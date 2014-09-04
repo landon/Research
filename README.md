@@ -3,4 +3,4 @@ Research
 
 TeX and things for math papers.
 
-No more paywalls please.
+No more research behind paywalls please.

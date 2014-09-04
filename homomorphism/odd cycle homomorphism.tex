@@ -173,35 +173,6 @@ Suppose $\chi(H) = k \le \frac{2a}{b}$.  Then there is an epimorphism from $H$ o
 $\rho_{a,b}(H) > \hat{\rho}_{a,b}(K_k)$.  But $\hat{\rho}_{a,b}(K_k) = \min_{t \in \irange{k}} at - b\binom{t}{2} = a$ since $k \le \frac{2a}{b}$, so we have the desired bound.
 \end{proof}
 
-
-\section{The proof}
-For a graph $G$, positive integer $k$ and $S \subseteq V(G)$, the \emph{$k$-potential} of $S$ in $G$ is \[\rho^k_G(S) \DefinedAs (4k+1)|S| - (4k-1)\size{G[S]}.\]  When $G$ is clear from context, we drop the subscript and just write $\rho^k(S)$. Kostochka and Yancey \cite{kostochkayancey2012ore} proved that if $\rho^1_G(S) \ge 3$ for all $\emptyset \ne S \subseteq V(G)$, then $G$ is $3$-colorable.  We generalize this as follows.
-
-\begin{thm}\label{MainTheorem}
-Let $G$ be a graph and $k$ a positive integer.  If $\rho^k_G(S) \ge 4k-1$ for all $\emptyset \ne S \subseteq V(G)$, then $G$ has a homomorphism into $C_{2k+1}$.
-\end{thm}
-
-Suppose Theorem \ref{MainTheorem} is false for some $k$ and choose a counterexample $G$ minimizing $\card{G}$.  
-We will prove a sequence of structural properties of $G$ and ultimately derive a contradiction.  First, we need a basic fact about the potential of induced subgraphs of $C_{2k+1}$.
-
-\begin{lem}\label{PotentialOfInducedPieces}
-$\rho^k_{C_{2k+1}}(S) \ge 4k+1$ for all $\emptyset \ne S \subseteq C_{2k+1}$.  Moreover, $\rho^k_{C_{2k+1}}(V(C_{2k+1})) = 4k+2$.
-\end{lem}
-\begin{proof}
-\end{proof}
-
-\begin{lem}
-$\rho^k_G(S) \ge 4k+2$ for every $S \subsetneq V(G)$ with $\card{S} \ge 2k + 2$.
-\end{lem}
-\begin{proof}
-Suppose to the contrary that there is $S \subsetneq V(G)$ with $\card{S} \ge 2k + 2$ and $\rho^k_G(S) \le 4k+1$.  Since $S \ne V(G)$, by minimality of $\card{G}$ we have a homomorphism $\func{h}{G[S]}{C_{2k+1}}$ which gives rise to a homomorphism $\func{h'}{G}{G_h}$. As noted in Definition \ref{InducedHomomorphism}, $G_h \not \rightarrow C_{2k+1}$ since $G \not \rightarrow C_{2k+1}$.  Since $\card{S} \ge 2k + 2$, we have $|G_h| < |G|$. So, minimality of $|G|$ gives $W \subseteq V(G_h)$ with $\rho^k_{G_h}(W) \le 4k-2$.  Put $X \DefinedAs h'(S)$. Since $W \not \subseteq V(G)$, we must have $\card{W \cap X} \ne \emptyset$.  Since every non-empty subset of $h'(S)$ has potential at least $4k+1$ (by Lemma \ref{PotentialOfInducedPieces}), $\rho^k_G((W - X) \cup S) \le \rho^k_{G_h}(W) - (4k+1) + \rho^k_G(S) \le \rho^k_{G_h}(W) \le 4k-2$, a contradiction since $\emptyset \ne S \subseteq (W - X) \cup S$.
-\end{proof}
-
-We'll also need a basic fact about homomorphisms between odd cycles (see Albertson and Collins \cite{albertson1985homomorphisms}).
-\begin{lem}\label{NoHomomorphism}
-If $C_{2j+1} \rightarrow C_{2k + 1}$, then $j \ge k$.
-\end{lem}
-
 \bibliographystyle{plain}
 \bibliography{GraphColoring}
 \end{document}

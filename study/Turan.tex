@@ -1,0 +1,82 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem*{Turan}{Tur{\'a}n's Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{TuranGraph}{Tur{\'a}n Graph}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\begin{document}
+\begin{TuranGraph}
+Let $r \leq n$ be positive integers.  We write $T_{n, r}$ for the complete $r$-partite graph $K_{n_1, \ldots, n_r}$ where $\sum_i n_i = n$ and $|n_i - n_j| \leq 1$ for all $i, j$.  
+\end{TuranGraph}
+
+\begin{Turan}
+Let $r \leq n$ be positive integers.  If $G$ is a $K_{r+1}$-free graph with $n$ vertices and the maximum number of edges, then $G = T_{n, r}$.
+\end{Turan}
+\begin{proof}
+Let $G$ be a $K_{r+1}$-free graph with $n$ vertices and the maximum number of edges.
+
+First, assume $G$ is a complete multipartite graph $K_{n_1, \ldots, n_s}$ with $n_i \geq n_j$ for $i \leq j$.  Then $s \leq r$ since $G$ is $K_{r+1}$-free.  If $s < r$, then $n_1 \geq 2$ and $K_{1, n_1 - 1, n_2, \ldots, n_s}$ is $K_{r+1}$-free and has more edges.  Thus $s = r$.  If $n_1 - n_s \geq 2$, then $K_{n_1 - 1, n_2, \ldots, n_{s-1}, n_s + 1}$ is $K_{r+1}$-free and has more edges.  Thus $G = T_{n, r}$ and we are done.
+
+Therefore, we may assume that $\overline{G}$ is not a disjoint union of cliques. Hence $G$ contains an induced $\overline{P_3}$, say with vertices $x, y, z$ where $yz \in E(G)$ and $xy, xz \not \in E(G)$.
+
+First, assume $d(x) \geq d(y)$ and $d(x) \geq d(z)$.  Create a new graph $H$ by adding two copies of $x$ to $G$ and removing $y$ and $z$.  Plainly, $H$ is $K_{r+1}$-free and $\card{E(H)} = \card{E(G)} + 2d(x) - (d(y) + d(z) - 1) > \card{E(G)}$.  This is a contradiction.
+
+Hence, without loss of generality, we may assume that $d(x) < d(y)$.  Now create a new graph $F$ by adding a copy of $y$ to $G$ and removing $x$.  Plainly, $F$ is $K_{r+1}$-free and $\card{E(F)} = \card{E(G)} + d(y) - d(x) > \card{E(G)}$.  This final contradiction completes the proof.
+\end{proof}
+\end{document}

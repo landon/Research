@@ -1,0 +1,40 @@
+\begin{center}
+\setlength{\extrarowheight}{2.5pt}
+  \begin{longtable}{c|c}
+	 Symbology & Meaning \\
+    \hline
+    $\card{G}$ & the number of vertices $G$ has \\
+    $\size{G}$ & the number of edges $G$ has \\
+    $x \adj y$ & $x$ and $y$ are adjacent \\
+    $G[S]$ & the subgraph of $G$ induced on $S$ \\
+    $E_G(X, Y)$ & the edges in $G$ with one \\
+                & end in $X$ and the other in $Y$ \\
+    $E_G(X)$ & $E_G(X, V(G) - X)$ \\
+	 $\chi(G)$ & the chromatic number of $G$ \\
+	 $\omega(G)$ & the clique number of $G$ \\
+	 $\alpha(G)$ & the independence number of $G$ \\
+	 $\Delta(G)$ & the maximum degree of $G$ \\
+	 $\delta(G)$ & the minimum degree of $G$ \\
+    $\kappa(G)$ & the vertex connectivity of $G$ \\
+    $\overline{G}$ & the complement of $G$ \\
+	 $\djunion{A}{B}$ & the disjoint union of graphs $A$ and $B$ \\
+	 $\join{A}{B}$ & the join of graphs $A$ and $B$ (that is,  $\overline{\djunion{\overline{A}}{\overline{B}}}$) \\
+    $kG$ & $\underbrace{\djunion{G}{\djunion{G}{\djunion{\cdots}{G}}}}_{\text{$k$ times}}$ \\
+    $G^k$ & $\underbrace{\join{G}{\join{G}{\join{\cdots}{G}}}}_{\text{$k$ times}}$ \\
+	 $H \subseteq G$ & $H$ is a subgraph of $G$ \\
+	 $H \subset G$ & $H$ is a proper subgraph of $G$ \\
+    $H \unlhd G$ & $H$ is an induced subgraph of $G$ \\
+    $H \lhd G$ & $H$ is a proper induced subgraph of $G$ \\
+    $H \prec G$ & $H$ is a child of $G$ \\
+    $\funcinj{f}{S}{T}$ & an injective function from $S$ to $T$ \\
+    $\funcsurj{f}{S}{T}$ & a surjective function from $S$ to $T$ \\
+	 $X \DefinedAs Y$ & $X$ is defined as $Y$ \\
+    $K_k$ & the complete graph on $k$ vertices \\
+    $E_k$ & the edgeless graph on $k$ vertices (that is, $\overline{K_k}$) \\
+	 $P_k$ & the path on $k$ vertices \\
+	 $C_k$ & the cycle on $k$ vertices \\
+    $K_{a,b}$ & the complete bipartite graph with \\
+              & parts of size $a$ and $b$ (that is, $\join{E_a}{E_b}$) \\
+	 $\irange{n}$ & $\set{1, 2, \ldots, n}$ \\
+  \end{longtable}
+\end{center}

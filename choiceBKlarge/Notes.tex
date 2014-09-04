@@ -1,0 +1,244 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\allowdisplaybreaks
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{CliqueGraph}{Clique Graph}
+
+\theoremstyle{plain}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mov}[2]{#1^{#2}}
+\newcommand{\wt}[1]{w\parens{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ex}{\operatorname{E}}
+
+\title{some notes}
+
+\begin{document}
+\maketitle
+
+\section{About Lemma 4.6}
+Lemma 4.6 can be improved, see Lemma \ref{improved} below.  You don't need the $\Delta_0 \geq 10^{20}$ condition here.  If you are willing to use existing theory (from \cite{mules}), the proof is much shorter also, it doesn't really have much to do with the particular problem, really just $d_1$-choosability stuff. 
+
+\bigskip
+
+The following are either lifted straight out of \cite{mules} or we include their short proof.  None of the proofs are difficult and the development is natural and reusable.
+
+\begin{cor}\label{K_tClassification}
+For $t \geq 4$, $\join{K_t}{B}$ is not $d_1$-choosable iff $B$ is almost complete; or $t = 4$ and $B$ is $E_3$ or a claw; or $t = 5$ and $B$ is $E_3$.
+\end{cor}
+
+\begin{lem}\label{IntersectionsInB}
+Let $A$ and $B$ be graphs such that $G \DefinedAs
+\join{A}{B}$ is not $d_1$-choosable.  If either $\card{A} \geq 2$ or $B$ is
+$d_0$-choosable and $L$ is a bad $d_1$-assignment on $G$, then
+\begin{enumerate}
+\item for any independent set $I \subseteq V(B)$ with $\card{I} = 3$, we have
+$\bigcap_{v \in I} L(v) = \emptyset$; and
+\item for disjoint nonadjacent pairs $\set{x_1, y_1}$ and $\set{x_2, y_2}$ at least one of the following holds
+	\begin{enumerate}
+	\item $L(x_1) \cap L(y_1) = \emptyset$;
+	\item $L(x_2) \cap L(y_2) = \emptyset$;
+	\item $\card{L(x_1) \cap L(y_1)} = 1$ and $L(x_1) \cap L(y_1) = L(x_2) \cap L(y_2)$.
+	\end{enumerate}
+\end{enumerate}
+\end{lem}
+
+\begin{lem}\label{NeighborhoodPotShrink}
+Let $H$ be a $d_0$-choosable graph such that $G \DefinedAs \join{K_1}{H}$ is not
+$d_1$-choosable and $L$ a minimal bad $d_1$-assignment on $G$.  If some
+nonadjacent pair in $H$ have intersecting lists, then $\card{Pot(L)} \leq \card{H} - 1$.
+\end{lem}
+
+\begin{lem}\label{neighborhood}
+If $B$ is a graph with $\delta(B) \geq \frac{\card{B} + 1}{2}$ such that
+$\join{K_1}{B}$ is not $d_1$-choosable, then $\omega(B) \geq \card{B} - 1$ or
+$B = \join{E_3}{K_4}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $L$ be a minimal bad $d_1$-assignment on $B$.
+First note that if $B$ does not contain disjoint nonadjacent pairs $x_1, y_1$
+and $x_2, y_2$, then $\omega(B) \geq \card{B} - 1$ or
+$B = \join{E_3}{K_4}$ by Corollary \ref{K_tClassification}.
+
+By Dirac's theorem, $B$ is hamiltonian and in particular $2$-connected. Since
+$B$ cannot be an odd cycle or complete, $B$ is $d_0$-choosable.
+
+By the Small Pot Lemma, $\card{Pot(L)} \leq \card{B}$.  Since $\card{L(x_1)} +
+\card{L(x_2)} \geq \card{B} + 1$, the lists intersect and thus Lemma
+\ref{NeighborhoodPotShrink} shows that $\card{Pot(L)} \leq \card{B} - 1$. But
+then $\card{L(x_i) \cap L(y_i)} \geq 2$ for each $i$ and Lemma
+\ref{IntersectionsInB} gives a contradiction.
+\end{proof}
+
+Note that the neighborhoods we will be looking at are huge, so the $B =
+\join{E_3}{K_4}$ case will never happen here.
+
+End of stuff from \cite{mules}.
+
+\bigskip
+
+Let $\D_1$ be the collection of graphs without induced $d_1$-choosable
+subgraphs.  Plainly, $\D_1$ is hereditary. For a graph $G$ and $t \in \IN$, let
+$\CC_t$ be the maximal cliques in $G$ having at least $t$ vertices. We prove the
+following decomposition result for graphs in $\D_1$ which generalizes Reed's decomposition in \cite{reed1999strengthening}.
+
+\begin{lem}\label{partition}
+Suppose $G \in \D_1$ has $\Delta(G) \geq 8$ and contains no $K_{\Delta(G)}$. If
+$\frac{\Delta(G) + 5}{2} \leq t \leq \Delta(G) - 1$, then $\bigcup \CC_t$ can be
+partitioned into sets $D_1, \ldots, D_r$ such that for each $i \in \irange{r}$
+at least one of the following holds:
+\begin{itemize}
+  \item $D_i \in \CC_t$,
+  \item $D_i = C_i \cup \set{x_i}$ where $C_i \in \CC_t$ and $\card{N(x_i) \cap
+  C_i} \geq t-1$,
+  \item each $v \in V(G) - D_i$ has at most $t-2$ neighbors in $C_i$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+Suppose $\card{C_i} \leq \card{C_j}$ and $C_i \cap C_j \neq \emptyset$. 
+Then $\card{C_i \cap C_j} \geq \card{C_i} + \card{C_j} - (\Delta + 1) \geq 4$.  It follows from Corollary
+\ref{K_tClassification} that $\card{C_i - C_j} \leq 1$.
+
+Now suppose $C_i$ intersects $C_j$ and $C_k$.  By the above,
+$\card{C_i \cap C_j} \geq \frac{\Delta(G) + 3}{2}$ and similarly $\card{C_i \cap
+C_k} \geq \frac{\Delta(G) + 3}{2}$.  Hence $\card{C_i \cap C_j \cap C_k} \geq
+\Delta(G) + 3 - (\Delta(G) - 1) = 4$.  Put $I \DefinedAs C_i \cap C_j \cap C_k$
+and $U \DefinedAs C_i \cup C_j \cup C_k$.  By maximality of $C_i, C_j, C_k$,
+$U$ cannot induce an almost complete graph.  Thus, by Corollary
+\ref{K_tClassification}, $\card{U} \in \set{4, 5}$ and the graph induced on $U -
+I$ is $E_3$.  But then $t \leq 6$ and hence $\Delta(G) \leq 7$, a contradiction.
+
+\smallskip
+
+\noindent The existence of the required partition is immediate. 
+\end{proof}
+
+This can quickly be turned into a decomposition for $d$-dense graphs.  Let $G$ be a minimum counterexample.  Then $G \in \D_1$.  Call $v \in V(G)$ $d$-sparse if it has more than $d\Delta$ non-edges in its neighborhood.  The $3d$ in the following isn't optimal.
+
+\begin{lem}\label{improved}
+Let $0 \leq d \leq \frac{\Delta}{10} - \frac32$. We can partition $V(G)$ into $S,D_1, \ldots, D_r$ so that
+
+\begin{enumerate}
+\item each vertex in $S$ is $d$-sparse,
+\item each $D_i$ contains a vertex $w_i$ such that $D_i - w_i$ is a clique of size at least $\Delta - 3d + 1$,
+\item no vertex outside of $D_i$ has more than $\frac{3\Delta}{4}$ neighbors in $D_i$ and $w_i$ has at least $\frac{3\Delta}{4}$ neighbors in $D_i$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Put $t \DefinedAs \frac34 \Delta + 1$, $B \DefinedAs \bigcup \CC_t$ and $S \DefinedAs V(G) - B$. Apply Lemma \ref{partition} to get $D_1, \ldots, D_r$ partitioning $B$. We claim that some subset of $\set{D_1, \ldots, D_r}$ works.  For item (i), we need to check that each $v \in S$ is $d$-sparse.  We know (Lemma 9.2.2 in the other write-up) that each $v \in S$ has more than $\binom{\Delta-1}{2} - \frac25 \Delta^2 \geq ( \frac{\Delta}{10} - \frac32)\Delta$ non-edges in its neighborhood, so $v$ is $d$-sparse.
+
+Item (iii) follows by the definition of the $D_i$.  Now item (ii).  If for any $i$, all vertices of $D_i$ are $d$-sparse, then just move all of $D_i$ into $S$.  So now we may assume that each $D_i$ contains a non-sparse vertex $v_i$.  Clearly, the largest clique in $G$ containing $v_i$ is contained in $D_i$.  Hence it will be enough to show that $v_i$ is in a $\Delta - 3d + 1$ clique.  We can do this with the same computation in the proof of Lemma 9.2.2 before.  Let $x$ be some $v_i$. Suppose $x$ is in no $\Delta - 3d + 1$ clique, then using Lemma \ref{neighborhood}, we get a sequence $y_1,
+\ldots, y_{3d} \in N(x)$ such that 
+\[\card{N(y_i) \cap (N(x) - \set{y_1, \ldots, y_{i-1}})} \leq \frac12 (\Delta + 1 - i).\]
+
+Hence $x$ is $d$-sparse since it has at least 
+
+\[\frac12\sum_{i=1}^{3d} (\Delta - i) > d\Delta.\]
+
+non-edges in its neighborhood.
+\end{proof}
+
+\section{About Lemma 5.3}
+We actually need the $C$ to be one of the $C_i$, not just maximal, otherwise, for some $i$ where $D_i = C_i \cup \set{w_i}$, we could choose $C$ to be the maximal clique containing $w_i$ that intersects $C_i$ in $\frac34 \Delta$ vertices.  If $C_i$ were bigger than $C$, the lemma fails for $C$.  The lemma isn't used for anything but the $C_i$, so this doesn't change anything.  Here is the statement and proof.
+
+\begin{lem}\label{AtMostFourIn}
+Each $v \in C_i$ has at most one
+neighbor outside of $C_i$ with more than $4$ neighbors in $C_i$ and no such
+neighbor if $v$ is low.
+\end{lem}
+\begin{proof}
+Suppose otherwise that we have $v \in C_i$ with two neighbors $w_1, w_2 \in V(G)
+- C_i$ each with $5$ or more neighbors in $C_i$.  Put $Q \DefinedAs
+G[\set{w_1,w_2} \cup C_i - v]$, then $v$ is joined to $Q$ and hence
+$\join{K_1}{Q} \unlhd G$.  We show that $\join{K_1}{Q}$ must be $d_1$-choosable. 
+
+First, suppose there are different $z_1,z_2 \in C_i$ such that $\set{w_1, z_1}$
+and $\set{w_2, z_2}$ are independent.  Since $Q$ contains an induced diamond,
+it is $d_0$-choosable. Let $L$ be a minimal bad $d_1$-assignment on
+$\join{K_1}{Q}$. Then $\card{L(w_i)} + \card{L(z_i)} \geq 4 + \card{Q} - 3 = \card{Q} + 1$.  By the Small Pot Lemma, $\card{Pot(L)} \leq \card{Q}$.  Hence
+$L(w_1) \cap L(z_1) \neq \emptyset$ and Lemma \ref{NeighborhoodPotShrink} shows
+that $\card{Pot(L)} \leq \card{Q} - 1$, but then $\card{L(w_i) \cap L(z_i)}
+\geq 2$ and Lemma \ref{IntersectionsInB} gives a contradiction.
+
+By maximality of $C_i$, neither $w_1$ nor $w_2$ can be adjacent to all of $C_i$
+hence it must be the case that there is $y \in C_i$ such that $w_1$ and $w_2$
+are joined to $C_i - y$.  If $w_1$ and $w_2$ aren't adjacent, then $G$ contains $\join{K_6}{E_3}$ contradicting Corollary \ref{K_tClassification}.  Hence $C_i$ intersects the larger clique $\set{w_1, w_2} \cup C_i - \set{y}$, this is impossible by the definition of $C_i$.
+
+When $v$ is low, an argument similar to the above shows that there can be no
+$z_1$ in $C_i$ so that $\set{w_1, z_1}$ is independent, and hence $C_i \cup
+\set{w_1}$ is a clique contradicting maximality of $C_i$.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}

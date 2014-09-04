@@ -1,0 +1,573 @@
+\documentclass{beamer}
+\usepackage{tkz-graph}
+\usetikzlibrary{shapes}
+%===============BEGIN GLOBAL BEAMER OPTIONS=====================
+
+%THIS CHANGES THE BACKGROUND COLOUR OF BOXES, AND ROUNDS OFF THEIR EDGES
+%\setbeamercolor{block title}{bg=yellow!50}
+%\setbeamercolor{block body}{}
+%\setbeamertemplate{blocks}[default]
+
+%THIS REMOVES NAVIGATION BAR ON THE BOTTOM
+\setbeamertemplate{navigation symbols}{}
+
+
+%%THIS ADDS FRAME NUMBERS TO THE Right (x/y)
+%\newcommand*\oldmacro{}
+%\let\oldmacro\insertshorttitle
+%\renewcommand*\insertshorttitle{
+ %\oldmacro\hfill
+ %\insertframenumber\,/\,\inserttotalframenumber}
+
+%+++++++++++++ MODES AND THEMES +++++++++
+\mode<presentation>
+
+\usetheme[hideothersubsections]{Hannover}
+\addtobeamertemplate{footline}
+{
+  \usebeamercolor[fg]{author in sidebar}
+  \vskip-1cm\hskip2pt
+  %\insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+}
+
+%\usecolortheme{beaver}
+%\usecolortheme{crane}
+%\usecolortheme{default}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle} 
+%\usecolortheme{dove} 
+%\usecolortheme{fly} 
+%\usecolortheme{seagull}
+%\usecolortheme{rose}
+\usecolortheme{orchid}
+%\usecolortheme{seahorse}
+
+
+
+%\useoutertheme{split}
+%\useoutertheme{shadow}
+
+% USE TO CREATE PRINTER FRIENDLY HANDOUT VERSION, TOGETHER WITH [HANDOUT]
+%ALSO USE ALTERNATE FIRST SLIDE
+%\usecolortheme{dove}
+
+%THIS CHANGES THE DEFAULT TRANSPARENCY GRADE FOR UNCOVERING COMMANDS
+%\setbeamercovered{transparent=30}
+
+%\beamertemplateshadingbackground{yellow!70}{black!20}
+
+%====================================
+
+\title[Improving Brooks' theorem]{Improving Brooks' theorem}
+\author{Landon Rabern}
+\institute{Arizona State University}
+\date{October 28, 2011}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{OreBrooks}{Theorem}
+\newtheorem*{DeltaTwo}{Theorem}
+\newtheorem*{Spectrum}{Theorem}
+\newtheorem*{OreBrooksKK}{Theorem}
+\newtheorem*{krs1}{Theorem}
+\newtheorem*{krs2}{Theorem}
+\newtheorem*{BrooksTheorem}{Theorem}
+\newtheorem*{MozhansLemma}{Lemma}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{PartyGame}{A prison problem}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{goal}{Goal}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{TemptingThought}{A tempting thought}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+%\AtBeginSubsection
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+%\AtBeginSection
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+\newcommand{\1}{\item<1-> }
+\newcommand{\2}{\item<2-> }
+\newcommand{\3}{\item<3-> }
+\newcommand{\4}{\item<4-> }
+\newcommand{\5}{\item<5-> }
+\newcommand{\6}{\item<6-> }
+\newcommand{\7}{\item<7-> }
+\newcommand{\8}{\item<8-> }
+\newcommand{\9}{\item<9-> }
+\newcommand{\ten}{\item<10-> }
+\newcommand{\ele}{\item<11-> }
+\newcommand{\twe}{\item<12-> }
+\newcommand{\thi}{\item<13-> }
+\newcommand{\fou}{\item<14-> }
+\newcommand{\fif}{\item<15-> }
+\newcommand{\six}{\item<16-> }
+\newcommand{\sev}{\item<17-> }
+\newcommand{\eig}{\item<18-> }
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{A prison problem}
+\begin{frame}{A prison problem}
+\uncover<1->{
+\begin{PartyGame}
+You are a warden in a prison with five large cells.  You need to put
+all the inmates into the cells, but to prevent fighting you cannot put
+a pair of inmates that have fought before into the same cell.  Each inmate in
+the prison has fought with at most six other inmates and none of the
+inmates who have fought with six others have fought with each other.  Under what conditions can you complete your task?
+\end{PartyGame}}
+
+\begin{itemize}
+\2 plainly, if there is a group of six inmates who have all fought one
+another, then you cannot complete your task
+\3 is this simple necessary condition sufficient?
+\end{itemize}
+\end{frame}
+
+\section{Some background}
+\begin{frame}[t]{Greedy coloring}
+\begin{itemize}
+\1 $C \DefinedAs \set{c_1, c_2, c_3, \ldots}$ an infinite set of colors
+\2 $G$ has vertices ordered $v_1, v_2, \ldots, v_n$
+\3 go through the vertices in order, coloring $v_i$ with the first color not used on a neighbor of $v_i$
+\end{itemize}
+
+\uncover<4->{
+For example, say $C \DefinedAs \set{\text{red}, \text{green}, \text{blue}, \text{cyan}, \ldots}$ and $G$ is the $5$-cycle:
+}
+
+\begin{overprint}
+\onslide<4| handout:0>\input{greedy1}\bigskip
+\onslide<5| handout:0>\input{greedy2}\bigskip
+\onslide<6| handout:0>\input{greedy3}\bigskip
+\onslide<7| handout:0>\input{greedy4}\bigskip
+\onslide<8| handout:0>\input{greedy5}\bigskip
+\onslide<9-| handout:1>\input{greedy6}\bigskip
+\end{overprint}
+
+\begin{itemize}
+\ten if $G$ has maximum degree $k$, then $v_i$ has at most $k$ colored neighbors, so greedy coloring uses at most $k+1$ colors
+\end{itemize}
+\end{frame}
+\begin{frame}{Brooks' theorem}
+\begin{itemize}
+\1 $\chi(G) \DefinedAs $ the minimum number of colors needed to color the vertices of $G$ so that adjacent vertices receive different colors \\
+\2 $\omega(G) \DefinedAs $ the number of vertices in a largest complete subgraph of $G$ \\
+\3 $\Delta(G) \DefinedAs $ the maximum degree of $G$
+\end{itemize}
+\uncover<4->{
+\bigskip
+\begin{BrooksTheorem}[Brooks 1941]
+Every graph with $\Delta \geq 3$ satisfies $\chi \leq \max\{\omega, \Delta\}$.
+\end{BrooksTheorem}}
+\end{frame}
+\begin{frame}[t]{Proof sketch}
+\uncover<1->{Any incomplete $2$-connected graph with $\Delta \geq 3$ has a spanning tree where the root has two nonadjacent leaves as neighbors.}
+\begin{overprint}
+\onslide<1-2| handout:1>\input{brooks1}\bigskip
+\onslide<3| handout:0>\input{brooks2}\bigskip
+\onslide<4| handout:0>\input{brooks3}\bigskip
+\onslide<5| handout:0>\input{brooks4}\bigskip
+\onslide<6| handout:0>\input{brooks5}\bigskip
+\onslide<7| handout:0>\input{brooks6}\bigskip
+\onslide<8| handout:0>\input{brooks7}\bigskip
+\end{overprint}
+\uncover<2->{Greedily coloring in leaf first order proves Brooks' theorem}
+\end{frame}
+
+
+\section{The Ore-degree}
+\begin{frame}{The Ore-degree}
+\uncover<1->{
+\begin{defn}
+The \alert{\emph{Ore-degree}} of an edge $xy$ in a graph $G$ is 
+
+\[\theta(xy) \DefinedAs d(x) + d(y).\]
+
+The \alert{\emph{Ore-degree}} of a graph $G$ is 
+\[\theta(G) \DefinedAs \max_{xy \in E(G)}\theta(xy).\]
+\end{defn}}
+
+\begin{itemize}
+\2 every graph satisfies $\floor{\frac{\theta}{2}} \leq \Delta$
+\3 greedy coloring (in any order) shows that every graph satisfies 
+$\chi \leq \left\lfloor\frac{\theta}{2} \right\rfloor + 1$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kierstead and Kostochka's generalization}
+\uncover<1->{
+\begin{OreBrooksKK}[Kierstead and Kostochka 2009]
+Every graph with $\theta \geq 12$ satisfies $\chi \leq \max \left\{\omega, \left\lfloor\frac{\theta}{2} \right \rfloor\right\}$.
+\end{OreBrooksKK}}
+
+\uncover<2->{
+Kierstead and Kostochka conjectured that the $12$ could be reduced to $10$.  That this would be best possible can be seen from the following example which has $\theta = 9$, $\omega = 4$ and $\chi = 5$.}
+
+\uncover<3->{
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 1pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[x = 0.270266681909561, y = 0.890800006687641, L = \tiny {4}]{v0}
+\Vertex[x = 0.336266696453094, y = 0.962799992412329, L = \tiny {4}]{v1}
+\Vertex[x = 0.334666579961777, y = 0.821199983358383, L = \tiny {4}]{v2}
+\Vertex[x = 0.56306654214859, y = 0.890800006687641, L = \tiny {5}]{v3}
+\Vertex[x = 0.244666695594788, y = 0.731600046157837, L = \tiny {4}]{v4}
+\Vertex[x = 0.417866677045822, y = 0.732000052928925, L = \tiny {4}]{v5}
+\Vertex[x = 0.243866696953773, y = 0.543200016021729, L = \tiny {4}]{v6}
+\Vertex[x = 0.415866762399673, y = 0.542800068855286, L = \tiny {4}]{v7}
+\Vertex[x = 0.0926666706800461, y = 0.890000000596046, L = \tiny {5}]{v8}
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v7)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v4)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v0)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v8)
+\end{tikzpicture}
+
+\caption{$O_5$, a counterexample with $\theta = 9$.}
+\end{figure}}
+\end{frame}
+
+\section{Rephrasing the problem}
+\begin{frame}{Rephrasing the problem}
+\uncover<1->{
+\begin{defn}
+A graph $G$ is called \alert{\emph{vertex critical}} if $\chi(G-v) < \chi(G)$ for each $v \in V(G)$.
+\end{defn}}
+\uncover<2->{
+\begin{defn}
+Let $G$ be a vertex critical graph.  The \alert{\emph{low vertex subgraph}} $\mathcal{L}(G)$ is the graph induced on the vertices of degree $\chi(G) - 1$.  The \alert{\emph{high vertex subgraph}} $\mathcal{H}(G)$ is the graph induced on the vertices of degree at least $\chi(G)$.
+\end{defn}}
+
+\uncover<3->{	
+\begin{problem}
+Prove that $K_{\Delta(G) + 1}$ is the only vertex critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ such that $\mathcal{H}(G)$ is edgeless.
+\end{problem}}
+\end{frame}
+
+\section{Solving the rephrased problem}
+\subsection{Kierstead and Kostochka's proof}
+\begin{frame}{Kierstead and Kostochka's proof}
+\begin{itemize}
+\1 the proof is high-tech and clean, it uses both of the following \\
+\2 Alon and Tarsi's algebraic list coloring theorem \\
+\3 a result of Stiebitz from 1982 proving a conjecture of Gallai stating that $\mathcal{H}(G)$ has at most as many components as $\mathcal{L}(G)$ \\
+\4 using these it is basically just a counting argument \\
+\5 unfortunately, it only works for $\Delta \geq 7$
+\end{itemize}
+\end{frame}
+\subsection{Problem solved}
+\begin{frame}
+\uncover<1->{
+To get down to $\Delta = 6$, go low-tech and get dirty.}
+
+\bigskip
+\uncover<2->{
+\begin{OreBrooks}[Rabern 2010]
+$K_{\Delta(G) + 1}$ is the only vertex critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ and $\omega(\mathcal{H}(G)) \leq \left \lfloor \frac{\Delta(G)}{2} \right \rfloor - 2$.
+\end{OreBrooks}}
+
+\begin{itemize}
+\3 setting $\omega(\mathcal{H}(G)) = 1$ proves Kierstead and Kostochka's conjecture \\
+\4 equivalently, as long as there is no group of six inmates who have all fought one another, you (the warden) can complete your inmate-cell-assignment task
+\end{itemize}
+\end{frame}
+\subsection{Proof outline}
+\begin{frame}{Proof outline}
+\begin{itemize}
+\1 start with a minimal counterexample $G$ \\
+\2 for any induced subgraph $H$, $\Delta - 1$ coloring $G-H$ leaves a list assignment $L$ on $H$ where $\card{L(v)} \geq \deg(v) - 1$
+\end{itemize}
+
+\uncover<3->{
+\begin{goal}
+Construct a subgraph $H$ for which such a list assignment can always be completed. 
+\end{goal}}
+
+\begin{itemize}
+\4 we need $H$ to have large degrees to get large lists, so $H$ will be ``dense'' \\
+\5 first, use minimality of $G$ to exclude some troublesome $H$'s \\
+\6 run the following recoloring algorithm to construct $H$
+\end{itemize}
+\end{frame}
+\subsection{Mozhan's lemma}
+\begin{frame}{Partitioned colorings}
+\begin{defn}
+Let $G$ be a vertex critical graph.  Let $a \geq 1$ and $r_1, \ldots, r_a$ be such that $1 + \sum_i r_i = \chi(G)$. By a \alert{\emph{$(r_1, \ldots, r_a)$-partitioned coloring}} of $G$ we mean a proper coloring of $G$ of the form
+\[\left\{\{x\}, L_{11}, L_{12}, \ldots, L_{1r_1}, L_{21}, L_{22}, \ldots, L_{2r_2}, \ldots, L_{a1}, L_{a2}, \ldots, L_{ar_a}\right\}.\]
+
+Here $\{x\}$ is a singleton color class and each $L_{ij}$ is a color class.
+\end{defn}
+\end{frame}
+
+\begin{frame}{Mozhan's Lemma}
+\begin{MozhansLemma}[Mozhan 1983]
+Let $G$ be a vertex critical graph.   Let $a \geq 1$ and $r_1, \ldots, r_a$ be such that $1 + \sum_i r_i = \chi(G)$. Of all $(r_1, \ldots, r_a)$-partitioned colorings of $G$ pick one minimizing
+
+\[\sum_{i = 1}^a \size{G\left[\bigcup_{j = 1}^{r_i} L_{ij}\right]}.\]
+
+Remember that $\{x\}$ is a singleton color class in the coloring. Put $U_i \DefinedAs \bigcup_{j = 1}^{r_i} L_{ij}$ and let $Z_i(x)$ be the component of $x$ in $G[\{x\} \cup U_i]$.  If $d_{Z_i(x)}(x) = r_i$, then $Z_i(x)$ is complete if $r_i \geq 3$ and $Z_i(x)$ is an odd cycle if $r_i = 2$.
+\end{MozhansLemma}
+\end{frame}
+
+\subsection{The recoloring algorithm}
+\begin{frame}{The recoloring algorithm}
+\begin{itemize}
+\1 take a  $(\left \lfloor \frac{\Delta - 1}{2} \right \rfloor, \left \lceil \frac{\Delta - 1}{2} \right \rceil)$-partitioned coloring minimizing the above function \\
+\2 prove that we may assume that $x$ is a low vertex \\
+\3 by Mozhan's lemma, the neighborhood of $x$ in each part induces a clique or an odd cycle
+\end{itemize}
+\end{frame}
+\begin{frame}[t]{The recoloring algorithm}
+\begin{overprint}
+\onslide<1| handout:0>\input{mozhan1}\bigskip
+\onslide<2| handout:0>\input{mozhan2}\bigskip
+\onslide<3| handout:0>\input{mozhan3}\bigskip
+\onslide<4| handout:0>\input{mozhan4}\bigskip
+\onslide<5| handout:0>\input{mozhan5}\bigskip
+\onslide<6| handout:1>\input{mozhan6}\bigskip
+\end{overprint}
+\begin{itemize}
+\1 swap $x$ with a low vertex $x_1$ in the right part \\
+\2 swap $x_1$ with a low vertex $x_2$ in the left part \\
+\3 continue swapping back and forth until you wrap around \\
+\end{itemize}
+\end{frame}
+\begin{frame}[t]{The recoloring algorithm}
+\begin{overprint}
+\onslide<1| handout:0>\input{mozhan6}\bigskip
+\onslide<2-| handout:1>\input{mozhan7}\bigskip
+\end{overprint}
+\begin{itemize}
+\1 use the fact that you wrapped around to show that there are many edges between the two cliques \\
+\2 we have now constructed the desired large ``dense'' subgraph \\
+\end{itemize}
+\end{frame}
+\section{A spectrum of generalizations}
+\subsection{Generalizing maximum degree}
+\begin{frame}{Generalizing maximum degree}
+\uncover<1->{
+\begin{defn}
+For $0 \leq \epsilon \leq 1$, define $\Delta_\epsilon(G)$ as
+
+\[\left\lfloor\max_{xy \in E(G)} (1 - \epsilon)\min\{d(x), d(y)\} + \epsilon\max\{d(x), d(y)\}\right\rfloor.\]
+\end{defn}
+}
+\uncover<2->{
+Note that $\Delta_1 = \Delta$, $\Delta_{\frac12} = \left\lfloor\frac{\theta}{2} \right\rfloor$.
+}
+\end{frame}
+\subsection{The generalized bound}
+\begin{frame}{The generalized bound}
+\uncover<1->{
+\begin{Spectrum}[Rabern 2010]
+For every $0 < \epsilon \leq 1$, there exists $t_\epsilon$ such that every graph with $\Delta_\epsilon \geq t_\epsilon$ satisfies $\chi \leq \max\{\omega, \Delta_\epsilon\}$.
+\end{Spectrum}}
+\begin{itemize}
+\2 the proof uses a recoloring algorithm similar to the above \\
+\3 it would be interesting to determine, for each $\epsilon$, the smallest $t_\epsilon$ that works \\
+\4 that $t_1 = 3$ is smallest is Brooks' theorem \\
+\5 the graph $O_5$ shows that $t_\epsilon = 6$ is smallest for $\frac12 \leq \epsilon < 1$ \\
+\6 best known general bounds, $\frac{2}{\epsilon} + 1 \leq t_\epsilon \leq \frac{4}{\epsilon} + 2$
+\end{itemize}
+\end{frame}
+\subsection{The lower bound on $t_\epsilon$}
+\begin{frame}{The lower bound on $t_\epsilon$}
+\uncover<1->{\input{reducer}}
+\begin{itemize}
+\2 $\chi(O_n) = n > \omega(O_n)$ and $\Delta(O_n) = \ceil{\frac{n-1}{2}} + n - 2$ \\
+\3 $\fancy{H}(O_n)$ is edgeless \\
+\4 computing $\Delta_\epsilon$ gives $t_\epsilon \geq \frac{2}{\epsilon} + 1$
+\end{itemize}
+\end{frame}
+\subsection{What about $\Delta_0$?}
+\begin{frame}{What about $\Delta_0$?}
+\begin{itemize}
+\1 the above proofs only work for $\epsilon > 0$ \\
+\2 what happens when $\epsilon = 0$? \\
+\3 the parameter $\Delta_0$ has already been investigated by Stacho under the name $\Delta_2$ \\
+\end{itemize}
+\uncover<4->{
+\begin{defn}[Stacho 2001]
+For a graph $G$ define
+
+\[\Delta_0(G) \DefinedAs \max_{xy \in E(G)} \min\{d(x), d(y)\}.\]
+\end{defn}
+}
+\end{frame}
+\begin{frame}{Facts about $\Delta_0$}
+\begin{itemize}
+\1 greedy coloring (in any order) shows that every graph satisfies $\chi \leq \Delta_0 + 1$ \\
+\2 for any fixed $t \geq 3$, the problem of determining whether or not $\chi(G) \leq \Delta_0(G)$ for graphs with $\Delta_0(G) = t$ is \emph{NP}-complete (Stacho 2001)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A tempting thought}
+\uncover<1->{
+\begin{TemptingThought}
+There exists $t$ such that every graph with $\Delta_0 \geq t$ satisfies $\chi \leq \max \{\omega, \Delta_0\}$.
+\end{TemptingThought}}
+
+\begin{itemize}
+\2 since $t_\epsilon \geq \frac{2}{\epsilon} + 1$, we see that $t_\epsilon \rightarrow \infty$ as $\epsilon \rightarrow 0$
+\3 thus, $t_0$ does not exist and the tempting thought cannot hold \\
+\4 there is a cute algorithmic way to see this assuming \emph{P}$\neq$\emph{NP} \\
+\5 we use Lov\'{a}sz's $\vartheta$ parameter which can be appoximated in polynomial time and has the property that $\omega(G) \leq \vartheta(G) \leq \chi(G)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A polynomial-time algorithm}
+\begin{itemize}
+\1 assume the tempting thought holds for some $t \geq 3$ \\
+\2 take any arbitrary graph with $\Delta_0 \geq t$ \\
+\3 first, compute $\Delta_0$ in polynomial time \\
+\4 second, compute $x$ such that $x - \frac12 < \vartheta < x + \frac12$ in polynomial time \\
+\5 if $x \geq \Delta_0 + \frac12$, then $\chi \geq \vartheta > \Delta_0$ and hence $\chi = \Delta_0 + 1$ \\
+\6 if $x < \Delta_0 + \frac12$, then $\omega \leq \vartheta < \Delta_0 + 1$, and hence $\omega \leq \Delta_0$ \\
+\7  now, $\chi \leq \max \{\omega, \Delta_0\} \leq \Delta_0$ \\
+\8 we just gave a polynomial time algorithm to determine whether or not $\chi \leq \Delta_0$ for graphs with $\Delta_0 \geq t$ \\
+\9 this is impossible unless \emph{P}=\emph{NP}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What we can prove about $\Delta_0$}
+\uncover<1->{
+\begin{DeltaTwo}[Rabern 2010]
+Every graph with $\Delta \geq 3$ satisfies \[\chi \leq \max \left\{\omega, \Delta_0, \frac{5}{6}(\Delta + 1)\right\}.\]
+\end{DeltaTwo}}
+
+\begin{itemize}
+\2 the proof uses a recoloring algorithm similar to the above \\
+\3 actually, all the above results about $\Delta_\epsilon$ follow from this result \\
+\end{itemize}
+\end{frame}
+
+\section{Further improvements}
+\begin{frame}
+\uncover<1->{
+In joint work with Kostochka and Stiebitz similar techniques were used to improve the bounds further.  Highlights:}
+
+\uncover<2->{
+\begin{krs1}[Kostochka, Rabern and Stiebitz 2010]
+Every graph with $\theta \geq 8$, except $O_5$, satisfies $\chi \leq \max \left\{\omega, \left\lfloor\frac{\theta}{2} \right \rfloor\right\}$.
+\end{krs1}}
+
+\uncover<3->{
+\begin{krs2}[Kostochka, Rabern and Stiebitz 2010]
+Every graph satisfies \[\chi \leq \max \left\{\omega, \Delta_0, \frac{3}{4}(\Delta + 2)\right\}.\]
+\end{krs2}}
+\end{frame}
+
+\begin{frame}
+\uncover<1->
+{
+\begin{conjecture}
+Every graph satisfies \[\chi \leq \max \left\{\omega, \Delta_0, \frac{2\Delta + 5}{3}\right\}.\]
+\end{conjecture}}
+
+\bigskip
+
+The examples $O_n$ above show that this would be tight.
+\end{frame}
+
+\nocite{krs_one}
+\nocite{grötschel1981ellipsoid}
+\nocite{stacho2001new}
+\nocite{rabern2010a}
+\nocite{stiebitz1982proof}
+\nocite{kierstead2009ore}
+\nocite{stacho2001new}
+\nocite{rabern2010b}
+\nocite{prison}
+\nocite{rabernhitting}
+\bibliographystyle{plain}
+\tiny
+\bibliography{GraphColoring}
+\end{document}

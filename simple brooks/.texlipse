@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Sat Dec 10 21:23:56 MST 2011
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=brooks.tex
+outputFile=brooks.pdf
+langSpell=en
+markDer=true
+srcDir=

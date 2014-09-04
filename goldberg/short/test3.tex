@@ -1,0 +1,131 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+\newtheorem*{ChronicleUpdate}{\bf {Chronicle update}}
+
+%\title{Fixer-Breaker and Short Tashkinov Trees }
+%\author{Daniel W. Cranston \and Landon Rabern}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\renewcommand{\S}{\fancy{S}}
+\newcommand{\W}{\fancy{W}}
+\newcommand{\T}{\fancy{T}}
+\renewcommand{\P}{\fancy{P}}
+\renewcommand{\C}{\fancy{C}}
+
+\begin{document}
+
+\begin{lem}\label{P_4-tash2}
+Fixer has a winning strategy against Breaker in the chronicled game on $G$, with superabundant list assignment $L$ where $|L(v_1)| = 2$, $|L(v_2)| = 2$, $|L(v_3)| = 3$ and $|L(v_4)| = 2$.
+\end{lem}
+\begin{proof}
+We show that for each possible such list assignment $L$ on $G$, Fixer has a winning strategy.
+Up to symmetry, the following cases cover all the possible list assignments that are not an immediate win for Fixer.
+
+\noindent\textbf{Case 1.  }\textit{$L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 2\}$ and $L(v_4) = \{2, 3\}$.}
+
+Fixer gets a winning strategy by coloring $v_3v_4$ with $2$ and applying Lemma \ref{CanColorAndPlayOnRest}.
+
+\noindent\textbf{Case 2.  }\textit{$L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{1, 3\}$.}
+
+Fixer gets a winning strategy by coloring $v_3v_4$ with $3$ and applying Lemma \ref{CanColorAndPlayOnRest}.
+
+\noindent\textbf{Case 3.  }\textit{$L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{1, 2\}$.}
+
+Let $S$ and $A_S$ be as in Lemma \ref{MultiMoveCombination} using colors $2$ and $3$. If the components of $A_S$ have vertex sets $\{v_1\}$ and $\{v_2, v_3\}$, then Fixer should swap 2 and 3 at $v_1$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 3\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{1, 2\}$, but then Fixer can edge-color the graph. If the components of $A_S$ have vertex sets $\{v_2\}$ and $\{v_1, v_3\}$, then Fixer should swap 2 and 3 at $v_2$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 2\}$ and $L(v_4) = \{1, 2\}$, but then Fixer can edge-color the graph. If the components of $A_S$ have vertex sets $\{v_3\}$ and $\{v_1, v_2\}$, then Fixer should swap 2 and 3 at $v_3$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{1, 3\}$, but then Fixer wins by Case 2. 
+
+\noindent\textbf{Case 4.  }\textit{$L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 2, 3\}$ and $L(v_4) = \{1, 2\}$.}
+
+Let $S$ and $A_S$ be as in Lemma \ref{MultiMoveCombination} using colors $1$ and $3$. If the components of $A_S$ have vertex sets $\{v_0\}$ and $\{v_2, v_3\}$, then Fixer should swap 1 and 3 at $v_0$. This results in a position with lists $L(v_1) = \{0, 3\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 2, 3\}$ and $L(v_4) = \{1, 2\}$, but then Fixer wins by Case 1. If the components of $A_S$ have vertex sets $\{v_2\}$ and $\{v_0, v_3\}$, then Fixer should swap 1 and 3 at $v_2$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 2\}$ and $L(v_4) = \{1, 2\}$, but then Fixer can edge-color the graph. If the components of $A_S$ have vertex sets $\{v_3\}$ and $\{v_0, v_2\}$, then Fixer should swap 1 and 3 at $v_3$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 2, 3\}$ and $L(v_4) = \{2, 3\}$, but then Fixer can edge-color the graph. 
+
+\noindent\textbf{Case 5.  }\textit{$L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{0, 1\}$.}
+
+Let $S$ and $A_S$ be as in Lemma \ref{MultiMoveCombination} using colors $0$ and $2$. If the components of $A_S$ have vertex sets $\{v_0\}$ and $\{v_2, v_3\}$, then Fixer should swap 0 and 2 at $v_0$. This results in a position with lists $L(v_1) = \{1, 2\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{0, 1\}$, but then Fixer can edge-color the graph. If the components of $A_S$ have vertex sets $\{v_2\}$ and $\{v_0, v_3\}$, then Fixer should swap 0 and 2 at $v_2$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{1, 2, 3\}$ and $L(v_4) = \{0, 1\}$, but then Fixer can edge-color the graph. If the components of $A_S$ have vertex sets $\{v_3\}$ and $\{v_0, v_2\}$, then Fixer should swap 0 and 2 at $v_3$. This results in a position with lists $L(v_1) = \{0, 1\}$, $L(v_2) = \{0, 2\}$, $L(v_3) = \{0, 1, 3\}$ and $L(v_4) = \{1, 2\}$, but then Fixer wins by Case 3. 
+
+\end{proof}
+
+
+\begin{lem}\label{CanColorAndPlayOnRest}
+Let $G$ be a multigraph and $L$ a list assignment on $G$.  Suppose we have an edge-coloring $\pi$ of $H \subseteq G$ where $\pi(xy) \in L(x) \cap L(y)$ for all $xy \in E(H)$.  Put $G' \DefinedAs G - E(H)$ and 
+$L'(v) \DefinedAs L(v) - \pi(E_H(v))$ for all $v \in V(G')$.  If Fixer has a winning strategy against Breaker in the chronicled game on $G'$ with lists $L'$, then Fixer has a winning strategy against Breaker in the chronicled game on $G$ with lists $L$.
+\end{lem}
+
+\begin{lem}\label{MultiMoveCombination}
+Let $G$ be a multigraph, $L$ a list assignment on $G$ and $\alpha, \beta \in \pot(L)$. Let $S \subseteq V(G)$ be those vertices $v$ with $\card{\set{\alpha, \beta} \cap L(v)} = 1$.  Then there is a graph $A_S$ with vertex set $S$ and $\Delta(A_S) \le 1$ such that Fixer has a sequence of moves against Breaker in the chronicled game resulting in a list assignment where Fixer has chosen to swap $\alpha$ and $\beta$ all or none of the vertices in each component of $A_S$.
+\end{lem}
+\begin{proof}
+For each $v \in S$, Fixer should swap $\alpha$ and $\beta$ at $v$ twice in a row.  Now every $v \in S$ is incident to an edge in $\C$; that is, as long as Fixer only does swaps with $\alpha$ and $\beta$, Breaker's moves are already foretold in the chronicle.  Now add an edge in $A_S$ for each $xy \in \C - \infty$ labeled $\set{\alpha, \beta}$. The lemma follows.
+\end{proof}
+
+\end{document}
+
+

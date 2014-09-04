@@ -1,0 +1,118 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\title{A weird proof of Brooks' theorem}
+\begin{document}
+\maketitle
+
+Let $G$ be a graph.  A partition $P \DefinedAs (V_0, V_1)$ of $V(G)$ will be
+called \emph{normal} if it achieves the minimum value of $(\Delta(G) - 1)\size{V_0} + \size{V_1}$.  Note that if $P$ is a normal partition, then
+$\Delta(G[V_0]) \leq 1$ and $\Delta(G[V_1]) \leq \Delta(G) - 1$.  
+The \emph{$P$-components} of $G$ are the components of $G[V_i]$ for $i \in
+\irange{2}$.  A $P$-component is called an \emph{obstruction} if it is a
+$K_2$ in $G[V_0]$ or a $K_{\Delta(G)}$ in $G[V_1]$ or an odd cycle in $G[V_1]$ when
+$\Delta(G) = 3$.  A path $x_1x_2\cdots x_k$ is called \emph{$P$-acceptable} if
+$x_1$ is contained in an obstruction and for different $i, j \in \irange{k}$, $x_i$ and
+$x_j$ are in different $P$-components.  For a subgraph $H$ of $G$ and $x \in V(G)$, 
+we put $N_H(x) \DefinedAs N(x) \cap V(H)$.
+
+\begin{lem}\label{ObstructionFree}
+Let $G$ be a graph with $\Delta(G) \geq 3$.  If $G$ doesn't contain
+$K_{\Delta(G) + 1}$, then $V(G)$ has an obstruction-free normal partition.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false.  Among the normal partitions having the minimum
+number of obstructions, choose $P \DefinedAs (V_0, V_1)$ and a
+maximal $P$-acceptable path $x_1x_2\cdots x_k$ so as to minimize $k$.
+
+Let $A$ and $B$ be the $P$-components containing $x_1$ and $x_k$ respectively.  
+Put $X \DefinedAs N_A(x_k)$. First, suppose $\card{X} = 0$.  Then moving $x_1$ to the
+other part of $P$ creates another normal partition $P'$ having the minimum number of
+obstructions.  But $x_2x_3\cdots x_k$ is a maximal $P'$-acceptable path,
+violating the minimality of $k$.  Hence $\card{X} \geq 1$.
+
+Pick $z \in X$. Moving $z$ to the other part of $P$ destroys the obstruction $A$, so it must create an obstruction containing $x_k$ and hence $B$.  Since obstructions are complete graphs or odd cycles, the only possibility is that $\set{z} \cup V(B)$ induces an
+obstruction.  Put $Y \DefinedAs N_B(z)$.  Then, since obstructions are regular, $N_B(x) = Y$ for all $x \in X$ and $\card{Y} = \delta(B) + 1$.  In particular, $X$ is joined to $Y$ in $G$.
+
+Suppose $\card{X} \geq 2$.  Then, similarly to above, moving $z$ and then $x_k$ to their respective other parts of $P$ shows that $\set{x_k} \cup V(A - z)$ induces an obstruction.  Since obstructions are regular, we must have $\card{N_{A-z}(x_k)} = \Delta(A)$ and hence $\card{X} \geq \Delta(A) + 1$.  Thus $\card{X \cup Y} = \Delta(A) + \delta(B) + 2 = \Delta(G) + 1$.  Suppose $X$ is not a clique and pick nonadjacent $v_1, v_2 \in X$. It is easily seen that moving $v_1, v_2$ and then $x_k$ to their respective other parts violates normality of $P$.  Hence $X$ is a clique. Suppose $Y$ is not a clique and pick nonadjacent $w_1, w_2 \in Y$.  Pick $z' \in X - \set{z}$. Now moving $z$ and then $w_1, w_2$ and then $z'$ to their respective other parts again violates normality of $P$.  Hence $Y$ is a clique.  But $X$ is joined to $Y$, so $X \cup Y$ induces a $K_{\Delta(G) + 1}$ in $G$, a contradiction.
+
+Hence we must have $\card{X} = 1$.  Suppose $X \neq \set{x_1}$.  First, suppose $A$ is $K_2$.  Then moving $z$ to the other part of $P$ creates another normal partition $Q$ having the minimum number of obstructions.  In $Q$, $x_kx_{k-1}\cdots x_1$ is a maximal $Q$-acceptable path since the $Q$-components containing $x_2$ and $x_k$ contain all of $x_1$'s neighbors in that part.  Running through the above argument using $Q$ gets us to the same point with $A$ not $K_2$.  Hence we may assume $A$ is not $K_2$.
+
+Move each of $x_1, x_2, \ldots, x_k$ in turn to their respective other parts of $P$.  Then the obstruction $A$ was destroyed by moving $x_1$ and for $1 \leq i < k$, the obstruction created by moving $x_i$ was destroyed by moving $x_{i+1}$.  Thus, after the moves, $x_k$ is contained in an obstruction.  By minimality of $k$, it must be that $\set{x_k} \cup V(A - x_1)$ induces an obstruction and hence $\card{X} \geq 2$, a contradiction.
+
+Therefore $X = \set{x_1}$.  But then moving $x_1$ to the other part of $P$ creates an obstruction containing both $x_2$ and $x_k$.  Hence $k = 2$.
+Since $x_1x_2$ is maximal, $x_2$ can have no neighbor in the other part besides $x_1$.  But now moving $x_1$ and then $x_2$ to their respective other parts creates a partition violating the normality of $P$.
+\end{proof}
+
+\begin{thm}[Brooks 1941]
+If a connected graph $G$ is not complete and not an odd cycle, then
+$\chi(G) \leq \Delta(G)$.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\Delta(G)$. 
+Plainly, $\Delta(G) \geq 3$.  By Lemma \ref{ObstructionFree}, $V(G)$ has an
+obstruction-free normal partition $(V_0, V_1)$.  
+Since $G[V_0]$ has maximum degree at most one and contains no
+$K_2$'s, we see that $V_0$ is independent.  Since $G[V_1]$ is obstruction-free,
+applying minimality of $\Delta(G)$ gives $\chi(G[V_1]) \leq \Delta(G[V_1]) <
+\Delta(G)$.  Hence $\chi(G) \leq \Delta(G)$, a contradiction.
+\end{proof}
+
+\end{document}

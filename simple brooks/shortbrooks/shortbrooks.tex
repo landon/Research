@@ -1,0 +1,132 @@
+\documentclass[note]{dmgt}
+\usepackage{amsmath, amsthm, amssymb}
+
+\newauthor{%
+Landon Rabern}{%
+L. Rabern}{%
+Arizona State University\\
+School of Mathematical \& Statistical Sciences}[%
+landon.rabern@gmail.com]
+
+\title{A different short proof of Brooks' theorem}
+\keywords{coloring, clique number, maximum degree}
+\classnbr{05C15}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+
+\begin{document}
+\begin{abstract}
+Lov\'{a}sz gave a short proof of Brooks' theorem by coloring greedily in a good
+order. We give a different short proof by reducing to the cubic case.  
+\end{abstract}
+
+In \cite{Lovasz1975269} Lov\'{a}sz gave a short proof of Brooks' theorem by
+coloring greedily in a good order. Here we give a different short proof by reducing to the cubic case.  One
+interesting feature of the proof is that it doesn't use any connectivity
+concepts. Our notation follows Diestel \cite{Diestel} except we write $K_t$ instead of $K^t$ for the complete graph on $t$ vertices.
+
+\begin{theorem}[(Brooks \cite{brooks1941colouring})]
+Every graph $G$ with $\chi(G) = \Delta(G) + 1 \geq 4$ contains
+$K_{\Delta(G) + 1}$.
+\end{theorem}
+\begin{proof}
+Suppose the theorem is false and choose a counterexample $G$ minimizing
+$\card{G}$.  Put $\Delta \DefinedAs \Delta(G)$. Using minimality of $\card{G}$,
+we see that $\chi(G - v) \leq \Delta$ for all $v \in
+V(G)$. In particular, $G$ is $\Delta$-regular.
+
+First, suppose $\Delta \geq 4$.  Pick $v \in V(G)$ and let $w_1, \ldots,
+w_\Delta$ be $v$'s neighbors. Since $K_{\Delta + 1} \not \subseteq G$, by
+symmetry we may assume that $w_2$ and $w_3$ are not adjacent. Choose a $(\Delta
++ 1)$-coloring $\set{\set{v}, C_1, \ldots, C_\Delta}$ of $G$ where $w_i \in
+C_i$ so as to maximize $\card{C_1}$.  Then $C_1$ is a maximal independent set in
+$G$ and in particular, with $H \DefinedAs G - C_1$, we have $\chi(H) =
+\chi(G) - 1 = \Delta = \Delta(H) + 1 \geq 4$.  By minimality of $\card{G}$, we
+get $K_\Delta \subseteq H$.  But $\set{\set{v}, C_2, \ldots, C_\Delta}$ is a
+$\Delta$-coloring of $H$, so any $K_\Delta$ in $H$ must contain $v$ and hence
+$w_2$ and $w_3$, a contradiction.
+
+Therefore $G$ is $3$-regular.  Since $G$ is not a forest it contains an induced
+cycle $C$.  Put $T \DefinedAs N(C)$.  Then $\card{T} \geq 2$ since $K_4 \not
+\subseteq G$.  Take different $x, y \in T$ and put $H_{xy} \DefinedAs G - C$ if
+$x$ is adjacent to $y$ and $H_{xy} \DefinedAs (G-C) + xy$ otherwise.  Then, by
+minimality of $\card{G}$, either $H_{xy}$ is $3$-colorable or adding $xy$
+created a $K_4$ in $H_{xy}$.
+
+Suppose the former happens.  Then we have a $3$-coloring of $G - C$
+where $x$ and $y$ receive different colors.  We can easily extend this partial
+coloring to all of $G$ since each vertex of $C$ has a set of two available
+colors and some pair of vertices in $C$ get different sets. 
+
+Whence adding $xy$ created a $K_4$, call it $A$, in $H_{xy}$.  We conclude that
+$T$ is independent and each vertex in $T$ has exactly one neighbor in $C$.  Hence
+$\card{T} \geq \card{C} \geq 3$. Pick $z \in T - \set{x,y}$.  Then $x$ is
+contained in a $K_4$, call it $B$, in $H_{xz}$.  Since $d(x) = 3$, we must have
+$A - \set{x,y} = B - \set{x, z}$.  But then any $w \in A - \set{x,y}$ has degree
+at least $4$, a contradiction.
+\end{proof}
+
+We note that the reduction to the cubic case is an immediate consequence of more
+general lemmas on hitting all maximum cliques with an independent set
+(see \cite{kostochkaRussian}, \cite{rabernhitting} and \cite{KingHitting}).  H.
+Tverberg pointed out that this reduction was also demonstrated in his paper
+\cite{tverberg1983brooks}.
+
+\begin{thebibliography}{99}
+
+\bibitem{brooks1941colouring}
+R.L. Brooks, \emph{{On colouring the nodes of a network}}, Mathematical
+  Proceedings of the Cambridge Philosophical Society, vol.~37, Cambridge Univ
+  Press, 1941, pp.~194--197.
+
+\bibitem{Diestel}
+R.~Diestel, \emph{{Graph Theory}}, {Fourth} ed., Springer Verlag, 2010.
+
+\bibitem{KingHitting}
+A.D. King, \emph{Hitting all maximum cliques with a stable set using lopsided
+  independent transversals}, Journal of Graph Theory \textbf{67} (2011), no.~4,
+  300--305.
+
+\bibitem{kostochkaRussian}
+A.V. Kostochka, \emph{{Degree, density, and chromatic number}}, Metody Diskret.
+  Anal. \textbf{35} (1980), 45--70 (in Russian).
+
+\bibitem{Lovasz1975269}
+L.~Lov\'{a}sz, \emph{Three short proofs in graph theory}, Journal of
+  Combinatorial Theory, Series B \textbf{19} (1975), no.~3, 269--271.
+
+\bibitem{rabernhitting}
+L.~Rabern, \emph{{On hitting all maximum cliques with an independent set}},
+  Journal of Graph Theory \textbf{66} (2011), no.~1, 32--37.
+
+\bibitem{tverberg1983brooks}
+H.~Tverberg, \emph{{On Brooks' theorem and some related results}}, Mathematics
+  Scandinavia \textbf{52} (1983), 37--40.
+
+\end{thebibliography}
+\end{document}

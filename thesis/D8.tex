@@ -1,0 +1,36 @@
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 1pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[x = 0.535568237304688, y = 0.836275801062584, L = \tiny {$x_2$}]{v0}
+\Vertex[x = 0.294997036457062, y = 0.687704384326935, L = \tiny {$x_4$}]{v1}
+\Vertex[x = 0.495568662881851, y = 0.687386810779572, L = \tiny {$x_3$}]{v2}
+\Vertex[x = 0.276996433734894, y = 0.847704276442528, L = \tiny {$x_5$}]{v3}
+\Vertex[x = 0.556489169597626, y = 0.595672339200974, L = \tiny {$y_3$}]{v4}
+\Vertex[x = 0.0587111786007881, y = 0.913989931344986, L = \tiny {$w$}]{v5}
+\Vertex[x = 0.221746027469635, y = 0.596272975206375, L = \tiny {$y_4$}]{v6}
+\Vertex[x = 0.407015770673752, y = 0.949415870010853, L = \tiny {$x_1$}]{v7}
+\Edge[](v2)(v0)
+\Edge[](v2)(v1)
+\Edge[](v3)(v1)
+\Edge[](v4)(v1)
+\Edge[](v0)(v5)
+\Edge[](v1)(v5)
+\Edge[](v2)(v5)
+\Edge[](v3)(v5)
+\Edge[](v4)(v2)
+\Edge[](v4)(v0)
+\Edge[](v6)(v1)
+\Edge[](v6)(v5)
+\Edge[](v6)(v3)
+\Edge[](v6)(v2)
+\Edge[](v7)(v3)
+\Edge[](v7)(v0)
+\Edge[](v7)(v5)
+\end{tikzpicture}
+\caption{The graph $D_8$.}
+\label{fig:D8}
+\end{figure}

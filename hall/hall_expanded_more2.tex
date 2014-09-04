@@ -1,0 +1,363 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\allowdisplaybreaks
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbcolon}[3]{\left\{ #1 \in #2 \colon\ #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\im}{\operatorname{im}}
+
+
+\renewcommand{\S}{\fancy{S}}
+\newcommand{\W}{\fancy{W}}
+\newcommand{\T}{\fancy{T}}
+\renewcommand{\P}{\fancy{P}}
+
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\B}{\mathbf{B}}
+
+\newcommand{\myhat}[1]{#1^*}
+
+\title{A game generalizing Hall's Theorem}
+\author{Landon Rabern}
+
+\begin{document}
+\begin{abstract}
+We characterize the initial positions from which the first player has a
+winning strategy in a certain two-player game.  This provides a generalization
+of Hall's Theorem.  Vizing's Theorem on edge-coloring follows from a special case.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+A $\emph{set system}$ is a finite family of finite sets. A \emph{transversal} of a set system $\S$ is an injection $\funcinj{f}{\S}{\bigcup \S}$ such that $f(S) \in S$ for each $S \in \S$.  Hall's Theorem \cite{hall} gives the precise conditions under which a set system has a transversal.
+
+\begin{thm}[Hall \cite{hall}]
+A set system $\S$ has a transversal if and only if $\card{\bigcup \W} \geq \card{\W}$ for each $\W
+\subseteq \S$.
+\end{thm}
+
+We generalize this by analyzing winning strategies in a two-player game played on a set system  by \emph{Fixer} (henceforth dubbed $\F$) and \emph{Breaker}. Fixer wins the game by eventually modifying the set system so that it has a transversal; if Breaker has a strategy to prevent this forever, then we say that Breaker wins.   Additionally, when playing on the set system $\S$, we provide a \emph{pot} $P$ with $\bigcup \S \subseteq P$. Fixer moves first and he can do the following.
+
+\begin{FixerMove}
+Pick $x \in P$ and $S \in \S$ with $x \not \in S$ and replace $S$ with $S
+\cup \set{x} \smallsetminus \set{y}$ for some $y \in S$.
+\end{FixerMove}
+
+For $k \in \IN$, let $\irange{k} = \set{1, \ldots, k}$. For each $t \in \irange{\card{\S} - 1}$, we have a different rule for Breaker. We denote Breaker by $\B_t$ when he is playing with the following rule.
+
+\begin{BreakerMove}
+If $\F$ modified $S \in \S$ by inserting $x$ and removing $y$, $\B_t$ can pick
+up to $t$ sets in $\S \smallsetminus \set{S}$ and modify them by
+swapping $x$ for $y$ or $y$ for $x$.
+\end{BreakerMove}
+
+To state the main theorem, we need additional notation.
+For $\W \subseteq \S$ and $x \in P$ define the \emph{degree} in $\W$ of $x$, written $d_{\W}(x)$, by
+\[d_{\W}(x) = \card{\setbcolon{S}{\W}{x \in S}}.\]
+
+\noindent Define the \emph{$t$-value} of $\W \subseteq \S$, written $\nu_t(\W)$, by
+\[\nu_t(\W) = \sum_{x \in \bigcup \W} \floor{\frac{d_{\W}(x) - 1}{t + 1}}.\]
+
+Intuitively, this measures how much $\F$ can increase $\card{\bigcup \W}$ without $\B_t$ undoing the progress. For instance, if $d_{\W}(y) \leq t + 1$ and $\F$ swaps $x$ in for $y$ at $W$, then $B_t$ can change all instances of $x$ to $y$, since $x$ appears in at most $t$ other sets.  In this case $y$ contributes nothing to the $t$-value of $\W$.  Our main theorem shows that this intuition is correct.
+
+\begin{thm}\label{MainTheorem}
+In a set system $\S$ with $\bigcup \S \subseteq P$ and $\card{P} \ge \card{\S}$, $\F$ has a winning strategy against $\B_t$ if and only if $\card{\bigcup \W} \geq \card{\W} - \nu_t(\W)$ for each $\W \subseteq \S$.
+\end{thm}
+
+We can recover Hall's Theorem from the case $t = \card{\S} - 1$; that is, $\B_t$
+can remove all $y$'s in $\S$ rendering $\F$'s move equivalent to swapping the
+names of $x$ and $y$, that is, rendering it useless. In Section
+\ref{VizingSection} we show that Vizing's Theorem on edge-coloring is a quick corollary of this result.  
+In fact, the strategy employed by $\F$ is based, in part, on the proofs of Vizing's Theorem by Ehrenfeucht, Faber, and Kierstead \cite{Ehrenfeucht1984159} and by Schrijver \cite{schrijver}.
+For a graph $G$, let $\chi'(G)$ be the edge-chromatic number of $G$ and let $\Delta(G)$ be the maximum degree of $G$.
+
+\begin{cor}[Vizing \cite{vizing}]\label{VizingSimple}
+If $G$ is a simple graph, then $\chi'(G) \le \Delta(G)+1$.
+\end{cor}
+
+There is a ``multiplicity'' version of Hall's Theorem in which the representatives sought for the sets in the family are disjoint subsets of specified sizes.  When each set $S$ is asked to have $\eta(S)$ representatives in the ``$\eta$-transversal'', the desired subsets can be found by making $\eta(S)$ copies of each set $S$ and applying Hall's Theorem. In Sections \ref{VizingMultiSection} and \ref{FanSection} we generalize this folklore extension of Hall's Theorem and use the generalization to give a non-standard proof of the following result from which classical edge-coloring results and various ``adjacency lemmas'' follow (see \cite{stiebitz} for the standard proof and how these consequences are derived).  Let $xy$ be an edge in a multigraph $G$.  We denote the multiplicity of $xy$ by $\mu(xy)$.  Additionally, $xy$ is \emph{critical} if $\chi'(G-xy) < \chi'(G)$.
+
+\begin{cor}\label{FanCor}
+Let $G$ be a multigraph satisfying $\chi'(G) \ge \Delta(G) + 1$. For each critical edge $xy$ in $G$, there exists $X \subseteq N(x)$ with $y \in X$ and $\card{X} \geq 2$ such that
+\[\sum_{v \in X} \parens{d(v) + \mu(xv) + 1 - \chi'(G)} \geq 2. \]
+\end{cor}
+
+\section{The proof}
+
+\begin{proof}[Proof of Theorem \ref{MainTheorem}]
+First we prove necessity of the condition. Suppose we have $\W \subseteq
+\S$ with $\card{\bigcup \W} < \card{\W} - \nu_t(\W)$.  We show that no matter what moves
+$\F$ makes, $\B_t$ can maintain this invariant. We then always have $\card{\bigcup \W} < \card{\W}$ and hence $\W$ can never have a
+transversal. 
+
+Suppose $\F$ modifies $S \in \S$ by inserting $x$ and removing $y$
+to get $S'$.  If $S \not \in \W$, then $\B_t$ does not need to do anything, so we may assume $S \in
+\W$. Put $\W' = \W \cup \set{S'} \smallsetminus \set{S}$.
+
+If $d_{\W}(x) = 0$, then $\card{\bigcup \W'} = \card{\bigcup \W} + 1$. 
+Now $\B_t$ swaps $x$ in for $y$ in $\min\set{t, d_{\W'}(y)}$ sets of $\W'$ to form $\myhat{\W}$.  
+If $d_{\W'}(y) \leq t$, then $d_{\myhat{\W}}(y) = 0$ and we have $\card{\bigcup \myhat{\W}}
+= \card{\bigcup \W}$; hence the invariant is maintained.  Otherwise $\nu_t(\myhat{\W}) <
+\nu_t(\W)$ because the degree of $y$ has decreased by $t+1$, and again the invariant is maintained.
+
+Hence we may assume $d_{\W}(x) > 0$.  Now $\card{\bigcup \W'} \le \card{\bigcup \W}$.  In order to have a chance to destroy the invariant, $\F$ must achieve $\nu_t(\W') > \nu_t(\W)$.  This requires $d_{\W'}(x) - 1$ to be a multiple of $t+1$ and $d_{\W'}(y)$ to not be a multiple of $t+1$; in particular, $d_{\W'}(y) \neq d_{\W'}(x) - 1$.  If $d_{\W'}(y) < d_{\W'}(x) - 1$, then $\B_t$ swaps $y$ in for $x$ in one set in $\W' \smallsetminus \set{S'}$.  Doing so maintains the invariant, since now every element has the same degree in the new set system as in $\W$.  Otherwise, $d_{\W'}(y) > d_{\W'}(x) - 1$ and $\B_t$ swaps $x$ in for $y$ in $\min\set{t, d_{\W'}(y) + 1 - d_{\W'}(x)}$ sets of $\W'$. This reduces the contribution from $y$ without further increasing the contribution from $x$ and thereby maintains the invariant.
+
+Now we prove sufficiency.  Suppose the condition is not sufficient for $\F$ to
+have a winning strategy.  Among all counterexamples having the fewest sets, choose $\S$ to maximize $\card{\bigcup \S}$.
+
+First, suppose $\card{\bigcup \S} \geq \card{\S}$.
+Let $C$ be a minimal nonempty subset of $\bigcup \S$ such that $\card{\W_C} \le
+\card{C}$, where $\W_C = \setb{S}{\S}{C \cap S \neq \emptyset}$ (we
+can make this choice because $\bigcup \S$ is such a subset).  Create a bipartite graph
+with parts $C$ and $\W_C$ and an edge from $x \in C$ to $S \in \W_C$ if and only if $x \in
+S$. If $\card{C} = 1$, then we clearly have a matching of $C$ into $\W_C$.  Otherwise,
+by minimality of $C$, for every set $D$ such that $\emptyset \neq D \subset C$ we have
+$\card{\W_D} > \card{D}$ and hence $\card{C} = \card{\W_C}$; now applying Hall's
+Theorem (for bipartite graphs) gives a matching of $C$ into $\W_C$.  This matching gives
+a transversal $\funcinj{f}{\W_C}{\bigcup \W_C}$ with image $C$.  Put $\S' = \S \smallsetminus \W_C$ and $P' = P \smallsetminus C$. The hypotheses of the claim are satisfied by $\S'$ and $P'$.  If $\F$ continues to play only using $\S'$ and $\P'$, then $\B_t$ cannot destroy the transversal of $\W_C$ that exists using elements of $C$, 
+even though $\B_t$ may play on all of $\S$, because $\F$ will make no further move involving the elements in that transversal. 
+Now minimality of $\card{\S}$ gives a contradiction.
+
+Therefore, we may assume $\card{\bigcup \S} < \card{\S}$ and hence $\nu_t(\S) \ge
+1$.  Since $\card{P} \geq \card{\S}$, we have $x \in P$ with $d_{\S}(x) = 0$.  So, we may choose $y \in P$
+with $d_{\S}(y) \geq t + 2$. Now $\F$ should swap $x$ in for $y$ in some $S \in
+\S$ to form $\S'$.  Since $d_{\S}(x) = 0$, we have $\card{\bigcup \S'} >
+\card{\bigcup \S}$.  We also have $d_{\S'}(y) \geq t + 1$.  Now $\B_t$ moves
+and creates $\myhat{\S}$. Since $d_{\myhat{\S}}(y) \geq d_{\S'}(y) - t > 0$, we have 
+$\card{\bigcup \myhat{\S}} > \card{\bigcup \S}$.  If our modifications changed
+some $\W \in \S$ so that it now violates the hypotheses, then let $\myhat{\W}$ be $\W$
+after both player's moves.  That is, $\card{\bigcup \myhat{\W}} < \card{\myhat{\W}} - \nu_t(\myhat{\W})$. 
+Since $d_{\S}(x) = 0$, we have $\card{\bigcup \myhat{\W}} \geq \card{\bigcup \W}$.  Thus
+$\nu_t(\myhat{\W}) < \nu_t(\W)$ and hence $d_{\myhat{\W}}(y) < d_{\W}(y)$.  Now
+$d_{\myhat{\W}}(x) > 0$, since any removed $y$ was replaced with $x$. Since $d_{\W}(x) = 0$, we have $\card{\bigcup \myhat{\W}} > \card{\bigcup \W}$.
+This leads to $\card{\W} - \nu_t(\W) \le \card{\bigcup \W} < \card{\bigcup \myhat{\W}} < \card{\myhat{\W}} - \nu_t(\myhat{\W})$, and hence $\nu_t(\myhat{\W}) \le \nu_t(\W) - 2$. This is impossible,
+since $\B_t$ can perform swaps in at most $t$ sets.
+Since $\myhat{\S}$ satisfies the hypotheses of the claim, $\card{\bigcup \myhat{\S}} >
+\card{\bigcup \S}$ now implies that $\F$ can win.
+\end{proof}
+
+\section{Vizing's Theorem for simple graphs}\label{VizingSection}
+\noindent Vizing's Theorem for simple graphs follows from a very special case of Theorem
+\ref{MainTheorem}.
+
+\begin{cor}\label{Simple}
+If $\S = \set{S_1, \ldots, S_k}$ with $\card{S_k} \geq 1$, $\card{S_i} \ge
+2$ for all $i \in \irange{k-1}$, and $|P| \ge k$, then $\F$ has a winning strategy against
+$\B_1$.
+\end{cor}
+
+\begin{proof}
+For $\W \subseteq \S$, we have 
+\[\nu_1(\W) \geq \sum_{x
+\in \bigcup \W} \frac{d_{\W}(x) - 2}{2} = \frac12 \sum_{S \in \W} \card{S} -
+\card{\bigcup \W} \geq \frac12 (2\card{\W} - 1) -
+\card{\bigcup \W}.\]  
+
+\noindent Hence $\nu_1(\W) \geq \card{\W} - \card{\bigcup \W}$, as desired.
+\end{proof}
+
+\bigskip
+
+\begin{proof}[Proof of Vizing's Theorem for simple graphs (Corollary \ref{VizingSimple})]
+Suppose not and let $G$ be a counterexample with fewest vertices.
+Let $v_1, \ldots, v_k$ be the neighbors of a vertex $v$ of maximum degree in $G$. 
+By minimality of $\card{G}$, we have a $(k + 1)$-edge-coloring of $G -
+v$. Among the $k+1$ colors used in this coloring, let $S_i$ be the set of those not appearing on edges incident to $v_i$.
+Each $v_i$ has degree at most $k - 1$ in $G - v$ and hence
+$\card{S_i} \geq 2$. Also, if $a \in S_i$ and $b \not \in S_i$ we
+may exchange colors on a maximum length path $M$ starting at $v_i$ and alternating between colors $b$ and $a$. 
+After the exchange, $S_i$ has lost $a$ and gained $b$.  Consider $S_j$ for some $j \in \irange{k} - \set{i}$.
+If $v_j$ is not in $M$ or is an internal vertex in $M$, then $S_j$ is maintained.  If $v_j$ is the endpoint of $M$
+then $S_j$ has changed by either swapping $a$ in for $b$ or by swapping $b$ in for $a$.  Therefore, performing the exchange 
+translates into an $\F$ move followed by a $\B_1$ move on the set system $\set{S_1, \ldots, S_k}$.  Since $\F$ can always make any of his legal moves this way, we may apply Corollary \ref{Simple}
+to get a transversal of the $S_i$. Now we can extend the $(k + 1)$-edge-coloring to all of $G$ by using the corresponding element of the
+transversal on $vv_i$ for each $i \in \irange{k}$.
+\end{proof}
+
+\begin{remark}
+In the proof above, the legal moves of the second player may be more restricted than those of $\B_1$.  For example, if $G$ is bipartite, then $M$ must have even length. Hence if $M$ ends at some $v_j$, then it ends with an edge colored $a$; that is, the second player is only allowed to swap $a$ in for $b$. Fixer can win against this opponent when all $S_i$ are nonempty by just being greedy; this proves  K\H{o}nig's Theorem on edge-coloring.  Are there any other interesting weak opponents that we can take advantage of?
+\end{remark}
+
+\section{The multiplicity version}\label{VizingMultiSection}
+To deal with edge-coloring of multigraphs, we need to generalize our game slightly.
+Instead of looking for a transversal, we will look for a system of
+disjoint sets of representatives. For $\func{\eta}{\S}{\IN}$, an
+\emph{$\eta$-transversal} of $\S$ is a function $\func{f}{\S}{\P\parens{\bigcup
+\S}}$ such that $f(S) \subseteq S$, with $\card{f(S)} = \eta(S)$ for $S \in \S$ and
+$f(A) \cap f(B) = \emptyset$ when $A \ne B$.  By making $\eta(S)$
+copies of each $S \in \S$ and applying Hall's Theorem, we get the following folklore result.
+
+\begin{thm}
+A set system $\S$ has an $\eta$-transversal if and only if $\card{\bigcup \W} \geq \sum_{W \in \W}
+\eta(W)$ for each $\W \subseteq \S$.
+\end{thm}
+
+Call the game where $\F$ wins by creating an $\eta$-transversal \emph{the
+$\eta$-game}.  We can use the same idea of making $\eta(S)$
+copies of each $S \in \S$  to get a multiplicity version of Theorem \ref{MainTheorem}.  
+For simplicity, we pull the implementation of this idea out into Lemma \ref{Spanner}.  In the proof of Theorem \ref{MainTheorem}, we implicitly proved Lemma \ref{Spanner} in the special case where $\eta(x) = 1$ for all $x \in X$.  This special case is well-known; for instance, it was used by Borodin, Kostochka and Woodall \cite{BorodinKostochkaWoodall} in strengthening Galvin's Theorem about list edge-coloring of bipartite graphs \cite{galvin1995list}.  To help develop the reader's intuition, we first state the special case.
+
+\begin{lem}\label{SpannerSpecial}
+Let $G$ be a bipartite graph with nonempty parts $X$ and $Y$.  If $|X| \le |Y|$ and $Y$ has no isolated vertices, then $G$ contains a nonempty matching $M$ whose vertex set is $S \cup N(S)$ for some $S \subseteq X$.
+\end{lem}
+
+\begin{lem}\label{Spanner}
+Let $G$ be a bipartite graph with nonempty parts $X$ and $Y$. If $\func{\eta}{X}{\IN}$ and $\card{N_G(X)} \ge \sum_{x \in X} \eta(x)$, then $G$ has a nonempty subgraph $G'$ with parts $X' \subseteq X$ and $Y' \subseteq Y$ such that $d_{G'}(x) = \eta(x)$ for $x \in X'$, $d_{G'}(y) = 1$ for $y \in Y'$, and $N_G(Y') = X'$.
+\end{lem}
+\begin{proof}
+First, we prove the special case where $\eta(x) = 1$ for all $x \in X$. Since $\card{N_{G}(Y)} \le |X| \le \card{N_G(X)}$, we may let $Y' \subseteq Y$ be a minimal nonempty subset of $N_G(X)$ such that $\card{N_{G}(Y')} \le \card{Y'}$. Let $X' = N_G(Y')$. If $\card{Y'} = 1$, then $\card{X'} = 1$ and we clearly have a matching of $Y'$ into $X'$.  Otherwise, by minimality of $Y'$, for every set $D$ such that $\emptyset \ne D \subset Y'$, we have $\card{N_{G}(D)} > \card{D}$ and hence $\card{X'} = \card{Y'}$; now applying Hall's Theorem (for bipartite graphs) gives a matching of $Y'$ into $X'$ as desired.
+
+For the general case, create a bipartite graph $H$ with parts $\myhat{X}$ and $Y$ from $G$ by replacing each $x \in X$ with $\eta(x)$ identical copies of $x$.  By assumption, $\card{N_{H}(\myhat{X})} = \card{N_G(X)} \ge \card{\myhat{X}}$.  Now apply the special case to $H$ to get a matching $M$ of $Y' \subseteq Y$ into $N_H(Y')$.  Since all copies of $x\in X$ have the same neighborhood in $H$, a copy of $x$ is in $N_H(Y')$ if and only if all copies of $x$ are.  For $x\in N_G(Y')$, we thus have all $\eta(x)$ copies of $x$ matched into $Y'$ by $M$.  Let $X' = N_G(Y')$ and let $G'$ be the subgraph of $G$ with parts $X'$ and $Y'$ such that $xy\in E(G')$ if and only if some copy of $x$ is matched to $y$ by $M$.  We have shown that $G'$ has the desired properties.
+\end{proof}
+
+\begin{thm}\label{MainTheoremMulti}
+In a set system $\S$ with $\bigcup \S \subseteq P$ and $\card{P} \geq \sum_{S \in \S}
+\eta(S)$, $\F$ has a winning strategy against $\B_t$ in the $\eta$-game if and only if $\card{\bigcup
+\W} \geq \sum_{W \in \W}
+\eta(W) - \nu_t(\W)$ for each $\W \subseteq \S$.
+\end{thm}
+\begin{proof}
+First we prove necessity of the condition. We note that the proof of necessity is identical to that in Theorem \ref{MainTheorem} aside from changing the invariant we are maintaining.  
+Consider $\W \subseteq \S$ with $\card{\bigcup\W} < \sum_{W \in \W} \eta(W) - \nu_t(\W)$.  We show that no matter what moves
+$\F$ makes, we can maintain this invariant.  We then always have $\card{\bigcup\W} < \sum_{W \in \W} \eta(W)$, and hence $\W$ can never have an
+$\eta$-transversal. 
+
+Suppose $\F$ modifies $S \in \S$ by inserting $x$ and removing $y$
+to get $S'$.  If $S \not \in \W$, then $\B_t$ does not need to do anything, so we may assume $S \in
+\W$. Put $\W' = \W \cup \set{S'} \smallsetminus \set{S}$.
+
+If $d_{\W}(x) = 0$, then $\card{\bigcup \W'} = \card{\bigcup \W} + 1$. 
+Now $\B_t$ swaps $x$ in for $y$ in $\min\set{t, d_{\W'}(y)}$ sets of $\W'$ to form $\myhat{\W}$.  
+If $d_{\W'}(y) \leq t$, then $d_{\myhat{\W}}(y) = 0$ and we have $\card{\bigcup \myhat{\W}}
+= \card{\bigcup \W}$; hence the invariant is maintained.  Otherwise, $\nu_t(\myhat{\W}) <
+\nu_t(\W)$ because the degree of $y$ has decreased by $t+1$, and again the invariant is maintained.
+
+Hence we may assume $d_{\W}(x) > 0$.  Now $\card{\bigcup \W'} \leq \card{\bigcup \W}$.  In order to have a chance to destroy the invariant, $\F$ must achieve $\nu_t(\W') > \nu_t(\W)$.  This requires $d_{\W'}(x) - 1$ to be a multiple of $t+1$ and $d_{\W'}(y)$ to not be a multiple of $t+1$; in particular, $d_{\W'}(y) \neq d_{\W'}(x) - 1$.  If $d_{\W'}(y) < d_{\W'}(x) - 1$, then $\B_t$ swaps $y$ in for $x$ in one set in $\W' \smallsetminus \set{S'}$.  Doing so maintains the invariant, since now every element has the same degree in the new set system as in $\W$.  Otherwise, $d_{\W'}(y) > d_{\W'}(x) - 1$ and $\B_t$ swaps $x$ in for $y$ in $\min\set{t, d_{\W'}(y) + 1 - d_{\W'}(x)}$ sets of $\W'$. This reduces the contribution from $y$ without further increasing the contribution from $x$ and thereby maintains the invariant.
+
+Now we prove sufficiency.  Suppose the condition is not sufficient for $\F$ to
+have a winning strategy.  Among all counterexamples having the fewest sets, choose $\S$ to maximize $\card{\bigcup \S}$.
+
+First, suppose $\card{\bigcup \S} \ge \sum_{S \in \S} \eta(S)$.  Let $G$ be the bipartite graph with parts $\S$ and $\bigcup \S$ and an edge from $S \in \S$ to $y \in \bigcup \S$ if and only if $y \in S$.  Apply Lemma \ref{Spanner} to get a nonempty subgraph $G'$ of $G$ with parts $X' \subseteq \S$ and $Y' \subseteq \bigcup \S$ such that $d_{G'}(x) = \eta(x)$ for $x \in X'$, $d_{G'}(y) = 1$ for $y \in Y'$ and $N_G(Y') = X'$.
+Letting $Q = \bigcup \S$, the function $\func{f}{X'}{\P\parens{Q}}$ given by $f(S) = N_{G'}(S)$ is an $\eta$-transversal of $X'$ with $\bigcup_{x \in X'} f(x) = Y'$. Put $\S' = \S \smallsetminus V(G')$ and $P' = P \smallsetminus V(G')$. 
+The hypotheses of the claim are satisfied by $\S'$ and $P'$.  If $\F$ continues to play only using $\S'$ and $\P'$, then $\B_t$ cannot destroy the transversal of $X'$ that exists using elements of $Y'$, 
+even though $\B_t$ may play on all of $\S$, because $\F$ will make no further move involving the elements in that $\eta$-transversal. 
+Now minimality of $\card{\S}$ gives a contradiction.
+
+Therefore we must have $\card{\bigcup \S} < \sum_{S \in \S} \eta(S)$ and hence $\nu_t(\S) \geq
+1$. Since $\card{P} \ge \sum_{S \in \S} \eta(S)$, we have $x \in P$ with $d_{\S}(x) = 0$.  So, we may choose $y \in P$
+with $d_{\S}(y) \geq t + 2$. Now $\F$ should swap $x$ in for $y$ in some $S \in
+\S$ to form $\S'$.  Since $d_{\S}(x) = 0$, we have $\card{\bigcup \S'} >
+\card{\bigcup \S}$.  We also have $d_{\S'}(y) \geq t + 1$.  Now $\B_t$ moves
+and creates $\myhat{\S}$. Since $d_{\myhat{\S}}(y) \geq d_{\S'}(y) - t > 0$, we have 
+$\card{\bigcup \myhat{\S}} > \card{\bigcup \S}$.  If our modifications changed
+some $\W \in \S$ so it now violates the hypotheses, then let $\myhat{\W}$ be $\W$
+after both player's moves.  That is, $\card{\bigcup \myhat{\W}} < \sum_{W \in \myhat{\W}} \eta(W) - \nu_t(\myhat{\W})$.
+
+Since $d_{\S}(x) = 0$, we have $\card{\bigcup \myhat{\W}} \ge \card{\bigcup \W}$.  Thus
+$\nu_t(\myhat{\W}) < \nu_t(\W)$ and hence $d_{\myhat{\W}}(y) < d_{\W}(y)$.  Now
+$d_{\myhat{\W}}(x) > 0$, since any removed $y$ was replaced with $x$. Since $d_{\W}(x) = 0$, we have $\card{\bigcup \myhat{\W}} > \card{\bigcup \W}$.
+
+This leads to $\sum_{W \in \W} \eta(W) - \nu_t(\W) \le \card{\bigcup\W} < \card{\bigcup \myhat{\W}} < \sum_{W \in \myhat{\W}} \eta(W) - \nu_t(\myhat{\W})$ 
+and hence $\nu_t(\myhat{\W}) \le \nu_t(\W) - 2$. This is impossible
+since $\B_t$ can perform swaps in at most $t$ sets.
+Since $\myhat{\S}$ satisfies the hypotheses of the claim, $\card{\bigcup \myhat{\S}} >
+\card{\bigcup \S}$ now implies that $\F$ can win.
+\end{proof}
+
+\section{The fan equation}\label{FanSection}
+In \cite{vizing}, Vizing proved Corollary \ref{VizingSimple} with an argument based on ``fans''.  
+Taking this type of argument further proves Corollary \ref{FanCor}---the so-called ``fan equation'' (see \cite{stiebitz}).  
+We show that Corollary \ref{FanCor} follows easily from Theorem \ref{MainTheoremMulti}.
+
+\begin{repcor}{FanCor}
+Let $G$ be a multigraph satisfying $\chi'(G) \ge \Delta(G) + 1$. For each critical edge $xy$ in $G$, there exists $X \subseteq N(x)$ with $y \in X$ and $\card{X} \geq 2$ such that
+\[\sum_{v \in X} \parens{d(v) + \mu(xv) + 1 - \chi'(G)} \geq 2. \]
+\end{repcor}
+\begin{proof}
+Put $k = \chi'(G) - 1$.  Consider a $k$-edge-coloring $\pi$ of $G - xy$.  For $v \in N(x)$, let
+$M_v \subseteq \irange{k}$ be the set of colors not incident to $v$ under $\pi$, and let $D_v$ be the set of colors on the edges from $x$ to $v$.  The sets $D_v$ for $v \in N(x)$ are
+pairwise disjoint, $\card{D_v} = \mu(xv)$ for $v \in N(x) - \set{y}$, and
+$\card{D_y} = \mu(xy) - 1$.  For $v \in N(x)$, put $S_v = M_v \cup
+D_v$. We obtain $\card{S_v} = \card{D_v} + \card{M_v} = k + \mu(xv) - d(v)$.  
+
+Now we translate the problem into our game.  Put $\eta(S_v) = \mu(xv)$. 
+If $v \in N(x)$ and $a \in S_v$ and $b \not \in S_v$, then we may exchange colors on a longest path in $G-x$ starting at $v$ and alternating between colors $b$ and $a$. 
+This translates into an $\F$ move followed by a $\B_1$ move in the $\eta$-game with sets
+$\S_{N(x)}$ where $\S_X = \setbs{S_v}{v \in X}$ for $X \subseteq N(x)$. If $\F$ has a winning
+strategy in this $\eta$-game against $\B_1$, then we can extend the $k$-edge-coloring to all of $G$, giving a contradiction.  
+
+Therefore, by Theorem \ref{MainTheoremMulti}, we must have $X \subseteq N(x)$ with 
+\[\card{\bigcup_{v \in X} S_v} < \sum_{v \in X} \eta(S_v) - \nu_1(\S_X) = \sum_{v \in X} \mu(xv) - \nu_1(\S_X).\]  
+
+Since the sets $D_v$ for $v \in N(x)$ are pairwise disjoint, we have
+$\card{\bigcup_{v \in X} S_v} \geq -1 + \sum_{v \in X} \mu(xv)$, with equality
+only if $y \in X$.  Hence $y \in X$ and $\nu_1(\S_X) = 0$.  Since $\chi' \geq
+\Delta + 1$, we have $\card{S_y} = k + \mu(xy) - d(y) \geq \mu(xy)$ and hence
+$\card{X} \geq 2$.  Since $\nu_1(\S_X) = 0$, each color is in at most two
+elements of $\S_X$.  Therefore $\sum_{v \in X} \parens{k + \mu(xv) - d(v)} =
+\sum_{v \in X} \card{S_v} \leq 2 \card{\bigcup_{v \in X} S_v} \leq -2 + 2\sum_{v \in X} \mu(xv)$.  The claim follows.
+\end{proof}
+
+\section{Acknowledgements}
+\noindent Thanks to the anonymous referees and editor for helping to improve the readability of the paper.
+
+\bibliographystyle{amsplain}
+\bibliography{hall}
+\end{document}

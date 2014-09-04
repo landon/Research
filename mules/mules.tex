@@ -1,0 +1,1153 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usepackage[position=bottom]{subfig}
+
+\usepackage[pdftex, colorlinks, hyperfootnotes]{hyperref}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{BrooksTheorem}{Brooks' Theorem}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{CliqueGraph}{Clique Graph}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+\title{Coloring and the maximum degree}
+\author{Landon Rabern\\
+\small \texttt{landon.rabern@gmail.com}}
+\setlength{\parindent}{0in}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+Brooks' theorem \cite{brooks1941colouring} completely characterizes graphs satisfying $\chi = \Delta + 1$.
+\begin{BrooksTheorem}
+A connected graph satisfies $\chi = \Delta + 1$ if and only if it is complete or an odd cycle.
+\end{BrooksTheorem}
+
+The natural next step in the study of highly dense graphs is to determine the structure of graphs satisfying $\chi = \Delta$.  Doing so has proven to be a highly non-trivial task.  Borodin and Kostochka have conjectured the structure of such graphs with $\Delta \geq 9$.
+
+\begin{BK}
+Every graph satisfying $\chi \geq \Delta \geq 9$ contains a $K_\Delta$.
+\end{BK}
+
+\begin{thm}[Borodin and Kostochka \cite{borodin1977upper}]\label{BorodinKostochkaBK}
+Every graph satisfying $\chi \geq \Delta \geq 7$ contains a $K_{\floor{\frac{\Delta + 1}{2}}}$.
+\end{thm}
+
+\begin{thm}[Mozhan \cite{mozhan1983}]\label{MozhanTwoThirdsBK}
+Every graph satisfying $\chi \geq \Delta \geq 10$ contains a $K_{\floor{\frac{2\Delta + 1}{3}}}$.
+\end{thm}
+
+\begin{thm}[Kostochka \cite{kostochkaRussian}]\label{KostochkaBK}
+Every graph satisfying $\chi \geq \Delta$ contains a $K_{\Delta - 28}$.
+\end{thm}
+
+Mozhan proved the following in his Ph.D. thesis.
+
+\begin{thm}[Mozhan]\label{MozhanBK}
+Every graph satisfying $\chi \geq \Delta \geq 31$ contains a $K_{\Delta - 3}$.
+\end{thm}
+
+Using probabilistic methods, Reed has proven that the conjecture holds for graphs with very large maximum degree.
+
+\begin{thm}[Reed \cite{reed1999strengthening}]\label{ReedBK}
+Every graph satisfying $\chi \geq \Delta \geq 10^{14}$ contains a $K_\Delta$.
+\end{thm}
+
+A lemma from Reed's proof of the above theorem is generally useful.
+
+\begin{lem}[Reed]
+Let $G$ be a critical graph satisfying $\chi = \Delta \geq 9$ having the minimum number of vertices.  If $K$ is a $(\Delta - 1)$-clique in $G$, then any vertex in $G - K$ is adjacent to at most $4$ vertices in $K$.  In particular, the $(\Delta - 1)$-cliques in $G$ are pairwise disjoint.
+\end{lem}
+
+We improve this lemma as follows.
+
+\begin{lem}\label{OneOneEdgeIn}
+Let $G$ be a critical graph satisfying $\chi = \Delta \geq 9$ having the minimum number of vertices.  If $K$ is a $(\Delta - 1)$-clique in $G$, then any vertex in $G - K$ is adjacent to at most one vertex in $K$.  
+\end{lem}
+
+We use this to prove that the following conjecture is equivalent to the Borodin-Kostochka conjecture.
+
+\begin{conjecture}
+Every graph satisfying $\chi \geq \Delta \geq 9$ contains a $K_3 + H$ where $|H| = \Delta - 3$.
+\end{conjecture}
+
+\section{Some Definitions}
+\begin{defn}
+For $k \in \IN$, let $\C{k}$ be the collection of all vertex critical graphs satisfying $\chi = \Delta = k$.
+\end{defn}
+
+\begin{BK2}
+For $k \geq 9$, we have $\C{k} = \emptyset$.
+\end{BK2}
+
+The following stratification of $\C{k}$ will prove useful.
+
+\begin{defn}
+For $k, j \in \IN$, let $\C{k, j}$ be the collection of all vertex critical graphs satisfying $\chi = \Delta = k$ and $\omega < k - j$.  Note that $\C{k, 0} = \C{k}$ and $\C{k, j} \subseteq \C{k, i}$ for $j \geq i$.
+\end{defn}
+
+The truth of Reed's conjecture \cite{reed1998omega} would imply that $\C{k, 2} = \emptyset$ for all $k \in \IN$.
+
+\begin{Reed}
+Every graph satisfies $\chi \leq \ceil{\frac{\omega + \Delta + 1}{2}}$.
+\end{Reed}
+
+\section{Connectivity of Complements}
+
+\begin{lem}\label{JoinSize}
+Fix $k \geq 5$.  If $G \in \C{k}$ and $A + B \unlhd G$ for graphs $A$ and $B$ with $1 \leq \card{A} \leq \card{B}$, then $\card{A+B} \leq \Delta(G) + 1$.
+\end{lem}
+\begin{proof}
+Let $G \in \C{k}$ and $A + B \unlhd G$ for graphs $A$ and $B$ with $1 \leq \card{A} \leq \card{B}$. Assume $\card{A+B} > \Delta(G) + 1$.  To avoid a vertex with degree larger than $\Delta(G)$, we must have $\Delta(A) \leq \card{A} - 2$ and $\Delta(B) \leq \card{B} - 2$.  In particular, both $A$ and $B$ are non-complete, $2 \leq \card{A} \leq \card{B}$ and both $A$ and $B$ contain an induced $E_2$.  Hence, by Lemma \ref{E2Classification}, both $A$ and $B$ are the disjoint union of cliques and at most one $P_3$.\newline
+
+First, assume $\card{A} = 2$, say $A = \set{x_1, x_2}$.  Since $\card{B} \geq \Delta(G)$, we conclude that $N(x_1) = N(x_2)$.  Thus $x_1$ and $x_2$ are twins in a critical graph which is impossible.\newline
+
+Thus we may assume that $\card{A} \geq 3$.   If $A$ contained an induced $P_3$, then $G$ would have an induced $E_2 + (K_1 + B)$.  For $K_1 + B$ to be the disjoint union of cliques and at most one $P_3$, $B$ must either be $E_2$ or complete, both of which are impossible.  Hence $A$ is a disjoint union of at least two cliques.  The same goes for $B$.\newline 
+
+Assume that $A$ is edgeless.  Then, by Lemma \ref{E3Classification}, $B$ must be $E_3$ or $\bar{P_3}$.  Hence $\Delta(G) + 1 < \card{A} + \card{B} = 6$, giving the contradiction $\Delta(G) \leq 4$.\newline
+
+Since $A$ is the disjoint union of at least two cliques and contains an edge, it contains $\bar{P_3}$.  By Lemma \ref{P3ComplementClassification}, $B$ must be either $E_3$ or the disjoint union of a vertex and a clique.  As above, $B = E_3$ is impossible.  In particular $B$ contains $\bar{P_3}$ and using Lemma \ref{P3ComplementClassification} again, we conclude that $A$ is the disjoint union of a vertex and a clique giving the final contradiction $\omega(G) \geq \omega(A+B) \geq \omega(A) + \omega(B) \geq \card{A} + \card{B} - 2 \geq \Delta(G)$.
+\end{proof}
+
+\begin{lem}
+Fix $k \geq 5$. If $G \in \C{k}$, then $\bar{G}$ is maximally connected; that is, $\kappa(\bar{G}) = \delta(\bar{G})$.
+\end{lem}
+\begin{proof}
+Let $G \in \C{k}$ and $S$ a cut-set in $\bar{G}$ with $\card{S} = \kappa(\bar{G})$.  To get a contradiction, assume that $\card{S} < \delta(\bar{G}) = \card{G} - (\Delta(G) + 1)$.  Then $G - S = A + B$ for graphs $A$ and $B$ with $1 \leq \card{A} \leq \card{B}$.  We have $\card{A} + \card{B} > \card{G} - (\card{G} - (\Delta(G) + 1)) = \Delta(G) + 1$.  But then Lemma \ref{JoinSize} gives a contradiction.
+\end{proof}
+
+
+\section{Hitting Maximum Cliques}
+In \cite{kostochkaRussian} Kostochka proved the following with the stronger antecedent $\omega \geq \Delta + \frac32 - \sqrt{\Delta}$ and then in \cite{rabernhitting} we improved it to $\omega \geq \frac34(\Delta + 1)$.  Finally, King \cite{KingAXiv} made the result tight.
+
+\begin{lem}[King]\label{HittingMaxCliques}
+If $G$ is a graph satisfying $\omega > \frac23 (\Delta + 1)$, then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+We can use this general lemma to prove the following reduction lemma.
+
+\begin{lem}\label{InductingOnC}
+Fix $k, j \in \IN$ with $k \geq 3j + 6$.  If $G \in \C{k, j}$, then there exists $H \in \C{k-1, j}$
+such that $H \lhd G$. 
+\end{lem}
+\begin{proof}
+Let $G \in \C{k, j}$. We first show that there exists a maximal independent
+set $M$ such that  $\omega(G - M) < k - (j + 1)$.   If $\omega(G)
+< k - (j + 1)$, then any maximal independent set will do for $M$.
+Otherwise, $\omega(G) = k - (j + 1)$.  Since $k \geq 3j + 6$, we have $\omega(G) = k - (j + 1) > \frac23(k + 1) = \frac23(\Delta(G) + 1)$.  Thus by Lemma
+\ref{HittingMaxCliques}, we have an independent set $I$ such that
+$\omega(G - I) < \omega(G)$.  Expand $I$ to a maximal independent set
+to get $M$.\newline
+
+Now $\chi(G - M) = k - 1 = \Delta(G - M)$, where the last equality
+follows from Brooks' theorem and $\omega(G - M) < k - (j + 1) \leq k - 1$.  Since $\omega(G - M) < k - (j + 1)$, for any $(k - 1)$-critical induced subgraph $H \unlhd G - M$ we have $H \in \C{k - 1, j}$.
+\end{proof}
+
+As a consequence we get the result of Kostochka that the Borodin-Kostochka conjecture can be reduced to the $k = 9$ case.
+
+\begin{lem}\label{HereditaryReduction}
+Let $\fancy{H}$ be a hereditary graph property. For $k \geq 5$, if $\fancy{H} \cap \C{k} = \emptyset$, then $\fancy{H} \cap \C{k+1} = \emptyset$.  In particular, to prove the Borodin-Kostochka conjecture it is enough to show that $\C{9} = \emptyset$.
+\end{lem}
+
+
+To prove Lemma \ref{HittingMaxCliques}, we need a few lemmas.
+
+\begin{lem}[Hajnal]\label{HajnalLemma}
+Let $G$ be a graph and $\mathcal{Q}$ a collection of maximum cliques in $G$. Then
+\[\card{\bigcup \mathcal{Q}} + \card{\bigcap \mathcal{Q}} \geq 2\omega(G).\]
+\end{lem}
+\begin{proof}
+Assume that the lemma is false and let $\mathcal{Q}$ be a counterexample with $|\mathcal{Q}|$ minimal.  Put $r = \card{\mathcal{Q}}$ and $\mathcal{Q} = \{Q_1, \ldots, Q_r\}$.  Consider the set $W = (Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i$.  Plainly, $W$ is a clique.  Thus we may derive a contradiction as follows.
+\begin{align*}
+\omega(G) &\geq |W| \\
+&= \card{(Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i} \\
+&= \card{Q_1 \cap \bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i \cap \bigcup_{i=2}^r Q_i} \\
+&= \card{Q_1} +\card{\bigcup_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&= \omega(G) +\card{\bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&\geq \omega(G) + 2\omega(G) - \left(\card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=1}^r Q_i}\right) \\
+& > \omega(G).
+\end{align*}
+\end{proof}
+
+We use the following generalization of a lemma due to Kostochka.  The proof technique is basically the same as the proof given for Kostochka's lemma in \cite{2009arXiv0907.3705R}.
+\begin{lem}\label{KostochkaGeneralized}
+Fix $k \geq 2$. Let $G$ be a graph satisfying $\omega > \frac{k+1}{2k+1} (\Delta + 1)$.  If $\mathcal{Q}$ is a collection of maximum cliques in $G$ such that any $k$ elements of $\mathcal{Q}$ have common intersection, then $\cap \mathcal{Q} \neq \emptyset$.
+\end{lem}
+\begin{proof}
+Assume not and let $\mathcal{Q} = \{Q_1, \ldots, Q_r\}$ be a bad collection of maximum cliques with $r$ minimal.  Then $r \geq k+1$.  Put $\mathcal{Z}_i = \mathcal{Q} - \{Q_i\}$.  Then any $k$ elements of $\mathcal{Z}_i$ have common intersection and hence by minimality $\cap \mathcal{Z}_i \neq \emptyset$. In particular $\cup \mathcal{Z}_i$ contains a universal vertex and thus $\card{\cup \mathcal{Z}_i} \leq \Delta(G) + 1$. Now, by Hajnal's Lemma, $\card{\cap \mathcal{Z}_i} \geq 2\omega(G) - (\Delta(G) + 1) > 2\omega(G) - \frac{2k+1}{k+1} \omega(G) = \frac{1}{k+1}\omega(G)$.\newline
+
+Put $m = \min_i \card{Q_i - \cup  \mathcal{Z}_i}$.  Note that the $\cap Z_i$ are pairwise disjoint since $\cap \mathcal{Q} = \emptyset$. Thus $\cup \mathcal{Q}$ contains the disjoint union of the $\cap Z_i$ as well as at least $m$ vertices in each clique outside the rest. In particular,
+
+\[\card{\cup \mathcal{Q}} \geq \frac{1}{k+1}\omega(G) r + mr \geq \omega(G) + (k+1)m.\]
+
+In addition, 
+
+\[\card{\cup \mathcal{Q}} \leq m + \Delta(G) + 1.\]
+
+Hence,
+
+\[m \leq \frac{\Delta(G) + 1 - \omega(G)}{k} < \frac{1}{k+1}\omega(G).\]
+
+Finally,
+
+\[\card{\cup \mathcal{Q}} \leq m + \Delta(G) + 1 < \frac{1}{k+1}\omega(G) + \frac{2k+1}{k+1}\omega(G) = 2\omega(G).\]
+
+Applying Hajnal's Lemma gives a contradiction.
+\end{proof}
+\begin{CliqueGraph}
+Let $G$ be a graph. For a collection of cliques $\mathcal{Q}$ in $G$, let $X_{\mathcal{Q}}$ be the intersection graph of $\mathcal{Q}$.  That is, the vertex set of $X_{\mathcal{Q}}$ is $\mathcal{Q}$ and there is an edge between $Q_1 \neq Q_2 \in \mathcal{Q}$ if and only if $Q_1$ and $Q_2$ intersect.
+\end{CliqueGraph}
+
+\begin{lem}\label{TwoThirdsLemma}
+Let $G$ be a graph satisfying $\omega > \frac{2}{3}(\Delta + 1)$.   If $\mathcal{Q}$ is a collection of maximum cliques in $G$ such that $X_{\mathcal{Q}}$ is connected, then $X_{\mathcal{Q}}$ is complete.
+\end{lem}
+\begin{proof}
+Let $Q_1, Q_2, Q_3 \in \mathcal{Q}$ be distinct and assume that $Q_1 \cap Q_2 \neq \emptyset$ and $Q_2 \cap Q_3 \neq \emptyset$.  Then $|Q_1 \cap Q_2| = |Q_1| + |Q_2| - |Q_1 \cup Q_2| \geq 2\omega(G) - (\Delta(G) + 1)$.  Hence
+
+\begin{align*}
+|Q_1 \cap Q_3| &\geq |Q_1 \cap Q_2 \cap Q_3| \\
+&\geq |Q_1 \cap Q_2| - (|Q_2| - |Q_2 \cap Q_3|) \\
+&\geq 2\omega(G) - (\Delta(G) + 1) - (\omega(G) - (2\omega(G) - (\Delta(G) + 1))) \\
+&= 3\omega(G) - 2(\Delta(G) + 1) > 0.\\
+\end{align*}
+
+Thus $Q_1 \cap Q_3 \neq \emptyset$ showing that $X_{\mathcal{Q}}$ is transitive.  The lemma follows since any transitive connected graph is complete.
+\end{proof}
+
+We also need the following result of King building on observations of Aharoni, Berger and Ziv about the proof of Haxell's theorem on independent transversals.
+\begin{lem}[King]\label{LopsidedISR}
+Let $G$ be a graph partitioned into $r$ cliques $V_1, \ldots, V_r$.  If there exists $k \geq 1$ such that for each $i$ every $v \in V_i$ has at most $\min\{k, \card{V_i} - k\}$ neighbors outside $V_i$, then $G$ contains an independent set with $r$ vertices.
+\end{lem}
+
+Now the proof of Lemma \ref{HittingMaxCliques} is straightforward.
+
+\begin{proof}[Proof of Lemma \ref{HittingMaxCliques}]
+Easy.  Fill this in.
+\end{proof}
+
+\section{Mules}
+\subsection{What is a Mule?}
+\begin{defn}
+A graph $A$ is a \emph{child} of a graph $G$ if there exists $H \lhd G$ and an epimorphism $f\colon H \surj A$.  
+\end{defn}
+
+Note that the child-of relation is a strict partial order on the set of (finite simple) graphs $\fancy{G}$.  We call this the \emph{child order} on $\fancy{G}$ and denote it by `$\prec$'.
+
+\begin{lem}\label{well-founded}
+The ordering $\prec$ is well-founded on $\fancy{G}$.  That is, every non-empty subset of $\fancy{G}$ has a minimal element under $\prec$.
+\end{lem}
+\begin{proof}
+Let $\fancy{T}$ be a non-empty subset of $\fancy{G}$.  Pick $G \in \fancy{T}$ with the minimum number of vertices.  Since any child of $G$ must have fewer vertices, we see that $G$ is minimal in $\fancy{T}$ with respect to $\prec$.
+\end{proof}
+
+\begin{defn}
+Let $\fancy{T}$ be a collection of graphs.  A minimal graph in $\fancy{T}$ under the child order is called a \emph{$\fancy{T}$-mule}.
+\end{defn}
+
+For $k \in \IN$, by a \emph{$k$-mule} we mean a $\C{k}$-mule.
+
+\begin{lem}\label{EpiPower}
+Let $G$ be a $k$-mule with $k \geq 4$ and $H \lhd G$.  If $A$ is a graph with $\Delta(A) \leq k$ and $f\colon H \surj A$ is an epimorphism then either
+\begin{itemize}
+\item $A$ is $(k-1)$-colorable; or,
+\item $A$ contains a $K_k$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+Let $A$ be a graph with $\Delta(A) \leq k$ and $f\colon H \surj A$ an epimorphism.  Without loss of generality, $A$ is critical.  Since $A \prec G$ and $G$ is a mule, $A \not \in \C{k}$.  Assume $A$ is not $(k-1)$-colorable.  Then $\chi(A) \geq k \geq \Delta(A)$.  Since $A \not \in \C{k}$ we have $\chi(A) > \Delta(A) \geq 3$ and hence $A = K_k$ by Brooks' theorem.
+\end{proof}
+
+Note that adding edges to a graph yields an epimorphism.
+
+\begin{lem}\label{UnequalColoredPairOrCliqueMinusEdge}
+Let $G$ be a $k$-mule with $k \geq 4$ and $H \lhd G$.  Assume $x, y \in V(H)$, $xy \not \in E(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$. If for every $(k-1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$, then $H$ contains $\set{x, y} + K_{k-2}$.
+\end{lem}
+\begin{proof}
+Assume that for every $(k-1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$.
+Use the inclusion epimorphism $f_{xy}\colon H \surj H + xy$ in Lemma \ref{EpiPower} shows that either $H + xy$ is $(k-1)$-colorable or $H + xy$ contains a $K_k$.  Since a $(k-1)$-coloring of $H + xy$ would induce a $(k-1)$-coloring of $H$ with $x$ and $y$ colored differently, we conclude that $H + xy$ contains a $K_k$.  But then $H$ contains $\set{x, y} + K_{k-2}$ and the proof is complete.
+\end{proof}
+
+
+\subsection{Some Examples}
+With a simple construction we can produce elements of $\C{k}$ for small $k$.  The construction uses what are called \emph{reducers} in \cite{molloy2002graph}.
+
+\begin{defn}
+For $t \geq 2$ and $r \geq 1$, a $K_{t-2} + E_r$ is called a \emph{$(t, r)$-reducer}.
+\end{defn}
+
+\begin{defn}
+Let $G$ be a graph and let $t = \chi(G)$.  For $v \in V(G)$, the \emph{$r$-expansion of $G$ at $v$} is the graph $G_{r, v}$ formed by taking the disjoint union of $G - v$ and a $(t, r)$-reducer $K_{t - 2} + \set{x_1, \ldots, x_r}$ and distributing $v$'s edges as evenly as possible amongst the $x_i$.
+\end{defn}
+
+For a graph $G$, let $k_G = \Delta(G) + 1 - \chi(G)$.
+
+\begin{lem}\label{ReducerLemma}
+Let $v$ be a vertex in a graph $G$.  For any $r \geq 1$, $\chi(G_{r, v}) = \chi(G)$ and $k_{G_{r, v}} \leq\max\set{k_G, r - 2, \ceil{\frac{d_G(v)}{r}} - 1}$.  Moreover, $G_{r, v}$ is critical if and only if $G$ is.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\subsection{Restrictions on $(k-1)$-cliques in Mules}
+Let $G$ be a graph and $H \lhd G$.  For $t \geq \chi(H)$, let $\pi$ be a proper $t$-coloring of $H$.  For each $x \in V(G-H)$, put $L_{\pi}(x) = \set{1, \ldots, t} - \bigcup_{y \in N(x) \cap V(H)} \pi(y)$.  Then $\pi$ is completable to a $t$-coloring of $G$ if and only if $L_{\pi}$ is good on $G-H$.  We will use this fact repeatedly in the proofs that follow.
+
+\begin{lem}\label{E2impliesE3}
+For $k \geq 6$, if a $k$-mule $G$ contains an induced $E_2 + K_{k - 2}$, then $G$ contains an induced $E_3 + K_{k - 2}$.
+\end{lem}
+\begin{proof}
+Assume $G$ is a $k$-mule containing an induced $E_2 + K_{k - 2}$, call it $F$.  Let $x, y$ be the vertices of degree $k-2$ in $F$ and $C = \set{w_1, \ldots, w_{k-2}}$ the vertices of degree $k-1$ in $F$.  Put $H = G - F$.  Since $G$ is critical, we may $k-1$ color $H$.  Doing so leaves a list assignment $L$ on $F$ with $\card{L(z)} \geq d_F(z) - 1$ for each $z \in V(F)$.  Now $\card{L(x)} + \card{L(y)} \geq d_F(x) + d_F(y) - 2 = 2k - 6 > k - 1$ since $k \geq 6$.  Hence we have $c \in L(x) \cap L(y)$.  Coloring both $x$ and $y$ with $c$ leaves a list assignment $L'$ on $C$ with $\card{L'(w_i)} \geq k - 3$ for each $1 \leq i \leq k-2$.  Now, if $\card{L'(w_i)} \geq k - 2$ or $L'(w_i) \neq L'(w_j)$ for some $i, j$, then we can complete the partial $k-1$ coloring to all of $G$ using Hall's theorem.  Hence we must have $d(w_i) = k$ and $L'(w_i) = L'(w_j)$ for all $i,j$.  Let $N = \bigcup_{w \in C} N(w) \cap H$ and note that $N$ is an independent set since it is contained in a single color class in every $k-1$ coloring of $H$.  Also, each $w \in C$ has exactly one neighbor in $N$.\newline
+
+Proving that $\card{N} = 1$ will give the desired $E_3 + K_{k - 2}$ in $G$.  Thus, to reach a contradiction, assume that $\card{N} \geq 2$.\newline  
+
+We know that $H$ has no $k-1$ coloring in which two vertices of $N$ get different colors since then we could complete the partial coloring as above. Let $v_1, v_2 \in N$ be different. Since both $v_1$ and $v_2$ have a neighbor in $F$, we may apply Lemma \ref{UnequalColoredPairOrCliqueMinusEdge} to conlcude that $\set{v_1, v_2} + K_{v_1, v_2}$ is in $H$, where $K_{v_1, v_2}$ is a $K_{k-2}$. \newline
+
+First, assume $\card{N} \geq 3$, say $N = \set{v_1, v_2, v_3}$.  We have $z \in K_{v_1, v_2} \cap K_{v_1, v_3}$ for otherwise $d(v_1) \geq 2(k - 2) > k$.  Since $z$ already has $k$ neighbors among $K_{v_1, v_2} - \set{z}$ and $v_1, v_2, v_3$, we must have $K_{v_1, v_3} = K_{v_1, v_2}$.  But then $\set{v_1, v_2, v_3} + K_{v_1, v_2}$ is our desired $E_3 + K_{k - 2}$ in $G$.\newline
+
+Hence we may assume that $\card{N} = 2$, say $N = \set{v_1, v_2}$.  For $i = 1,2$, $v_i$ has $k - 2$ neighbors in $K_{v_1, v_2}$ and thus at most two neighbors in $C$.  Hence $\card{C} \leq 4$.  Thus we may assume that $k = 6$.\newline
+
+We may apply the same reasoning to $\set{v_1, v_2} + K_{v_1, v_2}$ that we did to $F$ to get vertices $v_{2,1}, v_{2,2}$ such that $\set{v_{2,1}, v_{2,2}} +  K_{v_{2,1}, v_{2,2}}$ is in $G$.  But then we may do it again with $\set{v_{2,1}, v_{2,2}} +  K_{v_{2,1}, v_{2,2}}$ and so on.  Since $G$ is finite, at some point this process must terminate. But the only way to terminate is to come back around and use $x$ and $y$.  This graph is $5$-colorable since we may color all the $E_2$'s with the same color and then $4$-color the remaining $K_4$ components.  This final contradiction completes the proof.
+\end{proof}
+
+\begin{lem}\label{NoE2}
+For $k \geq 7$, the only $k$-mule containing an induced $E_2 + K_{k - 2}$ is $M_7$.
+\end{lem}
+\begin{proof}
+Assume there is a $k$-mule $G$ that contains an induced $E_2 + K_{k - 2}$. Then by Lemma \ref{E2impliesE3}, $G$ contains an induced $E_3 + K_{k - 2}$, call it $F$. Since $G$ is critical and $E_3 + K_6$ is $d_1$-choosable by Lemma \ref{E3PlusK6}, this is impossible if $k \geq 8$.\newline
+
+Hence we may assume that $k = 7$.  Let $x, y, z$ be the vertices of degree $5$ in $F$ and let $C = \set{w_1, \ldots, w_{5}}$ be the vertices of degree $7$ in $F$. Put $H = G - C$.  Since each of $x, y, z$ have degree at most $2$ in $H$ and $G$ is a mule, the homomorphism from $H$ sending $x, y$ and $z$ to the same vertex must produce a $K_7$.  The only way this can happen is if $H$ contains a $K_6$ (call it $D$) such that the neighborhoods of $x, y$ and $z$ in $D$ each contain two vertices and are pairwise disjoint.  Now, if $V(G) \neq V(F) \cup V(D)$, then $D$ would be a clique cutset in $G$.  This is impossible since $G$ is critical.  Hence $G = M_7$ and the proof is complete.
+\end{proof}
+
+\begin{lem}\label{UnequalColoredPair}
+Let $G$ be a $k$-mule with $k \geq 7$ other than $M_7$ and let $H \lhd G$.  If $x, y \in V(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$, then there exists a $(k-1)$-coloring $\pi$ of $H$ such that $\pi(x) \neq \pi(y)$.
+\end{lem}
+\begin{proof}
+Assume $x, y \in V(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$.  First, if $xy \in E(H)$ then any $(k-1)$-coloring of $H$ will do.  Otherwise, if for every $(k-1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$, then by Lemma \ref{UnequalColoredPairOrCliqueMinusEdge}, $H$ contains $\set{x, y} + K_{k-2}$.  The lemma follows since this is impossible by Lemma \ref{NoE2}.
+\end{proof}
+
+\begin{lem}\label{JoinerOrDifferentLists}
+Let $G$ be a $k$-mule with $k \geq 7$ other than $M_7$ and let $F \lhd G$.  Let $C = \setb{v}{V(F)}{d_F(v) = k - 1}$.  Then at least one of the following holds:
+\begin{itemize}
+\item $G - F$ has a $(k-1)$-coloring $\pi$ such that for some $x, y \in C$ we have $L_{\pi}(x) \neq L_{\pi}(y)$; or,
+\item $G - F$ has a $(k-1)$-coloring $\pi$ such that for some $x \in C$ we have $\card{L_{\pi}(x)} = k - 1$; or,
+\item there exists $z \in V(G - F)$ such that $C \subseteq N(z)$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+Put $H = G - F$.  Assume that for every $(k-1)$-coloring $\pi$ of $H$ we have $L_{\pi}(x) = L_{\pi}(y)$ for every $x, y \in C$.  Since the vertices in $C$ have degree $k-1$ in $F$, each of them has at most one neighbor in $H$.  If some $v \in C$ has no neighbors in $H$, then for any $(k-1)$-coloring $\pi$ of $H$ we have $\card{L_{\pi}(v)} = k - 1$.  Thus we may assume that every $v \in C$ has exactly one neighbor in $H$. Let $N = \bigcup_{w \in C} N(w) \cap H$. Assume $\card{N} \geq 2$. Pick different $z_1, z_2 \in N$. Then, by Lemma \ref{UnequalColoredPair}, there is a $(k-1)$-coloring $\pi$ of $H$ for which $\pi(z_1) \neq \pi(z_2)$.  But then $L_{\pi}(x) \neq L_{\pi}(y)$ for some $x, y \in C$ giving a contradiction.  Hence $N = \set{z}$ and thus $C \subseteq N(z)$.
+\end{proof}
+
+By Lemma \ref{E3PlusK6}, no graph in $\C{k}$ contains an induced $E_3 + K_{k - 3}$ for $k \geq 9$.  For mules, we can improve this as follows.
+\begin{lem}\label{NoE3}
+For $k \geq 7$, the only $k$-mule containing an induced $E_3 + K_{k - 3}$ is $M_7$.
+\end{lem}
+\begin{proof}
+Assume the lemma is false and let $G$ be a $k$-mule, other than $M_7$, containing such an induced subgraph $F$.  Let $z_1, z_2, z_3 \in F$ be the vertices with degree $k-3$ in $F$ and $C$ the rest of the vertices in $F$ (all of degree $k-1$ in $F$). Put $H = G - F$.\newline
+
+First assume there is not a vertex $x \in V(H)$ which is adjacent to all of $C$. Let $\pi$ be a $(k-1)$-coloring of $H$ guaranteed by Lemma \ref{JoinerOrDifferentLists} and put $L = L_\pi$.  Since $\card{L(z_1)} + \card{L(z_2)} + \card{L(z_3)} \geq 3(k-4) > k - 1$ we have $1 \leq i < j \leq 3$ such that $L(z_i) \cap L(z_j) \neq \emptyset$.  Without loss of generality, $i = 1$ and $j = 2$. Pick $c \in L(z_1) \cap L(z_2)$ and color both $z_1$ and $z_2$ with $c$.  Let $L'$ be the resulting list assignment on $F - \set{z_1, z_2}$.  Now $\card{L'(z_3)} \geq k-4$ and $\card{L'(v)} \geq k-3$ for each $v \in C$.  By our choice of $\pi$, either two of the lists in $C$ differ or for some $v \in C$ we have $\card{L'(v)} \geq k-2$.  In either case, we can complete the $(k-1)$-coloring to all of $G$ by Hall's theorem.\newline
+
+Hence we may assume that we have $x \in V(H)$ which is adjacent to all of $C$.  Thus $G$ contains the induced subgraph $K_4 + G[z_1, z_2, z_3, x]$.  This is impossible by Lemma \ref{K4Classification}.
+\end{proof}
+
+\begin{lem}\label{NoTwooks}
+For $k \geq 7$, no $k$-mule contains an induced $\bar{P_3} + K_{k - 3}$.
+\end{lem}
+\begin{proof}
+Assume the lemma is false and let $G$ be a $k$-mule containing such an induced subgraph $F$.  Note that $M_7$ has no induced $\bar{P_3} + K_{k - 3}$, so $G \neq M_7$. Let $z \in F$ be the vertex with degree $k-3$ in $F$, $v_1, v_2 \in F$ the vertices of degree $k-2$ in $F$ and $C$ the rest of the 
+vertices in $F$ (all of degree $k-1$ in $F$). Put $H = G - F$.\newline
+
+First assume there is not a vertex $x \in V(H)$ which is adjacent to all of $C$. Let $\pi$ be a $(k-1)$-coloring of $H$ guaranteed by Lemma \ref{JoinerOrDifferentLists} and put $L = L_\pi$.  Then, we have $\card{L(z)} \geq k-4$ and $\card{L(v_1)} \geq k-3$.  Since $k \geq 7$, $\card{L(z)} + \card{L(v_1)} \geq 2k - 7 > k - 1$.  Hence, by Lemma \ref{BasicFiniteSets}, we may color $z$ and $v_1$ the same.  Let $L'$ be the resulting list assignment on $F - \set{z, v_1}$. Now $\card{L'(v_2)} \geq k-3$ and $\card{L'(v)} \geq k-3$ for each $v \in C$.  By our choice of $\pi$, either two of the lists in $C$ differ or for some $v \in C$ we have $\card{L'(v)} \geq k-2$.  In either case, we can complete the $(k-1)$-coloring to all of $G$ by Hall's theorem.\newline   
+
+Hence we may assume that we have $x \in V(H)$ which is adjacent to all of $C$.
+Thus $G$ contains the induced subgraph $K_4 + G[z, v_1, v_2, x]$.  By Lemma \ref{K4Classification}, $G[z, v_1, v_2, x]$ must be a clique and a vertex and hence $x$ must be adjacent to both $v_1$ and $v_2$.  But then $G[v_1, v_2, x] + C$ is a $K_k$ in $G$, giving a contradiction.
+\end{proof}
+
+Reed proved that for $k \geq 9$, a vertex outside a $(k - 1)$-clique $H$ in a $k$-mule can have at most $4$ edges into $H$.  We improve this to at most one edge.
+
+\begin{lem}\label{NoForksThatArentKnives}
+For $k \geq 7$, no $k$-mule except $M_7$ contains an induced $K_r + \left(K_1 \sqcup K_{k - (r + 1)}\right)$ for any $r \geq 2$.
+\end{lem}
+\begin{proof}
+Assume the lemma is false and let $G$ be a $k$-mule, other than $M_7$, containing such an induced subgraph $F$ with $r$ maximal.  By Lemma \ref{NoE2} and Lemma \ref{NoTwooks}, the lemma holds for $r \geq k - 3$. So assume $r \leq k - 4$.
+Now, let $z \in F$ be the vertex with degree $r$ in $F$, $v_1, v_2, \ldots, v_{k - (r + 1)} \in F$ the vertices of degree $k - 2$ in $F$ and $C$ the rest of the vertices in $F$ (all of degree $k-1$ in $F$). Put $H = G - F$.\newline
+
+Let $E_1 = \setbs{za}{a \in N(v_1) \cap H}$.  Consider the graph $D = H + z + E_1$.  Since $v_1$ has at most $2$ neighbors in $H$, $\card{E_1} \leq 2$ and thus to form $D$, we have added no edges, a single edge or $e(P_3)$ to $H + z$.  Since $\card{C} \geq 2$, $\Delta(D) \leq k$.  By Lemma \ref{NoE2}, Lemma \ref{NoTwooks}, and Lemma \ref{EpiPower}, $\chi(D) \leq k - 1$.  This gives a $k-1$ coloring of $H + z$ in which $z$ receives a color $c$ which is not received by any of the neighbors of $v_1$ in $H$.  Thus $c$ remains in the list of $v_1$ and we may color $v_1$ with $c$.  After doing so, each vertex in $C$ has a list of size at least $k-3$ and $v_i$ for $i > 1$ has a list of size at least $k-4$.  If any pair of vertices in $C$ had different lists, then we could complete the partial coloring by Hall's theorem.
+Let $N = \bigcup_{w \in C} N(w) \cap H$ and note that $N$ is an independent set since it is contained in a single color class in the $k-1$ coloring of $H$ just constructed.\newline
+
+Assume that $\card{N} \geq 2$.  Pick $a_1, a_2 \in N$. Consider the graph $D = H + z + E_1 + a_1a_2$.  Plainly, $\Delta(D) \leq k$. To form $D$ from $H + z$ we either added no edges, a single edge, $e(P_3)$, $e(K_3)$, $e(P_4)$, or $e(K_2 \sqcup P_3)$.  Thus applying Lemma \ref{EpiPower} using Lemma \ref{NoE2}, Lemma \ref{NoTwooks}, Lemma \ref{NoE3}, Lemma \ref{P4PlusK3} and Lemma \ref{E2PlusDiamond} we conclude $\chi(D) \leq k - 1$.  This gives a $k-1$ coloring of $H$ in which $a_1$ and $a_2$ are in different color classes and $z$ receives a color not received by any neighbor of $v_1$ in $H$.  As above we can complete this partial coloring to all of $G$ by first coloring $z$ and $v_1$ the same and then using Hall's theorem.\newline
+
+Hence there is a vertex $x \in H$ which is adjacent to all of $C$.  Note that $x$ is not adjacent to any of $v_1, v_2, \ldots, v_{k - (r + 1)}$ by the maximality of $r$. Let $E_2 = \setbs{xa}{a \in N(v_2) \cap H}$.  Consider the graph $D = H + z + E_1 + E_2$.  As above, both $E_1$ and $E_2$ have cardinality at most $2$.  Since $\card{C} \geq 2$, both $x$ and $z$ have degree at most $k$ in $D$.  Since both $xa$ and $za$ were added only if $a$ was a neighbor of both $v_1$ and $v_2$, all the neighbors of $v_1$ in $H$ have degree at most $k$ in $D$. Similarly for $v_2$'s neighbors.  Hence $\Delta(D) \leq k$. To form $D$ from $H + z$ we either added no edges, a single edge, $e(P_3)$, $e(K_2 \sqcup K_2)$, $e(K_3)$, $e(P_4)$, $e(K_2 \sqcup P_3)$, $e(P_5)$, $e(C_4)$, or $e(P_3 \sqcup P_3)$. Thus applying Lemma \ref{EpiPower} using Lemma \ref{NoE2}, Lemma \ref{NoTwooks}, Lemma \ref{E2PlusDiamond}, Lemma \ref{NoE3}, Lemma \ref{P4PlusK3}, and Lemma \ref{C4BarPlusK4} we conclude $\chi(D) \leq k - 1$. This gives a $k-1$ coloring of $H + z$ in which $z$ receives a color $c_1$ which is not received by any of the neighbors of $v_1$ in $H$ and
+$x$ receives a color $c_2$ which is not received by any of the neighbors of $v_2$ in $H$.  Thus $c_1$ is in $v_1$'s list and $c_2$ is in $v_2$'s list.  
+Note that if $x$ and $z$ are adjacent then $c_1 \neq c_2$. Hence, we can $2$-color $G[x,z,v_1,v_2]$ from the lists.  This leaves $k-3$ vertices.  
+The vertices in $C$ have lists of size at least $k-3$ and the rest have lists of size at least $k-5$.  Since the union of any $k-4$ of the lists contains one of the size $k-3$ lists, we can complete the partial coloring by Hall's theorem.
+\end{proof}
+
+\begin{cor}\label{AtMostOneEdgeIn}
+For $k \geq 7$, if $H$ is a $(k - 1)$-clique in a $k$-mule $G$ other than $M_7$, then any vertex in $G - H$ has at most one edge into $H$.
+\end{cor}
+
+\begin{lem}
+Let $G$ be a $k$-mule other than $M_7$ with $k \geq 7$ and $H \lhd G$.  If $x, y \in V(H)$, $xy \not \in E(H)$ and  $\card{N_H(x) \cup N_H(y)} \leq k$, then there exists a $(k-1)$-coloring $\pi$ of $H$ such that $\pi(x) = \pi(y)$.
+\end{lem}
+
+\begin{lem}\label{K4sOut}
+For $k \geq 7$, no $k$-mule except $M_7$ contains an induced $K_4 + D$ where $\card{D} = k - 4$.
+\end{lem}
+\begin{proof}
+Let $G$ be a $k$-mule other than $M_7$ and assume $G$ contains an induced $K_4 + D$ where $\card{D} = k - 4$.  By Lemma \ref{K4Classification}, $D$ is $E_3$, a claw, a clique, or a clique and a vertex. If $D$ were a clique then $G$ would contain $K_k$. Lemma \ref{AtMostOneEdgeIn} shows that a clique and a vertex is impossible.  Finally, Lemma \ref{NoE3} shows that $D$ cannot be $E_3$ or a claw.  This contradiction completes the proof.
+\end{proof}
+
+\section{Restricted Classes of Graphs}
+\subsection{Line Graphs}
+\begin{lem}\label{muBoundLemma}
+Fix $k \geq 0$. Let $H$ be a multigraph and put $G = L(H)$.  Assume $\chi(G) = \Delta(G) + 1 - k$. If $xy \in E(H)$ is critical and $\mu(xy) \geq 2k + 2$, then $xy$ is involved in a $\chi(G)$ clique in $G$.
+\end{lem}
+\begin{proof}
+Let $xy \in E(H)$ be a critical edge with $\mu(xy) \geq 2k + 2$.  Let $A$ be the set of all edges incident with both $x$ and $y$.  Let $B$ be the set of edges incident with either $x$ or $y$ but not both.  Then, in $G$, $A$ is a clique joined to $B$ and $B$ is the complement of a bipartite graph.  Put $F = G[A \cup B]$.  Since $xy$ is critical, we have a $\chi(G) - 1$ coloring of $G - F$.  Viewed as a partial $\chi(G) - 1$ coloring of $G$ this leaves a list assignment $L$ on $F$ with 
+$|L(v)| = \chi(G) - 1 - (d_G(v) - d_F(v)) = d_F(v) - k + \Delta(G) - d_G(v)$ for each $v \in V(F)$.  Put $j = k + d_G(xy) - \Delta(G)$. \newline
+
+Let $M$ be a maximum matching in the complement of $B$.  First assume $|M| \leq j$.  Then, since $B$ is perfect, $\omega(B) = \chi(B)$ and we have
+
+\begin{align*}
+\omega(F) &= \omega(A) + \omega(B) \\ 
+&= |A| + \chi(B) \\
+&\geq |A| + |B| - j \\
+&= d_G(xy) + 1 - j \\
+&= \Delta(G) + 1 - k \\
+&= \chi(G).
+\end{align*}
+
+Thus $xy$ is involved in a $\chi(G)$ clique in $G$.\newline
+
+Hence we may assume that $|M| \geq j + 1$.  Let $\{\{x_1, y_1\}, \ldots, \{x_{j+1}, y_{j+1}\}\}$ be a matching in the complement of $B$.  Then, for each $1 \leq i \leq j + 1$ we have
+
+\begin{align*}
+|L(x_i)| + |L(y_i)| &\geq d_F(x_i) + d_F(y_i) - 2k \\
+&\geq |B| - 2 + 2|A| - 2k \\
+&= d_G(xy) + |A| - 2k - 1 \\
+&\geq d_G(xy) + 1.
+\end{align*}
+
+Where the second inequality follows since $\alpha(B) \leq 2$ and the last since $|A| = \mu(xy) \geq 2k + 2$.  Since the lists together contain at most $\chi(G) - 1 = \Delta(G) - k$ colors we see that for each $i$,
+
+\begin{align*}
+\left|L(x_i) \cap L(y_i)\right| &\geq |L(x_i)| + |L(y_i)| - (\Delta(G) - k) \\
+&\geq d_G(xy) + 1 - \Delta(G) + k \\
+&=j + 1.
+\end{align*}
+
+Thus we may color all the pairs $\{x_1, y_1\}, \ldots, \{x_{j+1}, y_{j+1}\}$ from $L$ using one color for each pair.  Since $|A| \geq k + 1$ we can easily extend this to a coloring of $B$ from $L$.  But each vertex in $A$ has $j+1$ colors used twice on its neighborhood, thus each vertex in $A$ is left with a list of size at least $d_A(v) - k + \Delta(G) - d_G(v) + j + 1 = d_A(v) + 1$.  Hence we can complete the $\chi(G) - 1$ coloring to all of $F$.  This contradiction completes the proof.
+
+\end{proof}
+
+As a consequence we get the following upper bound.
+
+\begin{thm}\label{CriticalMuBound}
+If $G$ is the line graph of a multigraph $H$ and $G$ is vertex critical, then
+\[\chi(G) \leq \max\left\{\omega(G), \Delta(G) + 1 - \frac{\mu(H) - 1}{2}\right\}.\]
+\end{thm}
+
+This upper bound is tight.  To see this, let $H_t = t \cdot C_5$ (i.e. $C_5$ where each edge has multiplicity $t$) and put $G_t = L(H_t)$.  It is easily checked that for odd $t$ we have $\chi(G_t) = \frac{5t + 1}{2}$, $\Delta(G_t) = 3t - 1$, and $\omega(G_t) = 2t$.  Since $\mu(H_t) = t$, the upper bound is achieved.\newline
+
+We need the following lemma which is an easy consequence of the fan equation (see \cite{Andersen}, \cite{Cariolaro}, \cite{Stiebitz}, \cite{GoldbergJGT}).
+\begin{lem}\label{FanEquation}
+Let $G$ be the line graph of a multigraph $H$.  Assume $G$ is vertex critical with $\chi(G) > \Delta(H)$. Then, for any $x \in V(H)$ there exist $z_1, z_2 \in N_H(x)$ such that $z_1 \neq z_2$ and 
+\begin{itemize}
+\item $\chi(G) \leq d_H(z_1) + \mu(xz_1)$.
+\item $2\chi(G) \leq d_H(z_1) + \mu(xz_1) + d_H(z_2) + \mu(xz_2)$.
+\end{itemize}
+\end{lem}
+
+\begin{lem}\label{Goldberg}
+Let $G$ be the line graph of a multigraph $H$.  If $G$ is vertex critical with $\chi(G) > \Delta(H)$, then
+\[\chi(G) \leq \frac{3\mu(H) + \Delta(G) + 1}{2}.\]
+\end{lem}
+\begin{proof}
+Let $x \in V(H)$ with $d_H(x) = \Delta(H)$.  By Lemma \ref{FanEquation} we have $z \in N_H(x)$ such that $\chi(G) \leq d_H(z) + \mu(xz)$.  Hence
+\[\Delta(G) + 1 \geq d_H(x) + d_H(z) - \mu(xz) \geq d_H(x) + \chi(G) - 2\mu(xz).\]
+
+Which gives
+
+\[\chi(G) \leq \Delta(G) + 1 - \Delta(H) + 2\mu(H).\]
+
+Adding Vizing's inequality $\chi(G) \leq \Delta(H) + \mu(H)$ gives the desired result.
+\end{proof}
+
+Combining this with Theorem \ref{CriticalMuBound} we get the following upper bound.
+
+\begin{thm}\label{LineGraphGeneralBound}
+If $G$ is the line graph of a multigraph, then
+\[\chi(G) \leq \max\left\{\omega(G), \frac{7\Delta(G) + 10}{8}\right\}.\]
+\end{thm}
+
+\begin{cor}
+If $G$ is the line graph of a multigraph with $\chi(G) \geq \Delta(G) \geq 11$, then $G$ contains a $K_{\Delta}$.
+\end{cor}
+
+With a little more care we can get the $11$ down to $9$.  Our analysis will be simpler if we can inductively reduce to the $\Delta(G) = 9$ case.  This reduction follows from Lemma \ref{HereditaryReduction} since the line graphs are hereditary.
+
+\begin{thm}
+For $k \geq 9$, $\C{k}$ contains no line graphs of multigraphs.
+\end{thm}
+\begin{proof}
+Assume the theorem is false and pick a counterexample $G$ to the theorem  minimizing $\Delta(G)$.  We may assume that $G$ is vertex critical and hence connected.  By Lemma \ref{HereditaryReduction}, we may assume that $\Delta(G) = 9$.\newline
+
+Let $H$ be such that $G = L(H)$.  Then by Lemma \ref{muBoundLemma} and Lemma \ref{Goldberg} we know that $\mu(H) = 3$. \newline
+
+Let $x \in V(H)$ with $d_H(x) = \Delta(H)$.  Then we have $z_1, z_2 \in N_H(x)$ as in Lemma \ref{FanEquation}.  This gives
+\begin{eqnarray}
+9 &\leq& d_H(z_1) + \mu(xz_1), \\
+18 &\leq& d_H(z_1) + \mu(xz_1) + d_H(z_2) + \mu(xz_2).
+\end{eqnarray}
+
+In addition, we have for $i = 1,2$, 
+
+\[9 \geq d_H(x) + d_H(z_i) - \mu(xz_i) - 1 = \Delta(H) + d_H(z_i) - \mu(xz_i) - 1.\]
+
+Thus,
+
+\begin{eqnarray}
+\Delta(H) &\leq& 2\mu(xz_1) + 1 \leq 7, \\
+\Delta(H) &\leq& \mu(xz_1) + \mu(xz_2) + 1.
+\end{eqnarray}
+
+Now, let $ab \in E(H)$ with $\mu(ab) = 3$.  Then, since $G$ is vertex critical, we have $8 = \Delta(G) - 1 \leq d_H(a) + d_H(b) - \mu(ab) - 1 \leq 2\Delta(H) - 4$.  Thus $\Delta(H) \geq 6$.  Hence we have $6 \leq \Delta(H) \leq 7$.  Thus, by $(3)$, we must have $\mu(xz_1) = 3$.\newline
+
+First, assume $\Delta(H) = 7$.  Then, by $(4)$ we have $\mu(xz_2) = 3$.  Let $y$ be the other neighbor of $x$.  Then $\mu(xy) = 1$ and thus $d_H(x) + d_H(y) - 2 \leq 9$.  That gives $d_H(y) \leq 4$.  Then we have vertices $w_1, w_2 \in N_H(y)$ guaranteed by Lemma \ref{FanEquation}. Note that $x \not \in \{w_1, w_2\}$.  Now $4 \geq d_H(y) \geq 1 + \mu(yw_1) + \mu(yw_2)$.  Thus $\mu(yw_1) + \mu(yw_2) \leq 3$.  This gives $d_H(w_1) + d_H(w_2) \geq 2\Delta(G) - 3 = 15$ contradicting $\Delta(H) \leq 7$.\newline
+
+Thus we must have $\Delta(H) = 6$.  By $(1)$ we have $d_H(z_1) = 6$.  Then, applying $(2)$ gives $\mu(xz_2) = 3$ and $d_H(z_2) = 6$.  Since $x$ was an arbitrary vertex of maximum degree and $H$ is connected we conclude that $G = L(3\cdot C_n)$ for some $n \geq 4$.  But no such graph is $9$-chromatic by Brooks' theorem, giving a contradiction.
+\end{proof}
+
+\section{List Coloring Results}
+\subsection{List Coloring Definitions}
+\begin{defn}
+Let $G$ be a graph.  A \emph{list assignment} to the vertices of $G$ is a function from $V(G)$ to the finite subsets of
+$\mathbb{N}$.  A list assignment $L$ to $G$ is \emph{good} if $G$ has a proper coloring $c$ where $c(v) \in L(v)$ for each 
+$v \in V(G)$.  It is \emph{bad} otherwise.
+\end{defn}
+
+\begin{defn}
+ Let $L$ be a list assignment to the vertices of a graph $G$.  We call the collection of all colors that
+appear in $L$, the \emph{pot} of $L$.  That is $Pot(L) = \bigcup_{v \in V(G)} L(v)$.  For
+a subgraph $H$ of $G$ we write $Pot_H(L) = \bigcup_{v \in V(H)} L(v)$.
+\end{defn}
+
+\begin{defn}
+Let $L$ be a list assignment to the vertices of a graph $G$. For $S \subseteq Pot(L)$, let $G_S$ be the graph $G\left[\setb{v}{V(G)}{L(v) \cap S \neq \emptyset}\right]$.  We also write $G_c$ for $G_{\{c\}}$.
+\end{defn}
+
+\begin{defn}
+Let $L$ be a list assignment to the vertices of a graph $G$. Let $\fancy{B}(L)$ be the bipartite graph that has parts $V(G)$ and $Pot(L)$ and an edge from $v \in V(G)$ to $c \in Pot(L)$ if and only if $c \in L(v)$.
+\end{defn}
+
+\begin{defn}
+Let $G$ be a graph and $f: V(G) \rightarrow \mathbb{N}$.  An $f$-assignment to $G$ is an assignment $L$ of lists 
+to the vertices of $G$ such that $|L(v)| = f(v)$ for each $v \in V(G)$.  
+We say that $G$ is $f$-choosable if every $f$-assignment to $G$ is good.
+\end{defn}
+
+\subsection{Shrinking The Pot}
+In \cite{ReedSudakov} Reed and Sudakov proved a lemma on shrinking the pot size for $k$-assignments.  We generalize this to arbitrary $f$-assignments.
+
+\begin{lem}\label{CannotColorSelfWithSelf}
+Let $G$ be a graph and $f\colon V(G) \rightarrow \mathbb{N}$.  Assume $G$ is not $f$-choosable and let $L$ be a bad list assignment with $|Pot(L)|$ minimal.  Assume $L(v) \neq Pot(L)$ for each $v \in V(G)$.  Then, for each non-empty $S \subseteq Pot(L)$, any proper coloring of $G_S$ from $L$ uses some color not in $S$.
+\end{lem}
+\begin{proof}
+Assume this is not the case and let $\emptyset \neq S \subseteq Pot(L)$ be such that $G_S$ has a proper coloring $\phi$ from $L$ using only colors in $S$.  For $v \in V(G)$, let $h(v)$ be the smallest element of $Pot(L) - L(v)$ (this is well defined by assumption). Pick some $c \in S$ and construct a new list assignment $L'$ as follows.\newline
+
+\[L'(v) = \left \{ \begin{array}{rl}
+L(v) &\mbox{ if $v \in V(G) - V(G_S)$} \\
+L(v) &\mbox{ if $v \in V(G_S)$ and $c \not \in L(v)$} \\
+L(v) - \{c\} \cup \{h(v)\} &\mbox{ if $v \in V(G_S)$ and $c\in L(v)$} \\
+\end{array} \right.\]
+
+Note that $L'$ is an $f$-assignment and $Pot(L') = Pot(L) - \{c\}$.  Thus, by minimality of $|Pot(L)|$, we can properly color $G$ from $L'$.  In particular, we have a proper coloring of $V(G) - V(G_S)$ from $L$ using no color from $S$.  We can complete this to a coloring of $G$ from $L$ using $\phi$. This contradicts the fact that $L$ is bad.  
+\end{proof}
+
+\begin{lem}\label{MinPotCondition}
+Let $G$ be a graph and $f\colon V(G) \rightarrow \mathbb{N}$.  Assume $G$ is not $f$-choosable and let $L$ be a bad list assignment with $|Pot(L)|$ minimal. Assume $L(v) \neq Pot(L)$ for each $v \in V(G)$. Then, in $\fancy{B}(L)$, every $S \subseteq Pot(L)$ can be matched into $V(G)$.
+\end{lem}
+\begin{proof}
+Assume (to reach a contradiction) that this is not the case and let $B \subseteq Pot(L)$ be minimal among those subsets with no matching into $V(G)$. Plainly $|B| \geq 2$, say $B = \{b_1, \ldots, b_r\}$.  By minimality $B' = \{b_2, \ldots, b_r\}$ has a matching into $V(G)$.  Let $W$ be the endpoints in $V(G)$ of such a matching.\newline
+
+Now we show that $L(v) \cap B = \emptyset$ for all $v \in V(G) - W$.  Assume this is not the case for some such $v$.  Say $v$ hits $b_i$.  Then $i > 1$ lest we have a matching of $B$ into $V(G)$.  Since every subset of $B'$ satisfies the Hall condition, so does every subset of $B$ containing $b_i$.  But $\{b_1, \ldots, b_{i-1}, b_{i+1}, ..., b_r\}$ has a matching as well, so every subset of $B$ not containing $b_i$ satisfies the Hall condition.  Thus $B$ has a matching into $V(G)$, contradiction.  Thus $L(v) \cap B = \emptyset$ for all $v \in V(G) - W$.\newline
+
+Hence $W = V(G_B)$ and the matching of $W$ into $B$ gives a proper coloring of $G_B$ using only colors from $B$.  Applying Lemma \ref{CannotColorSelfWithSelf} yields the desired contradiction.
+\end{proof}
+
+\begin{proof}[Proof of Small Pot Lemma]
+Assume not and let $L$ be a bad $f$-assignment with $|Pot(L)|$ minimal. For each $v \in V(G)$ we have $|L(v)| < |G| \leq |Pot(L)|$ and hence $L(v) \neq Pot(L)$.  Thus by Lemma \ref{MinPotCondition} we have a matching, in $\fancy{B}(L)$, of $Pot(L)$ into $V(G)$.  But $|Pot(L)| \geq |G|$, so this is a proper coloring of $G$ from $L$ contradicting the fact that $L$ is bad.
+\end{proof}
+
+We will often implicitly use the following simple lemma about finite sets.
+\begin{lem}\label{BasicFiniteSets}
+Let $S_1, \ldots, S_m$ be non-empty subsets of a finite set $T$.  If $\sum_{i} |S_i| > (m - 1)|T|$ then $\bigcap_{i} S_i \neq \emptyset$.
+\end{lem}
+
+\section{$d_r$-choosability}
+We will only need a very specific kind of function $f$ for our purposes.
+
+\begin{defn}
+Let $G$ be a graph.  Then $G$ is \emph{$d_r$-choosable} if $G$ is $f$-choosable where $f(v) = d(v) - r$.
+\end{defn}
+
+Due to the following observation, $d_r$-choosable graphs will play a prominent role in our investigations.
+
+\begin{observation}
+If $G$ is vertex critical satisfying $\chi = \Delta + 1 - r$, then $G$ contains no induced $d_r$-choosable graph.
+\end{observation}
+
+The classification of $d_0$-choosable graphs is a well known generalization of Brooks' Theorem (see \cite{BrooksExtended} and \cite{Hladky}).
+
+\begin{defn}
+A \emph{Gallai tree} is a graph all of whose blocks are cliques or odd cycles.
+\end{defn}
+
+\begin{ClassificationOfd0}
+For any connected graph $G$, the following are equivalent.
+\begin{itemize}
+\item $G$ is $d_0$-choosable.
+\item $G$ is not a Gallai tree.
+\item $G$ contains an induced even cycle with at most one chord.
+\end{itemize}
+\end{ClassificationOfd0}
+
+A few basic lemmas are in order.
+
+\begin{lem}\label{PartialdkLemma}
+Fix $k \geq 0$. Let $G$ be a graph and $H \unlhd G$ a $d_k$-choosable subgaph. If $L$ is a $d_k$-assignment to $G$ and $G - H$ is properly colorable from $L$, then $G$ is properly colorable from $L$.
+\end{lem}
+\begin{proof}
+Color $G - H$ from $L$. Let $L'$ be the resulting list assignment on $H$.  Since each $v \in H$ must be adjacent to as
+many vertices as colors in $G - H$ we see that $L'$ is again a $d_k$-assignment.  The lemma follows.
+\end{proof}
+
+\begin{lem}\label{ColorableSubgraphdk}
+Fix $k \geq 0$. Let $G$ be a graph and $H \unlhd G$ a $d_k$-choosable subgaph.  If there exists an ordering $v_1, \ldots, v_r$ of the vertices of $G - H$
+such that $v_i$ has degree at least $k+1$ in $G[V(H) \cup \bigcup_{1 \leq j \leq i - 1} v_j]$ for each $i$, then $G$ is $d_k$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_k$-assignment to $G$. Go through $G-H$ in order $v_r, \ldots, v_1$ coloring $v_i$ with the smallest available color in $L(v_i)$.  Since when we go to color $v_i$, it has at least $k+1$ uncolored neighbors we succeed in coloring $G-H$.  Now the lemma follows from Lemma \ref{PartialdkLemma}.
+\end{proof}
+
+\begin{remark}
+For $k=0$, a connected graph $G$ always has such an ordering.
+\end{remark}
+
+\section{Choosable Joins}
+\subsection{$d_k$-choosable Joins}
+We first look at sufficient conditions for a join $A+B$ to be $d_k$-choosable.  This corresponds to restricting neighborhood intersections in a $\Delta + 1 - k$ critical graph.  First we need a couple easy lemmas that allow us to conclude $d_k$-choosability of a graph from a subgraph.
+
+\begin{lem}\label{ArbitrarySubgraphLemma}
+Fix $k \geq 0$. Let $A$ be a graph with $|A| \geq k + 1$ and $B$ a non-empty graph.  If $A+B$ is $d_k$-choosable, then $A+C$ is 
+$d_k$-choosable for any graph $C$ with $B \unlhd C$.
+\end{lem}
+\begin{proof}
+ Assume $A+B$ is $d_k$-choosable and let $C$ be a graph with $B \unlhd C$.  Put $H = C - B$.  For each $v \in H$, 
+$|L(v)| \geq d(v) - k \geq d_H(k) + k+ 1 - k = d_H(v) + 1$.  Thus we may color $H$ from its lists.  By 
+Lemma \ref{PartialdkLemma}, we can complete the coloring.
+\end{proof}
+
+\begin{lem}\label{ConnectedSubgraphLemma}
+Fix $k \geq 0$. Let $A$ be a graph with $|A| \geq k$ and $B$ a non-empty graph.  If $A+B$ is $d_k$-choosable, then $A+C$ is 
+$d_k$-choosable for any connected graph $C$ with $B \unlhd C$.
+\end{lem}
+\begin{proof}
+Assume $A+B$ is $d_k$-choosable and let $C$ be a graph with $B \unlhd C$.  Put $H = C - B$.  For each $v \in H$, 
+$|L(v)| \geq d(v) - k \geq d_H(k) + k - k = d_H(v)$.  Since $C$ is connected, each component of $H$ has a vertex $v$
+that hits a vertex in $B$ and hence has $|L(v)| \geq d_H(v) + 1$. Thus we may color $H$ from its lists.  By 
+Lemma \ref{PartialdkLemma}, we can complete the coloring.
+\end{proof}
+
+\begin{lem}\label{E2bringsdown}
+Fix $k \geq 0$.  Let $G$ be a $d_{k - 1}$ choosable graph with at least $2k + 2$ vertices. Then $E_2 + G$ is $d_k$-choosable.
+\end{lem}
+\begin{proof}
+ Let $x,y$ be the vertices in the $E_2$.  Assume $G$ is not $d_k$-choosable.  Then by the Small Pot Lemma,
+we have a $d_k$-assignment $L$ with $|Pot(L)| < 2 + |G|$. 
+Now $|L(x)| + |L(y)| \geq d(x) + d(y) - 2k \geq 2|G| - 2k \geq 2 + |G|$ since $|G| \geq 2k+2$.  Thus we may mono-color
+$\{x,y\}$ leaving a $d_{k-1}$-assignment on $G$.  Thus we may complete the coloring giving a contradiction.
+\end{proof}
+
+Since every graph is $d_{-1}$-choosable we get immediately.
+\begin{cor}
+Fix $k \geq 0$. Then $E_2^{k+1} + G$ is $d_k$-choosable for all $G$ on at least two vertices.
+\end{cor}
+
+\begin{lem}\label{ArbitraryJoin}
+Fix $k \geq 0$.  Let $A$ be a graph with $|A| \geq 3k+2$ and $B$ an arbitrary graph.  If $A+B$ is not $d_k$-choosable, then
+$\omega(B) \geq |B| - 2k$.
+\end{lem}
+\begin{proof}
+Assume $G = A+B$ is not $d_k$-choosable and let $L$ be a $d_k$-assignment with $|Pot(L)| \leq |G| - 1$.  
+Let $g:S \rightarrow Pot_S(L)$ be a partial coloring of $B$ from $L$ maximizing $|S| - |im(g)|$ and then
+minimizing $|S|$.  Color $S$ using $g$ and let $L'$ be the resulting list assignment.
+Put $H = G - S$ and $C = B - S$. We must have $|S| - |im(g)| \leq k$ for otherwise
+completing $g$ to $C$ (which we can do since for $v \in C$ $|L'(v)| \geq d_C(v) - k + 3k+2 > d_C(v)$) leaves 
+each $v \in V(A)$ with a list of size at least $d_A(v) - k + |S| - |im(g)| > d_A(v)$.  Thus $L$ is not bad afterall, giving 
+a contradiction.  By the minimality condition on $|S|$ we see that $g$ has no singleton color classes.  In particular,
+$|S| \geq 2|im(g)|$ and thus $|S| \leq 2k$.  Whence the conclusion will follow if we can show that $C$ is complete.\newline
+
+By the maximality condition on $g$, $|Pot(L')| = |Pot(L)| - |im(g)|$ and 
+every pair of non-adjacent vertices in $C$ have disjoint lists under $L'$.  
+Let $I$ be a maximal independent set in $C$.  Assume $|I| \geq 2$.
+Then for all the elements of $I$ to have disjoint lists, we must have
+\begin{align*}
+ \sum_{v \in I} |L'(v)| &\leq |Pot(L')| \\
+ \sum_{v \in I} d_H(v) - k &\leq |Pot(L')| \\
+ \sum_{v \in I} |A| + d_C(v) - k &\leq |Pot(L')| \\
+ (|A|-k)|I| + \sum_{v \in I} d_C(v) &\leq |Pot(L')| \\
+ (|A|-k)|I| + |C| - |I| &\leq |Pot(L')| \\
+ (|A| - k - 1)|I| + |B| - |S|&\leq |A| + |B| - 1 - |im(g)| \\
+ (|A| - k - 1)|I| &\leq |A| - 1 + |S| - |im(g)| \\
+ 2(|A| - k - 1) &\leq |A| - 1 + |S| - |im(g)| \\
+ |A| - 2k - 1 &\leq |S| - |im(g)| \\
+ k + 1 &\leq |S| - |im(g)| \\
+\end{align*}
+
+Hence $|I| \leq 1$ showing that $C$ is complete.
+\end{proof}
+
+\begin{lem}\label{d0PotColoring}
+If $G$ is a connected graph and $L$ a $d_0$-assignment to $G$ with $|Pot(L)| \geq |G|$, then $G$ can be colored from $L$.
+\end{lem}
+\begin{proof}
+Assume (to reach a contradiction) that the lemma is false and let $L$ be a bad $d_0$-assignment to a connected graph
+ $G$ with $|Pot(L)| \geq |G|$ and $|G|$ minimal.  Plainly, $|G| \geq 2$.  
+Let $v \in G$ be a non-cut vertex (any end block has at least one).  
+If there exists $c \in L(v)- L(w)$ for some $w \in N(v)$, then coloring $v$ with $c$ would leave a connected graph with each
+vertex having at least as many colors as its degree and one vertex having more colors than its degree.  This is impossible since
+$L$ is bad.  Thus coloring $v$ decreases the pot by at most one, giving a smaller counterexample.  This contradiction completes the proof.
+\end{proof}
+
+\begin{lem}\label{ConnectedJoin}
+ Fix $k \geq 1$.  Let $A$ be a connected graph with $|A| \geq 3k+1$ and $B$ an arbitrary graph.  If $A+B$ is not $d_k$-choosable, then
+$\omega(B) \geq |B| - 2k$.
+\end{lem}
+\begin{proof}
+Assume $G = A+B$ is not $d_k$-choosable and let $L$ be a $d_k$-assignment with $|Pot(L)| \leq |G| - 1$.  Use the same notation as Lemma \ref{ArbitraryJoin}.  Note that if $|Pot(L)| \leq |G| - 2$ we are done by the same argument as Lemma \ref{ArbitraryJoin}.  Thus we may assume $|Pot(L)| = |G| - 1$.  Running through the argument with $|A| \geq 3k+1$, we conclude $|S| - |im(g)| = k$.  Completing $g$ to $C$ leaves a list assignment $L''$ on $A$ with $L''(v) \geq d_A(v)$ for each $v \in V(A)$.  Since $A$ is connected, by Lemma \ref{d0PotColoring}, we must have $Pot(L'') < |A|$.  Since we used $|B| - |S| + |im(g)| = |B| - k$ colors on $B$ we have 
+
+\[|Pot_A(L)| \leq |Pot(L'')| + |B| - k < |A| + |B| - k \leq |A| + |B| - 1.\]
+
+Thus we have some color $c \in Pot(L)$ that does not appear in any of $A$'s lists.  Put $Z = G\left[\{v \in V(B) \mid c \in L(v)\}\right]$ and let $X$ be a maximal independent set in $Z$. Put $B' = B - X$ and Let $g':S' \rightarrow Pot_{S'}(L) - \{c\}$ be a partial coloring of $B'$ from $L$ maximizing $|S'| - |im(g')|$ and then minimizing $|S'|$.  Color $S'$ using $g'$ and let $J$ be the resulting list assignment. Put $H' = G - S'$ and $C' = B' - S'$. We must have $|S'| - |im(g')| \leq k - |X|$ for otherwise
+completing $g'$ to $C'$ and then coloring $X$ with $c$ leaves 
+each $v \in V(A)$ with a list of size at least $d_A(v) - k + |S'| - |im(g')| + |X| > d_A(v)$.  Thus $L$ is not bad afterall, giving 
+a contradiction.  By the minimality condition on $|S'|$ we see that $g'$ has no singleton color classes.  In particular,
+$|S'| \geq 2|im(g')|$ and thus $|S'| \leq 2(k - |X|)$.  Thus $|C'| = |B'| - |S'| \geq |B| + |X| - 2k$. Whence the conclusion will follow if we can show that $C'$ is complete.\newline
+
+By the maximality condition on $g'$, $|Pot(J)| = |Pot(L)| - |im(g')|$ and 
+for every pair of non-adjacent vertices $w, z \in C'$ we have $J(w) \cap J(z) \subseteq \{c\}$. \newline
+ 
+Let $I'$ be a maximal independent set in $C'$.  Assume $|I'| \geq 2$.  By maximality of $|X|$, every $v \in C'$ with $c \in J(v)$ has an edge into $X$.  
+Thus $|J(v) - \{c\}| = |A| + d_{C'}(v) - k$ for each $v \in C'$.
+If for each $v \in I'$ we have $c \not \in J(v)$, then $|Pot_{I'}(J) - \{c\}| = |Pot_{I'}(J)| < |Pot(J)| \leq |A| + |B| - 1 - |im(g')|$.  On the other hand if for some $v \in I'$ we have $c \in J(v)$, then $|Pot_{I'}(J) - \{c\}| = |Pot_{I'}(J)| - 1 < |Pot(J)| \leq |A| + |B| - 1 - |im(g')|$.  For each pair of vertices $w, z \in I'$ to satisfy $J(w) \cap J(z) \subseteq \{c\}$ we must have
+\begin{align*}
+ \sum_{v \in I'} |J(v) - \{c\}| &\leq |Pot_{I'}(J) - \{c\}| \\
+ \sum_{v \in I'} |A| + d_{C'}(v) - k &\leq |A| + |B| - 2 - |im(g')| \\
+ (|A|- k)|I'| + \sum_{v \in I'} d_{C'}(v) &\leq |A| + |B| - 2 - |im(g')| \\
+ (|A|- k)|I'| + |C'| - |I'| &\leq |A| + |B| - 2 - |im(g')| \\
+ (|A| - k - 1)|I'| + |B'| - |S'|&\leq |A| + |B| - 2 - |im(g')| \\
+ (|A| - k - 1)|I'| + |B| - |X| - |S'|&\leq |A| + |B| - 2 - |im(g')| \\
+ (|A| - k - 1)|I'| &\leq |A| + |X| - 2 + |S'| - |im(g')| \\
+ 2(|A| - k - 1) &\leq |A| + |X| - 2 + |S'| - |im(g')| \\
+ |A| - 2k - |X| &\leq |S'| - |im(g')| \\
+ k - |X| + 1 &\leq |S'| - |im(g')| \\
+\end{align*}
+
+Hence $|I'| \leq 1$ showing that $C'$ is complete.
+\end{proof}
+
+\begin{lem}\label{ArbitraryBipartiteComplementJoin}
+Fix $k \geq 0$ and $j \leq k$. Let $A$ be a graph with $|A| \geq 3k+2$ and let $B$ be the complement of a bipartite graph.  If $L$ is a bad list assignment to $A+B$ such that $|L(v)| \geq d(v) - j$ for each $v \in A$ and $|L(v)| \geq d(v) - k$ for each $v \in B$, then $\omega(B) \geq |B| - j$.
+\end{lem}
+\begin{proof}
+Put $G = A + B$ and let $L$ be such a bad list assignment to $G$. Plainly $j \geq 0$. Let $M$ be a maximum matching in the complement of $B$, say $M = \{\{x_1, y_1\}, \ldots, \{x_r, y_r\}\}$.  First assume that $|M| > j$.\newline
+
+Let $M'$ be the first $j + 1$ elements of $M$. Put $H = G - \cup M'$ and $C = B - \cup M'$.  We want to mono-color each element of $M'$.  It would suffice to have $|L(x_i)| + |L(y_i)| \geq |Pot(L)| + j + 1$ for each $i$.  Since $\alpha(B) \leq 2$, for each $i$ we have $d(x_i) + d(y_i) \geq |B| - 2 + 2|A|$.  Hence $|L(x_i)| + |L(y_i)| \geq |B| - 2 + 2|A| - 2k$.  But, by the Small Pot Lemma, $|Pot(L)| \leq |A| + |B| - 1$.  Thus $|L(x_i)| + |L(y_i)| \geq |Pot(L)| + |A| - 2k - 1 \geq |Pot(L)| + k + 1$.  Hence we can mono-color each element of $M'$.  Do so and let $L'$ be the resulting list assignment on $H$.\newline
+
+Since for each $v \in V(C)$ we have $L'(v) \geq d_C(v) - k + 3k + 2 > d_C(v)$, we can complete the coloring to all of $B$.  Do so and let $L''$ be the resulting list assignment on $A$. Since each vertex of $A$ hits at least $j + 1$ mono-colored pairs in $B$ for each $v \in V(A)$ we have $L''(v) \geq d_A(v) + 1$.  Whence we can complete the coloring to all of $G$ contradicting the fact that $L$ was bad.\newline
+
+Hence $|M| \leq j$.  But $B$ is the complement of a bipartite graph and is thus perfect. Hence $\omega(B) = \chi(B) \geq |B| - |M| \geq |B| - j$.
+\end{proof}
+
+\begin{lem}\label{ConnectedBipartiteComplementJoin}
+Fix $k \geq 1$ and $j \leq k$. Let $A$ be a connected graph with $|A| \geq 3k+1$ and let $B$ be the complement of a bipartite graph.  If $L$ is a bad list assignment to $A+B$ such that $|L(v)| \geq d(v) - j$ for each $v \in A$ and $|L(v)| \geq d(v) - k$ for each $v \in B$, then $\omega(B) \geq |B| - j$.
+\end{lem}
+\begin{proof}
+Put $G = A + B$ and let $L$ be such a bad list assignment to $G$. Plainly $j \geq 0$. Let $M$ be a maximum matching in the complement of $B$, say $M = \{\{x_1, y_1\}, \ldots, \{x_r, y_r\}\}$.  If $|M| \leq j$, then since $B$ is perfect we have $\omega(B) = \chi(B) \geq |B| - |M| \geq |B| - j$. Thus we may assume that $|M| > j$.\newline
+
+Running through the proof of Lemma \ref{ArbitraryBipartiteComplementJoin} with $|B| \geq 3k+1$ shows that we must have $|Pot(L)| = |A| + |B| - 1$ and that we can mono-color each pair of any matching in the complement of $B$ having $k$ elements.  Do so for one such matching and then complete the coloring to the rest of $B$. Let $L''$ be the resulting list assignment on $A$.  Since each vertex of $A$ hits at least $k$ mono-colored pairs in $B$ for each $v \in V(A)$ we have $L''(v) \geq d_A(v) + k - j$. In particular, $j \geq k \geq 1$ and $L''(v) \geq d_A(v)$. Thus, by Lemma \ref{d0PotColoring} we must have $Pot(L'') < |A|$. Hence we have
+
+\[|Pot_A(L)| \leq |Pot(L'')| + |B| - j < |A| + |B| - j \leq |A| + |B| - 1.\]
+
+Thus we have some color $c \in Pot(L)$ that does not appear in any of $A$'s lists.  Take $x \in V(B)$ with $c \in L(x)$.  Put $B' = B - \{x\}$. Let $M'$ be a maximum matching in the complement of $B'$.  If $|M'| \leq j - 1$, then since $B'$ is perfect we have $\omega(B') = \chi(B') \geq |B'| - |M'| \geq |B| - 1 - (j - 1) = |B| - j$.  Thus we may assume $|M'| \geq j$.  By the proof of Lemma \ref{ArbitraryBipartiteComplementJoin} we know that we can mono-color the first $j$ elements of $M'$.  Do so.  If we used $c$, then we can easily complete the coloring to all of $G$.  If we did not use $c$, then color $x$ with $c$ and we can again complete the coloring to all of $G$.  Hence $L$ was not bad afterall giving a contradiction.
+\end{proof}
+
+When $A$ is complete it is possible to improve Lemma \ref{ConnectedBipartiteComplementJoin} by using Hall's theorem to get unused colors in $B$ and Lemma \ref{MinPotCondition} to find a set of vertices colorable with these colors.  However, the arguments get intricate and we've only been able to decrease the bound on $A$ by a small amount. We conjecture that the bound on $A$ can be decreased to $2k+2$.  This would be tight.
+
+\begin{conjecture}\label{CompleteBipartiteComplementJoin}
+Fix $k \geq 0$ and $j \leq k$. Let $A$ be a complete graph with $|A| \geq 2k+2$ and let $B$ be the complement of a bipartite graph.  If $L$ is a bad list assignment to $A+B$ such that $|L(v)| \geq d(v) - j$ for each $v \in A$ and $|L(v)| \geq d(v) - k$ for each $v \in B$, then $\omega(B) \geq |B| - j$.
+\end{conjecture}
+
+It is not difficult to show that for a bad list assignment to $G = A + B$ with $|Pot(L)|$ minimal, we must have $L(v) \neq Pot(L)$ for each $v \in V(G)$.  Thus Lemma \ref{MinPotCondition} applies without restriction.
+
+\subsection{$d_1$-choosable Joins}
+Here we perform an in depth study of $d_1$-choosable graphs.  These stand in the same relation to the Borodin-Kostochka conjecture as $d_0$-choosable graphs do to Brooks' theorem.  A complete classification like in the $d_0$ case would be very interesting, but seems hard to achieve.  We classify all the $d_1$-choosable graphs that can be written in the form $A+B$ where $|A| \geq |B| \geq 2$.  In addition we give some examples of $d_1$-choosable graphs of the form $K_1 + B$.\newline
+
+We will use both the Small Pot Lemma and Lemma \ref{ArbitrarySubgraphLemma} implicity throughout this section.  We note that the claims in this section are about small enough graphs that it is possible to check them with brute force by computer.  Even though we have done this, we include proofs for completeness.  By ``a clique and a vertex'' we mean the disjoint union of a clique and a vertex with zero or more edges added.
+
+\begin{thm}
+Any graph which can be written in the form $A+B$ where $|A| \geq |B| \geq 2$ is not $d_1$-choosable if and only if it falls into at least one of the following categories.
+
+\begin{itemize}
+\item $E_2 + B$ where $B$ is the disjoint union of cliques and at most one $P_3$,
+\item $E_3 + B$ where $B \in \{K_2,E_2,E_3,\bar{P_3},K_3,K_4,K_5\}$,
+\item $E_4 + B$ where $B \in \{K_2, E_2, K_3\}$,
+\item $E_r + B$ where $r \geq 5$ and  $B \in \{K_2, E_2\}$,
+\item $\bar{P_3} + B$ where $B$ is $E_3$, a clique, or the disjoint union of a vertex and a clique,
+\item $P_4 + B$ where $B = K_2$,
+\item $(K_1 \sqcup P_3) + B$ where $B \in \{K_2, E_2\}$,
+\item $\bar{C_4} + B$ where $B \in \{K_2, E_2, K_3\}$,
+\item $\text{anti-diamond} + B$ where $B \in \{K_2, E_2, K_3\}$,
+\item $K_6 + B$ where $B$ is a clique or a clique and a vertex,
+\item $K_5 + B$ where $B$ is $E_3$, a clique, or a clique and a vertex,
+\item $K_4 + B$ where $B$ is $E_3$, a clique, or a clique and a vertex, 
+\item $K_3 + B$ where $B$ is $E_3$, a clique, a clique and a vertex, or the disjoint union of two cliques,
+\item
+\item
+\item
+\end{itemize}
+\end{thm}
+
+\begin{lem}\label{E2SmallerPot}
+Let $H$ be a connected graph with $|H| \geq 4$ such that $E_2 + H$ is not $d_1$-choosable. Then there is a bad $d_1$-assignment $L$ to $E_2 + H$ with $|Pot(L)| \leq |H|$.  Moreover, any color that the $E_2$ vertices have in common appears on every vertex in $H$.
+\end{lem}
+\begin{proof}
+By the Small Pot Lemma we have a bad $d_1$-assignment $L$ to $E_2 + H$ with $|Pot(L)| \leq |H| + 1$.  To get a contradiction, assume $|Pot(L)| = |H| + 1$. Let $x,y$ be the vertices in the $E_2$.  Then $|L(x)| + |L(y)| \geq d(x) + d(y) - 2 = 2|H| - 2 \geq |H| + 2$ since $|H| \geq 4$.  Hence we can mono-color $x,y$.  Doing so leaves a $d_0$-assignment on $H$.  Since $H$ is connected, Lemma \ref{d0PotColoring} gives $|Pot_H(L)| \leq |H|$.  Then we have some color $c$ that only appears in the $E_2$.  But then $G_c$ is empty which is impossible by Lemma \ref{CannotColorSelfWithSelf}.\newline
+
+For the final statement just note that otherwise every $v \in V(H)$ would be left with at least $d_H(v)$ colors and some vertex would be left with more.
+\end{proof}
+
+\begin{lem}\label{E2PlusC4}
+$E_2 + C_4$ is $d_1$-choosable
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{E2bringsdown}.
+\end{proof}
+\begin{lem}\label{E2PlusDiamond}
+$E_2 +$diamond is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{E2bringsdown}.
+\end{proof}
+\begin{lem}\label{E2PlusClaw}
+$E_2 + $claw is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then  $|Pot(L)| \leq 4$ by Lemma \ref{E2SmallerPot}.  Let $x_1, x_2$ be the vertices of degree $4$, $y$ the vertex of degree $5$ and $z_1, z_2, z_3$ the vertices of degree $3$.  Then $x_1$ and $x_2$ have a two colors $c_1, c_2$ in common.\newline
+
+By Lemma \ref{E2SmallerPot} both $z_1$ and $z_2$ have $c_1$ and $c_2$. Coloring $x_1, x_2$ with $c_1$ and $z_1, z_2$ with $c_2$ leaves $y$ with a list of size at least $2$ and $z_3$ with a list of size at least $1$.  Now color $z_3$ and then $y$.\newline
+\end{proof}
+
+\begin{lem}\label{E2PlusPaw}
+$E_2 + $paw is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 4$ by Lemma \ref{E2SmallerPot}.  Let $w_1, w_2$ be the vertices in the $E_2$ (they have degree $4$), $x$ the vertex of degree $5$, $y$ the vertex of degree $3$, and $z_1, z_2$ the other vertices of degree $4$.\newline
+
+Then $w_1$ and $w_2$ have a two colors $c_1, c_2$ in common. By Lemma \ref{E2SmallerPot} each vertex in the paw also has $c_1$ and $c_2$.  Color $w_1, w_2$ with $c_1$ and then $y$ with $c_2$.  This leaves $x$ with a list of size at least $2$ and $z_1, z_2$ with lists of size at least $2$.  But $z_1, z_2$ both still have $c_2$ and $c_2$ got removed from $x$'s list when $y$ was colored.  Thus the lists are different and we can complete the coloring.
+\end{proof}
+
+\begin{lem}\label{E2PlusP4}
+$E_2 + P_4$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 4$ by Lemma \ref{E2SmallerPot}. Let $w_1, w_2$ be the vertices in the $E_2$ (they have degree $4$), and $x_1, x_2, x_3, x_4$ be the vertices of the $P_4$.\newline
+
+Let $c_1, c_2$ be two colors that $w_1, w_2$ have in common.  Then, by Lemma \ref{E2SmallerPot} each vertex in the $P_4$ has both $c_1$ and $c_2$.  Color $x_1, x_3$ with $c_1$ and $x_2, x_4$ with $c_2$.  Complete the coloring to $w_1, w_2$.
+\end{proof}
+
+\begin{lem}\label{E2Plus2P3}
+$E_2 + 2P_3$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 7$ by the Small Pot Lemma.  Let $w_1, w_2$ be the vertices in the $E_2$.  Then $w_1, w_2$ have three colors $c_1, c_2, c_3$ in common.  Coloring $w_1, w_2$ with $c_1$ we see that every vertex in at least one of the $P_3$'s contains $c_1$ (otherwise we can complete the coloring).  Similarly for $c_2$ and $c_3$.  Since the ends of the $P_3$'s have lists of size $2$, each $P_3$ gets at least one color.  Without loss of generality, we may color the ends on one $P_3$ with $c_1$ and the other with $c_2$.  Now color the remaining vertices in the $P_3 \sqcup P_3$ and note that we have only used $4$ colors.  Since $w_1$, $w_2$ have lists of size $5$ we can complete the coloring.
+\end{proof}
+
+\begin{lem}\label{E3NoCommon}
+Let $H$ be a graph such that $E_3 + H$ is not $d_1$-choosable.  Then in every bad list assignment $L$ to $E_3 + H$, the vertices in the $E_3$ have no common color.  In particular, $|H| \leq 7$.  In addition, if $|H| \geq 4$ then $H$ cannot be $2$-colored from the lists.
+\end{lem}
+\begin{proof}
+Let $L$ be a bad list assignment to $E_3 + H$ with $|Pot(L)|$ minimal. Let $x_1, x_2, x_3$ be the vertices in the $E_3$. Coloring $x_1, x_2, x_3$ a common color would leave a $d_1$-assignment on $H$ which is impossible since $L$ is bad.\newline
+
+By the Small Pot Lemma, we have $|Pot(L)| \leq |H| + 2$.  If $|H| \geq 8$, then $|L(x_1)| + |L(x_2)| + |L(x_3)| \geq d(x_1) + d(x_2) + d(x_3) - 3 = 3|H| - 3 > 2(|H| + 2)$ and thus $x_1, x_2, x_3$ have a color in common by Lemma \ref{BasicFiniteSets}.\newline
+
+If $|H| \geq 4$, then $2$-coloring of $H$ from the lists would leave each vertex in the $E_3$ with at least one color and thus we could complete the coloring.
+\end{proof}
+
+\begin{lem}\label{E3PlusC4Bar}
+$E_3 + \bar{C_4}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 6$ by the Small Pot Lemma.  By Lemma \ref{E3NoCommon}, $|Pot(L)| \geq 5$.  Let $x_1, x_2, x_3$ be the vertices in the $E_3$ and $y_1, y_2$ the vertices in one $K_2$ and $z_1, z_2$ the vertices in the other.\newline
+
+At least one pair of vertices among $x_1, x_2, x_3$ has a color in common.  Without loss of generality say $x_1, x_2$ both have $c_1$.  We know that $x_3$ does not have $c_1$, say $L(x_3) = \{c_2, c_3, c_4\}$.  Color $x_1, x_2$ with $c_1$ and $x_3$ with $c_2$.  This leaves a $d_0$-assignment on the rest, so every vertex in at least one of the $K_2$'s must contain both $c_1$ and $c_2$.  Do the same thing using $c_3$ and then $c_4$ for $x_3$.  Since each of $y_1, y_2, z_1, z_2$ have lists of size only $3$ it must be that they all have $c_1$.  In addition, without loss of generality $L(y_1) = L(y_2) = \{c_1, c_2, c_3\}$ and $\{c_1, c_4\} \subseteq L(z_1)$ and $\{c_1, c_4\} \subseteq L(z_2)$.\newline
+
+Assume $|Pot(L)| = 5$.  Then every pair of vertices among $x_1, x_2, x_3$ has a color in common and some pair has two in common.  But by the above argument that would mean each of $y_1, y_2, z_1, z_2$ have $4$ colors which is impossible.\newline
+
+Hence we may assume $|Pot(L)| = 6$.  By Lemma \ref{CannotColorSelfWithSelf} each of the $6$ colors must appear among $y_1, y_2, z_1, z_2$.  Thus without loss of generality $L(z_1) = \{c_1, c_4, c_5\}$ and $L(z_2) = \{c_1, c_4, c_6\}$.  Now color $x_1, x_2$ with $c_1$, color $x_3$ with $c_4$, color $y_1$ with $c_2$ and $y_2$ with $c_3$, and finally color $z_1$ with $c_5$ and $z_2$ with $c_6$.
+
+\end{proof}
+\begin{lem}\label{E3PlusDiamondBar}
+$E_3 + \text{anti-diamond}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 6$ by the Small Pot Lemma.  By Lemma \ref{E3NoCommon}, $|Pot(L)| \geq 5$ and we cannot $2$-color the $\text{anti-diamond}$ from the lists. Let $x_1, x_2, x_3$ be the vertices in the $E_3$ and $y_1, y_2$ the singleton components and $z_1, z_2$ the vertices in the $K_2$.\newline
+
+At least one pair of vertices among $x_1, x_2, x_3$ has a color in common.  Without loss of generality say $x_1, x_2$ both have $c_1$.  We know that $x_3$ does not have $c_1$, say $L(x_3) = \{c_2, c_3, c_4\}$.  Color $x_1, x_2$ with $c_1$ and $x_3$ with $c_2$.  This leaves a $d_0$-assignment on the rest, so every vertex in at least one of the components must contain both $c_1$ and $c_2$.  Do the same thing using $c_3$ and then $c_4$ for $x_3$.  Since $z_1, z_2$ have lists of size only $3$ and $y_1, y_2$ lists of size only $2$ and we can't $2$-color the $\text{anti-diamond}$ from the lists, we conclude without loss of generality that $L(y_1) = \{c_1, c_2\}$ and $c_1 \not \in L(y_2)$ and that $L(z_1) = L(z_2) = \{c_1, c_3, c_4\}$.\newline
+\end{proof}
+
+\begin{lem}\label{E3PlusClawBar}
+$E_3 +  \text{anti-claw}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 6$ by the Small Pot Lemma.  By Lemma \ref{E3NoCommon}, $|Pot(L)| \geq 5$.
+\end{proof}
+\begin{lem}\label{E3PlusE4}
+$E_3 + E_4$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+Let $L$ be a $d_1$-assignment with $|Pot(L)|$ minimal. Then $|Pot(L)| \leq 6$ by the Small Pot Lemma.  By Lemma \ref{E3NoCommon}, $|Pot(L)| \geq 5$.
+\end{proof}
+\begin{lem}\label{E3PlusK6}
+$E_3 + K_6$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+\begin{lem}\label{E4PlusP3Bar}
+$E_4 + \bar{P_3}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{E4PlusK4}
+$E_4 + K_4$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{E5PlusK3}
+$E_5 + K_3$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{P3BarPlusC4Bar}
+$\bar{P_3} + \bar{C_4}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{P3BarPlusDiamondBar}
+$\bar{P_3} + \text{anti-diamond}$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{P4PlusK3}
+$P_4 + K_3$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K1CupP3PlusK3}
+$(K_1 \sqcup P_3) + K_3$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{C4BarPlusK4}
+$ \bar{C_4} + K_4$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{DiamondBarPlusK4}
+$ \text{anti-diamond} + K_4$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K2PlusP5}
+$K_2 + P_5$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K2PlusC5}
+$K_2 + C_5$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K2PlusChair}
+$K_2 +$chair is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K2PlusKite}
+$K_2 +$kite is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K2Plus2P3}
+$K_2 + 2P_3$ is $d_1$-choosable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{E2Classification}
+$E_2 + B$ is not $d_1$-choosable if and only if $B$ is the disjoint union of cliques and at most one $P_3$.
+\end{lem}
+\begin{proof}
+Assume we have $B$ such that $E_2 + B$ is not $d_1$-choosable. By Lemma \ref{E2Plus2P3}, $B$ has at most one non-complete component.  Assume we have a non-complete component $C$ and let $xyz$ be an induced $P_3$ in $C$.  If $C \neq P_3$, then there is some other vertex $w$ with an edge to some of $\{x, y, z\}$.  But then $C$ contains one of $\{P_4, claw, C_4, paw, diamond\}$ all of which our lemmas have excluded.\newline
+
+For the other direction, it is easy to see that for any $B$ such that $E_2 + B$ is not $d_1$-choosable adding a disjoint clique to $B$ does not make it $d_1$-choosable.  Since $E_2 + P_3$ is not $d_1$-choosable, this proves the lemma.
+\end{proof}
+
+\begin{lem}\label{E3Classification}
+$E_3 + B$ is not $d_1$-choosable if and only if $B \in \{K_1,K_2,E_2,E_3,\bar{P_3},K_3,K_4,K_5\}$.
+\end{lem}
+\begin{proof}
+Assume we have $B$ such that $E_3 + B$ is not $d_1$-choosable. By Lemma \ref{E2Classification} $B$ is the disjoint union of cliques and at most one $P_3$.  By Lemma \ref{E2PlusClaw} $B$ contains no $P_3$.  By Lemma \ref{E3PlusE4} $B$ has at most three components.  By Lemma \ref{E3PlusDiamondBar} if $B$ has three components, then $B = E_3$.  By Lemma \ref{E3PlusC4Bar} and Lemma \ref{E3PlusClawBar} if $B$ has two components then $B = E_2$ or $B = \bar{P_3}$.  Otherwise $B$ is a clique and lemma \ref{E3PlusK6} shows that $|B| \leq 5$.\newline
+
+For the other direction, it is easy to verify that $E_2 + B$ is not $d_1$-choosable for the listed graphs.
+\end{proof}
+
+\begin{lem}\label{E4Classification}
+$E_4 + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2, E_2, K_3\}$.
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{E3Classification}, Lemma \ref{E4PlusP3Bar}, and Lemma \ref{E4PlusK4}.
+\end{proof}
+
+\begin{lem}\label{E5Classification}
+For $r\geq 5$, $E_r + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2, E_2\}$.
+\end{lem}
+\begin{proof}
+Lemma \ref{E5PlusK3} excludes $K_3$ from the classification in Lemma \ref{E4Classification}.\newline
+
+For the other direction, adding a vertex to make a larger $E_r$ doesn't help make the graph $d_1$-choosable since each possible $B$ has at most $2$ vertices.
+\end{proof}
+
+\begin{lem}\label{P3ComplementClassification}
+$\bar{P_3} + B$ is not $d_1$-choosable if and only if $B$ is $E_3$, a clique, or the disjoint union of a vertex and a clique.
+\end{lem}
+\begin{proof}
+Since $\bar{P_3}$ contains an $E_2$, Lemma \ref{E2Classification} shows that $B$ is the disjoint union of cliques and at most one $P_3$.  By Lemma \ref{E2PlusPaw} $B$ contains no $P_3$.  By Lemma \ref{P3BarPlusC4Bar} at most one component of $B$ has more than one vertex.  If $B$ has more than two components, then Lemma \ref{P3BarPlusDiamondBar} shows that $B$ is independent and thus Lemma \ref{E4PlusP3Bar} shows that $B = E_3$.  If $B$ has two components then it is the disjoint union of a clique and a vertex.  Otherwise $B$ is a clique.
+\end{proof}
+
+\begin{lem}\label{P4Classification}
+$P_4 + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2\}$.
+\end{lem}
+\begin{proof}
+Lemma \ref{E2PlusP4} shows that $B$ is a clique.  Lemma \ref{P4PlusK3} shows that $|B| \leq 2$.
+\end{proof}
+
+\begin{lem}\label{K1CupP3Classification}
+$(K_1 \sqcup P_3) + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2, E_2\}$.
+\end{lem}
+\begin{proof}
+Lemma \ref{P3ComplementClassification} shows that $B$ is $E_3$, a clique, or the disjoint union of a vertex and a clique.  Lemma \ref{E2PlusClaw} shows that $B$ is not $E_3$.  Lemma \ref{E2PlusPaw} shows that if $B$ has two components, then $B = E_2$.  Otherwise, Lemma \ref{K1CupP3PlusK3} shows that $|B| \leq 2$.
+\end{proof}
+
+\begin{lem}\label{C4ComplementClassification}
+$\bar{C_4} + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2, E_2, K_3\}$.
+\end{lem}
+\begin{proof}
+Since $\bar{C_4}$ contains $\bar{P_3}$, Lemma \ref{P3ComplementClassification} shows that $B$ is $E_3$, a clique, or the disjoint union of a vertex and a clique.  By Lemma \ref{E3Classification}, $B$ is not $E_3$.  Using Lemma \ref{P3ComplementClassification} the other direction shows that $B$ contains no $\bar{P_3}$.  Thus if $B$ has two components, then $B = E_2$.  Otherwise, Lemma \ref{C4BarPlusK4} shows that $|B| \leq 3$.
+\end{proof}
+
+\begin{lem}\label{DiamondComplementClassification}
+$\text{anti-diamond} + B$ is not $d_1$-choosable if and only if $B \in \{K_1, K_2, E_2, K_3\}$.
+\end{lem}
+\begin{proof}
+Since $\text{anti-diamond}$ contains $\bar{P_3}$, Lemma \ref{P3ComplementClassification} shows that $B$ is $E_3$, a clique, or the disjoint union of a vertex and a clique.  By Lemma \ref{E3Classification}, $B$ is not $E_3$. Using Lemma \ref{P3ComplementClassification} the other direction shows that $B$ contains no $\bar{P_3}$.  Thus if $B$ has two components, then $B = E_2$.  Otherwise, Lemma \ref{DiamondBarPlusK4} shows that $|B| \leq 3$. 
+\end{proof}
+
+\begin{lem}\label{K2Classification}
+$K_2 + B$ is not $d_1$-choosable if and only if...
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K3Classification}
+$K_3 + B$ is not $d_1$-choosable if and only if $B \in \{E_3, \text{claw}, K_2 + E_3\}$ or $B$ is a clique, a clique and a vertex, or the disjoint union of two cliques.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{K4Classification}
+$K_4 + B$ is not $d_1$-choosable if and only if $B$ is $E_3$, a claw, a clique, or a clique and a vertex.
+\end{lem}
+\begin{proof}
+By Lemma \ref{C4BarPlusK4} $B$ has at most one component with more than one vertex.  Now the lemma follows from Lemma \ref{K3Classification}.
+\end{proof}
+
+\begin{lem}\label{K5Classification}
+$K_5 + B$ is not $d_1$-choosable if and only if $B$ is $E_3$, a clique, or a clique and a vertex.
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{K4Classification}.
+\end{proof}
+
+\begin{lem}\label{K6Classification}
+$K_6 + B$ is not $d_1$-choosable if and only if $B$ is a clique or a clique and a vertex.
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{K5Classification} and Lemma \ref{E3PlusK6}.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+
+\end{document}

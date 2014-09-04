@@ -1,0 +1,192 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{KonigEgervary}{The K{\"o}nig-Egerv{\'a}ry Theorem}
+\newtheorem*{Konig}{K{\"o}nig's Theorem}
+\newtheorem*{Hall}{Hall's Theorem}
+\newtheorem*{Dilworth}{Dilworth's Theorem}
+\newtheorem*{Turan}{Tur{\'a}n's Theorem}
+\newtheorem*{Berge}{Berge's Theorem}
+\newtheorem*{TutteMatching}{Tutte's Matching Theorem}
+\newtheorem*{TutteBergeMatching}{Tutte-Berge Matching Formula}
+\newtheorem*{Richardson}{Richardson's Theorem}
+\newtheorem*{GallaiMilgram}{Gallai-Milgram Theorem}
+\newtheorem*{GallaiRoy}{Gallai-Roy Theorem}
+\newtheorem*{StableMatchingLemma}{Stable Matching Lemma}
+\newtheorem*{Galvin}{Galvin's Theorem}
+\newtheorem*{Mader}{Mader's Average Degree Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{NashWilliamsTutte}{Nash-Williams and Tutte Theorem}
+\newtheorem*{NashWilliams}{Nash-Williams Theorem}
+\newtheorem*{GallaiEdmonds}{Gallai-Edmonds Decomposition}
+\newtheorem*{Menger}{Menger's Theorem}
+\newtheorem*{VizingSimple}{Vizing's Simple Theorem}
+\newtheorem*{Vizing}{Vizing's Theorem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{TuranGraph}{Tur{\'a}n Graph}
+\newtheorem*{AugmentingPath}{Augmenting Path}
+\newtheorem*{StableMatching}{Stable Matching}
+\newtheorem*{NormalTree}{Normal Tree}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\defic}[1]{\text{def}(#1)}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+
+\title{Some notes}
+\author{landon rabern}
+
+\begin{document}
+\maketitle
+\section{Bipartite Coloring and Matching}
+
+\begin{lem}
+A graph is bipartite iff it contains no odd cycle.
+\end{lem}
+\begin{proof}
+The forward direction is plain.  For the reverse, assume the lemma is false and let $G$ be a graph containing no odd cycle which is not bipartite minimizing $\card{G}$.  Plainly $G$ is $3$-critical.  Pick $x \in V(G)$ and let $\set{\set{x}, A, B}$ be a proper coloring of $G$.  For $z \in N(x) \cap A$, let $C_z$ be the component of $z$ in $G[A \cup B]$.  
+
+First, assume there is $z \in N(x) \cap A$ such that there exists $y \in N(x) \cap B \cap C_z$.  Let $P$ be a path from $z$ to $y$ in $C_z$.  Then $\card{P}$ is even as $P$ alternates between $A$ and $B$. Thus $xPx$ is an odd cycle in $G$ giving a contradiction.
+
+Put $C = \bigcup_{z \in N(x) \cap A} C_z$.  Then $N(x) \cap B \cap C = \emptyset$. Move $A \cap C$ into $B$ and $B \cap C$ into $A$ to get a new $3$-coloring $\set{\set{x}, A', B'}$ of $G$.  Then, we have moved all of $N(x) \cap A$ into $B$ and moved none of $N(x) \cap B$.  Hence $x$ has no neighbors in $A'$ and we have the bipartition $\set{A' \cup \set{x}, B'}$ of $G$ giving a contradiction.
+\end{proof}
+
+\begin{lem}[Lov{\'a}sz, proof by Gasparian]\label{ComplementOfPerfectGraph}
+A graph $G$ is perfect iff $\alpha(H)\omega(H) \geq \card{H}$ for each $H \unlhd G$.  In particular, a graph is perfect iff its complement is perfect.
+\end{lem}
+\begin{proof}
+For the forward direction, just note that if $G$ is perfect, then $\alpha(H)\omega(H) = \alpha(H)\chi(H) \geq \card{H}$ for every $H \unlhd G$.
+
+Assume the reverse direction is false and let $G$ be a counterexample with the minimum number of vertices.  Then, by minimality, every proper induced subgraph of $G$ is perfect and $\omega(G) < \chi(G)$.  Thus, for each independent $I \subseteq V(G)$, we must have $\chi(G-I) = \omega(G-I) = \omega(G) = \chi(G) - 1$.
+
+Put $n = \card{G}$, $\alpha = \alpha(G)$ and $\omega = \omega(G)$.  Let $A_0 = \set{v_1, \ldots, v_\alpha}$ be a maximum independent set in $G$.  For $1 \leq i \leq \alpha$, let $\set{A_{(i - 1)\omega + 1}, \ldots, A_{i\omega}}$ be a proper $\omega$-coloring of $G - v_i$.  
+
+Let $K$ be an $\omega$-clique in $G$.  We claim that $A_i \cap K = \emptyset$ for at most one $0 \leq i \leq \alpha\omega$.  To prove the claim, first assume $A_0 \cap K = \emptyset$. Then $K \subseteq V(G - v)$ for each $v \in A_0$.  Hence, for each $v \in A_0$, $K$ intersects every color class in any $\omega$-coloring of $G-v$ and in particular, $A_t \cap K \neq \emptyset$ for all $t \geq 1$.  Now assume $A_0 \cap K = \set{w}$. For each $v \in A_0 - \set{w}$, $K$ intersects every color class in any $\omega$-coloring of $G-v$.  Also, $K$ intersects all but one color class in any $\omega$-coloring of $G-w$.  In particular, $K$ intersects all but one $A_t$ for $0 \leq t \leq \alpha\omega$.  This proves the claim.
+
+Since $\omega(G-A_i) = \omega$, we have an $\omega$-clique $K_i$ in $G - A_i$ for each $0 \leq i \leq \alpha\omega$.  We know that $\card{A_i \cap K_j} \leq 1$ for each $i, j$, since $A_i$ is independent and $K_j$ is complete. Since $A_i \cap K_i = \emptyset$, by the above claim, we have $\card{A_i \cap K_j} = \delta_{ij}$.
+
+Let $A$ be the $(\alpha\omega + 1) \times n$ matrix whose $i$-th row is the incidence vector of $A_i$.  Let $B$ be the $n \times (\alpha\omega + 1)$ matrix whose $i$-th column is the incidence vector of $K_i$.  Put $X = AB$.  Then, since $\card{A_i \cap K_j} = \delta_{ij}$, we see that $X$ is the $(\alpha\omega + 1) \times (\alpha\omega + 1)$ matrix with $X_{ij} = \delta_{ij}$. Plainly, $\det X \neq 0$ and hence $X\colon \mathbb{R}^{\alpha\omega + 1} \rightarrow \mathbb{R}^{\alpha\omega + 1}$ is injective.  Thus, $B\colon \mathbb{R}^{\alpha\omega + 1} \rightarrow \mathbb{R}^n$ is injective and in particular, $n \geq \alpha\omega + 1$.  But this contradicts our assumption that $\alpha\omega \geq n$.
+\end{proof}
+
+\begin{lem}\label{BipartiteComplement}
+The complement of any bipartite graph is perfect.
+\end{lem}
+\begin{proof}
+Plainly bipartite graphs are perfect.  Hence so are their complements by Lemma \ref{ComplementOfPerfectGraph}.
+\end{proof}
+
+\begin{KonigEgervary}\label{KonigEgervary}
+Every bipartite graph satisfies $\tau = \nu$.
+\end{KonigEgervary}
+\begin{proof}
+Let $G$ be a bipartite graph.  By Lemma \ref{BipartiteComplement}, we have
+\[\card{G} - \tau(G) = \alpha(G) = \omega(\overline{G}) = \chi(\overline{G}) = \card{G} - \nu(G).\]
+
+Hence $\tau(G) = \nu(G)$.
+\end{proof}
+
+\begin{Hall}\label{Hall}
+A bipartite graph with parts $A$ and $B$ has a matching of $A$ into $B$ iff
+$\card{N(X)} \geq \card{X}$ for all $X \subseteq A$.
+\end{Hall}
+\begin{proof}
+Let $G$ be a bipartite graph with parts $A$ and $B$.  The reverse implication is plain.  For the forward implication, assume $\card{N(X)} \geq \card{X}$ for all $X \subseteq A$.  Then, in $\overline{G}$, each $X \subseteq A$ is joined to at most $\card{B} - \card{X}$ vertices in $B$.  Hence $\omega(\overline{G}) \leq \card{B}$.  By Lemma \ref{BipartiteComplement}, we have $\card{G} - \nu(G) = \chi(\overline{G}) = \omega(\overline{G}) \leq \card{B}$.  Hence $\nu(G) \geq \card{A}$.  Since $A$ and $B$ are independent, any matching of size $\card{A}$ is a matching of $A$ into $B$.  This completes the proof.
+\end{proof}
+
+\begin{Konig}
+Every bipartite graph satisfies $\chi' = \Delta$.
+\end{Konig}
+\begin{proof}
+Let $H$ be the line graph of a bipartite graph $G$.  By Lemma \ref{BipartiteComplement}, $\overline{G}$ is perfect.  Hence $\omega(\overline{H}) = \alpha(H) = \nu(G) = \card{G} - \chi(\overline{G}) = \card{G} - \omega(\overline{G}) = \tau(G) = \chi(\overline{H})$.  
+
+Since removing edges from a bipartite graph leaves a bipartite graph, being the complement of the line graph of a bipartite graph is a hereditary property.  Hence the above shows that the complement of the line graph of a bipartite graph is perfect.
+
+Now, let $G$ be a bipartite graph. Then $\overline{L(G)}$ is perfect and hence $L(G)$ is perfect by Lemma \ref{ComplementOfPerfectGraph}. But
+$G$ has no triangles, so $\Delta(G) = \omega(L(G)) = \chi(L(G)) = \chi'(G)$.
+\end{proof}
+
+\begin{Dilworth}
+In any poset $(P, <)$, the maximum size of an antichain in $P$ equals the minimum size of a chain parition of $P$.
+\end{Dilworth}
+\begin{proof}
+Let $(P, <)$ be an arbitrary poset.  For $i \geq 1$, let $A_i$ be the $x \in P$ such that the longest chain in $P$ ending in $x$ has $i$ elements.  Then, each $A_i$ is an antichain since if $y, z \in A_i$ with $y < z$, then the union of $\set{z}$ with any length $i$ chain ending in $y$ gives the contradiction $z \not \in A_i$.  Let $c(P)$ be the length of the longest chain in $P$. Then $A_i = \emptyset$ for $i > c(P)$.  Hence $A_1, \ldots, A_{c(P)}$ is a partition of $P$ into $c(P)$ antichains.
+
+Let $G_P$ be the graph with $V(G_P) = P$ and $E(G_P) = \setbs{uv}{u < v \text{ or } v < u}$.  Then, from the above, $\chi(G_P) \leq c(P) = \omega(G_P)$ and hence $\chi(G_P) = \omega(G_P)$.  Call such a $G_P$ a \emph{comparability graph}.
+
+Since the class of comparability graphs is plainly hereditary, the above proves that they are perfect.  Hence by Lemma \ref{ComplementOfPerfectGraph}, so are their complements.  Thus, if $(P, <)$ is a poset, we have $\chi(\overline{G_P}) = \omega(\overline{G_P}) = \alpha(G_P)$.  But a clique in $G_P$ is precisely a chain in $P$ and an independent set is precisely an antichain in $P$.  Hence, the maximum size of an antichain in $P$ equals the minimum number of chains into which $P$ can be partitioned.
+\end{proof}
+
+\section{Other interesting results}
+
+\begin{thm}
+The graph resulting from replacing all vertices of a perfect graph with perfect graphs is perfect.
+\end{thm}
+\begin{proof}
+Clearly it is enough to show that replacing a single vertex of a perfect graph by a perfect graph gives a perfect graph.  Assume this is not the case and choose a perfect graph $G$, $v \in V(G)$ and a perfect graph $F$ first minimizing $\card{F}$ and then minimizing $\card{G}$ such that replacing $v$ by $F$ in $G$ yields an imperfect graph.  Let $D$ be $G$ with $v$ replaced by $F$.  Then any induced subgraph of $D$ is perfect by minimality of $\card{F}$ and $\card{G}$.  Hence we must have $\omega(D) < \chi(D)$.  Thus $\omega(D) = \omega(D - y) = \chi(D - y) = \chi(D) - 1$ for any $y \in V(D)$.
+
+Pick $x \in V(F)$ and let $\pi$ be an $\omega(D)$-coloring of $D-x$.  Let $C_1, \ldots, C_k$ be the color classes of $\pi$ that contain a vertex of $F-x$.  Then each $y \in V(F)$ is non-adjacent to all of $\bigcup_i C_i - V(F)$.  Hence we must have $\omega(F) = \chi(F) \geq k + 1$ and hence $\omega(F) = \chi(F) = k + 1$. Note that $x$ must be in every $(k+1)$-clique in $F$. But this was for any $x \in V(F)$, thus every vertex of $F$ is in every $(k+1)$-clique in $F$ showing that $F = K^{k+1}$.  If $k > 1$, then by minimality of $\card{F}$ replacing $v$ with $K^k$ and then one of the vertices of the $K^k$ with $K^2$ shows that $D$ is perfect.  Hence $k = 1$.
+
+Say $V(F) = \set{x, y}$ with $y \in C_1$. Then $y$ cannot be in an $\omega(D)$-clique $K$ in $D-x$ since then $K \cup \set{x}$ would be an $(\omega(D) + 1)$-clique in $D$.  Hence $\omega(D) - 1 = \omega(D - x - (C_1 - \set{y})) = \chi(D - x - (C_1 - \set{y}))$.  Putting this coloring together with the color class $(C_1 - \set{y}) \cup \set{x}$ gives an $\omega(D)$-coloring of $D$.  This final contradiction completes the proof.
+\end{proof}
+
+\begin{GallaiRoy}
+Every directed graph $G$ contains a directed path of length $\chi(G)$.
+\end{GallaiRoy}
+\begin{proof}
+Let $G$ be a directed graph and $G'$ a maximal acyclic induced
+subgraph of $G$.  Define a coloring $\pi$ on $V(G')$ by letting
+$\pi(x)$ be the length of the longest directed path in $G'$ starting
+at $x$. Then $\pi$ is proper since if $xy \in E(G')$, then tacking
+$xy$ onto the front of a longest path starting at $y$ (which cannot
+end at $x$ since $G'$ is acyclic) shows that $\pi(x) > \pi(y)$.  By
+maximality of $G'$, $G' + wz$ must contain a cycle for any edge $wz
+\in E(G) - E(G')$.  Hence $G'$ contains a directed path from $z$ to
+$w$ in $G'$ and therefore $\pi(z) > \pi(w)$ as above.  Thus $\pi$ is a
+proper coloring of $G$ as well.  But then $G$ contains a directed path
+of length at least $\card{im(\pi)} \geq \chi(G)$.
+\end{proof}
+
+\begin{Richardson}
+Any directed graph without odd directed cycles has a kernel.
+\end{Richardson}
+\begin{proof}
+Assume not and let $G$ be a kernel-less directed graph without odd directed cycles minimizing $\card{G}$.  Then $G$ is connected.  First assume $G$ is not strongly connected and let $A$ be a a sink the the finite acyclic graph formed by collapsing each strong component of $G$ to a single vertex.  Then $A$ has a kernel $U$ by minimality of $\card{G}$.  Let $T$ be the vertices in $G$ that have an edge into $U$.  Put $H = G - (U \cup T)$.  Then, by minimality, $H$ has a kernel $V$.  Put $W = U \cup V$.  Plainly, $W$ is a kernel in $G$.
+
+Hence we may assume that $G$ is strongly connected.  If $G$ is biparite, then each part is a kernel in $G$.  Hence we may assume that the underlying undirected graph of $G$ contains an odd cycle $v_0v_2\cdots v_rv_0$.  We construct an odd closed directed walk in $G$ starting and ending at $v_0$. Consider our indices modulo $r$. If $v_iv_{i+1} \in E(G)$, let $P_i = v_iv_{i+1}$; otherwise let $P_i$ be a shortest directed path from $v_i$ to $v_{i+1}$.  Then $P_i$ has odd length for each $i$ since otherwise $P_iv_{i+1}v_i$ would be an odd directed cycle in $G$.  Joining the $P_i$ end-to-end in order gives the desired odd closed directed walk in $G$.
+
+Hence we may let $Z$ be a minimal length odd closed directed walk in $G$.  Since $Z$ is not a directed cycle, it hits some vertex more than once.  Pick such a $v \in Z$ minimizing the length of the walk $L$ between $v$ and itself.  Then $L$ must be an even directed cycle.  But then removing $L$ from $Z$ gives a shorter odd closed directed walk. This final contradiction completes the proof.
+\end{proof}
+
+\end{document}

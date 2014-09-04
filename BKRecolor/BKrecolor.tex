@@ -1,0 +1,237 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+
+\title{Maybe?}
+\author{Landon Rabern}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\section{The decomposition}
+Let $\D_1$ be the collection of graphs without induced $d_1$-choosable
+subgraphs.  Plainly, $\D_1$ is hereditary.  For a graph $G$ and $r \in \IN$, let
+$\C_r$ be the maximal cliques in $G$ having at least $r$ vertices.
+
+\begin{lem}\label{CliqueJoin}
+If $B$ is a graph such that $\join{K_4}{B}$ is not $d_1$-choosable, 
+then at least one of the following holds:
+\begin{itemize}
+  \item $\card{B} \leq 4$ and $B$ is $\join{E_3}{K_{\card{B} - 3}}$,
+  \item $\omega(B) \geq \card{B} - 1$.
+\end{itemize}
+\end{lem}
+
+
+\begin{lem}\label{parition}
+If $G \in \D_1$ and $\frac{\Delta(G) + 5}{2} \leq r \leq \Delta(G) - 1$, then
+$\bigcup \C_r$ can be partitioned into sets $F_1, \ldots, F_t$ such that for
+each $i \in \irange{t}$ at least one of the following holds:
+\begin{itemize}
+  \item $F_i \in \C_r$,
+  \item $F_i = C_i \cup \set{x_i}$ where $C_i \in \C_r$ and $\card{N(x_i) \cap
+  C_i} \geq r-1$.
+\end{itemize}
+\end{lem}
+
+When $F_i \in \C_r$, we put $K_i \DefinedAs C_i \DefinedAs F_i$ and when $F_i =
+C_i \cup \set{x_i}$, we put $K_i \DefinedAs N(x_i) \cap C_i$.
+
+\section{The recoloring technique}
+
+\begin{lem}\label{SingletonSetTransversal}
+Let $H$ be a graph and $V_1 \cup \cdots \cup V_r$ a partition of $V(H)$. 
+Suppose that $\card{V_i} \geq 2\Delta(H)$ for each $i \in \irange{r}$.  If a
+graph $G$ is formed by attaching a new vertex $x$ to fewer than $2\Delta(H)$
+vertices of $H$,  then $G$ has an independent set $\set{x, v_1, \ldots, v_r}$
+where $v_i \in V_i$ for each $i \in \irange{r}$.
+\end{lem}
+\begin{proof}
+Suppose not. Remove $\set{x} \cup N(x)$ from $G$ to form $H'$ with induced
+partition $V_1', V_2', \ldots, V_r'$. Then $V_1', V_2', \ldots, V_r'$ has no
+independent transversal since we could combine one with $x$ to get our desired
+independent set in $G$. Note that $\card{V_i'} \geq 1$. 
+Create a graph $Q$ by removing edges from $H'$ until it is edge minimal without
+an independent transversal. Pick $yz \in E(Q)$ and apply Lemma
+\ref{BaseTransversalLemma} on $yz$ with the induced partition to get the guaranteed 
+$J \subseteq \irange{r}$ and the totally dominating induced matching 
+$M$ with $\card{M} = \card{J} - 1$. 
+Now $\card{\bigcup_{i \in J} V_i'} > 2\Delta(H)\card{J} - 2\Delta(H) =
+2(\card{J} - 1)\Delta(H)$ and hence $M$ cannot dominate, a contradiction.
+\end{proof}
+
+
+Call $v \in V(G)$ \emph{big} if it is contained in a $\bigclique{G}$
+clique in $G$.  If a vertex is not big, it is \emph{small}.
+
+\begin{lem}\label{StrengthenedHypotheses}
+If $G \in \D_1$ with $\Delta(G) \geq 50?$ and $\omega(G) < \Delta(G)$, then
+exactly one of the following holds:
+\begin{enumerate}
+  \item $\chi(G) \leq \Delta(G) - 2$,
+  \item $\chi(G) = \Delta(G) - 1$ and $G$ has a $(\Delta(G) - 1)$-coloring that
+  uses only $\Delta(G) - 2$ colors on the small vertices.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Put $\Delta
+\DefinedAs \Delta(G)$, $\chi \DefinedAs \chi(G)$ $\omega \DefinedAs \omega(G)$.
+Plainly, $\chi \in \set{\Delta - 1, \Delta}$. If $G$ has no big vertex, then
+Lemma \ref{DeltaMinusOneBigClique} gives a contradiction since $\chi \geq
+\Delta - 1$.
+
+Hence $G$ contains a big vertices. First, suppose $\Delta(G - x) < \Delta$ for
+every big vertex $x$.  Let $H$ be the vertices with degree $\Delta$ in $G$ and
+let $B$ be the big vertices in $G$.  Then $B$ is joined to $H$ in $G$.  But then
+we must have $H \subseteq B$ since any vertex joined to all big vertices must be
+big.  Thus it must be that the partition given by Lemma \ref{parition} for $r
+\DefinedAs \bigcliqueraw$ has only one part $F_1$ and $H \subseteq K_1$.  By
+Lemma \ref{SmallColoringExtension}, we have $(\Delta - 1)$-coloring of $G$ that
+uses only $(\Delta - 2)$ colors on the small vertices, contradicting (2).
+
+Otherwise, we have a big vertex $x$ such that, with $Q \DefinedAs G - x$,
+we have $\Delta(Q) = \Delta$. Applying minimality of $\card{G}$ shows that
+either (1) or (2) holds for $Q$. It can't be (1), for then adding $\set{x}$ as a
+color class to a $(\Delta - 2)$-coloring of $Q$ gives a $(\Delta - 1)$-coloring of $G$ satisfying (2).
+
+Hence, by symmetry, we have a $(\Delta - 1)$-coloring $\pi$ of $Q$
+and such that every vertex in $M \DefinedAs \pi^{-1}(1)$ is big.  We may as well
+have taken such a coloring $\pi$ so as to minimize $\card{M}$.  By minimality of $M$, every vertex in $M$ has a
+neighbor in $\pi(i)$ for each $i \in J \DefinedAs \irange{\Delta - 1} -
+\set{1}$.  For each $z \in M$, put $O_z \DefinedAs \setb{v}{N_Q(z)}{\pi(z)
+\not \in \pi(N_Q(z) - \set{v})}$.  Then $\card{O_z} \geq \Delta - 4$ for each
+$z \in M$.  Since $z$ is big, it is in some $F_j$.  If $z = x_j$, then put $P_z
+\DefinedAs K_j \cap O_z$, otherwise put $P_z \DefinedAs C_j \cap O_z$.  In
+either case, $\card{P_z} \geq \bigcliqueraw - 1 - 2 \geq \cliqueparts$.
+
+Suppose there are different $y, z \in M$ such that $P_y \cap P_z \neq
+\emptyset$.  By the definition of our partition of the big vertices, it must be
+that $P_y, P_z \subseteq F_j$ for some $j$.  But $y$ and $z$ are not adjacent so
+one of them must be $x_j$ and the other in $C_j - K_j$.  In particular,
+$\card{P_y \cap P_z} \geq \card{K_j} - 4 \geq \cliqueparts$. Plainly, no $P_z$
+intersects two others $P_y$ and $P_w$.
+
+For the $w \in M$ such that $P_w$ does not intersect some other $P_z$, put $S_w
+\DefinedAs P_w$.  The other vertices in $M$ come in pairs $w, w'$, put $S_w \DefinedAs P_w \cap P_{w'}$.  
+Consider the subgraph $T$ of $G$ induced on $\set{x} \cup \bigcup_{w \in M}
+S_w$ with each $S_w$ made into an independent set. For $w \in M$ and $z \in S_w$, we
+have $d_T(z) \leq \Delta - 1 - (\cliqueparts - 1) \leq \frac13 \Delta$.
+
+\end{proof}
+
+\begin{thm}
+Every graph satisfying $\chi \geq \Delta \geq 50?$ contains a $K_\Delta$.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Then $G$ is
+vertex critical and hence $G \in \D_1$.  By Lemma \ref{StrengthenedHypotheses},
+$G$ has a $(\Delta(G) - 1)$-coloring, a contradiction.
+\end{proof}
+
+\section{Some more details}
+\begin{lem}\label{DeltaMinusOneBigClique}
+Any graph satisfying $\chi \geq \Delta - 1 \geq 20?$ contains a $K_{\frac23
+\Delta}$.
+\end{lem}
+
+\begin{lem}\label{SmallColoringExtension}
+Let $G \in \D_1$ and put $r \DefinedAs \bigclique{G}$.  If the partition in
+Lemma \ref{parition} of $\C_r$ has only one part $F_1$ and
+$\setb{v}{V(G)}{d(v) = \Delta(G)} \subseteq K_i$, then $G$ has a $(\Delta(G) -
+1)$-coloring using only $\Delta(G) - 2$ colors on the small vertices.
+\end{lem}
+
+\end{document}

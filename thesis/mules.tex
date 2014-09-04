@@ -1,0 +1,749 @@
+\chapter{MULES}\label{APrioriWowChapter}
+\begin{center}
+\emph{The material in this chapter appeared in \cite{mules} and is joint work with Dan Cranston.}
+\end{center}
+
+In this we chapter carry out an in-depth study of minimum counterexamples to the
+Borodin-Kostochka conjecture.  Our main tool is the classification, in Chapter
+\ref{ListColoringChapter}, of graph joins $\join{A}{B}$ with $|A|\ge 2$, $|B|\ge
+2$ which are $f$-choosable, where $f(v) \DefinedAs d(v) - 1$ for each vertex
+$v$.  Since such a join cannot be an induced subgraph of a vertex critical
+graph with $\chi = \Delta$, we have a wealth of structural information about
+minimum counterexamples to the Borodin-Kostochka conjecture.  In Section
+\ref{excludemule}, we exploit this information and minimality to improve Reed's
+Lemma \ref{ReedsLemma} as follows (see Corollary~\ref{AtMostOneEdgeIn}).
+
+\begin{lem}
+Let $G$ be a vertex critical graph satisfying $\chi = \Delta \geq 9$ having the
+minimum number of vertices. 
+If $H$ is a $K_{\Delta - 1}$ in $G$, then any vertex in $G - H$ has at most $1$
+neighbor in $H$.
+\end{lem}
+
+Moreover, we lift the result out of the context of a minimum counterexample to
+the Borodin-Kostochka conjecture, to the more general context of graphs
+satisfying a certain criticality condition---we call such graphs mules. This allows us to prove meaningful results for values of $\Delta$ less than
+$9$.  
+
+Since a graph containing $K_\Delta$ as a subgraph also
+contains $K_{t, \Delta - t}$ as a subgraph for any $t \in \irange{\Delta - 1}$,
+the Borodin-Kostochka conjecture implies the following conjecture.  Our main
+result in this chapter is that the two conjectures are equivalent.
+
+\begin{conjecture}\label{NoThreeDealEquiv}
+Any graph with $\chi = \Delta \geq 9$ contains some $\join{A_1}{A_2}$ as an
+induced subgraph where $\card{A_1}, \card{A_2} \geq 3$, $\card{A_1} + \card{A_2} = \Delta$
+and $A_i \neq \djunion{K_1}{K_{\card{A_i} - 1}}$ for some $i \in \irange{2}$.
+\end{conjecture}
+
+In fact, using Kostochka's reduction (Lemma~\ref{HereditaryReduction}) to the
+case $\Delta = 9$, the following conjecture is also equivalent.
+
+\begin{conjecture}
+Any graph with $\chi = \Delta = 9$ contains some $\join{A_1}{A_2}$ as an induced
+subgraph where $\card{A_1}, \card{A_2} \geq 3$, $\card{A_1} + \card{A_2} = 9$
+and $A_i \neq \djunion{K_1}{K_{\card{A_i} - 1}}$ for some $i \in \irange{2}$.
+\end{conjecture}
+
+As a special case, we get a couple more palatable equivalent conjectures (see
+Lemma~\ref{K3sOut} and the comment following it).
+
+\begin{conjecture}\label{K3Conjecture}
+Any graph with $\chi = \Delta \geq 9$ contains $\join{K_3}{E_{\Delta-3}}$ as a
+subgraph.
+\end{conjecture}
+
+\begin{conjecture}\label{K3ConjectureReduced}
+Any graph with $\chi = \Delta = 9$ contains $\join{K_3}{E_6}$ as a
+subgraph.
+\end{conjecture}
+
+The condition $A_i \neq \djunion{K_1}{K_{\card{A_i} - 1}}$ is unnatural and
+by removing it we get a (possibly) weaker conjecture than the
+Borodin-Kostochka conjecture which has more aesthetic appeal.
+
+\begin{conjecture}\label{NonInducedThreeDeal}
+Let $G$ be a graph with $\Delta(G) = k \geq 9$. If $K_{t, k - t} \not \subseteq G$ for all $3 \leq t \leq k - 3$, then $G$ can be $(k - 1)$-colored.
+\end{conjecture}
+
+\begin{conjecture}
+Conjecture \ref{NonInducedThreeDeal} is equivalent to the Borodin-Kostochka
+conjecture.
+\end{conjecture}
+
+Perhaps it would be easier to attack Conjecture \ref{NonInducedThreeDeal} with
+$3 \leq t \leq k - 3$ replaced by $2 \leq t \leq k - 2$?  We are unable to
+prove even this conjecture. Making this change and bringing $k$ down to $5$
+gives the following conjecture, which, if true, would imply the remaining two cases of Gr\"unbaum's girth problem for graphs with girth at least five.
+
+\begin{conjecture}\label{NonInducedTwoDeal}
+Let $G$ be a graph with $\Delta(G) = k \geq 5$. If $K_{t, k - t} \not \subseteq
+G$ for all $2 \leq t \leq k - 2$, then $G$ can be $(k - 1)$-colored.
+\end{conjecture}
+
+If $G$ is a graph with with $\Delta(G) = k \geq 5$ and girth at least five, then
+it contains no $K_{t, k - t}$ for all $2 \leq t \leq k - 2$ and hence Conjecture \ref{NonInducedTwoDeal} would give a
+$(k-1)$-coloring.  This conjecture would be tight since the Gr\"unbaum graph and
+the Brinkmann graph are examples with $\chi = \Delta = 4$ and girth at least
+five.
+
+Finally, we prove that the following conjecture is equivalent to the
+Borodin-Kostochka conjecture for graphs with independence number at most $6$
+(see Theorem~\ref{SmallAlphaConj}).
+
+\begin{conjecture}\label{AlphaConjecture}
+Every graph satisfying $\chi = \Delta = 9$ and $\alpha \leq 6$ contains a
+$K_{8}$.
+\end{conjecture}
+
+\section{What is a mule?}
+\begin{defn}
+If $G$ and $H$ are graphs, an \emph{epimorphism} is a graph homomorphism $\funcsurj{f}{G}{H}$ such that $f(V(G)) = V(H)$.  We indicate this with the arrow $\surj$.
+\end{defn}
+
+\begin{defn}
+Let $G$ be a graph.  A graph $A$ is called a \emph{child} of $G$ if $A \neq G$ and there exists $H \unlhd G$ and an epimorphism $\funcsurj{f}{H}{A}$.  
+\end{defn}
+
+Note that the child-of relation is a strict partial order on the set of (finite simple) graphs $\fancy{G}$.  
+We call this the \emph{child order} on $\fancy{G}$ and denote it by `$\prec$'.  By definition, if $H \lhd G$ then $H \prec G$.
+
+\begin{lem}\label{well-founded}
+The ordering $\prec$ is well-founded on $\fancy{G}$; that is, every nonempty subset of $\fancy{G}$ has a minimal element under $\prec$.
+\end{lem}
+\begin{proof}
+Let $\fancy{T}$ be a nonempty subset of $\fancy{G}$.  Pick $G \in \fancy{T}$ minimizing $\card{G}$ and then maximizing $\size{G}$.  
+Since any child of $G$ must have fewer vertices or more edges (or both), we see that $G$ is minimal in $\fancy{T}$ with respect to $\prec$.
+\end{proof}
+
+\begin{defn}
+Let $\fancy{T}$ be a collection of graphs.  A minimal graph in $\fancy{T}$ under the child order is called a \emph{$\fancy{T}$-mule}.
+\end{defn}
+
+With the definition of mule we have captured the important properties (for coloring) of a counterexample first 
+minimizing the number of vertices and then maximizing the number of edges.  Viewing $\fancy{T}$ as a set of counterexamples, 
+we can add edges to or contract independent sets in induced subgraphs of a $\fancy{T}$-mule and get a non-counterexample.  
+We could do the same with a minimal counterexample, but with mules we have more minimal objects to work with. 
+One striking consequence of this is that many of our proofs naturally construct multiple counterexamples to Borodin-Kostochka for small $\Delta$.
+
+\section{Excluding induced subgraphs in mules}\label{excludemule}
+Our main goal in this section is to prove Lemma~\ref{K4sOut}, which says that (with
+only one exception) for $k\ge 7$, no $k$-mule contains $\join{K_4}{E_{k-4}}$ as
+a subgraph.  This result immediately implies that the Borodin-Kostochka
+conjecture is equivalent to Conjecture~\ref{K4Conjecture}.  This equivalence is
+a major step toward our main result.  Our approach is
+based on Lemma~\ref{K_tClassification}, which implies that if $G$ is a
+counterexample to Lemma~\ref{K4sOut}, then the vertices of the $E_{k-4}$ induce either
+$E_3$, a claw, a clique, or an almost complete graph.  Our job in this section
+consists of showing that each of these four possibilities is, in fact,
+impossible.  Ruling out the clique is easy.  The cases of $E_3$ and the claw
+are handled in Lemma~\ref{NoE3}, and the case of an almost complete graph
+(which requires the most work) is handled by Corollary~\ref{AtMostOneEdgeIn}.
+\bigskip
+
+For $k \in \IN$, by a \emph{$k$-mule} we mean a $\C{k}$-mule.
+
+\begin{lem}\label{EpiPower}
+Let $G$ be a $k$-mule with $k \geq 4$.  If $A$ is a child of $G$ with $\Delta(A) \leq k$ then either
+\begin{itemize}
+\item $A$ is $(k - 1)$-colorable; or,
+\item $A$ contains a $K_k$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+Let $A$ be a child of $G$ with $\Delta(A) \leq k$, $H \unlhd G$ and $\funcsurj{f}{H}{A}$ an epimorphism.  
+Without loss of generality, $A$ is vertex critical. Suppose $A$ is not $(k - 1)$-colorable.  
+Then $\chi(A) \geq k \geq \Delta(A)$.  Since $A \prec G$ and $G$ is a mule, $A \not \in \C{k}$. 
+Thus we have $\chi(A) > \Delta(A) \geq 3$, so Brooks' theorem implies that 
+$A = K_k$.
+\end{proof}
+
+Note that adding edges to a graph yields an epimorphism.
+
+\begin{lem}\label{UnequalColoredPairOrCliqueMinusEdge}
+Let $G$ be a $k$-mule with $k \geq 4$ and $H \unlhd G$.  
+Assume $x, y \in V(H)$, $xy \not \in E(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$. 
+If for every $(k - 1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$, then $H$ contains $\join{\set{x, y}}{K_{k-2}}$.
+\end{lem}
+\begin{proof}
+Suppose that for every $(k - 1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$.
+Using the inclusion epimorphism $\funcsurj{f_{xy}}{H}{H + xy}$ in Lemma \ref{EpiPower} shows that either $H + xy$ is $(k - 1)$-colorable or $H + xy$ contains a $K_k$.  
+Since a $(k - 1)$-coloring of $H + xy$ would induce a $(k - 1)$-coloring of $H$ with $x$ and $y$ colored differently, we conclude that $H + xy$ contains a $K_k$.  
+But then $H$ contains $\join{\set{x, y}}{K_{k-2}}$ and the proof is complete.
+\end{proof}
+
+We will often begin by coloring some subgraph $H$ of our graph $G$, and work to
+extend this partial coloring.  More formally, let $G$ be a graph and $H \lhd G$.  For $t \geq \chi(H)$, let $\pi$ be a proper $t$-coloring of $H$.  
+For each $x \in V(G-H)$, put $L_{\pi}(x) \DefinedAs \set{1, \ldots, t} -
+\bigcup_{y \in N(x) \cap V(H)} \pi(y)$. Then $\pi$ is completable to a
+$t$-coloring of $G$ iff $L_{\pi}$ admits a coloring of $G-H$. 
+We will use this fact repeatedly in the proofs that follow.  The following
+generalizes a lemma due to Reed \cite{reed1999strengthening}, the proof is
+essentially the same.
+
+\begin{lem}\label{E2impliesE3}
+For $k \geq 6$, if a $k$-mule $G$ contains an induced $\join{E_2}{K_{k - 2}}$, then $G$ contains an induced $\join{E_3}{K_{k - 2}}$.
+\end{lem}
+\begin{proof}
+Suppose $G$ is a $k$-mule containing an induced $\join{E_2}{K_{k - 2}}$, call it $F$.  
+Let $x, y$ be the vertices of degree $k-2$ in $F$ and $C \DefinedAs \set{w_1,
+\ldots, w_{k-2}}$ the vertices of degree $k-1$ in $F$.  Put $H \DefinedAs G -
+F$. Since $G$ is vertex critical, we may $k-1$ color $H$.  Doing so leaves a list assignment $L$ on $F$ with $\card{L(z)} \geq d_F(z) - 1$ for each $z \in V(F)$. 
+Now $\card{L(x)} + \card{L(y)} \geq d_F(x) + d_F(y) - 2 = 2k - 6 > k - 1$ since $k \geq 6$.  Hence we have $c \in L(x) \cap L(y)$.  
+Coloring both $x$ and $y$ with $c$ leaves a list assignment $L'$ on $C$ with $\card{L'(w_i)} \geq k - 3$ for each $1 \leq i \leq k-2$.  
+Now, if $\card{L'(w_i)} \geq k - 2$ or $L'(w_i) \neq L'(w_j)$ for some $i, j$, then we can complete the partial $(k - 1)$-coloring to all of $G$ using Hall's Theorem.  
+Hence we must have $d(w_i) = k$ and $L'(w_i) = L'(w_j)$ for all $i,j$.  
+Let $N \DefinedAs \bigcup_{w \in C} N(w) \cap V(H)$ and note that $N$ is an
+independent set since it is contained in a single color class in every $(k - 1)$-coloring of $H$. Also, each $w \in C$ has exactly one neighbor in $N$.
+
+Proving that $\card{N} = 1$ will give the desired $\join{E_3}{K_{k - 2}}$ in $G$.  Thus, to reach a contradiction, suppose that $\card{N} \geq 2$.  
+
+We know that $H$ has no $(k - 1)$-coloring in which two vertices of $N$ get different colors since then we could complete the partial coloring as above. 
+Let $v_1, v_2 \in N$ be different. Since both $v_1$ and $v_2$ have a neighbor in $F$, we may apply Lemma \ref{UnequalColoredPairOrCliqueMinusEdge} to conlcude 
+that $\join{\set{v_1, v_2}}{K_{v_1, v_2}}$ is in $H$, where $K_{v_1, v_2}$ is a $K_{k-2}$.
+
+First, suppose $\card{N} \geq 3$, say $N = \set{v_1, v_2, v_3}$.  We have $z \in K_{v_1, v_2} \cap K_{v_1, v_3}$ for otherwise $d(v_1) \geq 2(k - 2) > k$.  
+Since $z$ already has $k$ neighbors among $K_{v_1, v_2} - \set{z}$ and $v_1, v_2, v_3$, we must have $K_{v_1, v_3} = K_{v_1, v_2}$.  
+But then $\set{v_1, v_2, v_3} + K_{v_1, v_2}$ is our desired $\join{E_3}{K_{k - 2}}$ in $G$.
+
+Hence we must have $\card{N} = 2$, say $N = \set{v_1, v_2}$.  For $i \in \irange{2}$, $v_i$ has $k - 2$ neighbors in $K_{v_1, v_2}$ and thus at most two neighbors in $C$.  
+Hence $\card{C} \leq 4$.  Thus we must have $k = 6$.
+
+We may apply the same reasoning to $\join{\set{v_1, v_2}}{K_{v_1, v_2}}$ that we did to $F$ to get vertices $v_{2,1}, v_{2,2}$ 
+such that $\join{\set{v_{2,1}, v_{2,2}}}{K_{v_{2,1}, v_{2,2}}}$ is in $G$.  But then we may do it again with $\join{\set{v_{2,1}, v_{2,2}}}{K_{v_{2,1}, v_{2,2}}}$ and so on.  
+Since $G$ is finite, at some point this process must terminate. But the only way to terminate is to come back around and use $x$ and $y$.  
+This graph is $5$-colorable since we may color all the $E_2$'s with the same color and then $4$-color the remaining $K_4$ components.  
+This final contradiction completes the proof.
+\end{proof}
+
+\input{M_61}
+\input{M7}
+
+\begin{lem}\label{NoE2}
+For $k \geq 6$, the only $k$-mules containing an induced $\join{E_2}{K_{k - 2}}$
+are $M_{6,1}$ and $M_{7,1}$.
+\end{lem}
+\begin{proof}
+Suppose we have a $k$-mule $G$ that contains an induced $\join{E_2}{K_{k - 2}}$. 
+Then by Lemma \ref{E2impliesE3}, $G$ contains an induced $\join{E_3}{K_{k - 2}}$, call it $F$. 
+
+Let $x, y, z$ be the vertices of degree $k-2$ in
+$F$ and let $C \DefinedAs \set{w_1, \ldots, w_{k-2}}$ be the vertices of degree
+$k$ in $F$. Put $H \DefinedAs G - C$. Since each of $x, y, z$ have degree at
+most $2$ in $H$ and $G$ is a mule, the homomorphism from $H$ sending $x, y$, and
+$z$ to the same vertex must produce a $K_k$.  Thus we must have $k \leq 7$ and
+$H$ contains a $K_{k-1}$ (call it $D$) such that $V(D) \subseteq N(x) \cup N(y)
+\cup N(z))$.  Put $A \DefinedAs G\brackets{V(F) \cup V(D)}$.  Then $A$ is
+$k$-chromatic and as $G$ is a mule, we must have $G = A$.  If $k = 7$, then $G
+= M_{7,1}$.  Suppose $k=6$ and $G \neq M_{6,1}$. Then one of $x$, $y$, or $z$
+has only one neighbor in $D$.  By symmetry we may assume it is $x$.  But we can
+add an edge from $x$ to a vertex in $D$ to form $M_{6,1}$ and hence $G$ has a
+proper child, which is impossible.
+\end{proof}
+
+\begin{lem}\label{UnequalColoredPair}
+Let $G$ be a $k$-mule with $k \geq 6$ other than $M_{6,1}$ and $M_{7,1}$ and let
+$H \lhd G$. If $x, y \in V(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$, then there exists a $(k - 1)$-coloring $\pi$ of $H$ such that $\pi(x) \neq \pi(y)$.
+\end{lem}
+\begin{proof}
+Suppose $x, y \in V(H)$ and both $d_H(x) \leq k-1$ and $d_H(y) \leq k-1$.  
+First, if $xy \in E(H)$ then any $(k - 1)$-coloring of $H$ will do.  
+Otherwise, if for every $(k - 1)$-coloring $\pi$ of $H$ we have $\pi(x) = \pi(y)$, then by Lemma \ref{UnequalColoredPairOrCliqueMinusEdge}, 
+$H$ contains $\join{\set{x, y}}{K_{k-2}}$.  The lemma follows since this is impossible by Lemma \ref{NoE2}.
+\end{proof}
+
+\begin{lem}\label{JoinerOrDifferentLists}
+Let $G$ be a $k$-mule with $k \geq 6$ other than $M_{6,1}$ and $M_{7,1}$ and let $F \lhd G$.  
+Put $C \DefinedAs \setb{v}{V(F)}{d(v) - d_F(v) \leq 1}$.  At least one of the following holds:
+\begin{itemize}
+\item $G - F$ has a $(k - 1)$-coloring $\pi$ such that for some $x, y \in C$ we have $L_{\pi}(x) \neq L_{\pi}(y)$; or,
+\item $G - F$ has a $(k - 1)$-coloring $\pi$ such that for some $x \in C$ we have $\card{L_{\pi}(x)} = k - 1$; or,
+\item there exists $z \in V(G - F)$ such that $C \subseteq N(z)$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+Put $H \DefinedAs G - F$.  
+Suppose that for every $(k - 1)$-coloring $\pi$ of $H$ we have $L_{\pi}(x) = L_{\pi}(y)$ for every $x, y \in C$.  
+By assumption, the vertices in $C$ have at most one neighbor in $H$.  
+If some $v \in C$ has no neighbors in $H$, then for any $(k - 1)$-coloring $\pi$ of $H$ we have $\card{L_{\pi}(v)} = k - 1$.  
+Thus we may assume that every $v \in C$ has exactly one neighbor in $H$. 
+
+Let $N \DefinedAs \bigcup_{w \in C} N(w) \cap V(H)$. Suppose $\card{N} \geq 2$.
+Pick different $z_1, z_2 \in N$. Then, by Lemma \ref{UnequalColoredPair}, there is a $(k - 1)$-coloring $\pi$ of $H$ for which $\pi(z_1) \neq \pi(z_2)$.  
+But then $L_{\pi}(x) \neq L_{\pi}(y)$ for some $x, y \in C$ giving a contradiction.  Hence $N = \set{z}$ and thus $C \subseteq N(z)$.
+\end{proof}
+
+By Lemma \ref{ConnectedAtLeast6Poss}, no graph in $\C{k}$ contains an induced $\join{E_3}{K_{k - 3}}$ for $k \geq 9$.  
+For mules, we can improve this as follows.
+\begin{lem}\label{NoE3}
+For $k \geq 7$, the only $k$-mule containing an induced $\join{E_3}{K_{k - 3}}$ is $M_{7,1}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $G$ be a $k$-mule, other than $M_{7,1}$, containing such an induced subgraph $F$.  
+Let $z_1, z_2, z_3 \in F$ be the vertices with degree $k-3$ in $F$ and $C$ the rest of the vertices in $F$ (all of degree $k-1$ in $F$). 
+Put $H \DefinedAs G - F$.
+
+First suppose there is not a vertex $x \in V(H)$ which is adjacent to all of $C$. 
+Let $\pi$ be a $(k - 1)$-coloring of $H$ guaranteed by Lemma
+\ref{JoinerOrDifferentLists} and put $L \DefinedAs L_\pi$.  Since $\card{L(z_1)}
++ \card{L(z_2)} + \card{L(z_3)} \geq 3(k-4) > k - 1$ we have $1 \leq i < j \leq 3$ such that $L(z_i) \cap L(z_j) \neq \emptyset$.  
+Without loss of generality, $i = 1$ and $j = 2$. Pick $c \in L(z_1) \cap L(z_2)$ and color both $z_1$ and $z_2$ with $c$.  
+Let $L'$ be the resulting list assignment on $F - \set{z_1, z_2}$.  
+Now $\card{L'(z_3)} \geq k-4$ and $\card{L'(v)} \geq k-3$ for each $v \in C$.  
+By our choice of $\pi$, either two of the lists in $C$ differ or for some $v \in C$ we have $\card{L'(v)} \geq k-2$.  
+In either case, we can complete the $(k - 1)$-coloring to all of $G$ by Hall's Theorem.
+
+Hence we must have $x \in V(H)$ which is adjacent to all of $C$.  
+Thus $G$ contains the induced subgraph $\join{K_{k-3}}{G[z_1, z_2, z_3, x]}$.  
+Therefore $k = 7$ and $x$ is adjacent to each of $z_1, z_2, z_3$ by Lemma \ref{K_tClassification}.  
+Hence $G$ contains the induced subgraph $\join{K_5}{E_3}$ contradicting Lemma \ref{NoE2}.
+\end{proof}
+
+\begin{lem}\label{NoTwooks}
+For $k \geq 7$, no $k$-mule contains an induced $\join{\overline{P_3}}{K_{k - 3}}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $G$ be a $k$-mule containing such an induced
+subgraph $F$.  Note that $M_{7,1}$ has no induced $\join{\overline{P_3}}{K_{k -
+3}}$, so $G \neq M_{7,1}$. Let $z \in V(F)$ be the vertex with degree $k-3$ in
+$F$, $v_1, v_2 \in F$ the vertices of degree $k-2$ in $F$ and $C$ the rest of the vertices in $F$ (all of degree $k-1$ in $F$). 
+Put $H \DefinedAs G - F$.
+
+First suppose there is not a vertex $x \in V(H)$ which is adjacent to all of $C$. 
+Let $\pi$ be a $(k - 1)$-coloring of $H$ guaranteed by Lemma
+\ref{JoinerOrDifferentLists} and put $L \DefinedAs L_\pi$.  Then, we have
+$\card{L(z)} \geq k-4$ and $\card{L(v_1)} \geq k-3$.  
+Since $k \geq 7$, $\card{L(z)} + \card{L(v_1)} \geq 2k - 7 > k - 1$.  
+Hence, by Lemma \ref{BasicFiniteSets}, we may color $z$ and $v_1$ the same.  
+Let $L'$ be the resulting list assignment on $F - \set{z, v_1}$. 
+Now $\card{L'(v_2)} \geq k-4$ and $\card{L'(v)} \geq k-3$ for each $v \in C$. 
+By our choice of $\pi$, either two of the lists in $C$ differ or for some $v \in C$ we have $\card{L'(v)} \geq k-2$.  
+In either case, we can complete the $(k - 1)$-coloring to all of $G$ by Hall's Theorem.
+
+Hence we must have $x \in V(H)$ which is adjacent to all of $C$.
+Thus $G$ contains the induced subgraph $\join{K_4}{G[z, v_1, v_2, x]}$.  
+By Lemma \ref{K_tClassification}, $G[z, v_1, v_2, x]$ must be almost complete and hence $x$ must be adjacent to both $v_1$ and $v_2$.  
+But then $\join{G[v_1, v_2, x]}{C}$ is a $K_k$ in $G$, giving a contradiction.
+\end{proof}
+
+Reed proved that for $k \geq 9$, a vertex outside a $(k - 1)$-clique $H$ in a
+$k$-mule can have at most $4$ neighbors in $H$.  We improve this to at most one
+neighbor.
+
+\input{M_72}
+
+\begin{lem}\label{NoForksThatArentKnives}
+For $k \geq 7$ and $r \geq 2$, no $k$-mule except $M_{7, 1}$ and $M_{7, 2}$
+contains an induced $\join{K_r}{\left(\djunion{K_1}{K_{k - (r + 1)}}\right)}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $G$ be a $k$-mule, other than $M_{7,1}$ and
+$M_{7,2}$, containing such an induced subgraph $F$ with $r$ maximal. By Lemma
+\ref{NoE2} and Lemma \ref{NoTwooks}, the lemma holds for $r \geq k - 3$. So we have $r \leq k - 4$. Now, let $z \in V(F)$ be the vertex with degree $r$
+in $F$, $v_1, v_2, \ldots, v_{k - (r + 1)} \in V(F)$ the vertices of degree $k -
+2$ in $F$ and $C$ the rest of the vertices in $F$ (all of degree $k-1$ in $F$). Put $H \DefinedAs G - F$.
+
+Let $Z_1 \DefinedAs \setbs{za}{a \in N(v_1) \cap V(H)}$.  
+Consider the graph $D \DefinedAs H + z + Z_1$.  
+Since $v_1$ has at most two neighbors in $H$, $\card{Z_1} \leq 2$ and thus to
+form $D$ from $H + z$, we added $E(A)$ where $A \in \set{K_1, K_2, P_3}$.  Since
+$\card{C} \geq 2$, $\Delta(D) \leq k$. Hence Lemma \ref{EpiPower} shows that $H
++ z$ contains a $K_k - E(A)$ or $\chi(D) \leq k - 1$.  
+Suppose $\chi(D) \geq k$. 
+If $A = K_1$, $A = K_2$, or $A = P_3$, then 
+we have a contradiction by the fact that $\omega(G) < k$, Lemma \ref{NoE2}, and
+Lemma \ref{NoTwooks}, respectively. Thus
+we must have $\chi(D) \leq k - 1$, which gives a $(k - 1)$-coloring of $H + z$
+in which $z$ receives a color $c$ which is not received by any of the neighbors
+of $v_1$ in $H$. Thus $c$ remains in the list of $v_1$ and we may color $v_1$
+with $c$.  After doing so, each vertex in $C$ has a list of size at least $k-3$
+and $v_i$ for $i > 1$ has a list of size at least $k-4$.  If any pair of
+vertices in $C$ had different lists, then we could complete the partial
+coloring by Hall's Theorem.  Let $N \DefinedAs \bigcup_{w \in C} N(w) \cap
+V(H)$ and note that $N$ is an independent set since it is contained in a single
+color class in the $(k - 1)$-coloring of $H$ just constructed.
+
+Suppose $\card{N} \geq 2$.  Pick $a_1, a_2 \in N$. 
+Consider the graph $D \DefinedAs H + z + Z_1 + a_1a_2$.  
+Plainly, $\Delta(D) \leq k$. 
+To form $D$ from $H + z$ we added $E(A)$, where $A \in \set{K_1, K_2, P_3, K_3,
+P_4, \djunion{K_2}{P_3}}$.  Hence Lemma \ref{EpiPower} shows that $H + z$
+contains a $K_k - E(A)$ or $\chi(D) \leq k - 1$.  If $\chi(D) \geq k$, then we
+have a contradiction since $A = K_1$, $A = K_2$, and $A = P_3$ are impossible
+as above.
+%
+To show that $A=K_3$, $A=P_4$, and $A=\djunion{K_2}{P_3}$ are impossible,
+we apply Lemma \ref{NoE3} (this is where we use the fact that
+$G\ne M_{7,1}$), Lemma \ref{AJoinP_4} (since $K_t-E(P_4)=\join{P_4}{K_{t-4}}$),
+and Lemma \ref{E2Classification}, respectively.
+% show the impossibility of $A = K_3$, $A = P_4$ (since
+%$K_t-E(P_4)=\join{P_4}{K_{t-4}}$), and $A = \djunion{K_2}{P_3}$ respectively. 
+
+Thus we must have $\chi(D) \leq k - 1$, which gives a $(k -
+1)$-coloring of $H + z$ in which $a_1$ and $a_2$ are in different color classes
+and $z$ receives a color not received by any neighbor of $v_1$ in $H$.  As
+above we can complete this partial coloring to all of $G$ by first coloring $z$
+and $v_1$ the same and then using Hall's Theorem.
+
+Hence there is a vertex $x \in V(H)$ which is adjacent to all of $C$.  
+Note that $x$ is not adjacent to any of $v_1, v_2, \ldots, v_{k - (r + 1)}$ by the maximality of $r$. 
+Let $Z_2 \DefinedAs \setbs{xa}{a \in N(v_2) \cap V(H)}$.  Consider the graph 
+$D \DefinedAs H + z + Z_1 + Z_2$.  As above, both $Z_1$ and $Z_2$ have
+cardinality at most $2$.  Since $\card{C} \geq 2$, both $x$ and $z$ have degree at most $k$ in $D$.  
+Since both $xa$ and $za$ were added only if $a$ was a neighbor of both $v_1$ and $v_2$, 
+all the neighbors of $v_1$ in $H$ have degree at most $k$ in $D$. Similarly for $v_2$'s neighbors.  
+Hence $\Delta(D) \leq k$. 
+To form $D$ from $H + z$ we added $E(A)$ where $A
+\in \set{K_1, K_2, P_3, K_3, P_4, \djunion{K_2}{P_3}, 2K_2, P_5, 2P_3, C_4}$. 
+Hence Lemma \ref{EpiPower} shows that $H + z$ contains a $K_k - E(A)$ or $\chi(D) \leq k - 1$.  
+
+Suppose $\chi(D) \geq k$. Then $A = K_1$, $A = K_2$, $A = P_3$, $A =
+K_3$, $A = P_4$, and $A = \djunion{K_2}{P_3}$ are impossible as above.  
+Applying Lemma \ref{E2Classification} shows that $A = 2K_2$, $A = P_5$, and 
+$A = 2P_3$ are impossible.  Thus we must have $A = C_4$.  If $k \geq 8$, then 
+Lemma \ref{ConnectedAtLeast4Poss} gives a contradiction.  Hence we must have
+$k = 7$. 
+Since $H + z$ contains an induced $\join{K_3}{2K_2}$, we must have $N(v_1) \cap
+V(H) = N(v_2) \cap V(H)$, say $N(v_1) \cap V(H) = \set{w_1, w_2}$.  Moreoever,
+$xz \in E(G)$, $w_1w_2 \in E(G)$ and there are no edges between $\set{w_1, w_2}$
+and $\set{x, z}$ in $G$.  
+
+Put $Q \DefinedAs \set{v_1, \ldots, v_{k - (r + 1)}}$. Then for $v \in Q$, by
+the same argument as above, we must have $N(v) \cap V(H) = \set{w_1, w_2}$. 
+Hence $Q$ is joined to $\set{w_1, w_2}$, $C$ is joined to $Q$, and $\set{x, z}$
+and both $\set{x, z}$ and $\set{w_1, w_2}$ are joined to the same $K_3$ in $H$. 
+We must have $r = 3$ for otherwise one of $x, z, w_1, w_2$ has degree larger
+than $7$.  Thus we have an $M_{7, 2}$ in $G$ and therefore $G$ is $M_{7,2}$, a
+contradiction.
+
+Thus we must have $\chi(D) \leq k - 1$, which gives a $(k - 1)$-coloring of $H + z$ in which $z$ receives a color $c_1$ which is not received by any of the 
+neighbors of $v_1$ in $H$ and $x$ receives a color $c_2$ which is not received by any of the neighbors of $v_2$ in $H$.  
+Thus $c_1$ is in $v_1$'s list and $c_2$ is in $v_2$'s list. Note that if $x$ and $z$ are adjacent then $c_1 \neq c_2$. Hence, we can $2$-color $G[x,z,v_1,v_2]$ from the lists.  
+This leaves $k-3$ vertices. The vertices in $C$ have lists of size at least $k-3$ and the rest have lists of size at least $k-5$.  
+Since the union of any $k-4$ of the lists contains one list of size $k-3$, we
+can complete the partial coloring by Hall's Theorem.
+\end{proof}
+
+\begin{cor}\label{AtMostOneEdgeIn}
+For $k \geq 7$, if $H$ is a $(k - 1)$-clique in a $k$-mule $G$ other than
+$M_{7,1}$ and $M_{7,2}$, then any vertex in $G - H$ has at most one neighbor in
+$H$.
+\end{cor}
+\begin{proof}
+%Let $S$ denote the vertices of a $(k-1)$-clique, and 
+Let $v\notin H$ be adjacent to $r$ vertices in $H$.  Now
+$G[H\cup\{v\}]=K_r*(K_1+K_{k-(r+1)})$.  If $r\ge 2$, then $G[H\cup\{v\}]$ is
+forbidden by Lemma~\ref{NoForksThatArentKnives}.
+\end{proof}
+
+\begin{lem}\label{K4sOut}
+For $k \geq 7$, no $k$-mule except $M_{7,1}$ contains
+$\join{K_4}{E_{k-4}}$ as a subgraph.
+\end{lem}
+\begin{proof}
+Let $G$ be a $k$-mule other than $M_{7,1}$ and suppose $G$
+contains an induced $\join{K_4}{D}$ where $\card{D} = k - 4$. Then $G$ is not
+$M_{7,2}$. By Lemma \ref{K_tClassification}, $D$ is $E_3$, a claw, a clique, or
+almost complete. If $D$ is a clique then $G$  contains $K_k$, a contradiction. Now Corollary \ref{AtMostOneEdgeIn} shows that $D$ being almost complete is
+impossible. Finally, Lemma \ref{NoE3} shows that $D$ cannot be $E_3$ or a claw.  This contradiction completes the proof.
+\end{proof}
+
+Since $\join{K_4}{E_{\Delta - 4}} \subseteq K_\Delta$, Lemma \ref{K4sOut} shows that the following conjecture is equivalent to the Borodin-Kostochka conjecture.
+
+\begin{conjecture}\label{K4Conjecture}
+Any graph with $\chi \geq \Delta \geq 9$ contains $\join{K_4}{E_{\Delta - 4}}$ as a subgraph.
+\end{conjecture}
+
+\begin{lem}\label{NonInducedFourDealInMule}
+Let $G$ be a $k$-mule with $k \geq 8$. Let $A$ and $B$ be graphs with $4 \leq \card{A} \leq k - 4$ and $\card{B} = k - \card{A}$ such that $\join{A}{B} \unlhd G$. 
+Then $A = \djunion{K_1}{K_{\card{A} - 1}}$ and $B = \djunion{K_1}{K_{\card{B} - 1}}$.
+\end{lem}
+\begin{proof}
+Note that $\card{B} \geq 4$. 
+By Lemma \ref{BothSidesAtLeastFourD1Choose}, $\join{A}{B}$ is almost complete, $\join{K_5}{E_3}$ or our desired conclusion holds.  
+The first and second cases are impossible by Corollary \ref{AtMostOneEdgeIn} and
+Lemma \ref{NoE3}.
+\end{proof}
+
+This shows that the following conjecture is a natural weakening of Borodin-Kostochka.
+
+\begin{conjecture}\label{NonInducedFourDeal}
+Let $G$ be a graph with $\Delta(G) = k \geq 9$. If $K_{t, k - t} \not \subseteq G$ for all $4 \leq t \leq k - 4$, then $G$ can be $(k - 1)$-colored.
+\end{conjecture}
+
+In the next section we create the tools needed to reduce the $4$ in these lemmata to $3$.
+
+\subsection{Tooling up}
+For an independent set $I$ in a graph $G$, we write $\frac{G}{\brackets{I}}$ for
+the graph formed by collapsing $I$ to a single vertex and discarding duplicate
+edges.  We write $\brackets{I}$ for the resulting vertex in the new graph.  If
+more than one independent set $I_1, I_2, \ldots, I_m$ are collapsed in
+succession we indicate the resulting graph by
+$\frac{G}{\brackets{I_1}\brackets{I_2}\cdots\brackets{I_m}}$.
+
+\begin{lem}\label{ToolOne}
+Let $G$ be a $k$-mule other than $M_{7,1}$ and $M_{7,2}$ with $k \geq 7$ and $H
+\lhd G$. If $x, y \in V(H)$, $xy \not \in E(H)$ and  $\card{N_H(x) \cup N_H(y)} \leq k$, then there exists a $(k - 1)$-coloring $\pi$ of $H$ such that $\pi(x) = \pi(y)$.
+\end{lem}
+\begin{proof}
+Suppose $x, y \in V(H)$, $xy \not \in E(H)$ and $\card{N_H(x) \cup N_H(y)} \leq
+k$.  Put $H' \DefinedAs \frac{H}{\brackets{x, y}}$. Then
+$H' \prec H$ via the natural epimorphism $\funcsurj{f}{H}{H'}$.  By applying
+Lemma \ref{EpiPower} we either get the desired $(k - 1)$-coloring $\pi$ of
+$H$ or a $K_{k-1}$ in $H$ with $V(K_{k-1}) \subseteq N(x) \cup N(y)$.  But $k -
+1 \geq 6$, so one of $x$ or $y$ has at least three neighbors in $K_{k-1}$
+violating Corollary \ref{AtMostOneEdgeIn}.
+\end{proof}
+
+\begin{lem}\label{ToolTwo}
+Let $G$ be a $k$-mule other than $M_{7,1}$ and $M_{7,2}$ with $k \geq 7$ and $H
+\lhd G$.  Suppose there are disjoint nonadjacent pairs $\set{x_1, y_1},
+\set{x_2, y_2} \subseteq V(H)$ with $d_H(x_1), d_H(y_1) \leq k - 1$ and $\card{N_H(x_2)
+\cup N_H(y_2)} \leq k$. Then there exists a $(k - 1)$-coloring $\pi$ of $H$
+such that $\pi(x_1) \neq \pi(y_1)$ and $\pi(x_2) = \pi(y_2)$.
+\end{lem}
+\begin{proof}
+Put $H' \DefinedAs \frac{H}{\brackets{x_2, y_2}} + x_1y_1$.  Then
+$H' \prec H$ via the natural epimorphism $\funcsurj{f}{H}{H'}$.  
+Suppose the desired $(k - 1)$-coloring $\pi$ of $H$ doesn't exist. 
+Apply Lemma \ref{EpiPower} to get a $K_k$ in $H'$. Put $z \DefinedAs
+\brackets{x_2, y_2}$.  By Lemma \ref{NoE2} the $K_k$ must contain $z$ and by
+Lemma \ref{NoForksThatArentKnives}, the $K_k$ must contain $x_1y_1$; hence
+the $K_k$ contains $x_1$, $y_1$, and $z$.  Thus
+$H$ contains an induced subgraph $A \DefinedAs \join{\set{x_1, y_1}}{K_{k-3}}$
+where $V(A) \subseteq N_H(x_2) \cup N_H(y_2)$.  Then $x_2$ and $y_2$ each have at most
+two neighbors in the $K_{k-3}$ by Lemma \ref{K4sOut} and Lemma
+\ref{ConnectedEqual3Poss}.  Thus $k=7$ and both $x_2$ and $y_2$ have exactly
+two neighbors in the $K_4$.  One of $x_2$ or $y_2$ has at least one neighbor in
+$\set{x_1, y_1}$, so by symmetry we may assume that $x_2$ is adjacent to $x_1$. 
+But then $\set{x_2} \cup V(A)$ induces either a $\join{K_2}{\text{antichair}}$ (if
+$x_2\not\leftrightarrow y_1$) or a graph containing $\join{K_2}{C_4}$ (if
+$x_2\leftrightarrow y_1$), and both are impossible by Lemma
+\ref{K2ClassificationHelper}.
+\end{proof}
+
+\subsection{Using our new tools}
+
+\input{M_8}
+
+\begin{lem}\label{K3sOut}
+For $k \geq 7$, the only $k$-mules containing $\join{K_3}{E_{k-3}}$
+as a subgraph are $M_{7,1}$,  $M_{7,2}$ and $M_8$.
+\end{lem}
+\begin{proof}
+Suppose not and let $G$ be a $k$-mule other than $M_{7,1}$,  $M_{7,2}$ and $M_8$
+containing $F \DefinedAs \join{C}{B}$ as an induced subgraph where $C
+= K_3$ and $B$ is an arbitrary graph with $\card{B} = k - 3$. By Lemma
+\ref{ConnectedEqual3Poss}, $B$ is: $\join{E_3}{K_{\card{B} - 3}}$, almost
+complete, $\djunion{K_t}{K_{\card{B} - t}}$,
+$\djunion{\djunion{K_1}{K_t}}{K_{\card{B} - t - 1}}$, or
+$\djunion{E_3}{K_{\card{B} - 3}}$.  The first two options are impossible by
+Lemma \ref{K4sOut}.
+
+First, suppose there is no $z \in V(G-F)$ with $C \subseteq N(z)$.  Let $\pi$
+be the $(k-1)$-coloring of $G-F$ guaranteed by Lemma
+\ref{JoinerOrDifferentLists}.  Put $L \DefinedAs L_\pi$. Let $I$ be a maximal
+independent set in $B$. If there are $x,y \in I$ and $c \in L(x) \cap L(y)$,
+then we may color $x$ and $y$ with $c$ and then greedily complete the coloring to the rest of $F$ giving a contradiction.  Thus
+we must have
+
+\begin{align*}
+k - 1 &\geq \sum_{v \in I} \card{L(v)} \\
+& \geq \sum_{v \in I} \parens{d_F(v) - 1} \\
+&= \sum_{v \in I}(d_B(v) + 3 - 1)\\
+&= 2 \card{I} + \sum_{v \in I} d_B(v) \\
+&= \card{B} + \card{I} \\
+&= k-3 + \card{I}. \\
+\end{align*}
+Therefore $\card{I} \leq 2$ and hence $B$ is $\djunion{K_t}{K_{\card{B} - t}}$. 
+Put $N \DefinedAs \bigcup_{w \in C} N(w) \cap V(G-F)$.  Then $\card{N} \geq 2$
+by assumption.  Pick $x_1,y_1 \in N$ and nonadjacent $x_2, y_2 \in V(B)$ and put
+$H \DefinedAs G\brackets{V(G-F) \cup \set{x_2, y_2}}$.  Plainly, the conditions
+of Lemma \ref{ToolTwo} are satisfied and hence we have a $(k - 1)$-coloring
+$\gamma$ of $H$ such that $\gamma(x_1) \neq \gamma(y_1)$ and $\gamma(x_2) =
+\gamma(y_2)$.  But then we can greedily complete this coloring to all of $G$, a
+contradiction.
+
+Thus we have $z \in V(G-F)$ with $C \subseteq N(z)$.  Put $B' \DefinedAs
+G\brackets{V(B) \cup \set{z}}$ and $F' \DefinedAs
+G\brackets{V(F) \cup \set{z}}$.  As above, using Lemma
+\ref{ConnectedEqual3Poss} and Lemma \ref{K4sOut}, we see that $B'$ is
+$\djunion{K_t}{K_{\card{B'} - t}}$, $\djunion{\djunion{K_1}{K_t}}{K_{\card{B'} -
+t - 1}}$ or $\djunion{E_3}{K_{\card{B'} - 3}}$.  
+
+Suppose $B'$ is $\djunion{E_3}{K_{\card{B'} - 3}}$, say the $E_3$ is
+$\set{z_1, z_2, z_3}$.  Since $k \geq 7$, we have $w_1, w_2 \in V(B') -
+\set{z_1, z_2, z_3}$. Then $d_{F'}(z_3) + d_{F'}(w_1) = k$ and hence we may
+apply Lemma \ref{ToolOne} to get a $(k - 1)$-coloring $\zeta$ of $G - F'$ such
+that there is some $c \in L_\zeta(z_3) \cap L_\zeta(w_1)$.  Now $\card{L_\zeta(z_1)} +
+\card{L_\zeta(z_2)} + \card{L_\zeta(w_2)} \geq 2 + 2 + k - 4 = k$ and hence
+there is a color $c_1$ that is in at least two of 
+$L_\zeta(z_1)$, $L_\zeta(z_2)$ and $L_\zeta(w_2)$.  If $c_1 = c$, then $c$
+appears on an independent set of size $3$ in $B'$ and we may color this set
+with $c$ and greedily complete the coloring. Otherwise, $B'$ contains two
+disjoint nonadjacent pairs which we can color with different colors and again
+complete the coloring greedily, a contradiction.
+
+Now suppose $B'$ is $\djunion{\djunion{K_1}{K_t}}{K_{\card{B'} -
+t - 1}}$.  By Lemma \ref{NoForksThatArentKnives}, we must have $2 \leq t \leq
+\card{B'} - 3$. Let $x$ be the vertex in the $K_1$, $w_1, w_2 \in V(K_t)$ and
+$z_1, z_2 \in V(K_{\card{B'} - t - 1})$.  Then $d_{F'}(w_1) + d_{F'}(z_1) = k
++ 1$ and hence we may apply Lemma \ref{ToolOne} to get a $(k - 1)$-coloring
+$\zeta$ of $G - F'$ such that there is some $c \in L_\zeta(w_1) \cap
+L_\zeta(z_1)$.  Now $\card{L_\zeta(x)} +
+\card{L_\zeta(w_2)} + \card{L_\zeta(z_2)} \geq 2 + k-1 = k+1$ and hence
+there is are at least two colors $c_1, c_2$ that are each in at least two of 
+$L_\zeta(x)$, $L_\zeta(w_2)$ and $L_\zeta(z_2)$.  If $c_1 \neq c$ or $c_2 \neq
+c$, then $B'$ contains two
+disjoint nonadjacent pairs which we can color with different colors and
+then complete the coloring greedily.  Otherwise $c$
+appears on an independent set of size $3$ in $B'$ and we may color this set
+with $c$ and greedily complete the coloring, a contradiction.
+
+Therefore $B'$ must be $\djunion{K_t}{K_{\card{B'} - t}}$.  
+By Lemma \ref{NoForksThatArentKnives}, we must have $3 \leq t \leq \card{B'} -
+3$.  Thus $k \geq 8$.  Let $X$ and $Y$ be the two cliques covering $B'$.  Let
+$x_1, x_2 \in X$ and $y_1, y_2 \in Y$.  Put $H \DefinedAs G\brackets{V(G-F')
+\cup \set{x_1, x_2, y_1, y_2}}$ and $H' \DefinedAs \frac{H}{\brackets{x_1,
+y_1}\brackets{x_2,y_2}}$.  For $i \in \irange{2}$, $d_{F'}(x_i) + d_{F'}(y_i) =
+k + 2$ and thus $\Delta(H') \leq k$. If $\chi(H') \leq k - 1$, then we have a
+$(k-1)$-coloring of $H$ which can be greedily completed to all of $G$, a contradiction.  
+Hence, by Lemma \ref{EpiPower}, $H'$ contains $K_k$.  Thence $H - \set{x_1,
+y_1, x_2, y_2}$ contains a $K_{k-2}$, call it $A$, such that $V(A) \subseteq
+N(x_i) \cup N(y_i)$ for $i \in \irange{2}$.  
+%By considering degrees, 
+Since $d_{F'}(x_i)+d_{F'}(y_i)=k+2$, we see that
+$N_H(x_i) \cap N_H(y_i) = \emptyset$ for $i \in \irange{2}$.  But we can play
+the same game with the pairs $\set{x_1, y_2}$ and $\set{x_2, y_1}$.  We conclude
+that $N(x_1) \cap V(A) = N(x_2) \cap V(A)$ and $N(y_1) \cap V(A) = N(y_2) \cap
+V(A)$.  In fact we can extend this equality to all of $X$ and $Y$.  Put $Q
+\DefinedAs N(x_1) \cap V(A)$ and $P \DefinedAs N(y_1) \cap V(A)$.  Then we
+conclude that $X$ is joined to $Q$ and $Y$ is joined to $P$.  Moreover, we
+already know that $X$ and $Y$ are joined to the same $K_3$.  The edges in these
+joins exhaust the degrees of all the vertices, hence $G$ is a $5$-cycle with
+vertices blown up to cliques.  If $k = 8$, then $\card{X} = \card{Y} = 3$ and
+thus $\card{Q} = \card{P} = 3$, but then $G = M_8$, a contradiction.  So $k
+\geq 9$.  Since $\card{X}+\card{Y}= k-2 \ge 7$, we have either $\card{X}\ge 4$
+or $\card{Y}\ge 4$.
+If $\card{X}\ge 4$, then for each $q\in Q$, we have $d(q)\ge
+(k-2)-1+\card{X}\ge k+1$, contradiction.  If $\card{Y}\ge 4$, then for each
+$p\in P$, we have $d(p)\ge (k-2)-1+\card{Y}\ge k+1$, contradiction.
+\end{proof}
+
+Since $\join{K_3}{E_{\Delta-3}} \subseteq K_\Delta$, Lemma \ref{K3sOut} shows
+that Conjecture \ref{K3Conjecture} is equivalent to the Borodin-Kostochka
+conjecture.
+
+\begin{lem}\label{NonInducedThreeDealInMule}
+Let $G$ be a $k$-mule with $k \geq 7$ other than $M_{7,1}$, $M_{7,2}$ and $M_8$. 
+Let $A$ and $B$ be graphs with $3 \leq \card{A} \leq k - 3$ and $\card{B} = k - \card{A}$ such that $\join{A}{B} \unlhd G$. 
+Then $A = \djunion{K_1}{K_{\card{A} - 1}}$ and $B = \djunion{K_1}{K_{\card{B} - 1}}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $\join{A}{B} \unlhd G$ be a counterexample.
+
+First suppose $\card{A}, \card{B} \geq 4$. 
+Then, by Lemma \ref{BothSidesAtLeastFourD1Choose}, $\join{A}{B}$ is almost
+complete or $\join{K_5}{E_3}$. The first and
+second cases are impossible by Corollary \ref{AtMostOneEdgeIn} and Lemma
+\ref{NoE3} respectively.
+
+Thus we may assume $\card{A} = 3$.  By Lemma \ref{K3sOut}, $A \in \set{E_3,
+P_3, \djunion{K_1}{K_2}}$.  If $A = E_3$, then $B$ is complete by Lemma
+\ref{E3Classification}, but this is impossible by Lemma \ref{NoE3}.  If $A =
+P_3$, then $B$ is complete by Lemma \ref{ConnectedIncompleteAtLeast4}, but this
+is impossible by Lemma \ref{NoE2}.  Hence $A = \djunion{K_1}{K_2}$.  By Lemma
+\ref{AntiP3Classification}, $B$ is complete or $\djunion{K_1}{K_{\card{B} -
+1}}$.  The former is impossible by Lemma \ref{NoTwooks} and the latter by
+supposition.
+\end{proof}
+
+Lemma~\ref{NonInducedThreeDealInMule} proves our main result, that Conjecture
+\ref{NoThreeDealEquiv} is equivalent to the Borodin-Kostochka conjecture. 
+
+\subsection{The low vertex subgraph of a mule}
+In this section we show that if a mule is not regular, then the subgraph of
+non-maximum-degree vertices is severely restricted. For a vertex critical graph
+$G$ we write $\fancy{L}(G)$ for the subgraph induced on the vertices of degree $\chi(G) - 1$ in $G$ and $\fancy{H}(G)$ for the subgraph induced on the rest of the vertices.  We call $v \in V(G)$ \emph{low} if $v \in V(\fancy{L}(G))$ and \emph{high} otherwise.
+
+\begin{lem}\label{NoE2InSomeLow}
+For $k \geq 6$, no $k$-mule contains an induced $\join{E_2}{K_{k-2}}$ with some
+vertex low.
+\end{lem}
+\begin{proof}
+Since $M_{6,1}$ and $M_{7,1}$ contain no such induced subgraph, the lemma
+follows from Lemma \ref{NoE2}.
+\end{proof}
+
+\begin{lem}\label{LowVerticesAreClique}
+If $G$ is a $k$-mule with $k \geq 6$, then $\fancy{L}(G)$ is complete.
+\end{lem}
+\begin{proof}
+Let $G$ be a $k$-mule with $k \geq 6$ and suppose $G$ has nonadjacent low
+vertices $x$ and $y$. Then $G + xy \prec G$ and hence, by Lemma \ref{EpiPower}, $G + xy$ contains a $K_k$.  
+But then $G$ contains an $\join{E_2}{K_{k-2}}$ with some vertex low, contradicting Lemma \ref{NoE2InSomeLow}.  
+Hence $\fancy{L}(G)$ is complete.
+\end{proof}
+
+\begin{lem}\label{LowVerticesAreFew}
+If $G$ is a $k$-mule with $k \geq 6$ other than $M_{6,1}$ and $M_{7,1}$, then
+$\card{\fancy{L}(G)} \leq k - 2$.
+\end{lem}
+\begin{proof}
+Let $G$ be a $k$-mule with $k \geq 6$ other than $M_{6,1}$ and $M_{7,1}$.  
+By Lemma \ref{LowVerticesAreClique}, $\fancy{L}(G)$ is complete and hence $\card{\fancy{L}(G)} \leq k - 1$.  
+Suppose $\card{\fancy{L}(G)} = k - 1$.  
+Since $G$ doesn't contain $K_k$, no high $z$ is adjacent to all of $\fancy{L}(G)$.  
+Hence, by Lemma \ref{JoinerOrDifferentLists}, there is a $(k - 1)$-coloring of $\fancy{H}(G)$ that we can complete to all of $G$ using Hall's Theorem.  
+This contradiction completes the proof.
+\end{proof}
+
+\begin{lem}\label{AtMostTwoIntoLowMule}
+Let $G$ be a $k$-mule with $k \geq 6$.  If a high $x \in V(G)$ has at least
+three low neighbors, then $x$ is adjacent to all low vertices in $G$.
+\end{lem}
+\begin{proof}
+Assume the lemma is false.
+Let $x$ be a high degree vertex with at least three neighbors in
+$V(\fancy{L}(G))$.  If $|V(\fancy{L}(G))|=3$, then the claim holds.  So assume
+that $|V(\fancy{L}(G))|\ge 4$ and choose $y\in V(\fancy{L}(G))\setminus N(x)$. 
+Let $A=V(\fancy{L}(G))\cap N(x)$.  By Lemma \ref{LowVerticesAreClique},
+$\fancy{L}(G)$ is complete.  Thus, $G[\{x,y\}\cup A]=\join{E_2}{K_{|A|}}$. 
+Since $L(v)=d(v)$ for all $v\in (A\cup\{y\})$, Lemma
+\ref{E2JoinWithSomeLowOnBoth} implies that $\join{E_2}{K_{|A|}}$ cannot appear
+in $G$.  This contradiction implies the lemma.
+\end{proof}
+
+\subsection{Restrictions on the independence number}
+The Borodin-Kostochka conjecture has been proven for graphs with independence
+number at most two \cite{beutelspacher1984minimal}.  Here we prove that if we
+wish to prove the Borodin-Kostochka conjecture for graphs with independence
+number at most $a$ for any $a \leq 6$, it suffices to construct a $K_{\Delta
+- 1}$.
+
+For $a \geq 2$, let $\fancy{C}_k^a$ be those $G \in \fancy{C}_k$ with $\alpha(G)
+\leq a$.  By a $(k,a)$-mule we mean a $\fancy{C}_k^a$-mule. Note that if $G \in
+\fancy{C}_k^a$ and for some $H \in \fancy{C}_k$ we have $H \prec G$, then $H \in \fancy{C}_k^a$ as well.
+Therefore any $(k,a)$-mule is also a $k$-mule.
+
+\begin{thm}\label{SmallAlphaConj}
+For $k \geq 7$ and $2 \leq a \leq k-3$, no $(k, a)$-mule except $M_{7,1}$
+contains a $K_{k-1}$.
+\end{thm}
+\begin{proof}
+Suppose otherwise and let $G$ be such a $(k, a)$-mule containing a $K_{k-1}$,
+call it $H$. By Corollary \ref{AtMostOneEdgeIn}, each vertex in $G-H$ has at
+most one neighbor in $H$.  Let $\pi$ be a $(k-1)$-coloring of $G-H$.  
+Then $\card{L_\pi(v)} \geq k - 3$ for all $v \in V(H)$. Since
+$H$ cannot be colored from $L_\pi$, applying Hall's Theorem shows that either
+$\card{Pot(L_\pi)} \leq k - 2$ or there is some $x \in V(H)$ such that
+$\card{Pot_{H-x}(L_\pi)} \leq k - 3$.  In the former case, $\pi$ must have some
+color class to which each vertex of $H$ is adjacent and hence $\alpha(G) \geq
+k-1$, a contradiction.  In the latter case, $\pi$ must have two color classes to
+which each vertex of $H-x$ is adjacent and hence $G$ has two disjoint
+independent sets of size $k-2$.  Again we have a contradiction since $\alpha(G)
+\geq k-2$.
+\end{proof}
+It follows that Conjecture \ref{AlphaConjecture} is equivalent to the
+Borodin-Kostochka conjecture for graphs with independence number at most $6$.
+

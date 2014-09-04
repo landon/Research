@@ -1,0 +1,596 @@
+\chapter{\texorpdfstring{LIST BORODIN-KOSTOCHKA FOR LARGE $\Delta$}{LIST BORODIN-KOSTOCHKA FOR LARGE MAXIMUM DEGREE}}\label{ChoiceLargeDeltaChapter}
+\section{The setup}
+\noindent The aim of this chapter is to prove the following result.
+
+\begin{thm}
+There exists $\Delta_0$ such that every graph $G$ with $\chi_l(G) \geq \Delta(G)
+\geq \Delta_0$ contains a $K_{\Delta(G)}$.
+\end{thm}
+
+Suppose the theorem is false and choose a counterexample $G$ minimizing
+$\card{G}$.  Put $\Delta \DefinedAs \Delta(G)$ and let $L$ be a bad
+$(\Delta - 1)$-assignment on $G$.  Then, by minimality of $\card{G}$, any proper
+induced subgraph of $G$ is $L$-colorable.  In particular, every vertex has
+degree either $\Delta$ or $\Delta-1$, we call these \emph{high} and \emph{low}
+vertices respectively. 
+
+If $G$ had an induced $d_1$-choosable subgraph $H$, then we could
+$L$-color $G - H$ by minimality and then complete the $L$-coloring to all of
+$G$.  So, $G$ has no $d_1$-choosable induced subgraphs.  
+
+The proof strategy is the same as Reed's \cite{reed1999strengthening} for
+chromatic number, except some more care must be taken when lists have small
+intersection and $K_{\Delta-1}$'s require special attention.
+
+\section{The decomposition}
+We use Lemma \ref{partition} and the notation from Section
+\ref{GeneralDecomposition}.
+
+\begin{defn}
+The cliques in $\CC_{\frac34 \Delta + 1}$ are called \emph{big}.
+\end{defn}
+
+Let $B$ be all vertices contained in a big clique; that is, $B \DefinedAs
+\bigcup \CC_{\frac34 \Delta + 1}$. For a vertex $v$, put $G_v \DefinedAs G[N(v)]$.
+
+\begin{defn}
+A vertex $v$ is called \emph{sparse} if $\size{G_v} < \frac25 \Delta^2$.
+\end{defn}
+
+\begin{lem}\label{neighborhood}
+If $B$ is a graph with $\delta(B) \geq \frac{\card{B} + 1}{2}$ such that
+$\join{K_1}{B}$ is not $d_1$-choosable, then $\omega(B) \geq \card{B} - 1$ or
+$B = \join{E_3}{K_4}$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $L$ be a minimal bad $d_1$-assignment on $B$.
+First note that if $B$ does not contain disjoint nonadjacent pairs $x_1, y_1$
+and $x_2, y_2$, then $\omega(B) \geq \card{B} - 1$ or
+$B = \join{E_3}{K_4}$ by Corollary \ref{K_tClassification}.
+
+By Dirac's theorem, $B$ is hamiltonian and in particular $2$-connected. Since
+$B$ cannot be an odd cycle or complete, $B$ is $d_0$-choosable.
+
+By the Small Pot Lemma, $\card{Pot(L)} \leq \card{B}$.  Since $\card{L(x_1)} +
+\card{L(x_2)} \geq \card{B} + 1$, the lists intersect and thus Lemma
+\ref{NeighborhoodPotShrink} shows that $\card{Pot(L)} \leq \card{B} - 1$. But
+then $\card{L(x_i) \cap L(y_i)} \geq 2$ for each $i$ and Lemma
+\ref{IntersectionsInB} gives a contradiction.
+\end{proof}
+
+Note that the neighborhoods we will be looking at are huge, so the $B =
+\join{E_3}{K_4}$ case will never happen here.
+
+\begin{lem}
+Every vertex in $V(G) - B$ is sparse.
+\end{lem}
+\begin{proof}
+Suppose $x \in V(G) - B$.
+By applying Lemma \ref{neighborhood} repeatedly, we get a sequence $y_1,
+\ldots, y_{\floor{\frac{\Delta}{4}}} \in N(x)$ such that 
+\[\card{N(y_i) \cap (N(x) - \set{y_1, \ldots, y_{i-1}})} \leq \frac12 (\Delta +
+1 - i).\]
+
+\noindent Hence $x$ is sparse since
+
+\[\size{G_x} \leq \binom{\Delta}{2} -
+\frac12\sum_{i=1}^{\floor{\frac{\Delta}{4}}} (\Delta - i) < \frac25 \Delta^2.\]
+\end{proof}
+
+\noindent Let $D_1, \ldots, D_r$ be the partition of $B$ guaranteed by Lemma
+\ref{partition} and put $S \DefinedAs V(G) - B$.
+
+\section{The random procedure}
+For each vertex $v$, pick $c \in L(v)$ at random to get a possibly improper
+coloring $\zeta$ of $G$ from $L$.  Put $U \DefinedAs \setb{x}{V(G)}{\zeta(x) =
+\zeta(y) \text{ for some $y \in N(x)$}}$.  Put $H \DefinedAs G - U$, $F
+\DefinedAs G[U]$ and let $\pi$ be $\zeta$ restricted to $V(H)$.  We refer
+to $V(H)$ as the \emph{colored} vertices and $V(F)$ as the \emph{uncolored}
+vertices.  Also, let $J$ be the resulting list assignment on $F$; that is, $J(x)
+\DefinedAs L(x) - \bigcup_{y \in N(x) \cap V(H)} \pi(y)$ for $x \in V(F)$.
+
+\begin{defn}
+A vertex in $v \in V(G)$ is called \emph{safe} if it is colored or $\card{J(v)}
+\geq d_F(v) + 1$.
+\end{defn}
+
+Note that if every vertex is safe, then we can easily complete the $L$-coloring
+to all of $G$.  Our goal will be to show that the random procedure will, with
+positive probability, produce a partial coloring where every sparse vertex is
+safe and the uncolored nonsparse vertices satisfy conditions that will allow the
+coloring to be completed.  Now we make this precise.  Consider the following
+events:
+
+\begin{itemize}
+  \item $S_v$, for $v \in S$: the event that $v$ is not safe.
+  \item $E_i$, for $i \in \irange{r}$ where $\card{C_i} \leq \Delta - 2$: the event that $C_i$ does not contain two uncolored safe vertices.
+  \item $Q_i$, for $i \in \irange{r}$ where $\card{C_i} \leq \Delta - 2$: the event that $K_i$ does not contain two uncolored vertices.
+  \item $F_i$, for $i \in \irange{r}$ where $\card{C_i} = \Delta - 1$, every $x
+  \in G - C_i$ has $\card{N(x) \cap C_i} \leq \sqrt{\Delta}\log(\Delta)$ and
+  there are at most $\log^2(\Delta)$ vertices $x \in G - C_i$ with $\card{N(x)
+  \cap C_i} > \frac{\sqrt{\Delta}}{\log(\Delta)}$: the event that
+  $C_i$ does not contain two uncolored safe vertices.
+  \item $P_i$, for $i \in \irange{r}$ where $\card{C_i} = \Delta - 1$ and either some $x \in G
+  - C_i$ has $\card{N(x) \cap C_i} > \sqrt{\Delta}\log(\Delta)$ or more than
+  $\log^2(\Delta)$ vertices $x \in G - C_i$ have $\card{N(x) \cap C_i} >
+  \frac{\sqrt{\Delta}}{\log(\Delta)}$: the event that every $x \in G - C_i$ has
+  at most two ``good clumps'' in $K_i$.
+\end{itemize}
+
+It remains to define ``good clumps''.  To do so we need a lemma.
+
+\begin{lem}\label{clumping}
+Let $K$ be a $\Delta-1$ clique in $G$ and $x \in G - K$ with $\card{N(x) \cap
+K} \geq 4$.  Then every vertex in $\card{N(x) \cap
+K}$ is high and there is a partition $\set{Z_1, \ldots, Z_m}$
+of $N(x) \cap K$ such that for each $i \in \irange{m}$ we have $\card{Z_i} \leq
+5$ and $L(u) = L(v)$ for all $u, v \in Z_i$.  Moreover, $\card{L(v) - L(w)}
+\leq 1$ for all $v, w \in N(x) \cap K$.
+\end{lem}
+\begin{proof}
+Put $A \DefinedAs N(x) \cap K$ and $Q \DefinedAs G[\set{x} \cup K]$.  For any
+$L$-coloring $\gamma$ of $G - Q$, let $L_\gamma$ be the resulting list
+assignment on $Q$.
+
+First, suppose there is an $L$-coloring $\gamma$ of $G - Q$ such that
+$L_\gamma(u) \neq L_\gamma(v)$ for some $u, v \in A$.  Pick $y \in K - A$.  If
+$L_\gamma(x) \cap L_\gamma(y) \neq \emptyset$, then coloring $x$ and $y$ the
+same leaves a list assignment on $K - y$  which is completable by Hall's theorem.
+Hence we must have $L_\gamma(x) \cap L_\gamma(y) = \emptyset$.  Thus $\card{L_\gamma(x) \cup L_\gamma(y)} \geq \Delta$.  Put $Pot(T) \DefinedAs \bigcup_{v \in T} L_\gamma(v)$ for $T \subseteq A$.  If there is $c \in (L_\gamma(x) \cup L_\gamma(y)) - Pot(A)$, then coloring $x$ and $y$ so that $c$ is used leaves a list assignment on $K-y$ which is completable by Hall's theorem.  In particular, we must have $\card{Pot(A)} \geq \Delta$. Now, if we color $x$ and $y$ arbitrarily we can complete the coloring unless there exists $T \subseteq A$ with $\card{T} = \card{A}-1$ and $\card{Pot(T)} \leq \Delta - 2$.  Thus we can pick a color in $L_\gamma(x) \cup L_\gamma(y)$ which is not in any of $T$'s lists giving a coloring that is again easily completable.
+
+Therefore $L_\gamma(u) = L_\gamma(v)$ for all $u, v \in A$ for every
+$L$-coloring $\gamma$ of $G - Q$.  In particular, no vertex of $A$ is
+low and $\card{L(v) - L(w)} \leq 1$ for all $v, w \in A$.  Suppose there exists
+$Z \subseteq A$ with $\card{Z} \geq 6$ such that $L(u) = L(v)$ for all $u, v \in Z$.  Then every $v
+\in Z$ has exactly one neighbor $z_v$ in $G-Q$.  Put $N \DefinedAs
+\setbs{z_v}{v \in Z}$.  If $\card{N} = 1$, then $G$ contains $\join{K_6}{E_3}$
+violating Lemma \ref{K_tClassification}.  If some $L$-coloring $\gamma$ of $G-Q$ assigned
+two vertices of $N$ different colors, then $L_\gamma$ would give different lists
+for two vertices of $A$, a contradiction.  Hence $N$ is an independent set and
+adding an edge between two vertices of $N$ in $G-Q$ must create a $K_\Delta$ by
+minimality of $\card{G}$.  By counting degrees this is plainly impossible for
+$\card{N} \geq 3$.  For $\card{N} = 2$, both vertices have $\Delta-2$ neighbors
+in $G-Q$ and one has at least $3$ vertices in $Z$, impossible.
+
+Now taking maximal subsets of $A$ of vertices all having the same list gives the
+desired partition.
+\end{proof}
+
+The $Z_i$ in the partition in Lemma \ref{clumping} are called \emph{clumps} of $x$ in $K$.
+Note that there exists $Y$ such that for any $i \neq j$ we have $L(v) \cap L(z)
+= Y$ for $v \in Z_i$ and $w \in Z_j$.  For $i \in \irange{m}$ and $v \in Z_i$ we
+let $\alpha_i$ be the unique element of $L(v) - Y$.  We call $\alpha_i$ the
+\emph{special} color for $Z_i$.
+
+Now let $i \in \irange{r}$ where $\card{C_i} = \Delta - 1$ and some $x \in G -
+C_i$ has $\card{N(x) \cap C_i} \geq 4$. A clump $Z_j \subseteq
+N(x) \cap C_i$ is \emph{good} if there is uncolored $z_i \in Z_i$ such that
+$\alpha_i$ is not used on any neighbor of $z_i$ and the unique $y$ in $N(z_i) - C_i - \set{x}$ is colored with a color that is
+either not in $L(z_i)$ or is used on $C_i$.
+
+Now suppose we have a partial coloring $\pi$ where none of the bad events $S_v$,
+$E_i$, $Q_i$, $F_i$ and $P_i$ occur.  We color the $D_i$ corresponding to $P_i$
+events first.  Suppose $x \in G - C_i$ has $3$ good clumps $Z_1, Z_2, Z_3$ in $K_i$ with
+corresponding vertices $z_1, z_2, z_3$.  Since $\alpha_1 \not \in L(z_2),
+L(z_3)$, coloring $z_1$ with $\alpha_1$ leaves a list assignment we can complete
+greedily by coloring $z_2$ and $z_3$ last.  However, we need to be careful
+to not break the other such $D_i$ in the process.  So, we first color the
+respective $z_1$ in each such $D_i$.  After all of those have been colored, we
+greedily color the rest of each $D_i$.  
+It still needs to be checked that when we color $z_1$ with $\alpha_1$ we don't lose the ability to do the same 
+with $\alpha_1$ on some other $D_j$. To see this, note that $x$ has at least $3$ neighbors in $C_i$ and thus is 
+contain in no other $C_j$ with $\card{C_j} = \Delta-1$.  Moreover, $z_1$'s only
+possible other neighbor $y$ outside $C_i$ is already colored by assumption. 
+Now consider the $D_i$ that have two safe uncolored vertices in $C_i$.  If $C_i
+\neq K_i$, then since $Q_i$ doesn't happen $x_i$ has two uncolored neighbors,
+color it first.  Now color $C_i$ greedily saving the two safe uncolored vertices
+in $C_i$ for last. Now we can finish the coloring on the sparse vertices greedily. 
+Therefore if we can prevent all the bad events from happening we get our desired contradiction.
+
+It is easy to see that any given event depends on less than $3\Delta^5$ others,
+so the result will follow by showing that $\Pr(S_v), \Pr(E_i), \Pr(Q_i),
+\Pr(F_i),\Pr(P_i) \leq \Delta^{-6}$.  The following sections prove these bounds.
+
+\section{\texorpdfstring{$\Pr(S_v) \leq \Delta^{-6}$}{The S events}}
+We know $\size{G_v} < \frac25 \Delta^2$.  Put $A \DefinedAs
+\setb{x}{N(v)}{\card{L(x) \cap L(v)} \geq \frac23 \Delta}$ and $B \DefinedAs
+N(v) - A$.  Note that for $x, y \in A$ we have $\card{L(x) \cap L(y)} \geq
+\frac13 \Delta$ and for $x \in B$ we have $\card{L(x) - L(v)} \geq \frac13
+\Delta$.
+
+Let $A_v$ be the random variable that counts the number of nonadjacent pairs
+$x, y \in A$ such that, $\zeta(x) = \zeta(y)$ and $\zeta(z) \neq \zeta(x)$ for
+all $z \in N(v) - \set{x, y} \cup N(x) \cup N(y)$.
+
+Let $B_v$ be the random variable that counts the number of $x \in B$ such that
+$\zeta(x) \not \in L(v)$ and $\zeta(z) \neq \zeta(x)$ for all $z \in N(v) -
+\set{x} \cup N(x)$.
+
+Put $Z_v \DefinedAs A_v + B_v$.  Then $\ex(Z_v) = \ex(A_v) + \ex(B_v)$.  We
+prove the bound $\ex(Z_v) \geq \frac{\Delta}{1000}$ and then use Azuma's
+inequality to prove that $\Pr(\card{Z_v - \ex(Z_v)} > \frac{\Delta}{1000} - 2)
+\leq \Delta^{-6}$. The conclusion $\Pr(S_v) \leq \Delta^{-6}$ is then immediate.
+
+We know that $G_v$ has at least $\binom{\Delta - 1}{2} - \frac25 \Delta^2 \geq
+\frac{\Delta^2}{12}$ nonadjacent pairs.  Let $b$ be the number of nonadjacent pairs in $G_v$ that intersect $B$. 
+Plainly, $G[A]$ contains at least $\frac{\Delta^2}{12} - b$ nonadjacent pairs
+and $b \leq \card{B}\Delta$.
+
+First let's consider $\ex(A_v)$.  Let $x, y \in A$ be nonadjacent.  Since $\card{L(x) \cap L(y)} \geq
+\frac13 \Delta$, the probability that $x$ and $y$ get the same color and this
+color is not used on any of the rest of $N(v) \cup N(x) \cup N(y)$ is at least
+$(3\Delta)^{-1} (1-(\Delta-1)^{-1})^{3\Delta - 3} \geq (3\Delta)^{-1}3^{-3}$. 
+Thus $\ex(A_v) \geq (\frac{\Delta^2}{12} - b)\Delta^{-1}3^{-4} \geq
+\frac{\Delta}{1000} - \frac{b}{81\Delta}$.
+
+Now consider $\ex(B_v)$.  Let $x \in B$.  Since $\card{L(x) - L(v)} \geq \frac13
+\Delta$, the probability that $x$ gets a color not in $L(v)$ and this color is
+not used on any of the rest of $N(v) \cup N(x)$ is at least $\frac13
+(1-(\Delta-1)^{-1})^{2\Delta - 2} \geq 3^{-4}$.  Hence $\ex(B_v) \geq
+\frac{\card{B}}{81} \geq \frac{b}{81\Delta}$.  Therefore $\ex(Z_v) \geq
+\frac{\Delta}{1000}$.
+
+Now we need Azuma's inequality.  The concentration analysis is
+identical to the coloring case in Reed's proof.  We reproduce it here for
+completeness.
+
+\begin{lem}[Azuma]
+Let $X$ be a random variable determined by n trials $T_1, \ldots, T_n$ such that
+for each $i$ and any two possible sequences of outcomes $t_1, \ldots, t_i$ and
+$t_1, \ldots, t_{i-1}, t_i'$:
+
+\[\card{\ex(X \mid T_1 = t_1, \ldots, T_i = t_i) - \ex(X \mid T_1 = t_1,
+\ldots, T_i = t_i')} \leq c_i,\]
+
+\noindent then $\Pr(\card{X - \ex(X)} > t) \leq 2e^{\frac{-t^2}{2\sum c_i^2}}$.
+\end{lem}
+
+Since we colored the vertices of $G$ independently, we can apply Azuma using any
+ordering.  Order $V(G)$ as $w_1, \ldots, w_n$ so that $N(v)$ comes last and let
+$w_s$ be the last vertex not in $N(v)$.  Changing $\zeta(w_i)$ from $\beta$ to
+$\tau$ only affects the vertices using $\beta$ or $\tau$ and thus changes the
+conditional expected value by at most $2$.  For $w_i \not \in N(v)$, the
+probability that changing $w_i$'s color will affect $Z_v$ is at most the probability that one of
+$w_i$'s two colors is also assigned to one of its neighbors in $N(v)$.  Say
+$w_i$ has $d_i$ neighbors in $N(v)$.  Then the most changing $w_i$ can change
+$\ex(Z_v)$ is $c_i \DefinedAs 2\frac{2d_i}{\Delta-1} = \frac{4d_i}{\Delta-1}$. 
+Now $\sum_{i=1}^s d_i \leq \Delta^2$ and thus $\sum_{i=1}^s c_i \leq 4\Delta + 4
+\frac{\Delta}{\Delta-1} \leq 4\Delta + 5$.  As each $c_i \leq 5$, we have
+$\sum_{i=1}^s c_i^2 \leq 21\Delta$ and hence $\sum_i c_i^2 \leq 25\Delta$.  Now
+using $t \DefinedAs \frac{\Delta}{1000} - 2$ in Azuma gives $\Pr(Z_v < 2) <
+2e^{\frac{-(\frac{\Delta}{1000} - 2)^2}{50\Delta}} \leq \Delta^{-6}$ for large
+enough $\Delta$.
+
+\section{\texorpdfstring{$\Pr(E_i) \leq \Delta^{-6}$}{The E events}}
+We first need a couple structural lemmas.
+
+\begin{lem}\label{AtMostFourIn}
+Each $v \in C_i$ has at most one
+neighbor outside of $C_i$ with more than $4$ neighbors in $C_i$ and no such
+neighbor if $v$ is low.
+\end{lem}
+\begin{proof}
+Suppose otherwise that we have $v \in C_i$ with two neighbors $w_1, w_2 \in V(G)
+- C_i$ each with $5$ or more neighbors in $C_i$.  Put $Q \DefinedAs
+G[\set{w_1,w_2} \cup C_i - v]$, then $v$ is joined to $Q$ and hence
+$\join{K_1}{Q} \unlhd G$.  We show that $\join{K_1}{Q}$ must be $d_1$-choosable. 
+
+First, suppose there are different $z_1,z_2 \in C_i$ such that $\set{w_1, z_1}$
+and $\set{w_2, z_2}$ are independent.  Since $Q$ contains an induced diamond,
+it is $d_0$-choosable. Let $L$ be a minimal bad $d_1$-assignment on
+$\join{K_1}{Q}$. Then $\card{L(w_i)} + \card{L(z_i)} \geq 4 + \card{Q} - 3 = \card{Q} + 1$.  By the Small Pot Lemma, $\card{Pot(L)} \leq \card{Q}$.  Hence
+$L(w_1) \cap L(z_1) \neq \emptyset$ and Lemma \ref{NeighborhoodPotShrink} shows
+that $\card{Pot(L)} \leq \card{Q} - 1$, but then $\card{L(w_i) \cap L(z_i)}
+\geq 2$ and Lemma \ref{IntersectionsInB} gives a contradiction.
+
+By maximality of $C_i$, neither $w_1$ nor $w_2$ can be adjacent to all of $C_i$
+hence it must be the case that there is $y \in C_i$ such that $w_1$ and $w_2$
+are joined to $C_i - y$.  If $w_1$ and $w_2$ aren't adjacent, then $G$ contains $\join{K_6}{E_3}$ contradicting Corollary \ref{K_tClassification}.  Hence $C_i$ intersects the larger clique $\set{w_1, w_2} \cup C_i - \set{y}$, this is impossible by the definition of $C_i$.
+
+When $v$ is low, an argument similar to the above shows that there can be no
+$z_1$ in $C_i$ so that $\set{w_1, z_1}$ is independent, and hence $C_i \cup
+\set{w_1}$ is a clique contradicting maximality of $C_i$.
+\end{proof}
+
+\begin{lem}\label{triples}
+For $C_i$ with $\card{C_i} \leq \Delta - 2$, there are
+at least $\frac{3}{28}\Delta$ disjoint $P_3$'s $xyz$ with $y \in C_i$ and $x, z
+\not \in C_i$ such that $x$ and $z$ each have at most $4$ neighbors in $C_i$.
+\end{lem}
+\begin{proof}
+Consider a maximal such set of $P_3$'s. Let $A$ be all the central vertices of
+these $P_3$'s and $X$ all the ends.  Then each $v \in X$ has at most $3$
+neighbors in $C_i - A$ and by Lemma \ref{AtMostFourIn} and maximality, each $v
+\in C_i - A$ has at most $2$ neighbors in $G-C_i-B$ and at most $1$ if $v$ is
+low. Thus $6\card{A} = 3\card{X} \geq \size{C_i-A, X} \geq (\Delta - \card{C_i}
+- 1)\card{C_i-A} \geq \card{C_i} - \card{A}$.  Hence $\card{A} \geq
+\frac{3}{28}\Delta$.
+\end{proof}
+
+We need to force safe uncolored vertices in $C_i$.  If the lists have small
+intersections this might not happen with high probability.  We handle this case
+using minimality of $\card{G}$ instead.
+
+\begin{lem}\label{LargeIntersections}
+There exists $C_i' \subset C_i$ with $\card{C_i'} = \card{C_i} - 1$ such that
+for $x, y \in C_i'$ we have $\card{L(x) \cap L(y)} \geq \frac23 \Delta$.
+\end{lem}
+\begin{proof}
+Suppose not and consider an $L$-coloring of $G - C_i$.  Let $L'$ be the
+resulting list assignment on $C_i$.  Then $\card{L'(v)} \geq \card{C_i} - 2$ for
+all $v \in C_i$.  By assumption, for each $v \in C_i$ we have $x, y \in C_i -
+\set{v}$ with $\card{L(x) \cap L(y)} < \frac23 \Delta$.  But then $\card{L'(x) \cup
+L'(y)} \geq 2(\Delta - 1 - (\Delta + 1 - \card{C_i})) - \frac23 \Delta \geq
+\card{C_i}$.  Hence we can complete the $L$-coloring to $C_i$ by Hall's theorem,
+a contradiction.
+\end{proof}
+
+We will find the desired uncolored safe vertices in $C_i'$.  By Lemma
+\ref{triples}, there are at least $\frac{\Delta}{10}$ paths $acb$ where $c \in
+C_i'$ and $a,b \not \in C_i'$ such that $a$ and $b$ each have at most $4$
+neighbors in $C$.  Let $T_i$ be the union of all the vertices in these paths. 
+For some such fixed path we want to bound the probability that $c$ is uncolored and safe and the colors used on $a$ and $b$ are used on
+none of the rest of $T_i$.  To do so, we distinguish three cases.
+
+\textbf{Case~1.} \textit{$\card{L(a) \cap L(c)} < \frac23 \Delta$ and
+$\card{L(b) \cap L(c)} < \frac23 \Delta$}
+
+For $\alpha \in L(a) - L(c)$, $\beta \in L(b) - L(c)$, $z \in C_i' - T_i$ and
+$\gamma \in L(c) \cap L(z)$ where $\alpha, \beta, \gamma$ are all different, let
+$A_{\alpha, \beta, \gamma, z}$ be the event that all of the following hold:
+
+\begin{enumerate}
+  \item $\alpha$ is assigned to $a$ and none of the rest of $T_i \cup N(a)$,
+  \item $\beta$ is assigned to $b$ and none of the rest of $T_i \cup N(b)$,
+  \item $\gamma$ is assigned to $c$ and $z$ and none of the rest of $T_i \cup N(c)$.
+\end{enumerate}
+
+Then $\Pr(A_{\alpha, \beta, \gamma, z}) \geq (\Delta-1)^{-1}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(a)}}(\Delta-1)^{-1}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(b)}}(\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(c)}} \geq (\Delta-1)^{-4}3^{-18}$. Plainly, the $A_{\alpha, \beta, \gamma, z}$ are disjoint for different sets of
+indices.  
+
+Since $\card{L(a) - L(c)} \geq \frac{\Delta}{3}$, we have
+$\frac{\Delta}{3}$ choices for $\alpha$.  Similarly we then have
+$\frac{\Delta}{3} - 1$ choices for $\beta$.  For $z$ we have at least $\frac34
+\Delta - \frac{1}{10}\Delta \geq \frac{\Delta}{3}$ choices.  Since $\card{L(z)
+\cap L(c)} \geq \frac23 \Delta$, we then have at least $\frac23\Delta - 2$
+choices for $\gamma$ for each $z$.  In total we have at least $\Delta^4 3^{-4}$
+choices and thus the probability that $A_{\alpha, \beta, \gamma, z}$ holds for
+some choice of indices is at least $3^{-22}$.
+
+\textbf{Case~2.} \textit{$\card{L(a) \cap L(c)} < \frac23 \Delta$ and $\card{L(b) \cap
+L(c)} \geq \frac23 \Delta$}
+
+For $y \in C_i' - T_i - N(b)$, $z \in C_i' - T_i$, $\alpha \in L(a) - L(c)$,
+$\beta \in L(b) \cap L(y)$ and $\gamma \in L(c) \cap L(z)$ where $\alpha, \beta,
+\gamma$ are all different, let $A_{\alpha, \beta, \gamma, y, z}$ be the event
+that all of the following hold:
+
+\begin{enumerate}
+  \item $\alpha$ is assigned to $a$ and none of the rest of $T_i \cup N(a)$,
+  \item $\beta$ is assigned to $b$ and $y$ and none of the rest of $T_i \cup
+  N(b) \cup N(y)$,
+  \item $\gamma$ is assigned to $c$ and $z$ and none of the rest of $T_i \cup N(c)$.
+\end{enumerate}
+
+Then $\Pr(A_{\alpha, \beta, \gamma, y, z}) \geq (\Delta-1)^{-1}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(a)}}(\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(b) \cup N(y)}}(\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(c)}} \geq (\Delta-1)^{-5}3^{-21}$.
+
+Again the $A_{\alpha, \beta, \gamma, y, z}$ are disjoint for different sets of
+indices.  For $y$ we have at least $\card{C_i'} - \card{T_i \cap C_i'} -
+\card{N(b) \cap C_i} \geq \frac34 \Delta - 1 - \frac{\Delta}{10} - 4 \geq
+\frac{\Delta}{9}$ choices.  For each $y$ we have at least $\frac23 \Delta$ choices for $\beta$. 
+The rest are similar to above and in total we have at least $\Delta^53^{-6}$
+choices and thus the probability that $A_{\alpha, \beta, \gamma, y, z}$ holds
+for some choice of indices is at least $3^{-27}$.
+
+\textbf{Case~3.} \textit{$\card{L(a) \cap L(c)} \geq \frac23 \Delta$ and $\card{L(b)
+\cap L(c)} \geq \frac23 \Delta$}
+
+For $x \in C_i' - T_i - N(a)$, $y \in C_i' - T_i - N(b)$, $z \in C_i' - T_i$,
+$\alpha \in L(a) \cap L(c)$, $\beta \in L(b) \cap L(y)$ and $\gamma \in L(c)
+\cap L(z)$ where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha,
+\beta, \gamma, x, y, z}$ be the event that all of the following hold:
+
+\begin{enumerate}
+  \item $\alpha$ is assigned to $a$ and $y$ and none of the rest of $T_i \cup
+  N(a) \cup N(x)$,
+  \item $\beta$ is assigned to $b$ and $y$ and none of the rest of $T_i \cup
+  N(b) \cup N(y)$,
+  \item $\gamma$ is assigned to $c$ and $z$ and none of the rest of $T_i \cup N(c)$.
+\end{enumerate}
+
+Then $\Pr(A_{\alpha, \beta, \gamma, x, y, z}) \geq (\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(a) \cup N(x)}}(\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(b) \cup N(y)}}(\Delta-1)^{-2}(1-
+3(\Delta-1)^{-1})^{\card{T_i \cup N(c)}} \geq (\Delta-1)^{-6}3^{-24}$.
+
+Again the $A_{\alpha, \beta, \gamma, x, y, z}$ are disjoint for different sets
+of indices. In total we get at least $\Delta^6 3^{-8}$
+choices and thus the probability that $A_{\alpha, \beta, \gamma, x, y, z}$ holds
+for some choice of indices is at least $3^{-32}$.
+
+\bigskip
+
+Now we have at least $\frac{\Delta}{10}$ such triples.  So if $M_i$ counts the
+number of uncolored safe vertices in $C_i$ we have $\ex(M_i) \geq
+3^{-35}\Delta$.  The concentration details are identical to Reed's proof and we
+conclude $Pr(M_i < 2) < \Delta^{-6}$.
+
+\section{\texorpdfstring{$\Pr(Q_i) \leq \Delta^{-6}$}{The Q events}}
+If $\zeta(x) = \zeta(y)$ for different $x,y \in K_i$, then $x$ and $y$ will be
+uncolored and $Q_i$ cannot hold.  Thus it is enough to show that all vertices of
+$K_i$ getting different colors is unlikely.  Just like Lemma
+\ref{LargeIntersections}, we can find $K_i' \subset K_i$ with $\card{K_i'} =
+\card{K_i} - 1$ such that for $x,y \in K_i'$ we have $\card{L(x) \cap L(y)}
+\geq \frac23 \Delta$.  
+
+Let $x, y \in K_i'$.  The probability that $x$ and $y$ get the same color and
+this color is used on none of the rest of $N(x) \cup N(y)$ is at least
+$\frac{2}{3\Delta}(1 - (\Delta-1)^{-1})^{2\Delta - 2} \geq \frac{2}{3^3\Delta}$.
+Since there are at least $\frac12 (\frac23 \Delta)^2$ such pairs, the expected
+number of pairs getting the same color is at least $3^{-4}\Delta$.  An
+application of Azuma's inequality very similar to the sparse case now proves
+$\Pr(Q_i) \leq \Delta^{-6}$.
+
+\section{\texorpdfstring{$\Pr(F_i) \leq \Delta^{-6}$}{The F events}}
+In this case we must have $C_i = K_i$ since no vertex outside $C_i$ has
+$\frac34 \Delta$ neighbors in $C_i$.  Since low vertices don't make things
+harder, we will assume there are no low vertices in $C_i$.  In particular, for a
+low vertex, we don't need a triple as in the follow lemma, but just one good neighbor outside because we only need to save one color on a low
+vertex's neighborhood to make it safe.
+
+\begin{lem}\label{triplesAgain}
+There are at least $\frac14 \sqrt{\Delta}\log{\Delta}$ disjoint $P_3$'s $xyz$
+with $y \in C_i$ and $x, z \not \in C_i$ such that $x$ and $z$ each have at most
+$\frac{\sqrt{\Delta}}{\log(\Delta)}$ neighbors in $C_i$.
+\end{lem}
+\begin{proof}
+Since there are at most $\log^2(\Delta)$ vertices outside $C_i$ which have more
+than $\frac{\sqrt{\Delta}}{\log(\Delta)}$ neighbors in $C_i$ and all of these
+vertices have at most $\sqrt{\Delta}\log(\Delta)$ neighbors in $C_i$, removing
+all their neighbors from $C_i$ we are left with a set $A$ of of vertices all of
+whose neighbors outside $C_i$ have at most $\frac{\sqrt{\Delta}}{\log(\Delta)}$
+neighbors in $C_i$.  Now $\card{A} \geq \Delta - 1 -
+\log^2(\Delta)\sqrt{\Delta}\log(\Delta) \geq \frac{\Delta}{2}$.  Now pick
+$P_3$'s $xyz$ with $y \in A$ in turn removing the neighbors of $x$ and $z$ each
+time.  We get at least $\frac{\card{A}}{2\frac{\sqrt{\Delta}}{\log(\Delta)}}
+\geq \frac14 \sqrt{\Delta}\log{\Delta}$ disjoint $P_3$'s.
+
+Now the proof of the expected value is the same as the proof of $\Pr(E_i) \leq
+\Delta^{-6}$, except that we have fewer $P_3$'s to multiply by at the end.  So,
+if $M_i$ counts the number of uncolored safe vertices in $C_i$, we have
+$\ex(M_i) \geq 3^{-35} (\frac14) \sqrt{\Delta}\log{\Delta} \geq 3^{-37}
+\sqrt{\Delta}\log{\Delta}$.
+
+Now, the application of Azuma is the same as in the $\Pr(E_i) \leq
+\Delta^{-6}$ case, except we use $t \DefinedAs 3^{-37}
+\sqrt{\Delta}\log{\Delta} - 2$, which gives gives $\Pr(M_i < 2) <
+2e^{\frac{-(3^{-37} \sqrt{\Delta}\log{\Delta} - 2)^2}{\Delta}} \leq
+\Delta^{-6}$ for large enough $\Delta$.
+\end{proof}
+
+\section{\texorpdfstring{$\Pr(P_i) \leq \Delta^{-6}$}{The P events}}
+\textbf{Case~1.} \textit{Some $x \in G  - C_i$ has $\card{N(x) \cap C_i} >
+\sqrt{\Delta}\log(\Delta)$.} 
+
+If $C_i \neq K_i$, then take $x$ to be $x_i$. Let $Z_1, \ldots, Z_m$ be the
+clumps of $x$ in $K_i$ and for $j \in \irange{m}$, let $\alpha_j$ be the color
+the $Z_j$ clump has that the others do not.  By Lemma \ref{LargeIntersections}, we may as well assume that $\card{L(x) \cap
+L(y)} \geq \frac23 \Delta$ for all $x,y \in K_i$ (the cost is one vertex which
+changes nothing).
+
+Pick $z_j \in Z_j$ arbitrarily.  By Lemma \ref{AtMostFourIn}, any neighbor of
+$z_j$ in $G - C_i - x$ (of which there is at most one) has at most $4$ neighbors
+in $C_i$.  Thus, by symmetry, for each $j \in \irange{\frac{m}{4}}$ we can pick
+$y_j \in G - C_i - x$ such that $y_jz_j \in E(G)$ and the $y_j$ are all
+different.  Put $A \DefinedAs N(x) \cap K_i$.  Then $\frac{m}{4} \geq
+(\frac14)(\frac15)\card{A} \geq \frac{1}{20}\sqrt{\Delta}\log(\Delta)$.
+
+Now, for fixed $j \in \irange{\frac{m}{4}}$, we bound the probability that $z_j$
+is uncolored, $\alpha_j$ is not used on any neighbor of $z_j$ and $y_j$ is colored
+with a color that is either not in $L(z_j)$ or is used on $C_i$.  Let $T_i$ be
+the union of all the $y_j$'s and $z_j$'s. We distinguish two cases.
+
+\textbf{Subcase~1a.} \textit{$\card{L(y_j) \cap L(z_j)} < \frac23 \Delta$}
+
+For $\beta \in L(y_j) - L(z_j)$, $w \in C_i - T_i$ and $\gamma \in L(z_j) \cap
+L(w)$ where $\beta, \gamma \neq \alpha_j$ and $\beta \neq \gamma$, let
+$F_{\beta, \gamma, w}$ be the event that all of the following hold:
+
+\begin{enumerate}
+  \item $\beta$ is assigned to $y_j$ and none of the rest of $T_i \cup N(y_j)$,
+  \item $\gamma$ is assigned to $z_j$ and $w$ and none of the rest of $T_i \cup N(z_j)$,
+  \item $\alpha_j$ is assigned to no neighbor of $z_j$.
+\end{enumerate}
+
+The probability of (3) is
+at least $\parens{\frac{\Delta - 2}{\Delta - 1}}^{\Delta} = (1 -
+(1-\Delta)^{-1})^\Delta \geq \frac13$. Hence $\Pr(F_{\beta, \gamma, w}) \geq
+\frac13 (\Delta-1)^{-1}(1-3(\Delta-1)^{-1})^{\card{T_i \cup
+N(y_j)}}(\Delta-1)^{-2}(1 - 3(\Delta-1)^{-1})^{\card{T_i \cup N(z_j)}} \geq
+(\Delta-1)^{-3}3^{-13}$.
+
+Now we have at least $\frac{\Delta}{3}$ choices for $\beta$, $\frac{\Delta}{2}$
+choices for $w$ and $\frac 23 \Delta$ choices for $\gamma$ for each $w$.  Thus
+the probability that $F_{\beta, \gamma, w}$ holds for some choice of indices is
+at least $3^{-15}$.
+
+\textbf{Subcase~1b.} \textit{$\card{L(y_j) \cap L(z_j)} \geq \frac23 \Delta$}
+For $y \in C_i - T_i - N(y_j)$, $\beta \in L(y_j) \cap L(y)$, $w \in C_i - T_i$
+and $\gamma \in L(z_j) \cap L(w)$ where $\beta, \gamma \neq \alpha_j$ and $\beta \neq \gamma$, let
+$F_{\beta, \gamma, y, w}$ be the event that all of the following hold:
+
+\begin{enumerate}
+  \item $\beta$ is assigned to $y_j$ and $y$ and none of the rest of $T_i \cup
+  N(y_j) \cup N(y)$,
+  \item $\gamma$ is assigned to $z_j$ and $w$ and none of the rest of $T_i \cup N(z_j)$,
+  \item $\alpha_j$ is assigned to no neighbor of $z_j$.
+\end{enumerate}
+
+We have $\Pr(F_{\beta, \gamma, y, w}) \geq
+\frac13 (\Delta-1)^{-2}(1-3(\Delta-1)^{-1})^{\card{T_i \cup
+N(y_j) \cup N(y)}}(\Delta-1)^{-2}(1 - 3(\Delta-1)^{-1})^{\card{T_i \cup N(z_j)}} \geq
+(\Delta-1)^{-4}3^{-16}.$
+
+Now for $y$ we have at least $\card{K_i} - \card{C_i \cap T_i} - \card{N(y_j)
+\cap C_i} \geq \frac{\Delta}{2}$ choices and for each $y$ we have at least
+$\frac23 \Delta$ choices for $\beta$. Thus the probability that $F_{\beta,
+\gamma, y, w}$ holds for some choice of indices is at least $3^{-18}$.
+
+\bigskip
+
+Therefore the expected number of good clumps is at least $3^{-18}
+(\frac{1}{20})\sqrt{\Delta}\log(\Delta) \geq 3^{-21} \sqrt{\Delta}\log(\Delta)$.   
+Changing any color will affect the conditional expectations by at most $2$ and a
+similar computation for Azuma shows that $\Pr(F_i) \leq \Delta^{-6}$.  The key
+here is that $(\sqrt{\Delta}\log(\Delta))^2$ grows faster that $\Delta$.
+
+\textbf{Case~2.} \textit{More than $\log^2(\Delta)$ vertices $x \in G  - C_i$ have
+$\card{N(x) \cap C_i} > \frac{\sqrt{\Delta}}{\log(\Delta)}$.}
+
+We must have $C_i = K_i$.  Let $x_1, \ldots, x_k$ be $k \DefinedAs
+\ceil{\log^2(\Delta)}$ different vertices in $G - C_i$ which have $\card{N(x_j)
+\cap C_i} > \frac{\sqrt{\Delta}}{\log(\Delta)}$ for each $j \in \irange{k}$.  
+
+The computation for the expected number of good clumps for each $x_j$ is the
+same as Case 1 and so we expect at least
+$3^{-21}\frac{\sqrt{\Delta}}{\log(\Delta)}$ good clumps for each $x_j$.  Thus in
+total we expect $3^{-21}\sqrt{\Delta}\log(\Delta)$ good clumps over the
+$\log^2(\Delta)$ sets.  Let $X$ count this total number of good clumps.  We show
+that $\Pr(X < 3\log^2(\Delta)) \leq \Delta^{-6}$ and hence at least one $x_j$
+has at least $3$ good clumps with high enough probability.
+
+If we applied Azuma with the information we have now we'd be in trouble because
+many of the $x_j$'s could use the same special color and hence changing a vertex
+to that color would change the conditional expectation by a lot.  We need one
+further structural lemma that guarantees at most $4$ of the $x_j$'s use any
+given special color.
+
+\begin{lem}\label{LastStructure}
+Let $K$ be a $\Delta-1$ clique in $G$ and $x_1, x_2, x_3, x_4, x_5 \in G - K$
+with $\card{N(x_j) \cap K} \geq 5$ such that the $N(x_j) \cap K$ are pairwise
+disjoint. Then no color is special for all the $x_j$.
+\end{lem}
+\begin{proof}
+Suppose otherwise that some color $\alpha$ is special for all the $x_j$. Put
+$A_j \DefinedAs N(x_j) \cap K$. Just like in the proof of Lemma \ref{clumping},
+any $L$-coloring of $G - (K \cup \set{x_1, \ldots, x_5})$ must not leave
+$\alpha$ available on any of the vertices in $A_j$ for any $j \in \irange{5}$.
+Pick $z_j \in A_j$ for each $j$ and let $y_j$ be the neighbor of $z_j$ in $G -
+(K \cup \set{x_1, \ldots, x_5})$. Put $N \DefinedAs \set{y_1, \ldots, y_5}$. By
+Lemma \ref{AtMostFourIn}, $\card{N} \geq 2$.  Now just like in Lemma
+\ref{clumping}, by using minimality of $\card{G}$ we see that adding any edge
+between vertices in $N$ must create a $K_\Delta$ and then counting degrees gives
+a contradiction.
+\end{proof}
+
+Now when we change a color we change the conditional expectation by at most $8$.
+A similar computation to before bounds $\sum_j c_j^2 \leq 500\Delta$.  Applying
+Azuma with $t = 3^{-21}\sqrt{\Delta}\log(\Delta) - 3\log^2(\Delta)$ gives $\Pr(X
+< 3\log^2(\Delta)) < 2e^{\frac{-(3^{-21}\sqrt{\Delta}\log(\Delta) -
+3\log^2(\Delta))^2}{500\Delta}} \leq \Delta^{-6}$ for large $\Delta$.

@@ -1,0 +1,94 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\allowdisplaybreaks
+\pagestyle{headings}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\PP}{\mathcal{P}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\F}{\mathfrak{F}}
+\renewcommand{\S}{\mathfrak{S}}
+\newcommand{\E}{\mathfrak{E}}
+\newcommand{\W}{\fancy{W}}
+\title{}
+
+\begin{document}
+\maketitle
+
+\textbf{Efficieny as the measure.} In the moment, impotent worry over outcomes might be exchanged for learning to use a general tool, say Redfield enumeration.
+
+\textbf{Semigroup.} A \emph{semigroup} is a set $X$ together with a set of functions $\F$ from $X$ itself.
+
+\textbf{Monoid.} A \emph{monoid} is a semigroup where $\F$ contains the identity function.
+
+\textbf{Group.} A \emph{group} is a monoid where for each $f \in \F$, there is $g \in \F$ so that applying $f$ and then applying $g$ gives the identity function.
+
+\textbf{Danger.} A semigroup is \emph{dangerous} if it has a fixed-point-free element.
+
+\textbf{Graphical.} A semigroup $\S \DefinedAs (X, \F)$ is \emph{graphical} if, for some directed graph $\G \DefinedAs (V, \E)$, there is a representation of $X$ as $X = \prod_{v\in V} \mathbb{Z}_2$ such that $f$ is in $\F$ just in case for each $v \in V$, the function $f^v$ given by $f^v(x) \DefinedAs f(x)_v$ is independent of $V - N^+(v)$.  Such a $\G$ is a \emph{witness} for $\S$.
+
+\textbf{Witnesses}. For each semigroup $\S$, write $\W(\S)$ for the witnesses of $\S$.  Note that if $\S$ is not graphical, then $\W(\S) = \emptyset$.
+
+\textbf{Problem.} Classify the dangerous graphical semigroups by their witness sets.
+\end{document}

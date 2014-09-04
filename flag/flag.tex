@@ -1,0 +1,163 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\K{\fancy{K}}
+\def\F{\fancy{F}}
+\def\dim{\mathtt{dim}}
+\renewcommand{\sc}[1]{\text{sc}\parens{#1}}
+\newcommand{\fc}[1]{\text{fc}\parens{#1}}
+
+
+
+\title{Flag complexes and coloring}
+\author{landon rabern}
+
+\begin{document}
+\maketitle
+
+\section{Flag complexes}
+A \emph{simplicial complex} is a nonempty set of finite sets $\K$ such that if $X \in \K$ and $Y \subseteq X$, then $Y \in \K$.  The elements of $\K$ are called the \emph{faces} of $\K$.  The \emph{dimension} of a face $F$ is $\dim(F) \DefinedAs \card{F} - 1$.  The \emph{dimension} of a set of faces $\F$ is $\dim(\F) \DefinedAs \max_{F \in \F} \dim(F)$ if $\F \neq \emptyset$ and $-1$ otherwise.  A \emph{facet} in $\K$ is an inclusion-wise maximal face.  A \emph{cell} in $\K$ is facet $F$ of $\K$ with $\dim(F) = \dim(\K)$.  We write $C(\K)$ for the set of cells of $\K$.  For $i \geq 0$, the \emph{$i$-skeleton} of $\F \subseteq \K$ is the subset of $\F$ consisting of all the faces of dimension at most $i$.  We write $\F^{(i)}$ for the $i$-skeleton of $\F$.  The set $V(\F) \DefinedAs \cup \F$ are the \emph{vertices} of $\F$. The \emph{degree} $d(v)$ of $v \in V(\K)$ is the degree of $v$ in the \emph{underlying graph} $\K^{(1)}$. The \emph{degree} $d(F)$ of a face $F \in \K$ is $\max_{v \in F} d(v)$.  Finally, for $\F \subseteq \K$, the \emph{maximum degree} of $\F$ is $\Delta(\F) \DefinedAs \max_{F \in \F} d(F)$ and the \emph{minumum degree} of $\F$ is $\delta(\F) \DefinedAs \min_{F \in \F} d(F)$.
+
+A \emph{flag complex} is a simplicial complex $\K$ in which any minimal nonface has two elements.  In terms of the geometric realization of $\K$, this just means that there are no empty simplices.  It is easy to see that $\K$ is a flag complex iff $\K$ is the clique complex of some graph.  For a set of faces $\F$, we write $\sc{\F}$ for the intersection of all simplicial complexes containing $\F$ and $\fc{\F}$ for the intersection of all flag complexes containing $\F$.  Note that $\sc{\F}$ is a simplicial complex and $\fc{\F}$ is a flag complex.
+
+\subsection{Cell intersections}
+The following is a restatement of a lemma due to Hajnal \cite{hajnaltheorem}.
+
+\begin{lem}
+Let $\K$ be a flag complex.  For any $\F \subseteq C(\K)$ we have
+
+\[\dim(\K) + 1 \leq \frac{\card{\cup \F} + \card{\cap \F}}{2}.\]
+\end{lem}
+\begin{proof}
+Easy by induction once you know the magic trick, is this geometrically obvious?
+\end{proof}
+
+\begin{defn}
+A flag complex $\K$ is called \emph{$r$-intersecting} if any set of $r$ cells in $\K$ has nonempty intersection.
+\end{defn}
+
+\begin{lem}\label{KostochkaGeneralized}
+Let $r \geq 2$ and $\K$ an $r$-intersecting flag complex.  If $\bigcap C(\K) = \emptyset$, then
+
+\[\dim(\K) + 1 \leq \frac{r+1}{2r+1}\parens{\Delta(\K) + 1}.\]
+\end{lem}
+\begin{proof}
+Induction on $\card{C(\K)}$.  Geometric proof?
+\end{proof}
+
+A restatement of Kostochka's lemma from \cite{kostochkaRussian} follows.  A set of faces $\F$ is called \emph{connected} if the geometric realization of $\sc{\F}$ is connected (equivalently, the intersection graph of $\F$ is connected).
+
+\begin{lem}[Kostochka 1980]\label{KostochkaLemma}
+If $\K$ is a flag complex such that $C(\K)$ is connected and $\bigcap C(\K) = \emptyset$, then
+
+\[\dim(\K) + 1 \leq \frac{2}{3}\parens{\Delta(\K) + 1}.\]
+\end{lem}
+\begin{proof}
+If $\dim(\K) + 1 > \frac{2}{3}\parens{\Delta(\K) + 1}$, then $\K$ is $2$-intersecting.  Apply Lemma \ref{KostochkaGeneralized}.
+\end{proof}
+
+\subsection{Tame face collections}
+A set of faces $\F$ in a simplicial complex $\K$ is called \emph{tame} if $\dim(\fc{\F^{(i)}}) \leq i$ for all $i \geq 0$.  Since $C(\K)$ is tame and $\dim(C(\K)) = \max_{F \in \K} \card{F} = \min_{F \in \K} \card{F}$, the following generalizes Hajnal's lemma.
+
+\begin{lem}
+If $\K$ is a simplicial complex and $\F \subseteq \K$ is tame, then
+
+\[\max_{F \in \F} \card{F} + \min_{F \in \F} \card{F} \leq \card{\cup \F} + \card{\cap \F}.\]
+\end{lem}
+\begin{proof}[Proof (sketch)]
+Suppose not and let $\K$ and $\F \subseteq \K$ constitute a counterexample minimizing $b(\F) \DefinedAs \max_{F \in \F} \card{F} - \min_{F \in \F} \card{F}$.  If $b(\F) = 0$, we are done by Hajnal's lemma. 
+
+Otherwise, let $k \DefinedAs \min_{F \in \F} \card{F}$ and choose $x$ such that $\set{x} \cap V(\K) = \emptyset$.  Replace each $F \in \F$ with $\card{F} = k$ with $F \cup \set{x}$ to get $\F'$ and add the necessary subsets to get a simplical complex $\K'$.  Then $\F'$ is tame and has smaller difference.  Applying minimality we easily get a contradiction.
+\end{proof}
+
+We can use this to generalize the Kostochka-like lemmas to tame face collections.
+
+\section{Independent transversals}
+A set $S$ of vertices in a graph $G$ is called $\emph{stable}$ if it induces no edges (also known as \emph{independent}).
+
+\begin{defn}
+An \emph{independent transversal} of a partition $\set{V_1, \ldots, V_r}$ of a the vertex set of a graph $G$ is a stable set $\set{v_1, \ldots, v_r} \subseteq V(G)$ such that $v_i \in V_i$ for each $i$.
+\end{defn}
+
+Here is a sequence of sufficient conditions for an independent transversal to exist, each improving on the previous.  The first two give weakened forms of Lemma \ref{Hitting} (see \cite{rabernhitting}).  Lemma \ref{Hitting} is tight (see \cite{KingAXiv}).
+
+\begin{lem}[Alon 1988]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if $\card{V_i} \geq 2e\Delta(G)$ for each $i$.
+\end{lem}
+\begin{proof}
+Easy probabilistic argument.
+\end{proof}
+
+\begin{lem}[Haxell 2001]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if $\card{V_i} \geq 2\Delta(G)$ for each $i$.
+\end{lem}
+\begin{proof}
+There is a short, but somewhat delicate, induction proof as well as a proof using topological connectivity of the independent set complex (it uses Sperner's lemma).
+\end{proof}
+
+\begin{lem}[King 2009]\label{KingLemma}
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if there exists a positive integer $k$ such that for 
+each $i$ we have $\min \set{k, \card{V_i} - k} \geq \max_{v \in V_i} d(v)$.
+\end{lem}
+\begin{proof}
+Follows from observations about Haxell's inductive proof in \cite{aharoni2007independent}.  The topological proof doesn't seem to get this, but maybe it does.
+\end{proof}
+
+\section{Putting these together}
+
+Putting Lemma \ref{KostochkaLemma} together with Lemma \ref{KingLemma} proves the following.  Note that \emph{clique number} $\omega(G)$ of $G$ is one more than the dimension of the clique complex of $G$.
+
+\begin{lem}\label{Hitting}
+Any graph $G$ with $\omega(G) > \frac23\parens{\Delta(G) + 1}$ has a stable set $S$ such that $\omega(G - S) < \omega(G)$.
+\end{lem}
+
+This is very useful for coloring problems.
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}

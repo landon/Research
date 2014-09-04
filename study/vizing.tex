@@ -1,0 +1,123 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{KonigEgervary}{The K{\"o}nig-Egerv{\'a}ry Theorem}
+\newtheorem*{Konig}{K{\"o}nig's Theorem}
+\newtheorem*{Hall}{Hall's Theorem}
+\newtheorem*{Dilworth}{Dilworth's Theorem}
+\newtheorem*{Turan}{Tur{\'a}n's Theorem}
+\newtheorem*{Berge}{Berge's Theorem}
+\newtheorem*{TutteMatching}{Tutte's Matching Theorem}
+\newtheorem*{TutteBergeMatching}{Tutte-Berge Matching Formula}
+\newtheorem*{Richardson}{Richardson's Theorem}
+\newtheorem*{GallaiMilgram}{Gallai-Milgram Theorem}
+\newtheorem*{GallaiRoy}{Gallai-Roy Theorem}
+\newtheorem*{StableMatchingLemma}{Stable Matching Lemma}
+\newtheorem*{Galvin}{Galvin's Theorem}
+\newtheorem*{Mader}{Mader's Average Degree Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{NashWilliamsTutte}{Nash-Williams and Tutte Theorem}
+\newtheorem*{NashWilliams}{Nash-Williams Theorem}
+\newtheorem*{GallaiEdmonds}{Gallai-Edmonds Decomposition}
+\newtheorem*{Menger}{Menger's Theorem}
+\newtheorem*{VizingSimple}{Vizing's Simple Theorem}
+\newtheorem*{Vizing}{Vizing's Theorem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{TuranGraph}{Tur{\'a}n Graph}
+\newtheorem*{AugmentingPath}{Augmenting Path}
+\newtheorem*{StableMatching}{Stable Matching}
+\newtheorem*{NormalTree}{Normal Tree}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\defic}[1]{\text{def}(#1)}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+
+\begin{document}
+
+For a $k$-edge-coloring $\pi$ of a graph $G$, let $\pi(x) = \setbs{\pi(xy)}{xy \in E(G)}$ for $x \in V(G)$ and for $i \in \irange{k}$ put $\pi_i = \setb{x}{N(v)}{i \not \in \pi(x)}$.
+
+\begin{lem}\label{SimpleVizPrecursor}
+If $G$ is a simple graph and there exists $k \in \mathbb{N}$ and $v \in V(G)$ such that each of the following hold:
+\begin{enumerate}
+\item $\chi'(G - v) \leq k$;
+\item $d(v) \leq k$;
+\item $d(x) \leq k$ for all $x \in N(v)$;
+\item $d(x) = k$ for at most one $x \in N(v)$.
+\end{enumerate}
+Then $\chi'(G) \leq k$.
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample $G$, vertex $v \in V(G)$ and $k \in \mathbb{N}$ minimizing $k$.  Then $v$ satisfies each of (1), (2), (3) and (4).  By adding dummy pendant edges to $v$ and its neighbors if necessary, we may assume that $d(v) = k$, $d(x) = k$ for exactly one $x \in N(v)$ and $d(y) = k - 1$ for $y \in N(v) - \set{x}$.
+
+Choose a $k$-edge-coloring $\pi$ of $G - v$ minimizing $\sum_{i \in \irange{k}} \card{\pi_i}^2$.  First, assume $\card{\pi_i} \neq 1$ for all $i \in \irange{k}$.  Then, we have $\sum_{i \in \irange{k}} \card{\pi_i} = \card{\setb{(i, x)}{ \irange{k} \times N(v)}{i \not \in \pi(x)}} = \sum_{x \in N(v)} \left(k - d_{G-v}(x)\right) = 2d(v) - 1 < 2k$.  Hence there exists $a \in \irange{k}$ such that $\card{\pi_a} = 0$.  Also, since $2d(v) - 1$ is odd, there must be $b \in \irange{k}$ such that $\card{\pi_b}$ is odd and hence at least $3$.  Pick $z \in \pi_b$ and consider a maximum length path $zPw$ with edges alternating between color $a$ and color $b$ starting at $z$.  Exchange colors $a$ and $b$ on $P$ to get a new $k$-edge-coloring $\pi'$ of $G-v$.  Note that for any internal vertex $x$ of $P$ we have $\pi'(x) = \pi(x)$.  Since every vertex in $N(v)$ is incident with color $a$, if $w \in N(v)$, then by maximality of $P$, the last edge of $P$ must be colored $a$.  Hence, in any case, $\card{\pi'_a}^2 + \card{\pi'_b}^2 < \card{\pi_a}^2 + \card{\pi_b}^2$ contradicting our minimality assumption on $\pi$.
+
+Hence, we may assume $\pi_i = \set{z}$ for some $z \in N(v)$ and $i \in \irange{k}$.  Make a graph $H$ by removing $vz$ as well as all $e \in E(G)$ with $\pi(e) = i$ from $G$.  Then $H-v$ is $(k-1)$-edge-colored and we have removed exactly one neighbor from $v$ and each of its neighbors.  Hence, by minimality of $k$, we must have $\chi'(H) \leq k - 1$.  But then adding back in the edges we removed all colored with the same new color gives a $k$-edge-coloring of $G$. This final contradiction completes the proof.
+\end{proof}
+
+\begin{VizingSimple}
+Every simple graph satisfies $\Delta \leq \chi' \leq \Delta + 1$.
+\end{VizingSimple}
+\begin{proof}
+Let $G$ be a simple graph.  Plainly, $\chi'(G) \geq \Delta(G)$.  Applying Lemma \ref{SimpleVizPrecursor} inductively with $k = \Delta(G) + 1$ proves that $\chi'(G) \leq \Delta(G) + 1$.
+\end{proof}
+
+
+\begin{lem}\label{MultiVizPrecursor}
+If $G$ is a multigraph and there exists $k \in \mathbb{N}$ and $v \in V(G)$ such that each of the following hold:
+\begin{enumerate}
+\item $\chi'(G - v) \leq k$;
+\item $d(v) \leq k$;
+\item $d(x) + \mu(vx) \leq k + 1$ for all $x \in N(v)$;
+\item $d(x) + \mu(vx) = k + 1$ for at most one $x \in N(v)$.
+\end{enumerate}
+Then $\chi'(G) \leq k$.
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample $G$, vertex $v \in V(G)$ and $k \in \mathbb{N}$ minimizing $k$.  Then $v$ satisfies each of (1), (2), (3) and (4).  By adding dummy pendant edges to $v$ and its neighbors if necessary, we may assume that $d(v) = k$, $d(x) + \mu(vx) = k + 1$ for exactly one $x \in N(v)$ and $d(y) + \mu(vy) = k$ for $y \in N(v) - \set{x}$.
+
+Choose a $k$-edge-coloring $\pi$ of $G - v$ minimizing $\sum_{i \in \irange{k}} \card{\pi_i}^2$.  First, assume $\card{\pi_i} \neq 1$ for all $i \in \irange{k}$.  Then, we have $\sum_{i \in \irange{k}} \card{\pi_i} = \card{\setb{(i, x)}{\irange{k} \times N(v)}{i \not \in \pi(x)}} = \sum_{x \in N(v)} \left(k - d_{G-v}(x)\right) = -1 + \sum_{x \in N(v)} 2\mu(vx) = 2d(v) - 1 < 2k$.  Hence there exists $a \in \irange{k}$ such that $\card{\pi_a} = 0$.  Also, since $2d(v) - 1$ is odd, there must be $b \in \irange{k}$ such that $\card{\pi_b}$ is odd and hence at least $3$.  Pick $z \in \pi_b$ and consider a maximum length path $zPw$ with edges alternating between color $a$ and color $b$ starting at $z$.  Exchange colors $a$ and $b$ on $P$ to get a new $k$-edge-coloring $\pi'$ of $G-v$.  Note that for any internal vertex $x$ of $P$ we have $\pi'(x) = \pi(x)$.  Since every vertex in $N(v)$ is incident with color $a$, if $w \in N(v)$, then by maximality of $P$, the last edge of $P$ must be colored $a$.  Hence, in any case, $\card{\pi'_a}^2 + \card{\pi'_b}^2 < \card{\pi_a}^2 + \card{\pi_b}^2$ contradicting our minimality assumption on $\pi$.
+
+Hence, we may assume $\pi_i = \set{z}$ for some $z \in N(v)$ and $i \in \irange{k}$.  Make a multigraph $H$ by removing one edge between $v$ and $z$ as well as all $e \in E(G)$ with $\pi(e) = i$ from $G$.  Then $H-v$ is $(k-1)$-edge-colored and we have removed exactly one neighbor from $v$ and each of its neighbors.  Hence, by minimality of $k$, we must have $\chi'(H) \leq k - 1$.  But then adding back in the edges we removed all colored with the same new color gives a $k$-edge-coloring of $G$. This final contradiction completes the proof.
+\end{proof}
+
+\begin{Vizing}
+Every multigraph satisfies $\Delta \leq \chi' \leq \Delta + \mu$.
+\end{Vizing}
+\begin{proof}
+Let $G$ be a multigraph.  Plainly, $\chi'(G) \geq \Delta(G)$.  Applying Lemma \ref{MultiVizPrecursor} inductively with $k = \Delta(G) + \mu(G)$ proves that $\chi'(G) \leq \Delta(G) + \mu(G)$.
+\end{proof}
+
+\end{document}

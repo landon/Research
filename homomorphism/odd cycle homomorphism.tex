@@ -1,0 +1,209 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\usepackage{tikz-cd}
+
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\title{Sparse graphs admit homomorphisms into odd cycles}
+\author{Landon Rabern}
+\date{\today}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}{\fancy{C}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+\newcommand{\mad}{\operatorname{mad}}
+
+\begin{document}
+
+\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+All graphs under consideration are nonempty finite simple graphs. For graphs $G$ and $H$, we indicate the existence of a homomorphism from $G$ to $H$ or lack thereof by $G \rightarrow H$ and $G \not \rightarrow H$, respectively.  We write $H \unlhd G$ to indicate that $H$ is an induced subgraph of $G$, when we want the containment to be proper, we write $H \lhd G$. 
+
+\section{Potential functions}
+Kostochka and Yancey \cite{kostochkayancey2012ore} used ``potential functions'' to great effect in proving lower bounds on the number of edges in critical graphs. Here we generalize this idea and prove some basic facts.
+
+\begin{defn}
+For positive integers $a$ and $b$, the \emph{$(a,b)$-potential function} is the function from graphs to $\IZ$ given by $\rho_{a,b}(G) \DefinedAs a\card{G} - b\size{G}$.  Additionally, put
+\[\hat{\rho}_{a,b}(G) \DefinedAs \min_{H \unlhd G} \rho_{a,b}(H).\]
+\end{defn}
+
+The invariant $\hat{\rho}_{a,b}(G)$ is a measure of the sparseness of $G$, the larger $\hat{\rho}_{a,b}(G)$ is, the sparser $G$ is.  For example, if $\hat{\rho}_{a,b}(G) \ge 0$, then $\mad(G) \le \frac{2a}{b}$ where $\mad(G)$ is the maximum average degree of $G$.
+
+For any fixed graph $T$, we are interested in proving results of the form: any sufficiently sparse graph admits a homomorphism into $T$.  To do so, it will be useful to get the benefits of having a minimum counterexample without being bound to a fixed inductive context.  To achieve this, we use \emph{mules} as introduced in \cite{CranstonR-equiv, raberndiss}. 
+
+\subsection{Mules}
+\begin{defn}
+\label{epi}
+If $G$ and $H$ are graphs, an \emph{epimorphism} is a graph homomorphism $\funcsurj{f}{G}{H}$ such that $f(V(G)) = V(H)$.  We indicate this with the arrow $\surj$.
+\end{defn}
+
+\begin{defn}
+\label{child}
+Let $G$ be a graph.  A graph $A$ is called a \emph{child} of $G$ if $A \neq G$
+and there exists $H \unlhd G$ and an epimorphism $\funcsurj{f}{H}{A}$.  
+\end{defn}
+
+Note that the child-of relation is a strict partial order on the set of (finite
+simple) graphs $\fancy{G}$.  We call this the \emph{child order} on $\fancy{G}$
+and denote it by `$\prec$'.  By definition, if $H \lhd G$ then $H \prec G$.
+
+\begin{lem}\label{well-founded}
+The ordering $\prec$ is well-founded on $\fancy{G}$; that is, every nonempty
+subset of $\fancy{G}$ has a minimal element under $\prec$.
+\end{lem}
+\begin{proof}
+Let $\fancy{T}$ be a nonempty subset of $\fancy{G}$.  Pick $G \in \fancy{T}$
+minimizing $\card{V(G)}$ and then maximizing $\card{E(G)}$.  
+Since any child of $G$ must have fewer vertices or more edges (or both), we see
+that $G$ is minimal in $\fancy{T}$ with respect to $\prec$.
+\end{proof}
+
+\begin{defn}
+Let $\fancy{T}$ be a collection of graphs.  A minimal graph in $\fancy{T}$
+under the child order is called a \emph{$\fancy{T}$-mule}.
+\end{defn}
+\smallskip
+
+\subsection{Basic facts}~\\
+\begin{figure}
+\begin{center}
+\begin{Large}
+\begin{tikzcd}
+H \arrow[r, hookrightarrow, "\iota"] \arrow[d, twoheadrightarrow, "h"'] & G \arrow[d, twoheadrightarrow, "h'"] \\
+Q \arrow[r, hookrightarrow, "\iota"'] & G_h
+\end{tikzcd}
+\end{Large}
+\end{center}
+\caption{The commutative diagram for $G_h$.}
+\label{fig:G_h}
+\end{figure}
+For a graph $T$ together with positive integers $a$, $b$ and $c$, let $\C_{T,a,b,c}$ be the set of graphs $G$ such that $G \not \rightarrow T$ and $\hat{\rho}_{a,b}(G) \ge c$.  
+
+\begin{lem}
+Let $G$ be a $\C_{T,a,b,c}$-mule.  If $H \lhd G$, then $H \rightarrow T$.
+\end{lem}
+\begin{proof}
+Since $\hat{\rho}_{a,b}(H) \ge \hat{\rho}_{a,b}(G) \ge c$ and $H \prec G$, we must have $H \rightarrow T$ since $G$ is a $\C_{T,a,b,c}$-mule.
+\end{proof}
+
+\begin{defn}\label{InducedHomomorphism}
+Let $H$ be an induced subgraph of a graph $G$ and $\funcsurj{h}{H}{Q}$ an epimorphism onto some graph $Q$. Let $G_h$ be the image of the natural extension of $h$ to an epimorphism $h'$ defined on $G$; that is, $G_h$ and $h'$ are such that the diagram in Figure \ref{fig:G_h} commutes (where $\iota$ indicates the inclusion map).
+\end{defn}
+
+\begin{lem}\label{ArbitraryQ}
+Let $G$ be a $\C_{T,a,b,c}$-mule and $Q$ an arbitrary graph.  If $H \unlhd G$ with $H \ne Q$ such that $H \surj Q$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(Q)$.
+\end{lem}
+\begin{proof}
+Suppose to the contrary that there is $H \unlhd G$ with $H \ne Q$ such that $H \surj Q$ and $\rho_{a,b}(H) \le \hat{\rho}_{a,b}(Q)$.  
+Let $h$ be an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) \le  \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \hat{\rho}_{a,b}(Q) = \rho_{a,b}(W) < c$, a contradiction since $\hat{\rho}_{a,b}(G) \ge c$.
+\end{proof}
+
+We have the following basic bound on the potential of non-complete subgraphs of $G$.
+\begin{cor}\label{CompleteQ}
+Let $G$ be a $\C_{T,a,b,c}$-mule. If $H \unlhd G$ is not complete and $\chi(H) \le \frac{2a}{b}$, then $\rho_{a,b}(H) > a$.
+\end{cor}
+\begin{proof}
+Suppose $\chi(H) = k \le \frac{2a}{b}$.  Then there is an epimorphism from $H$ onto $K_k$ given by contracting all color classes in a $k$-coloring of $H$.  Since $H \ne K_k$, Lemma \ref{ArbitraryQ} gives
+$\rho_{a,b}(H) > \hat{\rho}_{a,b}(K_k)$.  But $\hat{\rho}_{a,b}(K_k) = \min_{t \in \irange{k}} at - b\binom{t}{2} = a$ since $k \le \frac{2a}{b}$, so we have the desired bound.
+\end{proof}
+
+
+\section{The proof}
+For a graph $G$, positive integer $k$ and $S \subseteq V(G)$, the \emph{$k$-potential} of $S$ in $G$ is \[\rho^k_G(S) \DefinedAs (4k+1)|S| - (4k-1)\size{G[S]}.\]  When $G$ is clear from context, we drop the subscript and just write $\rho^k(S)$. Kostochka and Yancey \cite{kostochkayancey2012ore} proved that if $\rho^1_G(S) \ge 3$ for all $\emptyset \ne S \subseteq V(G)$, then $G$ is $3$-colorable.  We generalize this as follows.
+
+\begin{thm}\label{MainTheorem}
+Let $G$ be a graph and $k$ a positive integer.  If $\rho^k_G(S) \ge 4k-1$ for all $\emptyset \ne S \subseteq V(G)$, then $G$ has a homomorphism into $C_{2k+1}$.
+\end{thm}
+
+Suppose Theorem \ref{MainTheorem} is false for some $k$ and choose a counterexample $G$ minimizing $\card{G}$.  
+We will prove a sequence of structural properties of $G$ and ultimately derive a contradiction.  First, we need a basic fact about the potential of induced subgraphs of $C_{2k+1}$.
+
+\begin{lem}\label{PotentialOfInducedPieces}
+$\rho^k_{C_{2k+1}}(S) \ge 4k+1$ for all $\emptyset \ne S \subseteq C_{2k+1}$.  Moreover, $\rho^k_{C_{2k+1}}(V(C_{2k+1})) = 4k+2$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}
+$\rho^k_G(S) \ge 4k+2$ for every $S \subsetneq V(G)$ with $\card{S} \ge 2k + 2$.
+\end{lem}
+\begin{proof}
+Suppose to the contrary that there is $S \subsetneq V(G)$ with $\card{S} \ge 2k + 2$ and $\rho^k_G(S) \le 4k+1$.  Since $S \ne V(G)$, by minimality of $\card{G}$ we have a homomorphism $\func{h}{G[S]}{C_{2k+1}}$ which gives rise to a homomorphism $\func{h'}{G}{G_h}$. As noted in Definition \ref{InducedHomomorphism}, $G_h \not \rightarrow C_{2k+1}$ since $G \not \rightarrow C_{2k+1}$.  Since $\card{S} \ge 2k + 2$, we have $|G_h| < |G|$. So, minimality of $|G|$ gives $W \subseteq V(G_h)$ with $\rho^k_{G_h}(W) \le 4k-2$.  Put $X \DefinedAs h'(S)$. Since $W \not \subseteq V(G)$, we must have $\card{W \cap X} \ne \emptyset$.  Since every non-empty subset of $h'(S)$ has potential at least $4k+1$ (by Lemma \ref{PotentialOfInducedPieces}), $\rho^k_G((W - X) \cup S) \le \rho^k_{G_h}(W) - (4k+1) + \rho^k_G(S) \le \rho^k_{G_h}(W) \le 4k-2$, a contradiction since $\emptyset \ne S \subseteq (W - X) \cup S$.
+\end{proof}
+
+We'll also need a basic fact about homomorphisms between odd cycles (see Albertson and Collins \cite{albertson1985homomorphisms}).
+\begin{lem}\label{NoHomomorphism}
+If $C_{2j+1} \rightarrow C_{2k + 1}$, then $j \ge k$.
+\end{lem}
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fullpage}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem*{TheoremK}{Theorem K}
+\newtheorem*{TheoremL}{Theorem L}
+\newtheorem*{WeakerCondition}{Weaker Condition}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{CapRizz}{Caprara and Rizzi}
+\newtheorem*{FractionalTheorem}{Fractional Version}
+\newtheorem*{KingVettaReed}{King, Reed and Vetta}
+\newtheorem*{ReedConjecture}{Reed's Conjecture}
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BrooksTheorem}{Brooks' Theorem}
+\newtheorem*{BorodinKostochka}{Borodin-Kostochka Conjecture}
+\newtheorem*{BKLine}{Borodin-Kostochka for Line Graphs}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}} 
+
+\title{Possibly true things i'd like to prove}
+\setlength{\parindent}{0in}
+
+\begin{document}
+\maketitle
+
+First the main motivating conjectures for the study of graphs with $\chi = \Delta$.
+\begin{conjecture}[Borodin \& Kostochka]
+Every graph satisfying $\chi \geq \Delta \geq 9$ contains a $K_\Delta$.
+\end{conjecture}
+
+It is easy to show that the following conjecture of Gr\"unbaum holds for $\chi \geq \Delta \geq 7$, so the $5$ and $6$ cases remain.  The $6$ case should be easier -- the $5$ case implies the $6$.
+
+\begin{conjecture}[Gr\"unbaum]
+There are no triangle free graphs with $\chi \geq \Delta \geq 5$.
+\end{conjecture}
+
+The following with $8$ replaced by $9$ is equivalent to Borodin-Kostochka -- i think the stronger statement is true.  One idea for proving Borodin-Kostochka is to try to find a more general statement that holds for $\Delta = 7$, $\Delta = 6$, etc and get down to a manageable max degree base case.
+\begin{conjecture}
+Every graph satisfying $\chi \geq \Delta \geq 8$ contains a $K_3 \vee H$ where $H$ is some graph on $\Delta - 3$ vertices.
+\end{conjecture}
+
+\begin{conjecture}
+In the complement of any $k$-mule with $k \geq 8$ the only minimum cardinality vertex cuts are neighborhoods.  i think the bound on $k$ might be reduced if we allow a finite list of exceptions.
+\end{conjecture}
+
+\begin{conjecture}
+No $k$-mule with $k \geq 8$ contains a $K_{k-1}$.
+\end{conjecture}
+
+\begin{conjecture}
+The Borodin-Kostochka conjecture holds for circular interval graphs, quasi-line graphs, and claw-free graphs -- in order of class containment.
+\end{conjecture}
+
+\begin{conjecture}
+The only connected counterexample to Borodin-Kostochka with $\Delta = 8$ that is the line graph of a multigraph is $L(3C_5)$.  Is this also the only circular interval graph counterexample with $\Delta = 8$?  quasi-line? claw-free?
+\end{conjecture}
+
+The following can be viewed as an improvement of Vizing's theorem.
+
+\begin{conjecture}
+If $G$ is the line graph of a multigraph $H$, then
+\[\chi(G) \leq  \max\left\{\omega(G), \frac{\Delta(G) + 2}{2} + \mu(H)\right\}.\]
+\end{conjecture}
+
+This is motivated in that if true so would be the following tight bound.
+
+\begin{conjecture}\label{BestPossibleWithJustDelta}
+If $G$ is the line graph of a multigraph, then
+\[\chi(G) \leq \max\left\{\omega(G),\frac{5\Delta(G) + 8}{6}\right\}.\]
+\end{conjecture}
+
+i think this next one might be false, but i'd like to know.  It is false for claw-free graphs; in fact, no bound like this at all can hold for claw-free since $C_5 \vee K_t$ has $\omega = t + 2$, $\chi = t + 3$, and $\Delta = t + 4$.
+
+\begin{conjecture}
+If $G$ is a quasi-line graph then
+\[\chi(G) \leq \max\left\{\omega(G),\frac{5\Delta(G) + 8}{6}\right\}.\]
+\end{conjecture}
+
+\end{document}
+
+

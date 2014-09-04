@@ -1,0 +1,19 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 8pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[x = 0.3, y = 0.75, L = \tiny {}]{v0}
+\Vertex[x = 0.4, y = 0.75, L = \tiny {}]{v1}
+\Vertex[x = 0.5, y = 0.75, L = \tiny {}]{v2}
+\Vertex[x = 0.6, y = 0.75, L = \tiny {}]{v3}
+\Vertex[x = 0.7, y = 0.75, L = \tiny {}]{v4}
+\Edge[](v4)(v3)
+\Edge[style = {bend left}](v4)(v0)
+\Edge[](v0)(v1)
+\Edge[](v2)(v1)
+\Edge[](v2)(v3)
+\end{tikzpicture}
+\end{figure}

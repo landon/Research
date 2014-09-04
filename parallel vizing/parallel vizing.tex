@@ -1,0 +1,86 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+
+\title{A fast parallel edge-coloring extension algorithm}
+\author{Landon Rabern}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $G$ be a simple graph with $n$ vertices and maximum degree $\Delta$. For $k \ge \Delta + 1$, Liang, Shen and Hu \cite{liang1996parallel} considered the problem of extending a $k$-edge-coloring of $G-v$, for some vertex $v$, to a $k$-edge-coloring of $G$.  They propose an algorithm that runs on a CRCW PRAM in time $\mathcal{O}(\Delta^{\frac32}\log^3(\Delta) + \Delta\log(n))$ time using $\mathcal{O}(\max\{n\Delta, \Delta^3\})$ processors. We give a faster algorithm that runs on a CREW PRAM in $\mathcal{O}(\log(\Delta)\log(n))$ time using $\mathcal{O}(n\Delta)$ processors.  In particular, this shows that the edge-coloring extension problem is in FNC.
+\end{abstract}
+
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

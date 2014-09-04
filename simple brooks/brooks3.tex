@@ -1,0 +1,73 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\title{}
+\begin{document}
+\maketitle
+
+\begin{proof}[Proof of Brooks' theorem]
+Suppose the theorem is false and choose a counterexample $G$ minimizing $\card{G}$.  Let $\set{A_1, A_2}$ be a separation of $G$ minimizing $k \DefinedAs \card{A_1 \cap A_2}$.  If $A_1 \cap A_2$ is a clique, then by minimality of $\card{G}$, we have $\Delta$-colorings of each $G[A_i]$ which use $k$ colors on $A_1 \cap A_2$.  By permuting color names if necessary we can combine these to get a $\Delta(G)$-coloring of $G$, a contradiction.  In particular, $k \geq 2$ and if $k = 2$, then $A_1 \cap A_2$ is independent.
+
+Suppose $k = 2$ and say $A_1 \cap A_2 = \set{u, v}$.  By symmetry we may assume that every $\Delta$-coloring of $G[A_1]$ gives $u$ and $v$ different colors and every $\Delta$-coloring of $G[A_2]$ gives $u$ and $v$ the same color (otherwise we could combine the colorings into a $\Delta$-coloring of $G$ as above).  By minimality of $k$, each of $u$ and $v$ have a neighbor on both sides of the separation.  Hence $u$ and $v$ must each have $\Delta-1$ neighbors in $A_1$ and $1$ neighbor in $A_2$.  But then since $\Delta \geq 3$, any $\Delta$-coloring of $G[A_2 - \set{u, v}]$ can be extended to a $\Delta$-coloring of $G[A_2]$ where $u$ and $v$ receive the same color, a contradiction.
+
+Thence $k \geq 3$.  Since $G$ is not a disjoint union of cliques, we have an induced $P_3$ $xyz$ in $G$. Since $k \geq 3$, $G - x - z$ is connected and hence we may order $V(G)$ as $x, z, v_1, \ldots, v_n, y$ so that each $v_i$ has a neighbor to the right.  But this is a contradiction since greedily coloring in this order uses at most $\Delta$ colors as $x$ and $z$ get the same color, each $v_i$ has at most $\Delta - 1$ neighbors to the left and $y$ has two neighbors ($x$ and $z$) colored the same.
+\end{proof}
+
+\end{document}

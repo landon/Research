@@ -1,0 +1,101 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\begin{document}
+\begin{lem}
+Let $G$ be a graph and $\func{\pi}{V(G)}{\irange{k}}$ a proper $k$-coloring of
+$G$.  Suppose that $\pi$ has no $G$-independent transversal, but for every $e
+\in E(G)$, $\pi$ has a $(G-e)$-independent transversal. Then for every $xy \in
+E(G)$ there is $J \subseteq \irange{k}$ with $\pi(x), \pi(y) \in J$ and an induced matching $M$ of $G\brackets{\pi^{-1}(J)}$ with $xy \in M$ such that
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $G\brackets{\pi^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\pi(u) = a$ and $\pi(v) = b$ is a (simple) tree.  In
+  particular $\card{M} = \card{J} - 1$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $G$ with
+$\func{\pi}{V(G)}{\irange{k}}$ so as to minimize $k$.  Let $xy \in E(G)$.
+By assumption $\pi$ has a $(G-xy)$-independent transversal $T$.  Note that we
+must have $x,y \in T$ lest $T$ be a $G$-independent transversal of $\pi$.
+
+By symmetry we may assume that $\pi(x) = k-1$ and $\pi(y) = k$. Put $X
+\DefinedAs \pi^{-1}(k-1)$, $Y \DefinedAs \pi^{-1}(k)$ and $H \DefinedAs G -
+N(\set{x, y}) - E(X,Y)$. Define $\func{\zeta}{V(H)}{\irange{k-1}}$ by $\zeta(v)
+\DefinedAs \min\set{\pi(v), k-1}$. Note that since $x,y \in T$, we have
+$\card{\zeta^{-1}(i)} \geq 1$ for each $i \in \irange{k-2}$.  Put $Z \DefinedAs
+\zeta^{-1}(k-1)$. Then $Z \neq \emptyset$ for otherwise $M \DefinedAs \set{xy}$
+totally dominates $G[X \cup Y]$ giving a contradiction.
+
+Suppose $\zeta$ has an $H$-independent transversal $S$.  Then we have $z \in S
+\cap Z$ and by symmetry we may assume $z \in X$.  But then $S \cup \set{y}$ is
+a $G$-independent transversal of $\pi$, a contradiction.
+
+Let $H' \subseteq H$ be a minimal spanning subgraph such that $\zeta$ has no
+$H'$-independent transversal.  Now $d(z) \geq 1$ for each $z \in Z$ for
+otherwise $T - \set{x,y} \cup \set{z}$ would be an $H'$-independent transversal
+of $\zeta$.  Pick $zw \in E(H')$.  By minimality of $k$, we have $J \subseteq
+\irange{k-1}$ with $\zeta(z), \zeta(w) \in J$ and an induced matching $M$ of
+$H'\brackets{\zeta^{-1}(J)}$ with $zw \in M$ such that
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $H'\brackets{\zeta^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\zeta(u) = a$ and $\zeta(v) = b$ is a (simple) tree.
+\end{enumerate}
+
+Put $M' \DefinedAs M \cup \set{xy}$ and $J' \DefinedAs J \cup \set{k}$.
+Since $H'$ is a spanning subgraph of $H$, $\bigcup M$ totally dominates
+$H\brackets{\zeta^{-1}(J)}$ and hence $\bigcup M'$ totally dominates
+$G\brackets{\pi^{-1}(J')}$.  Moreover, the multigraph in (2) for $M'$ and $J'$
+is formed by splitting the vertex $k-1 \in J$ in two vertices and adding an edge
+between them and hence it is still a tree.  This final contradiction proves the
+lemma.
+\end{proof}
+\end{document}

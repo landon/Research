@@ -1,0 +1,45 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 12pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[style={fill=red},x = 0.697999894618988, y = 0.750000074505806, L = \tiny {}]{v0}
+\Vertex[style={fill=green},x = 0.695999979972839, y = 0.591999977827072, L = \tiny {}]{v1}
+\Vertex[x = 0.496000051498413, y = 0.59400001168251, L = \tiny {$2$}]{v2}
+\Vertex[style={fill=red},x = 0.69599986076355, y = 0.840000033378601, L = \tiny {}]{v3}
+\Vertex[x = 0.496000111103058, y = 0.526000112295151, L = \tiny {$3$}]{v4}
+\Vertex[x = 0.582000017166138, y = 0.636000007390976, L = \tiny {$3$}]{v5}
+\Vertex[x = 0.580000042915344, y = 0.405999958515167, L = \tiny {$3$}]{v6}
+\Vertex[x = 0.580000102519989, y = 0.510000079870224, L = \tiny {$4$}]{v7}
+\Vertex[x = 0.495999962091446, y = 0.407999932765961, L = \tiny {$4$}]{v8}
+\Vertex[x = 0.416000008583069, y = 0.539999932050705, L = \tiny {$4$}]{v9}
+\Vertex[x = 0.317999958992004, y = 0.541999995708466, L = \tiny {$3$}]{v10}
+\Vertex[x = 0.413999974727631, y = 0.442000091075897, L = \tiny {$3$}]{v11}
+\Edge[](v1)(v0)
+\Edge[](v3)(v2)
+\Edge[style = {color=blue, line width=3pt}](v5)(v4)
+\Edge[](v7)(v6)
+\Edge[style = {color=blue, line width=3pt}](v4)(v1)
+\Edge[](v5)(v0)
+\Edge[](v3)(v6)
+\Edge[](v7)(v2)
+\Edge[](v1)(v11)
+\Edge[](v7)(v11)
+\Edge[](v5)(v8)
+\Edge[style = {color=blue, line width=3pt}](v6)(v8)
+\Edge[style = {color=blue, line width=3pt}](v2)(v9)
+\Edge[style = {color=blue, line width=3pt}](v4)(v9)
+\Edge[style = {color=blue, line width=3pt}](v0)(v10)
+\Edge[style = {color=blue, line width=3pt}](v3)(v10)
+\Edge[style = {color=blue, line width=3pt}](v10)(v11)
+\Edge[](v8)(v9)
+\Edge[style = {color=blue, line width=3pt}](v8)(v11)
+\Edge[style = {color=blue, line width=3pt}](v9)(v10)
+\Edge[](v3)(v5)
+\Edge[](v0)(v6)
+\Edge[](v2)(v1)
+\Edge[style = {color=blue, line width=3pt}](v7)(v4)
+\end{tikzpicture}
+\end{figure}

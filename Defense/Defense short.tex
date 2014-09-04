@@ -1,0 +1,401 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+\usepackage{graphicx}
+
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+
+\title{Coloring from almost maximum degree sized palettes}
+\author{Landon Rabern}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+My dissertation contains material on a bunch of topics all relating to graph coloring, but today I'm going to almost entirely restrict myself to talking about a conjecture of Borodin and Kostochka from 1977.  First, i need to define some terms.
+
+Define, $\Delta(G)$, $K_t$, coloring.  PICTURES.
+
+\begin{conjecture}
+Every graph $G$ with $\Delta(G) \geq 9$ that doesn't contain $K_{\Delta(G)}$ is $(\Delta(G)-1)$-colorable.
+\end{conjecture}
+
+Talk, $K_\Delta$ is the obvious obstruction to $(\Delta-1)$-coloring.
+
+The classical theorem of Brooks from 1941 says:
+
+\begin{thm}[Brooks 1941]
+Every graph $G$ with $\Delta(G) \geq 3$ that doesn't contain $K_{\Delta(G) + 1}$ is $\Delta(G)$-colorable.
+\end{thm} 
+
+The $\Delta \geq 9$ condition is necessary:
+
+\input{SmallCE}
+
+\bigskip
+\noindent Known results:
+\begin{itemize}
+\item In 1980, Kostochka proved that if we exclude $K_{\Delta(G)-29}$ instead, then $G$ is $(\Delta(G)-1)$-colorable.
+\item Later in the 1980s, Mozhan proved that if $\Delta(G) \geq 31$ and we exclude $K_{\Delta(G)-3}$ instead, then $G$ is $(\Delta(G)-1)$-colorable.
+\item In 1999, Reed proved that the conjecture holds for $\Delta \geq 10^{14}$.  
+\end{itemize}
+
+\noindent Highlights:
+\begin{itemize}
+\item We prove the full Borodin-Kostochka conjecture for claw-free graphs.
+\item We prove that the following conjecture is equivalent to the Borodin-Kostochka conjecture.
+\begin{conjecture}
+If $G$ is a graph with $\Delta(G) \geq 9$ such that $G$ doesn't contain $\join{K_3}{\overline{K}_{\Delta(G)-3}}$, then $G$ is $(\Delta(G)-1)$-colorable.
+\end{conjecture}
+\item We generalize Reed's result to list coloring:
+
+\begin{thm}
+There exists $\Delta_0$ such that every graph with $\Delta \geq \Delta_0$ that doesn't contain $K_{\Delta}$ is $(\Delta-1)$-choosable.
+\end{thm}
+
+Define $k$-choosable.
+\end{itemize}
+
+To illustrate the different proof ideas used i'm going to give a nonstandard proof of Brooks' theorem and then generalize parts of it.
+
+\section{Brooks' theorem to illustrate parts}
+\begin{thm}[Brooks 1941]
+For $t \geq 3$, any graph with maximum degree at most $t$ that doesn't contain a $K_{t + 1}$ can be $t$-colored.
+\end{thm}
+
+\subsection{A proof}
+\begin{enumerate}
+\item Reduce to the cubic case.
+\item Exclude diamonds.  PICTURE.
+\item Exclude induced cycles.
+\item Forests are bipartite.
+\end{enumerate}
+
+Suppose not and let $G$ be a counterexample with the minimum number of vertices.  By minimality of $\card{G}$, $G-v$ is $t$-colorable for each $v \in V(G)$.  In particular, $G$ is $t$-regular.
+
+\textbf{Step (1).} \textit{Reduce to the cubic case}
+Suppose $t \geq 4$. Consider a $t$-coloring of $G-v$ for some $v \in V(G)$.  Each color must be used on every $K_t$ in $G-v$ and hence some color must be used on every $K_t$ in $G$.  PICTURE.  
+
+Let $M$ be such a color class expanded to a maximal independent set.  Then $\Delta(G-M) \leq t-1$ and $G-M$ contains no $K_t$, but $G-M$ cannot be $(t-1)$-colored, a contradiction.
+
+\textbf{Step (2).} \textit{Exclude diamonds}
+If $G$ has an induced diamond $D$, then after $3$-coloring $G-D$, we can color the nonadjacent vertices in $D$ the same and then finish greedily, impossible.  PICTURE.
+
+\textbf{Step (3).} \textit{Exclude induced cycles}
+Suppose $G$ contains an induced cycle $C$.   Since $K_4 \not \subseteq G$ we have $\card{N(C)} \geq 2$. PICTURE.
+
+So, we may take different $x, y \in N(C)$ and put $H \DefinedAs G - C$ if $x$ is adjacent to $y$ and $H \DefinedAs (G-C) + xy$ otherwise.  PICTURE.
+
+Then, $H$ doesn't contain $K_4$ as $G$ doesn't contain diamonds. PICTURE.
+
+By minimality of $\card{G}$, $H$ is $3$-colorable. That is, we have a $3$-coloring of $G - C$ where $x$ and $y$ receive different colors, say $x$ gets $1$ and $y$ gets $2$.  Pick a neighbor $v_x$ in $C$ of $x$ and $v_y$ in $C$ of $y$.  Then $v_x$ has colors $2, 3$ available and $v_y$ has colors $1,3$ available.  PICTURE.
+
+Follow a path from $v_x$ to $v_y$ to find adjacent vertices $p, q$ with different available color lists.  Color $p$ with a color $q$ doesn't have, then greedily color with $q$ last. PICTURE.
+
+\textbf{Step (4).} \textit{Forests are bipartite.}
+So, we're done.
+
+\subsection{Generalizing pieces of the proof}
+\subsubsection{Reducing maximum degree}
+The reduction we just did worked by using the following idea.
+
+Idea:  Find an independent set $I$ so that $\omega(G-I) < \omega(G)$.
+
+\bigskip
+
+Can such an $I$ can always be found?  No, take a $5$-cycle, PICTURE.  In fact, the graphs $G$ where for every induced subgraph $H$ of $G$ there exists $I$ such that $\omega(H-I) < \omega(H)$ are precisely the perfect graphs.  So, any odd hole or antihole provides an example.
+
+Really, these reductions can be done with no conditions on the chromatic number. In 1980, Kostochka proved
+
+\begin{lem}[Kostochka 1980]
+If $G$ is a graph satisfying $\omega \geq \Delta + \frac32 - \sqrt{\Delta}$,
+then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+In 2011, i improved the required condition to $\omega \geq \frac34 (\Delta + 1)$.  Finally, King improved the condition to $\omega > \frac23 (\Delta + 1)$, which is tight.  It follows from any of these results that the Borodin-Kostochka conjecture can be reduced to the $\Delta=9$ case.
+
+\subsubsection{Excluding small subgraphs}
+The argument used to exclude the diamond works in general: given any list assignment $L$ to the diamond where $\card{L(v)} \geq d(v)$, we can properly color from $L$.  A graph that has this property is called $d_0$-choosable and were classified in the 70s as the non-Gallai trees. PICTURE.
+
+Studying graphs that can be colored from any list assignment $L$ with $\card{L(v)} \geq d(v) - 1$ are similarly useful for $(\Delta(G) - 1)$-coloring graphs; these are the $d_1$-choosable graphs.   We didn't completely classify them, but we classified the $d_1$-choosable joins $\join{A}{B}$ where $\card{A}, \card{B} \geq 2$.  For example, $\join{K_6}{\overline{K}_3}$ is $d_1$-choosable, so no minimal counterexample to BK can have it as an induced subgraph.  PICTURE.
+
+This classification was used to prove the full Borodin-Kostochka for claw-free graphs.  
+
+\subsubsection{Adding edges to a subgraph}
+In step (3) of the proof of Brooks' theorem, we added an edge to a subgraph of $G$ in order to force the coloring to have a nice property we could use to extend it.  In our proofs we exploit this idea much more generally. For example, say we have a subgraph $H$ we want to complete a coloring of $G-H$ to.  PICTURE.  To do so, we'd like to guarantee we can color some pair of nonadjacent vertices the same, say $x$ and $y$.  One way we can do this is to look at a coloring of $G-(H-y)$ with edges between $y$ and $x$'s neighbors added.  In such a coloring, $y$ gets a color that is not used on any of $x$'s neighbors and hence this color is available for $x$.  PICTURE.  So, we get either we can extend the coloring or when we added those edges we created a $K_\Delta$ and hence $G$ contained a $K_\Delta$ less those edges---now we show $G$ cannot contain such a thing.
+
+\section{Borodin-Kostochka for claw-free graphs}
+Reminder $d_1$-choosable definition. We classified the $d_1$-choosable graph joins $\join{A}{B}$ where $\card{A}, \card{B} \geq 2$, this gives a lot more structure about a counterexample.  The classification takes 45 pages to prove, we won't go into it, but will use the results to prove Borodin-Kostochka for claw-free graphs.
+
+\bigskip
+We outline the proof of the following.
+\begin{thm}
+Every claw-free graph with $\Delta \geq 9$ that doesn't contain $K_{\Delta}$ can be $(\Delta-1)$-colored.
+\end{thm}
+
+The proof uses the structure theorem for claw-free graphs proved by Chudnovsky and Seymour. We actually only need a simpler part of it: the structure theorem for quasi-line graphs; graphs where the neighborhood of every vertex can be covered by two cliques.  PICTURE.
+
+\bigskip
+
+We use the following structure theorem for quasi-line graphs.
+
+\begin{lem}\label{QuasilineStructure}
+Every connected skeletal quasi-line graph is a circular interval graph or a composition of
+linear interval strips.
+\end{lem}
+
+We need to define the terms in this lemma.
+
+A \emph{homogeneous pair of cliques} $(A_1, A_2)$ in a graph $G$ is a pair of
+disjoint nonempty cliques such that for each $i \in \irange{2}$, every vertex in
+$G - (A_1 \cup A_2)$ is either joined to $A_i$ or misses all of $A_i$ and
+$\card{A_1} + \card{A_2} \geq 3$. PICTURES.
+
+A homogeneous pair of cliques $(A_1, A_2)$ is $\emph{skeletal}$
+if for any $e \in E(A, B)$ we have $\omega(G[A \cup B] - e) < \omega(G[A \cup
+B])$.  A graph is $\emph{skeletal}$ if it contains no nonskeletal homogeneous
+pair of cliques.  
+
+\bigskip
+
+Given a set $V$ of points on the unit circle together with a set of closed intervals $C$ on the unit circle we define a graph with vertex set $V$ and an edge between two different vertices if and only if they are both contained in some element of $C$.  Any graph isomorphic to such a graph is a \emph{circular interval graph}.  Similarly, by replacing the unit circle with the unit interval, we get the class of \emph{linear interval graphs}.
+
+\bigskip
+
+It remains to define \emph{compositions of linear interval strips}.  These are a generalization of line graphs. 
+A \emph{linear interval strip} $(S, A_1, A_2)$ is a linear interval graph $S$ together with end cliques $A_1$ and $A_2$.  PICTURE.
+
+\bigskip
+
+Let $H$ be a directed multigraph (possibly with loops)
+and suppose for each edge $e$ of $H$ we have a strip $(S_e, X_e, Y_e)$.  For
+each $v \in V(H)$ define
+
+\[C_v \DefinedAs \parens{\bigcup \setbs{X_e}{\text{$e$ is directed out of $v$}}}
+\cup \parens{\bigcup \setbs{Y_e}{\text{$e$ is directed into $v$}}}\]
+
+The graph formed by taking the disjoint union of $\setbs{S_e}{e \in E(H)}$ and
+making $C_v$ a clique for each $v \in V(H)$ is the composition of the strips
+$(S_e, X_e, Y_e)$.  Any graph formed in such a manner is called a
+\emph{composition of linear interval strips}.  PICTURE.
+
+Taking all strips to have a single vertex gives the line graph construction.
+
+\bigskip\bigskip
+
+Now we can outline the proof.
+
+\begin{enumerate}
+\item Prove for circular interval graphs.
+\item Reduce from quasi-line graphs to line graphs as follows:
+	\begin{enumerate}
+	\item It is always possible to make skeletal counterexample from a given counterexample just by removing edges in nonskeletal homogeneous pairs of cliques.  Do so.
+	\item We must have a composition of linear interval strips by the structure theorem.
+	\item Take a composition representation using the maximum number of strips.
+	\item Show that for each strip $(S, A_1, A_2)$ we must have $V(S) = A_1 = A_2$ and thus we have a line graph.
+	\end{enumerate}
+\item Prove for line graphs of multigraphs.
+\item Reduce from claw-free graphs to quasi-line graphs.
+\end{enumerate}
+
+Steps (1), (2) and (4) all rely heavily on our classification of $d_1$-choosable joins.  Step (4) uses some $d_1$-choosability results outside this classification, for example, the following graph $D_8$ is $d_1$-choosable:
+
+\input{D8}
+
+The reduction from claw-free graphs to quasi-line graphs works for list coloring as well.  Also, the circular interval graphs proof works for list coloring.  So, the following generalization seems within reach.
+
+\begin{conjecture}
+Every claw-free graph with $\Delta \geq 9$ that doesn't contain $K_{\Delta}$ is $(\Delta-1)$-choosable.
+\end{conjecture}
+
+Borodin and Kostochka conjecture that this holds with the claw-free restriction removed.  As evidence of this, we generalized Reed's proof of Borodin-Kostochka for large $\Delta$ to list coloring, proving:
+
+\begin{thm}
+There exists $\Delta_0$ such that every graph with $\Delta \geq \Delta_0$ that doesn't contain $K_{\Delta}$ is $(\Delta-1)$-choosable.
+\end{thm}
+
+\section{Future directions}
+\begin{enumerate}
+\item BK for list coloring for claw-free graphs.
+\item improved bounds on the number of edges in (online) list-critical.  These can be used to prove Ore degree bounds for (online) list coloring; we have so far that the Ore degree version of Brooks' theorem for (online) list coloring holds for $\Delta \geq 11$.
+\item Improve Mozhan's methods to get down to $\Delta-2$, we can now prove his $\Delta-3$ result for $\Delta \geq 13$ instead of $\Delta \geq 31$, and the proof is relatively simple.
+\item BK for large $\Delta$ for online list coloring (and Alon-Tarsi number)
+\end{enumerate}
+
+\section{Reducing degree details}
+
+\bigskip
+
+But for our purposes we need less.  Suppose we could always find an $I$ when $\omega(G) \geq \Delta(G)$.  Then, if $\omega(G) \geq \Delta(G)$, expand the $I$ we get to a maximal independent set $M$, otherwise choose an arbitrary maximal independent set $M$.  Then we have $\omega(G-M) < \omega(G) \leq \Delta(G) - 1$ and $\Delta(G-M) \leq \Delta(G) - 1$,  hence $G-M$ is a smaller counterexample.
+
+\bigskip
+
+Let's look at the maximum cliques.  If $A$ and $B$ are maximum cliques that intersect, then $\card{A \cup B} \leq \Delta(G) + 1$, PICTURE. 
+
+Thus $\card{A\cap B} = |A| + |B| - \card{A \cup B} \geq 2\omega(G) - (\Delta + 1) \geq \Delta(G) - 1 \geq 3$. Know: $G$ has no diamonds.  So, $A = B$. PICTURE.
+
+\bigskip
+
+PICTURE of clique blobs.  We just need to find an independent set with one vertex in each blob.  That is, we need to find an independent transversal.  First attempt might be to pick a vertex at random from each blob and apply the local lemma.  This only works for $\Delta \geq 6$.  In this simple case where each vertex has only one external neighbor, a simple algorithm will work (basic idea: pick a vertex, if it restricts a clique we haven't taken care of, pick a vertex in that clique, otherwise pick a vertex in some clique we haven't taken care of and repeat), but we want to generalize, so use:
+
+\begin{lem}[Haxell]\label{HaxellLemma}
+Let $H$ be a graph and $V_1 \cup \cdots \cup V_r$ a partition of $V(H)$. Suppose that $\card{V_i} \geq 2\Delta(H)$ for each $i \in \irange{r}$. Then $H$ has an independent set $\set{v_1, \ldots, v_n}$ where $v_i \in V_i$ for each $i \in \irange{r}$.
+\end{lem}
+
+The bound $2\Delta$ is best possible without further assumptions:
+
+\begin{center}
+\includegraphics{notransversal.PNG}
+\end{center}
+
+This does the work for us and we have our desired independent set $I$ with $\omega(G-I) < \omega(G)$.
+
+\section{Excluding small subgraphs details}
+
+\begin{ClassificationOfd0}
+For any connected graph $G$, the following are equivalent.
+\begin{itemize}
+\item $G$ is $d_0$-choosable.
+\item $G$ is not a Gallai tree.  DEFINITION and PICTURE.
+\item $G$ contains an induced even cycle with at most one chord.
+\end{itemize}
+\end{ClassificationOfd0}
+
+This generalizes Brooks' theorem since all regular Gallai trees with maximum degree at least $3$ are complete.
+
+\section{Adding edges details}
+In Step (3) of the proof of Brooks' theorem, we added an edge to $G-C$ to force two vertices to get different colors.  This trick is more generally useful.   Another useful trick we'll use is contracting an independent set. To use either of these we need to be in the context of a minimal counterexample.  It's cumbersome to carry this context around, so we're going to get rid of it by defining a strengthened notion of vertex critical graph.  We call these extra critical things \emph{mules}.
+
+\begin{defn}
+For any collection $\fancy{T}$ of graphs, a \emph{$\fancy{T}$-mule} is a $G \in \fancy{T}$ such that no homomorphic image of an induced subgraph of $G$ is in $\fancy{T}$ (besides $G$ itself).
+\end{defn}
+
+PICTURES.\bigskip
+
+We're working with finite graphs, so $\fancy{T}$-mules exist for every nonempty $\fancy{T}$.  The identity homomorphism from a proper induced subgraph shows that this strengthens vertex critical. 
+
+\bigskip
+
+Let $\fancy{C}_k$ be the graphs $G$ with $\chi(G) \geq \Delta(G) = k$ and $\omega(G) < k$.  The Borodin-Kostochka conjecture says that $\fancy{C}_k$ is empty for $k \geq 9$. Using $\fancy{C}_k$-mules we get more information about small $k$ than we get from a minimum counterexample.  For example, these are both $\fancy{C}_7$-mules:
+
+\input{M7}
+\input{M_72}
+
+The first one has $14$ vertices while the second has $15$. Both are constructed by our proofs, but since the second one has more vertices it would not be constructed by a minimum counterexample argument.
+
+\bigskip
+
+The main result we proved about mules is
+
+\begin{lem}\label{K3sOut}
+For $k \geq 7$, the only $\fancy{C}_k$-mules containing $\join{K_3}{\overline{K}_{k-3}}$
+as a subgraph are $M_{7,1}$,  $M_{7,2}$ and $M_8$.
+\end{lem}
+
+Here $M_8$ is the only known (connected) counterexample with $\Delta=8$.
+
+\input{M_8}
+
+Since $\join{K_3}{\overline{K}_{\Delta-3}} \subseteq K_\Delta$, Lemma \ref{K3sOut} shows
+that Conjecture \ref{K3Conjecture} is equivalent to the Borodin-Kostochka
+conjecture.
+
+\begin{conjecture}\label{K3Conjecture}
+If $G$ is a graph with $\Delta(G) \geq 9$ such that $G$ doesn't contain $\join{K_3}{\overline{K}_{\Delta(G)-3}}$, then $G$ is $(\Delta(G)-1)$-colorable.
+\end{conjecture}
+\end{document}

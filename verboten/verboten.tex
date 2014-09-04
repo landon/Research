@@ -1,0 +1,139 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\begin{document}
+For a vertex $v$ in a graph $G$, let $E(v)$ be the edges of $G$ incident to $v$.
+
+A graph $G$ is \emph{edge-critical} if $\chi'(G-e) < \chi'(G)$ for each $e \in E(G)$.  Suppose $G$ is edge-critical and $\chi'(G) = k + 1$ for some $k \ge \Delta(G)$.  
+For $H \subseteq G$ and $k$-edge-coloring $\pi$ of $G - E(H)$, put $L_\pi(v) \DefinedAs \irange{k} - \pi(E(v) - E(H)$ for each $v \in V(H)$.
+
+A pair $(H, L)$ where $H$ is a graph and $L$ is a list assignment on $H$ is \emph{verboten} if there does not exist an edge-critical graph $G$ containing $H$ (up to isomorphism) and 
+a $(\chi'(G) - 1)$-edge-coloring $\pi$ of $G - E(H)$ such that $L = L_\pi$.  We investigate verboten pairs.
+
+For a list assignment $L$ on $H$, put $\pot(L) \DefinedAs \bigcup_{v \in V(H)} L(v)$.  For $\alpha \in \pot(L)$, and $Q \subseteq H$ let $Q_{L, \alpha}$ be the subgraph of $Q$ induced on $\setb{v}{V(Q)}{\alpha \in L(v)}$.  
+When $L$ is fixed in a context, we write $Q_\alpha$ for $Q_{L, \alpha}$.
+
+\begin{lem}\label{NecessaryConditions}
+If $(H, L)$ is verboten, then
+
+\begin{enumerate}
+\item $|L(v)| \ge d_H(v)$ for all $v \in V(H)$; and
+\item $\displaystyle\sum_{\alpha \in \pot(L)} \floor{\frac{\card{Q_\alpha}}{2}} \ge \size{Q}$ for all $Q \subseteq H$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+(1) is immediate.  i proved (2) is necessary in the case when $H$ is a star in \cite{HallGame}.  It should work in general, but i haven't tried to prove it yet.
+\end{proof}
+
+If $(H, L)$ satisfies both conditions in Lemma \ref{NecessaryConditions}, then $(H, L)$ is \emph{conceivable}.  The following was proved in \cite{HallGame}.
+
+\begin{thm}\label{StarTheorem}
+If $H$ is a star, then $(H, L)$ is verboten iff $(H, L)$ is conceivable.
+\end{thm}
+
+Vizing's adjacency lemma (and anything else you can get from fans) is an immediate consequence of this theorem.
+
+Theorem \ref{StarTheorem} is not true for general graphs $H$, or even paths.  The example at the top of page 46 of \cite{stiebitz2012graph} shows that $(P_4, L)$ where $P_4 = y_0y_1y_2y_3$, $L(y_i) = \set{1,2}$ for $i = 0, 2, 3$ and $L(y_1) = \set{1,3}$ is conceivable but not verboten.  But the following generalization of Tashkinov trees should be true.
+
+\begin{thm}\label{TreeTheorem}
+If $(H, L)$ is conceivable where $H$ is a tree and $|L(v)| \ge d_H(v) + 1$ for all $v \in V(H)$, then $(H, L)$ is verboten.
+\end{thm}
+\begin{proof}
+i sketched a proof to myself that worked for paths, something similar should work for trees.
+\end{proof}
+
+If Theorem \ref{TreeTheorem} were true for all $H$, that would imply Goldberg's conjecture; for a minimal counterexample $G$ (which is edge-critical), use $H = G$, condition (1) is satisfied if $\chi' \ge \Delta + 2$. But then (2) must fail for some $Q \subseteq G$, unpacking what that means shows that $Q$ is ``overfull''.  i think this would be harder to prove than Goldberg, but it at least tells us that we have the right condition in (2).
+
+The problem with Theorem \ref{TreeTheorem} (and Tashkinov trees / Kierstead paths) is that it doesn't do much for us when $G$ is $(\Delta + 1)$-edge-critical.  
+We need to allow some vertices to have $|L(v)| = d_H(v)$ for it to be useful.  This is exactly what that ``short Kierstead paths'' result is doing.  Here is the more general result (leaving out case (d) for now, but it worked too).
+
+\begin{lem}\label{PathLengthFour}
+If $(H, L)$ is a conceivable pair where $H = P_4$ and $|L(v)| > d_H(v)$ for an internal vertex $v$, then $(H, L)$ is verboten.
+\end{lem}
+
+i've run some cases on the computer and get something for $P_5$, not sure what the best is yet, one case still running.  But i got this so far.
+
+\begin{lem}\label{PathLengthFive}
+If $(H, L)$ is a conceivable pair where $H = P_5$ and $|L(v)| > d_H(v)$ for two internal vertices, then $(H, L)$ is verboten.
+\end{lem}
+
+My current running conjecture is the following.
+
+\begin{conj}\label{TreeConjecture}
+If $(H, L)$ is a conceivable pair where $H$ is a tree and for each edge $xy \in E(H)$ we have $\ceil{\frac{|L(x)| + |L(y)|}{2}} \ge \min\set{d_H(x), d_H(y)} + 1$, then $(H, L)$ is verboten.
+\end{conj}
+
+But that's just a guess based on data i have and the fact that adding colors to the lists of leaves doesn't seem to help.  What we really need is to find another necessary condition to supplement (1) and (2).  The condition should hold for all stars and in general when $|L(v)| \ge d_H(v) + 1$ for all $v$.  The condition in Conjecture \ref{TreeConjecture} satisfies these conditions.
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

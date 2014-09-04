@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{setup}{The setup}
+\newtheorem*{atticus}{Atticus' move}
+\newtheorem*{lazy_demon}{Lazy Demon}
+\newtheorem*{contrary_demon}{Contrary Demon}
+\newtheorem*{konig_demon}{K\"onig's Demon}
+\newtheorem*{vizing_demon}{Vizing's Demon}
+\newtheorem*{winning}{Winning}
+\newtheorem*{edgecoloring}{Edge coloring}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\title{Playing cards with a demon}
+\author{Rachel Anderson-Rabern, Atticus Rabern, Brian Rabern, Landon Rabern}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We analyze a solitaire game in which a demon rearranges some cards after each move.  The graph edge coloring theorems of K\"onig and Vizing follow from the winning strategies developed.
+\end{abstract}
+
+\section{The Solitaire Game}
+Atticus the solitaire master, plays the solitaire game with a fixed number of stacks of face up cards.  Call a game with $k$ stacks where the $i$-th stack has $n_i$ cards an $(n_1, \ldots, n_k)$-game.  We disallow the two trivial cases where there are no stacks and where a stack has no cards; that is, we require $k \geq 1$ and $n_i \geq 1$ for each $i$.
+
+To set up an $(n_1, \ldots, n_k)$-game, the demon chooses a number $N$ at least $k$ and creates a deck with $k$ $1$-cards, $k$ $2$-cards, \ldots, and $k$ $N$-cards. Then the demon makes $k$ stacks where the $i$-th stack has $n_i$ differently numbered cards from the deck.
+
+With the game set up, Atticus can repeatedly make moves of the following form.
+
+\begin{atticus}
+Pick some stack containing an $a$-card but no $b$-card and then swap
+the $a$-card for a $b$-card from the deck.
+\end{atticus}
+
+Atticus' goal in the game is simply the following.
+
+\begin{winning}
+Atticus wins if at the start of his turn he can make a hand of $k$ differently numbered cards by picking one card from each stack.
+\end{winning}
+
+To make the game harder for Atticus, the demon will rearrange some cards after each of Atticus' moves.  Whether or not Atticus has a winning strategy will depend on how the demon chooses to rearrange the cards.  Consider for example the following extreme demons.
+
+\begin{lazy_demon}
+After Atticus' turn, Lazy Demon does nothing.
+\end{lazy_demon}
+
+Can Atticus win against this demon?  Sure he can -- all he has to do is go through the stacks in order, swapping an $i$-card into the $i$-th stack if there is not one there already.  
+
+\begin{contrary_demon}
+Say Atticus' swapped an $a$-card out of and a $b$-card into the $i$-th stack.  Contrary Demon undoes what Atticus just did; that is, he swaps a $b$-card out of and an $a$-card into the $i$-th stack.
+\end{contrary_demon}
+
+Now Atticus cannot ever change the stacks and so only wins if the demon gave him a winning position to start with.
+
+\section{K\"onig's Demon}
+
+\begin{konig_demon}
+Say Atticus' swapped an $a$-card out of and a $b$-card into the $i$-th stack.
+K\"onig's Demon either does nothing or picks a stack other than the $i$-th containing a $b$-card but no $a$-card and swaps the $b$-card for an $a$-card from the deck.
+\end{konig_demon}
+
+\begin{thm}
+Atticus has a winning strategy against K\"onig's Demon for any $\parens{n_1, \ldots, n_k}$-game.
+\end{thm}
+\begin{proof}
+Suppose the demon has set up an $(n_1, \ldots, n_k)$-game.  Atticus should consider the largest hand of differently numbered cards he can make by picking one card from each stack.  If he can make a hand of size $k$, he wins.  Otherwise, there is some stack, say the $i$-th, from which he is not picking a card and some number $b \leq N$ not appearing on any card in his hand.  Since $n_i \geq 1$, there is at least one card in the $i$-th stack, say an $a$-card.  Now Atticus can swap an $a$-card out of and a $b$-card into the $i$-th stack.  Atticus can make a larger hand by picking the $b$-card from the $i$-th stack.  Since the hand uses a $b$-card from only the $i$-th stack, the demon swapping out a $b$-card in another stack cannot decrease the size of Atticus' hand.  Repeating this process, Atticus ends up with a hand of size $k$ and wins.
+\end{proof}
+
+\section{Vizing's Demon}
+
+\begin{vizing_demon}
+Say Atticus' swapped an $a$-card out of and a $b$-card into the $i$-th stack.
+Vizing's Demon either does nothing or picks a stack other than the $i$-th, containing a $b$-card but no $a$-card and swaps the $b$-card for an $a$-card from the deck, or picks a stack other than the $i$-th containing an $a$-card but no $b$-card and swaps the $a$-card for a $b$-card from the deck.
+\end{vizing_demon}
+
+\begin{thm}
+Atticus has a winning strategy against Vizing's Demon for any $\parens{n_1, \ldots,
+n_k}$-game where at most one of the $n_i$ is $1$.
+\end{thm}
+
+Atticus' winning strategy will involve reducing a game with $k$ stacks to one with $k - 1$ stacks. We break out the stretegy for reducing the number of stacks into the following lemma.
+
+\begin{lem}\label{Reduction}
+For any $\parens{n_1, \ldots, n_k}$-game against Vizing's Demon where at most one of the $n_i$ is $1$, Atticus can either get to a winning position or to a position where, for some $c$, exactly one stack contains a $c$-card.
+\end{lem}
+
+Using Lemma \ref{Reduction}, Atticus' strategy is as follows.  Ignore the stack with the $c$-card and play the game on the rest of the stacks never swapping in a $c$-card.  Using Using Lemma \ref{Reduction} again, we have $c_2 \neq c$ that appears on only one stack in this game, ignore that stack as well and play the game on the rest of the stacks never swapping in a $c_2$-card.  Repeating this we eventually get down to a single stack.  Pick a card, say a $c_k$-card, from this stack.  Now Atticus wins by choosing the hand with cards numbered $c, c_2, \ldots, c_k$.  Therefore it just remains to prove the lemma.
+
+\begin{proof}[Proof of Lemma \ref{Reduction}]
+\end{proof}
+
+\section{Edge Coloring}
+
+\bibliographystyle{amsplain}
+\bibliography{demon}
+\end{document}

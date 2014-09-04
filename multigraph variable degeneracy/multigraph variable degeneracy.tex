@@ -1,0 +1,108 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\title{Multigraph Variable Degeneracy}
+\author{}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}{\fancy{C}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\begin{document}
+\maketitle
+
+In \cite{borodin2000variable} Borodin, Kostochka and Toft proved a common generalization of Gallai's structure theorem for the low vertex subgraph of a critical graph (and also the classification of degree-choosable graphs proved independently by Borodin \cite{borodin1977criterion} and Erd\H{o}s, Rubin and Taylor \cite{ErdosRT79}) and Borodin's \cite{borodin1976decomposition} result on decomposing a graph into degenerate parts.  Here we generalize this result to multigraphs.
+
+We reformulate the result from \cite{borodin2000variable} so it looks more like coloring.  Let $G$ be a loopless multigraph.  To each $v \in V(G)$, assign a list $L(v)$ of pairs $(c,d) \in \IN \times \IN$ which we call \emph{graded colors}.  For $(c,d) \in L(v)$, we will think of $c$ as the color and $d$ as a measure of how hard it is to color $v$ with $c$ (where $d = 0$ means it is impossible). Let $\pot(L) = \setbs{c}{(c,d) \in L(v)}$. We say that $G$ is $L$-colorable if there is a (possibly improper) coloring $\pi$ of $V(G)$ where $\pi(v) \in L(v)$ for each $v \in V(G)$ such that for each color $c \in \pot(L)$, the vertices colored with $c$, that is $V_c = \setbs{v}{\pi(v) \in \set{c} \times \IN}$ there exists an ordering of $V_c$ such that each $v \in V_c$ has fewer than $d$ edges going to the left (where $\pi(v) = (c,d)$).
+
+That definition can surely be said better.  Note that no vertex can be colored with $(c,0)$ for any $c$, so we can remove any $(c,0)$'s from lists without changing anything.  By convention we will always remove $(c,0)$'s from the lists.  Also, in the case that $L(v) \subseteq \IN \times \set{1}$ for all $v \in V(G)$, we recover normal list coloring.  Now we can state the result from \cite{borodin2000variable}.
+
+\begin{thm}[Borodin, Kostochka and Toft \cite{borodin2000variable}]
+Let $G$ be a connected graph and $L(v)$ an assignment on $G$ such that $\sum_{(c,d) \in L(v)} d \ge d_G(v)$ for each $v \in V(G)$.  Then $G$ is $L$-colorable if and only if $(G,L)$ is not ``hard-constructible''.
+\end{thm}
+
+Here ``hard-constructible'' is just giving the few exceptions.  In the case that $L(v) \subseteq \IN \times \set{1}$ for all $v \in V(G)$, this says that if each vertex has a list of at least $d_G(v)$ colors, then $G$ can be colored from the lists (unless exceptions, which coincide with Gallai trees); this is the classification of degree-choosable graphs.  If instead, we strengthen the condition to $\sum_{(c,d) \in L(v)} d \ge \Delta(G)$, we get Borodin's \cite{borodin1976decomposition} result.  The goal is to extend the result to loopless multigraphs. This will imply the directed versions of the desired results by just considering multigraphs with maximum multiplicity $2$.  We'll determine what ``harder-constructible'' should mean in the process of proving.
+
+\begin{thm}
+Let $G$ be a connected loopless multigraph and $L(v)$ an assignment on $G$ such that $\sum_{(c,d) \in L(v)} d \ge d_G(v)$ for each $v \in V(G)$.  Then $G$ is $L$-colorable if and only if $(G,L)$ is not ``harder-constructible''.
+\end{thm}
+\begin{proof}
+We just consider the `if' direction now.  Suppose the theorem is false and let $G$ be a counterexample minimizing $\card{G}$.
+
+Let $v$ be a noncutvertex of $G$.  For any $(c,d) \in L(v)$ with $d > 0$, consider the list assignment $L'$ on $G-v$ created from $L$ by changing $(c, d') \in L(w)$ to $(c, \max\set{0,d' - \mu(vw)})$ (and so, removing the pair if $d' \le \mu(vw)$) for each neighbor $w$ of $v$.  Suppose $(G-v, L')$ is not ``harder-constructible''.  Then, by minimality of $|G|$, we have an $L'$-coloring of $G-v$.  We can extend this to an $L$-coloring of $G$ by coloring $v$ with $c$ by putting $v$ first in the ordering of $V_c$.  Hence $(G-v, L')$ is ``harder-constructible'' for any $(c,d) \in L(v)$ with $d > 0$.
+
+Suppose $G$ is not $2$-connected.  Consider two end-blocks, removing a noncutvertex from one shows that all but its block is hard, and the other one shows all.  So $G$ is $2$-connected.
+
+Suppose $\C_L(v) \ne \C_L(w)$ for some $v, w \in V(G)$, then since $G$ is connected, there are adjacent vertices $u,z \in V(G)$ with $\C_L(u) - \C_L(z) \ne \emptyset$.  Pick $c \in \C_L(u) - \C_L(z)$.  Consider $(G-z, L')$ where $L'$ is created from $L$ by changing $(c, d') \in L(x)$ to $(c, \max\set{0,d' - \mu(zx)})$ for each neighbor $x$ of $z$.  Then $u$ is a $+1$ vertex while the rest are still $0$ vertices, so we win.
+
+
+
+\end{proof}
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

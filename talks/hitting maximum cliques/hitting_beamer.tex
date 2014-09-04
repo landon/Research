@@ -1,0 +1,354 @@
+\documentclass{beamer}
+\usepackage{tkz-graph}
+%===============BEGIN GLOBAL BEAMER OPTIONS=====================
+
+%THIS CHANGES THE BACKGROUND COLOUR OF BOXES, AND ROUNDS OFF THEIR EDGES
+%\setbeamercolor{block title}{bg=yellow!50}
+%\setbeamercolor{block body}{}
+%\setbeamertemplate{blocks}[default]
+
+%THIS REMOVES NAVIGATION BAR ON THE BOTTOM
+\setbeamertemplate{navigation symbols}{}
+
+
+%%THIS ADDS FRAME NUMBERS TO THE Right (x/y)
+%\newcommand*\oldmacro{}
+%\let\oldmacro\insertshorttitle
+%\renewcommand*\insertshorttitle{
+ %\oldmacro\hfill
+ %\insertframenumber\,/\,\inserttotalframenumber}
+
+%+++++++++++++ MODES AND THEMES +++++++++
+\mode<presentation>
+
+\usetheme[hideothersubsections]{Hannover}
+\addtobeamertemplate{footline}
+{
+  \usebeamercolor[fg]{author in sidebar}
+  \vskip-1cm\hskip2pt
+  %\insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+}
+
+%\usecolortheme{beaver}
+%\usecolortheme{crane}
+%\usecolortheme{default}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle} 
+%\usecolortheme{dove} 
+%\usecolortheme{fly} 
+%\usecolortheme{seagull}
+%\usecolortheme{rose}
+\usecolortheme{orchid}
+%\usecolortheme{seahorse}
+
+
+
+%\useoutertheme{split}
+%\useoutertheme{shadow}
+
+% USE TO CREATE PRINTER FRIENDLY HANDOUT VERSION, TOGETHER WITH [HANDOUT]
+%ALSO USE ALTERNATE FIRST SLIDE
+%\usecolortheme{dove}
+
+%THIS CHANGES THE DEFAULT TRANSPARENCY GRADE FOR UNCOVERING COMMANDS
+%\setbeamercovered{transparent=30}
+
+%\beamertemplateshadingbackground{yellow!70}{black!20}
+
+%====================================
+
+\title[Hitting maximum cliques]{Hitting maximum cliques}
+\author{Landon Rabern}
+\institute{landon.rabern@gmail.com}
+%\date{June 1, 2011}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{CliqueGraph}{Clique graph}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\1}{\item<1-> }
+\newcommand{\2}{\item<2-> }
+\newcommand{\3}{\item<3-> }
+\newcommand{\4}{\item<4-> }
+\newcommand{\5}{\item<5-> }
+\newcommand{\6}{\item<6-> }
+\newcommand{\7}{\item<7-> }
+\newcommand{\8}{\item<8-> }
+\newcommand{\9}{\item<9-> }
+\newcommand{\ten}{\item<10-> }
+\newcommand{\ele}{\item<11-> }
+\newcommand{\twe}{\item<12-> }
+\newcommand{\thi}{\item<13-> }
+\newcommand{\fou}{\item<14-> }
+\newcommand{\fif}{\item<15-> }
+\newcommand{\six}{\item<16-> }
+\newcommand{\sev}{\item<17-> }
+\newcommand{\eig}{\item<18-> }
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+\section{Introduction}
+\begin{frame}{Introduction}
+\uncover<1->{
+Finding a stable set hitting every maximum clique in a graph can be very useful for coloring problems.}
+\uncover<2->{
+\begin{observation}
+A graph is perfect iff every induced subgraph has a stable set hitting every maximum clique.
+\end{observation}}
+
+\uncover<3->{
+Kostochka \cite{kostochkaRussian} gave the following sufficient condition.
+\begin{lem}[Kostochka 1980]
+A graph satisfying $\omega \geq \Delta + \frac32 - \sqrt{\Delta}$ has a stable set hitting every maximum clique.
+\end{lem}}
+\end{frame}
+\begin{frame}
+\uncover<1->{
+In \cite{rabernhitting}, we improved this as follows.
+\begin{lem}[Rabern 2009]
+There exists a positive constant $c < 1$ such that every graph satisfying $\omega > c(\Delta + 1)$ has a stable set hitting every maximum clique.
+\end{lem}}
+\end{frame}
+
+\subsection{What's it good for?}
+\begin{frame}{What's it good for?}
+\begin{itemize}
+\1 removing a stable set which hits every maximum clique decreases $\omega$
+\2 say you are trying to prove Brooks' theorem and start by taking a counterexample minimizing $\Delta$
+\3 suppose $\Delta \geq 4$
+\4 then $\omega = 4$, hence by the fact that $c = \frac34$ works in the above lemma, we have a stable set hitting every maximum clique
+\5 expanding it to a maximal stable set and removing it leaves a graph with $\omega \leq 3$, $\chi = 4$ and $\Delta \leq 3$, contradicting minimality of $\Delta$
+\6 thus a countexample to Brooks' theorem minimizing $\Delta$ must have $\Delta = 3$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What's it good for?}
+\begin{itemize}
+\1 Borodin and Kostochka \cite{borodin1977upper} conjecture that graphs with $\Delta \geq 9$ containing no $K_\Delta$ are $(\Delta - 1)$-colorable.  
+\2 as shown by Kostochka, almost identically to the case of Brooks' theorem, we may assume that $\Delta = 9$
+\3 Reed conjectures that every graph satisfies $\chi \leq \ceil{\frac{\omega + \Delta + 1}{2}}$
+\4 when proving this conjecture for a hereditary class of graphs, a minimum counterexample must have $\omega \leq \frac34(\Delta + 1)$
+\5 this was used in \cite{rabernhitting} to simplify the proof of Reed's conjecture for line graphs given in \cite{king2007upper}
+\end{itemize}
+\end{frame}
+
+\subsection{An outline of the proof}
+\begin{frame}{An outline of the proof}
+\uncover<1->{
+PICTURE
+}
+\begin{itemize}
+\2 use lemmas of Hajnal and Kostochka to show that each component of the maximum clique graph has many universal vertices
+\3 consider the subgraph induced on these universal vertices and partition it by component
+\4 find an independent transversal
+\5 this is our desired stable set hitting all maximum cliques
+\end{itemize}
+
+\end{frame}
+\section{The common lemmas}
+\subsection{Hajnal's clique collection lemma}
+\begin{frame}{Hajnal's clique collection lemma}
+\uncover<1->{
+\begin{lem}[Hajnal 1965]
+For a collection $\fancy{Q}$ of maximum cliques in a graph $G$ we have
+\[\card{\bigcup \fancy{Q}} + \card{\bigcap \fancy{Q}} \geq 2\omega(G).\]
+\end{lem}}
+
+\begin{itemize}
+\2 let $\mathcal{Q}$ be a counterexample with $\card{\mathcal{Q}}$ minimal
+\3 put $r \DefinedAs \card{\mathcal{Q}}$, say $\mathcal{Q} = \set{Q_1, \ldots, Q_r}$
+\4 consider $W \DefinedAs (Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i$
+\5 $W$ is a clique, so the following machinations give a contradiction
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Machinations}
+\uncover<1->{
+
+\begin{align*}
+\omega(G) &\geq |W| \\
+&= \textstyle\card{(Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i} \\
+&= \textstyle\card{Q_1 \cap \bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i \cap \bigcup_{i=2}^r Q_i} \\
+&= \textstyle\card{Q_1} +\card{\bigcup_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&= \textstyle\omega(G) +\card{\bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&\geq \textstyle\omega(G) + 2\omega(G) - \left(\card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=1}^r Q_i}\right) \\
+& > \omega(G).
+\end{align*}}
+\end{frame}
+
+\subsection{Kostochka's lemma}
+\begin{frame}{The clique graph}
+\uncover<1->{
+In \cite{2009arXiv0907.3705R} we gave the following simple proof of Kostochka's lemma from \cite{kostochkaRussian}.  First a definition.
+}
+
+\uncover<2->{
+\begin{CliqueGraph}
+For a collection of cliques $\mathcal{Q}$ in a graph, let $X_{\mathcal{Q}}$ be the intersection graph of $\mathcal{Q}$; that is, the vertex set of $X_{\mathcal{Q}}$ is $\mathcal{Q}$ and there is an edge between $Q_1 \neq Q_2 \in \mathcal{Q}$ iff $Q_1$ and $Q_2$ intersect.
+\end{CliqueGraph}}
+\end{frame}
+
+\begin{frame}{Kostochka's lemma}
+\uncover<1->{
+\begin{lem}[Kostochka 1980]
+Let $G$ be a graph satisfying $\omega > \frac{2}{3}(\Delta + 1)$.   If $\mathcal{Q}$ is a collection of maximum cliques in $G$ such that $X_{\mathcal{Q}}$ is connected, then $\cap \mathcal{Q} \neq \emptyset$.
+\end{lem}}
+
+\begin{itemize}
+\2 let $\mathcal{Q}$ be a counterexample with $\card{\mathcal{Q}}$ minimal
+\3 let $A \in \mathcal{Q}$ be a non-cutvertex in $X_{\mathcal{Q}}$ and $B$ a neighbor of $A$
+\4 put $\mathcal{Z} \DefinedAs \mathcal{Q} - \set{A}$
+\5 then $X_{\mathcal{Z}}$ is connected and hence by minimality of $\card{\mathcal{Q}}$, $\cap \mathcal{Z} \neq \emptyset$
+\6 in particular $\card{\cup \mathcal{Z}} \leq \Delta(G) + 1$
+\7 thus $\card{\cup Q} \leq \card{A - B} + \card{\cup \mathcal{Z}} \leq 2(\Delta(G) + 1) - \omega(G) < 2\omega(G)$ contradicting Hajnal
+
+\end{itemize}
+\end{frame}
+
+\section{Proving the main results}
+\subsection{Independent transversals}
+\begin{frame}{Independent transversals}
+\uncover<1->{
+\begin{defn}
+An \emph{independent transversal} of a partition $\set{V_1, \ldots, V_r}$ of a the vertex set of a graph $G$ is a stable set $\set{v_1, \ldots, v_r} \subseteq V(G)$ such that $v_i \in V_i$ for each $i$.
+\end{defn}}
+
+\uncover<2->{
+Alon \cite{alon1988linear} proved a simple sufficient condition probabilistically.
+}
+
+\uncover<3->{
+\begin{lem}[Alon 1988]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if $\card{V_i} \geq 2e\Delta(G)$ for each $i$.
+\end{lem}}
+
+\end{frame}
+
+\begin{frame}{Alon's proof}
+\begin{itemize}
+\1 put $\Delta = \Delta(G)$
+\2 without loss of generality we may suppose that $\card{V_i} = k \geq 2e\Delta$ for each $i$
+\3 randomly select one vertex from each $V_i$
+\4 for each edge $e$ of $G$, let $B_e$ be the event that both ends of $e$ get selected
+\5 $\fancy{P}(B_e) \leq k^{-2}$
+\6 each $B_e$ is independent of all but at most $d \DefinedAs 2k(\Delta - 1) < 2k\Delta - 1 \leq k^2e^{-1} - 1$ other events
+\7 since $e\fancy{P}(B_e)(d + 1) < 1$, the Lov{\'a}sz Local Lemma implies that the probability that none of the $B_e$ occur is positive
+\8 hence an independent transversal exists
+\end{itemize}
+\end{frame}
+
+\subsection{Putting it all together}
+\begin{frame}{Putting it all together}
+\uncover<1->{
+\begin{lem}[Rabern 2009]
+A graph satisfying $\omega \geq \frac{12}{13}(\Delta + 1)$ has a stable set hitting every maximum clique.
+\end{lem}}
+
+\begin{itemize}
+\2 let $G$ be a graph satisfying $\omega \geq \frac{12}{13}(\Delta + 1)$
+\3 let $\fancy{Q}$ be the maximum cliques in $G$ and $\fancy{Q}_1, \ldots, \fancy{Q}_t$ the vertex sets of the components of $X_{\fancy{Q}}$
+\4 put $K_i = \cap \fancy{Q}_i$
+\5 by Kostochka's lemma, $K_i \neq \emptyset$ for each $i$
+\6 in particular, $\card{\cup \fancy{Q}_i} \leq \Delta(G) + 1$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Putting it all together}
+\begin{itemize}
+\1 put $k \DefinedAs \min_i \card{K_i}$
+\2 by Hajnal's lemma, $k \geq 2\omega(G) - (\Delta(G) + 1) \geq \frac{11}{13}(\Delta + 1)$
+\3 consider the graph $H$ with vertex set $\cup_i K_i$ and edge set $\setbs{xy \in E(G)}{x \in K_i, y \in K_j, i \neq j}$
+\4 $\Delta(H) \leq \Delta(G) + 1 - k \leq \frac{2}{13}(\Delta(G) + 1)$
+\5 hence $k \geq \frac{11}{13}(\Delta(G) + 1) \geq \frac{4e}{13}(\Delta(G) + 1) \geq 2e\Delta(H)$
+\6 by Alon's lemma, we have an independent transversal through the $K_i$ and this is the desired stable set hitting every maximum clique
+\end{itemize}
+\end{frame}
+
+\subsection{Improving the constant}
+\begin{frame}{Improving the constant}
+\uncover<1->{
+In \cite{rabernhitting} we proved that $c = \frac34$ works in the same way as above using the following lemma of Haxell \cite{haxell2001note}.}
+
+\uncover<2->{
+\begin{lem}[Haxell 2001]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if $\card{V_i} \geq 2\Delta(G)$ for each $i$.
+\end{lem}}
+
+\begin{itemize}
+\3 Haxell's proof is elementary and uses some somewhat delicate induction
+\4 there are also proofs based on topological connectivity of the independent set complex
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Improving the constant}
+\uncover<1->{
+Building on observations by Aharoni, Berger and Ziv \cite{aharoni2007independent} about the proof of Haxell's lemma, King \cite{KingAXiv} proved the following lopsided version of Haxell's lemma.  Using this, he proved that $c = \frac23$ works.}
+
+\uncover<2->{
+\begin{lem}[King 2009]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if there exists a positive integer $k$ such that for 
+each $i$ we have $\min \set{k, \card{V_i} - k} \geq \max_{v \in V_i} d(v)$.
+\end{lem}}
+\end{frame}
+
+\begin{frame}{Tightness of King's lemma}
+\begin{itemize}
+\1 let $G_r$ be line graph of a $5$-cycle where each edge has multiplicity $r$; that is, $G_r \DefinedAs L(r \cdot C_5)$
+\2 then $\omega(G_r) = 2r = \frac23(\Delta(G_r) + 1)$ and no stable set hits every maximum clique
+\3 thus King's lemma is tight
+\end{itemize}
+
+\uncover<4->{
+PICTURE GOES HERE
+}
+\end{frame}
+
+\nocite{hajnaltheorem}
+\nocite{rabernhitting}
+\bibliographystyle{amsplain}
+\tiny
+\bibliography{GraphColoring}
+\end{document}

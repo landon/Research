@@ -1,0 +1,240 @@
+\chapter{INTRODUCTION}
+Graph coloring is instantiated by many partitioning problems that arise in
+practice.  Any time we encounter a relation between things of some sort and wish
+to group those things so that no group contains a related pair, we have to solve
+a graph coloring problem.  On some such encounters, the possible relations
+between our sorted things are restricted in a way that allows a small number of
+groups to be used.  This is good.  If the sort in question were
+\emph{a sort of tasks to be performed} and the relation were \emph{can't be
+performed at the same time}, then such a grouping, taken in some order, gives an
+order in which to perform the tasks.  Fewer groups means faster task completion.
+How many groups are needed for a certain sort of task collection?  How can we
+find a grouping with the minimum number of groups?  If we can't find such a
+grouping, how can we at least determine the number of groups in a minimum
+grouping?  This dissertation is primarily concerned with the first type
+of question---but an answer to the first type of question can have bearing
+on the other questions when coupled with a method of sorting.  When we move from
+the instantiation to abstract graph coloring we call the things \emph{vertices}
+and represent the relation of two vertices by an \emph{edge} between them.  The
+vertices together with the edges constitute a \emph{graph} and one of our
+groupings corresponds to a labeling of the vertices with $1, 2, \ldots, k$ so
+that there are no edges between vertices receiving the same label.  Such a labeling is called a
+\emph{coloring} or more precisely a \emph{$k$-coloring}. For a graph $G$ we
+write $\chi(G)$ for the minimum $k$ for which $G$ has a $k$-coloring---this
+corresponds to the number of groups in a minimum grouping.  This study concerns
+the relation of $\chi$ to other \emph{graph parameters}.  Our
+terminology and notation are basically standard (for all notation, see
+Appendix \ref{NotationAppendix}).
+
+\section{A short history}
+Here we collect statements of the results and conjectures that have bearing on this inquiry woven together with some historical remarks and our improvements.  
+The first non-trivial result about coloring graphs with around $\Delta$ colors is Brooks' theorem from 1941.
+
+\begin{thm}[Brooks \cite{brooks1941colouring}]
+Every graph with $\Delta \geq 3$ satisfies $\chi \leq \max\{\omega, \Delta\}$.
+\end{thm}
+
+In 1977, Borodin and Kostochka conjectured that a similar result holds for $\Delta - 1$ colorings.  Counterexamples exist showing that the $\Delta \geq 9$ condition is tight (see Figure \ref{fig:SmallCE}).
+\bigskip
+\input{SmallCE}
+\begin{conjecture}[Borodin and Kostochka \cite{borodin1977upper}]
+Every graph with $\Delta \geq 9$ satisfies $\chi \leq \max\{\omega, \Delta - 1\}$.
+\end{conjecture}
+
+Note that another way of stating this is that for $\Delta \geq 9$, the only obstruction to $(\Delta-1)$-coloring is a $K_\Delta$. In the same paper, Borodin and Kostochka prove the following weaker statement.
+
+\begin{thm}[Borodin and Kostochka \cite{borodin1977upper}]\label{BorodinKostochkaBK}
+Every graph satisfying $\chi \geq \Delta \geq 7$ contains a $K_{\floor{\frac{\Delta + 1}{2}}}$.
+\end{thm}
+
+The proof is quite simple once you have a decomposition lemma of Lov\'{a}sz from the 1960's \cite{lovasz1966decomposition}.
+
+\begin{lem}[Lov\'{a}sz
+\cite{lovasz1966decomposition}]\label{LovaszDecomposition} Let $G$ be a graph and $r_1, \ldots, r_k \in \IN$ such that $\sum_{i=1}^k r_i \geq \Delta(G) + 1 - k$. 
+Then $V(G)$ can be partitioned into sets $V_1, \ldots, V_k$ such that $\Delta(G[V_i]) \leq r_i$ for each $i \in \irange{k}$.
+\end{lem}
+\begin{proof}
+For a partition $P \DefinedAs \parens{V_1, \ldots, V_k}$ of $V(G)$ let
+			\[f(P) \DefinedAs \sum_{i=1}^k \parens{\size{G[V_i]} - r_i\card{V_i}}.\]
+
+\noindent Let $P \DefinedAs \parens{V_1, \ldots, V_k}$ be a partition of $V(G)$
+minimizing $f(P)$.  Suppose there is $i \in \irange{k}$ and $x \in V_i$ with
+$d_{V_i}(x) > r_i$. Since $\sum_{i=1}^k r_i \geq \Delta(G) + 1 - k$, there is
+some $j \neq i$ such that $d_{V_j}(x) \leq r_j$ and thus moving $x$ from $V_i$ to
+$V_j$ gives a new partition violating minimality of $f(P)$.  Hence
+$\Delta(G[V_i]) \leq r_i$ for each $i \in \irange{k}$.
+\end{proof}
+
+Now to prove Borodin and Kostochka's result, let $G$ be a graph with $\chi \geq
+\Delta \geq 7$ and use $r_1 \DefinedAs \ceil{\frac{\Delta - 1}{2}}$ and $r_2
+\DefinedAs \floor{\frac{\Delta - 1}{2}}$ in Lov\'{a}sz's lemma to get a
+partition $(V_1, V_2)$ of $V(G)$ with $\Delta(G[V_i]) \leq r_i$ for each $i \in
+\irange{2}$.  Since $r_1 + r_2 = \Delta - 1$ and $\chi \geq \Delta$, it
+must be that $\chi(G[V_i]) \geq r_i + 1$ for some $i \in \irange{2}$. But
+$\Delta \geq 7$, so $r_i \geq 3$ and hence by Brooks' theorem $G[V_i]$ contains
+a $K_{\floor{\frac{\Delta + 1}{2}}}$.
+
+A decade later, Catlin \cite{CatlinAnotherBound} showed that bumping the $\Delta(G) + 1$ to $\Delta(G) + 2$ allowed for shuffling vertices from one partition set to another and thereby 
+proving stronger decomposition results. A few years later Kostochka \cite{KostochkaTriangleFree} modified Catlin's algorithm to show that every triangle-free graph $G$ can be 
+colored with at most $\frac23 \Delta(G) + 2$ colors.  In \cite{rabern2010destroying}, we generalized Kostochka's modification to prove the following.
+
+\begin{replem}{DestroyLemma}[Rabern \cite{rabern2010destroying}]
+Let $G$ be a graph and $r_1, \ldots, r_k \in \IN$ such that $\sum_{i=1}^k r_i \geq \Delta(G) + 2 - k$. 
+Then $V(G)$ can be partitioned into sets $V_1, \ldots, V_k$ such that $\Delta(G[V_i]) \leq r_i$ and $G[V_i]$ contains no incomplete $r_i$-regular components for each $i \in \irange{k}$.
+\end{replem}
+
+Setting $k = \left \lceil \frac{\Delta(G) + 2}{3} \right \rceil$ and $r_i = 2$
+for each $i$ gives a slightly more general form of Kostochka's triangle-free
+coloring result.
+
+\begin{repcor}{TrianglesAndPaths}[Rabern \cite{rabern2010destroying}]
+The vertex set of any graph $G$ can be partitioned into $\left \lceil \frac{\Delta(G) + 2}{3} \right \rceil$ sets, each of which induces a disjoint union of triangles and paths.
+\end{repcor}
+
+For coloring, this actually gives the bound $\chi(G) \leq 2  \left \lceil \frac{\Delta(G) + 2}{3} \right \rceil$ for triangle free graphs.  
+To get $\frac23 \Delta(G) + 2$, just use $r_k = 0$ when $\Delta \equiv 2 (\text{mod } 3)$. 
+Similarly, for any $r \geq 2$, setting $k = \left \lceil \frac{\Delta(G) + 2}{r + 1} \right \rceil$ and $r_i = r$ for each $i$ gives the following.
+\begin{repcor}{NoKrPlusOne}[Rabern \cite{rabern2010destroying}]
+Fix $r \geq 2$.  The vertex set of any $K_{r + 1}$-free graph $G$ can be partitioned into $\left \lceil \frac{\Delta(G) + 2}{r + 1} \right \rceil$ sets each inducing an $(r-1)$-degenerate subgraph with maximum degree at most $r$.
+\end{repcor}
+In fact, we proved a lemma stronger than Lemma \ref{DestroyLemma} allowing us
+to forbid a larger class of components coming from any so-called \emph{$r$-permissible collection}. In section \ref{ShuffleHeightSection} we will explore a result that both simplifies and generalizes this latter result.
+
+Also in the 1980's, Kostochka proved the following using a complicated recoloring argument together with a technique for reducing $\Delta$ in a counterexample 
+based on hitting every maximum clique with an independent set.
+
+\begin{thm}[Kostochka \cite{kostochkaRussian}]\label{KostochkaBK}
+Every graph satisfying $\chi \geq \Delta$ contains a $K_{\Delta - 28}$.
+\end{thm}
+
+Kostochka \cite{kostochkaRussian} proved the following result which shows that
+graphs having clique number sufficiently close to their maximum degree contain
+an independent set hitting every maximum clique. In \cite{rabernhitting} we
+improved the antecedent to $\omega \geq \frac34(\Delta + 1)$.  Finally, King  \cite{KingHitting} made the result tight.
+
+\begin{replem}{KostochkaHitting}[Kostochka \cite{kostochkaRussian}]
+If $G$ is a graph satisfying $\omega \geq \Delta + \frac32 - \sqrt{\Delta}$,
+then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{replem}
+\begin{replem}{RabernHitting}[Rabern \cite{rabernhitting}]
+If $G$ is a graph satisfying $\omega \geq \frac34 (\Delta + 1)$,
+then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{replem}
+\begin{replem}{HittingMaxCliques}[King \cite{KingHitting}]
+If $G$ is a graph satisfying $\omega > \frac23 (\Delta + 1)$, then $G$ contains
+an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{replem}
+
+If $G$ is a vertex critical graph satisfying $\omega > \frac23 (\Delta + 1)$ and
+we expand the independent set $I$ produced by Lemma \ref{HittingMaxCliques} to a
+maximal independent set $M$ and remove $M$ from $G$, we see that $\Delta(G-M)
+\leq \Delta(G) - 1$, $\chi(G-M) = \chi(G) - 1$ and $\omega(G - M) = \omega(G) - 1$. Using this, the proof of many coloring results can be reduced to the case of the
+smallest $\Delta$ for which they work. In Chapter
+\ref{ReductionChapter}, we give three such applications.
+
+A little after Kostochka proved his bound, Mozhan \cite{mozhan1983}
+used a function minimization and vertex shuffling procedure different than, but related to Catlin's, to prove the following.  
+
+\begin{thm}[Mozhan \cite{mozhan1983}]\label{MozhanTwoThirdsBK}
+Every graph satisfying $\chi \geq \Delta \geq 10$ contains a $K_{\floor{\frac{2\Delta + 1}{3}}}$.
+\end{thm}
+
+Finally, in his dissertation Mozhan proved the following.  We don't know the
+method of proof as we were unable to obtain a copy of his dissertation. 
+However, we suspect the method is a more complicated version of the above proof.
+
+\begin{thm}[Mozhan]\label{MozhanBK}
+Every graph satisfying $\chi \geq \Delta \geq 31$ contains a $K_{\Delta - 3}$.
+\end{thm}
+
+In \cite{rabern2010a}, we used part of Mozhan's method to prove the following result.  For a graph $G$ let $\mathcal{H}(G)$ be the subgraph of $G$ induced on the vertices of degree at least $\chi(G)$.
+
+\begin{thm}[Rabern \cite{rabern2010a}]\label{TheoremM}
+$K_{\chi(G)}$ is the only vertex critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ and $\omega(\mathcal{H}(G)) \leq \left \lfloor \frac{\Delta(G)}{2} \right \rfloor - 2$.
+\end{thm}
+
+Setting $\omega(\mathcal{H}(G)) = 1$ proved a conjecture of Kierstead and Kostochka \cite{kierstead2009ore}.
+
+\begin{cor}[Rabern \cite{rabern2010a}]\label{CorollaryN}
+$K_{\chi(G)}$ is the only vertex critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ such that $\mathcal{H}(G)$ is edgeless.
+\end{cor}
+
+In joint work with Kostochka and Stiebitz \cite{krs_one}, we generalized and improved this result, again using Mozhan's technique.  
+In section \ref{ShuffleLowsSection}, we will improve these results further and simplify the proofs by using Catlin's vertex shuffling algorithm in place of Mozhan's.
+
+In 1999, Reed used probabilistic methods to prove that the Borodin-Kostochka conjecture holds for graphs with very large maximum degree.
+
+\begin{thm}[Reed \cite{reed1999strengthening}]\label{ReedBK}
+Every graph satisfying $\chi \geq \Delta \geq 10^{14}$ contains a $K_\Delta$.
+\end{thm}
+
+A lemma from Reed's proof of the above theorem is generally useful.
+
+\begin{lem}[Reed \cite{reed1999strengthening}]\label{ReedsLemma}
+Let $G$ be a critical graph satisfying $\chi = \Delta \geq 9$ having the minimum number of vertices.  If $H$ is a $K_{\Delta - 1}$ in $G$, then any vertex in $G - H$ has at most $4$ neighbors in $H$.  In particular, the $K_{\Delta - 1}$'s in $G$ are pairwise disjoint.
+\end{lem}
+
+In Chapter \ref{APrioriWowChapter}, we improve this lemma by showing that under
+the same hypotheses, any vertex in $G - H$ has at most $1$ neighbor in $H$.  Moreover, we lift the result out of the context of a minimal counterexample to graphs satisfying a certain criticality condition---we refer to such graphs as mules.  This allows meaningful results to be proved for values of $\Delta$ less than $9$.  Also in Chapter \ref{APrioriWowChapter}, we prove that the following, prima facie weaker, conjecture is equivalent to the Borodin-Kostochka conjecture.
+
+\begin{conjecture}[Cranston and Rabern \cite{mules}] 
+If $G$ is a graph with $\chi = \Delta = 9$, then $\join{K_3}{\overline{K}_6}
+\subseteq G$.
+\end{conjecture}
+
+At the core of these results are the list coloring lemmas proved in section
+\ref{ListColoringChapter}.  There we classify graphs of the form $\join{A}{B}$
+that are not $f$-choosable where $f(v) \DefinedAs d(v) - 1$ for each vertex
+$v$.  In Chapter \ref{ClawFreeChapter} we use these list coloring results
+together with Chudnovsky and Seymour's decomposition theorem for claw-free graphs \cite{chudnovsky2005structure} and our proof in \cite{rabern2011strengthening} of the Borodin-Kostochka conjecture for line graphs of multigraphs to prove the conjecture for claw-free graphs.
+
+\begin{thm}[Cranston and Rabern \cite{cranstonrabernclaw}]
+Every claw-free graph with $\Delta\geq 9$ satisfies $\chi \leq \max\set{\omega, \Delta - 1}$.
+\end{thm}
+
+In Chapter \ref{StrongColoringChapter}, we adapt a recoloring trick
+previously used for strong coloring and prove the following.
+
+\begin{repcor}{TwoThirdsCliqueCor}
+Every graph with $\chi \geq \Delta \geq 9$ such that every
+vertex is in a clique on $\frac23\Delta + 2$ vertices contains $K_\Delta$.
+\end{repcor}
+
+Using this we show that to prove the Borodin-Kostochka conjecture it is enough
+to prove it for irregular graphs; more precisely, we prove the following.
+
+\begin{repthm}{IrregularReduction}
+Every graph satisfying $\chi \geq \Delta = k \geq 9$ either
+contains $K_k$ or contains an irregular critical subgraph satisfying $\chi
+= \Delta = k - 1$.
+\end{repthm}
+
+In particular, the Borodin-Kostochka conjecture would follow from the following.
+This is at least somewhat plausible since the only known critical (or connected
+even) counterexample to Borodin-Kostochka for $\Delta = 8$ is regular (see
+Figure \ref{fig:M_8}).
+
+\begin{repconjecture}{EightRegular}
+Every critical graph satisfying $\chi \geq \Delta = 8$ is regular.
+\end{repconjecture}
+
+As our final application of the recoloring trick, we prove the following bounds on the chromatic number.  The first generalizes the result of Beutelspacher and Hering \cite{beutelspacher1984minimal} that the Borodin-Kostochka conjecture holds for graphs with independence number at most two.  This result was generalized in another direction in \cite{cranstonrabernclaw} (also Chapter \ref{ClawFreeChapter}) where the conjecture was proved for claw-free graphs.
+
+\begin{repthm}{AlphaBound}
+Every graph satisfies $\chi \leq \max\set{\omega, \Delta - 1, 4\alpha}$.
+\end{repthm}
+
+The second bound shows that the Borodin-Kostochka conjecture holds for graphs with maximum degree on the order of the square root of their order.  This improves on prior bounds of $\Delta > \frac{n + 1}{2}$ from Beutelspacher and Hering \cite{beutelspacher1984minimal} and $\Delta > \frac{n-6}{3}$ of Naserasr \cite{naserasr}.
+
+\begin{repthm}{OrderBound}
+Every graph satisfies $\chi \leq \max\set{\omega, \Delta - 1, \ceil{\frac{15 + \sqrt{48n + 73}}{4}}}$.
+\end{repthm}
+
+Borodin and Kostochka also conjectured \cite{PersonalComms} that
+their conjecture holds for list coloring. In Chapter \ref{ChoiceLargeDeltaChapter}, we prove that this conjecture holds for large $\Delta$.
+
+\begin{conjecture}[Borodin and Kostochka \cite{PersonalComms}]\label{BKList}
+Every graph with $\Delta \geq 9$ satisfies $\chi_l \leq \max\{\omega, \Delta -
+1\}$.
+\end{conjecture}
+

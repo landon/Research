@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\im}{\operatorname{im}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{Recoloring trees}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{The trees}
+For a coloring $\pi$ of a graph $G$, put $I_\gamma \DefinedAs \pi^{-1}(\gamma)$ for each $\gamma \in \im(\pi)$.  Also, for different $\alpha, \beta \in \im(\pi)$, put $G_{\alpha, \beta} \DefinedAs G\brackets{I_\alpha \cup I_\beta}$.
+
+Let $(T, r)$ be a tree in with root $r$.  We think of the edges of $T$ as directed away from the root. We write $C(v)$ for the children (out-neighbors) of $v \in V(T)$ and for $v \neq r$ we write $P(v)$ for the parent (unique in-neigbor) of $v$ in $T$. To enable uniform statements we set $P(r) \DefinedAs \bot$ and extend all functions $f$ to have $f(\bot) = \bot$ where $\bot$ is outside the universe of our objects. Let $G$ be a graph and $(T, r)$ an induced tree in $G$. For a coloring $\pi$ of $G$, $(T, r)$ is $\pi$-normal if 
+\begin{enumerate}
+\item $N_T(v) = \pi^{-1}(\pi(C(v))) \cap N_G(v)$ for each $v \in V(T)$; and
+\item for different $\alpha, \beta \in \im(\pi)$ and any maximal directed path $x_1x_2\cdots x_s$ with $s \geq 3$ in $T \cap G_{\alpha, \beta}$, we have $\card{C(x_i) \cap G_{\alpha, \beta}} = 1$ for $i \in \irange{s-2}$.
+\end{enumerate}
+
+This definition needs some explanation.  Our aim is to recolor the vertices of $T$ so that $\card{I_{\pi(r)}}$ decreases without using more colors. To do this, we will try to repeatedly recolor leaves that have no neighbor in some color class until we have recolored enough of $T$ to recolor $r$. Condition (1) means that if $v$ has a child in $T$ of color $\gamma$, then all of $v$'s neighbors in $G$ of color $\gamma$ are also neighbors of $v$ in $T$.  That is, $T$ encodes all the information about what vertices need to be recolored for $v$ to be colored $\gamma$.  Condition (2) prevents us from getting in our own way as we recolor vertices having the same color as their grandparents.
+
+\subsection{An ordering on rooted trees}
+Let $(T,r)$ be a tree with root $r$.  A \emph{build order} of $(T,r)$ is a tuple $(v_1,A_1), \ldots (v_s, A_s)$ where:
+\begin{enumerate}
+\item $v_1 = r$; and
+\item $A_i \subseteq C(v_i)$ for each $i \in \irange{s}$; and
+\item $A_i \neq \emptyset$ for $i \in \irange{s}$ and $A_i \cap A_j = \emptyset$ for $j \neq i$; and
+\item $T\brackets{\set{r} \cup \bigcup_{i \in \irange{k}} A_i}$ is connected for each $k \in \irange{s}$; and
+\item $V(T) = \set{r} \cup \bigcup_{i \in \irange{s}} A_i$.
+\end{enumerate}
+
+The \emph{profile} $p(B)$ of a build order $B \DefinedAs (v_1,A_1), \ldots (v_s, A_s)$ is $(\card{A_1}, \ldots, \card{A_s})$. We use the partial order on all triples $(T, r, B)$ induced by the Kleene-Brouwer order on the profiles of their build orders; that is, $(T, r, B) < (T', r', B')$ iff $p(B')$ is a proper prefix of $p(B)$ or there is $k$ such that $(a_1, \ldots, a_{k-1}, a_k)$ is a prefix of $p(B)$, $(a_1, \ldots, a_{k-1}, a'_k)$ is a prefix of $B'$ and $a_k < a'_k$.
+
+In our applications all of our trees will be induced subtrees of a fixed finite graph and so there will be only finitely many triples $(T, r, B)$ under consideration; in particular, the ordering is well-founded and we can do induction on the triples.
+
+\subsection{Recoloring}
+Let $G$ be a graph, $\pi$ a coloring of $G$ and and $(T, r)$ a $\pi$-normal induced tree in $G$.  A build order $B \DefinedAs (v_1,A_1), \ldots (v_s, A_s)$ of $(T,r)$ \emph{respects} $\pi$ if for each $i \in \irange{s}$ we have $A_i = C(v_i) \cap I_c \neq \emptyset$ for some $c \in \im(\pi)$.  Call a triple $(T, r, B)$ $\pi$-normal if $(T, r)$ is $\pi$-normal and $B$ is a build order of $(T,r)$ respecting $\pi$. Fix a $\pi$-normal triple $(T,r, B)$.  
+
+Suppose we have $v \in V(T)$ and $c_v \in \im(\pi) - \set{\pi(r), \pi(v)}$ such that $N_G(v) \cap I_{c_v} \subseteq \set{P(v)}$.  We call the following operation $(v\Rightarrow c_v)$-recoloring. Let $x_1x_2\cdots x_s$ be the maximal path in $T$ where $x_s = v$ and $C(x_i) \cap I_{\pi(x_{i+1})} = \set{x_{i+1}}$ for $2 \leq i \leq s-1$.  Note that, by maximality, if $C(x_1) \cap I_{\pi(x_{2})} = \set{x_{2}}$, then $x_1 = r$; when this happens we say we have \emph{finished}.  Let $\pi'$ be the coloring obtained from $\pi$ by coloring $v$ with $c_v$ and $x_i$ with $\pi(x_{i+1})$ for $2 \leq i \leq s-1$ and if we have finished, coloring $x_1$ with $\pi(x_2)$.  Since $T$ is induced, it is clear that $\pi'$ is a proper coloring using at most as many colors as $\pi$.  When we have finished we succeed in recoloring $r$ since $x_1=r$.  Otherwise, let $T'$ be the component of $x_1$ in $T-x_2$.  Again since $T$ is induced, it is clear that $T'$ is $\pi'$-normal.  Let $k$ be such that $x_2 \in A_k$.  Then $B'\DefinedAs ((A_1, v_1),\ldots, (A_k-x_2, v_k)$ is a build order of $(T', r)$ since $\card{A_k} = \card{C(x_1) \cap I_{\pi(x_{2})}} \geq 2$.  Then $(T', r, B')$ is $\pi$-normal and $(T', r, B') < (T, r, B)$.
+
+\begin{defn}
+For each graph $G$, $r \in V(G)$ and $k \in \IN^+$, let $\Gamma(G,r,k)$ be all triples $(T,r,B)$ that are $\pi$-normal where $\pi$ is a $k$-coloring of $G$.
+\end{defn}
+
+\begin{lem}
+Let $G$ be a graph, fix $r \in V(G)$ and $k \in \IN^+$. If $(T, r, B) \in \Gamma(G,r,k)$ is minimal, then either:
+\begin{enumerate}
+\item there is $v \in V(T)$ and $c_v \in \im(\pi) - \set{\pi(r), \pi(v)}$ with $N_G(v) \cap I_{c_v} \subseteq \set{P(v)}$ such that $(v\Rightarrow c_v)$-recoloring finishes; or 
+\item for every $v \in V(T)$ and $c_v \in \im(\pi) - \set{\pi(r), \pi(v)}$ we have $N_G(v) \cap I_{c_v} \not \subseteq \set{P(v)}$; moreover, if $c_v \not \in \pi(C(v))$ then either:
+	\begin{enumerate}
+	\item $V(T) \cup N_G(v) \cap I_{c_v}$ does not induce a tree in $G$; or
+	\item $c_v = \pi(P(v))$ and $\card{N_G(v) \cap I_{c_v}} \geq 3$.
+	\end{enumerate} 
+\end{enumerate}
+\end{lem}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

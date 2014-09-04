@@ -1,0 +1,118 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\title{Shuffle}
+\author{}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}{\fancy{C}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\begin{document}
+\maketitle
+
+Call multigraph \emph{standard} if it is loopless with maximum multiplicity at most $2$.
+
+\begin{defn}
+For $k \ge 1$, a standard multigraph is $k$-bad if
+\begin{itemize}
+\item $k = 1$ and $G$ is a simple cycle; or
+\item $k = 2$ and $G$ is an odd cycle with all multiplicities equal to $2$; or
+\item $G$ is a $K_{k+1}$ with all multiplicities $2$; or
+\item $G$ is $K_{\Delta(G) + 1}$.
+\end{itemize}
+\end{defn}
+
+\begin{lem}
+Let $G$ be a connected standard multigraph. If $\Delta(G) \le 2k$ and $G$ is not $k$-bad, then $V(G)$ can be partitioned into $k$ (possibly empty) sets $V_1, \ldots, V_k$ such that $G[V_i]$ induces a disjoint union of simple paths.
+\end{lem}
+\begin{proof}
+Choose a partition $P = \{P_1, \ldots, P_k\}$ of $V(G)$ 
+\begin{enumerate}
+\item minimizing $\sum_i \size{G[P_i]}$,
+\item subject to (1), minimizing the total number of cycles within parts.
+\end{enumerate}
+
+For all $i \in \irange{k}$, we have $\Delta(G[P_i]) \le 2$ since if $v \in P_i$ has degree $>2$ in $P_i$ then it has degree $<2$ in some other $P_j$, moving $v$ to $P_j$ violates (1).
+
+We are done unless some $G[P_i]$ contains a cycle, so by symmetry we may assume that $G[P_1]$ contains a cycle $C_0$.  Put $P^0 = P$ and choose $v_0$ on $C_0$. Then, by the minimization in (1), $v_0$ has degree $2$ is every other part.  So, we can move $v_0$ to any other part and preserve (1). Let $P^1$ be the partition formed by moving $v_0$ to $P^0_1$.  Since moving $v_0$ destroys $C_0$, it must be that $v_0$ is in a cycle component in $G[P^1_1]$, call this $C_1$.  Now pick $v_1 \in P^1_1$ adjacent to $v_0$ and move it to $P^1_0$ to form $P^2$.  Let $C_2$ be the created cycle.  Since $G$ is finite, continuing this way, there is a least $t$ such that for some $s < t$ we have $C_s - v_s = C_t - v_{t-1}$.
+
+By symmetry, we may assume that $C_s \subseteq G[P^s_0]$.  Let $v_sx_s$ and $v_sy_s$ be edges in $G[P^s_0]$ (where we could have $x_s = y_s$ for a digon). Then, from the cycle in $G[P^t_0]$, there must also be edges $v_{t-1}x_s$ and $v_{t-1}y_s$.  Let $v_{t-2}v_{t-1}$ and $v_{t-2}x_{t-1}$ be edges in $G[P^{t-1}_1]$. In $P^s$, consider moving $x_s$ to $P^s_1$.  Then, there must be edges $x_sv_{t-1}$ and $x_sx_{t-1}$.
+
+Suppose $C_{t-1}$ is a digon.  Then $v_{t-1} = x_{t-1}$.  But then the edge $v_{t-1}x_s$ is a double edge and hence $x_s = y_s$ showing that $C_s$ is a digon as well.  Now consider the fact that the sequence $P^s, \ldots, P^t$ is cyclical, so we can start it from any point and even run it in reverse.  This shows that either all or none of $C_s, \ldots, C_t$ are digons.  When they are all digons, we have an odd cycle with all edges doubled.  In particular, $s = 0$.
+
+Now, suppose $C_{t-1}$ is not a digon.  Further, suppose $C_{t-1}$ is not a triangle and let $y_{t-1}$ be a neighbor of $x_{t-1}$ different from $v_{t-2}$ and $v_{t-1}$. In $P^t$, move $x_s$ to $P^t_1$.  Since we have the edge $x_sx_{t-1}$, we see that $x_{t-1}$ has different neighbors $v_{t-2}, y_{t-1}$ and $x_s$, so there is some part we can move $x_{t-1}$ to violate (1).  Hence $C_{t-1}$ is a triangle.  As before, we can start the sequence $P^s, \ldots, P^t$ anywhere to conclude that each of $C_s, \ldots, C_t$ is a triangle. Since $x_sx_{t-1}$ is an edge, moving $x_s$ to $P^t_1$ shows that $x_sv_{t-2}$ is an edge.  Similarly, $y_sv_{t-2}$ is an edge.  But the only way for that to happen is for $v_s$ to be $v_{t-2}$.  So $t = s + 2$.  Suppose $s > 0$, then by symmetry, we may assume that $v_{s-1} = x_s$.  But then $x_s$ has neighbors in two different components in $P^s_1$, so moving $x_s$ to $P^s_1$ does not create a cycle, violating (2).  Hence $s = 0$, $C_0$ is a triangle joined to $C_1 - v_0$ which is a $K_2$.
+
+So, the possible sequences come in two types, digon odd cycles or length one joins.  Suppose $C_0$ is not a digon.  Then applying the above argument to each part $P_1, \ldots, P_k$, get that $C_0$ is a triangle joined to a $K_2$ in each of these parts.  But we can move a vertex from $C_0$ to $P_1$ to form a triangle there and run the same argument to conclude that the $K_2$ in $P_1$ is joined to the rest of the $K_2$'s, playing this game for all parts, we conclude that all the $K_2$'s are joined to each other giving a $K_{\Delta(G) + 1}$.
+
+Instead, suppose $C_0$ is a digon and let $v$ be on $C_0$.  Then, by the above argument, moving $v$ to any other part, we must create a digon.  But, we can repeat this argument after moving $v$ to any other part with $v$'s neighbors and all their neighbors.  We conclude that $v$'s component has all doubled edges.  Since $G$ is connected, $G$ has all doubled edges.  Since $\Delta(G) \le 2k$, Brooks' theorem gives a $k$-coloring of $G$ unless $G$ is a $K_{k+1}$ with all multiplicities $2$.
+\end{proof}
+
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

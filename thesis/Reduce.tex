@@ -1,0 +1,250 @@
+\chapter{REDUCING MAXIMUM DEGREE}\label{ReductionChapter}
+
+\begin{center}
+\emph{Some of the material in this chapter appeared in
+\cite{rabernhitting}.}
+\end{center}
+
+\section{Hitting all maximum cliques}
+As part of his proof that every graph with $\chi \geq \Delta$ contains a $K_{\Delta - 28}$, Kostochka proved the following lemma.
+
+\begin{lem}[Kostochka \cite{kostochkaRussian}]\label{KostochkaHitting}
+If $G$ is a graph satisfying $\omega \geq \Delta + \frac32 - \sqrt{\Delta}$, then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+To talk about the proof we first need a definition.
+
+\begin{CliqueGraph}
+Let $G$ be a graph. For a collection of cliques $\mathcal{Q}$ in $G$, let $X_{\mathcal{Q}}$ be the intersection graph of $\mathcal{Q}$.  That is, the vertex set of $X_{\mathcal{Q}}$ is $\mathcal{Q}$ and there is an edge between $Q_1 \neq Q_2 \in \mathcal{Q}$ iff $Q_1$ and $Q_2$ intersect.
+\end{CliqueGraph}
+
+Kostochka's proof proceeded in two stages.  First show that the vertices in each component of the clique graph have a large intersection.  Then find an independent transversal of these intersections.  Such a transversal is an independent set hitting every maximum clique.  Kostochka used a custom method to find a transversal.  In \cite{rabernhitting}, we applied the following lemma of Haxell \cite{haxell2001note} (proved long after Kostochka's paper) to find the independent transversal.
+
+\begin{lem}\label{HaxellLemma}
+Let $H$ be a graph and $V_1 \cup \cdots \cup V_r$ a partition of $V(H)$. Suppose that $\card{V_i} \geq 2\Delta(H)$ for each $i \in \irange{r}$. Then $H$ has an independent set $\set{v_1, \ldots, v_n}$ where $v_i \in V_i$ for each $i \in \irange{r}$.
+\end{lem}
+Finding the independent transversal using this lemma gives the following.
+
+\begin{lem}[Rabern \cite{rabernhitting}]\label{RabernHitting}
+If $G$ is a graph satisfying $\omega \geq \frac{3}{4}\parens{\Delta + 1}$, then $G$ contains an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+Aharoni, Berger and Ziv \cite{aharoni2007independent} showed that Haxell's proof actually gets more than Lemma \ref{HaxellLemma}.  
+From their extension, King \cite{KingHitting} proved the following lopsided version of Haxell's lemma.
+
+\begin{lem}[King \cite{KingHitting}]\label{LopsidedISR}
+Let $G$ be a graph partitioned into $r$ cliques $V_1, \ldots, V_r$.  If there exists $k \geq 1$ such that for each $i$ every $v \in V_i$ has at most $\min\{k, \card{V_i} - k\}$ neighbors outside $V_i$, then $G$ contains an independent set with $r$ vertices.
+\end{lem}
+
+Using this gives the best possible form of the lemma.
+
+\begin{lem}[King \cite{KingHitting}]\label{HittingMaxCliques}
+If $G$ is a graph satisfying $\omega > \frac23 (\Delta + 1)$, then $G$ contains
+an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+\subsection{A simple proof of Kostochka's first stage}
+The proofs for Kostochka's first stage can be made much simpler than the originals and we do so here.
+
+\begin{lem}[Hajnal \cite{HajnalSaturation}]\label{HajnalLemma}
+Let $G$ be a graph and $\mathcal{Q}$ a collection of maximum cliques in $G$. Then
+\[\card{\bigcup \mathcal{Q}} + \card{\bigcap \mathcal{Q}} \geq 2\omega(G).\]
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and let $\mathcal{Q}$ be a counterexample with $|\mathcal{Q}|$ minimal.  Put $r \DefinedAs \card{\mathcal{Q}}$ and say $\mathcal{Q} = \set{Q_1, \ldots, Q_r}$.  
+
+Consider the set $W \DefinedAs (Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i$.  Plainly, $W$ is a clique.  Thus we may derive a contradiction as follows.
+\begin{align*}
+\omega(G) &\geq |W| \\
+&= \card{(Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i} \\
+&= \card{Q_1 \cap \bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i \cap \bigcup_{i=2}^r Q_i} \\
+&= \card{Q_1} +\card{\bigcup_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&= \omega(G) +\card{\bigcup_{i=2}^r Q_i} + \card{\bigcap_{i=2}^r Q_i} - \card{\bigcup_{i=1}^r Q_i} - \card{\bigcap_{i=1}^r Q_i} \\
+&\geq \omega(G) + 2\omega(G) - \left(\card{\bigcup_{i=1}^r Q_i} + \card{\bigcap_{i=1}^r Q_i}\right) \\
+& > \omega(G).
+\end{align*}
+\end{proof}
+
+\begin{lem}[Kostochka \cite{kostochkaRussian}]\label{KostochkaCliqueGraph}
+If $\fancy{Q}$ is a collection of maximum cliques in a graph $G$ with 
+$\omega(G) > \frac23 (\Delta(G) + 1)$ such that $X_{\fancy{Q}}$ is connected, then $\cap \fancy{Q} \neq \emptyset$. 
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $\fancy{Q} \DefinedAs \set{Q_1, \ldots, Q_r}$ minimizing $r$. Plainly, $r \geq 3$. Let $A$ be a noncutvertex in $X_{\fancy{Q}}$ and $B$ a neighbor of $A$. Put $\fancy{Z} \DefinedAs Q - \set{A}$. Then $X_{\fancy{Z}}$ is connected and hence by minimality of $r$, $\cap \fancy{Z} \neq \emptyset$. In particular, $\card{\cup \fancy{Z}} \leq \Delta(G) + 1$. Hence $\card{\cup \fancy{Q}} \leq \card{\cup \fancy{Z}} + \card{A - B} \leq 2(\Delta(G) + 1) - \omega(G) < 2\omega(G)$. This contradicts Hajnal's lemma.
+\end{proof}
+
+With a little more work we can prove the following generalization of Kostochka's lemma which has a Helly feel.  
+We won't use this result here, but it has some independent interest.  The
+following example from King \cite{KingPersonalKostochkaGeneralized} shows that
+the condition $\omega > \frac{k+1}{2k+1} (\Delta + 1)$ is tight.  Take
+$\join{K_{k+1}}{E_{k+1}}$ and remove a perfect matching between $K_{k+1}$ and
+$E_{k+1}$ to get a graph $H$.  Then $\omega(H) = k + 1$ and $\Delta(H) = 2k$ and
+thus $\omega(H) = \frac{k+1}{2k+1} (\Delta(H) + 1)$.  Taking $\mathcal{Q}$ to be
+all $(k+1)$-cliques containing a vertex in the $E_{k+1}$, we see that $\cap
+\mathcal{Q} = \emptyset$ but any $k$ elements of $\mathcal{Q}$ have common
+intersection.
+
+\begin{lem}\label{KostochkaGeneralized}
+Fix $k \geq 2$. Let $G$ be a graph satisfying $\omega > \frac{k+1}{2k+1} (\Delta + 1)$.  
+If $\mathcal{Q}$ is a collection of maximum cliques in $G$ such that any $k$ elements of $\mathcal{Q}$ have common intersection, then $\cap \mathcal{Q} \neq \emptyset$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $\fancy{Q} \DefinedAs \set{Q_1, \ldots, Q_r}$ minimizing $r$. Plainly, $r \geq k + 1$.  Put $\mathcal{Z}_i \DefinedAs \mathcal{Q} - \set{Q_i}$.  Then any $k$ elements of $\mathcal{Z}_i$ have common intersection and hence by minimality $\cap \mathcal{Z}_i \neq \emptyset$. In particular $\cup \mathcal{Z}_i$ contains a universal vertex and thus $\card{\cup \mathcal{Z}_i} \leq \Delta(G) + 1$. Now, by Hajnal's Lemma, $\card{\cap \mathcal{Z}_i} \geq 2\omega(G) - (\Delta(G) + 1) > 2\omega(G) - \frac{2k+1}{k+1} \omega(G) = \frac{1}{k+1}\omega(G)$.
+
+Put $m \DefinedAs \min_i \card{Q_i - \cup  \mathcal{Z}_i}$.  Note that the $\cap Z_i$ are pairwise disjoint since $\cap \mathcal{Q} = \emptyset$. Thus $\cup \mathcal{Q}$ contains the disjoint union of the $\cap Z_i$ as well as at least $m$ vertices in each clique outside the rest. In particular,
+
+\[\card{\cup \mathcal{Q}} \geq \frac{1}{k+1}\omega(G) r + mr \geq \omega(G) + (k+1)m.\]
+
+\noindent In addition, 
+
+\[\card{\cup \mathcal{Q}} \leq m + \Delta(G) + 1.\]
+
+\noindent Hence,
+
+\[m \leq \frac{\Delta(G) + 1 - \omega(G)}{k} < \frac{1}{k+1}\omega(G).\]
+
+\noindent Finally,
+
+\[\card{\cup \mathcal{Q}} \leq m + \Delta(G) + 1 < \frac{1}{k+1}\omega(G) + \frac{2k+1}{k+1}\omega(G) = 2\omega(G).\]
+
+\noindent Applying Hajnal's Lemma gives a contradiction.
+\end{proof}
+
+\subsection{Independent transversals}
+In \cite{haxell2006odd}, Haxell and Szab{\'o} develop a technique for
+dealing with independent transversals.  In \cite{haxell2011forming}, Haxell used
+this technique to give simpler proof of her Lemma. The proof gives a bit more
+as the following lemma shows.  This is just slightly more general than
+the extension given in \cite{aharoni2007independent} by Aharoni, Berger and
+Ziv and either gives enough to prove King's lopsided version of Haxell's lemma.  We write $\funcsurj{f}{A}{B}$ for a surjective function from $A$ to $B$.  Let $G$ be a graph.  For a $k$-coloring $\funcsurj{\pi}{V(G)}{\irange{k}}$ of $G$ and a subgraph $H$ of $G$ we say that $I \DefinedAs \set{x_1, \ldots, x_k} \subseteq V(H)$ is an $H$-independent transversal of $\pi$ if $I$ is an independent set in $H$ and $\pi(x_i) = i$ for all $i \in \irange{k}$.
+
+\begin{lem}\label{BaseTransversalLemma}
+Let $G$ be a graph and $\funcsurj{\pi}{V(G)}{\irange{k}}$ a proper $k$-coloring of
+$G$.  Suppose that $\pi$ has no $G$-independent transversal, but for every $e
+\in E(G)$, $\pi$ has a $(G-e)$-independent transversal. Then for every $xy \in
+E(G)$ there is $J \subseteq \irange{k}$ with $\pi(x), \pi(y) \in J$ and an 
+induced matching $M$ of $G\brackets{\pi^{-1}(J)}$ with $xy \in M$ such that
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $G\brackets{\pi^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\pi(u) = a$ and $\pi(v) = b$ is a (simple) tree.  In
+  particular $\card{M} = \card{J} - 1$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $G$ with
+$\funcsurj{\pi}{V(G)}{\irange{k}}$ so as to minimize $k$.  Let $xy \in E(G)$.
+By assumption $\pi$ has a $(G-xy)$-independent transversal $T$.  Note that we
+must have $x,y \in T$ lest $T$ be a $G$-independent transversal of $\pi$.
+
+By symmetry we may assume that $\pi(x) = k-1$ and $\pi(y) = k$. Put $X
+\DefinedAs \pi^{-1}(k-1)$, $Y \DefinedAs \pi^{-1}(k)$ and $H \DefinedAs G -
+N(\set{x, y}) - E(X,Y)$. Define $\func{\zeta}{V(H)}{\irange{k-1}}$ by $\zeta(v)
+\DefinedAs \min\set{\pi(v), k-1}$. Note that since $x,y \in T$, we have
+$\card{\zeta^{-1}(i)} \geq 1$ for each $i \in \irange{k-2}$.  Put $Z \DefinedAs
+\zeta^{-1}(k-1)$. Then $Z \neq \emptyset$ for otherwise $M \DefinedAs \set{xy}$
+totally dominates $G[X \cup Y]$ giving a contradiction.
+
+Suppose $\zeta$ has an $H$-independent transversal $S$.  Then we have $z \in S
+\cap Z$ and by symmetry we may assume $z \in X$.  But then $S \cup \set{y}$ is
+a $G$-independent transversal of $\pi$, a contradiction.
+
+Let $H' \subseteq H$ be a minimal spanning subgraph such that $\zeta$ has no
+$H'$-independent transversal.  Now $d(z) \geq 1$ for each $z \in Z$ for
+otherwise $T - \set{x,y} \cup \set{z}$ would be an $H'$-independent transversal
+of $\zeta$.  Pick $zw \in E(H')$.  By minimality of $k$, we have $J \subseteq
+\irange{k-1}$ with $\zeta(z), \zeta(w) \in J$ and an induced matching $M$ of
+$H'\brackets{\zeta^{-1}(J)}$ with $zw \in M$ such that
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $H'\brackets{\zeta^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\zeta(u) = a$ and $\zeta(v) = b$ is a (simple) tree.
+\end{enumerate}
+
+Put $M' \DefinedAs M \cup \set{xy}$ and $J' \DefinedAs J \cup \set{k}$.
+Since $H'$ is a spanning subgraph of $H$, $\bigcup M$ totally dominates
+$H\brackets{\zeta^{-1}(J)}$ and hence $\bigcup M'$ totally dominates
+$G\brackets{\pi^{-1}(J')}$.  Moreover, the multigraph in (2) for $M'$ and $J'$
+is formed by splitting the vertex $k-1 \in J$ in two vertices and adding an edge
+between them and hence it is still a tree.  This final contradiction proves the
+lemma.
+\end{proof}
+
+
+\begin{replem}{LopsidedISR}[King \cite{KingHitting}]
+Let $H$ be a graph partitioned into $k$ cliques $V_1, \ldots, V_k$.  If there
+exists $r \geq 1$ such that for each $i$ every $v \in V_i$ has at most
+$\min\set{r, \card{V_i} - r}$ neighbors outside $V_i$, then $G$ contains an
+independent set with $k$ vertices.
+\end{replem}
+\begin{proof}
+Suppose not and choose a counterexample $H$ minimizing $\size{H}$.  Remove all
+the edges from each $V_i$ to form a graph $G$. Pick $xy \in E(G)$ and apply
+Lemma \ref{BaseTransversalLemma} on $xy$ with $\funcsurj{\pi}{V(G)}{\irange{r}}$ given by $\pi(V_i) = i$ to get the guaranteed $J \subseteq \irange{r}$ and induced matching $M$.  Note that by our assumption,
+the ends of an edge from $V_i$ to $V_j$ together dominate at most $\min\set{|V_i|, |V_j|}$
+vertices.  Let $T$ be the tree with vertex set $J$ and an edge between $a, b \in
+J$ for each $uv \in M$ with $\pi(u) = a$ and $\pi(v) = b$.  Choose a root $c$ of
+$T$. Traversing $T$ in leaf-first order and for each leaf $a$ with
+parent $b$ picking $|V_a|$ from $\min\set{|V_a|, |V_b|}$ we get that the vertices in $M$ together dominate
+at most $\sum_{i \in J - c} \card{V_i}$ vertices, a contradiction.
+\end{proof}
+
+\subsection{Putting it all together}
+Now we are in a position to prove Lemma \ref{HittingMaxCliques}.
+
+\begin{replem}{HittingMaxCliques}[King \cite{KingHitting}]
+If $G$ is a graph satisfying $\omega > \frac23 (\Delta + 1)$, then $G$ contains
+an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{replem}
+\begin{proof}
+Put $\Delta \DefinedAs \Delta(G)$ and $\omega \DefinedAs \omega(G)$. Let $\fancy{Q}$ be all the maximum cliques in $G$ and $\fancy{Q}_1, \ldots, \fancy{Q}_k$ the vertex sets of the components of $X_{\fancy{Q}}$.  Since the components of $X_{\fancy{Q}}$ satisfy the hypotheses of Lemma \ref{KostochkaCliqueGraph}, we have $F_i \DefinedAs \cap \fancy{Q}_i \neq \emptyset$ for all $i \in \irange{k}$.  Put $D_i \DefinedAs \cup \fancy{Q}_i$. 
+
+Put $r \DefinedAs \frac13(\Delta + 1)$.  Note that the vertices in $F_i$ are universal in $D_i$.  Since $\card{D_i} \geq \omega > \frac23 (\Delta + 1)$, each $v \in F_i$ has at most $r$ neighbors in the rest of the $F_j$. Applying Lemma \ref{HajnalLemma} gives $\card{F_i} + \card{D_i} \geq 2\omega > \frac{4}{3}(\Delta + 1)$.  Thus each $v \in F_i$ has at most $\Delta + 1 - \card{D_i} > \Delta + 1 - (\frac{4}{3}(\Delta + 1) - \card{F_i}) = \card{F_i} - r$ neighbors in the rest of the $F_j$. Applying Lemma \ref{LopsidedISR} gives an independent set intersecting each $F_i$ and hence every maximum clique in $G$.
+\end{proof}
+
+\section{Example reductions}
+\subsection{The quintessential reduction example}
+Reed \cite{reed1998omega} has conjectured that every graph satisfies
+\[\chi \leq \ceil{\frac{\omega + \Delta + 1}{2}}.\]
+
+If we could always find an independent set whose removal decreased both $\omega$ and $\Delta$, then the conjecture would follow by simple induction since we can give the independent set a single color and use at most $\ceil{\frac{\omega + \Delta + 1}{2}} - 1$ colors on what remains.  Expanding the independent set given by Lemma \ref{HittingMaxCliques} to a maximal one shows that this sort of argument goes through when $\omega > \frac{2}{3}(\Delta + 1)$. Thus a minimum counterexample to Reed's conjecture satisfies $\omega \leq \frac{2}{3}(\Delta + 1)$.
+
+\subsection{Reducing for Brooks}
+The proof in Chapter \ref{BrooksChapter} reduces Brooks'
+theorem to the $\Delta=3$ case by an ad hoc argument. The reduction follows
+from the general lemmas on hitting maximum cliques as follows. Let $G$ be a
+counterexample to Brooks' theorem minimizing $\Delta(G)$. Suppose $\Delta(G) \geq 4$. We may assume $G$ is critical. If $\omega(G) < \Delta(G)$, then removing any maximal independent set from $G$ decreases $\chi(G)$ and $\Delta(G)$ both by one giving a counterexample 
+with smaller $\Delta$.  Hence $\omega(G) \geq \Delta(G)$.  
+But then $\omega(G) > \frac{2}{3}(\Delta(G) + 1)$ and Lemma \ref{HittingMaxCliques} gives us an independent 
+set $I$ such that $\omega(G-I) < \omega(G)$.  Let $M$ be a maximal independent set containing $I$.  
+Then $G-M$ is a counterexample with smaller $\Delta$.
+
+\subsection{Reducing for Borodin-Kostochka}
+More generally, we can use the facts on hitting maximum cliques to prove the following reduction lemma.
+
+\begin{defn}
+For $k, j \in \IN$, let $\C{k, j}$ be the collection of all vertex critical graphs satisfying $\chi = \Delta = k$ and $\omega < k - j$.  Put $\C{k} \DefinedAs \C{k, 0}$. Note that $\C{k, j} \subseteq \C{k, i}$ for $j \geq i$.
+\end{defn}
+
+\begin{lem}\label{InductingOnC}
+Fix $k, j \in \IN$ with $k \geq 3j + 6$.  If $G \in \C{k, j}$, then there exists $H \in \C{k-1, j}$
+such that $H \lhd G$. 
+\end{lem}
+\begin{proof}
+Let $G \in \C{k, j}$. We first show that there exists a maximal independent
+set $M$ such that  $\omega(G - M) < k - (j + 1)$.   If $\omega(G)
+< k - (j + 1)$, then any maximal independent set will do for $M$.
+Otherwise, $\omega(G) = k - (j + 1)$.  Since $k \geq 3j + 6$, we have $\omega(G) = k - (j + 1) > \frac23(k + 1) = \frac23(\Delta(G) + 1)$.  Thus by Lemma
+\ref{HittingMaxCliques}, we have an independent set $I$ such that
+$\omega(G - I) < \omega(G)$.  Expand $I$ to a maximal independent set
+to get $M$.
+
+Now $\chi(G - M) = k - 1 = \Delta(G - M)$, where the last equality
+follows from Brooks' theorem and $\omega(G - M) < k - (j + 1) \leq k - 1$.  Since $\omega(G - M) < k - (j + 1)$, for any $(k - 1)$-critical induced subgraph $H \unlhd G - M$ we have $H \in \C{k - 1, j}$.
+\end{proof}
+
+As a consequence we get the result of Kostochka that the Borodin-Kostochka conjecture can be reduced to the $k = 9$ case.
+
+\begin{lem}\label{HereditaryReduction}
+Let $\fancy{H}$ be a hereditary graph property. For $k \geq 5$, if $\fancy{H} \cap \C{k} = \emptyset$, then $\fancy{H} \cap \C{k+1} = \emptyset$.  In particular, to prove the Borodin-Kostochka conjecture it is enough to show that $\C{9} = \emptyset$.
+\end{lem}

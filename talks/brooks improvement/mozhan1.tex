@@ -1,0 +1,40 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 12pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[style = {fill=magenta}, x = 0.5, y = 0.7, L = \tiny {}]{v0}
+\Vertex[style = {fill=cyan}, x = 0.45, y = 0.6, L = \tiny {}]{v1}
+\Vertex[style = {fill=yellow}, x = 0.55, y = 0.6, L = \tiny {$x_1$}]{v2}
+\Vertex[style = {fill=green}, x = 0.35, y = 0.7, L = \tiny {}]{v3}
+\Vertex[style = {fill=red}, x = 0.3, y = 0.6, L = \tiny {}]{v4}
+\Vertex[style = {fill=blue}, x = 0.4, y = 0.6, L = \tiny {}]{v5}
+\Vertex[style = {fill=magenta}, x = 0.5, y = 0.85, L = \tiny {}]{v6}
+\Vertex[style = {fill=cyan}, x = 0.45, y = 0.75, L = \tiny {}]{v7}
+\Vertex[style = {fill=yellow}, x = 0.55, y = 0.75, L = \tiny {}]{v8}
+\Vertex[x = 0.425, y = 0.4, L = \tiny {$x$}]{v9}
+\Vertex[style = {fill=green}, x = 0.35, y = 0.85, L = \tiny {}]{v10}
+\Vertex[style = {fill=red}, x = 0.3, y = 0.75, L = \tiny {}]{v11}
+\Vertex[style = {fill=blue}, x = 0.4, y = 0.75, L = \tiny {}]{v12}
+\Edge[](v2)(v0)
+\Edge[](v2)(v1)
+\Edge[](v1)(v0)
+\Edge[](v4)(v3)
+\Edge[](v5)(v3)
+\Edge[](v5)(v4)
+\Edge[](v7)(v6)
+\Edge[](v8)(v6)
+\Edge[](v8)(v7)
+\Edge[](v11)(v10)
+\Edge[](v12)(v10)
+\Edge[](v12)(v11)
+\Edge[](v9)(v4)
+\Edge[](v9)(v5)
+\Edge[](v9)(v3)
+\Edge[](v9)(v1)
+\Edge[](v9)(v2)
+\Edge[](v9)(v0)
+\end{tikzpicture}
+\end{figure}

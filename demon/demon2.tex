@@ -1,0 +1,162 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{beattame}{Beating tame demons}
+\newtheorem*{vizing}{Vizing's theorem\footnote{Vizing \cite{vizing1965chromatic}}}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{setup}{The setup}
+\newtheorem*{atticus}{Atticus' move}
+\newtheorem*{demon}{The demon's move}
+\newtheorem*{winning}{Winning}
+\newtheorem*{tame}{Tame demons}
+\newtheorem*{edgecoloring}{Edge coloring}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\defic}[1]{\text{def}(#1)}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+
+\title{Playing cards with a demon}
+\author{Landon Rabern}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We introduce a two-player card game and prove sufficient conditions for the first player to have a winning strategy.  Vizing's edge coloring theorem is a consequence.
+\end{abstract}
+
+\section{Some card games}
+We will first give the rules for some card games that are played between two players: our hero Atticus, and a demon.  Each game is played with a fixed number of stacks of face up cards.  For convenience, we give some compact notation codifying the number and size of stacks in a given game.  Call a game with $k$ stacks where the $i$-th stack has $n_i$ cards an $(n_1, \ldots, n_k)$-game.  We exclude the two trivial cases where there are no stacks and where a stack has no cards; that is, we require $k \geq 1$ and $n_i \geq 1$ for each $i$. 
+
+\subsection{A game that's too easy}
+Fix a number of stacks $k$ and stack sizes $n_1, \ldots, n_k$.  Consider the following $(n_1, \ldots, n_k)$-game.
+
+\begin{setup}
+There is a very large stock of cards each numbered with one of $1, \ldots, k$.  From this stock, the demon makes $k$ stacks of cards where the $i$-th stack has $n_i$ differently numbered cards.
+\end{setup}
+
+\begin{atticus}
+He picks a stack and discards some card from it.  Then he picks any card not in this stack already from the stock and puts it into this stack.
+\end{atticus}
+
+\begin{demon}
+He passes his turn.
+\end{demon}
+
+\begin{winning}
+Atticus wins if at the start of his turn he can form a run $1, 2, \ldots, k$ by choosing one card from each stack.  The demon wins if Atticus never does.
+\end{winning}
+
+\noindent It is easy to see that Atticus can always win this game.
+
+\subsection{A game that's too hard}
+Again, fix a number of stacks $k$ and stack sizes $n_1, \ldots, n_k$.  Consider the following $(n_1, \ldots, n_k)$-game.
+
+\begin{setup}
+There is a very large stock of cards each numbered with one of $1, \ldots, k$.  From this stock, the demon makes $k$ stacks of cards where the $i$-th stack has $n_i$ differently numbered cards.
+\end{setup}
+
+\begin{atticus}
+He picks a stack and discards some card from it.  Then he picks any card not in this stack already from the stock and puts it into this stack.
+\end{atticus}
+
+\begin{demon}
+He picks a stack different from the one Atticus picked and discards some card from it.  Then he picks any card not in this stack already from the stock and puts it into this stack.
+\end{demon}
+
+\begin{winning}
+Atticus wins if at the start of his turn he can form a run $1, 2, \ldots, k$ by choosing one card from each stack.  The demon wins if Atticus never does.
+\end{winning}
+
+\subsection{A game that's just right}
+Yet again, fix a number of stacks $k$ and stack sizes $n_1, \ldots, n_k$.  Consider the following $(n_1, \ldots, n_k)$-game.
+
+\begin{setup}
+There is a very large stock of cards each numbered with one of $1, \ldots, k$.  From this stock, the demon makes $k$ stacks of cards where the $i$-th stack has $n_i$ differently numbered cards.
+\end{setup}
+
+\begin{atticus}
+He picks a stack and discards some card from it.  Then he picks any card not in this stack already from the stock and puts it into this stack.
+Say he discarded an $a$-card and then put a $b$-card into the stack.
+\end{atticus}
+
+\begin{demon}
+He passes his turn or picks a stack different from the one Atticus picked that contains an $a$-card or a $b$-card but not both.  If this stack contains an $a$-card, he discards it and puts in a $b$-card from the stock.  If this stack contains a $b$-card, he discards it and puts in an $a$-card from the stock.
+\end{demon}
+
+\begin{winning}
+Atticus wins if at the start of his turn he can form a run $1, 2, \ldots, k$ by choosing one card from each stack.  The demon wins if Atticus never does.
+\end{winning}
+
+\section{Beating tame demons}
+\begin{tame}
+A demon $D$ is \emph{tame} if whenever Atticus has a winning strategy against $D$ for the $(n_1, \ldots, n_k)$-game then he has a winning strategy against $D$ for any $(m_1, \ldots, m_k)$-game where $m_i \geq n_i$.
+\end{tame}
+
+\begin{beattame}
+Atticus has a winning strategy for the $(n_1, \ldots, n_k)$-game against a tame demon if $n_1 \geq 1$ and $n_i \geq 2$ for $i \geq 2$.
+\end{beattame}
+\begin{proof}
+We prove the theorem by induction on $k$.  For $k=1$, Atticus always wins on his first turn, so we may assume that $k \geq 2$.  Since our demons are tame, we may also assume that $\sum_i n_i = 2k-1$.
+
+For a collection of stacks $P = \set{S_1, \ldots, S_k}$ and $i \in \set{1, \ldots, k}$, let $P_i$ be the stacks of $P$ that contain an $i$-card.  Atticus's strategy will be to maximize $\gamma(P) = \sum_i \card{P_i}^2$.
+
+Say it is Atticus's turn and the current stack collection is $P$.  Assume $\card{P_i} \neq 1$ for all $i$.  Then, as $\sum_i \card{P_i} = 2k-1$, we have $r$ such that $\card{P_r} = 0$.  Also, since $\sum_i \card{P_i}$ is odd we have $t$ such that $\card{P_t} \geq 3$.  Pick $S \in P$ that contains a $t$-card.  Now Atticus will replace the $t$-card with an $r$-card in $S$ to get stacks $P'$.  Since none of the other stacks have an $r$-card, after the demon's move we have $\card{P'_r} \geq 1$ and $\card{P'_t} \leq 2$.  In particular,  $\gamma(P') > \gamma(P)$.  Since the game has only finitely many states, at some point it must be Atticus's turn with stacks $Q$ such that $\card{Q_i} = 1$ for some $i$.
+
+Let $S$ be the stack in $Q$ with the $i$-card and put $Q' = Q - \set{S}$.  Then $Q'$ satisfies hypotheses of the theorem for $k-1$ with card labels $\set{1, \ldots, i - 1, i + 1, \ldots, k}$.  Hence, by induction, Atticus can win the game played on $Q'$.  Doing so and then using the $i$-card from $S$ gives the desired $1, 2, \ldots, k$ run.  Hence Atticus has a winning strategy.\footnote{This proof is essentially the same as Schrijver's proof of Vizing's theorem \cite{schrijver2003combinatorial} which is rooted in the proof of Ehrenfeucht, Faber and Kierstead \cite{Ehrenfeucht1984159}.}
+\end{proof}
+
+\section{Edge coloring}
+\begin{edgecoloring}
+An \emph{edge coloring} of a simple graph is an assignment of colors to its edges such that no pair of incident edges receive the same color.
+\end{edgecoloring}
+
+\begin{vizing}
+Every simple graph $G$ has an edge coloring using at most $\Delta(G) + 1$ colors.
+\end{vizing}
+\begin{proof}
+Assume not and let $G$ be a counterexample minimizing $\card{G}$. Pick $v \in V(G)$ with degree $\Delta(G)$, say $v_1, \ldots, v_k$ are the neighbors of $v$ in $G$. 
+By minimality of $\card{G}$, we have a $(k + 1)$-edge-coloring of $G - v$.  
+Let $S_i$ be the colors not incident with $v_i$ in this coloring.  
+Each $v_i$ has degree at most $k-1$ in $G - v$ and hence $\card{S_i} \geq 2$.  
+Also, if $a \in S_i$ and $b \not \in S_i$ we may exchange colors on a maximum length path starting at $v_i$ and alternating between colors $b$ and $a$.  
+But this just gives a Atticus move followed by a demon move.  By adding dummy pendant edges to the $v_i$ if necessary, we see that the demon is tame.  
+Hence Atticus can win and the won state tells us how to extend the $(k+1)$-edge-coloring to all of $G$.
+\end{proof}
+\newpage
+
+\bibliographystyle{amsplain}
+\bibliography{demon}
+\end{document}

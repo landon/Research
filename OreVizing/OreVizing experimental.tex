@@ -1,0 +1,640 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\title{Improved lower bounds on the number of edges in list critical and paint critical graphs}
+%\author{Hal Kierstead and Landon Rabern\thanks{School of Mathematical and Statistical Sciences, Arizona State University}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+A \emph{$k$-coloring} of a graph $G$ is a function $\func{\pi}{V(G)}{\irange{k}}$ such that $\pi(x) \neq \pi(y)$ for each $xy \in E(G)$.  The least $k$ for which $G$ has a $k$-coloring is the \emph{chromatic number} $\chi(G)$ of $G$. We say that $G$ is \emph{$k$-chromatic} when $\chi(G) = k$.  A graph is \emph{$k$-critical} if $\chi(G) = k$ and $\chi(H) < k$ for every proper subgraph $H$ of $G$.  If $G$ is $k$-chromatic, then any minimal $k$-chromatic subgraph of $G$ is $k$-critical.  In this way, many questions about $k$-chromatic graphs can be reduced to questions about $k$-critical graphs which have more structure.  The study of critical graphs was initiated by Dirac \cite{dirac1951note} in 1951.  It is easy to see that a $k$-critical graph $G$ must have minimum degree at least $k-1$ and hence $2\size{G} \geq (k-1)\card{G}$.  The problem of determining the minimum number of edges in a $k$-critical graph has a long history. First, in 1957, Dirac \cite{dirac1957theorem} generalized Brooks' theorem \cite{brooks1941colouring} by showing that any $k$-critical graph $G$ with $k \geq 4$ and $\card{G} \geq k+2$ must satisfy 
+
+\[2\size{G} \geq (k-1)\card{G} + k-3.\]
+
+In 1963, this bound was subsequently improved for large $\card{G}$ by Gallai \cite{gallai1963kritische}.  Put 
+
+\[g_k(n, c) \DefinedAs \parens{k-1 + \frac{k-3}{(k-c)(k-1) + k-3}}n.\]
+
+Gallai showed that every $k$-critical graph $G$ with $k \geq 4$ and $\card{G} \geq k+2$ satisfies $2\size{G} \geq g_k(\card{G}, 0)$.  In 1997, Krivelevich \cite{krivelevich1997minimal} improved Gallai's bound by replacing $g_k(\card{G}, 0)$ with $g_k(\card{G}, 2)$.  Then, in 2003, Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} improved this for $k \geq 6$ by showing that a $k$-critical graph with $k \geq 6$ and $\card{G} \geq k+2$ must satisfy $2\size{G} \geq g_k(\card{G}, (k-5)\alpha_k)$ where
+
+\[\alpha_k \DefinedAs \frac12 - \frac{1}{(k-1)(k-2)}.\]
+
+In 2012, Kostochka and Yancey \cite{kostochkayancey2012ore} drastically improved these bounds by showing that every $k$-critical graph $G$ with $k \geq 4$ must satisfy
+
+\[\size{G} \geq \ceil{\frac{(k+1)(k-2)\card{G} - k(k-3)}{2(k-1)}}.\]
+
+Moreover, they show that this bound is tight for $k=4$ and $n \geq 6$ as well as for infinitely many values of $\card{G}$ for any $k \geq 5$.  This bound has many interesting coloring applications such as a very short proof of Gr\"otsch's theorem on the $3$-colorability of triangle-free planar graphs \cite{kostochka2012oregrotsch} and short proofs of the results on coloring with respect to Ore degree in \cite{kierstead2009ore, rabern2010a, krs_one}.  Given the applications to coloring theory, it makes sense to investigate the same problem for more general types of coloring.  In this article, we obtain improved lower bounds on the number of edges for both the list coloring and online list coloring problems.  To state our results we need some definitions.
+
+\emph{List coloring} was introduced by Vizing \cite{vizing1976} and independently Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  Let $G$ be a graph. A list assignment on $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \neq \pi(y)$ for each $xy \in E(G)$.   A graph $G$ is \emph{$L$-critical} if $G$ is not $L$-colorable, but every proper subgraph $H$ of $G$ is $\restr{L}{V(H)}$-colorable. For $\func{f}{V(G)}{\IN}$, a list assignment $L$ is an \emph{$f$-assignment} if $\card{L(v)} = f(v)$ for each $v \in V(G)$.  If $f(v) = k$ for all $v \in V(G)$, then we also call an $f$-assignment a $k$-assignment.  We say that $G$ is \emph{$f$-choosable} if $G$ is $L$-colorable for every $f$-assignment $L$.  The best known lower bound on the number of edges in an $L$-critical graph where $L$ is a $(k-1)$-assignment was given by Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} in 2003 and shows that for $k \geq 9$ and $G \neq K_k$ an $L$-critical graph where $L$ is a $(k-1)$-assignment on $G$, we have $2\size{G} \geq g_k(\card{G}, \frac13 (k-4)\alpha_k)$.  We improve the bound to $2\size{G} \geq g_k(\card{G}, (k-3)\alpha_k)$.
+
+\emph{Online list coloring} was independently introduced by Zhu \cite{zhu2009online} and Schauz \cite{schauz2009mr} (Schauz called it \emph{paintability}). Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{online $f$-choosable} if $f(v) \geq 1$ for all $v \in V(G)$ and for every $S \subseteq V(G)$ there is an independent set $I \subseteq S$ such that $G-I$ is online $f'$-choosable where $f'(v) \DefinedAs f(v)$ for $v \in V(G) - S$ and $f'(v) \DefinedAs f(v) - 1$ for $v \in S - I$.  We say that $G$ is \emph{online $f$-critical} if $G$ is not online $f$-choosable, but every proper subgraph $H$ of $G$ is online $\restr{f}{V(H)}$-choosable.  In 2012, Riasat and Schauz \cite{riasat2012critically} showed that Gallai's bound  $2\size{G} \geq g_k(\card{G}, 0)$ holds for online $f$-critical graphs where $f(v) \DefinedAs k-1$ for all $v \in V(G)$.  We improve this for $k \geq 9$ by proving the same bound as we have for list coloring: $2\size{G} \geq g_k(\card{G}, (k-3)\alpha_k)$.
+
+Our main theorem shows that a graph either has many edges or an induced subgraph which has a certain kind of good orientation.  To describe these good orientations we need a few definitions. A subdigraph $H$ of a directed multigraph $D$ is called \emph{eulerian} if $d^-_H(v) = d^+_H(v)$ for every $v \in V(H)$.  We call $H$ \emph{even} if $\size{H}$ is even and \emph{odd} otherwise.  We write $EE(D)$ (resp. $EO(D)$) for the number of even (resp. odd) spanning subdigraphs of $D$.  Note that the edgeless subgraph of $D$ is even and hence we always have $EE(D) > 0$.
+
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon-Tarsi} (for brevity, \emph{$f$-AT}) if $G$ has an orientation $D$ where $f(v) \geq d_{D}^+(v) + 1$ for all $v \in V(D)$ and $EE(D) \neq EO(D)$.  Alon and Tarsi \cite{Alon1992125} showed that such orientations are very useful for list coloring; they proved the following.
+
+\begin{lem}\label{AlonTarsi}
+If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is $f$-choosable.
+\end{lem}
+
+\noindent Schauz \cite{schauz2010flexible} extended this result to online $f$-choosability.
+
+\begin{lem}\label{Schauz}
+If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is online $f$-choosable.
+\end{lem}
+
+For a graph $G$, we define $\func{d_0}{V(G)}{\IN}$ by $d_0(v) \DefinedAs d_G(v)$.  The $d_0$-choosable graphs were first characterized by Borodin \cite{borodin1977criterion} and independently by Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  The connected graphs which are not $d_0$-choosable are precisely the Gallai trees (connected graphs in which every block is complete or an odd cycle). The generalization to a characterization of $d_0$-AT graphs was first given in \cite{Hladky} by Hladk{\`y}, Kr{\'a}l and Schauz. 
+
+We prove the following general lemma saying that either a graph has many edges or has an induced $f_H$-AT subgraph $H$ where $f_H$ basically gives the number of colors we would expect the vertices to have left in their lists after $\delta(G)$-coloring $G-H$. 
+
+\begin{repthm}{EdgeBoundEuler}
+Let $G$ be a graph with $\delta \DefinedAs \delta(G) \geq 8$ and $K_{\delta + 1} \not \subseteq G$. We have either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $2\size{G} \geq g_{\delta+1}(\card{G}, (\delta-2)\alpha_{\delta + 1})$.
+\end{enumerate}
+\end{repthm}
+
+The \emph{Alon-Tarsi number} of a graph $AT(G)$ is the least $k$ such that $G$ is $f$-AT where $f(v) \DefinedAs k$ for all $v \in V(G)$. We have $\chi(G) \leq \ch(G) \leq \ch_{OL}(G) \leq AT(G) \leq \col(G) + 1$.  We say that $G$ is $k$-AT-critical if $\AT(G) = k$ and $AT(H) < k$ for all proper induced subgraphs $H$ of $G$.  From Theorem \ref{EdgeBoundEuler} we can conclude the following.
+
+\begin{thm}\label{EdgeBoundAT}
+For $k \geq 9$ and $G \neq K_k$ a $k$-AT-critical graph, we have $2\size{G} \geq g_k(\card{G}, (k-3)\alpha_k)$.
+\end{thm}
+
+\noindent Similarly, applying Lemma \ref{AlonTarsi} gives the following.
+
+\begin{thm}\label{EdgeBound}
+For $k \geq 9$ and $G \neq K_k$ an $L$-critical graph where $L$ is a $(k-1)$-assignment on $G$, we have $2\size{G} \geq g_k(\card{G}, (k-3)\alpha_k)$.
+\end{thm}
+
+This improves the bound given by Kostochka and Stiebitz in \cite{kostochkastiebitzedgesincriticalgraph}; for $L$-critical graphs, they have $2\size{G} \geq g_k(\card{G}, \frac13 (k-4)\alpha_k)$.  Now, applying Lemma \ref{Schauz} gives the following.
+
+\begin{thm}\label{EdgeBoundOnline}
+For $k \geq 9$ and $G \neq K_k$ an online $f$-critical graph where $f(v) \DefinedAs k-1$ for all $v \in V(G)$, we have $2\size{G} \geq g_k(\card{G}, (k-3)\alpha_k)$.
+\end{thm}
+
+\begin{defn}
+The \emph{Ore-degree} of an edge $xy$ in a graph $G$ is $\theta(xy) \DefinedAs d(x) + d(y)$.  The \emph{Ore-degree} of a graph $G$ is $\theta(G) \DefinedAs \max_{xy \in E(G)}\theta(xy)$.
+\end{defn}
+
+A bound like Brooks' theorem in terms of the Ore-degree was given by Kierstead and Kostochka \cite{kierstead2009ore} and subsequently the required lower bound on $\Delta$ was improved in $\cite{rabern2010a, krs_one, rabern2012partitioning}$.  For example, we have the following.
+
+\begin{thm}\label{RegularOre}
+Every graph with $\theta \geq 10$ and $\omega \leq \frac{\theta}{2}$ is $\floor{\frac{\theta}{2}}$-colorable.
+\end{thm}
+
+Another method for achieving the tightest of these results on Ore-degree was given by Kostochka and Yancey \cite{kostochkayancey2012ore}.  Their proof combined their new lower bound on the number of edges in a color critical graph together with a list coloring lemma derived via the kernel lemma.  In Section \ref{OrientationsSection} we improve this latter lemma and, in a similar way, use it in combination with Theorem \ref{EdgeBound} to prove an Ore-degree version of Brooks' theorem for list coloring.  The improved lemma can be seen to be giving another lower bound on the number of edges in $G$. Let $\mic(G)$ be the maximum of $\sum_{v \in I} d_G(v)$ over all independent sets $I$ of $G$.
+
+\begin{repthm}{ConsantListMicStrength}
+For any graph $G$ we have either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is online $f_H$-choosable where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $2\size{G} \geq (\delta(G) - 1)\card{G} + \mic(G) + 1$.
+\end{enumerate}
+\end{repthm}
+
+\noindent This quickly gives the aforementioned Ore degree version of Brooks' theorem for list coloring.
+
+\begin{repthm}{OurListOre}
+Every graph with $\theta \geq 20$ and $\omega \leq \frac{\theta}{2}$ is $\floor{\frac{\theta}{2}}$-choosable.
+\end{repthm}
+
+\noindent Note that using Kostochka and Stiebitz's above lower bound on the number of edges in a list critical graph gives Theorem \ref{OurListOre} with $\theta \geq 54$. Similarly, we get the online version.
+
+\begin{repthm}{OurListOnlineOre}
+Every graph with $\theta \geq 20$ and $\omega \leq \frac{\theta}{2}$ is online $\floor{\frac{\theta}{2}}$-choosable.
+\end{repthm}
+
+\section{Either many edges or an Alon-Tarsi orientable subgraph}
+Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. For a graph $G$, let $W^k(G)$ be the $v \in V(G)$ contained in some $K_{k-1}$ in $G$. 
+
+\subsection{Extending Alon-Tarsi orientations}
+In \cite{kostochkastiebitzedgesincriticalgraph} Kostochka and Stiebitz gave a method for extending list colorings into Gallai trees. We generalize these ideas in terms of extension of orientations.
+
+\begin{lem}\label{ConfigurationTypeTwoEuler}
+Let $G$ be a multigraph without loops and $\func{f}{V(G)}{\IN}$. If there are $F \subseteq G$ and
+$Y \subseteq V(G)$ such that:
+\begin{enumerate}
+\item any multiple edges in $G$ are contained in $G[Y]$; and
+\item $f(v) \geq d_G(v)$ for all $v \in V(G) - Y$; and
+\item $f(v) \geq d_{G[Y]}(v) + d_F(v) + 1$ for all $v \in Y$; and
+\item For each component $T$ of $G-Y$ there are different $x_1, x_2 \in V(T)$ where $N_T[x_1] = N_T[x_2]$ and $T - \set{x_1, x_2}$ is connected such that either:
+	\begin{enumerate}
+	\item there are $x_1y_1, x_2y_2 \in E(F)$ where $y_1 \neq y_2$ and $N(x_i) \cap Y = \set{y_i}$ for $i \in \irange{2}$; or
+	\item $\card{N(x_2) \cap Y} = 0$ and there is $x_1y_1 \in E(F)$ where $N(x_1) \cap Y = \set{y_1}$,
+	\end{enumerate}
+\end{enumerate}
+
+\noindent then $G$ is $f$-AT.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $\parens{G, f, F, Y}$ minimizing $\card{G-Y}$.  If $\card{G-Y} = 0$, then $f(v) \geq d_G(y) + 1$ for all $v \in V(G)$, so any acyclic orientation of $G$ will do. Hence $\card{G-Y} > 0$.  
+
+Pick a component $T$ of $G - Y$ and pick $x_1, x_2 \in V(T)$ as guaranteed by (4). First, suppose (4a) holds.   Put $G' \DefinedAs (G - T) + y_1y_2$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y - V(T)$ and let $f'$ be $f$ restricted to $V(G')$.  Then $G'$ has an orientation $D'$ where $f'(v) \geq d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \neq EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  By symmetry we may assume that the new edge $y_1y_2$ is directed toward $y_2$.  Now we use the orientation of $D'$ to construct the desired orientation of $D$. First, we use the orientation on $D' - y_1y_2$ on $G-T$. Now, order the vertices of $T$ as $x_1, x_2, z_1, z_2, \ldots$ so that every vertex has at least one neighbor to the right.  Orient the edges of $T$ left-to-right in this ordering.  Finally, we use $y_1x_1$ and $x_2y_2$ and orient all other edges between $T$ and $G-T$ away from $T$.  Plainly, $f(v) \geq d_{D}^+(v) + 1$ for all $v \in V(D)$.  Now, there is a bijection between eulerian subgraphs of $D'$ containing $y_1y_2$ and eulerian subgraphs of $D - (T - \set{x_1, x_2})$ containing $y_1x_1x_2y_2$, moreover this bijection preserves the parity of the eulerian subgraph.  Any other eulerian subgraph $A$ of $D$ must contain $y_1x_1$ and not $x_2y_2$.  Since $x_1$ must have in-degree $1$ in $A$, it must also have out-degree $1$ in $A$.  We show that $A$ has a mate $A'$ of opposite parity.  Suppose $x_2 \not \in A$ and $x_1z_1 \in A$; then we make $A'$ by removing $x_1z_1$ from $A$ and adding $x_1x_2z_1$.  If $x_2 \in A$ and $x_1x_2z_1 \in A$, we make $A'$ by removing $x_1x_2z_1$ and adding $x_1z_1$.  We conclude that $EE(D) \neq EO(D)$, a contradiction.
+
+Now suppose (4b) holds.  Put $G' \DefinedAs G - T$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y - V(T)$ and define $f'$ by $f'(v) = f(v)$ for all $v \in V(G'-y_1)$ and $f'(y_1) = f(y_1) - 1$.  Then $G'$ has an orientation $D'$ where $f'(v) \geq d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \neq EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  We orient $G - T$ according to $D$, orient $T$ as in the previous case, again use $y_1x_1$ and orient all other edges between $T$ and $G-T$ away from $T$.  Since we decreased $f'(y_1)$ by $1$, the extra out edge of $y_1$ is accounted for and we have $f(v) \geq d_{D}^+(v) + 1$ for all $v \in V(D)$.  Again any additional eulerian subgraph must contain $y_1x_1$ and since $x_2$ has no neighbor in $G-T$ we can use $x_2$ as before to build a mate of opposite parity for any additional eulerian subgraph.  Hence $EE(D) \neq EO(D)$ giving our final contradiction.
+\end{proof}
+
+\begin{lem}\label{ConfigurationTypeOneSingleEuler}
+Let $r \geq 0$, $k \geq r + 4$ and $G \neq K_k$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $G-x$ is connected; and
+\item $d_G(x) \geq r + 2$; and
+\item $\card{N(x) \cap W^k(G-x)} \geq 1$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - r$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample minimizing $\card{G}$.  Let $Q$ be the non-separating vertices in $G-x$. Suppose we have $y \in Q$ such that $G-y$ satisfies all the hypotheses of the theorem. Then minimality of $\card{G}$ shows that $G-y$ is $f'$-AT where $f'(v) \DefinedAs f(v) + d_{G-y}(v) - d_G(v)$ for $v \in V(G)$.  Create an orientation $D$ of $G$ from the orientation of $G-y$ by directing all edges incident to $y$ into $y$.  These new edges are on no cycle and thus the eulerian subgraph counts did not change.  Also, we have increased the out degree of any vertex $v$ by at most $d_G(v) - d_{G-y}(v)$.  Hence $G$ is $f$-AT, a contradiction.  Therefore $G-y$ must fail some hypothesis for each $y \in Q$; note that it is only possible for $G-y$ to fail (2) or (3).
+
+We show that $Q \subseteq N(x)$.  Suppose otherwise that we have $y \in Q - N(x)$.  
+Since (2) is satisfied for $G-y$, (3) must fail and hence $y$ is contained in a $K_{k-1}$, call it $B$, in $G-x$ such that $N(x) \cap B \neq \emptyset$. Pick $z \in N(x) \cap B$. Since $d_G(z) \leq k-1$ we must have $N_{G-x}(z) \subseteq B$ and hence $z \in Q$.  Since $d_G(y) \leq k-1$ and $y \in Q$ we must have $N_{G-x}(y) \subseteq B$. But then the conditions of Lemma \ref{ConfigurationTypeTwoEuler} are satisfied with $F \DefinedAs G[x, z]$ and $Y \DefinedAs \set{x}$ since $f(x) \geq d_G(x) - r \geq 2 = d_{G[Y]}(x) + d_F(x) + 1$. This is a contradiction and hence we must have $Q \subseteq N(x)$.
+
+Now, by (3), $G-x$ has at least one $K_{k-1}$, call it $B$, such that $N(x) \cap V(B) \neq \emptyset$.  If $V(G-x) = B$, then $B = Q \subseteq N(x)$ and $G = K_k$, impossible.  Hence we may pick $y \in Q - B$.  Then $G-y$ satisfies (3) and hence must not satisfy (2).  We conclude that $d_G(x) = r+2$ and hence $\card{Q} \leq r+2$.  But $\card{Q} \geq \Delta(G-x) = k-1$ and hence $k \leq r + 3$, a contradiction.
+\end{proof}
+
+We will need to know what happens when we patch two $d_0$-choosable graphs together at a vertex.  To determine this we first need to understand the structure of $d_0$-choosable graphs.  The $d_0$-choosable graphs were first characterized by Borodin \cite{borodin1977criterion} and independently by Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  The generalization to a characterization of $d_0$-AT graphs was first given in \cite{Hladky} by Hladk{\`y}, Kr{\'a}l and Schauz.  This generalization follows quickly using the following lemma from \cite{erdos1979choosability} (this is often referred to as ``Rubin's Block Theorem'').
+
+\begin{lem}[Rubin \cite{erdos1979choosability}]\label{RubinBlock}
+A $2$-connected graph is either complete, an odd cycle or contains an induced even cycle with at most one chord.
+\end{lem}
+
+\begin{lem}\label{d0Characterization}
+For a connected graph $G$, the following are equivalent:
+\begin{enumerate}
+\item $G$ is not a Gallai tree,
+\item $G$ contains an induced even cycle with at most one chord,
+\item $G$ is $d_0$-choosable,
+\item $G$ is $d_0$-AT,
+\item $G$ has an orientation $D$ where $d_G(v) \geq d_{D}^+(v) + 1$ for all $v \in V(D)$, $EE(D) \in \set{2,3}$ and $EO(D) \in \set{0,1}$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+That (1), (2) and (3) are equivalent is the characterization of $d_0$-choosable graphs in \cite{borodin1977criterion} and \cite{erdos1979choosability}.  Since (5) implies (4) and (4) implies (3) it will suffice to show that (2) implies (5).  The proof we give of (5) is the same as in \cite{Hladky}. Suppose (2) holds and let $H$ be an induced even cycle with at most one chord in $G$.  Orient the even cycle in $H$ clockwise and the (possible) other edge arbitrarily.  Collapse $H$ to a single vertex $x_H$ to form $H'$ and take a spanning tree $T$ of $H'$ with root $x_H$.  Orient the remaining edges in $G$ away from the root in this tree to get $D$.  Then every vertex has in degree at least $1$ in $D$ and hence $d_G(v) \geq d_{D}^+(v) + 1$ for all $v \in V(D)$.  Also, since the orientation of $D-H$ is acyclic, the only spanning eulerian subgraphs of $D$ are the edgeless graph, the graph with just the edges from the even cycle in $H$ and possibly one other using the chord in $H$.  Hence $EE(D) \in \set{2,3}$ and $EO(D) \in \set{0,1}$, thus (5) holds. 
+\end{proof}
+
+\begin{lem}\label{CutvertexListPatchEuler}
+If $\set{A, B}$ is a separation of $G$ such that $G[A]$ and $G[B]$ are connected $d_0$-AT graphs and $A \cap B = \set{x}$, then $G$ is $f$-AT where $f(v) = d_G(v)$ for all $v \in V(G) - x$ and $f(x) = d_G(x) - 1$.
+\end{lem}
+\begin{proof}
+By Lemma \ref{d0Characterization} we may choose an orientation $D_A$ of $A$ with $d^+(v) < d(v)$ for all $v \in V(D_A)$ and $EE(D_A) \neq EO(D_A)$ and an orientation $D_B$ of $B$ with $d^+(v) < d(v)$ for all $v \in V(D_B)$ and $EE(D_B) \neq EO(D_B)$.  Together these give the desired orientation $D$ of $G$ since no cycle has vertices in both $A-x$ and $B-x$ and thus $EE(D) - EO(D) = EE(D_A)EE(D_B) + EO(D_A)EO(D_B) - (EE(D_A)EO(D_B) + EO(D_A)EE(D_B)) = (EE(D_A) - EO(D_A))(EE(D_B) - EO(D_B)) \neq 0$.
+\end{proof}
+
+Lemma \ref{ConfigurationTypeOneSingleEuler} restricts the interaction of a high vertex and a single low component.  Similarly to \cite{kostochkastiebitzedgesincriticalgraph} we'll use the following lemma to restrict a high vertex's interaction with two low components.
+
+\begin{lem}\label{ConfigurationTypeOneDoubleEuler}
+Let $k \geq 4$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $G-x$ has two components $H_1, H_2 \in \T_k$; and
+\item $\card{N(x) \cap V(H_i)} = 2$ for $i \in \irange{2}$; and
+\item $\card{N(x) \cap W^k(H_i)} \in \irange{2}$ for $i \in \irange{2}$; and
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+\begin{proof}
+Using Lemma \ref{CutvertexListPatchEuler}, we just need to show that $Q_i \DefinedAs G\brackets{\set{x} \cup V(H_i)}$ is $d_0$-AT for $i \in \irange{2}$; that is show that $Q_i$ is not a Gallai tree.  
+If $Q_i$ is a Gallai tree, then $x$'s two neighbors in $H_i$ must be in the same block in $H_i$ and this block must be a $K_{k-1}$, but this creates a diamond since $k \geq 4$, impossible.
+\end{proof}
+
+Combining Lemma \ref{ConfigurationTypeOneSingleEuler} and Lemma \ref{ConfigurationTypeOneDoubleEuler} gives the following.
+
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \geq 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has components $H_1, H_2, \ldots, H_t \in \T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \geq 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \geq t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+\begin{proof}
+Since $d_G(x) \geq t+2$, either $x$ has $3$ neighbors in some $H_i$ or $x$ has two neighbors in each of $H_i, H_j$.  In either case, let $C_1, \ldots, C_q$ be the other components of $G-x$.  For each $i \in \irange{q}$, pick $z_i \in N(x) \cap V(C_i)$.  Then order the vertices of $C_i$ with $z_i$ first and orient all the edges in $C_i$ to the left with respect to this ordering.  Now orient all edges between $C_i$ and $G-C_i$ into $C_i$.  Note that each vertex in $C_i$ has in-degree at least one and no cycle passes through $C_i$. Hence we can complete the orientation using one of Lemma \ref{ConfigurationTypeOneSingleEuler} or Lemma \ref{ConfigurationTypeOneDoubleEuler} to get our desired orientation $D$ of $G$.
+\end{proof}
+
+To deal with more than one high vertex we need to define the following auxiliary bipartite graph.  For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \geq 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ iff $N(y) \cap W^k(T) \neq \emptyset$.  This lemma gives the substantive improvement over \cite{kostochkastiebitzedgesincriticalgraph} on the lower bound on the number of edges in a list critical graph.
+
+\begin{lem}\label{MultipleHighConfigurationEuler}
+Let $k \geq 9$ and let $G$ be a graph with $Y \subseteq V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item the components of $G-Y$ are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-Y)$; and
+\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $\delta(\B) \geq 3$.
+	%\begin{enumerate}
+	%\item $d_{\B}(y) \geq 3$ for all $y \in Y$ and $d_{\B}(T) \geq 3$ for all components $T$ of %$G-Y$; or
+
+%	\item $d_{\B}(y) \geq 4$ for all $y \in Y$ and $d_{\B}(T) \geq 2$ for all components $T$ of %$G-Y$.
+	%\end{enumerate}
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(y) = d_G(y) - 1$ for $y \in Y$ and $f(v) = d_G(v)$ for all $v \in V(G - Y)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Suppose a component of $G-Y$ has an endblock $B \neq K_{k-1}$.  Let $X_B$ be the non-separating vertices of $B$.  Then $G' \DefinedAs G-X_B$ still satisfies the hypotheses of the theorem since the degrees in $\B$ are not affected.  Hence, by minimality of $\card{G}$, we have that $G'$ is $f'$-AT where $f'(v) \DefinedAs f(v) + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  But we can extend the orientation of $G'$ to $G$ by ordering the vertices of $B$ with the separating vertices before the non-separating vertices, orienting all edges of $B$ to the right and then orienting all edges from $X_B$ to $G-B$ into $X_B$. In doing so, we don't change the eulerian subgraph counts since no cycle passes through $X_B$. Moreover, we don't break the out-degree condition since the out-degree of any $v \in V(G)$ as increased by at most $d_{G'}(v) - d_G(v)$. Therefore $G$ is $f$-AT, a contradiction. Hence every endblock in $G-Y$ is a $K_{k-1}$.  We can do the same thing with a $K_{k-1}$ endblock in which the non-separating vertices have no neighbors in $Y$. Thus every endblock $B$ has a non-separating vertex $x_B$ with a neighbor $y_B \in Y$.
+
+To each component $T$ of $G-Y$ we associate a set of edges $u(T)$ from $W^k(T)$ to $Y$. We'll also classify the components as either \emph{type 1}, \emph{type 2a}, \emph{type 2b}, \emph{type 2c} or \emph{type 3}. Call $T$ \emph{saturated} if it has an endblock $B_T$ such that every non-separating $z \in V(B_T)$ has a neighbor in $Y$.  
+
+Suppose $T$ is saturated.  If $T$ has one block, we let $u(T)$ be all edges from non-separating vertices in $B_T$ to $Y$.  Such a $T$ is of type 2a.  Otherwise, $T$ has an endblock $B'$ other than $B_T$.  First, suppose  every non-separating $z \in V(B')$ has a neighbor in $Y$.  Then we let $u(T)$ be all edges from non-separating vertices in $B_T$ to $Y$ together with all edges from non-separating vertices in $B'$ to $Y$.  Such a $T$ is of type 3.  Otherwise some non-separating $v \in V(B')$ has no edge to $Y$ and we let $u(T)$ be all edges from non-separating vertices in $B_T$ to $Y$ together with $x_{B'}y_{B'}$.  Such a $T$ is of type 2b.
+
+Now suppose $T$ is not saturated.  If $T$ has at least $3$ endblocks $B_1, B_2, B_3$, then put $u(T) \DefinedAs \setbs{x_{B_i}y_{B_i}}{i \in \irange{3}}$.  Such a $T$ is of type 1.  If $T$ has only one block, then pick $3$ edges from $T$ with different endpoints in $Y$.  Such a $T$ is also of type 1.  Now suppose $T$ has exactly two endblocks $B_1$ and $B_2$.  If, for some $i \in \irange{2}$, there are two edges incident to non-separating vertices in $B_i$ with different endpoints in $Y$, then let $u(T)$ be these two edges together with $x_{B_{3-i}}y_{B_{3-i}}$.  Such a $T$ is of type 1.
+
+If we haven't defined $u(T)$ yet, then $T$ must contain a block $B = K_{k-1}$ that is not an endblock since $d_{\B}(T) \geq 3$.  Moreover, $B$ must contain a non-separating $x_B$ which is adjacent to $y_B \in Y - \set{y_{B_1}, y_{B_2}}$. If some non-separating $v \in V(B)$ has no edge to $Y$, then put $u(T) \DefinedAs \set{x_{B_1}y_{B_1}, x_{B_2}y_{B_2}, x_{B}y_{B}}$.  In this case, $T$ is of type 1.  Otherwise, let $u(T)$ be $\set{x_{B_1}y_{B_1}, x_{B_2}y_{B_2}}$ together with all edges from non-separating vertices of $B$ to $Y$. Note that as $T$ has exactly $2$ endblocks, $B$ has $k-3$ non-separating vertices.  This final kind of $T$ is of type 2c.
+
+Now we will create a bipartite graph $\B'$ from $\B$ by splitting vertices corresponding to components $T$ of $G-Y$ as follows. Split each $T$ into $T$ and $T'$ by divvying up $T$'s edges in $\B$ so that $T$ is adjacent to all and only the endpoints in $Y$ of the edges in $u(T)$ and $T'$ is adjacent to the rest.  We call $T$ an \emph{original} and $T'$ a \emph{copy}. 
+
+We need to handle one more issue before proceeding with the application of Lemma \ref{ConfigurationTypeTwoEuler}.  When $T$ is type 2a, 2b, 2c or 3, it is possible that $u(T)$ contains edges of the form $yx_1$ and $yx_2$.  To see why this could be a problem, consider a component $T$ of type $2a$.  We'd like to show that $T$ has degree $k-1$ in $\B'$, but it could be that for some $y \in Y$ we have $yx_1$ and $yx_2$ for different $x_1, x_2 \in V(T)$ and hence $T$ has degree at most $k-2$ in $\B'$.  However, in such a situation, we get a gain for $y$ in a way that will become clear below.  For now, we just need to hold on to the data.  Define $\func{g}{Y}{\set{0,1}}$ by letting $g(y)$ be the number of components $T$ in which there are different $x_1, x_2$ with $yx_1, yx_2 \in u(T)$. By Lemma \ref{ConfigurationTypeOneEuler} each $y \in Y$ has at most $2$ neighbors in any given $T$ and more than $1$ neighbor in at most one $T$, so $g$ is well-defined.  Also, for each $Y' \subseteq Y$ and component $T$, let $s_{Y'}(T)$ be the number of $y \in Y'$ that have $g(y)=1$ because of $T$.  Now, if $T$ is type 2a, we have $d_{\B'}(T) \geq k-1 - s(T)$.  If $T$ is type 2b, then $d_{\B'}(T) \geq k-2 - s(T) + 1 = k-1 - s(T)$.  If $T$ is of type 2c, then $d_{\B'}(T) \geq k-3 - s(T) + 2 = k-1 - s(T)$.  Finally, if $T$ is of type 3, then $d_{\B'}(T) \geq 2(k-2) - s(T)$.  We also have the equality $\sum_{T} s(T) = \sum_{y} g(y)$.
+
+We aim to find an orientation of $\B'$ such that each $y \in Y$ has in degree at least $2 - g(y)$, each original $T$ of type 1 has in degree at least $1$, each original $T$ of type 2 has in degree at least $2$ and each original $T$ of type 3 has in degree at least $3$.  Note that we are not placing any conditions on the copies.  Let's see why we want such an orientation.  Suppose we have one.  We will construct $F \subseteq G$ needed in Lemma \ref{ConfigurationTypeTwoEuler}.  First off, add each edge of $u(T)$ that ends in a copy to $F$ (this is the gain mentioned above). Now, for each directed edge $yT$, pick the edge in $G$ from $y$ to $T$ from $u(T)$ and add it to $F$. We claim that these edges satisfy (4) of Lemma \ref{ConfigurationTypeTwoEuler}.  This is clear if $T$ is type 1 then the selected edge satisfies (4b).  If $T$ is of type 2a, then we have satisfied (4a).  If $T$ is type 2b or 2c, then we satisfy (4a) if the two edges end in the same block of $T$ and (4b) otherwise.  If $T$ is type 3, then two of the three edges must end in the same block and we satisfy (4a). Also, as each $y \in Y$ has in degree at least $2-g(y)$, we have $f(y) = d_G(y) - 1 \geq d_{G[Y]}(y) + d_F(y) + 1$ since the $-g(y)$ is accounted for by the edge in $F$ to a copy.  Now $G$ is $f$-AT by Lemma \ref{ConfigurationTypeTwoEuler}, a contradiction.
+
+Hence we may assume that $\B'$ has no such orientation. Let $Q$ be the original vertices of type $1$ in $\B'$, $P$ the original vertices of type $2a$, $2b$ or $2c$ in $\B'$ and $R$ the original vertices of type $3$ in $\B'$.  Then each $y \in Y$ has degree at least $3$ in $\B'$, each $T \in Q$ has degree at least $3$ in $\B'$.  each $T \in P$ has degree at least $k-1-s(T)$ in $\B'$ and each $T \in R$ has degree at least $2(k-2) - s(T)$ in $\B'$.  Now we apply Lemma \ref{InOrientations} with $S \DefinedAs Q \cup P \cup R$.  Let $H \unlhd \B'[S]$.  For readability, we'll put $A_H \DefinedAs A \cap V(H)$ for $A \subseteq V(\B')$.  To get a contradiction, suppose $H$ doesn't meet the condition in Lemma \ref{InOrientations}; that is, suppose 
+
+\[\size{H}^+ < \parens{\sum_{y \in Y_H} 2-g(y)} + \card{Q_H} + 2\card{P_H} + 3\card{R_H}.\] 
+
+\noindent We have 
+
+\[\size{H}^+ \geq \max\set{3\card{Y_H}, 3\card{Q_H} + \parens{\sum_{T \in P_H} k-1 - s(T)} + \parens{\sum_{T \in R_H} 2(k-2) - s(T)}}.\]
+
+\noindent Put $\zeta \DefinedAs \sum_{y \in Y_H} g(y)$. Hence $\card{Q_H} + 2\card{P_H} > \card{Y_H}$ and $2\card{Y_H} > 2\card{Q_H} + (k-5)\card{P_H}$.  Hence $2\card{Q_H} + (k-5)\card{P_H} < 2\card{Q_H} + 4\card{P_H}$ giving $(k-9)\card{P_H} < 0$ a contradiction since $k \geq 9$.  Hence Lemma \ref{InOrientations} gives the desired orientation of $\B'$, a contradiction.
+\end{proof}
+
+\subsection{Many edges}\label{LowerBoundSectionEuler}
+The rest of the proof is basically taken verbatim from \cite{kostochkastiebitzedgesincriticalgraph}. We need the following definitions:
+\begin{align*}
+\L_k(G) &\DefinedAs G\brackets{x \in V(G) \mid d_G(x) = k-1},\\
+\HH_k(G) &\DefinedAs G\brackets{x \in V(G) \mid d_G(x) \geq k},\\
+\sigma_k(G) &\DefinedAs \parens{k-2 + \frac{2}{k-1}}\card{\L_k(G)} - 2\size{\L_k(G)},\\
+\tau_{k,c}(G) &\DefinedAs 2\size{\HH_k(G)} + \parens{k-c - \frac{2}{k-1}}\sum_{y \in V(\HH_k(G))} \parens{d_G(y) - k},\\
+\alpha_k &\DefinedAs \frac12 - \frac{1}{(k-1)(k-2)},\\
+q_k(G) &\DefinedAs \alpha_k\sum_{v \in V(G) - W^k(G)} \parens{k-1 - d_G(v)}.\\
+\end{align*}
+
+\noindent As proved in \cite{kostochkastiebitzedgesincriticalgraph}, a computation gives the following.
+\begin{lem}\label{SigmaTauBoundEuler}
+Let $G$ be a graph with $\delta \DefinedAs \delta(G) \geq 3$ and $0 \leq c \leq \delta + 1 - \frac{2}{\delta}$.  If $\sigma_{\delta + 1}(G) + \tau_{\delta + 1, c}(G) \geq c\card{\HH_{\delta + 1}(G)}$, then $2\size{G} \geq g_{\delta + 1}(\card{G}, c)$.
+\end{lem}
+
+\noindent We need the following degeneracy lemma.
+\begin{lem}\label{DegenerateEuler}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  If $\size{G} > \sum_{v \in V(G)} f(v)$, then $G$ has an induced subgraph $H$ such that $d_H(v) > f(v)$ for each $v \in V(H)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G} \geq 3$ and we have $x \in V(G)$ with $d_G(x) \leq f(x)$. But now $\size{G-x} > \sum_{v \in V(G-x)} f(v)$, contradicting minimality of $\card{G}$.
+\end{proof}
+
+We'll also need the following consequence of a lemma in \cite{kostochkastiebitzedgesincriticalgraph} giving a lower bound on $\sigma_k(T)$ for $T \in \T_k$.
+
+\begin{lem}\label{SigmaBoundEuler}
+Let $k \geq 6$ and $T \in \T_k$. If $K_{k-1} \subseteq T$, then $\sigma_k(T) \geq 2 + q_k(T)$; otherwise $\sigma_k(T) \geq 2 - \alpha_k + q_k(T)$.
+\end{lem}
+
+\noindent We are now ready to prove the main theorem.
+
+\begin{thm}\label{EdgeBoundEuler}
+Let $G$ be a graph with $\delta \DefinedAs \delta(G) \geq 8$ and $K_{\delta + 1} \not \subseteq G$. With $c \DefinedAs (\delta-2)\alpha_{\delta + 1}$ we have either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $2\size{G} \geq g_{\delta+1}(\card{G}, c)$.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+Suppose (1) does not hold. Put $k \DefinedAs \delta + 1$, $\L \DefinedAs \L_k(G)$ and $\HH \DefinedAs \HH_k(G)$.  Using Lemma \ref{SigmaTauBoundEuler}, we just need to show that $\sigma_k(G) + \tau_{k, c}(G) \geq c\card{\HH}$.  Put $W \DefinedAs W^k(\L)$, $L' \DefinedAs V(\L) - W$ and $H' \DefinedAs \setb{v}{V(\HH)}{d_G(v) = k}$.   For $y \in V(\HH)$, put $\tau_{k,c}(y) \DefinedAs d_{\HH}(y) + \parens{k-c + \frac{2}{k-1}}(d_G(y) - k)$.  We have  $\tau_{k,c}(G) = \sum_{y \in V(\HH)} \tau_{k,c}(y) \geq \sum_{y \in H'} d_{\HH}(y) + \parens{k-c - \frac{2}{k-1}}\card{\HH - H'} \geq \sum_{y \in H'} d_{\HH}(y) + c\card{\HH - H'}$.  Thus it will be sufficient to prove that $S \DefinedAs \sigma_k(G) + \sum_{y \in H'} d_{\HH}(y) \geq c\card{H'}$.
+
+Let $\D$ be the components of $\L$ containing $K_{k-1}$ and $\CC$ the components of $\L$ not containing $K_{k-1}$.  Then $\D \cup \CC \subseteq \T_k$ for otherwise some $T \in \D \cup \CC$ is $d_0$-AT and hence $f_T$-AT and (1) holds.  We have $\sigma_k(G) = \sum_{T \in \D} \sigma_k(T) + \sum_{T \in \CC} \sigma_k(T) \geq 2\card{\D} + (2-\alpha_k)\card{\CC} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}$.
+
+Now we define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
+
+\begin{enumerate}
+\item  $B = H'$ and $A$ is the disjoint union of the following sets
+$A_1, A_2$ and $A_3$,
+\item $A_1 = \D$ and each $T \in \D$ is adjacent to all $y \in H'$
+where $N(y) \cap W^k(T) \neq \emptyset$,
+\item For each $v \in L'$, let $A_2(v)$ be a set of $\card{N(v) \cap
+H'}$ vertices connected to $N(v) \cap H'$ by a matching in $F$.  Let
+$A_2$ be the disjoint union of the $A_2(v)$ for $v \in L'$,
+\item For each $y \in H'$, let $A_3(y)$ be a set of $d_{\HH}(y)$ vertices
+which are all joined to $y$ in $F$.  Let $A_3$ be the disjoint union
+of the $A_3(y)$ for $y \in H'$.
+\end{enumerate}
+
+Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_2 \cup A_3$ and $f(v) = 2$ for all $v \in B \cup A_1$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  In particular, $V(Q) \subseteq B \cup A_1$ and $\delta(Q) \geq 3$.  Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. Now $G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEuler} and hence (1) holds with $H \DefinedAs G[X \cup Y]$, a contradiction.
+
+Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{H'} + \card{\D}) + \card{A_2} + 
+\card{A_3}$. By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \geq k-1$.  Hence $\size{F} \geq (k-1)\card{H'}$.  This gives $(k-3)\card{H'} \leq 2\card{\D} + \card{A_2} + 
+\card{A_3}$.  By our above estimate we have $S \geq 2\card{\D} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \alpha_k\card{A_2} + \card{A_3} \geq \alpha_k(2\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \geq \alpha_k(k-3)\card{H'}$.  Thus (2) holds by Lemma \ref{SigmaTauBoundEuler}.
+\end{proof}
+
+\section{Good orientations from big cuts}\label{OrientationsSection}
+Here we strengthen the lemmas on list colorings and orientations of Kostochka and Yancey \cite{kostochkayancey2012ore}.  The proofs are identical except we replace their ad-hoc method of getting an orientation by vertex splitting and Hall's theorem by the following simple general lemma.  This lemma can be derived from the max-flow min-cut theorem, but we give the entire proof for completeness.  For $H \unlhd G$ put $\size{H}^+ \DefinedAs \size{H} + \size{H, G-H}$.
+
+\begin{lem}\label{InOrientations}
+Let $G$ be a graph, $S \subseteq V(G)$ and $\func{g}{S}{\IN}$.  Then $G$ has an orientation such that $d^-(v) \geq g(v)$ for all $v \in S$ iff for every $H \unlhd G[S]$ we have
+
+\[\size{H}^+ \geq \sum_{v \in V(H)} g(v).\]
+\end{lem}
+\begin{proof}
+First, suppose $G$ has such an orientation and let $H \unlhd G[S]$.  Then $\size{H}^+ = \sum_{v \in V(H)} d_H^-(v) + \size{H, G-H} \geq \sum_{v \in V(H)} d_G^-(v) \geq \sum_{v \in V(H)} g(v)$.
+
+For the other direction, pick an orientation of $G$ minimizing
+
+\[\Theta \DefinedAs \sum_{v \in S} \max\set{0, g(v) - d^-(v)}.\]
+
+\noindent Note that the orientation has the desired property iff $\Theta = 0$. Suppose $\Theta > 0$.  Then we may choose $x \in S$ with $d^-(x) < g(x)$. Put
+
+\[X \DefinedAs \setb{v}{V(G)}{\text{there exists an $xv$-directed-path}}.\]
+
+\noindent For any $v \in X$ we must have $v \in S$ and $d^-(v) \leq g(v)$ for otherwise reversing all the edges on an $xv$-path violates minimality of $\Theta$.  By definition, all edges between $X$ and $G-X$ are directed into $X$ and hence with $H \DefinedAs G[X]$ we have
+
+\[\size{H}^+ = \sum_{v \in V(H)} d^-(v) = d^-(x) + \sum_{v \in V(H) - x} d^-(v) < \sum_{v \in V(H)} g(v).\]
+
+\noindent This contradicts our supposition and thus completes the proof.
+\end{proof}
+
+A \emph{kernel} in a digraph $D$ is an independent set $I \subseteq V(D)$ such that each vertex in $V(D) - I$ has an edge into $I$.  A digraph in which every induced subdigraph has a kernel is called \emph{kernel-perfect}.  
+
+\begin{KernelLemma}
+If $D$ is a kernel-perfect digraph and $\func{f}{V(D)}{\IN}$ such that $f(v) \geq d^+(v) + 1$ for each $v \in V(D)$, then $G$ is online $f$-choosable.
+\end{KernelLemma}
+
+All bipartite graphs are kernel-perfect, the following lemma from \cite{kostochkayancey2012ore} generalizes this fact.
+
+\begin{lem}\label{KernelPerfect}
+Let $B$ be an independent set in a graph $G$ and put $A \DefinedAs V(G) - B$.  Any digraph created from $G$ by replacing each edge in $G[A]$ by a pair of opposite arcs and orienting the edges between $A$ and $B$ arbitrarily is kernel-perfect.
+\end{lem}
+
+Now we have everything needed to prove the strengthing.  For disjoint subsets $A$ and $B$ of $V(G)$, we write $G(A, B)$ for the bipartite subgraph $G[A \cup B] - E(G[A]) - E(G[B])$.  
+
+\begin{lem}\label{MicStrength}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \leq d_G(v) + 1$ for all $v \in V(G)$.  If there is independent $A \subseteq V(G)$ such that for each $Q \unlhd G(A, V(G-A))$ we have
+
+\[\size{Q}^+ \geq  \sum_{v \in V(Q)} d_G(v) + 1 - f(v).\]
+
+\noindent then $G$ is online $f$-choosable.
+\end{lem}
+\begin{proof}
+Applying Lemma \ref{InOrientations} on $G(A, V(G-A))$ with $S = V(G)$ and $g(v) \DefinedAs d_G(v) + 1 - f(v)$ for all $v \in V(G)$ gives an orientation of $G$ where $d^-(v) \geq d_G(v) + 1 - f(v)$ for each $v \in V(G)$ and thus $f(v) \geq d^+(v) + 1$.  Using this orientation in Lemma \ref{KernelPerfect} for the edges between $A$ and $V(G-A)$ then give the desired kernel-perfect orientation of $G$ showing that $G$ is online $f$-choosable.
+\end{proof}
+
+\begin{lem}\label{SecondStrengtheningMic}
+Let $G$ be a nonempty graph and $\func{f}{V(G)}{\IN}$ with $f(v) \leq d_G(v) + 1$ for all $v \in V(G)$. If there is independent $A \subseteq V(G)$ such that
+
+\[\size{A, G-A} \geq  \sum_{v \in V(G)} d_G(v) + 1 - f(v),\]
+
+\noindent then $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.
+\end{lem}
+\begin{proof}
+Let $A \subseteq V(G)$ be an independent set with $\size{A, G-A} \geq \sum_{v \in V(G)} \parens{d_G(v) + 1 - f(v)}$ and put $B \DefinedAs V(G-A)$. Choose nonempty $H \unlhd G$ with $\size{A \cap V(H), B \cap V(H))} \geq  \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)}$ minimizing $\card{H}$. Suppose $H$ is not online $f_H$-choosable. Then, by Lemma \ref{MicStrength}, we have $Q \unlhd G(A \cap V(H), B \cap V(H))$ with $\size{Q}^+ < \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)}$.  Now $Q \neq H$ by our assumption on $H$, hence $Z \DefinedAs H-Q$ is a nonempty induced subgraph of $G$ with $\size{A \cap V(Z), B \cap V(Z)} = \size{A \cap V(H), B \cap V(H)} - \size{Q}^+ > \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)} - \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)} = \sum_{v \in V(Z)} \parens{d_Z(v) + 1 - f_Z(v)}$ contradicting the minimality of $\card{H}$.
+\end{proof}
+
+As a special case we get the following lower bound on the number of edges.  Recall that $\mic(G)$ is the maximum of $\sum_{v \in I} d_G(v)$ over all independent sets $I$ of $G$.
+
+\begin{thm}\label{ConsantListMicStrength}
+For any graph $G$ we have either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is online $f_H$-choosable where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $2\size{G} \geq (\delta(G) - 1)\card{G} + \mic(G) + 1$.
+\end{enumerate}
+\end{thm}
+
+\section{The applications}
+For a graph $G$, let $\HH(G)$ be the subgraph of $G$ induced on the vertices of degree greater than $\delta(G)$ and $\L(G)$ the subgraph of $G$ induced on the vertices of degree $\delta(G)$.
+
+\subsection{Putting the two bounds together}
+\begin{lem}\label{OrePrecursor1}
+If $G$ is a graph such that $\HH(G)$ is edgeless and $\Delta(G) = \delta(G) + 1$, then either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is online $f_H$-choosable where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $2\size{G} < \parens{\delta(G) + \frac{1}{\delta(G)}}\card{G}$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Put $\delta \DefinedAs \delta(G)$ and suppose $2\size{G} \geq \parens{\delta + \frac{1}{\delta}}\card{G}$.  Then $\card{\HH(G)} + \delta\card{G} = 2\size{G} \geq \parens{\delta + \frac{1}{\delta}}\card{G}$ and hence $\card{G} \leq \delta\card{\HH(G)}$.  Therefore $\size{\L(G), \HH(G)} \geq (\delta + 1)\card{\HH(G)} \geq \card{\HH(G)} + \card{G}$.  Plugging into (2) of Lemma \ref{ConsantListMicStrength} gives $2\size{G} \geq 2\size{G} + 1$, which is impossible; hence we get the desired induced subgraph $H$ and (1) holds.
+\end{proof}
+
+The method of achieving lower bounds on the number of edges in Section \ref{LowerBoundSectionEuler} computes a bound on $\sigma(G)$ as an intermediate step. We can make things simpler by using the upper bound in this form as well.  A routine computation gets the following from Lemma \ref{OrePrecursor1}.
+
+\begin{lem}\label{OrePrecursor2}
+If $G$ is a graph such that $\HH(G)$ is edgeless and $\Delta(G) = \delta(G) + 1$, then either:
+\begin{enumerate}
+\item $G$ has a nonempty induced subgraph $H$ which is online $f_H$-choosable where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$; or
+\item $\sigma_{\delta(G) + 1}(G) < \parens{4 - \frac{2}{\delta(G)}}\card{\HH(G)}$.
+\end{enumerate}
+\end{lem}
+
+\begin{thm}\label{EdgelessEuler}
+Every graph $G$ with $\delta(G) + 1 = \Delta(G) \geq 11$ such that $\HH(G)$ is edgeless either contains $K_{\Delta(G)}$ or has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs \Delta(G) - 1 + d_H(v) - d_G(v)$ for all $v \in V(H)$.
+\end{thm}
+\begin{proof}
+Suppose not and let $G$ be a counterexample.  Put $\delta \DefinedAs \delta(G)$. By (the proof of) Lemma \ref{EdgeBoundEuler} we have $\sigma_{\delta + 1}(G) \geq \alpha_{\delta+1}\card{\HH(G)}$.  By Lemma \ref{OrePrecursor2}, we have $\sigma_{\delta + 1}(G) < \parens{4 - \frac{2}{\delta}}\card{\HH(G)}$ and hence we have $(4 - \frac{2}{\delta})\card{\HH(G)} > \alpha_{\delta + 1}(\delta - 2)\card{\HH(G)}$ giving $4 - \frac{2}{\delta} > \alpha_{\delta+1}(\delta-2) = \parens{\frac12 - \frac{1}{\delta(\delta-1)}}\parens{\delta-2}$.  But then $\delta \leq 9$, a contradiction.
+\end{proof}
+
+A bound for smallish $\Delta$ can already be derived from Kostochka and Stiebitz's result.  That would give $4 - \frac{2}{\delta} > \frac13\parens{\frac12 - \frac{1}{(\delta)(\delta-1)}}\parens{\delta-3}$ at the end and hence works for $\Delta \geq 28$.
+
+\subsection{Ore Brooks for list coloring}
+\begin{thm}\label{OurListOre}
+Every graph with $\theta \geq 20$ and $\omega \leq \frac{\theta}{2}$ is $\floor{\frac{\theta}{2}}$-choosable.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Put $\Delta \DefinedAs \Delta(G)$, $k \DefinedAs \floor{\frac{\theta(G)}{2}} + 1$ and let $L$ be a bad $(k-1)$-assignment on $G$.  Then $G$ is $L$-critical by minimality of $\card{G}$.  Moreover, $\HH(G)$ is edgeless by Vizing's extension of Brooks' theorem to list coloring. Hence $\delta(G) \geq k - 1$ which gives $\Delta = k \geq 11$.  Since $G$ contains no $K_\Delta$, applying Lemma \ref{EdgelessEuler} gives a nonempty induced subgraph $H$ of $G$ that is online $f_H$-choosable where $f_H(v) \DefinedAs \Delta - 1 + d_H(v) - d_G(v)$ for all $v \in V(H)$.  Color $G-H$ from $L$ and let $L'$ be the resulting list assignment on $H$.  Then $L'$ is an $f_H$-assignment on $H$ since $\card{L'(v)} \geq \card{L(v)} + d_H(v) - d_G(v) = \Delta - 1 + d_H(v) - d_G(v)$ for all $v \in V(H)$.  Since $H$ is online $f_H$-choosable, $H$ is $f_H$-choosable and hence we can $L'$-color $H$ giving a contradiction.
+\end{proof}
+
+\subsection{Ore Brooks for online list coloring}
+\begin{lem}\label{CutLemma}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  If $H$ is an induced subgraph of $G$ such that $G-H$ is online $f$-choosable and $H$ is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_G(v) - d_H(v)$, then $G$ is online $f$-choosable.
+\end{lem}
+
+\begin{lem}\label{BrooksOnline}
+Every graph with $\Delta \geq 3$ not containing $K_{\Delta+1}$ is online $\Delta$-choosable.
+\end{lem}
+
+\begin{thm}\label{OurListOnlineOre}
+Every graph with $\theta \geq 20$ and $\omega \leq \frac{\theta}{2}$ is online $\floor{\frac{\theta}{2}}$-choosable.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$.  Put $\Delta \DefinedAs \Delta(G)$, $k \DefinedAs \floor{\frac{\theta(G)}{2}} + 1$.  By repeatedly applying Lemma \ref{CutLemma} for a single vertex, we may assume that $\delta(G) \geq k - 1$. Now using Lemma \ref{BrooksOnline} we conclude that $\HH(G)$ is edgeless and $\Delta = \delta(G) + 1 \geq k \geq 11$. Since $G$ contains no $K_\Delta$, applying Lemma \ref{EdgelessEuler} gives a nonempty induced subgraph $H$ of $G$ that is online $f_H$-choosable where $f_H(v) \DefinedAs \Delta - 1 + d_H(v) - d_G(v)$ for all $v \in V(H)$.  Hence $G$ is online $(\Delta - 1)$-choosable by Lemma \ref{CutLemma}, a contradiction.
+\end{proof}
+
+\subsection{Ore Brooks for maximum degree four}
+\subsubsection{Exact bound on the number of edges}
+Kostochka and Yancey's bound \cite{kostochkayancey2012ore} shows that if $G$ is $4$-critical, then $\size{G} \geq \ceil{\frac{5\card{G}-2}{3}}$.  If we try to analyze $4$-critical graphs with edgeless high vertex subgraphs by putting this lower bound on the number of edges together with the results on orientations and list coloring obtained in \cite{kostochkayancey2012ore}, we get nothing.  Using the improved bound from Lemma \ref{OrePrecursor1} we get an exact bound on the number of edges in such a graph.
+
+\begin{lem}\label{EdgesIn4Critical}
+For a critical graph $G$ with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless we have $\size{G} = \ceil{\frac{5\card{G} - 2}{3}}$ and $\card{G}$ is not a multiple of $3$.
+\end{lem}
+\begin{proof}
+Since $G$ is $4$-critical, applying Lemma \ref{OrePrecursor1} gives $2\size{G} < \parens{3 + \frac13}\card{G} = \frac{10}{3}\card{G}$.  By Kostochka and Yancey's bound we have $\ceil{\frac{5\card{G}-2}{3}} \leq \size{G} < \frac{5}{3}\card{G}$.  Hence $\size{G} = \ceil{\frac{5\card{G} - 2}{3}}$ and $\card{G}$ is not a multiple of $3$.
+\end{proof}
+
+Note that Lemma \ref{EdgesIn4Critical} determines many of the invariants of $G$ we might want to know. We have:
+
+\begin{itemize}
+\item $\card{\HH(G)} = \ceil{\frac{\card{G} - 4}{3}}$,
+\item $\card{\L(G)} = \ceil{\frac{2\card{G} + 4}{3}}$,
+\item $\size{\HH(G), \L(G)} = 4 \ceil{\frac{\card{G} - 4}{3}}$,
+\item $\size{\L(G)} = \ceil{\frac{5\card{G} - 2}{3}} - 4 \ceil{\frac{\card{G} - 4}{3}}$,
+\item $\mic(G) \leq 2(\size{G} - \card{G}) - 1 = \ceil{\frac43(\card{G}-1)} - 1$ (by Lemma \ref{ConsantListMicStrength}).
+\end{itemize}
+\subsubsection{Neighborhoods of low independent sets}
+If there is an independent set $I$ in the low vertices whose neighborhood in the high vertices is small, then we can get some savings by looking at $V(\HH(G)) \cup I - N(I)$ instead of $V(\HH(G))$ in our estimate of $\mic(G)$.  Doing so gives the following.
+
+\begin{lem}\label{LowIndependentSet}
+Let $G$ be a critical graph with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless.  If $I \subseteq V(\L(G))$ is independent, then 
+\[\card{N(I) \cap V(\HH(G))} \geq 
+\begin{cases} \frac34(\card{I} - 1) & \text{if $\card{G} \equiv 1 \pmod{3}$,}\\
+\frac{3\card{I} - 1}{4} & \text{if $\card{G} \equiv 2 \pmod{3}$.}
+\end{cases}\]
+\end{lem}
+\begin{proof}
+Let $I \subseteq V(\L(G))$ be independent and put $A \DefinedAs V(\HH(G)) \cup I - N(I)$.  Then $A$ is independent and hence $\mic(G) \geq \sum_{v \in A} d_G(v) = 4\card{\HH(G) - N(I)} + 3\card{I}$.  Above we saw that $\mic(G) \leq \ceil{\frac43(\card{G}-1)} - 1$ and hence we have $4\card{\HH(G)} - 4\card{N(I) \cap V(\HH(G))} + 3\card{I} \leq \ceil{\frac43(\card{G}-1)} - 1$.  Since  $\card{\HH(G)} = \ceil{\frac{\card{G} - 4}{3}}$, the lemma follows.
+\end{proof}
+
+\noindent As a consequence we have the following.
+
+\begin{cor}\label{LowLowNeighborhood}
+Let $G$ be a critical graph with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless.  If $\card{G} \equiv 2 \pmod{3}$ then every low vertex in $G$ has a high neighbor and if $\card{G} \equiv 1 \pmod{3}$, then at most one component of $\L(G)$ contains a vertex with no high neighbor.
+\end{cor}
+
+\subsubsection{Diamond contraction}
+We can contract a diamond (that is $K_4^-$) in any example to get another example.
+
+\begin{lem}\label{DiamondContraction}
+Let $G$ be a critical graph with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless.  Suppose $G$ has an induced diamond $D = K_4 - xy$ with vertex set $\set{w, x, y, z}$.  Then at least one of $x$ or $y$ is high and $N(x) \cap N(y) = \set{w, z}$.  Let $H$ be the graph obtained by contracting $D$ to a single vertex.  Then $H$ is a critical graph with $\Delta(H) \leq \chi(H) = 4$ and $\HH(H)$ is edgeless. 
+\end{lem}
+\begin{proof}
+Suppose both $x$ and $y$ are low.  Then we can $3$-color $G-D$, color $x$ and $y$ the same, then color $w$ and $z$ different giving a $3$-coloring of $G$, impossible.  Now suppose there is $v \in N(x) \cap N(y) - \set{w, z}$.  Then we can $3$-color $G - D - v$, color $x$ and $y$ the same, color $v$ with its at least one available color and then color $w$ and $z$ different giving a $3$-coloring of $G$, impossible.
+
+Let $v_D$ be the vertex to which $D$ was contracted in forming $H$.  Then $d_H(v_D) = \min\set{d_G(x), d_G(y)} \in \set{3,4}$.  Every other vertex in $H$ has the same degree as it had in $G$.  Hence  $\HH(H)$ is edgeless.   Any $3$-coloring $\pi$ of $H$ gives a $3$-coloring of $G$ by coloring $x$ and $y$ with $\pi(v_D)$, coloring $w$ and $z$ with different elements of $\irange{3} - \pi(v_D)$ and coloring every $v \in V(G-D)$ with $\pi(v)$.  Hence $\chi(H) \geq 4$.  Since $G$ is critical, $G-w$ has a $3$-coloring, using this coloring on $G-D$ and then coloring $v_D$ with $4$ gives a $4$-coloring of $H$.  Therefore $\Delta(H) \leq \chi(H) = 4$ as desired.  Let $H'$ be a proper subgraph of $H$.  If $v_D \not \in V(H')$, then $H'$ is a proper subgraph of $G$ and hence $H'$ is $3$-colorable.  Otherwise, the graph formed by expanding $v_D$ in $H'$ back to a diamond is a proper subgraph of $G$ and hence has a $3$-coloring $\pi$.  Then we must have $\pi(x) = \pi(y)$ and hence we get a $3$-coloring of $H'$ by coloring $v_D$ with $\pi(x)$ and every $v \in V(H')-v_D$ with $\pi(v)$.  Therefore $H$ is critical.
+\end{proof}
+
+\begin{conjecture}
+Every critical graph $G$ with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless, except $K_4$, has an induced diamond. In particular, any such $G$ can be reduced to $K_4$ by a sequence of diamond contractions.
+\end{conjecture}
+
+\noindent Perhaps the following consequence would be easier to prove.
+
+\begin{conjecture}
+Every critical graph $G$ with $\Delta(G) \leq \chi(G) = 4$ such that $\HH(G)$ is edgeless is planar.
+\end{conjecture}
+
+%\subsubsection{Haj{\'o}s construction}
+
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

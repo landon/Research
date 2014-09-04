@@ -1,0 +1,1106 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx,algorithmic,algorithm,amsfonts, verbatim}
+\usepackage{fullpage,amsthm,amssymb,amsmath}
+\usepackage{enumerate}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{SmallPotLemma}[theorem]{Small Pot Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{calculation}[theorem]{Calculation}
+
+\newcommand{\lra}{\Leftrightarrow}
+\newcommand{\ra}{\Rightarrow}
+\newcommand{\la}{\Leftarrow}
+
+\begin{document}
+\title{The Borodin-Kostochka Conjecture for choosability and graphs with large maximum degree}
+\author{
+Ilkyoo Choi\thanks{Department of Mathematics, University of Illinois at Urbana-Champaign, ichoi4@illinois.edu.}\,,
+Hal Kierstead\thanks{}\,,
+Landon Rabern\thanks{}\,,
+Bruce Reed\thanks{}
+}
+\date\today
+\maketitle
+\begin{abstract}
+Brooks' Theorem states that for a graph $G$ with maximum degree $\Delta(G)$ at least $3$, the chromatic number is at most $\Delta(G)$ when the clique number of $G$ is at most $\Delta(G)$. 
+Vizing proved that the list chromatic number is also at most $\Delta(G)$ under the same conditions.
+Borodin and Kostochka conjectured that a graph $G$ with maximum degree at least $9$ must be $(\Delta(G)-1)$-colorable when $G$ has clique number at most $\Delta(G)-1$;
+this was proven for graphs with maximum degree at least $10^{14}$ by Reed.
+In this paper, we prove the analogous result for the list chromatic number;
+namely, we prove that a graph $G$ with $\Delta(G)\geq 10^{20}$ is $(\Delta(G)-1)$-choosable when $G$ has clique number at most $\Delta(G)-1$. 
+\end{abstract}
+
+\section{Introduction}
+
+Let $K_n$ be the complete graph on $n$ vertices and let $E_n$ be the empty graph on $n$ vertices.
+For a graph $G$, let $\Delta(G)$, $\omega(G)$, $\chi(G)$, and $\chi_l(G)$ denote the maximum degree, clique number, chromatic number, and list chromatic number of $G$, respectively. 
+It is a trivial fact that a graph can be properly colored with $\Delta(G)+1$ colors.
+Interestingly enough, $\Delta(G)+1$ happens to be the least upper bound on $\omega(G)$. 
+In 1941, Brooks \cite{Br41} proved the following classical result that connects $\Delta(G)$, $\omega(G)$, and $\chi(G)$. 
+
+\begin{theorem}\cite{Br41}
+For a graph $G$ with $\Delta(G)\geq 3$, if $\omega(G)\leq \Delta(G)$, then $\chi(G)\leq \Delta(G)$. 
+\end{theorem}
+
+The condition on the maximum degree is tight, as the conclusion does not follow for odd cycles. 
+Actually, in 1976, Vizing \cite{Vi76} showed that the analogous result holds for the list chromatic number under the same conditions.
+
+\begin{theorem}\cite{Br41}
+For a graph $G$ with $\Delta(G)\geq 3$, if $\omega(G)\leq \Delta(G)$, then $\chi_l(G)\leq \Delta(G)$. 
+\end{theorem}
+
+Shortly after, in 1977, Borodin and Kostochka \cite{BK77} conjectured a similar type of result when the upper bound on the clique number is one less. 
+The condition on the maximum degree is tight, as there exist graphs with maximum degree less then $9$ where the conclusion is not true. We state the contrapositive.
+
+\begin{conjecture}\cite{BK77}\label{BKconj}
+Every graph $G$ satisfying $\chi(G)\geq \Delta(G)\geq 9$ contains a $K_{\Delta(G)}$. 
+\end{conjecture}
+
+There are various partial results regarding this conjecture. 
+Kostochka \cite{Ko80} proved the following result, which guarantees a clique of size almost the maximum degree. 
+A relaxation on the lower bound on the maximum degree conditions allows a theorem by Mozhan \cite{Mo83}, which ensures a bigger, but still less than the maximum degree, clique. 
+By drastically increasing the lower bound on the maximum degree, Reed \cite{Re99} finally shows the existence of a clique of size equal to the maximum degree using probabilistic arguments. 
+
+\begin{theorem}\cite{Ko80}
+Every graph $G$ satisfying $\chi(G)\geq \Delta(G)$ contains a $K_{\Delta(G)-28}$. 
+\end{theorem}
+
+\begin{theorem}\cite{Mo83}
+Every graph $G$ satisfying $\chi(G)\geq \Delta(G)\geq 31$ contains a $K_{\Delta(G)-3}$. 
+\end{theorem}
+
+\begin{theorem}\cite{Re99}
+Every graph $G$ satisfying $\chi(G)\geq \Delta(G)\geq 10^{14}$ contains a $K_{\Delta(G)}$.
+\end{theorem}
+
+There is even a paper by Cranston and Rabern \cite{CR12} that takes a deep look into minimum counterexamples to Conjecture \ref{BKconj}.
+We will use a couple results from their paper for a structural lemma in this paper. 
+Recall the following generalization of choosability. 
+
+\begin{definition}
+For an integer $r$, a graph $G$ is {\it $d_r$-choosable} if $G$ is $f$-choosable where $f(v)=d(v)-r$. 
+\end{definition}
+
+In this paper, we address Conjecture \ref{BKconj} for the list chromatic number. 
+We prove that the conjecture is true even for the list chromatic number when the maximum degree is sufficiently large. 
+The main result in this paper is the following. 
+
+\begin{theorem}\label{result}
+For a graph $G$ with $\Delta(G)\geq 10^{20}$, 
+if $\omega(G)\leq \Delta(G)-1$, then $\chi_l(G)\leq \Delta(G)-1$. 
+\end{theorem}
+
+Throughout this paper, unless specified otherwise, $G$ will be a minimum counterexample in terms of the number of vertices for Theorem \ref{result} with maximum degree $\Delta$. 
+Note that every vertex of $G$ must have degree either $\Delta$ or $\Delta-1$, and $G$ cannot have a $d_1$-choosable graph as an induced subgraph, even though every proper subgraph of $G$ is $(\Delta-1)$-choosable.
+Let $L(v)$ be the list of colors assigned to a vertex $v\in V(G)$. 
+
+We will show that $G$ is actually $(\Delta-1)$-choosable, proving such a counterexample $G$ cannot exist.
+Section 2 will first introduce some useful lemmas.
+The proof will come in two steps. 
+Section 3 is the first step, which is to construct a decomposition of $G$ that will facilitate the second step.
+Section 4 is the second step, which is to show that $G$ is actually $(\Delta-1)$-choosable via a probabilistic argument involving the Lov\'asz Local Lemma and Azuma's Inequality.
+
+\section{Lemmas}
+
+The lemmas in this section will reveal some aspects of the list assignment to the vertices of cliques of $G$. In particular, the list assignment of vertices in maximum cliques are analyzed.
+
+\begin{lemma}\cite{CR12}\label{K6Possibilities}
+If $B$ is a graph with $\omega(B) \leq |B| - 2$, then $K_6\vee B$ is $d_1$-choosable.
+\end{lemma}
+
+The above lemma from \cite{CR12} shows that $G$ cannot have $K_6\vee B$ as an induced subgraph if $\omega(B) \leq |B| - 2$. Recall that $G_1\vee G_2$ denotes the {\it join} of $G_1$ and $G_2$.
+
+\begin{definition}
+A vertex $v$ is {\it safe} if $d(v)-(\Delta-2)$ instances of any of the following happen:
+\begin{enumerate}
+\item there is a color not in $L(v)$ coloring a vertex of $N(v)$; 
+\item there is a color assigned to two vertices of $N(v)$.
+\end{enumerate}
+\end{definition}
+
+Note that a safe vertex always has a color in its list that can be used on it since at most $\Delta-2$ colors can appear in its neighborhood.
+Now we show that the lists of all but at most one vertex in a clique of $G$ has many colors in common. 
+This lemma will be used for a more detailed analysis in Lemma \ref{theLemma}.
+
+\begin{lemma}\label{core}
+If $C$ is a clique of $G$, then there exists $C'\subset C$ such that $|C'|=|C|-1$ and $|L(x)\cap L(y)|\geq |C|-3$ for all $x, y\in C$.
+\end{lemma}
+
+\begin{proof}
+Let $L'(v)$ be the remaining colors available for $v$ after a $(\Delta-1)$-list coloring of $G-C$, which exists by the minimality of $G$. 
+For $v\in C$, since $v$ has at most $\Delta-(|C|-1)$ neighbors outside $C$, it follows that $|L'(v)|\geq |C|-2$.
+
+%%%%%%%%%%% ILKYOO's proof
+%Fix some $v_0\in C$ and assume for the sake of contradiction that there exist $x, y\in C-v_0$ such that $|L(x)\cap L(y)|<|C|-3$. 
+%We will either find a sufficient $C'$ or we can extend the coloring onto $C$ by Hall's Theorem, which contradicts that $G$ is a counterexample.
+%Let $S$ be a nonempty subset of $C$. 
+%If $|S|\leq |C|-2$, then since $S$ is nonempty, $|L'(S)|\geq |C|-2\geq |S|$.
+%If $|S|=|C|$, then since $|L'(S)|\geq|L'(x)\cup L'(y)|\geq 2(|C|-2)-|L'(x)\cap L'(y)|\geq 2(|C|-2)-|L(x)\cap L(y)|>|C|-1$, it follows that $|L'(S)|\geq |C|=|S|$. Now consider when $|S|=|C|-1$. 
+%If $|L'(S)|\geq |C|-1=|S|$, then we can extend the coloring onto $C$ by Hall's Theorem, which is a contradiction.
+%
+%So assume $|L'(S)|\leq |C|-2$, and note that it must be the case that $|L'(S)|=|C|-2$ since $|L'(S)|\geq |C|-2$. 
+%In other words, $L'(v)$ must be identical for all $v\in S$ with size at least $|C|-3$. 
+%Hence, $S$ is an appropriate $C'$.
+%%%%%%%%%%%
+
+%%%%%%%%%%%%%(Prof. Reed's original comments)
+%Since this is a minimal counterexample, we cannot find a system of distinct representatives for the $L'$. 
+%Thus. by Hall’s theorem, there exists a set $F$ of vertices of these lists, such that the union of the $L'(v)$ for $v$ in $F$ has size less than $|F|$.
+%Since each list has size $|C|-2$, $|F|$ has size at least $|C|-1$.
+%If $|F|$ has size $|C|-1$ then every vertex in F has the same list and we are done.
+%Otherwise F is C, and the union of the list for the vertices in $|C|$ has at most $|C|-1$ elements.   
+% We can assume  there are two vertices x and y with distinct lists as otherwise we are done. 
+%Now the union of these lists has size exactly $|C|-1$ and every vertex in $|C|$ must have a list consisting of
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%(Prof. Reed's proof modified by ILKYOO)
+Since $G$ is a minimum counterexample, a system of distinct representatives for $L'(v)$ where $v\in C$ does not exist. 
+Thus, by Hall's theorem, there exists a subset $F$ of $C$ such that the union of the $L'(v)$ for $v$ in $F$ has size less than $|F|$.
+Since each $L'$ list has size at least $|C|-2$, $|F|$ has size at least $|C|-1$.
+If $|F|$ has size $|C|-1$ then every vertex in $F$ has the same $L'$ list and we are done.
+Otherwise, $F$ is $C$, and the union of the lists for the vertices in $C$ has at most $|C|-1$ elements.   
+We can assume there are two vertices $x$ and $y$ with distinct lists as otherwise we are done. 
+Now the union of these $L'$ lists has size exactly $|C|-1$ and every vertex in $C$ has at most one color missing from each of the $L'$ lists of $x$ and $y$. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{proof}
+
+\begin{lemma}\label{theLemma}
+For a $(\Delta-1)$-clique $C$ of $G$ and a vertex $w\not\in C$ such that $|N(w)\cap C|\geq 5$,
+the following holds:
+\begin{enumerate}[(i)]
+\item there exists a set $S$ of $\Delta-2$ colors that are in $L(v)$ for every $v\in N(w)\cap C$;
+\item each vertex in $N(w)\cap C$ has degree $\Delta$;
+\item each vertex $y\not\in C\cup\{w\}$ has at most $4$ neighbors in $N(w)\cap C$;
+\item for each $v\in N(w)\cap C$, the color in $L(v)-S$ appears in the lists of at most $5$ vertices in $N(w)\cap C$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof} of $(i)$.
+%%%%%%%%%%%%%%%%%% ILKYOO's proof
+Let $L'(v)$ be the remaining colors available for $v$ after a $(\Delta-1)$-list coloring of $G-C-w$, which exists by the minimality of $G$. 
+We want to show $L'(x)=L'(y)$ for all $x, y\in N(w)\cap C$. 
+Assume for the sake of contradiction that there exists a color $\alpha$ such that $N(w)\cap C$ can be partitioned into two nonempty sets $A$ and $B$ where a vertex $v\in N(w)\cap C$ is in $A$ if and only if $\alpha\in L'(v)$. 
+Choose vertices $x\in C-N(w)$, $a\in A$, and $b\in B$.
+We may assume $|B|\geq 2$ since if $|B|=1$, then choose a color in $L'(b)-L'(a)$ instead of $\alpha$ to form the partition. 
+Note that $|L'(w)|\geq \Delta-1-(\Delta-5)=4$, $|L'(x)|\geq \Delta-3$, and $|L'(b)|\geq \Delta-2$. 
+
+If there exists a color $c\in L'(w)\cap L'(x)$, then color both $w$ and $x$ with $c$.
+If $c=\alpha$, then we can complete the coloring by coloring the vertices in $B$ last since every vertex in $B$ is safe. 
+If $c\neq \alpha$, then color $a$ with $\alpha$, and now we can complete the coloring by coloring the vertices in $B$ last since every vertex in $B$ is safe. 
+
+If $L'(w)$ and $L'(x)$ are disjoint, then since $|L'(w)\cup L'(x)-L'(b)|\geq |L'(w)|+|L'(x)|-|L'(b)|\geq \Delta+1-(\Delta-2)=3$, either $L'(w)-L'(b)$ or $L'(x)-L'(b)$ has at least two colors. 
+Without loss of generality, assume $|L'(w)-L'(b)|\geq 2$, and therefore there must be a color $c\in L'(w)-L'(b)$ that is different from $\alpha$. 
+We can complete the coloring by first coloring $w$ with $c$ and $a$ with $\alpha$, and then coloring the vertices in $B$ last since they are safe. 
+%%%%%%%%%%%%%(Prof. Reed's original comments)%%%%%%%%%%%%%%%
+%Let $A_i=N(w_i)\cap C_i$ and let $S_i$ be the maximum set of colours that appear on all of lists of vertices in $A_i$. 
+%Suppose that for some vertex $y_i$ in $A_i$ there are two colours not in $S_i$ which appear in $L_{y_i}$. 
+%Then we have that we are not in a minimal counterexample.
+%(We colour $G-C_i-w_i$, colour $y_i$ with a colour $c$ not in $S_i$, we let $x_i$ be a vertex in $A_i$ on which $c$ is not available, we colour $v_i$ and $w_i$ with either the same colour or so that one of them gets a colour
+%which is not in $L_{x_i}$ and is also missed by at least one other vertex $r_i$  in $A_i-x_i-y_i$; 
+%we can then complete greedily colouring $r_i$ second last and $x_i$ last).
+%So now, there is a special colour for every vertex.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{proof}
+
+\begin{proof} of $(ii)$.
+Let $L'(v)$ be the remaining colors available for $v$ after a $(\Delta-1)$-list coloring of $G-C-w$, which exists by the minimality of $G$. 
+Assume for the sake of contradiction that there exists a vertex $v\in N(w)\cap C$ with degree $\Delta-1$. 
+Choose a vertex $x\in C-N(w)$. 
+Note that $|L'(w)|\geq \Delta-1-(\Delta-5)=4$, $|L'(x)|\geq \Delta-3$, and $|L(v)|=|L'(v)|=\Delta-1$.
+
+If there exists a color $c\in L'(w)\cap L'(x)$, then color both $w$ and $x$ with $c$.
+We can complete the coloring by coloring $v$ last since $v$ is safe.
+
+If $L'(w)$ and $L'(x)$ are disjoint, then since $|L'(w)\cup L'(x)-L'(v)|\geq |L'(w)|+|L'(x)|-|L'(v)|\geq \Delta+1-(\Delta-1)=2$, either $L'(w)-L'(v)$ or $L'(x)-L'(v)$ has one color $c$ that is not in $L(v)$.
+Again, we can complete the coloring by first coloring $w$ or $x$ with $c$, and coloring $v$ last since $v$ is safe.
+\end{proof}
+
+\begin{proof} of $(iii)$.
+Suppose not. 
+Let $y\not\in C\cup\{w\}$ have at least $5$ neighbors in $N(w)\cap C$. 
+Let $x\in C-N(w)$ and let $z\in C-x$ be a vertex not adjacent to $y$. 
+Such a $z$ must exist since if not, then $y$ and $w$ must be adjacent to all the vertices in $C$ except $x$. 
+Now, $x, w, y$ form an independent set since adding any edge would create a $\Delta$-clique. 
+This implies that there exists an induced $E_3\vee K_6$, which is $d_1$-choosable, which is a contradiction. 
+
+Let $L'(v)$ be the remaining colors available for $v$ after a $(\Delta-1)$-list coloring of $G-C-w-y$, which exists by the minimality of $G$. 
+Note that $|L'(y)|\geq 4$ and $|L'(w)|\geq 4$ since $y$ and $w$ each have at least $5$ neighbors in $C$.
+Also, $|L'(x)|\geq \Delta-3$ and $|L'(z)|\geq \Delta-3$ since $x$ and $z$ have at most $2$ neighbors in $G-C-w-y$. Let $v\in N(y)\cap C$ so that $|L'(v)|=|L(v)|=\Delta-1$.
+
+Without loss of generality assume $L'(w)\cap L'(x)=\emptyset$, which implies $|L'(w)\cup L'(x)-L'(v)|\geq \Delta+3-(\Delta-1)=2$. 
+If $L'(y)\cap L'(z)=\emptyset$, then by the same logic $|L'(y)\cup L'(z)-L'(v)|\geq 2$. 
+Now, color $y$ or $z$ with a color $c'\in L'(y)\cup L'(z)-L'(v)$, and color $w$ or $x$ with a color $c$ that is neither in $L'(v)$ nor $c'$.
+Such color $c$ exists since $|L'(w)\cup L'(x)-L'(v)|\geq 2$. 
+If there exists a color $c'$ in $L'(y)\cap L'(z)$, then color $y$ and $z$ with $c'$, and color $w$ or $x$ with a color $c$ that is neither in $L'(v)$ nor $c$. 
+Such color $c$ exists since $|L'(w)\cup L'(x)-L'(v)|\geq 2$.
+Either way, we can color every vertex in $C$, leaving $v$ and one more vertex $u$ in $N(y)\cap N(w)\cap C$ to color last.
+Since $u$ has the same list as $v$, we can color $u$ since $v$ is uncolored and there exists a color in $N(u)$ that is not in the list of $u$. Now we can finish the coloring since $v$ is safe. 
+
+Now assume $L'(w)\cap L'(x)\neq \emptyset$ and $L'(y)\cap L'(z)\neq \emptyset$. 
+If $|(L'(w)\cap L'(x))\cup (L'(y)\cap L'(z))|\geq 2$, then we can find two different colors $c$ and $c'$ where we can color $w, x$ with $c$ and $y, z$ with $c'$. 
+We finish the coloring by coloring every vertex in $C-N(y)\cap N(w)$ first, and coloring the vertices in $N(y)\cap N(w)\cap C$ last since every vertex in $N(y)\cap N(w)\cap C$ is safe. 
+
+The only remaining case is when $L'(w)\cap L'(x)=L'(y)\cap L'(z)=\{c\}$ for some color $c$.
+In this case, $|(L'(w)-L(x))\cup (L'(x)-L'(w))-L'(v)|\geq 1$, which implies that there is a color $c'$ in either $L'(w)$ or $L'(x)$ that is not in the list of $v$. 
+So now we can color $y$ and $z$ with $c$ and color either $w$ or $x$ with $c'$ first, and then color vertices in $C-N(y)$. Since vertices in $N(y)\cap N(w)\cap C$ must have the same list by a previous result, we can finish the coloring since every vertex in $N(y)\cap N(w)\cap C$ is safe. 
+\end{proof}
+
+\begin{proof} of $(iv)$.
+Suppose not. 
+Assume a color in $L(v)-S$ appears in a set $P$ of at least $6$ vertices. 
+Consider the set $Q$ of neighbors of vertices in $P$ that are not in $C\cup\{w\}$. 
+Note that the neighbors of vertices in $Q$ that are in $P$ partition $P$ since each vertex in $P$ has exactly one neighbor not in $C\cup\{w\}$ by a previous result.
+By another previous result, since a vertex outside of $C\cup\{w\}$ has at most $5$ neighbors in $N(w)\cap C$, there must be at least $2$ vertices in $Q$.
+Also, $Q$ must be an independent set. 
+Otherwise, if there is an edge with two endpoints in $Q$, then the endpoints of this edge will receive different colors in a $(\Delta-1)$-list coloring of $G-C-w$, which exists by the minimality of $G$. 
+Now, the vertices in $P$ could not have had the same list of colors, which is a contradiction to a previous result. 
+
+Adding any edge with endpoints in $Q$ must create a $\Delta$-clique in $G-C-w$. 
+If $v\in Q$ has $d_P(v)\geq 3$, this is impossible since $v$ cannot have $\Delta-2$ neighbors outside $P$. 
+This implies that $|Q|\geq 3$ and $d_P(v)\leq 2$ for all $v\in Q$. 
+Note that three vertices $x, y, z\in Q$ must have at least $\Delta-3$ common neighbors not in $C\cup\{w\}$. 
+These common neighbors and $x, y, z$ induce a copy of $E_3\vee K_6$, which is $d_1$-choosable, which is a contradiction.
+\end{proof}
+
+\begin{definition}
+Let $C$ be a $(\Delta-1)$-clique of $G$ and let a vertex $w\not\in C$ be such that $|N(w)\cap C|\geq 6$. 
+The {\it core} of $N(w)\cap C$ is the set of $\Delta-2$ colors $S$ that are in $L(v)$ for every $v\in N(w)\cap C$.
+For a vertex $v\in N(w)\cap C$, the {\it special color} of $v$ is the color in $L(v)-S$, and the {\it external neighbor} of $v$ is the one vertex that is adjacent to $v$ that is not in $C\cup \{w\}$. 
+\end{definition}
+
+\section{The Decomposition}
+
+In this section, we will construct a decomposition of $G$ that will be very helpful in the next section. Here are a few definitions and a lemma from page 158 of \cite{MR}.
+
+\begin{definition}
+A vertex $v$ of $G$ is {\it $d$-sparse} if the subgraph induced by its neighborhood contains fewer than ${\Delta\choose 2}-d\Delta$ edges. Otherwise, $v$ is {\it $d$-dense}. 
+\end{definition}
+
+\begin{definition}
+Given a graph $H$, let the {\it pot} of $H$, denoted $Pot(L)$, be $\bigcup_{v\in V(H)}L(v)$.
+\end{definition}
+
+\begin{SmallPotLemma}\cite{CR12}\label{SmallPotLemma}
+Let $H$ be a graph and $f:V(H)\rightarrow\mathbb{N}$ with $f(v)<|H|$ for all $v\in V(H)$. 
+If $H$ is not $f$-choosable, then $H$ has a bad $f$-assignment $L$ such that $|Pot(L)|<|H|$.
+\end{SmallPotLemma}
+
+\begin{lemma}\label{NeighborhoodLargeMinDegree}
+For any graph $B$ with $\delta(B) \geq \frac{|B|}{2} + 1$ and $\omega(B) \leq |B| - 2$, the graph $K_1\vee B$ is $d_1$-choosable.
+\end{lemma}
+\begin{proof}
+By the Small Pot Lemma \ref{SmallPotLemma} it suffices to prove that all $d_1$-assignments $L$ on $K_1\vee B$ with $|Pot(L)| \leq |B|$ are good.  Let $L$ be such a list assignment. 
+
+First, suppose $B$ contains disjoint nonadjacent pairs $\{x_1, y_1\}$ and $\{x_2, y_2\}$.  Since $|L(x_i)| + |L(y_i)| \geq |B| + 2$, we have $|L(x_i) \cap L(y_i)| \geq 2$ for each $i$.  Color $x_1$ and $y_1$ with $c_1 \in L(x_1) \cap L(y_1)$ and color $x_2$ and $y_2$ with $c_2 \in L(x_2) \cap L(y_2) - c_1$.  By the minimum degree condition on $B$, each component of $B - \{x_1, y_1, x_2, y_2\}$ has a vertex joined to $\{x_1, y_1\}$ or $\{x_2, y_2\}$.  Hence we can complete the coloring to all of $B$ and then to the $K_1$.  Thus $L$ is good.
+
+So, we may assume there are no disjoint nonadjacent pairs. Now let $K$ be a maximum clique in $B$. Then we know $|K| \leq |B| - 2$ so we can pick $x,y \in B-K$.  The only possibility is that there is $z \in K$ such that both $x$ and $y$ are joined to $K-z$.  Since $K$ is maximum $x$ is not adjacent to $y$ and hence $B$ is a $K_{|B| - 3}\vee E_3$.  By Lemma \ref{K6Possibilities}, $|B| \leq 4$.  Since $d_B(y) = |B| - 3$, this violates our minimum degree condition on $B$.
+\end{proof}
+
+\begin{lemma}\label{decomp}
+We can partition $V(G)$ into $S, D_1, \ldots, D_l$ so that
+\begin{enumerate}[(i)]
+\item each vertex of $S$ is sparse;
+\item each $D_i$ contains a vertex $w_i$ such that $D_i-w_i$ is a clique of size at least $\Delta-8\Delta^{\alpha}+1$;
+\item no vertex outside of $D_i$ has more than ${3\Delta\over 4}$ neighbors in $D_i$ and $w_i$ has at least ${3\Delta\over 4}$ neighbors in $D_i$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Let $C_1, \ldots, C_s$ be the maximal cliques in $G$ with at least $\frac{3\Delta}{4} + 1$ vertices.  Suppose $|C_i| \leq |C_j|$ and $C_i \cap C_j \neq \emptyset$. 
+Then $|C_i \cap C_j| \geq |C_i| + |C_j| - (\Delta + 1) \geq 6$.  It follows from Lemma
+\ref{K6Possibilities} that $|C_i - C_j| \leq 1$.  Now suppose $C_i$ intersects $C_j$ and $C_k$.  By the above,
+$|C_i \cap C_j| \geq \frac{3\Delta}{4}$.  Hence $|C_i \cap C_j \cap C_k| \geq \frac{\Delta}{2} \geq 6$.  By Lemma \ref{K6Possibilities} we see that $\omega(G[C_i \cup C_j \cup C_k]) \geq |C_i \cup C_j \cup C_k| - 1$ which is impossible since each of $C_i, C_j, C_k$ are maximal.  Hence $\bigcup_{i \in [s]} C_i$ can be
+partitioned into sets $D_1, \ldots, D_r$ so that each $D_j$ is either one of the $C_i$ or one of the $C_i$ and an extra vertex $w_i$ with at least $\frac{3\Delta}{4}$ neighbors in $C_i$.
+
+Put $d = \Delta^{\alpha}$ and let $D_1, \ldots, D_l$ be all the $F_j$ such that some vertex in $F_j$ is $d$-dense and let $S$ be $V(G) - \bigcup_{i \in [l]} D_i$.  Then (iii) follows by construction.  It remains to check (i) and (ii).
+
+We show that if $v \in V(G)$ is $d$-dense, then it is in a $(\Delta - 8d + 2)$-clique. Since we know that any $v \in S$ is either in no $(\frac{3\Delta}{4} + 1)$-clique (and hence in no $(\Delta - 8d + 2)$-clique) or is $d$-sparse, (i) follows. Also, since each $F_j$ contains a $d$-dense vertex, (ii) follows as well.
+
+So, suppose $v \in V(G)$ is $d$-dense but in no $(\Delta - 8d + 2)$-clique. Then applying Lemma \ref{NeighborhoodLargeMinDegree} repeatedly, we get a sequence $y_1, \ldots, y_{8d} \in N(v)$ such that 
+\[|N(y_i) \cap (N(x) - \{y_1, \ldots, y_{i-1}\})| \leq \frac12 (\Delta + 1 - i).\]
+
+Hence the number of non-edges in $v$'s neighborhood is at least 
+
+\[\frac12\sum_{i=1}^{8d} (\Delta - i) > d\Delta.\]
+\end{proof}
+
+% ILKYOO's decomposition proof
+%
+%\begin{definition}
+%Let $d$ be a positive integer and let $H$ be a graph of maximum degree $\Delta$. We say $D_1, \ldots, D_l, S$ form a $d$-dense decomposition of $H$ if:
+%
+%\begin{enumerate}[$(a)$]
+%\item $D_1, \ldots, D_l, S$ are disjoint and partition $V(H)$;
+%\item every $D_i$ has between $\Delta+1-8d$ and $\Delta+4d$ vertices;
+%\item there are at most $8d\Delta$ edges between $D_i$ and $V(H)-D_i$;
+%\item a vertex is adjacent to at least ${3\Delta\over 4}$ vertices of $D_i$ if and only if it is in $D_i$;
+%\item every vertex in $S$ is $d$-sparse.
+%\end{enumerate}
+%\end{definition}
+%
+%We call $D_1, \ldots, D_l$, {\it $d$-dense sets}, or simply dense sets. Note that although every vertex in $S$ is sparse, not every sparse vertex need be in $S$. 
+%
+%\begin{lemma}\cite{MR}\label{ddense}
+%For every $\Delta$ and $d\leq {\Delta\over 100}$, every graph of maximum degree $\Delta$ has a $d$-dense decomposition.
+%\end{lemma}
+%
+%We will use the above result and a simple observation below to prove that the following decomposition exists. 
+%Note that the $o(\Delta)$ term in $(ii)$ can be improved. 
+%
+%{\bf TODO: NOTE}: for $\alpha={9\over 10}$, it must be that $\Delta_0\geq 10^{20}$; of course the lemma can be improved. 
+%
+%\begin{observation}\label{obs}
+%If a graph $H$ has no matching of size $2$, then $H$ has at most one non-trivial component, and this component is either a $K_3$ or a star.
+%\end{observation}
+%
+%\begin{definition}
+%A vertex of $G$ is {\it sparse} if more than $\Delta^{1+\alpha}$ pairs of neighbors are nonadjacent.
+%\end{definition}
+%
+%\begin{lemma}\label{decomp}
+%We can partition $V(G)$ into $S, D_1, \ldots, D_l$ so that
+%\begin{enumerate}[(i)]
+%\item each vertex of $S$ is sparse;
+%\item each $D_i$ contains a vertex $w_i$ such that $D_i-w_i$ is a clique of size at least $\Delta-8\Delta^{\alpha}+1$;
+%\item no vertex outside of $D_i$ has more than ${3\Delta\over 4}$ neighbors in $D_i$ and $w_i$ has at least ${3\Delta\over 4}$ neighbors in $D_i$.
+%\end{enumerate}
+%\end{lemma}
+%
+%\begin{proof}
+%Apply Lemma \ref{ddense} for $d=\Delta^{\alpha}$ to obtain a decomposition not only satisfying $(i)$ and $(iii)$ of Lemma \ref{decomp}, but also $(a)$ through $(e)$ of Definition 4.2.
+%It remains to show that each dense set of the decomposition is either a clique or a clique plus a vertex.
+%Assume for the sake of contradiction that this is not the case for some dense set $D$.
+%Since $G$ is a minimum counterexample, $G-D$ has an acceptable coloring from its lists.
+%We will extend this to an acceptable coloring of $G$ by showing that there is an acceptable coloring for the list coloring problem on $D$, where the list $L'(z)$ for a vertex $z$ is obtained from $L(z)$ by removing all the colors assigned to the neighbors of $z$ that are not in $D$.  
+%Note that $|L'(z)|\geq {3\Delta\over 4}-1$ for each $z$ in $D$.
+%Let $M$ be a maximum matching in the complement of $G[D]$. 
+%Note that if $|M|=0$ then $D$ is a clique. 
+%
+%We first deal with the case when $|M|\geq 4$; let $M'$ be four edges $x_1y_1, \ldots ,x_4y_4$ in $M$.
+%Since $x_1$ and $y_1$ both see at least $3\Delta\over 4$ vertices of $D$, there are at least $\Delta\over 3$ vertices of $D-V(M')$ which are adjacent (in $G$) to both $x_1$ and $y_1$. 
+%Thus, there are at least ${\Delta\over 4}$ vertices of $D-V(M')$ which are adjacent (in $G$) to all
+%four vertices of some pair of edges in $M'$. 
+%It follows that there are $v, w$ in $D-V(M')$ and $i,j$ with $1 \le i <j\le 4$, such that $v$ and $w$ both see all of $x_i,y_i,x_j,y_j$. 
+%Let $T=D \cap N(v) \cap N(w) -x_i-y_i-x_j-y_j$.
+%We will first color $x_i, y_i,x_j,y_j$ before any other vertex of $D$, then color $D-T-v-w$, then color $T$, then color $w$ and $v$ last. 
+%Since $v$ and $w$ both have at least ${3\Delta\over 4}$ neighbors in $D$, we know that $T$ contains at least $\Delta\over 3$ vertices. 
+%Since each vertex $z$ in $D-T-x_i-y_i-x_j-y_j$ has $3\Delta\over 4$ neighbors in $D$, each $z$ sees two vertices of $T$. 
+%Hence there will be a color available when it comes to coloring $z$.
+%Since each vertex of $T$ sees both $v$ and $w$, we will be able to greedily extend the coloring of $D-T-v-w$ to $D-v-w$. 
+%It remains to show that we can choose colors for $x_i,y_i,x_j,y_j$ so that we can color $v$ and $w$ when the time comes.
+%
+%We will show that we can color $x_i,y_i,x_j,y_j$ so that both $v$ and $w$ become safe. 
+%We will color $x_i, y_i$ first, according to the following three cases: 
+%(1) If $L'(x_i)$ or $L'(y_i)$ contains a color $c$ not in $L(v) \cup L(w)$, then use $c$ on the appropriate vertex and color the other one greedily.
+%(2) If $L'(x_i)$ and $L'(y_i)$ intersect, then use a color in the intersection to color both $x_i$ and $y_i$.  
+%(3) If the pair $x_i,y_i$ can be colored using a color in $L(v)-L(w)$ and a color in $L(w)-L(v)$, then do so.
+%Assume for a contradiction that none of these three possibilities occur. 
+%Since (1) and (2) do not happen, $L'(x_i)$ and $L'(y_i)$ are disjoint subsets of $L(v)\cup L(w)$. 
+%Since (3) does not happen, without loss of generality, $L'(y_i)\subset L(w)$. 
+%Since $|L'(y_i)|\geq {3\Delta\over 4}-1$ and $|L(w)|=\Delta-1$, it follows that $L'(x_i)$ has at most ${\Delta\over 4}$ elements in $L(w)$.
+%This implies that at least ${\Delta\over 2}-1$ colors of $L'(x_i)$ are in $L(v)-L(w)$, and since (3) does not happen, it must be that $L'(y_i)$ is in $L(v)\cap L(w)$. 
+%This is a contradiction since now $L(v)$ has at least ${5\Delta\over 4}-2$ elements. 
+%By similar logic, we can find colors for $x_j$ and $y_j$ to make both $v$ and $w$ safe, which means we can extend our coloring of $G-v-w$ to $G$ when $|M|\geq 4$. 
+%%Since the first does not occur, without loss of generality, $L'(x_i)$ contains at most ${\Delta-1\over 2}$ elements of $L(v)$.
+%% Since the second possibility does not occur we see that $L'(x_i)$ contains at least $\Delta/4$ elements of $L(w)-L(v)$. 
+%%Since neither the second or the third possibility occur, we see that $L'(y_i)$ is contained in $L(w)$.  
+%%But now, since neither of the first two possibilities occur, $L'(x_i) \cup L'(y_i)$ contains at least $3\Delta/2$ distinct colours all of which are in $L(v) \cup L(w)$. 
+%%It follows that $L(v) \cap L(w)$ has at most $\Delta/2$ elements. Thus, $L'(y_i)$ contains a colour
+%%in $L(w)-L(v)$. 
+%%But now, since neither the  second or third possibility occurs  $L'(x_i)$  is contained in $L(w)$.
+%%But since $L'(y_i)$ is also contained in $L(w)$ we see that the first possibility occurs.
+%%If  $L'(x_j) \cap L'(y_j)$ has at least three elements then we one such element not used on $x_i$ or $y_i$ with which to colour both $x_j$ and $y_j$.
+%%Otherwise, WLOG, $x_i$ contains at most $\Delta/2$ colours from $L(v)$ and so we can colour $x_i$ with a colour which is not on $L(v)$. 
+%%We do so and colour $y_i$ greedily.
+%%
+%%Our choices ensure that there are at most two colours from $L(v)$ and at most three colours from $L(w)$ used on the vertices $x_i,y_i,x_j,y_j$ so  we can greedily complete our colouring of $G-v-w$ to a colouring of $G$ if there is a matching of size four in the complement of $G[D]$.
+%
+%If $2\leq |M|\leq 3$, then there is a clique $C$ in $D-V(M)$ with at least $|D|-6$ vertices. 
+%Applying Observation \ref{obs} to the complement of $G[C\cup\{x_i,y_i\}]$ as $H$ where $x_iy_i$ is an edge in $M$, we see that at least ${3\Delta\over 5}$ vertices of $C$ see both endpoints of an edge in $M$. 
+%Therefore, there are at least $2$ vertices $v$, $w$ of $C$ which see all four vertices of the endpoints of two edges in $M$.
+%Labeling the vertices in the two edges as $x_i,y_i,x_j,y_j$ and proceeding as above, we are done with this case.
+%
+%%If there is no such matching then there is a clique $C$ in $D$ with $|D|-6$ vertices. 
+%%If there are two disjoint pairs of non-adjacent vertices of $D$, we choose two such pairs so as to maximize the intersection of their union with $C$. 
+%%Clearly, this implies that each pair either intersects $C$ or consists of two vertices each of which is non-adjacent to at most one vertex of $C$. 
+%%Since every vertex in each of the pairs sees at least $3\Delta/4-6$ vertices of $C$, it follows that there are two vertices $v$ and $w$ of $C$ which see all four vertices in these two pairs. 
+%%Labelling the vertices as $x_i,y_i,x_j,y_j$ and proceeding as above we are done in this
+%%case.
+%
+%Now $|M|=1$, and thus there is a clique $C$ in $D$ with $|D|-2$ vertices. 
+%By applying Observation \ref{obs} to the complement of $G[D]$ as $H$, the complement of $G[D]$ is either a star or a $K_3$. 
+%If it is a star, then we are done as $D$ minus the center of the star is a clique. 
+%Otherwise, it is a $K_3$, and let $x, y, z$ be the vertices of the $K_3$.
+%% where $z$ is in $C$ and $x,y$ are in $D-C$. 
+%%By letting $x$ and $y$ be the vertices of $D-C$, we see that either $D$ contains a clique with $|D|-1$ vertices (and we are done), or there is some vertex $z$ of $C$ such that $x$ and $y$ both miss.
+%%Note that since $x,y$ see all of $D-x-y-z$, it follows that $xy$ is also not an edge or we are done (as $D-z$ is a clique). 
+%Note that $D-x-y-z$ is a clique $K$ with at least $\Delta-8d-2$ vertices. 
+%Choose $v$ and $w$ in $K$ so that we color $x,y,z$ first, then $K-v-w$, then $w$ and $v$ to obtain an acceptable coloring. 
+%For a color $c$ and a set of vertices $S$, let $P(c, S)=|\{s\in S: c\in L'(s)\}|$. 
+%Since $\sum_c P(c, \{x, y, z\})=|L'(x)|+|L'(y)|+|L'(z)|\geq {9\over 4\Delta}-3$ and $\sum_c P(c, \{v, w\})\leq 2\Delta$, where the sums are taken over all colors $c$, it follows that there are colors $\alpha$ such that $P(\alpha, \{x, y, z\})>P(\alpha,\{v, w\})$; among these colors, let $\beta$ be a color that maximizes $P(\beta, \{x, y, z\})$. 
+%If $P(\beta, \{x, y, z\})=3$, then by using $\beta$ on $x, y, z$, we make both $v$ and $w$ safe.
+%If $P(\beta, \{x, y, z\})=2$, then since $P(\beta, \{v, w\})\leq 1$, without loss of generality, we may assume $\beta\not\in L'(v)$. 
+%By using $\beta$ on two of $x, y, z$, it follows that $w$ has a repeated color and an uncolored neighbor $v$ in $N(w)$, and $v$ is safe since $\beta$, which is not in $L'(v)$, appears twice in $N(v)$. 
+%If $P(\beta, \{x, y, z\})=1$, then it follows that $\beta\not\in L'(v)\cup L'(w)$ and without loss of generality we may assume $\beta\in L'(x)$. 
+%If $L'(y)\cap L'(z)\neq\emptyset$, then use that color on $y$ and $z$, and use $\beta$ on $x$. 
+%If $L'(y)\cap L'(z)=\emptyset$, then there must be a color in $L'(y)\cup L'(z)$ that is not in $L(v)$; use that color on $y$ or $z$.
+%Now, $w$ has $\beta$, which is not in $L'(w)$, and an uncolored vertex $v$ in $N(w)$, and $v$ is safe since $\beta$, which is not in $L'(v)$, appears in $N(v)$ as well as either a repeated color or another color that is not in $L'(v)$. 
+%Thus, for each case, we have obtained an acceptable coloring for the entire graph $G$, which is a contradiction.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ILKYOO's
+%%Using Lemma \ref{32}, we choose $v$ and $w$ such that $|L(v)\cap L(w)|\geq |K|-3$.
+%%Now, $L'(x)\cap L'(y)\cap L'(z)\neq\emptyset$, otherwise, we use the same color on $x,y,z$, and we are done since $v,w$ are both safe. 
+%%Since $L'(x), L'(y), L'(z)$ are all at least $|K|-2$, it follows that $|L'(x)\cup L'(y)\cup L'(z)|\geq {3\over 2}(|K|-2)$. 
+%%By the choice of $v, w$, there are at most $2\Delta-2-(|K|-3)=2\Delta-|K|+1$ colors in $L(v)\cup L(w)$. 
+%%Thus, there are at least ${5\over 2}|K|-2\Delta-4$ colors $S$ that are in $L'(x)\cup L'(y)\cup L'(z)$ but not in $L(v)\cup L(w)$.
+%%If at least two of $x,y,z$ have these colors, then we are done as $v,w$ both become safe by using colors from $S$ on two of $x,y,z$.
+%%Without loss of generality, assume $S\subset L'(x)$. 
+%%Then, $L'(y)\cap L'(z)=\emptyset$, since if not, then use that color on both $y$ and $z$ and a colors from $S$ on $x$ to make both $v$ and $w$ safe. 
+%%Now, if there is a color $c$ in $L'(y)\cup L'(z)$ that is in $L(v)-L(w)$ or $L(w)-L(v)$, then we are done by coloring the appropriate vertex with $c$ and coloring $x$ with a color in $S$.
+%%Therefore, every color in $L'(y)\cup L'(z)$ must be in $L(v)\cap L(w)$, which is impossible since $|L'(y)\cup L'(z)|\geq 2|K|-4\geq 2\Delta-16d-8>\Delta-1\geq |L(v)\cap L(w)|$ for $\Delta\geq 10^{20}$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BRUCE REED's
+%%Since every vertex of $K-v-w$ sees both $v$ and $w$, it is enough to show that we can colour $x$, $y$, and $z$ using at most one colour in $L(v)$ and at most two colours in $L(w)$. 
+%%We note that $L'(x)$,$L'(y)$, and $L'(z)$ all have size $\Delta-o(\Delta)$.
+%%Applying Rabern's result we see that there is a set $S$ of $|D|-3$ colours such that  the list for every vertex in $K$ intersects $S$ in $|D|-6$ elements. 
+%%It follows that $T=L(v) \cup L(w)$ has $\Delta +o(\Delta)$ elements. 
+%%In a first step, we colour  those vertices in $x,y,z$ which contain fewer than $3$ colours outside $T$. 
+%%In a second step we colour the remaining vertices of $x,y,z$ using colours outside $T$. 
+%%Clearly, the vertices coloured in the first step can be coloured using a colour which appears on all their lists, since their list have an intersection of size $\Delta-o(\Delta)$.
+%\end{proof}
+%%%%%%%%%%%%
+
+\begin{definition}
+For convenience, let 
+$K_i=
+\begin{cases}
+C_i & \mbox{if }D_i=C_i \\
+C_i\cap N(w_i) & \mbox{if } D_i=C_i\cup\{w_i\}
+\end{cases}$
+\end{definition}
+
+\begin{definition}
+Also for convenience, partition the set of $C_i$ into the following three sets (if some $C_i$ can be either $(ii)$ or $(iii)$, then just choose an arbitrary one):
+\begin{enumerate}[$(i)$]
+\item $\mathcal{P}_1$: the set of $C_i$ such that $|C_i|\leq \Delta-2$;
+\item $\mathcal{P}_2$: the set of $C_i$ such that $|C_i|=\Delta-1$ and every vertex outside $C_i$ has at most $\Delta^c$ neighbors in $C_i$;
+\item $\mathcal{P}_3$: the set of $C_i$ such that $|C_i|=\Delta-1$ and some vertex outside $C_i$ has more than $\Delta^d$ neighbors inside $C_i$. 
+\end{enumerate}
+\end{definition}
+
+{\bf TODO: NOTE:} Of course, for this to be a partition, it must be the case that $d\leq c$. For $\Delta_0=10^{20}$, the values $c=d=0.29$ work. The reason I have $c$ and $d$ separate is so that I can do calculations more efficiently when something changes in the proof. \\
+
+Now we prove a structure lemma that will be crucial in the following sections. We use a lemma from \cite{CR12} to prove the lemma needed.
+
+\begin{lemma}\cite{CR12}\label{NeighborhoodPotShrink}
+Let $H$ be a $d_0$-choosable graph such that $F := {K_1}\vee{H}$ is not
+$d_1$-choosable and let $L$ be a bad $d_1$-assignment on $F$ minimizing $|Pot(L)|$.  If some
+nonadjacent pair in $H$ has intersecting lists, then $|Pot(L)| \leq |H| - 1$.
+\end{lemma}
+
+\begin{lemma}\label{4neighbors}
+Each $v \in C_i$ of $G$ has at most one
+neighbor outside of $C_i$ with more than $4$ neighbors in $C_i$, and no such
+neighbor if $v$ has degree $\Delta-1$.
+\end{lemma}
+\begin{proof}
+Suppose there exists $v \in C_i$ with two neighbors $w_1, w_2 \in V(G)- C_i$, each with $5$ or more neighbors in $C_i$.  
+Put $Q :=G[\{w_1,w_2\} \cup C_i - v]$, so that $v$ is joined to $Q$ and hence ${K_1}\vee{Q}$ is an induced subgraph of $G$.  We will show that ${K_1}\vee{Q}$ must be $d_1$-choosable.  Note that $Q$ is $d_0$-choosable since it contains a $K_4$ without one edge. Let $L$ be a bad $d_1$-assignment on ${K_1}\vee{Q}$ minimizing $|Pot(L)|$.
+
+First, suppose there are different $z_1,z_2 \in C_i$ such that $\{w_1, z_1\}$
+and $\{w_2, z_2\}$ are independent.  By the Small Pot Lemma \ref{SmallPotLemma}, $|Pot(L)| \leq |Q|$. Thus $|L(w_1)| +|L(z_1)| \geq 4 + |Q| - 3 > |Pot(L)|$ and therefore $w_1$ and $w_2$ have intersecting lists.  Applying Lemma \ref{NeighborhoodPotShrink} shows that $|Pot(L)| \leq |Q| - 1$.
+
+Now $|L(w_j)| + |L(z_j)| \geq 4 + |Q| - 3 \geq |Pot(L)| + 2$.  Hence $|L(w_j) \cap L(z_j)| \geq 2$.  Pick $x \in N(w_1) \cap \{C_i - v - z_2\}$.  Then after coloring each pair $\{w_1, z_1\}$ and $\{w_2, z_2\}$ with a different color, we can finish the coloring because we saved a color for $x$ and two colors for $v$.
+
+By maximality of $C_i$, neither $w_1$ nor $w_2$ can be adjacent to all of $C_i$
+hence it must be the case that there is $y \in C_i$ such that $w_1$ and $w_2$
+are joined to $C_i - y$.  If $w_1$ and $w_2$ aren't adjacent, then $G$ contains ${K_6}\vee{E_3}$ contradicting Lemma \ref{K6Possibilities}.  Hence $C_i$ intersects the larger clique $\{w_1, w_2\} \cup C_i - \{y\}$, this is impossible by the definition of $C_i$.
+
+When $v$ is low, an argument similar to the above shows that there can be no
+$z_1$ in $C_i$ with $\{w_1, z_1\}$ independent, and hence $C_i \cup
+\{w_1\}$ is a clique contradicting maximality of $C_i$.
+\end{proof}
+
+\section{The Coloring}
+
+Now we will show that there exists a $(\Delta-1)$-list coloring.
+We will conduct the naive coloring procedure, which is defined below, to a subgraph of $G$, namely, $G-\bigcup_{C_i\in \mathcal{P}_3}C_i$.
+%which we will specify after defining the (bad) events. 
+Using the Lov\'asz Local Lemma, we will show that with positive probability, the naive coloring procedure will produce a coloring in which none of the bad events happen. 
+The bad events are defined in a way that if none of them happen, then we can finish off the list coloring in a greedy fashion. 
+
+\begin{definition}
+The {\it naive coloring procedure} is the following:
+\begin{enumerate}[$(i)$]
+\item For each vertex, choose a color in its list uniformly at random and use it on the vertex;
+\item Uncolor any vertex that receives the same color as one of its neighbors.
+\end{enumerate}
+\end{definition}
+
+%Before defining the bad events, let $\mathcal{Y}$ be the set of $C_i$ such that $|C_i|=\Delta-1$ and $\Delta^c<\max_{w_i\not\in C_i}d_{C_i}(w_i)<\Delta^d$. 
+%Let $w_i$ be the vertex that achieves the maximum and let $K'_i$ be the neighbors of $w_i$ that are in $C_i$. 
+For $C_i\in \mathcal{P}_3$, let $w_i$ be a vertex with the maximum number of neighbors in $C_i$ and let $K'_i$ be the neighbors of $w_i$ that are in $C_i$. 
+%Note that these are the $C_i$ that correspond to the bad event $\mathcal{A}_i$. 
+
+\begin{definition}
+The {\it bad events} are the following events: 
+\begin{enumerate}[$(i)$]
+%\item For each $C_i$, where $|C_i|\leq \Delta-2$, let $\mathcal{B}_i$ be the event that $K_i$ does not contain two uncolored safe vertices;
+\item For $C_i\in \mathcal{P}_1$, let $\mathcal{E}_{1,i}$ be the event that $K_i$ does not contain two uncolored safe vertices;
+%\item For each $C_i$, where $|C_i|=\Delta-1$ and every vertex outside $C_i$ has at most $\Delta^c$ neighbors in $C_i$, let $\mathcal{C}_i$ be the event that $K_i$ does not contain two 
+\item For $C_i\in \mathcal{P}_2$, let $\mathcal{E}_{2, i}$ be the event that $K_i$ does not contain two uncolored safe vertices;
+%\item For each $C_i$, where $|C_i|=\Delta-1$ and some vertex outside $C_i$ has at least $\Delta^d$ neighbors in $C_i$, let $\mathcal{D}_i$ be the event that $K_i$ does not contain three uncolored safe vertices with distinct special colors;
+\item For $C_i\in \mathcal{P}_3$, let $\mathcal{E}_{3, i}$ be the event that $K'_i$ does not contain two uncolored safe vertices;
+%\item For each $C_i$, where $|C_i|=\Delta-1$ and $C_i$ does not fall in the above categories, let $\mathcal{A}_i$ be the event that $K'_i$ does not contain one vertex where the special color can be used on.
+\item For sparse vertex $v$, let $\mathcal{S}_v$ be the event that $v$ is not safe.
+\end{enumerate}
+\end{definition}
+
+We will apply the local lemma to prove that with positive probability, none of the bad events above happen. To do so, we need to calculate the probability of each (bad) event and the dependencies. Note that each event is mutually independent to all but at most $\Delta^5$ events. The task of proving that the probability of each (bad) event is at most $\Delta^{-6}$ will be done in the following subsections.
+
+%We will apply the naive coloring procedure to $G-\bigcup_{C_i\in\mathcal{Y}}C_i$.
+%Assuming none of the bad events happen, we will obtain a proper list coloring of $G-\bigcup_{C_i\in\mathcal{Y}}C_i$ in the following way:
+%For the dense sets $D_i$ where the corresponding $C_i$ is not in $\mathcal{Y}$, there exist at least two uncolored safe vertices. 
+%For all of these $D_i$, we first color the other vertices in $D_i$, and then color the two uncolored safe vertices in each $D_i$ since they are safe. 
+%We then color the vertices in $S$ since they are all safe to finish the proper list coloring on $G-\bigcup_{C_i\in\mathcal{Y}}C_i$.
+
+We will apply the naive coloring procedure to $G-\bigcup_{C_i\in \mathcal{P}_3}C_i$. Assuming none of the bad events happen, we will obtain a proper list coloring of $G$ in the following way: 
+First color all the vertices in the dense sets that are not the two uncolored safe vertices. 
+This is possible since each vertex we are coloring in this phase is adjacent to the two uncolored (safe) vertices.
+Then, for each dense set, color the remaining uncolored vertices, which must be safe by the first phase.
+Now, we can finish the proper list coloring of $G$ since the only vertices that are possibly uncolored are the sparse vertices, which are all safe. 
+
+%Now we need to show that we can extend the coloring to all of $G$. 
+%For each $C_i$ in $\mathcal{Y}$, let $z_i$ be the vertex in $K'_i$ that can be colored with its special color and color $z_i$ with its special color.
+%The strategy is to force either a repeated color or another color that is not in $L(u_i)$ in the neighborhood of $u_i$ to make $u_i$ safe, where $u_i$ is some vertex in $K'_i$ and $u_i$ and $z_i$ have different special colors.
+%Then, using this safe vertex $u_i$, extend the partial coloring to all of $G$, which is a contradiction.
+%
+%For each $i$, choose a vertex $u_i\in K'_i$ such that the special color of $u_i$ is different from the color that is currently used on $K'_i$ (the special color of $z_i$). 
+%Now, for each $i$, choose a vertex $v_i\in C_i-K'_i$ where $|L(u_i)\cap L(v_i)|\geq \Delta-4$.
+%
+%\begin{claim}\label{2}
+%We can choose the $v_i$ so that they form a stable set. 
+%\end{claim}
+%
+%\begin{proof}
+%We will apply the local lemma. 
+%Note that $|C_i-K'_i|\geq \Delta-1-\Delta^d$. 
+%Let $R_i\subset C_i-K'_i$ be a set of $\Delta^d$ vertex such that the list of each vertex in $R_i$ has at least $\Delta-4$ colors in common with $L(u_i)$. 
+%Such a set exists for $\Delta\geq 10^{20}$ by some easy calculations in the last section.
+%Choose one vertex from each $R_i$ uniformly at random. 
+%Let $E_e$ be the (bad) event that both endpoints of an edge $e$ is chosen. 
+%Thus, $Pr(E_e)\leq \left({1\over \Delta^d}\right)^2$. 
+%Now, $E_{e_1}$ is mutually independent from $E_{e_2}$ unless $e_1$ and $e_2$ have at least one endpoint in the same $K'_i$.
+%Thus, $E_e$ is mutually independent to all but $4 \Delta^d$ other events. 
+%Since $e\left(1\over \Delta^d\right)^2 4\Delta^d<1$, since $\Delta\geq 20$, we are done.
+%
+%%%%%%%%%%%%% Prof. Reed's original argument
+%%(Prof. Reed's argument:)
+%%We do not know that they are distinct. but we choose the $v_i$ so that they are a stable set. 
+%%This is easy because $w$ sees vertices in $o(\Delta)$ stable sets and each previous stable set chosen only forbids one vertex.
+%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%(Prof. Reed's argument:)
+%choose the $v_i$ so that they are a stable set. 
+%This is easy because $w$ sees vertices in $o(\Delta)$ stable sets and each previous stable set chosen only forbids one vertex.
+%\hfill
+%\end{proof}
+%
+%%For a $w$ and the corresponding set of $v_i$, we choose a colour for $w$ forbidding any colour used in $N(w)\cup \bigcup_i\left(N(v_i)\cup (S_i-L_{v_i}) \cup (L_{u_i}-S_i)\right)$.
+%%We forbid at most $8$ colours for each $S_i$ and $w$ has more than $10$ uncoloured neighbours in each $S_i$, so there will be a colour with which to colour $w$. 
+%
+%Note that the $w_i$ might not all be distinct. Let $w$ be a vertex that is adjacent to some set $\mathcal{T}$ of $K'_i$. 
+%We color $w$ with a color not in $N(w)\cup \bigcup_{K'_i\in \mathcal{T}}\left(N(v_i)\cup (S_i-L(v_i)) \cup (L(u_i)-S_i)\right)$, where $S_i$ is the core of $K_i$.
+%(Prof. Reed's argument)
+%We forbid at most $8$ colours for each $S_i$ and $w$ has more than $10$ uncoloured neighbours in each $S_i$, so there will be a colour with which to colour $w$. 
+%
+%\begin{claim}
+%There exists a color available for $w$.
+%\end{claim}
+%
+%\begin{proof}
+%Let $|\mathcal{T}|=t\geq 1$. 
+%The vertex $w$ is adjacent to at most $\Delta-t\Delta^c+t$ colored neighbors and $v_i$ is adjacent to at most $3$ color neighbors. 
+%Since the lists of $v_i$ and $u_i$ have at least $\Delta-4$ colors in common, $|S_i-L(v_i)|\leq 4$. 
+%Also, $|L(u_i)-S_i|\leq 1$ since $u_i\in K_i$. 
+%Now, there are at most $\Delta-t\Delta^c+t+3t+4t+t=\Delta-t\Delta^c+9t$ colors forbidden, so the number of colors available is at least $\Delta-1-(\Delta-t\Delta^c+9t)\lra t\Delta^c-9t-1$. 
+%Now, since $\Delta\geq 10^{20}\ra \Delta^c\geq 10^{20c}>215>2+9\geq {2\over t}+9$, this implies that 
+%$\Delta^c\geq {2\over t}+9\lra t\Delta^c-9t-1\geq 1$.
+%\end{proof}
+%
+%%Now, if $w$ gets a colour $c$ in $S_i$, this colour is in $L_{v_i}$, so we can use it on $v_i$ and we get a repeat for $v_i$ and every other vertex of $A_i$. 
+%%Otherwise $c\not\in L_{u_i}$ and appears on at most $7$ vertices of $A_i$, so we can choose some vertex in $A_i$ which does not have $c$ on its list to colour second last.
+%
+%Now, if $w$ gets a color $c$ in $S_i$, this color is available for $v_i$ since we forbid all colors in $N(v_i)$.
+%So by using $c$ on $v_i$ and $w$, we get a repeated color in the neighborhood of every vertex in $K'_i$. 
+%Otherwise, $c\not\in L(u_i)$ and appears on at most $5$ vertices of $K'_i$, so we can choose some vertex in $K'_i$ that does not have $c$ on its list to color second last. In either case, each $u_i$ becomes a safe vertex, and we can finish the coloring by coloring $u_i$ last. 
+
+\subsection{$Pr(\mathcal{E}_{1,i})\leq \Delta^{-6}$}
+
+Let $C'_i$ be a subset of $C_i$ with one less vertex where every two vertices in $C'_i$ have at least $|C_i|-3$ colors in common in their lists;
+such a $C'_i$ exists by Lemma \ref{core}. 
+%We will use the following lemma, which is an immediate consequence of lemmas in \cite{CR12}.
+%
+%\begin{lemma}\label{2lem4}
+%For a maximal clique with more than ${3\over 4}\Delta$ vertices, each vertex in $C$ has at most one neighbor not in $C$ with more than $4$ neighbors in $C$. 
+%\end{lemma}
+Let $\mathcal{T}_i$ be vertices in a set of maximum $P_3$ where the center vertex is in $C'_i$ and the other two vertices are not.% in $C'_i$. 
+
+\begin{claim}
+There are at least ${3\over 28}\Delta$ such $P_3$. 
+\end{claim}
+\begin{proof}
+Consider a maximal set of $P_3$. Let $A$ be the central vertices and let $B$ be the endpoints of these $P_3$. Then, each $v\in B$ has at most $3$ neighbors in $C-A$ and by the previous lemma and maximality, each $v\in C-A$ has at most $2$ neighbors $G-C-B$. Thus, $6|A|=3|B|\geq ||C-A, B||\geq |C|-|A|$. Hence, $|A|\geq {3\over 28}\Delta$.
+\end{proof}
+
+Consider a set $T_i$ of ${3\over 28}\Delta$ such $P_3$. For some fixed $P_3$, we want to bound the probability that the center vertex $c$ is uncolored and safe, and the colors used on the two end vertices, $a$ and $b$, are used on none of the rest of $T_i$. 
+To do so, we distinguish three cases. \\
+
+{\bf Case 1.} When $|L(a)\cap L(c)|<{2\over 3}\Delta$ and $|L(b)\cap L(c)|<{2\over 3}\Delta$.
+
+For $\alpha\in L(a)-L(c)$, $\beta\in L(b)-L(c)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertex $a$ gets $\alpha$ and none of the rest of $N(a)\cup T_i$;
+\item vertex $b$ gets $\beta$ and none of the rest of $N(b)\cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, z})\geq (\Delta-1)^{-4}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)|}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)|}\left(1-{1\over \Delta-1}\right)^{|T_i|}\geq (\Delta-1)^{-4}3^{-(2+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-4} 3^{-2.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, z}$ are disjoint for different sets of indices. 
+Since $|L(a)-L(c)|\geq {\Delta\over 3}$, we have $\Delta\over 3$ choices for $\alpha$. 
+Similarly, we have ${\Delta\over 3}-1$ choices for $\beta$. 
+There are $|C'_i|-|T_i|\geq \Delta-{3\over 28}\Delta-o(\Delta)$, which is about ${25\over 28}\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about $\Delta$, choices for $\gamma$. 
+
+Thus, there are ${25\over 28}3^{-2}\Delta^4$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, z}$ holds for some choice of indices is at least ${25\over 28}3^{-4.1}$, which is about $0.00987$. \\
+
+{\bf Case 2.} When $|L(a)\cap L(c)|<{2\over 3}\Delta$ and $|L(b)\cap L(c)|\geq{2\over 3}\Delta$.
+
+For $\alpha\in L(a)-L(c)$, $y\in C'_i-T_i-N(b)$, $\beta\in L(b)\cap L(y)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, y, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertex $a$ gets $\alpha$ and none of the rest of $N(a)\cup T_i$;
+\item vertices $b$ and $y$ get $\beta$ and none of the rest of $N(b)\cup N(y) \cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, y, z})\geq (\Delta-1)^{-1}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)|}(\Delta-1)^{-2}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)\cup N(y)|}(\Delta-1)^{-2}\left(1-{1\over \Delta-1}\right)^{|T_i|}\geq (\Delta-1)^{-5}3^{-(3+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-5} 3^{-3.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, y, z}$ are disjoint for different sets of indices. 
+Since $|L(a)-L(c)|\geq {\Delta\over 3}$, we have $\Delta\over 3$ choices for $\alpha$. 
+For $y$, we have at least $|C'_i|-|T_i\cap C'_i|-|N(b)\cap C'_i|\geq \Delta-{3\over 28}\Delta-o(\Delta)$, which is about ${25\over 28}\Delta$ choices. 
+For each $y$, we have about ${2\over 3}\Delta$ choices since $|L(y)\cap L(b)|\geq |C_i|-4$. 
+There are $|C'_i|-|T_i|\geq \Delta-{3\over 28}\Delta-o(\Delta)$, which is about ${25\over 28}\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about $\Delta$, choices for $\gamma$. 
+
+Thus, there are ${25^2\over 28^2}\Delta^5 3^{-2}2$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, y, z}$ holds for some choice of indices is at least ${25^2\over 28^2}3^{-5.1}2$, which is about $0.00587$. \\
+
+{\bf Case 3.} When $|L(a)\cap L(c)|\geq {2\over 3}\Delta$ and $|L(b)\cap L(c)|\geq{2\over 3}\Delta$.
+
+For $x\in C'_i-T_i-N(b)$, $\alpha\in L(a)\cap L(c)$, $y\in C'_i-T_i-N(b)$, $\beta\in L(b)\cap L(y)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, x, y, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertices $a$ and $x$ get $\alpha$ and none of the rest of $N(a)\cup N(x)\cup T_i$;
+\item vertices $b$ and $y$ get $\beta$ and none of the rest of $N(b)\cup N(y) \cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, x, y, z})\geq (\Delta-1)^{-6}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)\cup N(x)|}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)\cup N(y)|}\left(1-{1\over \Delta-1}\right)^{|T_i|}$
+$\geq (\Delta-1)^{-6}3^{-(4+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-6} 3^{-4.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, x, y, z}$ are disjoint for different sets of indices. 
+For $y$, we have at least $|C'_i|-|T_i\cap C'_i|-|N(b)\cap C'_i|\geq \Delta-{3\over 28}\Delta-o(\Delta)$, which is about ${25\over 28}\Delta$ choices. 
+For each $y$, we have about ${2\over 3}\Delta$ choices since $|L(y)\cap L(b)|\geq |C_i|-4$. 
+Similarly, for $x$ we have about ${25\over 28}\Delta$ choices and for each $x$, there are about ${2\over 3}\Delta$ choices. 
+There are $|C'_i|-|T_i|\geq \Delta-{3\over 28}\Delta-o(\Delta)$, which is about $\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about ${25\over 28}\Delta$, choices for $\gamma$. 
+
+Thus, there are ${25^3\over 28^3}\Delta^6 3^{-2}2^2$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, x, y, z}$ holds for some choice of indices is at least ${25^3\over 28^3}3^{-6.1}2^2$, which is about $0.00349$. 
+
+Since we have ${3\over 28}\Delta$ triples, the expected number of uncolored safe vertices $X_i$ is at least $3.4\cdot 10^{-3}\cdot {3\over 28}\Delta$. 
+
+Now we use Azuma's Inequality to show that the probability that $X_i$ deviates from the expected value is at most $\Delta^{-6}$. 
+Let the conditional expected value of $X_i$ change by at most $c_v$ when changing the color of $v$. 
+
+If $v\in T_i\cup C'_i$, then $c_v\leq 2$ since changing the color on $v$ affects $X_i$ by at most $2$ for any given assignment of colors to the remaining vertices.
+Thus, the sum of the $c_v^2$ is at most $4|{T}_i\cup C'_i|\leq 4(\Delta-o(\Delta)+{3\over 28}\Delta)$.
+
+If $v\in V(G)-T_i-C'_i$, then changing the color of $v$ from $\alpha$ to $\beta$ will only affect $X_i$ if some neighbor of $v$ that is in $T_i\cup C'_i$ receives either $\alpha$ or $\beta$. 
+This occurs with probability at most ${2d_v\over \Delta-1}$, where $d_v$ is the number of neighbors of $v$ that are in $T_i\cup C'_i$. 
+Therefore, by changing the color of $v$, the conditional expectation of $X_i$ changes by at most $c_v={4d_v\over \Delta-1}$. 
+Since the $d_v$ sum is at most $\left(\Delta-o(\Delta)+{6\over 28}\Delta\right)^2\leq 2\Delta^2$, for sufficiently large $\Delta$, the sum of these $c_v$ is at most ${4\over \Delta}{2\Delta^2}=8\Delta$. 
+As each $c_v$ is at most $4$, we see that the sum of $c_v^2$ is at most $32\Delta$.
+
+Hence, the sum of all the $c_v$ is at most $40\Delta$ for sufficiently large $\Delta$. Applying Azuma's Inequality yields $Pr(\mathcal{E}_{1, i})\leq \Delta^{-6}$ for sufficiently large $\Delta$. See Calculation \ref{1cal}
+
+\subsection{$Pr(\mathcal{E}_{2,i})\leq \Delta^{-6}$}
+
+This subsection is similar to the previous subsection, except a linear (in terms of $\Delta$) number of $P_3$ is not guaranteed. 
+Let $C'_i$ be a subset of $C_i$ with one less vertex where every two vertices in $C'_i$ have at least $|C_i|-3$ colors in common in their lists;
+such a $C'_i$ exists by Lemma \ref{core}. 
+Let $\mathcal{T}_i$ be vertices in a set of maximum $P_3$ where the center vertex is in $C'_i$ and the other two vertices are not in $C'_i$. 
+Since at most one of the two endpoints can have more than $4$ neighbors in $C_i$ by Lemma \ref{4neighbors}, it follows that ${|\mathcal{T}_i|}\geq {\Delta-1\over \Delta^c+4}$. 
+By Calculation \ref{2p3}, the number of $P_3$ is at least ${999\over 1000}\Delta^{1-c}$.
+Consider a set $T_i$ of ${999\over 1000}\Delta^{1-c}$ $P_3$ that are in $\mathcal{T}_i$.
+
+For some such fixed path, we want to bound the probability that the center vertex $c$ is uncolored and safe, and the colors used on the two end vertices, $a$ and $b$, are used on none of the rest of $T_i$. 
+To do so, we distinguish three cases. 
+
+{\bf Case 1.} When $|L(a)\cap L(c)|<{2\over 3}\Delta$ and $|L(b)\cap L(c)|<{2\over 3}\Delta$.
+
+For $\alpha\in L(a)-L(c)$, $\beta\in L(b)-L(c)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertex $a$ gets $\alpha$ and none of the rest of $N(a)\cup T_i$;
+\item vertex $b$ gets $\beta$ and none of the rest of $N(b)\cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, z})\geq (\Delta-1)^{-4}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)|}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)|}\left(1-{1\over \Delta-1}\right)^{|T_i|}\geq (\Delta-1)^{-4}3^{-(2+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-4} 3^{-2.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, z}$ are disjoint for different sets of indices. 
+Since $|L(a)-L(c)|\geq {\Delta\over 3}$, we have $\Delta\over 3$ choices for $\alpha$. 
+Similarly, we have ${\Delta\over 3}-1$ choices for $\beta$. 
+There are $|C'_i|-|T_i|\geq \Delta-2-{999\over 1000}\Delta^{1-c}$, which is about $\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about $\Delta$, choices for $\gamma$. 
+
+Thus, there are $\Delta^4 3^{-2}$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, z}$ holds for some choice of indices is at least $3^{-4.1}$, which is about $0.01106$. \\
+
+{\bf Case 2.} When $|L(a)\cap L(c)|<{2\over 3}\Delta$ and $|L(b)\cap L(c)|\geq{2\over 3}\Delta$.
+
+For $\alpha\in L(a)-L(c)$, $y\in C'_i-T_i-N(b)$, $\beta\in L(b)\cap L(y)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, y, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertex $a$ gets $\alpha$ and none of the rest of $N(a)\cup T_i$;
+\item vertices $b$ and $y$ get $\beta$ and none of the rest of $N(b)\cup N(y) \cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, y, z})\geq (\Delta-1)^{-1}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)|}(\Delta-1)^{-2}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)\cup N(y)|}(\Delta-1)^{-2}\left(1-{1\over \Delta-1}\right)^{|T_i|}\geq (\Delta-1)^{-5}3^{-(3+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-5} 3^{-3.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, y, z}$ are disjoint for different sets of indices. 
+Since $|L(a)-L(c)|\geq {\Delta\over 3}$, we have $\Delta\over 3$ choices for $\alpha$. 
+For $y$, we have at least $|C'_i|-|T_i\cap C'_i|-|N(b)\cap C'_i|\geq \Delta-2-{999\over 1000}\Delta^{1-c}-4$, which is about $\Delta$ choices. 
+For each $y$, we have about ${2\over 3}\Delta$ choices since $|L(y)\cap L(b)|\geq |C_i|-4$. 
+There are $|C'_i|-|T_i|\geq \Delta-2-{999\over 1000}\Delta^{1-c}$, which is about $\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about $\Delta$, choices for $\gamma$. 
+
+Thus, there are $\Delta^5 3^{-2}2$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, y, z}$ holds for some choice of indices is at least $3^{-5.1}2$, which is about $0.00737$. \\
+
+{\bf Case 3.} When $|L(a)\cap L(c)|\geq {2\over 3}\Delta$ and $|L(b)\cap L(c)|\geq{2\over 3}\Delta$.
+
+For $x\in C'_i-T_i-N(b)$, $\alpha\in L(a)\cap L(c)$, $y\in C'_i-T_i-N(b)$, $\beta\in L(b)\cap L(y)$, $z\in C'_i-T_i$, and $\gamma\in L(c)\cap L(z)$, where $\alpha, \beta, \gamma$ are all different, let $A_{\alpha, \beta, \gamma, x, y, z}$ be the event that all of the following hold:
+
+\begin{enumerate}[$(i)$]
+\item vertices $a$ and $x$ get $\alpha$ and none of the rest of $N(a)\cup N(x)\cup T_i$;
+\item vertices $b$ and $y$ get $\beta$ and none of the rest of $N(b)\cup N(y) \cup T_i$;
+\item vertices $c$ and $z$ get $\gamma$ and none of the rest of $T_i$.
+\end{enumerate} 
+
+Then, $Pr(A_{\alpha, \beta, \gamma, x, y, z})\geq (\Delta-1)^{-6}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(a)\cup N(x)|}\left(1-{1\over \Delta-1}\right)^{|T_i\cup N(b)\cup N(y)|}\left(1-{1\over \Delta-1}\right)^{|T_i|}$
+$\geq (\Delta-1)^{-6}3^{-(4+3{999\over 1 000}\Delta^{1-c})}\geq \Delta^{-6} 3^{-4.1}$ for sufficiently large $c$ and $\Delta$. See calculation \ref{2A}.
+
+The $A_{\alpha, \beta, \gamma, x, y, z}$ are disjoint for different sets of indices. 
+For $y$, we have at least $|C'_i|-|T_i\cap C'_i|-|N(b)\cap C'_i|\geq \Delta-2-{999\over 1000}\Delta^{1-c}-4$, which is about $\Delta$ choices. 
+For each $y$, we have about ${2\over 3}\Delta$ choices since $|L(y)\cap L(b)|\geq |C_i|-4$. 
+Similarly, for $x$ we have about $\Delta$ choices and for each $x$, there are about ${2\over 3}\Delta$ choices. 
+There are $|C'_i|-|T_i|\geq \Delta-2-{999\over 1000}\Delta^{1-c}$, which is about $\Delta$ choices for $z$. Since $|L(z)\cap L(c)|\geq {2\over 3}\Delta$, there are $|C'_i|-4$, which is about $\Delta$, choices for $\gamma$. 
+
+Thus, there are $\Delta^6 3^{-2}2^2$ choices for indices, and thus the probability that $A_{\alpha, \beta, \gamma, x, y, z}$ holds for some choice of indices is at least $3^{-6.1}2^2$, which is about $0.00491$. 
+
+Since we have ${999\over 1000}\Delta^{1-c}$ triples, the expected number of uncolored safe vertices $X_i$ is at least $4.9\cdot 10^{-3}\cdot {999\over 1000}\Delta^{1-c}$. 
+
+Now we use Azuma's Inequality to show that the probability that $X_i$ deviates from the expected value is at most $\Delta^{-6}$. 
+Let the conditional expected value of $X_i$ change by at most $c_v$ when changing the color of $v$. 
+
+If $v\in T_i\cup C'_i$, then $c_v\leq 2$ since changing the color on $v$ affects $X_i$ by at most $2$ for any given assignment of colors to the remaining vertices.
+Thus, the sum of the $c_v^2$ is at most $4|{T}_i\cup C'_i|\leq 4(\Delta-1+{1998\over 1000}\Delta^{1-c})$.
+
+If $v\in V(G)-T_i-C'_i$, then changing the color of $v$ from $\alpha$ to $\beta$ will only affect $X_i$ if some neighbor of $v$ that is in $T_i\cup C'_i$ receives either $\alpha$ or $\beta$. 
+This occurs with probability at most ${2d_v\over \Delta-1}$, where $d_v$ is the number of neighbors of $v$ that are in $T_i\cup C'_i$. 
+Therefore, by changing the color of $v$, the conditional expectation of $X_i$ changes by at most $c_v={4d_v\over \Delta-1}$. 
+Since the $d_v$ sum is at most $2(\Delta-1-{1998\over 1000}\Delta^{1-c}) + (\Delta-1){999\over 1000}\Delta^{1-c} \leq {\Delta^{2-c}\over 5000}$, for $c$ at most $2\over 3$ and sufficiently large $\Delta$ (see calculation \ref{2az2}), the sum of these $c_v$ is at most ${{4\over \Delta}{\Delta^{2-c}\over 5000}}$. 
+As each $c_v$ is at most $4$, we see that the sum of $c_v^2$ is at most ${16\Delta^{1-c}\over 5000}$.
+
+Hence, the sum of all the $c_v$ is at most $4\Delta -4 + 8\Delta^{1-c}\leq 4.1\Delta$ for sufficiently large $\Delta$ and $c$. Applying Azuma's Inequality yields $Pr(\mathcal{E}_{2, i})\leq \Delta^{-6}$ for sufficiently large $\Delta$. See Calculation \ref{2cal2}
+
+\subsection{$Pr(\mathcal{E}_{3,i})\leq \Delta^{-6}$}
+
+%Recall that a $C_i$ that corresponds to this case satisfies $\Delta^c<\max_{w_i\not\in C_i} d_{C_i}(w_i)<\Delta^d$. 
+Recall that a $C_i$ that corresponds to this case has a vertex $w_i$ outside of $C_i$ that has at least $\Delta^d$ neighbors inside $C_i$ and $K'_i=N(w_i)\cap C_i$. 
+
+Now uncolor each $w_i$ that is colored.
+If there exist two vertices in $x, y\in K'_i$ with different special colors such that the external neighbors of $x, y$ are both in $\bigcup_{C_i\in\mathcal{P}_3} (C_i-K'_i)$, then color $x, y$ with their special colors; 
+this is possible since none of the neighbors of $x,y$ are colored yet.
+Note that such $K'_i$ contain at least two safe uncolored vertices, namely, the vertices that do not contain the special colors of $x,y$ in their lists. 
+
+Let $\mathcal{K}$ be the set of remaining $K'_i$. 
+%If there exists one vertex such that its external neighbor is in $\bigcup_{C_i\in\mathcal{P_3}} (C_i-K'_i)$, then color that vertex with its special color. 
+%Now assume that no vertex in $K'_i$ is adjacent to a vertex in $\bigcup_{C_i\in\mathcal{P_3}}(C_i-K'_i)$,
+Let $T_i$ be a maximum set of vertices in $K'_i\in \mathcal{K}$ such that every vertex in $T_i$ has a different special color, and each vertex in $T_i$ has its external neighbor in $G-\left(\bigcup_{C_i\in\mathcal{P}_3}C_i\right)$. 
+Note that the external neighbors of $T_i$ must all be distinct. 
+Partition $\mathcal{K}$ into two sets $\mathcal{K}_1$ and $\mathcal{K}_2$ so that for $K'_i\in\mathcal{K}$, the set $K'_i$ is in $\mathcal{K}_1$ if and only if $|T_i|\geq{\Delta^d\over 5}-40$.
+
+%\begin{claim}
+%There exists a stable set $Z\subset \bigcup_{K'_i\in \mathcal{K}_2}K'_i$ where there is exactly one vertex from each $K'_i\in \mathcal{K}_2$. 
+%\end{claim}
+%
+%\begin{proof}
+%For $K'_i\in \mathcal{K}_2$, there exists a set of at least $11$ vertices in $K'_i$ that have their external neighbors in $\mathcal{K}_2$; let $R_i$ be $11$ of these vertices for each $i$. 
+%Choose one vertex from each $R_i$ uniformly at random. 
+%We will apply the local lemma. 
+%Let $E_e$ be the (bad) event that both endpoints of an edge $e$ is chosen. 
+%Thus, $Pr(E_e)\leq \left({1\over 11}\right)^2$. $E_{e_1}$ is mutually independent from $E_{e_2}$ unless $e_1$ and $e_2$ have at least one endpoint in the same $K'_i$.
+%Thus, $E_e$ is mutually independent to all but $4\cdot 11$ other events. 
+%Since $e\left(1\over 11\right)^2 44<1$, we are done.
+%%For $A_i\in \mathcal{A}_2$, let $A''_i$ be the set of vertices in $A_i$ that have their external neighbors in some $A_j\in\mathcal{A}_2$. Note that $|A''_i|\leq {\Delta^c\over 7}-11$ Choose one vertex from each $A'_i$ uniformly at random. We will apply the local lemma. Let $E_e$ be the event that both endpoints of an edge $e$ is chosen. Thus, $Pr(E_e)\leq \left(7\over 6\Delta^c\right)^2$. $E_{e_1}$ is mutually independent from $E_{e_2}$ unless $e_1$ and $e_2$ have at least one endpoint in the same $A'_i$. Thus, $E_e$ is mutually independent to all but $2{6\Delta^c\over 7}$ other events. Since $e\left(7\over 6\Delta^c\right)^2 2{6\Delta^c\over 7}<1$ for sufficiently large $\Delta$ (TODO: Calculate later), we are done.
+%\hfill
+%\end{proof}
+
+\begin{claim}
+There exists $Z\subset V(G)$ where $G[Z]$ is a $1$-factor and each edge of $G[Z]$ is within the same $K'_i$ in $\mathcal{K}_2$. 
+(There exists a set $Z\subset \bigcup_{K'_i\in \mathcal{K}_2}K'_i$ where exactly two vertices are chosen from each $K'_i\in \mathcal{K}_2$ and no edge from different $K'_i$ has both endpoints chosen.)
+(There exists a set $Z\subset \bigcup_{K'_i\in \mathcal{K}_2}K'_i$ where $G[Z]$ is a $1$-factor and each edge of $G[Z]$ is within the same $K'_i$.)
+\end{claim}
+
+\begin{proof}
+For each $K'_i\in \mathcal{K}_2$, vertices of at most one special color have their external neighbors in $\bigcup_{C_i\in \mathcal{P}_3}(C_i-K'_i)$. 
+Since there are at least $\Delta^d\over 5$ special colors, there exists at least $40$ vertices with different special colors for each $K'_i\in \mathcal{K}_2$ that have their external neighbors in $\bigcup_{K'_i\in \mathcal{K}_2}K'_i$; 
+let $R_i$ be $40$ of these vertices for each $K'_i\in \mathcal{K}_2$.
+Choose two vertices from each $R_i$ uniformly at random. 
+We will apply the local lemma. 
+Let $E_e$ be the (bad) event that both endpoints of an edge $e$ with endpoints in different $K'_i$ is chosen. 
+Thus, $Pr(E_e)\leq \left({1\over 20}\right)^2$. $E_{e_1}$ is mutually independent from $E_{e_2}$ unless $e_1$ and $e_2$ have at least one endpoint in the same $K'_i$.
+Thus, $E_e$ is mutually independent to all but at most $80$ other events. 
+Since $e\left(1\over 20\right)^2 80<1$, we are done.
+\hfill
+\end{proof}
+
+For each vertex in $Z$, color it with its special color; this is possible since no vertex in $Z$ has a colored neighbor. Color these two vertices with their special colors for each $K'_i\in \mathcal{K}_1$. 
+
+Now we will finish this section by finally showing that $Pr(\mathcal{E}_{i,3})\leq \Delta^{-6}$.
+
+\begin{claim}\label{3claim2}
+With high probability, for each $K'_i\in \mathcal{K}_1$, there are at least two vertices in $K'_i$ where the special color of each vertex is available, and their external neighbors are colored. 
+\end{claim}
+
+\begin{proof}
+We will actually show that these two vertices are in $T_i$. 
+Let $\mathcal{U}_i$ be the external neighbors of $\mathcal{T}_i$, which is a maximum set of vertices in $T_i$ that satisfy the following conditions:
+\begin{enumerate}[$(i)$]
+\item the external neighbor of $x\in\mathcal{T}_i$ retains a color that is not the special color of $x$;
+\item every external neighbor of a vertex in $\mathcal{T}_i$ has a distinct color. 
+\end{enumerate} 
+We will first show that the expectation of $|\mathcal{T}_i|$ is high, and then we will show that $|\mathcal{T}_i|$ is concentrated around its expectation. 
+
+The probability that an external neighbor $y$ of $x\in\mathcal{T}_i$ will not receive the special color of $x$ is at least ${\Delta-2\over \Delta-1}$, and the probability that the at most $\Delta-1$ neighbors of $y$ do not receive the color $y$ received is $\left(1-{1\over \Delta-1}\right)^{\Delta-1}$, which is about $1\over e$. 
+Since $|{T}_i|\geq {\Delta^d\over 5}-40$, it follows that $E[|\mathcal{T}_i|]\geq \left({\Delta^d\over 5}-40\right)\cdot{1\over e}$, which is about ${\Delta^d\over 5e}$.
+
+Now we use Azuma's Inequality to show that the probability that $|\mathcal{T}_i|$ deviates from the expected value is at most $\Delta^{-6}$. 
+Let the conditional expected value of $|\mathcal{T}_i|$ change by at most $c_v$ when changing the color of $v$. 
+
+If $v\in \mathcal{U}_i-C_i$, then $c_v\leq 2$ since changing the color on $v$ affects $|\mathcal{T}_i|$ by at most $2$ for any given assignment of colors to the remaining vertices.
+Thus, the sum of the $c_v^2$ is at most $4|\mathcal{T}_i|$, which is about ${4\Delta^d\over 5}$. 
+
+If $v\in V(G)-\mathcal{U}_i-C_i$, then changing the color of $v$ from $\alpha$ to $\beta$ will only affect $|\mathcal{T}_i|$ if some neighbor of $v$ that is in $\mathcal{U}_i$ receives either $\alpha$ or $\beta$. 
+This occurs with probability at most ${2d_v\over \Delta-1}$, where $d_v$ is the number of neighbors of $v$ that are in $\mathcal{U}_i$. 
+Therefore, by changing the color of $v$, the conditional expectation of $|\mathcal{T}_i|$ changes by at most $c_v={4d_v\over \Delta-1}$. 
+Since the $d_v$ sum is at most $\left({\Delta^d\over 5}-40\right)(\Delta-1)$, the sum of these $c_v$ is at most ${4\Delta^d\over 5}$. As each $c_v$ is at most $4$, we see that the sum of $c_v^2$ is at most ${16\Delta^d\over 5}$.
+
+Hence, the sum of all the $c_v$ is at most $4\Delta^d$. Applying Azuma's Inequality yields $Pr(\mathcal{E}_{3, i})\leq \Delta^{-6}$ for sufficiently large $\Delta$. See Calculation \ref{3cal2}
+\end{proof}
+
+Color these two vertices with their special colors for each $K'_i\in \mathcal{K}_1$. 
+
+This guarantees that every $K'_i$ that corresponds to this subsection has at least two vertices that are colored with their special colors. 
+Now, the vertices within each $K'_i$ that do not have the colored vertices in their lists are the safe vertices we are looking for. 
+
+\subsection{$Pr(\mathcal{S}_v)\leq \Delta^{-6}$}
+
+Recall that $v$ has at least $\Delta^{1+\alpha}$ nonadjacent pairs of vertices in its neighborhood. 
+Let $A=\{x\in N(v): |L(x)\cap L(v)|\geq {2\over 3}\Delta\}$ and $B=N(v)-A$. Note that for $x,y\in A$, we have $|L(x)\cap L(y)|\geq {\Delta\over 3}$ and for $x\in B$ we have $|L(x)-L(v)|\geq {\Delta\over 3}$. 
+Let $b$ be the number of nonadjacent pairs in $N(v)$ that intersect $B$, so that $G[A]$ contains at least $\Delta^{1+\alpha}-b$ nonadjacent pairs and $b\leq |B|\Delta$. 
+Let $A_v$ be the random variable that counts the number of colors that appear at least twice in $N(v)$. 
+Let $B_v$ be the random variable that counts the number of colors that appear in $N(v)$ that are not in the list of $L(v)$. 
+Let $Z_v=A_v+B_v$ so that $E[Z_v]=E[A_v]+E[B_v]$. 
+We will prove that $E[Z_v]$ is high, and then use Azuma's Inequality to prove that with high probability, $Z_v$ is concentrated around its mean. 
+
+For $A_v$, let $x, y\in A$ be nonadjacent. 
+We will actually calculate the number of colors that appear exactly twice in $N(v)$. 
+Since $|L(x)\cap L(y)|\geq {\Delta\over 3}$, the probability that $x, y$ get the same color and retain it and this color is not used on the rest of $N(v)$ is at least ${\Delta\over 3}(\Delta-1)^{-2}(1-(\Delta-1))^{|N(v)\cup N(x)\cup N(y)|}\geq \Delta^{-1}3^{-4}$. 
+Thus, $E[A_v]\geq (\Delta^{1+\alpha}-b)\Delta^{-1}3^{-4}$.
+
+For $B_v$, let $x\in B$. 
+Since $|L(x)-L(v)|\geq {\Delta\over 3}$, the probability that $x$ gets a color not in $L(v)$ and retains it and is not used on the rest of $N(v)$ is at least ${\Delta\over 3}(\Delta-1)^{-1}(1-(\Delta-1)^{-1})^{|N(v)\cup N(x)|}\geq 3^{-3}$. 
+Thus $E[B_v]\geq {|B|\over 27}\geq {b\over 81\Delta}$. 
+Hence, $E[Z_v]\geq\Delta^{\alpha}3^{-4}\geq {\Delta^\alpha \over 100}$.
+
+Now we use Azuma's Inequality to show that the probability that $Z_v$ deviates from the expected value is at most $\Delta^{-6}$. 
+Let the conditional expected value of $Z_w$ change by at most $c_w$ when changing the color of $w$. 
+
+Changing the color of $w$ from $\alpha$ to $\beta$ will only affect $Z_v$ if some neighbor of $w$ that is in $N(v)$ receives either $\alpha$ or $\beta$. 
+This occurs with probability at most ${2d_w\over \Delta-1}$, where $d_w$ is the number of neighbors of $w$ that are in $N(v)$.
+Therefore, by changing the color of $w$, the conditional expectation of $Z_v$ changes by at most $c_w={4d_w\over \Delta-1}$. 
+Since the $d_w$ sum is at most $\Delta^2$, the sum of these $c_w$ is at most $5\Delta$. As each $c_w$ is at most $5$, we see that the sum of $c_w^2$ is at most $25\Delta$.
+
+Hence, the sum of all the $c_w$ is at most $25\Delta$. Applying Azuma's Inequality yields $Pr(\mathcal{S}_{v})\leq \Delta^{-6}$ for sufficiently large $\Delta$. See Calculation \ref{4cal}.
+
+%%\section{Question}
+%%
+%%\begin{claim}
+%%The special color of at least one vertex in $K'_i$ is available for all $K'_i\in \mathcal{K}_1$.
+%%\end{claim}
+%%
+%%\begin{proof}
+%%We will apply the local lemma. 
+%%For each $K'_i\in\mathcal{K}_1$, let $E_i$ be the (bad) event that the special color is used on the external neighbor and is retained of each vertex in $K'_i$. 
+%%$Pr(E_i)\leq {1\over e(\Delta-1)}$. 
+%%Changing the color of one vertex can affect at most $\Delta^{3+c}\over 5$ other events, thus, $E_i$ mutually independent to all but at most $\Delta^{3+c}\over 5$ events. 
+%%Since $e\left({1\over \Delta-1}\right)^{{\Delta^c\over 5}-10}{\Delta^{3+c}\over 5}<1$ for $\Delta\geq 10^{20}$, we are done.\hfill
+%%\end{proof}
+
+\section{Calculations}
+
+Typed up the calculations so they do not get lost in my notes. 
+
+\begin{calculation}\label{2p3}
+For number of $P_3$ for $\mathcal{E}_{2, i}$, when proving
+$${\Delta-1\over \Delta^c+4}\geq {999\over 1000}\Delta^{1-c}$$
+\end{calculation}
+\begin{proof}
+$$\lra \Delta-1\geq {999\over 1000}\Delta +4{999\over 1000}\Delta^{1-c}
+\lra {\Delta-1000\over 3996}\geq \Delta^{1-c}
+\lra {\ln\left( {\Delta-1000\over 3996}\right)\over \ln\Delta} \geq 1-c$$
+$$\lra c \geq1- {\ln\left( {\Delta-1000\over 3996}\right)\over \ln\Delta}
+=0.180008\cdots \mbox{for $\Delta=10^{20}$}$$
+
+\end{proof}
+
+\begin{calculation}\label{2A}
+$$3{999\over 1000}\Delta^{1-c}\leq 0.1\Delta$$
+\end{calculation}
+\begin{proof}
+$$\lra 30{999\over 1000}\leq \Delta^c
+\ra c\geq {\ln(30{999\over 1000})\over \ln \Delta}=0.0745\cdots\mbox{for $\Delta=10^{20}$}$$
+\end{proof}
+
+\begin{calculation}\label{2az2}
+$$2(\Delta-1-{1998\over 1000}\Delta^{1-c}) + (\Delta-1){999\over 1000}\Delta^{1-c} \leq {\Delta^{2-c}\over 5000}$$
+\end{calculation}
+\begin{proof}
+This is true for $c$ at most $2\over 3$.
+\end{proof}
+
+\begin{calculation}\label{1cal}
+For $\mathcal{E}_{1, i}$,
+$$2\exp\left(  {-\left(  3.4\cdot 10^{-3}\cdot {3\over 28}\Delta-2  \right)^2\over 40\Delta}  \right)\leq \Delta^{-6}$$
+\end{calculation}
+\begin{proof}
+$$2\exp\left(  {-\left(  3.4\cdot 10^{-3}\cdot {3\over 28}\Delta-2  \right)^2\over 40\Delta}  \right)\leq \Delta^{-6}$$
+$$ \lra (40\ln 2)\Delta + 6\cdot 40\Delta \ln \Delta \leq  {\left( 3.4\cdot 10^{-3}\cdot {3\over 28} \right)^2}\Delta^{2} +4 - 4 \left( 3.4\cdot 10^{-3}\cdot {3\over 28} \right)\Delta$$
+$$\la 250\Delta\ln \Delta\leq \left( 3.4\cdot 10^{-3}\cdot {3\over 28} \right)^2\Delta^2
+\la 250\ln \Delta\leq 10^{-6}\Delta \lra 250\cdot 10^6\ln \Delta\leq \Delta$$
+This is true for $\Delta\geq 10^{10}$.
+\end{proof}
+
+\begin{calculation}\label{2cal2}
+For $\mathcal{E}_{2, i}$,
+$$2\exp\left(  {-\left(  4.9\cdot 10^{-3}\cdot {999\over 1000}\Delta^{1-c}-2  \right)^2\over 8.2\Delta}  \right)\leq \Delta^{-6}$$
+\end{calculation}
+\begin{proof}
+$$2\exp\left(  {-\left(  4.9\cdot 10^{-3}\cdot {999\over 1000}\Delta^{1-c}-2  \right)^2\over 8.2\Delta}  \right)\leq \Delta^{-6}$$
+$$ \lra (8.2\ln 2)\Delta + 6\cdot 8.2\Delta \ln \Delta \leq  {\left( 4.9\cdot 10^{-3}\cdot {999\over 1000} \right)^2}\Delta^{2-2c} +4 - 4 \left( 4.9\cdot 10^{-3}\cdot {999\over 1000} \right)\Delta^{1-c}$$
+$$\la 50\Delta\ln \Delta\leq \left( 4.9\cdot 10^{-3}\cdot {999\over 1000} \right)^2\Delta^{2-2c}
+\la c\leq {\ln\left({\left( 4.9\cdot 10^{-3}\cdot {999\over 1000} \right)^2\Delta\over 50\ln \Delta}\right)\over 2\ln \Delta}$$
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c}
+For $c\leq$ & 0.3004 & 0.2905 & 0.2795 & 0.2672 & 0.2535 & 0.2380 \\
+\hline
+true for $\Delta\geq$ & $10^{20}$ & $10^{19}$ & $10^{18}$ & $10^{17}$ & $10^{16}$ & $10^{15}$
+\end{tabular}
+\end{center}
+\end{proof}
+
+\begin{calculation}\label{3cal2}
+For $\mathcal{E}_{3,i}$, Claim \ref{3claim2},
+$$2\exp\left(  {-\left(  {\Delta^d\over 5e}-2  \right)^2\over 8\Delta^d}  \right)\leq \Delta^{-6}$$
+\end{calculation}
+\begin{proof}
+$$2\exp\left(  {-\left(  {\Delta^d\over 5e}-2  \right)^2\over 8\Delta^d}  \right)\leq \Delta^{-6}
+\lra (8\ln 2)\Delta^d + 6\cdot 8\Delta^d \ln \Delta \leq  {\left(  {\Delta^d\over 5e}-2  \right)^2} 
+={\Delta^{2d}\over 25e^2}-{4\Delta^d\over 5e}+4$$
+$$\la (8\ln 2)\Delta^d + 6\cdot 8\Delta^d \ln \Delta + {4\Delta^d\over 5e}\leq  {\Delta^{2d}\over 25e^2}
+\la 49\Delta^d \ln \Delta \leq  {\Delta^{2d}\over 25e^2}
+\lra d\geq {\ln(49\cdot 25\cdot e^2 \cdot \ln \Delta)\over \ln \Delta}
+$$
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c}
+For $d\geq$ & 0.2810 & 0.2947 & 0.3097 & 0.3264 & 0.3664 & 0.4495 \\
+\hline
+true for $\Delta\geq$ & $10^{20}$ & $10^{19}$ & $10^{18}$ & $10^{17}$ & $10^{15}$ & $10^{12}$
+\end{tabular}
+\end{center}
+\end{proof}
+
+\begin{calculation}\label{4cal}
+For $\mathcal{S}_v$,
+$$2\exp{ \left( -\left( {\Delta^\alpha\over 100 } -2\right)^2 \over 50\Delta \right) }\leq \Delta^{-6}$$
+\end{calculation}
+\begin{proof}
+$$2\exp{ \left( -\left( {\Delta^\alpha\over 100 } -2\right)^2 \over 50\Delta \right) }\leq \Delta^{-6}
+\lra (50\ln 2)\Delta + 6\cdot 50\Delta \ln \Delta \leq  {\left(  {\Delta^\alpha\over 100 } -2  \right)^2} 
+={\Delta^{2\alpha}\over 10000}-{4\Delta^\alpha\over 100}+4$$
+$$ \la {\Delta^\alpha\over 25}+120\Delta + 300\Delta\ln \Delta \leq {\Delta^{2\alpha}\over 10000}$$
+For $\Delta\geq 10^{10}$, ${\Delta^\alpha\over 25}\leq {0.1\Delta^{2\alpha}\over 10000} \lra {10^5\over 25}\leq \Delta^\alpha$ and $120\Delta\leq 10\Delta\ln \Delta \lra e^{12}\leq \Delta$.
+$$310\Delta\ln \Delta\leq {9\Delta^{2\alpha }\over 100000}
+\lra\alpha \geq { {\ln \left({310\cdot 10^5\o ver 9}\ln \Delta\right)\over \ln\Delta}+1\over 2}
+=0.89496
+\la \alpha\geq {9\over 10}$$
+\end{proof}
+
+\begin{thebibliography}{1}
+
+\bibitem{BK77}
+O. V. Borodin, A. V. Kostochka,
+\newblock On an upper bound of a graph's chromatic number, depending on the graph's degree and density,
+\newblock {\em Journal of Combinatorial Theory, Series B}, 23 (1977), no. 2--3, 247--250.
+
+\bibitem{Br41}
+R. L. Brooks,
+\newblock On colouring the nodes of a network,
+\newblock {\em Mathematical Proceedings of the Cambridge Philosophical Society}, 
+vol. 37, Cambridge Univ Press, 1941, pp. 194--197.
+
+\bibitem{CR12}
+D. W. Cranston, L. Rabern,
+\newblock Conjectures equivalent to the Borodin-Kostochka conjecture that appear weaker,
+\newblock {\em preprint}.
+
+\bibitem{Ko80}
+A. V. Kostochka,
+\newblock Degree, density, and chromatic number,
+\newblock {\em Metody Diskret. Anal.} 35 (1980), 45--70 (in Russian).
+
+\bibitem{MR}
+M. Molloy, B. Reed,
+\newblock Graph Colouring and the Probabilistic Method.
+
+\bibitem{Mo83}
+N. N. Mozhan,
+\newblock Chromatic number of graphs with a density that does not exceed two-thirds of the maximal degree,
+\newblock {\em Metody Diskretn. Anal.} 39 (1983), 52--65 (in Russian).
+
+\bibitem{Re99}
+B. Reed,
+\newblock A strengthening of Brooks' theorem,
+\newblock {\em J. Combin. Theory Ser. B} 76(2):136-149, 1999.
+
+\bibitem{Vi76}
+V. G. Vizing,
+\newblock TODO: FIND ARTICLE.
+
+\end{thebibliography}
+
+\end{document}

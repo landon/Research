@@ -1,0 +1,245 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem*{MainLemma}{The Main Lemma}
+\newtheorem*{CapRizz}{Caprara and Rizzi}
+\newtheorem*{FractionalTheorem}{Fractional Version}
+\newtheorem*{KingVettaReed}{King, Reed and Vetta}
+\newtheorem*{ReedConjecture}{Reed's Conjecture}
+\newtheorem*{TheoremD}{Theorem D}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{CliqueGraph}{Clique Graph}
+\newtheorem*{Satisfaction}{Satisfaction}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\title{On hitting all maximum cliques with an independent set}
+\author{Landon Rabern\\
+\small \texttt{landon.rabern@gmail.com}}
+\setlength{\parindent}{0in}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove that every graph $G$ for which $\omega(G) \geq \frac{3}{4}(\Delta(G) + 1)$, has an independent set $I$ such that $\omega(G - I) < \omega(G)$.  It follows that a minimum counterexample $G$ to Reed's conjecture satisfies $\omega(G) < \frac{3}{4}(\Delta(G) + 1)$ and hence also $\chi(G) > \left\lceil \frac{7}{6}\omega(G) \right\rceil$.  This also applies to restrictions of Reed's conjecture to hereditary graph classes, and in particular generalizes and simplifies King, Reed, and Vetta's proof of Reed's conjecture for line graphs.
+\end{abstract}
+
+\section{Introduction}
+We prove the following general lemma and apply it to Reed's conjecture.
+
+\begin{MainLemma}
+If $G$ is a graph with $\omega(G) \geq \frac{3}{4}(\Delta(G) + 1)$, then $G$ has an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{MainLemma}
+
+In \cite{Reed}, Reed conjectured the following upper bound on the chromatic number.
+
+\begin{ReedConjecture}
+For every graph $G$ we have $\chi(G) \leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil$.
+\end{ReedConjecture}
+
+\begin{observation}
+If we could always find an independent set whose removal decreased both $\omega$ and $\Delta$, then the conjecture would follow by simple induction since we can give the independent set a single color and use at most $\left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil - 1$ colors on what remains.  Expanding the independent set given by The Main Lemma to a maximal one shows that this sort of argument goes through when $\omega \geq \frac{3}{4}(\Delta + 1)$.
+Thus a minimum counterexample to Reed's conjecture satisfies $\omega < \frac{3}{4}(\Delta + 1)$ and hence also $\chi > \left\lceil \frac{7}{6}\omega \right\rceil$.\\
+\end{observation}
+
+Reed's conjectured upper bound was proved for line graphs of multigraphs by King, Reed and Vetta in \cite{LineGraphs}, for quasi-line graphs by King and Reed in \cite{QuasiLineGraphs}, and recently King and Reed proved it for all claw-free graphs (see King's thesis \cite{KingThesis}).  The line graphs of multigraphs result follows from the following theorem.\newline
+
+\begin{TheoremD}
+If $G$ is a graph with $\chi(G) \leq \left\lceil \frac{7}{6}\omega(G) \right\rceil$ and for every proper induced subgraph $H$ of $G$ we have $\chi(H) \leq \left\lceil \frac{\omega(H) + \Delta(H) + 1}{2}\right\rceil$, then we also have $\chi(G) \leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil$.
+\end{TheoremD}
+
+King, Reed and Vetta's upper bound for line graphs of multigraphs follows immediately from Theorem D, a bound of Caprara and Rizzi (see \cite{CapraraAndRizzi}) and the bound of Molloy and Reed on fractional colorings (see \cite{MolloyAndReed} chapter 21, section 3). 
+We write $\chi^*(G)$ for the fractional chromatic number of a graph $G$.
+
+\begin{CapRizz}
+Let $H$ be a multigraph and $G = L(H)$.  Then
+\[\chi(G) \leq \max\left\{\left\lfloor 1.1\Delta(H) + 0.7 \right\rfloor, \left\lceil \chi^*(G) \right\rceil\right\}\]
+\end{CapRizz}
+
+\begin{FractionalTheorem}
+For every graph $G$ we have $\chi^*(G) \leq \frac{\omega(G) + \Delta(G) + 1}{2}$.
+\end{FractionalTheorem}
+
+\begin{KingVettaReed}
+If $G$ is the line graph of a multigraph, then $\chi(G) \leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil$.
+\end{KingVettaReed}
+
+To prove this result, they consider a minimum counterexample $G = L(H)$. This must have $\Delta(G) < \frac{3}{2}\Delta(H) - 1$, otherwise Caprara and Rizzi's result implies Reed's bound.
+When $\Delta(G) < \frac{3}{2}\Delta(H) - 1$, they use the structure of line graphs to prove that G contains an independent set intersecting all maximum cliques. However, this second step can easily be replaced with an application of Theorem D, since $\left\lfloor 1.1 \omega(G) + 0.7 \right\rfloor \leq \left\lceil \frac{7}{6}\omega(G) \right\rceil$. This example
+demonstrates the usefulness of Theorem D as a general tool, requiring no specific structural analysis to find the independent set. On the other hand, the structural analysis has the benefit of leading to a polynomial time algorithm for actually finding the desired independent set in a supposedly minimum counterexample (see \cite{LineGraphs}).
+
+\section{Proof of The Main Lemma}
+We need three lemmas.  The first is due to Hajnal (see \cite{Hajnal}).
+
+\begin{lem}\label{HajnalLemma}
+Let $G$ be a graph and $\mathcal{Q}$ a collection of maximum cliques in $G$. Then
+\[\left | \bigcap \mathcal{Q}\right | \geq 2\omega(G) - \left | \bigcup \mathcal{Q}\right |.\]
+\end{lem}
+\begin{proof}
+Assume (to reach a contradiction) that the lemma is false and let $\mathcal{Q}$ be a counterexample with $|\mathcal{Q}|$ minimal.  Put $r = |\mathcal{Q}|$ and $\mathcal{Q} = \{Q_1, ..., Q_r\}$.  Consider the set $\displaystyle W = (Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i$.  Plainly, $W$ is a clique.  Thus
+\begin{align*}
+\omega(G) &\geq |W| \\
+&= \left |(Q_1 \cap \bigcup_{i=2}^r Q_i) \cup \bigcap_{i=2}^r Q_i \right | \\
+&= \left |Q_1 \cap \bigcup_{i=2}^r Q_i \right | + \left |\bigcap_{i=2}^r Q_i \right | - \left |\bigcap_{i=1}^r Q_i \cap \bigcup_{i=2}^r Q_i \right | \\
+&= \left |Q_1 \right | + \left |\bigcup_{i=2}^r Q_i \right | - \left |\bigcup_{i=1}^r Q_i \right| + \left |\bigcap_{i=2}^r Q_i \right | - \left |\bigcap_{i=1}^r Q_i \right | \\
+&= \omega(G) + \left |\bigcup_{i=2}^r Q_i \right | + \left |\bigcap_{i=2}^r Q_i \right | - \left |\bigcup_{i=1}^r Q_i \right| - \left |\bigcap_{i=1}^r Q_i \right | \\
+&\geq \omega(G) + 2\omega(G) - \left |\bigcup_{i=1}^r Q_i \right| - \left |\bigcap_{i=1}^r Q_i \right |. \\
+\end{align*}
+
+Where the final step follows by the minimality of $|\mathcal{Q}|$. Thus $\displaystyle \left |\bigcap_{i=1}^r Q_i \right | \geq 2\omega(G) - \left |\bigcup_{i=1}^r Q_i \right|$ giving a contradiction.
+\end{proof}
+
+The second lemma we need is an improvement of Hajnal's result for graphs satisfying $\omega > \frac{2}{3}(\Delta + 1)$ due to Kostochka (see \cite{Kostochka}).  We reproduce Kostochka's proof here to serve as an English translation.
+
+\begin{CliqueGraph}
+Let $G$ be a graph and $\mathcal{Q}$ the collection of all maximum cliques in $G$.  The \emph{clique graph} of $G$ is the graph with vertex set $\mathcal{Q}$ and an edge between $Q_1 \neq Q_2 \in \mathcal{Q}$ if and only if $Q_1$ and $Q_2$ intersect.  Let $\mathcal{C}(G)$ be the components of the clique graph of $G$.
+\end{CliqueGraph}
+
+\begin{lem}\label{KostochkaLemma}
+Let $G$ be a graph with $\omega(G) > \frac{2}{3}(\Delta(G) + 1)$.  Then for every $C \in \mathcal{C}(G)$ we have 
+\[\left | \bigcap V(C) \right | \geq 2\omega(G) - (\Delta(G) + 1).\]
+\end{lem}
+\begin{proof}
+Assume (to reach a contradiction) that the lemma is false and let $G$ be a counterexample with the minimum number of vertices.  Then there is some component $C \in \mathcal{C}(G)$ with $\left | \bigcap V(C) \right | < 2\omega(G) - (\Delta(G) + 1)$.  By minimality of $G$, we have $G = \bigcup V(C)$.  Put $D = \bigcap V(C)$.  Note that if $|D| \geq 1$, then $|G| \leq \Delta(G) + 1$ and the result follows from Lemma \ref{HajnalLemma}.  We can therefore assume that $|D| = 0$ and hence $|V(C)| \geq 3$.\newline
+
+By Lemma \ref{HajnalLemma} we have $|G| \geq 2\omega(G)$.  Put $V(C) = \{Q_1, \ldots, Q_r\}$.  Take $x \in V(G)$ that is in the minimum number of the $Q_i$.  Without loss of generality, say $x \in Q_i$ for $1 \leq i \leq t$ for some $t \geq 1$.  Consider the set
+
+\[A = \displaystyle \bigcap_{i=1}^t Q_i - \bigcup_{i = t + 1}^r Q_i.\]
+
+If $y \in G-A$, then $y \not \in \displaystyle \bigcap_{i=1}^t Q_i$ or $y \in \displaystyle \bigcup_{i = t + 1}^r Q_i$.  In the former case, we must have $y \in \displaystyle \bigcup_{i = t + 1}^r Q_i$ for otherwise $y$ would be in fewer than $t$ of the $Q_i$ contradicting the minimality of $x$.  Thus $G-A \subseteq \displaystyle\bigcup_{i = t + 1}^r Q_i$. Hence $G-A = \displaystyle\bigcup_{i = t + 1}^r Q_i$.\newline
+
+To apply the minimality of $G$ to $G-A$ all we need to show is that $G-A$ has a single clique component.  Clearly this will follow if we show that the clique graph of $G$ is complete.  Since the clique graph is connected, it will be enough to show that it is transitive, i.e. contains no induced path on three vertices.  So, let $Q_1, Q_2, Q_3$ be distinct maximum cliques and assume that $Q_1 \cap Q_2 \neq \emptyset$ and $Q_2 \cap Q_3 \neq \emptyset$.  Then $|Q_1 \cap Q_2| = |Q_1| + |Q_2| - |Q_1 \cup Q_2| \geq 2\omega(G) - (\Delta(G) + 1)$.  Hence
+\begin{align*}
+|Q_1 \cap Q_3| &\geq |Q_1 \cap Q_2 \cap Q_3| \\
+&\geq |Q_1 \cap Q_2| - (|Q_2| - |Q_2 \cap Q_3|) \\
+&\geq 2\omega(G) - (\Delta(G) + 1) - (\omega(G) - (2\omega(G) - (\Delta(G) + 1))) \\
+&= 3\omega(G) - 2(\Delta(G) + 1) > 0.\\
+\end{align*}
+
+Thus $Q_1 \cap Q_3 \neq \emptyset$ showing that the clique graph of $G$ is transitive.\newline
+
+So we may apply minimality of $G$ to conclude that $\left |\displaystyle\bigcap_{i = t + 1}^r Q_i \right | \geq 2\omega(G) - (\Delta(G) + 1)$.  In particular, $|G-A| \leq \Delta(G) + 1$.  Since $A \subseteq Q_1 - Q_r$ and $Q_1 \cap Q_r \neq \emptyset$ we have $|A| \leq \omega(G) - (2\omega(G) - (\Delta(G) + 1)) = \Delta(G) + 1 - \omega(G)$. But then
+\begin{align*}
+|G| &= |A| + |G-A| \\
+&\leq \Delta(G) + 1 - \omega(G) + \Delta(G) + 1 \\
+&= 2(\Delta(G) + 1) - \omega(G) \\
+&< 2\omega(G).\\
+\end{align*}
+
+This contradicts the fact that $|G| \geq 2\omega(G)$.
+\end{proof}
+
+Kostochka gives the example of $C_5$ with each vertex blown up to a $k$-clique to show that the $\omega > \frac{2}{3}(\Delta + 1)$ condition in Lemma \ref{KostochkaLemma} is best possible.\newline
+
+The third lemma we need is a result of Haxell (see \cite{Haxell}) on independent transversals.
+
+\begin{lem}\label{HaxellLemma}
+Let $k$ be a positive integer, let $H$ be a graph of maximum degree at most $k$,
+and let $V(H) = V_1 \cup \cdots \cup V_n$ be a partition of the vertex set of $H$. Suppose that $|V_i| \geq 2k$ for each $i$. Then $H$ has an independent set $\{v_1, \ldots, v_n\}$ where $v_i \in V_i$ for each $i$.
+\end{lem}
+
+\begin{proof}[Proof of The Main Lemma]
+Let $G$ be a graph satisfying $\omega \geq \frac{3}{4}(\Delta + 1)$.  Put $\mathcal{C}(G) = \{C_1, \ldots, C_r\}$. By Lemma \ref{KostochkaLemma}, the mutual intersection $F_i$ of the maximum cliques in $C_i$ satisfies $|F_i| \geq 2\omega(G) - (\Delta(G) + 1)$ for each $i$.  Since every vertex $v \in F_i$ is in a maximum clique in $\bigcup V(C_i)$, $v$ is adjacent to at most $\Delta(G) + 1 - \omega(G) \leq \frac{1}{4} (\Delta(G) + 1)$ vertices outside of $\bigcup V(C_i)$.\newline
+
+Let $H$ be the graph with $V(H) = \displaystyle \bigcup_{i} V(F_i)$ and an edge between $v, w \in V(H)$ if and only if $vw \in E(G)$ and $v$ and $w$ are in different clique components in $G$.  Then, by the above, $\Delta(H) \leq \Delta(G) + 1 - \omega(G)$.\newline
+
+Consider the partition $\{F_i\}_{i}$ of $V(H)$.  We have 
+\begin{align*}
+|F_i| &\geq 2\omega(G) - (\Delta(G) + 1) \\
+&\geq 2 \frac{3}{4}(\Delta(G) + 1) - (\Delta(G) + 1) \\
+&= \frac{1}{2}(\Delta(G) + 1) \\
+&\geq 2\Delta(H). \\
+\end{align*}
+
+Thus, by Lemma \ref{HaxellLemma}, $H$ has an independent set $I = \{v_1, \ldots, v_n\}$ where $v_i \in F_i$ for each $i$.  Since $F_i$ is contained in all the maximum cliques in $C_i$ we have $\omega(G - I) < \omega(G)$.
+\end{proof}
+\section{Proof of Theorem D}
+Theorem D is an easy consequence of The Main Lemma.
+\begin{proof}[Proof of Theorem D]
+Assume (to reach a contradiction) that the theorem is false and let $G$ be a counterexample with the minimum number of vertices.  First assume that $\omega(G) \geq \frac{3}{4}(\Delta(G) + 1)$.  Then by The Main Lemma we have an independent set $I$ with $\omega(G - I) < \omega(G)$.  Plainly, we may assume that $I$ is maximal (and hence $\Delta(G - I) < \Delta(G)$). Put $H = G - I$.  Then, by minimality of $G$, we have
+\begin{align*}
+\chi(G) &\leq 1 + \chi(H) \\
+&\leq 1 + \left\lceil \frac{\omega(H) + \Delta(H) + 1}{2}\right\rceil \\
+&\leq 1 + \left\lceil \frac{\omega(G) - 1 + \Delta(G) - 1 + 1}{2}\right\rceil \\
+&\leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil. \\
+\end{align*}
+
+This is a contradiction, hence we must have $\omega(G) < \frac{3}{4}(\Delta(G) + 1)$.  But then
+\begin{align*}
+\left\lceil \frac{7}{6}\omega(G) \right\rceil &\geq \chi(G) \\
+&> \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil \\
+&\geq \left\lceil \frac{\omega(G) + \frac{4}{3}\omega(G)}{2}\right\rceil \\
+&= \left\lceil \frac{7}{6}\omega(G) \right\rceil. \\
+\end{align*}
+
+This final contradiction completes the proof.
+\end{proof}
+
+\section*{Acknowledgments}
+Thanks to Andrew King and the anonymous referees for many helpful suggestions.
+
+\begin{thebibliography}{1}
+
+\bibitem{CapraraAndRizzi}
+A. Caprara and R. Rizzi.
+\newblock Improving a family of approximation algorithms to edge color multigraphs.
+\newblock{\em Information Processing Letters,} \textbf{68}, 1998, \mbox{11 - 15.}
+
+\bibitem{Hajnal}
+A. Hajnal.
+\newblock A theorem on k-saturated graphs. 
+\newblock{\em Can. J. Math.,} \textbf{10(4)}, 1965, \mbox{720-724}.
+
+\bibitem{Haxell}
+P. E. Haxell.
+\newblock A Note on Vertex List Colouring. 
+\newblock{\em Combinatorics, Probability and Computing,} \textbf{10(4)}, 2001, \mbox{345-347}.
+
+\bibitem{LineGraphs}
+A. King, B. Reed, and A. Vetta. 
+\newblock An upper bound for the chromatic number of line graphs. 
+\newblock{\em European Journal of Combinatorics,} \textbf{28(8)}, 2007, \mbox{2182-2187}.
+
+\bibitem{QuasiLineGraphs}
+A. King, B. Reed.
+\newblock Bounding $\chi$ in terms of $\omega$ and $\Delta$ for quasi-line graphs.
+\newblock{\em Journal of Graph Theory,} To Appear.
+
+\bibitem{KingThesis}
+A. King.
+\newblock Claw-free graphs and two conjectures on $\omega$, $\Delta$, and $\chi$.
+\newblock{Thesis.}
+
+\bibitem{Kostochka}
+A. Kostochka. 
+\newblock Degree, clique number, and chromatic number. 
+\newblock{\em Metody Diskret. Anal.,} \textbf{35}, 1980, \mbox{45-70}. [In Russian]
+
+\bibitem{MolloyAndReed}
+M. Molloy and B. Reed.
+\newblock Graph Coloring and the Probabilistic Method.
+\newblock{\em Springer-Verlag, Berlin,} 2000.
+
+\bibitem{Reed}
+B. Reed.
+\newblock $\omega$, $\Delta$, and $\chi$.
+\newblock{\em Journal of Graph Theory,} \textbf{27}, 1998, \mbox{177-212}.
+
+\end{thebibliography}
+
+\end{document}

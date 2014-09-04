@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb, fullpage}
+
+\title{Hitting maximum cliques}
+\author{Landon Rabern}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem*{lem}{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{CliqueGraph}{Clique graph}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\begin{document}
+\section*{What we are proving}
+\begin{lem}[Rabern 2009]
+There exists a positive constant $c < 1$ such that every graph satisfying $\omega > c(\Delta + 1)$ has a stable set hitting every maximum clique.
+\end{lem}
+\section*{Paper memory}
+\begin{lem}[Hajnal 1965]
+For a collection $\fancy{Q}$ of maximum cliques in a graph $G$ we have
+\[\card{\bigcup \fancy{Q}} + \card{\bigcap \fancy{Q}} \geq 2\omega(G).\]
+\end{lem}
+\begin{CliqueGraph}
+For a collection of cliques $\mathcal{Q}$ in a graph, let $X_{\mathcal{Q}}$ be the intersection graph of $\mathcal{Q}$; that is, the vertex set of $X_{\mathcal{Q}}$ is $\mathcal{Q}$ and there is an edge between $Q_1 \neq Q_2 \in \mathcal{Q}$ iff $Q_1$ and $Q_2$ intersect.
+\end{CliqueGraph}
+\begin{lem}[Kostochka 1980]
+Let $G$ be a graph satisfying $\omega > \frac{2}{3}(\Delta + 1)$.   If $\mathcal{Q}$ is a collection of maximum cliques in $G$ such that $X_{\mathcal{Q}}$ is connected, then $\cap \mathcal{Q} \neq \emptyset$.
+\end{lem}
+\begin{lem}[Alon 1988]
+A partition $\set{V_1, \ldots, V_r}$ of the vertex set of a graph $G$ has an independent transversal if $\card{V_i} \geq 2e\Delta(G)$ for each $i$.
+\end{lem}
+
+\nocite{haxell2001note}
+\nocite{aharoni2007independent}
+\nocite{KingAXiv}
+\nocite{king2007upper}
+\nocite{2009arXiv0907.3705R}
+\nocite{alon1988linear}
+\nocite{borodin1977upper}
+\nocite{kostochkaRussian}
+\nocite{hajnaltheorem}
+\nocite{rabernhitting}
+\bibliographystyle{amsplain}
+\tiny
+\bibliography{GraphColoring}
+\end{document}

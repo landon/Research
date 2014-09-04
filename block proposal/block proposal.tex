@@ -1,0 +1,293 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\allowdisplaybreaks
+\pagestyle{headings}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem*{GoldBerg}{Goldberg's Conjecture}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+
+
+\renewcommand{\S}{\fancy{S}}
+\newcommand{\W}{\fancy{W}}
+\newcommand{\T}{\fancy{T}}
+\renewcommand{\P}{\fancy{P}}
+
+
+\title{Proposal for 2012 block grant:\\Edge coloring via two-player games}
+\author{Landon Rabern}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+We propose to study the following two-player game which has applications to edge
+coloring graphs.  The game is played on a graph $G$ by \emph{Fixer} and
+\emph{Breaker}.  The game is set up by assigning a list of colors $L(v)$ to each
+$v \in V(G)$ and choosing a \emph{pot} $P$ with $\bigcup_{v \in V(G)} L(v)
+\subseteq P$.  Fixer always gets the first move and he wins iff before moving on
+his turn he can construct a proper edge coloring of $G$, say $\func{\pi}{E(G)}{P}$ such that
+$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(G)$.
+
+\begin{FixerMove}
+Pick $\alpha \in P$ and $v \in V(G)$ with $\alpha \not \in L(v)$ and set $L(v)
+\DefinedAs L(v) \cup \set{\alpha} \smallsetminus \set{\beta}$ for some $\beta
+\in L(v)$.
+\end{FixerMove}
+
+\begin{BreakerMove}
+If Fixer modified $L(v)$ by inserting $\alpha$ and removing $\beta$, Breaker can
+pick at most one vertex in $V(G) \smallsetminus \set{v}$ and modify its list by
+swapping $\alpha$ for $\beta$ or $\beta$ for $\alpha$.
+\end{BreakerMove}
+
+The game setup corresponds to the situation that arises after picking some edges
+in a (multi)graph, removing them and coloring the rest of the graph.  A Fixer
+move followed by a Breaker move corresponds to switching colors along a
+two-colored path (see the proof of Vizing's theorem below for an example). 
+Studying this game on its own apart from edge coloring has many advantages just as studying list coloring as a separate concept has advantages
+over merely viewing it as pre-coloring extension---more induction parameters,
+indirect minimizations and hypothesis generalizations to name a few.
+
+In \cite{HallGame}, we have carried out the analysis of winning strategies for
+Fixer when $G$ is a fan $K_{1,t}$.  The result is a simultaneous generalization
+of Hall's theorem and Vizing's theorem.  Other results such as Vizing's
+adjacency lemma and generalizations also follow from the analysis.  In the
+next section, we will outline this analysis as an example.  
+
+Our proposal is to take these results much further by analyzing the game on more
+classes of graphs.  One goal will be to fold the acceptable paths of Kierstead
+\cite{kierstead1984chromatic} and the acceptable trees of Tashkinov
+\cite{tashkinov} into this framework.  We also hope that this approach will help
+make progress on the big conjecture of Goldberg \cite{goldberg}. For a graph
+$G$, define the \emph{overfull parameter} of $G$ as
+
+\[w(G) \DefinedAs \max_{H \subseteq G} \ceil{\frac{\size{H}}{\floor{\frac12
+\card{H}}}}.\]
+
+\begin{GoldBerg}
+For any graph $G$ we have $\chi'(G) \leq \max \set{\Delta(G) + 1, w(G)}$.
+\end{GoldBerg}
+
+\section{The game on a fan}
+As an example, we have completed the analysis of the game on a fan $K_{1,t}$.
+From this, all of the classical edge coloring results follow.  We need a couple
+of preconditions to make the game tenable.  First we always assume $\card{P}
+\geq t$ and second we assume that the root $r$ of the $K_{1,t}$ has $L(r) = P$. 
+With these assumptions, the game amounts to doing Hall's theorem with a little
+extra power. For the remainder of this proposal, let $\S$ be a finite family of
+finite sets. A \emph{transversal} of $\S$ is an injection $\funcinj{f}{\S}{\bigcup \S}$ such that $f(S) \in S$ for each $S \in \S$.  
+Hall's theorem \cite{hall} gives the precise conditions under
+which $\S$ has a transversal.
+
+\begin{thm}[Hall \cite{hall}]
+$\S$ has a transversal iff $\card{\bigcup \W} \geq \card{\W}$ for each $\W
+\subseteq \S$.
+\end{thm}
+
+The precise conditions under which Fixer has a winning strategy will look very
+similar.  To state the main theorem we need a couple pieces of notation. Define
+the \emph{degree} in $\W \subseteq \S$ of $x \in P$ as
+
+\[d_{\W}(x) \DefinedAs \card{\setb{S}{\W}{x \in S}}.\]
+
+\noindent Now define the \emph{value} of $\W \subseteq \S$ as
+
+\[\nu(\W) \DefinedAs \sum_{x \in P} \floor{\frac{\max\set{0, d_{\W}(x) -
+1}}{2}}.\]
+
+\begin{thm}\label{MainTheorem}
+Fixer has a winning strategy against Breaker iff $\card{\bigcup \W} \geq
+\card{\W} - \nu(\W)$ for each $\W \subseteq \S$.
+\end{thm}
+
+Vizing's theorem follows from a special case of Theorem \ref{MainTheorem}.  
+In fact, the strategy employed by Fixer is based, in part, on Ehrenfeucht, Faber
+and Kierstead's proof of Vizing's theorem \cite{Ehrenfeucht1984159}.
+
+\begin{cor}\label{Simple}
+If $\S = \set{S_1, \ldots, S_k}$ with $\card{S_k} \geq 1$ and $\card{S_i} \geq
+2$ for all $i \in \irange{k-1}$, then Fixer has a winning strategy against
+Breaker.
+\end{cor}
+
+\begin{proof}
+Let $\W \subseteq \S$. Then $\nu(\W) \geq \sum_{x
+\in \bigcup \W} \frac{d_{\W}(x) - 2}{2} = \frac12 \sum_{S \in \W} \card{S} -
+\card{\bigcup \W} \geq \frac12 (2\card{\W} - 1) -
+\card{\bigcup \W}$.  Hence $\nu(\W) \geq \card{\W} - \card{\bigcup \W}$ as
+desired.
+\end{proof}
+
+\begin{cor}[Vizing \cite{vizing}]
+Every simple graph satisfies $\chi' \leq \Delta + 1$.
+\end{cor}
+\begin{proof}
+Suppose not and let $G$ be a counterexample minimizing $\card{G}$. Put $\Delta
+\DefinedAs \Delta(G)$.  Pick $v \in V(G)$ with
+degree $\Delta$, say $v_1, \ldots, v_\Delta$ are the neighbors of $v$ in $G$. 
+By minimality of $\card{G}$, we have a $(\Delta + 1)$-edge-coloring of $G -
+v$. Let $S_i$ be the colors not incident with $v_i$ in this coloring. 
+Each $v_i$ has degree at most $\Delta - 1$ in $G - v$ and hence
+$\card{S_i} \geq 2$. Also, if $a \in S_i$ and $b \not \in S_i$ we
+may exchange colors on a maximum length path starting at $v_i$ and alternating between colors $b$ and $a$. 
+This gives a Fixer move followed by a Breaker move.  Apply Corollary
+\ref{Simple} to get a transversal of the $S_i$. Now we may complete the $(\Delta +
+1)$-edge-coloring to all of $G$ by using the corresponding element of the
+transversal on $vv_i$ for each $i \in \irange{\Delta}$.
+\end{proof}
+
+To deal with edge coloring multigraphs, we need to generalize our game slightly.
+Instead of looking for a transversal, we will look for a system of
+disjoint representatives. For $\func{\eta}{\S}{\IN^+}$ an
+\emph{$\eta$-transversal} of $\S$ is a function $\func{f}{\S}{\P\parens{\bigcup
+\S}}$ such that $f(S) \subseteq S$, $\card{f(S)} = \eta(S)$ for $S \in \S$ and
+$f(A) \cap f(B) = \emptyset$ for different $A,B \in \S$.  By making $\eta(S)$
+copies of each $S \in \S$ and applying Hall's theorem we get the following.
+
+\begin{thm}
+$\S$ has an $\eta$-transversal iff $\card{\bigcup \W} \geq \sum_{W \in \W}
+\eta(W)$ for each $\W \subseteq \S$.
+\end{thm}
+
+Call the game where Fixer wins iff he creates an $\eta$-transversal \emph{the
+$\eta$-game}.  Using the above simple generalization of Hall's theorem in the
+proof of Theorem \ref{MainTheorem} gives the following.
+
+\begin{thm}\label{MainTheoremMulti}
+Fixer has a winning strategy against Breaker in the $\eta$-game iff
+$\card{\bigcup \W} \geq \sum_{W \in \W}
+\eta(W) - \nu(\W)$ for each $\W \subseteq \S$.
+\end{thm}
+
+With this theorem in hand, many edge coloring results such as Vizing's adjacency
+lemma and generalizations follow.
+
+\bibliographystyle{amsplain}
+\bibliography{hall}
+%\nocite*{}
+%\bibliographystyle{amsplain}
+%\renewcommand\refname{Landon Rabern's Publications}
+%\bibliography{landon}
+
+\renewcommand{\refname}{Landon Rabern's Publications} 
+\begin{thebibliography}{1}
+
+\bibitem{krs_one}
+A.V. Kostochka, L.~Rabern, and M.~Stiebitz, \emph{{Graphs with chromatic number
+  close to maximum degree}}, Discrete Math (Forthcoming).
+
+\bibitem{rabern2008simple}
+B.~Rabern and L.~Rabern, \emph{A simple solution to the hardest logic puzzle
+  ever}, Analysis \textbf{68} (2008), no.~2, 105--112.
+
+\bibitem{DBLP:journals/siamdm/Rabern06}
+L.~Rabern, \emph{{On Graph Associations}}, SIAM J. Discrete Math. \textbf{20}
+  (2006), no.~2, 529--535.
+
+\bibitem{rabern2007applying}
+L.~Rabern, \emph{{Applying Gr{\"o}bner basis techniques to group theory}},
+  Journal of Pure and Applied Algebra \textbf{210} (2007), no.~1, 137--140.
+
+\bibitem{DBLP:journals/combinatorics/Rabern07}
+L.~Rabern, \emph{{The Borodin-Kostochka Conjecture for Graphs Containing a Doubly
+  Critical Edge}}, Electr. J. Comb. \textbf{14} (2007), no.~1.
+
+\bibitem{DBLP:journals/siamdm/Rabern08}
+L.~Rabern, \emph{{A Note On Reed's Conjecture}}, SIAM J. Discrete Math.
+  \textbf{22} (2008), no.~2, 820--827.
+
+\bibitem{rabern2011strengthening}
+L.~Rabern, \emph{{A strengthening of Brooks' Theorem for line graphs}}, Electron.
+  J. Combin. \textbf{18} (2011), no.~p145, 1.
+
+\bibitem{rabernhitting}
+L.~Rabern, \emph{{On hitting all maximum cliques with an independent set}},
+  Journal of Graph Theory \textbf{66} (2011), no.~1, 32--37.
+
+\bibitem{rabern2010a}
+L.~Rabern, \emph{{$\Delta$-Critical graphs with small high vertex cliques}},
+  Journal of Combinatorial Theory Series B \textbf{102} (2012), no.~1,
+  126--130.
+
+\bibitem{rabern2010destroying}
+L.~Rabern, \emph{Destroying non-complete regular components in graph partitions},
+  J. Graph Theory (Forthcoming).
+
+\bibitem{Danger}
+L.~Rabern, B.~Rabern, and M.~Macauley, \emph{{Dangerous reference graphs and semantic paradoxes}}, Submitted
+  (2012).
+
+\bibitem{partitiondegree}
+L.~Rabern, \emph{Partitioning and coloring with degree constraints}, Submitted (2012).
+
+\bibitem{HallGame}
+L.~Rabern, \emph{{A game generalizing Hall's
+  theorem}}, Submitted (2012).
+
+\end{thebibliography}
+
+
+\end{document}

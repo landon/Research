@@ -1,0 +1,85 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.2in, bottom=1.2in, left=0.8in, right=0.8in]{geometry}
+
+\pagestyle{headings}
+\usepackage{tkz-graph}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\title{$\pi$-walk ideas}
+\author{Landon Rabern}
+
+\begin{document}
+\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{$\pi$-walks}
+\noindent Unless otherwise noted we mean \emph{proper coloring} when we say \emph{coloring}.  The codomain of all our $k$-colorings is $\irange{k}$.
+
+\begin{defn}
+Let $G$ be a graph and $\pi$ a $k$-coloring of $G$.  A \emph{$\pi$-walk} is a walk $x_0x_1\cdots x_r$ in $G$ with the following two properties:
+
+\begin{enumerate}
+\item for $i \in \irange{r}$, $\pi(x_i) \not \in \pi\parens{N(x_i) - \setbs{x_j}{j \in \irange{i}}}$;
+\item for $i,j \in \irange{r}$, if $\pi(x_i) = \pi(x_j)$ then $x_{i-1}x_{j-1} \not \in E(G)$.
+\end{enumerate}
+\end{defn}
+
+\noindent Let $G$ be a graph, $\pi$ a $k$-coloring of $G$ and $W \DefinedAs x_0x_1\cdots x_r$ a $\pi$-walk in $G$. For $v \in V(G)$ put $i_W(v) \DefinedAs \min \setbs{i \in \irange{r} \cup \set{0}}{v = x_i}$ if $v \in V(W)$ and $i_W(v) \DefinedAs -1$ otherwise.
+
+\begin{lem}
+The function $\func{\pi_W}{V(G)}{\irange{k+1}}$ given by the following is a $(k+1)$-coloring of $G$:
+
+\[\pi_W(v) \DefinedAs \begin{cases}
+\pi(v) & \text{ if $i_W(v) = -1$;} \\
+\pi(x_{i_W(v) + 1}) & \text{ if $0 \leq i_W(v) \leq r-1$;} \\
+k+1 & \text{ if $i_W(v) = r$.}
+\end{cases}\]
+\end{lem}
+
+\begin{lem}
+Any $\pi$-walk beginning at a vertex $v \in V(G)$ with $\card{\pi^{-1}(\pi(v))} = 1$ is a path or a cycle.
+\end{lem}
+
+\end{document}

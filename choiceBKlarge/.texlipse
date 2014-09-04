@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Thu May 17 19:01:47 MST 2012
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=choiceBKlarge.tex
+outputFile=choiceBKlarge.pdf
+langSpell=en
+markDer=true
+srcDir=

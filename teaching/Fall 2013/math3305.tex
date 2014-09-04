@@ -1,0 +1,133 @@
+%TEX
+%
+\documentclass[11pt]{CAS_syllabus}
+\usepackage{lastpage}
+\usepackage[text={6.75in,9.3in}, top=0.8in, left=0.9in]{geometry}
+
+%-------------- begin the document --------------------------------------------
+\begin{document}
+
+% Define the header for the Course Syllabus document:
+\Heading
+
+\Coursehead[
+% The following defines the heading of the document.
+instructor      = {Landon Rabern},
+phone           = {},
+email           = {lrabern@newhaven.edu},
+course          = {MATH 3305},
+coursecrosslist = {},
+coursename      = {Discrete Structures},
+revision        = {1.0, 08/18/2013},
+semester        = {Fall 2013},
+office          = {},
+meetingtimes    = {TTh 12:15--13:30},
+classroom       = {Maxcy 203},
+credits         = {3},
+officehours     = {TTh 13:30pm--15:00},
+%
+%
+%
+%
+% The following are web links used throughout the text of the document.
+addanddrop              = {Monday, September, 9},
+addanddropurl           = {http://www.newhaven.edu/academics/13324/},
+addanddroppolicyurl     = {http://www.newhaven.edu/academics/13324/},
+attendanceurl           = {http://www.newhaven.edu/academics/16648/},
+integrityurl            = {http://www.newhaven.edu/academics/16246/},
+courseworkurl           = {http://www.newhaven.edu/academics/16697/},
+accessurl               = {http://www.newhaven.edu/student-life/CampusLife_StudentAffairs/Campus_Access_Services/},
+undergraduatecalendarurl= {http://www.newhaven.edu/academics/13324/},
+finalexamurl            = {http://www.newhaven.edu/academics/29258/},
+importantdatesurl       = {http://www.newhaven.edu/academics/12592/},
+gradepolicyurl          = {http://www.newhaven.edu/academics/17041/},
+%
+% The following are dates used throughout the text of the document.
+semesterclasses      = {Fall Semester 2013},
+startsemesterclasses = {Thursday, August 23},
+endsemesterclasses   = {Monday, December 10},
+lastdropdate         = {Monday, September 9},
+semesterholidays     = {Labor Day, September 2; Fall Break, Monday/Tuesday October 14--15; Thanksgiving, November 26 -- November 29},
+semesterfinalexam    = {Thursday December 12, from 14:00 to 16:00 in Maxcy 203}
+]
+
+%...............................................................................
+
+\Title{\Course\ \Coursename}
+
+\Subtopic{Course Description}
+Prerequisite: MATH 1108. Methods of proof, the integers, induction, prime numbers, recursive algorithms, greatest common divisors, the Euclidean algorithm, the fundamental theorem of arithmetic, congruences. 3 credits. 
+
+
+\Subtopic{Required Text}
+\textit{A Friendly Introduction to Number Theory}, Joseph H.\ Silverman,
+Pearson (2013), ISBN 13: 978-0-321-81619-1.
+
+\Subtopic{Recommended Additional Text}
+\textit{Proofs from the Book}, Martin Aigner, Gunter M. Ziegler, 4th ed. (2009).
+
+\Topic{Content}
+\Course\ provides an introduction to the integers and their fundamental nature.
+In rigorously investigating the integers, students will learn the basic proof techniques used in all of mathematics and increase their mathematical maturity.
+
+
+%\Subtopic{Topics}
+%\begin{compactenum}
+%\item
+%\end{compactenum}
+
+
+%STANDARD EXAM POLICY
+% SELECT:
+% \input{policy-exam2}
+% \input{policy-exam3}
+\input{policy-exam}
+% END EXAM POLICY
+
+\Subtopic{Further Considerations and Rules}
+\begin{compactitem}
+\item
+\textit{Electronic devices}:
+The use of phones and electronic devices, except in an emergency or unless
+otherwise approved by the instructor,
+is disallowed in class. The use of any electronic device, except those
+explicitly approved for use during any exam, will result a non-positive grade equal to the number of malus points on that exam. 
+If in doubt, please inquire prior to using the electronic device.
+\item
+\textit{Scheduling conflicts}:
+It is the student's responsibility to contact the instructor concerning any
+scheduling conflicts which may result in late papers, or other scheduling
+conflicts, e.g., an absence for an exam.
+\end{compactitem}
+
+
+\Subtopic{Course Outline Schedule}
+\Semester\ classes are from \Startsemesterclasses\ to \Endsemesterclasses.
+The last day to drop classes is \Lastdropdate.
+Semester holidays are on: \Semesterholidays.
+The final exam is scheduled for \Semesterfinalexam.  A schedule of all assignments due will be available on blackboard.
+
+%COPIES OF THE SCHEDULE FOR MW AND TR ARE KEPT IN ./lib.........................
+{
+\renewcommand{\syllabusfontstable}{\syllabusfontf}
+\renewcommand{\tableheader}{\tableheaders}
+\input{./schedule.tex}
+}
+
+
+
+\syllabusfontn
+The Undergraduate Academic Calendar is found
+at \Urls{\UndergraduatecalendarURL}, and the date for final exam dates can
+be found at \Urls{\FinalexamURL}. A summary of important dates can also be
+found at \Urls{\ImportantdatesURL}.
+
+
+
+%THIS SECTION IS STANDARD POLICY....................................DO NOT ALTER
+%\newpage
+\input{CASpolicy}
+%THIS SECTION IS STANDARD POLICY....................................DO NOT ALTER
+
+\end{document}
+

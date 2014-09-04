@@ -1,0 +1,180 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+% any changes to \claim should be mirrored in \claimnonum and \subclaim
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\title{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+
+\section{General dense recoloring}
+For a a graph $G$ and $S \subseteq V(G)$, put $\nint{S} \DefinedAs \bigcap_{v \in S} N(v)$.
+\begin{defn}
+Let $G$ be a graph.  A partition $\set{V_1, \ldots, V_r}$ of $V(G)$ is \emph{$(k, t)$-dense} if for each $i \in \irange{r}$ we have:
+\begin{enumerate}
+\item a clique $Q_i \subseteq V_i$ such that for any independent $I \subseteq V_i$ we have $\card{Q_i \cap \nint{I}} \ge t + (k + 1)|I|$; and,
+\item $U_i \subseteq Q_i$ a set of universal vertices in $G[V_i]$ with $\card{U_i} \ge 3k + 1$; and,
+\item $G[V_i] - U_i$ is the complement of a bipartite graph.
+\end{enumerate}
+\end{defn}
+
+\begin{lem}\label{BipartiteComplementCliqueJoinLow}
+Let $k \ge 1$ and $j \le k$.  Let $B$ be the complement of a bipartite graph and $L$ a list assignment on $G \DefinedAs \join{K_{3k+1}}{B}$ such that $\card{L(v)} \ge d(v)-j$ for $v \in V(K_{3k+1})$ and $\card{L(v)} \ge d(v)-k$ for $v \in V(B)$.  If $L$ is bad on $G$, then $\omega(B) \geq \card{B} - j$.
+\end{lem}
+
+\begin{thm}
+Let $k \ge 1$, $\gamma \in \IN$ and $G$ a graph with $\Delta(G) \le \gamma$ and $\omega(G) \le \gamma - k$. If $G$ has a $(k,t)$-dense decomposition with $t \ge X$, then $G$ is $(\gamma-k)$-colorable.
+\end{thm}
+\begin{proof}
+Suppose the theorem fails and choose a counterexample first minimizing $\gamma$ and subject to that minimizing $\card{G} + \size{G}$.  Put $\Delta \DefinedAs \Delta(G)$ and $\omega \DefinedAs \omega(G)$.  Suppose $\Delta < \gamma$.  Put $k' \DefinedAs k - 1$ and $\gamma' \DefinedAs \gamma - 1$.  If $k' \ge 1$, then $G$ satisfies the hypotheses of the theorem with $k'$ and $\gamma'$.  By minimality of $\gamma$, $G$ is colorable with $\gamma' - k' = \gamma - k$ colors, a contradiction.  If $k' = 0$, then Brooks' theorem gives a contradiction.  Hence $\Delta = \gamma$.
+
+Let $\set{V_1, \ldots, V_r}$ be a $(k,t)$-dense decomposition of $G$.  Suppose every $x \in U_1$ has $N(x) \subseteq V_1$. Then every vertex in $U_1$ has the same degree, pick $z \in U_1$ and put $s \DefinedAs \Delta - d(z)$.  Note that $G-V_1$ satisfies the hypotheses of the theorem and hence we may $(\Delta-k)$-color $G-V_1$.  After doing so, the resulting list assignment $L$ on $G[V_1]$ must be bad.   For $x \in V_1 - U_1$, we have $\card{L(x)} \ge d_{V_1}(x) - k$ and for $x \in U_1$, we have $\card{L(x)} \ge \Delta - k - (d(x) - d_{V_1}(x)) = d_{V_1}(x) - k + s$. Since $\card{U_1} \geq 3k+1$, applying Lemma \ref{BipartiteComplementCliqueJoinLow} with $j \DefinedAs k-s$ gives $\Delta-k \ge \omega \ge \omega(G[V_1]) \ge |V_1| - j$ and hence $d(z) + 1 = |V_1| \le \Delta + j - k = \Delta - s = d(z)$, a contradiction.  Thus we have $x \in U_1$ that has a neighbor $w \in V(G) - V_1$.
+
+Since $G - xw$ satisfies the hypotheses of the theorem, by minimality we must have $\chi(G - xw) \le \Delta - k$.  Let $\pi$ be a $(\Delta - k)$-coloring of $G-xw$ chosen so that $\pi(x) = 1$ so as to minimize $\card{\pi^{-1}(1)}$.  The rest of the proof is quite similar to Haxell's proof in \cite{haxell2004strong}.  Before getting into the details, let's see an intuitive explanation of the recoloring process. Considering $\pi$ as a coloring of $G-x$, we first color $x$ with $1$, then note the $V_i$ where there is a conflict (neighbors of $x$ colored $1$).  Suppose there is a conflict in $V_i$, say $I \subseteq V_i$ all got colored $1$.  We fix this conflict by (carefully) choosing $y \in Q_i \cap \nint{I}$, stealing its color, using that on all of $I$ and then coloring $y$ with $1$.  We must be wary of two issues when choosing $y$.  First, it may be that some $z \in I$ has a neighbor besides $y$ with color $\pi(y)$; in this case, coloring $z$ with $\pi(y)$ would cause a secondary conflict which we cannot manage.  We will exclude such $y$ from our options and dub them \emph{badly colored}.  The second issue is adjacencies between $y$ and vertices we have already recolored---if $y$ is adjacent to vertices previously recolored in the process then we run the risk of breaking $V_i$ we have fixed.  We exclude such $y$ from our options as well and call them \emph{dangerous}.  With these two restrictions in place, as long as we can always find legal $y$ for some conflicted $V_i$, then we can fix $V_i$, but by the exclusion of dangerous vertices, we never need to fix the same $V_i$ more than once and hence we conclude that our finite graph has infinitely many vertices, a contradiction.  That's the basic idea of the recoloring process our argument is modeling.  The following formal argument will look a bit different since it is cleaner to write down in a static manner instead of as a dynamic recoloring process.
+
+Let $\tau$ be a $(\Delta - k)$-coloring of $G-x$ where $1 \not \in \tau(V_1 - x)$ minimizing $\card{\tau^{-1}(1)}$.  Put $Z \DefinedAs \tau^{-1}(1)$ and for $i \in \irange{r}$ put $Z_i \DefinedAs Z \cap V_i$. For $v \in V(G)$, put $Z_{\tau}(v) \DefinedAs N(v) \cap Z$ and let $\ell(v)$ be such that $v \in V_{\ell(v)}$. Define the \emph{$\tau$-completion} of $S \subseteq Z$ as $\fancy{C}_\tau(S) \DefinedAs \bigcup \setbs{Z_i}{S \cap Z_i \ne \emptyset}$.  A \emph{$\tau$-recoloring tree} of is a set of vertices $F \DefinedAs \set{y_1, \ldots, y_h} \cup \bigcup_{m \in \irange{h}} X_m$ in $G$ with the following properties:
+
+\begin{enumerate}
+\item $y_1 = x$;
+\item For $1 \le i \le h$, $X_i \DefinedAs \fancy{C}_\tau\parens{Z_{\tau}(y_i)} \ne \emptyset$ and $X_i \cap X_j = \emptyset$ for $i \neq j$;
+\item For $2 \le i \le h$, $y_i \in R_j$ for some $j < i$ where $R_j \DefinedAs \bigcup \setbs{Q_{\ell(v)} \cap \nint{Z_{\ell(v)}}}{v \in \bigcup_{m \in \irange{j}} X_m}$;
+\item For $2 \le i \le h$, $y_i$ is nonadjacent to $\parens{\set{y_1, \ldots, y_{i-1}} \cup \bigcup_{m \in \irange{i-1}} X_m} - V_{\ell(y_i)}$;
+\item For $2 \le i \le h$, 
+\begin{itemize}
+\item if there is $j < i$ such that $\emptyset \ne Z_{\ell(y_i)} \subseteq X_j$ and $\card{X_j} = 1$, then $\tau^{-1}(\tau(y_i)) \cap N(v) \subseteq \set{y_i, y_j}$ for all $v \in Z_{\ell(y_i)}$,
+\item otherwise $\tau^{-1}(\tau(y_i)) \cap N(v) = \set{y_i}$ for all $v \in Z_{\ell(y_i)}$.
+\end{itemize}
+\end{enumerate}
+
+Note that condition (4) is excluding dangerous vertices and condition (5) is excluding badly colored vertices with one caveat: we allow secondary conflicts in the special case of a two-colored path which will be easy to manage.  For a $\tau$-recoloring tree $F$ put $R(F) \DefinedAs  \bigcup \setbs{Q_{\ell(v)} \cap \nint{Z_{\ell(v)}}}{v \in F - y_1}$.  Then $R(F) - F$ is the set of all $y$ we might try to use to fix conflicts.  But we can only use such $y$ that are not dangerous and not badly colored.  We call $y \in R(F) - F$ a \emph{qualifying vertex} if $y$ satisfies conditions (4) and (5) and we let $\fancy{Q}(F)$ be the set of qualifying vertices for $F$.
+
+\claim{1}{Let $\tau$ be a $(\Delta - k)$-coloring of $G-x$ where $1 \not \in \tau(V_1 - x)$ minimizing $\card{\tau^{-1}(1)}$ and suppose $F$ is a $\tau$-recoloring tree. Then $\fancy{Q}(F) \ne \emptyset$.}
+
+\bigskip
+
+Let's see how the theorem follows given Claim 1.  For a $\tau$-recoloring tree $F$ we define the \emph{profile} of $F$ as the tuple $\fancy{P}(F) \DefinedAs \parens{|X_1|, \ldots, |X_h|}$.  Consider the partial ordering defined on recoloring trees by $F < F'$ iff $\fancy{P}(F')$ is a proper prefix of $\fancy{P}(F)$ or there is $s$ such that $\parens{a_1, \ldots, a_{s-1}, a_s}$ is a proper prefix of $\fancy{P}(F)$, $\parens{a_1, \ldots, a_{s-1}, a_s'}$ is a proper prefix of $\fancy{P}(F')$ and $a_s < a_s'$ (in other words, the order induced by the Kleene-Brouwer order on their profiles).  This order is well-founded and hence we may pick a minimal recoloring tree $F$.  By Claim 1, we may pick $y \in \fancy{Q}(F)$.  
+
+First, suppose $Z_{\tau}(y) \ne \emptyset$.  Then put $F' \DefinedAs \set{y_1, \ldots, y_h, y_{h+1}} \cup \bigcup_{m \in \irange{h+1}} X_m$ where $y_{h+1} \DefinedAs y$ and $X_{h+1} \DefinedAs \fancy{C}_\tau\parens{Z_{\tau}(y)}$.  Plainly $F'$ is a $\tau$-recoloring tree, but $\fancy{P}(F)$ is a proper prefix of $\fancy{P}(F')$, so $F' < F$ contradicting minimality of $F$.
+
+Hence we must have $Z_{\tau}(y) = \emptyset$.  In terms of our intuitive explanation this means $y$ can be colored $1$ without causing any new conflicts (minus the caveat of the restricted two-color path secondary conflicts we allowed).  Note that such a recoloring step never makes more vertices colored $1$, so always preserves the minimality condition on $\card{\tau^{-1}(1)}$. The precise details of the recoloring here are nearly identical to those in Haxell's proof and not worth reproducing.  Instead, let's describe the process when there are no two-color path secondary conflicts. The process starts by coloring $Z_{\ell(y)}$ with $\tau(y)$ and coloring $y$ with $1$.  If $F' \DefinedAs \set{y_1, \ldots, y_h} \cup \bigcup_{m \in \irange{h}} X_m - Z_{\ell(y)}$ is a recoloring tree, then we contradict minimality of $F$.  But the only way for it to not be a recoloring tree is if by removing $Z_{\ell(y)}$ we made some $X_i = \emptyset$ and hence we are right back in the situation we were at the start of the paragraph.  So, we can repeat this recoloring step.  Since the graph is finite we must either fix all conflicts giving a proper $(\Delta-k)$-coloring of $G$ or land at a smaller recoloring tree, either way we have a contradiction.
+
+\begin{proof}[Proof of Claim 1]
+For $j \in \irange{h}$, partition $X_j$ as $\set{X_{j, v_1}, \ldots, X_{j, v_{q_j}}}$ where $X_{j, v_i} \DefinedAs V_{\ell(v_i)} \cap X_j \ne \emptyset$.  Since $\set{V_1, \ldots, V_r}$ is $(k,t)$-dense, each $v \in F \cap V_i$ has at least $t + (k + 1)\card{Z_i}$ neighbors in $V_i$.  Note that, by definition, we have $X_{j, v_i} = Z_{\ell(v_i)}$.  Hence each $X_{j, v_i}$ disqualifies at most $\card{X_{j, v_i}}\parens{\Delta - \parens{t + (k + 1)\card{X_{j, v_i}}}} - 1$ vertices by (4), where the $-1$ is from the fact that at least one vertex in $X_{j, v_i}$ must have a $y_s$ neighbor for some $s < j$.  Similarly, each $y_j$ disqualifies at most $\Delta - \parens{t + (k + 1)\card{Z_{\ell(v_i)}}} - q_j$ vertices by (4).
+
+Now consider vertices excluded by (5).  By the minimality of $\card{\tau^{-1}(1)}$, every vertex $v$ with $\tau(v) = 1$ has a neighbor in every other color class.  In particular, there are at most $k+1$ color classes in which $v$ has two or more neighbors. Put $J_1 \DefinedAs \setb{i}{\irange{h}}{|X_i| = 1}$ and $J_0 \DefinedAs \irange{h} - J_1$.  First, suppose $j \in J_1$ and let $X_j = \set{x_j}$.  Then $x_j$ has degree at least $t + k + 1$ in $V_{\ell(x_j)}$. Hence there are at most $\min\set{k+1, \Delta - (t + k + 1) - 1} = \min\set{k+1, \Delta - (t + k + 2)}$ vertices disqualified by (5) for $x_j$, so at most $\min\set{k+1, d-1}\card{J_1}$ disqualified for $J_1$.  Now suppose $j \in J_0$. Then for each $z \in X_j$ at most $k+1$ vertices are disqualified by (5) for $z$ and hence at most $(k+1)\sum_{j \in J_0} \card{X_j}$ vertices in total are disqualified by (5) for $J_0$.  Thus in total (5) disqualifies at most $\min\set{k+1, \Delta - (t + k + 2)}\card{J_1} + (k+1)\sum_{j \in J_0} \card{X_j}$ vertices.
+
+Now $\card{R(F)} \ge \sum_{j \in \irange{h}} \sum_{i \in \irange{q_j}} t + (k+1)\card{X_{j, v_i}} = (k+1) \sum_{j \in \irange{h}} |X_j| + \sum_{j \in \irange{h}} q_jt$.  Also, $|F| = h + \sum_{j \in \irange{h}} |X_j|$.  
+
+Hence after removing all vertices disqualified by (5) from $R(F) - F$, we have at least $-h + \sum_{j \in \irange{h}} q_jt - |X_j|$ candidates remaining.
+\end{proof}
+
+\end{proof}
+
+\end{document}

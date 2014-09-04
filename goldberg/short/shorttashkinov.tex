@@ -1,0 +1,1522 @@
+\documentclass[12pt,reqno]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage{subfig}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+\newtheorem*{ChronicleUpdate}{\bf {Chronicle update}}
+
+\title{Fixer-Breaker and Short Tashkinov Trees }
+\author{Daniel W. Cranston \and Landon Rabern}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\renewcommand{\S}{\fancy{S}}
+\newcommand{\W}{\fancy{W}}
+\newcommand{\T}{\fancy{T}}
+\renewcommand{\P}{\fancy{P}}
+\renewcommand{\C}{\fancy{C}}
+\renewcommand{\G}{\fancy{G}}
+\newcommand{\fix}[1]{\chi_\text{fix}(#1)}
+\newcommand{\cfix}[1]{\chi_\text{cfix}(#1)}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%
+%  If the proof ends with a displayed equation, use \aftermath just
+%  before \end{proof} to put the halmos in the ``right'' place.  This
+%  may not work near page boundaries. 
+%
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Suppose we want to $k$-color a graph $G$. If we already have a $k$-coloring of
+an induced subgraph $H$ of $G$, we might try to extend this coloring to all of
+$G$.  We can view this task as the problem of trying to list color $G-H$, where
+each vertex $v$ in $G-H$ gets a list of colors formed from $\set{1, \ldots, k}$
+by removing all of the colors used on $N(v)$ in $H$.  
+%It has proved useful to %Studying 
+Such list coloring problems are interesting in their own right, outside the
+context of
+completing partial colorings [degree-choosable graphs, other examples here]. 
+In many situations we cannot complete just any $k$-coloring of $H$ to all of
+$G$.  Instead, we may need to modify the $k$-coloring of $H$ to get a coloring
+we can extend.  Given rules for how we are allowed to modify the $k$-coloring
+of $H$, we can recast the task of modifying the $k$-coloring and then
+completing it to $G$ as the problem of trying to list color $G-H$ where each
+vertex gets a list as before, but now we are allowed to modify these lists in a
+prescribed manner.  Studying such list coloring/modifying problems in their own
+right has also proved useful.  
+
+As an example of this paradigm,
+the second author proved \cite{HallGame} 
+a common generalization of Hall's marriage theorem and Vizing's theorem on
+edge-coloring.  The present paper will generalize a
+special case of this result and put it into a broader context.  An interesting
+caveat arises when investigating this list coloring/modifying paradigm. 
+Since we often want to prove coloring results for all graphs having
+certain properties and not just some fixed graph, we only have partial control
+over the outcome of a recoloring of $H$. For example, if we swap colors red and
+green in a component $C$ of the red-green subgraph (that is, we perform a Kempe
+change), we may succeed in making some desired vertex red,
+but if $C$ is somewhat arbitrary, we cannot precisely control what happens
+to the colors of the other vertices.  In the list modifying/coloring paradigm,
+we model this lack of control as a two-player game---we move by doing the part
+of the
+recoloring we desire and then the other player gets a turn to muck things up. 
+In the original context where we want to color $G$, the opponent is the graph
+$G$; more precisely, the embedding of $G-H$ in $G$ is one way to describe a
+strategy for the second player. 
+The general paradigm that we described above is for vertex coloring.  In the
+rest of the paper, we consider only the special case that is edge-coloring (or,
+equivalently, vertex coloring line graphs).
+
+
+\section{The basic game}
+The \emph{basic game} is played on a multigraph $G$ by \emph{Fixer} and
+\emph{Breaker}.  To set up the game, we assign a list of colors $L(v)$ to each
+$v \in V(G)$. Put $\pot(L) = \bigcup_{v \in V(G)} L(v)$.
+Fixer always gets the first move and he wins if and only if on some turn, before moving, he can construct a proper edge-coloring of $G$, say $\func{\pi}{E(G)}{\pot(L)}$ such that
+$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(G)$.
+It is important to notice that we are coloring the edges, even though the lists
+are assigned to the vertices.
+
+\begin{FixerMove}
+Pick $\alpha \in \pot(L)$ and $v \in V(G)$ with $\alpha \not \in L(v)$ and set $L(v)
+\DefinedAs L(v) \cup \set{\alpha} - \beta$ for some $\beta
+\in L(v)$.
+\end{FixerMove}
+
+\begin{BreakerMove}
+If Fixer modified $L(v)$ by inserting $\alpha$ and removing $\beta$, then
+Breaker can either do nothing or pick $w \in V(G - v)$ and modify its list by
+swapping $\alpha$ for $\beta$ or $\beta$ for $\alpha$.
+\end{BreakerMove}
+
+
+\noindent
+These options for Breaker's turn correspond to the outcomes of performing a
+Kempe change on a longest path colored with $\alpha$ and $\beta$ beginning at
+vertex $v$, if graph $G$ is embedded in some larger graph $Q$.  Say $w$ is the
+other endpoint of this path. If $w \not \in V(G)$, then only $L(v)$ is modified; this corresponds to Breaker doing nothing.  
+Otherwise, $L(w)$ is modified by removing one of
+$\alpha$ and $\beta$ and adding the other.  In Section~\ref{EdgeColoringRelationshipSection},
+we further discuss this connection to completing edge-colorings.
+
+\bigskip
+\noindent If $G$ fails to have an $L$-edge-coloring because of some property of $L$ that Fixer cannot change, then not having this property is a necessary condition for Fixer to have a winning strategy.  For example,
+since Fixer cannot change the list sizes, if he is going to have any chance of winning we must have $\card{L(v)} \ge d_G(v)$ for all $v \in V(G)$.  In an $L$-edge-coloring of $G$, the edges of each subgraph $H$ are partitioned into matchings, so if $\size{H}$ exceeds the sum of the sizes of the maximum matchings in $H$ in each color, then $G$ cannot have an $L$-edge-coloring.  We show that if $G$ has such a subgraph $H$, then Fixer cannot fix $H$.  This gives a strong necessary condition.
+
+\bigskip
+\noindent 
+For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
+subgraph of $H$ induced on the vertices $v$ with $L(v) \cap C \ne \emptyset$. 
+When $L$ is clear from context, we may write $H_C$ for $H_{L,C}$. If $C =
+\set{\alpha}$, we may write $H_\alpha$ for $H_C$.  For $H \subseteq G$, put
+
+\[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
+
+Each term in the sum gives an upper bound on the size of a matching in color
+$\alpha$. So $\psi_L(H)$ is an upper bound on the the number of edges in a
+partial $L$-edge-coloring of $H$.  We say that $(H, L)$ is \emph{abundant} if
+$\psi_L(H) \ge \size{H}$ and that $(H,L)$ is \emph{superabundant} if for every
+$H' \subseteq H$, the pair $(H', L)$ is abundant.  If $(H, L)$ is not
+superabundant, then Fixer cannot win on the first move since there is some
+subgraph he cannot properly color.  We now show that if $(H, L)$ is not
+superabundant, then Breaker can prevent Fixer from creating a superabundant
+position, and thus Fixer can never win.
+
+\begin{lem}\label{Necessity}
+If Fixer has a winning strategy in the basic game, then $(G, L)$ is superabundant.
+\end{lem}
+\begin{proof}
+Suppose $(G, L)$ is not superabundant, say $H \subseteq G$ is such that $(H,
+L)$ is not abundant.  We show that no matter what move Fixer makes, Breaker has
+a response, giving lists $L'$, such that $(H, L')$ is not abundant.  But then
+Fixer can never win since any state admitting a proper edge-coloring must be
+superabundant.
+
+Suppose Fixer swaps $\alpha$ for $\beta$ in $L(v)$ for some $v \in V(G)$.  If
+Fixer is going to have any chance of increasing $\psi_L(H)$, we must have $v
+\in V(H)$ and both $\card{H_{L, \alpha}}$ and $\card{H_{L, \beta}}$ must be
+odd.  Since $\card{H_{L, \alpha}}$ and $\card{H_{L, \beta}}$ have the same
+parity and $\card{\set{\alpha, \beta} \cap L(v)} = 1$, there must be $w \in V(H
+- v)$ such that $\card{\set{\alpha, \beta} \cap L(w)} = 1$. Breaker should swap
+$\alpha$ and $\beta$ in $L(w)$.  If $L'$ is the resulting list assignment,
+then Breaker has ensured that both $\card{H_{L', \alpha}}$ and $\card{H_{L',
+\beta}}$ are again odd; so $\psi_{L'}(H)=\psi_L(H)$, and hence $(H, L')$ is not
+abundant. 
+\end{proof}
+
+We say that $G$ is \emph{$f$-fixable} for $\func{f}{V(G)}{\IN}$ if Fixer has a winning strategy in the basic game for every list assignment $L$ where $(G, L)$ is superabundant and $\card{L(v)} \ge f(v)$ for all $v \in V(G)$.  By the above discussion, we know that if $G$ is $f$-fixable, then $f(v) \ge d(v)$ for all $v \in V(G)$.  For brevity's sake, we will say that $f$ is $\emph{valid}$ if $f(v) \ge d(v)$ for all $v \in V(G)$.
+
+\section{Relationship to completing partial edge-colorings}\label{EdgeColoringRelationshipSection}
+Suppose $G$ is a subgraph of a multigraph $Q$. Given a proper $k$-edge-coloring
+$\pi$ of $Q' = Q - E(G)$, put $L_\pi(v) = \irange{k} -
+\pi\parens{E_{Q'}(v)}$ for $v \in V(G)$.  So, $L_\pi$ is the list assignment
+given by starting with $\irange{k}$ for $v \in V(G)$ and then removing all the
+colors $\pi$ uses on edges incident to $v$.  Suppose there exist $\alpha,\beta$
+with $\alpha \in L_\pi(v)$ but
+$\beta \not \in L_\pi(v)$.  Then there is an edge colored $\beta$ incident to
+$v$ in $Q'$.  Consider what happens to $L_\pi$ when we swap $\alpha$ and
+$\beta$ on a longest path $P$ in $Q'$ starting at $v$ that alternates between
+colors $\beta$ and $\alpha$.  When $w \in V(G)$ is not in $P$ or is an internal
+vertex in $P$, there is no change to $L_\pi(w)$.  The only changes are that
+$L_\pi(v)$ has gained $\beta$ and lost $\alpha$ and if $P$ ends at some vertex
+$z$, then $L_\pi(z)$ has either gained $\beta$ and lost $\alpha$ or lost
+$\beta$ and gained $\alpha$.  Therefore, making this color swap induces a Fixer
+move followed by a Breaker move in the basic game on $G$ with lists $L_\pi$. 
+Since Fixer can always make any of his legal moves in this manner, the
+existence of a winning strategy for Fixer on $(G, L_\pi)$ implies that we can
+modify $\pi$ and complete the edge-coloring to $Q$.  
+
+In translating to the basic game, we have lost properties of the embedding of $Q$ in $G$ that might help in completing the edge-coloring.  For example, if $Q$ is bipartite, then two-colored paths in $Q'$  must start and end with the same or opposite color depending on whether the distance of the endpoints in $G$ are at even or odd distance in $G$ (so as not to form an odd cycle).  So, Breaker playing with the strategy given by $Q$ is a very weak opponent. This is why K\H{o}nig's theorem on edge-coloring is so easy to prove.
+
+Further, there are (prima facie helpful) properties we have lost that come just
+from the fact that $G$ is embedded in \emph{some} graph $Q$.  For example,
+suppose $x, y \in V(G)$ both have blue in their lists.  If we add a blue edge
+between $x$ and $y$ (and remove blue from their lists) before performing a swap
+of red for blue at some vertex, then we are guaranteed that $x$ and $y$ will
+have a color in common afterwards (it may be red instead of blue).  In this way
+we can ``protect'' the property ``$x$ and $y$ have a color in common''.  In the
+basic game, Fixer doesn't have this ability, since Breaker is free to change
+the list for one of
+$x$ or $y$ and not the other.  It is possible to define a game where Fixer is
+directly given abilities of this sort, but we don't bother doing so because we
+can achieve this ``protection'' using a different advantage as
+follows.
+
+Another interesting advantage that we get from the embedding is the fact that, for each $x \in V(G)$, there is at most one longest red-blue path containing $x$.  In particular, if a longest red-blue path starts at $x$ and ends at $y$, then no longest red-blue path starts at $x$ and ends at $z$ where $z \ne y$.  We can partially model this in the game by adding a sort of memory where some information about Breaker's previous moves is stored.  We call the memory a \emph{chronicle}.  In the next section, we'll define this \emph{chronicled game}.
+
+Making explicit the properties we use to extend edge-colorings can help to simplify and clarify proofs of edge-coloring results.  That is one purpose served by the different games.  One piece is still missing; we'd like a way to discuss the ability to ``win'' on $(G, L)$ given the full power of being embedded.  To this end, we say that Fixer has a winning strategy on $(G, L)$ in the \emph{master game} if for any multigraph $Q$ with $G \subseteq Q$ and any edge-coloring $\pi$ of $Q - E(G)$ where $L = L_\pi$, there exists an $\card{\im(\pi)}$-edge-coloring of $Q$.
+
+To gain further intuition for why requiring superabundance is natural, consider
+the following conjecture.  If true, this would be very hard to prove since it
+implies Goldberg's conjecture.  We state it for the basic game, though it is
+more likely to hold in a game where Fixer has more power (the ``if'' direction,
+that is); the ``only if'' direction for the basic game follows from
+Lemma~\ref{Necessity}.
+
+
+\begin{conj}\label{GameGoldbergConjecture}
+If $f(v) \ge d(v) + 1$ for all $v \in V(G)$, then $G$ is $f$-fixable.
+\end{conj}
+
+Let's see how Conjecture~\ref{GameGoldbergConjecture} implies Goldberg's
+conjecture.  Suppose $G$ is not $k$-edge-colorable for some $k \ge \Delta(G) +
+1$. Let $L(v) = \irange{k}$ for all $v \in V(G)$.  Now Fixer has no moves, so
+Fixer has no winning strategy.
+By Conjecture \ref{GameGoldbergConjecture}, there exists $H \subseteq G$
+with 
+\[
+\size{H}
+> \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_\alpha}}{2}} 
+= \sum_{\alpha \in \pot(L)} \floor{\frac{|H|}{2}}
+= k\floor{\frac{|H|}{2}}.
+\] 
+
+\noindent That is, $\floor{\frac{\size{H} - 1}{\floor{\frac{|H|}{2}}}}\ge k$. 
+Hence,
+if $G$ is not $(\Delta(G) + 1)$-edge-colorable, then it is  
+$w(G)$-edge-colorable where $w(G) = \max_{\substack{H
+\subseteq G\\|H| \ge 2}}\ceil{\frac{\size{H}}{\floor{\frac{|H|}{2}}}}.$ 
+This is Goldberg's Conjecture.
+
+\section{The chronicled game}
+The \emph{chronicled game} is the same as the basic game except that we
+maintain a \emph{chronicle} $\C$ which restricts Breaker's possible moves. 
+(This chronicle is a way of requiring Breaker to make moves that are consistent
+with some embedding of $G$ in a larger graph $Q$.)
+Suppose Fixer and Breaker play on $(G, L)$.  It will be convenient to add a ``point at infinity'' to the chronicle in order to model Breaker doing nothing in a uniform manner (this corresponds to a two-colored path leaving and never coming back).  We call this point $\infty$.
+The chronicle is a multigraph with vertex set $V(G) \cup \set{\infty}$ that will be updated as the game progresses.  Each edge of
+$\C$ will be labeled with a doubleton of colors $\set{\alpha, \beta} \subseteq \pot(L)$.  At the start of the game $\C$ is edgeless.  
+
+\begin{FixerMove}
+Pick $v \in V(G)$ and different $\alpha, \beta \in \pot(L)$ with $\card{\set{\alpha, \beta} \cap L(v)} = 1$ and swap $\alpha$ and $\beta$ at $v$.
+\end{FixerMove}
+
+\begin{BreakerMove}
+If there is a $vx \in E(\C - \infty)$ labeled $\set{\alpha, \beta}$, then Breaker swaps $\alpha$ and $\beta$ at $x$.
+If instead $v\infty \in E(\C)$, then Breaker does nothing.
+Otherwise, Breaker can either do nothing, or pick $w \in V(G - v)$ with $\card{\set{\alpha, \beta} \cap L(w)} = 1$ such that no edge incident to $w$ in $\C$ has label $\set{\alpha, \beta}$, and swap $\alpha$ and $\beta$ at $w$.
+\end{BreakerMove}
+
+\noindent Right after Breaker's move, the chronicle is updated as follows.
+
+\begin{ChronicleUpdate}
+Remove all edges of $\C$ whose label intersects $\set{\alpha, \beta}$ in exactly one color.  
+If Breaker swapped $\alpha$ and $\beta$ at $z$ and there is no $vz$ edge in $\C$ labeled $\set{\alpha, \beta}$, then add one.
+Otherwise, if Breaker did nothing and there is no $v\infty$ edge in $\C$ labeled $\set{\alpha, \beta}$, then add one.
+\end{ChronicleUpdate}
+
+
+\begin{lem}\label{WinningChronicledGameEdgeColors}
+Suppose $G$ is a subgraph of a multigraph $Q$ and $\pi$ a $k$-edge-coloring of 
+$Q - E(G)$.  If Fixer has a winning strategy against Breaker in the chronicled
+game on $(G, L_\pi)$, then $Q$ is $k$-edge-colorable.
+\end{lem}
+\begin{proof}
+Fixer can make any of his legal moves in the game by flipping a $2$-colored path in $Q - E(G)$. Our only worry is that we have restricted Breaker too much.  It will suffice to show that at the start of any of Fixer's turns the following hold. Suppose $xy \in E(\C)$ where $x \ne \infty$ is labeled $\set{\alpha, \beta}$. If $y \ne \infty$, then there is a longest $\alpha-\beta$ path in $Q - E(G)$ with endpoints $x$ and $y$.  If $y = \infty$, then there is a longest $\alpha-\beta$ path in $Q - E(G)$ with endpoints $x$ and $z$ where $z \in V(Q) - V(G)$.
+
+Say we are in round $n$. If $y \ne \infty$, put $z = y$. Since
+$xz$ is labeled $\set{\alpha, \beta}$ by the chronicle update, there is a
+largest round $k$ with $k < n$ in which Fixer swapped $\alpha$ and $\beta$ at
+one of $x$ or $z$ and then Breaker swapped $\alpha$ and $\beta$ at the other
+one.  If instead $y = \infty$, then the other end of the path is some $z \in
+V(Q) - V(G)$.  So there is a largest round $k$ with $k < n$ where Fixer swapped
+$\alpha$ and $\beta$ at $x$ and then Breaker did nothing.  In both the cases
+$y=\infty$ and $y\ne \infty$, no swap involving exactly one of $\alpha$ or
+$\beta$ occurred at any round $j$ with $k < j < n$ (if it had, then the
+chronicle update would have removed the edge $xy$ labeled
+$\set{\alpha,\beta}$).  The moves in round $k$ imply that at the start of round
+$k$, there is a longest $\alpha-\beta$ path in $Q - E(G)$ with endpoints $x$
+and $z$.  Since no two-colored path involving exactly one of $\alpha$ or
+$\beta$ was swapped at any round $j$ with $k < j < n$, at round $n$ there is
+still a longest $\alpha-\beta$ path in $Q - E(G)$ with endpoints $x$ and $z$.
+\end{proof}
+
+
+We say that $G$ is \emph{$f$-fixable in the chronicled game} for $\func{f}{V(G)}{\IN}$ if Fixer has a winning strategy in the 
+chronicled game for every list assignment $L$ where $(G, L)$ is superabundant and $\card{L(v)} \ge f(v)$ for all $v \in V(G)$.
+
+\section{Kierstead-Tashkinov-Vizing assignments}
+Most edge-coloring results have been proved using a specific kind of
+superabundant pair $(G, L)$ where superabundance can be proved via a special
+ordering. That is, the orderings given by the definition of Vizing fans,
+Kierstead paths, and Tashkinov trees.  In this section, we show how
+superabundance easily follows from these orderings.
+
+We first define a Tashkinov tree (Vizing fans and Kierstead
+paths are the special cases where the tree is a star and a path, respectively).
+Let $Q$ be an edge-critical multigraph with $\chi'(Q) = k + 1$ for some $k \ge \Delta(G) + 1$. A tree $T \subseteq Q$ is \emph{Tashkinov} if for some $xy \in E(T)$ there is a $k$-edge-coloring $\pi$ of $G-xy$ and a total ordering `$<$' of $V(T)$ such that 
+
+\begin{enumerate}
+\item $x < y < z$ for all $z \in V(T - x - y)$; and
+\item $T\brackets{w \mid w \le z}$ is a tree for all $z \in V(T)$; and
+\item for each $wz \in E(T - xy)$, there is $u < \max\set{w, z}$ such that $\pi(wz) \in \bar{\pi}(u)$.
+\end{enumerate}
+
+By $\bar{\pi}(u)$ we mean the colors from $\irange{k}$ not incident to $u$.  We also say that the quadruple $\parens{T, xy, \pi, <}$ is Tashkinov.
+When $xy \in E(G)$ and $X \subseteq V(G)$ with $x,y \in X$, we say that $X$ is
+\emph{elementary} with respect to a $k$-edge-coloring $\pi$ of $G-xy$ if
+$\bar{\pi}(u) \cap \bar{\pi}(w) = \emptyset$ for all $u, w \in X$.
+The reason for interest in Tashkinov trees is that if $G$ is edge-critical and
+$\pi$ is a $k$-edge-coloring of $G-xy$, then every Tashkinov tree in $G$ must
+be elementary with respect to $\pi$.  For Vizing fans, this fact can be proved
+easily using Kempe changes.  For Kierstead paths, the proof is a bit longer, but
+not hard.  However, proving it for Tashkinov trees in general is tedious, to
+say the least.
+
+If true, the following conjecture generalizes the fact that Tashkinov
+trees are elementary.  Furthermore, the statement feels more natural, since the
+condition is both necessary and sufficient.
+Again, we state it for the basic game, but it is more likely to
+hold for games where Fixer has more power (the ``if'' direction that is; superabundance may no longer be necessary when Fixer has more power).  Even proving the ``if'' direction
+for the master game would be quite interesting.
+
+\begin{conj}
+\label{GameTashkinovTrees}
+If $G$ is a tree and $f(v) \ge d(v) + 1$ for all $v \in V(G)$, then $G$ is $f$-fixable.
+\end{conj}
+
+Let's see why Conjecture \ref{GameTashkinovTrees} implies that Tashkinov trees are elementary.  First, we need some definitions.  We say that a list assignment $L$ on $G$ is a \emph{Kierstead-Tashkinov-Vizing} assignment (henceforth \emph{KTV-assignment}) if for some $xy \in E(G)$, there is a total ordering `$<$' of $V(G)$ such that
+
+\begin{enumerate}
+\item there is $\func{\pi}{E(G)}{\pot(L)}$ such that $\pi(uv) \in L(u) \cap L(v)$ for each $uv \in E(G - xy)$; 
+\item $x < z$ for all $z \in V(G - x)$; 
+\item $G\brackets{w \mid w \le z}$ is connected for all $z \in V(G)$; 
+\item for each $wz \in E(G - xy)$, there is $u < \max\set{w, z}$ such that $\pi(wz) \in L(u) - \setbs{\pi(e)}{e \in E(u)}$;
+\item there are different $s, t \in V(G)$ such that $L(s) \cap L(t) - \setbs{\pi(e)}{e \in E(s) \cup E(t)} \ne \emptyset$.
+\end{enumerate}
+
+\begin{lem}\label{KTVImpliesSuperabundant}
+If $L$ is a KTV-assignment on $G$, then $(G, L)$ is superabundant.
+\end{lem}
+\begin{proof}
+Let $L$ be a KTV-assignment on $G$, and let $H \subseteq G$.  We will show that
+$(H,L)$ is abundant.  
+Clearly it suffices to consider the case when $H$ is an induced subgraph, so we
+assume this.
+Property (1) gives that $G-xy$ has an edge-coloring
+$\pi$, so $\psi_L(H)\ge \size{H}-1$; also $\psi_L(H)\ge \size{H}$ if
+$\{x,y\}\not\subseteq V(H)$.  Furthermore $\psi_L(H)\ge \size{H}$ if $s$ and
+$t$ from property (5) are both in $V(H)$, since then $\psi_L(H)$ gains 1 over
+the naive lower bound, due to the color in $L(s)\cap L(t)$.  So $V(G)-
+V(H)\ne \emptyset$.
+
+Now choose $z \in V(G) - V(H)$ that is smallest under $<$.  
+Put $H' = G\brackets{w \mid w \le z}$.  By the minimality of $z$, we have $H' - z \subseteq H$. By property (2), $\card{H'} \ge 2$.  
+By property (3), $H'$ is connected and thus there is $w \in V(H' - z)$ adjacent to $z$. So, we have $w < z$ and $wz\in E(G)-E(H)$.
+Now $\pi(wz)\in L(w)$.  By the definition of a KTV-assignment, 
+property (4) implies that there exists $u$ with $u < \max\set{w, z} = z$ and $\pi(wz) \in
+L(u)-\{\pi(e)|e\in E(u)\}$.  Then $u \in V(H' - z) \subseteq V(H)$ and
+again we gain 1 over the naive lower bound on $\psi_L(H)$, due to the color
+in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
+\end{proof}
+
+\begin{lem}\label{TashkinovGameImpliesTashkinovElementary}
+Assume that Conjecture \ref{GameTashkinovTrees} holds.  Let $Q$ be an
+edge-critical multigraph with $\chi'(Q) = k + 1$ for some $k \ge \Delta(G) + 1$.
+If $T \subseteq Q$ is a tree and $\parens{T, xy, \pi, <}$ is Tashkinov, then
+$V(T)$ is elementary with respect to $\pi$.
+\end{lem}
+\begin{proof}
+Let $T \subseteq Q$ be a tree such that $\parens{T, xy, \pi, <}$ is Tashkinov.
+Put $H = Q - E(T)$ and $L(v) = \irange{k} - \pi\parens{E(v) - E(T)}$ for each $v \in V(T)$.  
+Then $|L(v)| \ge k - (d(v) - d_T(v)) \ge d_T(v) + \Delta + 1 - d(v) \ge d_T(v) + 1$.  
+
+We play the Fixer/Breaker game on $T$ with lists $L$.  Fixer can make any of his legal moves in the game by flipping a $2$-colored path in $H$.  How doing so effects the rest of the lists corresponds to Breaker's response.  Breaker has no more power than we allow him in the game (he may have less power, depending on $Q$); therefore, if Fixer could win the game, we could $k$-edge-color $Q$.  Hence Fixer cannot win and thus, by Conjecture \ref{GameTashkinovTrees}, it must be that $(G, L)$ is not superabundant.  Plainly, $L$ satisfies properties (1)--(4) to be a KTV-assignment.  If $V(T)$ is not elementary, then $L$ satisfies property (5) as well and hence $(G, L)$ is superabundant by Lemma \ref{KTVImpliesSuperabundant}, a contradiction.
+\end{proof}
+
+As we noted above, it is known that Tashkinov trees are elementary, whether
+or not Conjecture~\ref{GameTashkinovTrees} is true.  That proof is quite long
+and complicated; we might hope for a more natural proof in the generalized
+context of superabundance.  For stars, there is a natural proof based on
+Hall's theorem, which we will see in Theorem~\ref{HallGame}.
+
+\section{Superabundance preserving moves}
+Suppose $(G, L)$ is superabundant.  Fixer would like to know what moves he can make without Breaker breaking superabundance.  For different $\alpha, \beta \in \pot(L)$, we say that $\alpha$ and $\beta$ are \emph{swappable} in $(G, L)$ if whenever Fixer swaps $\alpha$ for $\beta$ or $\beta$ for $\alpha$ in some list and Breaker responds resulting in lists $L'$, the pair $(G, L')$ is superabundant.
+
+\begin{lem}\label{SwappableCondition}
+Suppose $(G, L)$ is superabundant.  Then different $\alpha, \beta \in \pot(L)$ are swappable if for every $H \subseteq G$, at least one of the following holds:
+\begin{enumerate}
+\item $\psi_L(H) > \size{H}$; or,
+\item $\card{H_{L, \alpha}}$ is odd; or,
+\item $\card{H_{L, \beta}}$ is odd.
+\end{enumerate}
+\end{lem}
+%
+\begin{proof}
+Say Fixer swaps $\alpha$ in for $\beta$ in $L(v)$. Let $L'$ be the list
+assignment after Breaker's response.  Choose $H \subseteq G$; we will show that
+$(H,L')$ is abundant.  Note that $\card{H_{L,\alpha}}$ and
+$\card{H_{L',\alpha}}$ differ by at most 2, so their contributions to
+$\psi_L(H)$ and $\psi_{L'}(H)$ differ by at most 1; the same is true for
+$\card{H_{L,\beta}}$ and $\card{H_{L',\beta}}$.  
+We consider the three
+possibilities for $H$ in the hypothesis.  (1) If $\psi_L(H)>\size{H}$, then
+$\psi_{L'}(H) \ge \psi_L(H)-1\ge \size{H}$. 
+So suppose (2) or (3) holds.
+The only way that we can have
+$\psi_{L'}(H)<\psi_L(H)$ is if $\floor{\frac{\card{H_{L', \alpha}}}{2}} +
+\floor{\frac{\card{H_{L', \beta}}}{2}} < \floor{\frac{\card{H_{L, \alpha}}}{2}}
++ \floor{\frac{\card{H_{L, \beta}}}{2}}$.  
+Since $\card{H_{L, \beta}} + \card{H_{L, \alpha}} = \card{H_{L', \beta}} +
+\card{H_{L', \alpha}}$,   this requires that both $\card{H_{L, \beta}}$ and
+$\card{H_{L, \alpha}}$ are even; since (2) or (3) holds, this is impossible.
+\end{proof}
+
+\section{The game on stars}
+In \cite{HallGame}, the second author proved that Conjecture \ref{GameGoldbergConjecture} holds in stronger form when $G$ is a star (in fact, more generally for multistars).  For a graph $G$, let $\nu(G)$ be the number of edges in a maximum matching of $G$. 
+For a list assignment $L$ on $G$, put
+\[\eta_L(G) = \sum_{\alpha \in \pot(L)} \nu(G_\alpha).\]
+
+If $G$ has a proper edge-coloring from $L$, then $\eta_L(G) \ge \size{G}$.  As a
+sort of partial converse, we will show that when $G$ is a star and $\eta_L(G)
+\ge \size{G}$, we can color a subset of the edges with colors $C$ so that no
+color in $C$ appears in the lists on the uncolored edges.  Then Fixer can just
+play on the uncolored edges, never performing swaps using colors from $C$, so
+this gives a way to reduce to a smaller game.  The partial converse follows
+from Hall's theorem, but it is convenient in the proof to use the following
+intermediate lemma which was used by Borodin, Kostochka, and Woodall
+\cite{BorodinKostochkaWoodall} in strengthening Galvin's Theorem about list
+edge-coloring of bipartite graphs \cite{galvin1995list}.  
+
+\begin{lem}\label{SpannerSpecial}
+Let $G$ be a bipartite graph with nonempty parts $X$ and $Y$.  If $|X| \le |Y|$ and $Y$ has no isolated vertices, then $G$ contains a nonempty matching $M$ whose vertex set is $S \cup N(S)$ for some $S \subseteq Y$.
+\end{lem}
+
+Fixer's strategy on stars will be to perform a swap that increases $\eta_L(G)$
+when $\eta_L(G) < \size{G}$ and to reduce to a smaller uncolored star when
+$\eta_L(G) \ge \size{G}$.
+
+\begin{thm}[Rabern \cite{HallGame}]\label{HallGame}
+If $G$ is a star, then $G$ is $f$-fixable for all valid $f$.
+\end{thm}
+\begin{proof}
+Lemma \ref{Necessity} proves necessity of superabundance. Now we prove sufficiency. 
+
+Suppose the condition is not sufficient for Fixer to have a winning strategy in the basic game.  Choose a counterexample $G$ with lists $L$ so as to minimize $\card{G}$ and subject to that, to maximize $\eta_L(G)$.
+
+Let $r$ be a vertex of maximum degree in $G$ ($r$ is unique when $\size{G}>1$).
+ Create a bipartite graph $B$ with parts $X = \setb{uw}{E(G)}{L(u)
+\cap L(w) \ne \emptyset}$ and $Y \DefinedAs
+\setb{\alpha}{\pot(L)}{\nu(G_\alpha) = 1}$, where $uw \in X$ is adjacent to
+$\alpha \in Y$ if and only if $\alpha \in L(u) \cap L(w)$. Informally, $Y$ is
+the set of colors $\alpha$ that can be used on at least one edge, and $X$ is
+the set of edges $e$ with at least one color available on $e$, and a
+color $\alpha$ is adjacent to an edge $e$ if $\alpha$ can be used on $e$.
+\bigskip
+
+[This would be a great place for a picture; maybe showing $(G,L)$, then $B$,
+then $M$, then $G'$ and the colors on $E(G)-E(G')$.]
+\bigskip
+
+\noindent\textbf{Claim.  }\textit{We have $\eta_L(G) < \size{G}$.}
+
+Suppose $\eta_L(G) \ge \size{G}$.  Since $\card{X} \le \size{G} \le \eta_L(G) =
+\card{Y}$ and $Y$ has no isolated vertices, we can apply Lemma
+\ref{SpannerSpecial} to get a nonempty matching $M$ whose vertex set is $S \cup
+N_B(S)$ for some $S \subseteq Y$.  For each $\set{uw, \alpha} \in M$, use color
+$\alpha$ on edge $uw$.  Let $G' = G - V(N_B(S) - r)$, that is, $G$ with
+the colored edges deleted; let $L'(v) = L(v) - S$.
+Since $\card{G'}<\card{G}$, it suffices to show that $\card{L'(v)}\ge
+d_{G'}(v)$ for all $v$ and that $(G',L')$ is superabundant.  Since
+$\card{L(r)}\ge d_G(r)$, and $r$ lost exactly one color from its list for each
+incident edge colored, we have
+$\card{L'(r)}\ge d_{G'}(r)$.  For all other $v\in V(G')$, we have
+$d_{G'}(v)=d_{G}(v)$.  Further, since the colors $S$ that we used appeared in
+no lists of vertices in $V(G')$, we have $L'(v) = L(v)$ for each $v\in V(G')$. 
+Thus, for each $H\subseteq G'$, we see that $(H,L')$ is abundant precisely
+because $(H,L)$ is abundant.  By the minimality of $G$, Fixer has a winning
+strategy on $(G',L')$, giving an edge-coloring of $G'$.  Since the colors used
+on $E(G)-E(G')$ and on $E(G')$ form disjoint sets, the edge-colorings combine
+to give an edge-coloring of $G$.
+
+\bigskip
+
+\noindent\textbf{Finish.}
+
+By the Claim, we have $\eta_L(G) < \size{G}$.  Since $\card{L(r)} \ge d(r) =
+\size{G}>\eta_L(G)$, there exists $\alpha \in L(r) - Y$.  So $\alpha \in L(r)$
+and $\card{G_\alpha} = 1$. Since every subgraph of $G$ that has edges contains
+$r$, Lemma \ref{SwappableCondition} implies that $\alpha$ is swappable with
+$\beta$ for all $\beta \in \pot(L) - \alpha$.
+
+Suppose there is $\beta \in Y$ such that $\card{N_B(\beta)} \ge 3$.  Pick $rv \in N_B(\beta)$.  Now Fixer should swap $\alpha$ for $\beta$ in $L(v)$.  Let $L'$ be the list assignment after Breaker's response. Note that $L'(r) = L(r)$ since $\alpha, \beta \in L(r)$.  Since Breaker can swap $\alpha$ for $\beta$ in $L(w)$ for at most one $w$ where $rw \in N_B(\beta)$, we have $\eta_{L'}(G) > \eta_L(G)$, which contradicts the maximality of $\eta_L(G)$.
+
+Therefore, each $\beta \in Y$ has $\card{N_B(\beta)} \le 2$.  So each color
+in $Y$ contributes at most one to $\psi_L(G)$.  Since $\card{Y} = \eta_L(G)
+< \size{G}\le \psi_L(G)$, there must be $\tau \not \in Y$ such that
+$\card{G_\tau - r} \ge 2$.  Now Fixer should swap $\tau$ for $\alpha$ in
+$L(r)$. Let $L'$ be the list assignment after Breaker's response.  Since
+Breaker can swap $\alpha$ for $\tau$ in $L(w)$ for at most one $w \in V(G_\tau
+- r)$, we again contradict the maximality of $\eta_L(G)$.
+\end{proof}
+
+\section{Reduction in the chronicled game}
+In Section \ref{EdgeColoringRelationshipSection}, we defined the chronicled
+game, where Fixer ostensibly has more power than in the basic game.  Here we
+prove a lemma needed to prevent Breaker from destroying Fixer's progress in the
+form of a partial coloring.  More precisely, if we can properly edge-color part
+of the graph such that Fixer has a winning strategy (in the chronicled game) on
+the rest of the graph with the reduced lists, then Fixer can win the chronicled
+game on the whole graph.  We are unable to prove this result for the basic
+game, so this may be a good place to look if we are trying to prove that the
+basic game is strictly harder for Fixer.
+
+In the case of stars we were able to do this sort of reduction because the colors in the partial edge-coloring we used did not appear elsewhere in the graph.  For other graphs, say paths, a proper edge-coloring can use the same color on more than one edge, so we aren't hopeful that such a nice partial coloring can be found.  And there lies the difficulty with proving the mentioned result for the basic game---if Fixer makes a move with a color that was used in the partial coloring, then Breaker can mess up the partial coloring.  As we will see, Fixer has enough power in the chronicled game to successfully protect a partial coloring.
+
+Suppose Fixer and Breaker play the chronicled game on a graph $G$ with list assignment $L$. We define the \emph{length} of the game on $G$ with $L$, written $\ell(G, L)$, as the maximum over all Breaker strategies of the minimum number of moves it takes Fixer to beat Breaker; when Fixer cannot win, we let $\ell(G, L) = \infty$.  
+
+\begin{lem}\label{ColorOneEdgeAndPlayOnRest}
+Let $G$ be a multigraph and $L$ a list assignment on $G$.  Suppose we have $xy \in E(G)$ and $\tau \in L(x) \cap L(y)$. Put $G' = G - xy$ and 
+$L'(v) = L(v)$ for all $v \in V(G' - x - y)$ and $L'(v) = L(v) - \tau$ for $v \in \set{x,y}$. If Fixer has a winning strategy against Breaker in the chronicled game on $G'$ with lists $L'$, then Fixer has a winning strategy against Breaker in the chronicled game on $G$ with lists $L$.
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample so as to minimize $\ell(G', L')$.  We give Fixer and Breaker the names ``Fixer$^*$'' and ``Breaker$^*$'' when they are playing on $(G', L')$.  Suppose Fixer$^*$ is playing a winning strategy achieving $\ell(G', L')$.  Consider Fixer$^*$'s first move.  Suppose Fixer$^*$ swapped $\alpha$ and $\beta$ in $L'(v)$.   We need to decide on a move for Fixer, playing on $G$ with $L$.
+
+\noindent\textbf{Claim 1.  }\textit{$v \not \in \set{x, y}$.}
+
+Suppose $v \in \set{x,y}$. By symmetry, we may assume $v = x$.
+
+\noindent\textbf{Subclaim 1a.  }\textit{$\set{\alpha, \beta} \not \subseteq L(v) \cap L(y)$.}
+
+Suppose $\set{\alpha, \beta} \subseteq L(v) \cap L(y)$. In this case Fixer doesn't even need to make a move.
+We must have $\tau \in \set{\alpha, \beta}$. By symmetry we may assume that $x = v$ and $\beta = \tau$.  Change $\tau$ to be $\alpha$ in the statement of the lemma.  The effect on $L'$ is that both $x$ and $y$ have lost $\alpha$ and gained $\beta$.  So, this is equivalent to Fixer$^*$ swapping $\alpha$ and $\beta$ in $L'(x)$ and then Breaker$^*$ swapping $\alpha$ and $\beta$ in $L'(y)$.  But Fixer$^*$ is playing by a strategy that beats any move of Breaker$^*$ in at most $\ell(G', L') - 1$ more moves. By minimality of $\ell(G', L')$, Fixer has a winning strategy against Breaker in the chronicled game on $G$ with $L$ (since $L$ didn't change), a contradiction.
+
+\noindent\textbf{Subclaim 1b.  }\textit{$\set{\alpha, \beta} \not \subseteq L(v)$.}
+
+Suppose $\set{\alpha, \beta} \subseteq L(v)$. We must have $\tau \in \set{\alpha, \beta}$. By symmetry we may assume that $\beta = \tau$.  By Subclaim 1a, $\alpha \not \in L(y)$.  Fixer should swap $\alpha$ and $\tau$ in $L(y)$.  Breaker's only responses are to do nothing, or to swap $\alpha$ and $\tau$ at some $w \not \in \set{x,y}$.  Say $J$ is the list assignment on $G$ after Breaker's response and $J'$ the list assignment on $G'$ (where we removed $\alpha$ now instead of $\tau$).  Now the $J'$ lists look just as they would if Fixer$^*$ had swapped $\alpha$ and $\tau$ at $x$ and then Breaker$^*$ had swapped $\alpha$ and $\tau$ at $w$.  The only difference in $J$ is that now $x$ and $y$ both have $\alpha$ instead of $\tau$.  So, $\ell(G', J') < \ell(G', L')$ and again Fixer has a winning strategy by minimality of $\ell(G', L')$.
+
+\noindent\textbf{Subclaim 1c.  }\textit{Claim 1 is true.}
+
+If $\tau \not \in \set{\alpha, \beta}$, then Fixer wins by minimality of $\ell(G', L')$.  So assume $\beta = \tau$. By Subclaim 1b, we have $\alpha \not \in L(v)$.  But then $\set{\alpha, \beta} \cap L'(v) = \emptyset$, so Fixer$^*$ couldn't have swapped $\alpha$ and $\beta$ in $L'(v)$, a contradiction.
+
+\noindent\textbf{Fixer move.  }\textit{Fixer swaps $\alpha$ and $\beta$ in $L(v)$.}
+
+\noindent\textbf{Claim 2.  }\textit{$\tau \in \set{\alpha, \beta}$ and Breaker swaps $\alpha$ and $\beta$ at $w \in \set{x, y}$.  By symmetry, we assume $\beta = \tau$ and $w = x$.}
+
+Say $J$ is the list assignment on $G$ after Breaker's response and $J'$ the list assignment on $G'$. If $\tau \not \in \set{\alpha, \beta}$, or Breaker did nothing, or Breaker swapped $\alpha$ and $\beta$ at $w \not \in \set{x,y}$, then $\ell(G', J') < \ell(G', L')$.  By minimality of $\ell(G', L')$, Fixer has a winning strategy against Breaker in the chronicled game on $G$ with lists $J$.  But combined with his first move, this is a winning strategy with lists $L$, a contradiction.
+
+\noindent\textbf{Claim 3.  }\textit{$\alpha \not \in L(y)$.}
+
+Suppose $\alpha \in L(y)$. Say $J$ is the list assignment on $G$ after Breaker's response and $J'$ the list assignment on $G'$ (where we removed $\alpha$ now instead of $\tau$).  Then the only difference in $J$ is that now $x$ and $y$ both have $\alpha$ instead of $\tau$, the only difference in $J'$ is that $y$ has $\tau$ instead of $\alpha$. So, as far as Fixer$^*$ is concerned, Breaker$^*$ swapped $\alpha$ and $\tau$ at $y$.  But Fixer$^*$ is playing by a strategy that beats any move of Breaker$^*$ in at most $\ell(G', L') - 1$ more moves, so $\ell(G', J') < \ell(G', L')$ and again Fixer has a winning strategy by minimality of $\ell(G', L')$.
+
+\noindent\textbf{Claim 4.  }\textit{Fixer wins.}
+
+By Claim 3, $\alpha \not \in L(y)$.  We are going to have Fixer make another move in such a way that it still looks like one Fixer$^*$ move followed by a Breaker$^*$ move. Fixer should swap $\alpha$ and $\tau$ at $y$.  The chronicle contains an edge labeled $\set{\alpha, \tau}$ incident with $x$, so Breaker cannot respond by swapping $\alpha$ and $\tau$ at $x$.  So Breaker's only responses are to do nothing, or to swap $\alpha$ and $\tau$ at some $w \not \in \set{x,y}$.  Say $J$ is the list assignment on $G$ after Breaker's response and $J'$ the list assignment on $G'$ (where we removed $\alpha$ now instead of $\tau$).  Now the $J'$ lists look just as they would if Breaker$^*$ had swapped $\alpha$ and $\tau$ at $w$.  The only difference in $J$ is that now $x$ and $y$ both have $\alpha$ instead of $\tau$.  So, $\ell(G', J') < \ell(G', L')$ and again Fixer has a winning strategy by minimality of $\ell(G', L')$.
+\end{proof}
+
+\begin{lem}\label{CanColorAndPlayOnRest}
+Let $G$ be a multigraph and $L$ a list assignment on $G$.  Suppose we have an edge-coloring $\pi$ of $H \subseteq G$ where $\pi(xy) \in L(x) \cap L(y)$ for all $xy \in E(H)$.  Put $G' = G - E(H)$ and 
+$L'(v) = L(v) - \pi(E_H(v))$ for all $v \in V(G')$.  If Fixer has a winning strategy against Breaker in the chronicled game on $G'$ with lists $L'$, then Fixer has a winning strategy against Breaker in the chronicled game on $G$ with lists $L$.
+\end{lem}
+\begin{proof}
+If not, we can take a counterexample minimizing $\size{H}$ and then apply Lemma \ref{ColorOneEdgeAndPlayOnRest} to get a smaller counterexample.
+\end{proof}
+
+In the proof of Claim 4 of Lemma \ref{ColorOneEdgeAndPlayOnRest} we had Fixer play a two-move combination to force what he wanted using the chronicle.  We can turn this idea into a very useful lemma where Fixer may need to perform a multi-move combination.
+
+\begin{lem}\label{MultiMoveCombination}
+Let $G$ be a multigraph, $L$ a list assignment on $G$ and $\alpha, \beta \in \pot(L)$. Let $S \subseteq V(G)$ be those vertices $v$ with $\card{\set{\alpha, \beta} \cap L(v)} = 1$.  Then there is a graph $A_S$ with vertex set $S$ and $\Delta(A_S) \le 1$ such that Fixer has a sequence of moves against Breaker in the chronicled game resulting in a list assignment where Fixer has chosen to swap $\alpha$ and $\beta$ in all or none of the vertices in each component of $A_S$.
+\end{lem}
+\begin{proof}
+For each $v \in S$, Fixer should swap $\alpha$ and $\beta$ at $v$ twice in a row.  Now every $v \in S$ is incident to an edge in $\C$; that is, as long as Fixer only does swaps with $\alpha$ and $\beta$, Breaker's moves are already foretold in the chronicle.  Now add an edge in $A_S$ for each $xy \in \C - \infty$ labeled $\set{\alpha, \beta}$. The lemma follows.
+\end{proof}
+
+\section{Stars with one edge subdivided}
+Let $G$ be the graph created from a star with at least $3$ vertices by subdividing one edge.  Let $r$ be the center of the star, $t$ the vertex at distance two from $r$ and $s$ the intervening vertex.
+
+\begin{thm}\label{SubdividedStarWithLowCenter}
+If $f$ is valid and $f(r) \ge d(r) + 1$, then $G$ is $f$-fixable in the chronicled game.
+\end{thm}
+\begin{proof}
+Suppose the condition is not sufficient for Fixer to have a winning strategy in the chronicled game.  Choose a counterexample $G$ with lists $L$ so as to minimize $\card{G}$ and subject to that, to maximize $\eta_L(G - t)$.
+
+Create a bipartite graph $B$ with parts $X = \setb{uw}{E(G - t)}{L(u) \cap L(w) \ne \emptyset}$ and $Y = \setb{\alpha}{\pot(L)}{\nu((G - t)_\alpha) = 1}$, where $uw \in X$ is adjacent to $\alpha \in Y$ if and only if $\alpha \in L(u) \cap L(w)$.  Put $F = L(r) - \bigcup_{v \in N(r)} L(v)$.
+
+\noindent\textbf{Claim 1.  }\textit{If $\beta \in Y$ is swappable with $\gamma \in F$, then $\card{G_\beta - r - t} \le 2$.}
+
+Suppose $\card{G_\beta - r - t} \ge 3$.  Pick $v \in V(G_\beta - r - t)$.  Now Fixer should swap $\gamma$ for $\beta$ in $L(v)$.  Let $L'$ be the list assignment after Breaker's response. Note that $L'(r) = L(r)$ since $\gamma, \beta \in L(r)$.  Since Breaker can swap $\gamma$ for $\beta$ in $L(w)$ for at most one $w \in V(G_\beta - r - t)$, we have $\eta_{L'}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
+
+\noindent\textbf{Claim 2.  }\textit{If $\beta \not \in Y$ is swappable with $\gamma \in F$, then $\card{G_\beta - r - t} \le 1$.}
+
+Suppose $\card{G_\beta - r - t} \ge 2$.  Now Fixer should swap $\beta$ for $\gamma$ in $L(r)$. Let $L'$ be the list assignment after Breaker's response.  Since Breaker can swap $\gamma$ for $\beta$ in $L(w)$ for at most one $w \in V(G_\beta - r - t)$, we again contradict the maximality of $\eta_L(G - t)$.
+
+\noindent\textbf{Claim 3.  }\textit{We have $\eta_L(G - t) \ge \size{G - t}$.}
+
+Suppose $\eta_L(G - t) < \size{G - t}$. Then we have $\card{F} \ge 2$. If $F \not \subseteq L(t)$, pick $\gamma \in F - L(t)$; otherwise pick any $\gamma \in F$.   
+
+
+\noindent\textbf{Subclaim 3a.  }\textit{$\gamma$ is swappable with $\beta \in \pot(L) - \gamma$ unless $\gamma \not \in L(t)$ and $L(s) \cap L(t) = \set{\beta}$.  In particular, there is at most one color with which $\gamma$ is not swappable.}
+
+Suppose $\gamma \in L(t)$. Then $F \subseteq L(t)$ by our choice of $\gamma$. Let $H \subseteq G$.  If $\card{H_{L, \gamma}}$ is even, then $r, t \in V(H)$ and hence $\psi_L(H) > \size{H}$.  Therefore $\gamma$ is swappable with any $\beta \in \pot(L) - \gamma$ by Lemma \ref{SwappableCondition}.
+
+Instead, suppose $\gamma \not \in L(t)$.  Now, the only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, so if $\gamma$ is not swappable with some $\beta \in \pot(L) - \gamma$, then it must be $H = G[s, t]$ that fails all conditions of Lemma \ref{SwappableCondition}.  Hence we have $L(s) \cap L(t) = \set{\beta}$.  This proves the claim.
+
+\noindent\textbf{Subclaim 3b.  }\textit{There is $\beta \in \pot(L) - \gamma$ not swappable with $\gamma$.  Moreover, if $\beta \in Y$, then $\card{G_\beta - r - t} \ge 3$ and otherwise $\card{G_\beta - r - t} \ge 2$.  In particular, $\gamma \not \in L(t)$ and $L(s) \cap L(t) = \set{\beta}$.}
+
+Suppose $\gamma$ is swappable with all $\beta \in \pot(L) - \gamma$.  Then, by Claim 1, the colors in $Y$ each contribute at most one to $\psi_L(G - t)$.  By Claim 2, the colors not in $Y$ contribute nothing to $\psi_L(G - t)$.  Hence $\psi_L(G - t) \le \card{Y} = \eta_L(G - t) < \size{G-t}$, a contradiction.  So, there is $\beta \in \pot(L) - \gamma$ not swappable with $\gamma$. Since Claim 1 and Claim 2 apply to all colors except $\beta$ the second sentence follows since it just gives the bounds from Claim 1 and Claim 2 for $\beta$.  The final sentence follows from Subclaim 3a.
+
+\noindent\textbf{Subclaim 3c.  }\textit{If $\beta \in Y$ is not swappable with $\gamma$, then $\card{G_\beta - r - t} \le 3$.}
+
+Suppose $\card{G_\beta - r - t} \ge 4$. By Subclaim 3a, $L(s) \cap L(t) = \set{\beta}$.  Pick $v \in V(G_\beta - r - t - s)$.  Now Fixer should add the edge $st$ colored $\beta$ and then swap $\gamma$ for $\beta$ in $L(v)$.  Let $L'$ be the list assignment after Breaker's response. Note that $L'(r) = L(r)$ since $\gamma, \beta \in L(r)$.  Now Breaker can replace $\beta$ in both $L(s)$ and $L(t)$ with $\gamma$ and then swap $\gamma$ for $\beta$ in $L(w)$ for at most one $w \in V(G_\beta - r - t - s)$. Hence we have $\eta_{L'}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
+
+\noindent\textbf{Subclaim 3d.  }\textit{If $\beta \not \in Y$ is not swappable with $\gamma$, then $\card{G_\beta - r - t} \le 2$.}
+
+Suppose $\card{G_\beta - r - t} \ge 3$.  By Subclaim 3a, $L(s) \cap L(t) = \set{\beta}$. Now Fixer should add the edge $st$ colored $\beta$ and then swap $\beta$ for $\gamma$ in $L(r)$. Let $L'$ be the list assignment after Breaker's response.   Now Breaker can replace $\beta$ in both $L(s)$ and $L(t)$ with $\gamma$ and then swap $\gamma$ for $\beta$ in $L(w)$ for at most one $w \in V(G_\beta - r - t)$.  Hence we again contradict the maximality of $\eta_L(G - t)$.
+
+\noindent\textbf{Subclaim 3e.  }\textit{There is $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.}
+
+By Subclaim 3b, we have $\beta \in \pot(L) - \gamma$ not swappable with $\gamma$.   By Claim 1, the colors in $Y - \beta$ contribute at most $|Y - \beta|$ to $\psi_L(G - t)$.  By Subclaim 3c and Subclaim 3d, the total contribution of $Y$ and $\beta$ to $\psi_L(G - t)$ is at most $\card{Y} + 1$.  Since nothing else contributes by Claim 2, we have $\psi_L(G - t) \le \eta_L(G - t) + 1 \le \size{G} - 1$.  Since $\psi_L(G) \ge \size{G}$, there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.
+
+\noindent\textbf{Subclaim 3f.  }\textit{We may assume $\delta \in L(r) \cap L(t) - \bigcup_{v \in N(r)} L(v)$.}
+
+Suppose not.  Suppose $\delta \in Y$. Then, by Claim 1 and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for $u,w \in N(r) - s$.  Fixer should swap $\gamma$ for $\delta$ in $L(t)$.  If Breaker replaces any $\delta$ with $\gamma$, he increases $\eta_L(G - t)$, so Breaker must pass.  Pick $\alpha \in F - \gamma$.  Then, by Subclaim 3b applied to this new position, we must have $\alpha \not \in L(t)$, so we can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$, which proves the subclaim in this case.
+
+Otherwise, by Claim 2, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Again, if Fixer swaps $\gamma$ for $\delta$ in $L(t)$, Breaker must pass lest he increase $\eta_L(G - t)$.  As before we  can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$.
+
+\noindent\textbf{Subclaim 3g.  }\textit{Claim 3 is true.}
+
+Fixer should swap $\delta$ for $\beta$ in $L(s)$.  First, suppose $\beta \in Y$.  Then, by Subclaim 3b, we have $\card{G_\beta - r - t} \ge 3$.  No matter what Breaker does, $\eta_L(G-t)$ has increased.  Similarly, if $\beta \not \in Y$, Subclaim 3b gives $\card{G_\beta - r - t} \ge 2$ and $\eta_L(G-t)$ has increased no matter Breaker's response.
+
+
+\noindent\textbf{Claim 4.  }\textit{If $\card{C} \ge \card{N_B(C)}$ for $C \subseteq Y$, then $C \cap L(t) \ne \emptyset$.}
+
+Suppose not. Let $B'$ be the subgraph of $B$ induced on $C \cup N_B(C)$. Then we may apply Lemma \ref{SpannerSpecial} to get a nonempty matching $M$ of $B'$ whose vertex set is $S \cup N_B(S)$ for some $S \subseteq C$.  For each $\set{uw, \alpha} \in M$, color $uw$ with $\alpha$.  Then since we used colors $S$, no edge in $X - N_B(S)$ has a color in $S$, so the graph $G' = G - V(N_B(S) - r)$ with lists $L'(v) = L(v) - S$ satisfies the hypotheses of the lemma.  Since $\card{G'} < \card{G}$, Fixer has a winning strategy on $G'$ with lists $L'$.  But this strategy wins on $G$ with $L$ as well since $N_B(S)$ is colored with $S$, a contradiction. 
+ 
+\noindent\textbf{Claim 5.  }\textit{We have $\card{C} \le \card{N_B(C)}$ for $C \subseteq Y$. In particular, $\eta_L(G-t) = \size{G-t}$ and $F \ne \emptyset$.}
+
+Suppose not and choose $C \subseteq Y$ such that $\card{C} > \card{N_B(C)}$ so as to minimize $\card{C}$.  For all $\tau \in C$, by minimality of $\card{C}$, we have $N_B(C - \tau) = N_B(C)$.  Since $\card{N_B(C')} \ge \card{C}$ for every $C' \subseteq C - \tau$, Hall's theorem gives a nonempty matching $M_\tau$ whose vertex set is $(C - \tau) \cup N_B(C-\tau) = (C - \tau) \cup N_B(C)$.  So, for every $\tau \in C$, we can color $N_B(C - \tau)$ using $C - \tau$ as in Claim 4; the key point is that each of these colorings colors the same edge set.
+
+Put $R = C \cap L(t)$.  By Claim 4, $R \ne \emptyset$.  For $\tau \in R$, we have $\card{C - \tau} \ge \card{N_B(C - \tau)}$, so Claim 4 gives $\card{R} \ge 2$. 
+
+First, suppose $rs \in N_B(C)$. Pick $\tau \in R \cap L(s)$ if possible; otherwise pick $\tau \in R$ arbitrarily. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r)$ and $L'(v) = L(v) - (C - \tau)$ for $v \in V(G')$.  We claim that $(G', L')$ is superabundant.  Suppose otherwise that we have $H \subseteq G'$ such that $(H, L')$ is not abundant.  Since $rs$ got colored, the only subgraph to worry about is $H = G[s,t]$.  If $\tau \in L(s)$, then $\tau \in L'(s) \cap L'(t)$, so we are good.  Otherwise, $R \cap L(s) = \emptyset$, so there must be some color $\delta \in L(s) \cap L(t) - C$; in particular, $\delta \in L'(s) \cap L'(t)$.  Since $(G', L')$ satisfies the hypotheses of the lemma and $\card{G'} < \card{G}$, Fixer has a winning strategy by minimality of $\card{G}$.  But this strategy wins on $G$ with $L$ as well since $N_B(C - \tau)$ is colored with $C - \tau$, a contradiction. 
+
+Hence, we may assume that $rs \not \in N_B(C)$. So, $R \cap L(s) = \emptyset$. Pick $\tau \in R$. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r)$ and $L'(v) = L(v) - (C - \tau)$ for $v \in V(G')$.  We claim that $(G', L')$ is superabundant.  Suppose otherwise that we have $H \subseteq G'$ such that $(H, L')$ is not abundant. Since $\tau \not \in L(s$, we must have $r, t \in V(H)$.  Now $V(H_\tau - t) = \set{r}$ since $N_B(\tau) \subseteq N_B(C)$.  So, when we add $t$ back in, $\tau$ contributes one to $\psi_{L'}(H)$.  But $(H - t, L')$ is abundant, so $(H, L')$ is abundant, a contradiction.  Since $(G', L')$ satisfies the hypotheses of the lemma and $\card{G'} < \card{G}$, Fixer has a winning strategy by minimality of $\card{G}$. But this strategy wins on $G$ with $L$ as well since $N_B(C - \tau)$ is colored with $C - \tau$, a contradiction. 
+
+\noindent\textbf{Claim 6.  }\textit{$G-t$ has an $L$-edge-coloring $\pi$.}
+
+By Claim 5 and Hall's theorem, $B$ has a perfect matching which gives an $L$-edge-coloring of $G-t$.
+
+\noindent\textbf{Claim 7.  }\textit{There is a color $\beta$ such that $L(s) \cap L(t) = \set{\beta}$.  Moreover, $\beta \in L(r)$.}
+
+Otherwise, we $L$-edge-color $G-t$ by Claim 6 and then use one of the two colors in $L(s) \cap L(t)$ to color $st$, a contradiction.
+
+\noindent\textbf{Claim 8.  }\textit{We have $F \cap L(t) = \emptyset$.}
+
+Suppose otherwise that there is $\gamma \in F \cap L(t)$.  Color the edges of $G - s - t$ via $\pi$ and let $L'$ be the resulting list assignment on $rst$.  Then $\beta \in L'(r) \cap L'(s) \cap L'(t)$ and $\gamma \in 'L(r) \cap L'(t)$.  Hence $(rst, L')$ is superabundant and hence Fixer has a winning strategy on $rst$ with $L'$ by Theorem \ref{HallGame}.  But then Lemma \ref{CanColorAndPlayOnRest} shows that Fixer has a winning strategy on $G$ with $L$, a contradiction.
+
+\noindent\textbf{Claim 9.  }\textit{We have $L(r) \cap L(s) = \set{\beta}$.}
+
+Suppose not and pick $\tau \in L(r) \cap L(s) - \beta$. Pick $\gamma \in F$. 
+
+Suppose $\tau$ appears in more than three lists.  Then Fixer swaps $\gamma$ for $\tau$ in $L(s)$.  If Breaker does nothing, then Fixer colors $G - s - t$ from $\pi$, colors $rs$ with $\gamma$ and $st$ with $\beta$ to win.  Hence Breaker must swap $\gamma$ for $\tau$ at some $v \in N(r) - s$.  But $\tau \in L(w)$ for some $w \in N(r) - s - v$, so $\eta_L(G-t)$ has increased, a contradiction. 
+
+Suppose $\beta$ appears in more than three lists. Then Fixer swaps $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ somewhere, then Fixer can finish the coloring.  Hence Breaker must swap $\beta$ for $\tau$ at some $v \in N(r) - s$.  But now applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
+
+Therefore, $\beta$ and $\tau$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 5, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 8.
+
+\noindent\textbf{Claim 10.  }\textit{Fixer wins.}
+
+Pick $\gamma \in F$.  Since $L(r) \cap L(s) = \set{\beta}$ by Claim 9, there must be $\alpha \in L(r) \cap L(t)$ since $rst$ is abundant and $L(s) \cap L(t) = \set{\beta}$ by Claim 7.
+
+Pick $\tau \in L(s) - \beta$.  Suppose $\tau$ appears in more than one list.  Then Fixer should swap $\gamma$ for $\tau$ in $L(s)$.  Then $\eta_L(G - t)$ has increased unless Breaker swaps $\tau$ for $\gamma$ in $L(r)$.  But since $\tau$ is in more than one list, it must be in $L(v)$ for some $v \in N(r) - s$ and $\eta_L(G - t)$ has increased as well, a contradiction.
+
+Suppose $\beta$ appears in more than three lists.  Then Fixer should swap $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ in any list other than $L(r)$, then Fixer can complete the coloring.  So Fixer must swap $\tau$ for $\beta$ in $L(r)$.  But $\beta \in L(v)$ for some $v \in N(r) - s$, so applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
+
+Suppose $\alpha$ appears in more than three lists.  Then Fixer should swap $\gamma$ for $\alpha$ in $L(t)$. Now Breaker must pass lest he increase $\eta_L(G - t)$.  But this is a position contradicting Claim 8.
+
+Therefore, $\beta$ and $\alpha$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 5, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 8.
+\end{proof}
+
+This generalizes the ``short Kierstead paths'' of Kostochka and Stiebitz (see Theorem 3.3 in \cite{stiebitz2012graph}).  Parts (a), (b) and (c) of Theorem 3.3 in \cite{stiebitz2012graph} are the special case of the following where $T$ is $P_4$.
+
+\begin{cor}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$.  Suppose $T \subseteq Q$ is a star with center $r$ and one edge subdivided. If $d_Q(r) < \Delta(Q)$ and $\parens{T, xy, \pi, <}$ is Tashkinov, then $V(T)$ is elementary with respect to $\pi$.
+\end{cor}
+
+Part (d) of Theorem 3.3 in \cite{stiebitz2012graph} now follows from the following theorem.
+
+\begin{thm}\label{SubdividedStarWithExtraPsi}
+If $(G,L)$ is superabundant and $\psi_L(G) > \size{G}$, then Fixer has a winning strategy against Breaker in the chronicled game.
+\end{thm}
+\begin{proof}
+Suppose the condition is not sufficient for Fixer to have a winning strategy in the chronicled game.  Choose a counterexample $G$ with lists $L$ so as to minimize $\card{G}$ and subject to that, to maximize $\eta_L(G - t)$.
+By Theorem \ref{SubdividedStarWithLowCenter} we know that $\card{L(v)} = d(v)$.
+
+Create a bipartite graph $B$ with parts $X = \setb{uw}{E(G - t)}{L(u) \cap L(w) \ne \emptyset}$ and $Y = \setb{\alpha}{\pot(L)}{\nu((G - t)_\alpha) = 1}$, where $uw \in X$ is adjacent to $\alpha \in Y$ if and only if $\alpha \in L(u) \cap L(w)$.  Put $F = L(r) - \bigcup_{v \in N(r)} L(v)$.  Claim 1 and Claim 2 follow with the same proof as in Theorem \ref{SubdividedStarWithLowCenter}.
+
+\noindent\textbf{Claim 1.  }\textit{If $\beta \in Y$ is swappable with $\gamma \in F$, then $\card{G_\beta - r - t} \le 2$.}
+
+\noindent\textbf{Claim 2.  }\textit{If $\beta \not \in Y$ is swappable with $\gamma \in F$, then $\card{G_\beta - r - t} \le 1$.}
+
+\noindent\textbf{Claim 3.  }\textit{We have $\eta_L(G - t) \ge \size{G - t}$.}
+
+Suppose $\eta_L(G - t) < \size{G - t}$. Then we have $\card{F} \ge 1$.  Pick $\gamma \in F$.
+
+\noindent\textbf{Subclaim 3a.  }\textit{We have $\card{F} = 1$ and hence $\eta_L(G - t) = \size{G - t} - 1$.}
+
+Otherwise, the proof of Claim 3 in Theorem \ref{SubdividedStarWithLowCenter} goes through, a contradiction.
+
+\noindent\textbf{Subclaim 3b.  }\textit{If $\gamma \not \in L(t)$, then $\gamma$ is swappable with $\beta \in \pot(L) - \gamma$ unless $L(s) \cap L(t) = \set{\beta}$.  In particular, if $\gamma \not \in L(t)$, then there is at most once color with which $\gamma$ is not swappable.}
+
+The proof is the same as this case of Subclaim 3a in Theorem \ref{SubdividedStarWithLowCenter}.
+
+\noindent\textbf{Subclaim 3c.  }\textit{We may assume that $\gamma \in L(t)$.}
+
+Suppose $\gamma \not \in L(t)$.  Then Claims 3b through 3e from Theorem \ref{SubdividedStarWithLowCenter} all go through.  Hence we have $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  If $\delta \in L(r) \cap L(t) - \bigcup_{v \in N(r)} L(v)$, then $\card{F} \ge 2$ contradicting Claim 3a.
+
+Suppose $\delta \in Y$. Then, by Claim 1 and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for $u,w \in N(r) - s$.  Fixer should swap $\gamma$ for $\delta$ in $L(t)$.  If Breaker replaces any $\delta$ with $\gamma$, he increases $\eta_L(G - t)$, so Breaker must pass.  This gives the desired position.
+
+Otherwise, by Claim 2, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Again, if Fixer swaps $\gamma$ for $\delta$ in $L(t)$, Breaker must pass lest he increase $\eta_L(G - t)$. We again have the desired position.
+
+\noindent\textbf{Subclaim 3d.  }\textit{We can finish this proof somehow.}
+\end{proof}
+
+This should also be true and makes our adjacency lemma a bit better.
+\begin{thm}\label{SubdividedStarWithLowIntermediate}
+If $f$ is valid and $f(s) \ge d(s) + 1$, then $G$ is $f$-fixable in the chronicled game.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+
+\section{Small fixable graphs}
+
+\begin{lem}\label{FixP5}
+Let $G$ be $P_5$.  Then the following hold:
+
+\begin{enumerate}
+\item $G$ is $f$-fixable in the chronicled game for any valid $f$ such that $f(v) \ge d_G(v) + 1$ for at least two internal vertices $v$;
+\item if $(G, L)$ is superabundant, $\card{L(v)} \ge d_G(v) + 1$ for at least one internal vertex $v$ and $\psi_L(G) > \size{G}$, then Fixer has a winning strategy against Breaker in the chronicled game.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Let $P=v_1\ldots v_5$ and $v_2$ and $v_3$ are high.
+Suppose that $(G,L)$ is superabundant.
+
+\noindent
+\textbf{Claim 1} If color 0 appears on all vertices and color 1 appears on
+$v_2,v_3$, then Fixer wins.\\
+If 1 appears nowhere else, then Fixer colors $v_1v_2$ with 0 and $v_2v_3$ with
+1.  Fixer can complete the coloring, since $v_3v_4v_5$ is superabundant.
+Suppose instead that color 2 appear also on $v_4$ or $v_5$.  Now Fixer has a
+Kierstead path, with color 0 on $v_1v_2$ and $v_3v_4$ and color 1 on $v_2v_3$.
+\smallskip
+
+\noindent
+\textbf{Claim 2} If color 0 appears on all vertices and color 1 appears on
+4 vertices, then Fixer wins.
+
+By Claim 1, we need only consider the two cases where color 1 appears on
+$v_1,v_2,v_4,v_5$ and where color 1 appears on $v_1,v_3,v_4,v_5$.
+We will reduce the first case to the second and show how Fixer can win the
+second.  In the first case, let 2 be another color on $v_3$.  Fixer will swap 1
+and 2.  If Breaker does not pair $v_2$ and $v_3$, then Fixer swaps 1 for 2 at
+$v_3$.  Now we have a Kierstead path with 0 on $v_1v_2$, 1 on $v_2v_3$, and 0
+on $v_3v_4$.  Hence, Breaker pairs $v_2$ and $v_3$.  After Fixer swaps 2 for 1
+at $v_2$ and 1 for 2 at $v_3$, we are in the second case, which we now consider.
+
+Let color 2 be another color at $v_2$.  Fixer will swap colors 0 and 2. 
+There are 3 cases for the matching that Breaker chooses.  It could include
+$v_1v_3$ or $v_1v_4$ or $v_1v_5$.
+
+In the first case, Fixer swaps 2 for 0 at $v_1$ and $v_3$.  Let 3 be another
+color at $v_3$.  Fixer will swap 3 for 0.  If Breaker does not pair $v_2$ and
+$v_3$, then Fixer swaps 0 for 3 at $v_3$ (and Breaker possibly swaps 3 for 0 at
+$v_4$ or $v_5$).  Now Fixer has a Kierstead path with color 2 on $v_1v_2$,
+color 0 on $v_2v_3$, and color 1 on $v_3v_4$.  So Breaker must pair $v_2$ and
+$v_3$ (for swapping 0 and 3).  After Fixer swaps 3 for 0 at $v_2$ and 0 for 3
+at $v_3$, he colors $v_3v_4$ with 0 and colors $v_4v_5$ with 1.  Now Fixer can
+win on $v_1v_2v_3$, since it is superabundant (color 2 appears everywhere and
+color 1 appears at $v_1$ and $v_3$).
+
+In the second case, Fixer swaps 2 for 0 at $v_1$ and $v_4$.  Now we have a
+Kierstead path with color 2 on $v_1v_2$, color 0 on $v_2v_3$, and color 1 on
+$v_3v_4$.
+In the third case, Fixer swaps 2 for 0 at $v_3$ and $v_4$.  Now we have a
+Kierstead path with color 0 on $v_1v_2$, color 3 on $v_2v_3$, and color 1 on
+$v_3v_4$.
+\smallskip
+
+\noindent
+\textbf{Claim 3}
+If color 0 appears on all vertices and color 1 appears on $v_1$ and $v_2$, then
+Fixer wins.
+
+If color 1 does not appear elsewhere, then Fixer colors $v_1v_2$ with 1 and can
+finish on $v_2v_3v_4v_5$ since it is superabundant.  So assume that color 1
+appears elsewhere.  By Claim 1, we assume that it does not appear on $v_3$;
+by Claim 2, we assume that 1 does not appear on both $v_4$ and $v_5$.  
+
+Suppose
+that 1 appears on $v_4$.  Since $(G,L)$ is superabundant, some color 2 appears
+on at least two of $v_3,v_4,v_5$.  If 2 appears on $v_3,v_4$, then we color
+$v_1v_2$ with 2, $v_2v_3$ with 0, $v_3v_4$ with 2, and $v_4v_5$ with 0.  If
+instead 2 appears on $v_4v_5$, then Fixer colors $v_4v_5$ with 3.  He can win
+on the smaller graph, since it is superabundant.  Thus, 2 appears on $v_3, v_5$.
+Now Fixer will swap 1 and 2.  If Breaker matches $v_3$ and $v_5$, then Fixer
+wins, since he can get 0 and 1 both appearing on every vertex.  Similarly, if
+Breaker matches $v_3$ and $v_4$, then Fixer swaps 1 and 2 at $v_3$ and then
+finishes the coloring.  If Breaker matches $v_3$ and $v_1$, then Fixer swaps 1
+and 2 at $v_3$ and $v_1$; now we have a Kierstead path with 0 on $v_1v_2$, 2 on
+$v_2v_3$, and 0 on $v_3v_4$.  Hence Breaker must match $v_3$ and $v_2$.  If
+Breaker does not match $v_1$ and $v_4$, then Fixer swaps 3 for 2 at $v_4$.
+Now fixer colors $v_1v_2$ with 1, $v_2v_3$ with 0, $v_3v_4$ with 2, and $v_4v_5$
+with 0.  So Breaker matches $v_1$ and $v_4$.  Now Fixer swaps 3 for 2 at $v_1$
+and $v_4$.  Finally, Fixer can win by Claim 2.
+
+Suppose instead that 1 appears on $v_5$.  Since $(G,L)$ is superabundant, some
+other color 2 appears on at least two of $v_3, v_4, v_5$.  If 2 appears on $v_3$
+and $v_4$, the we color $v_1v_2$ with 1, $v_2v_3$ with 0, $v_3v_4$ with 2, and
+$v_4v_5$ with 0.  So assume that 2 does not appear on $v_3$ and $v_4$.  Now some
+other color 3 appears on at least two of $v_2,v_3,v_4$.  Hence, Fixer can color
+$v_1v_2$ with 1, and reduce to the shorter path $v_2v_3v_4v_5$, since it will
+still be superabundant.
+\smallskip
+
+\noindent
+\textbf{Claim 4}
+If color 0 appears on all vertices and color 1 appears on $v_3$ and $v_4$, then
+Fixer wins. 
+
+If color 1 does not appear on $v_1$ or $v_2$, then Fixer colors
+$v_3v_4$ with 2 and colors $v_4v_5$ with 0.  He can complete the coloring on
+the shorter path $v_1v_2v_3$ since it is still superabundant.  By Claim 1, we
+assume that color 1 does not appear on $v_2$, so assume that color 1 appears on
+$v_1$.  If color 1 also appears on $v_5$, then Fixer wins by Claim 2, so assume
+that it doesn't.  Since $L$ is superabundant, some other color 2 appears on at
+least two vertices.  If 2 appears on two vertices other than $v_5$, then we
+color $v_4v_5$ with 0.  Fixer can complete the coloring on $v_1v_2v_3v_4$ since
+it is still superabundant.  So assume that 2 appears on $v_5$.  
+
+If 2 also
+appears on $v_4$, then we color $v_4v_5$ with 2. Fixer can color the shorter
+path, since it is still superabundant.  Thus we assume that color 2 appears on
+$v_1$, $v_2$, or $v_3$.
+We may assume that 2 appears on $v_2$ as follows.  If not, then let 3 be
+another color at $v_2$.  Now Fixer will swap 2 and 3.  This will put color 2 on
+$v_2$ and some neighbor (in which case Fixer wins by Claim 1 or Claim 3),
+unless Breaker pairs them in the matching for 2 and 3.  Thus, Breaker leave
+$v_5$ unpaired, so now color 2 is at $v_2$ and $v_5$.
+%
+Now Fixer swaps 1 and 2.
+Regardless of which matching Breaker chooses, after Fixer swaps at $v_2$, it
+will have the same color as either $v_1$ or $v_3$, and the lists will still be
+superabundant.  So Fixer can win by either Claim 1 or Claim 3.  
+\smallskip
+
+%\noindent
+%\textbf{Claim 5}
+%If color 0 appears on all vertices and color 1 appears on $v_4$ and $v_5$, then
+%Fixer wins.  
+%
+%If 1 appears nowhere else, then Fixer colors $v_4v_5$ with 1 and
+%colors the smaller path since it is still superabundant.  By Claim 4, we assume
+%that 1 does not appear on $v_3$, so it appears on $v_1$ or $v_2$.
+%
+%Suppose that 1 appears on $v_2$. Let 2 be another color at $v_3$.  Fixer will
+%swap 1 and 2.  Regardless of which matching Breaker chooses, the resulting lists
+%are still superabundant; in each case, 2 appears on $v_3$ and one of its
+%neighbors.  Now Fixer wins by Claim 1 or Claim 4.
+%
+%Finally, suppose that 1 appears on $v_1$.  Since $L$ is superabundant, some
+%other color 2 appears on two of $v_1, v_2, v_3$.  If it appears on $v_2$ and
+%$v_3$, then Fixer colors $v_1v_2$ with 0, $v_2v_3$ with 2, $v_3v_4$ with 0, and
+%$v_4v_5$ with 1.  Otherwise some additional color 3 appears on two of
+%$v_2,v_3,v_4$.  Now Fixer colors $v_4v_5$ with color 1.  He can color the
+%shorter path $v_1v_2v_3v_4$, since its lists are still superabundant.
+%\smallskip
+
+\noindent
+\textbf{Claim 5}
+If color 0 appears on all vertices, then Fixer wins.
+
+By the Claims 1, 3, and 4 we may assume that no color 1 appears on adjacent
+vertices among $v_1,v_2,v_3,v_4$.  Since $L$ is superabundant, there exists
+colors 1 and 2 such that 1 appears on $v_1$ and $v_3$ and 2 appears on $v_2$
+and $v_4$.  Now fixer swaps 1 for 2 at $v_2$.  Regardless of which matching
+Breaker chooses, the lists remain superabundant and now color 1 appears on
+$v_2$ and one of its neighbors.  Hence, Fixer can win by Claim 1 or 3.
+\end{proof}
+
+
+\begin{lem}\label{FixC4}
+$C_4$ is degree-fixable in the chronicled game.
+\end{lem}
+\begin{proof}
+Suppose not. Let $G$ be a $C_4$, say $v_1v_2v_3v_4v_1$.  Let $L$ be a superabundant list assignment on $G$ with $\card{L(v)} \ge 2$ for all $v \in V(G)$ where Fixer has no winning strategy in the chronicled game.
+A color in $Pot(L)$ is a \emph{quadruple} if it is available at all four
+vertices of $C_4$; \emph{triples}, \emph{pairs}, and \emph{singletons} are
+defined analogously.  An \emph{adjacent pair} is one that is available on the
+endpoints of an edge.  Pairs that are not adjacent are \emph{diagonal}.
+Among all choices for such a bad $L$, choose $L$ to maximize the number
+quadruples, then triples, then adjacent pairs, then diagonal pairs.
+(We only use this extremal choice of $L$ in Case 2.c.3.a, but it shortens that
+case, so I'm leaving it for now.)
+In the first few claims, we often use the following fact.
+If $L$ has a quadruple 1 and Fixer can color the two edges of a matching with
+colors other than 1, then Fixer wins.\\
+%
+%\noindent\textbf{Claim 1.  }\textit{$\card{L(v_2)} = \card{L{v_3}} = 2$}
+%If not, then by symmetry, we may assume $\card{L(v_2)} \ge 3$.
+
+\noindent
+\textbf{Claim 1.}
+If $L$ contains a quadruple then $L$ has no
+diagonal pairs.  \\
+%
+%\noindent
+\textbf{Proof.}
+Suppose not. Let $L$ be a bad superabundant list assignment with 1 as a
+quadruple and with the minimum number of diagonal pairs, including 2 on $v_1$
+and $v_3$ (by symmetry).
+
+\noindent
+\textbf{Case 1.}  Suppose that $L$ has no triples.  By considering $H=C[v_1,v_2,v_4]$,
+we see that $L$ must have another pair on $\{v_1,v_2,v_4\}$. \\ 
+\textbf{Case 1.a.}  First suppose that $L$ also contains a diagonal pair 3 on
+$v_2$ and
+$v_4$.  Fixer swaps 2 for 3 at $v_2$; Breaker must pass or Fixer will win
+immediately.  So $v_2$ has an edge labeled $2,3$ to $\infty$ in the chronicle.
+Now Fixer swaps 2 for 3 at $v_4$.  By symmetry, Breaker swaps 3 for 2 at $v_3$.
+Now Fixer swaps 3 for 2 at $v_2$; Breaker passes (due to the chronicle), so
+Fixer wins.\\
+\textbf{Case 1.b.}  Suppose instead that $L$ contains no other diagonal
+pair.  The subgraph induced by $\{v_1,v_2,v_4\}$ implies that $L$ contains
+a pair among these three vertices.  Similarly for $\{v_2,v_3,v_4\}$.  Since $L$
+has a diagonal pair only on $v_1,v_3$, $L$ must have two adjacent pairs.
+%If these adjacent pairs are on edges forming a matching, then Fixer wins.  
+%So, 
+By symmetry, assume that 3 appears on $v_1$ and $v_2$ and that 4 appears on
+$v_2$ and $v_3$.  Choose $5 \in L(v_4)-1$.  Fixer swaps 2 for 5
+at $v_4$.  Regardless of Breaker's response, Fixer wins immediately.
+
+\noindent
+\textbf{Case 2.}  Suppose instead that $L$ has a triple.\\
+\textbf{Case 2.a.} Suppose that 3 appears on $v_1,v_2,v_4$.  Fixer swaps 2 for 3
+at $v_2$.  If Breaker swaps 2 for 3 at $v_4$, then Fixer wins, since 1 and 2 are
+now quadruples.  If Breaker swaps 3 for 2 at $v_3$, then Fixer uses 2 on
+$v_1v_2$ and 3 on $v_3v_4$.  Finally, if Breaker passes, then Fixer uses 2 on
+$v_2v_3$ and 3 on $v_1v_4$.\\
+\textbf{Case 2.b} Suppose that 3 appears on $v_1,v_2,v_3$.  Let 4 be another
+color in $L(v_4)$.  Now Fixer swaps 2 for 4 at $v_4$, threatening to win with 2
+on $v_1v_4$ and 3 on $v_2v_3$.  So Breaker swaps 4 for 2 at $v_1$.  Now Fixer
+wins with 3 on $v_1v_2$ and 2 on $v_3v_4$.\\
+
+
+\noindent
+\textbf{Claim 2.}  If $L$ contains a quadruple, then $L$ contains no triple.\\
+\textbf{Proof.}
+Suppose instead that $L$ contains the quadruple 1, and the triple 2, by symmetry
+on $v_1,v_2,v_3$.  %By Claim 1, $L$ contains no diagonal pair.  
+Since $L$ is superabundant (and contains no diagonal pair by Claim 1), some
+color 3 other than 1 and 2 is available on some edge $e$.  If $e$ is $v_3v_4$ or
+$v_4v_1$, then Fixer wins immediately.  So assume that 3 appears on $v_1$ and
+$v_2$, and let 4 be another color in $L(v_4)$.  Fixer swaps 4 for 3 at $v_2$;
+Breaker must pass or Fixer will win immediately.  The resulting list assignment
+is superabundant with a diagonal pair, so Fixer wins by Claim 1.
+%Now Fixer swaps 4 for 2 at
+%$v_3$.  If Breaker swaps 4 for 2 at $v_1$, then Fixer wins, since now 4 is a
+%quadruple.  If Breaker swaps 2 for 4 at $v_4$, then Fixer wins with 4 on
+%$v_2v_3$ and 2 on $v_1v_4$.  So Breaker passes, and Fixer wins with 2 on
+%$v_1v_2$ and 4 on $v_3v_4$.
+\\
+
+\noindent
+\textbf{Claim 3.} $L$ contains no quadruples.\\  
+\textbf{Proof.}
+Suppose that $L$ contains the quadruple 1.  Now consider the subgraphs
+induced by the four vertex subsets of size 3.  Since $L$ contains no triple
+and no diagonal pair (by Claims 2 and 1), three of the four edges have some
+available color other than 1.  Thus, Fixer wins.\\
+
+\noindent
+\textbf{Claim 4.} Fixer wins.\\
+\textbf{Proof.}
+If $L$ contains no triples, then (since $L$ contains no quadruples, by Claim 3)
+some pair is available on each edge, and
+these pairs are disjoint, so Fixer wins.
+When $L$ contains one triple, the situation is similar.  \\
+\textbf{Case 1.} $L$ contains exactly 1 triple.\\
+Suppose 1 is available on
+$v_1,v_2,v_3$, and $L$ contains no other triples.  Each of the edges $v_3v_4$
+and $v_4v_1$ has a color available, say colors 2 and 3.  If also a color other
+than 1 is available on either $v_1v_2$ or $v_2v_3$, then Fixer wins. Since $L$
+is superabundant, some pair is available on two of $v_1,v_2,v_3$.  Since it is
+not an adjacent pair, it must be a diagonal pair 4 on $v_1,v_3$.  Choose $5\in
+L(v_2)-1$. Fixer swaps 4 for 5 at $v_2$.  However Breaker responds, Fixer wins
+immediately.\\
+\textbf{Case 2.} $L$ contains at least 2 triples.\\
+Suppose that all triples are available only on $v_1,v_2,v_3$.\\  
+By symmetry among colors, assume colors 1 and 2 are available on
+$v_1,v_2,v_3$. By superabundance, some color is available on each of edges
+$v_3v_4$ and $v_4v_1$.  Using these colors, together with colors 1 and 2, Fixer
+wins.
+
+\noindent
+\textbf{Case 2.a.} Triples appear on $v_1,v_2,v_3$ and $v_2,v_3,v_4$ and
+$v_3,v_4,v_1$.\\
+If a triple also is available on $v_4,v_1,v_2$, then Fixer wins immediately.
+Similarly, if $L$ contains any adjacent pair, then Fixer wins immediately.
+Without loss of generality, assume that 1 is available on $v_1,v_2,v_3$ and 2
+is available on $v_2,v_3,v_4$ and 3 is available on $v_3,v_4,v_1$.  Since $L$ is
+superabundant, it contains some other pair 4.  As noted above, $L$ contains no
+adjacent pair.  So assume that 4 is a diagonal pair.  We have two
+cases.  If 4 is available on $v_1,v_3$, then Fixer swaps 4 for 2 at $v_2$.  Now
+Fixer wins (whether or not Breaker swaps 2 for 4 at $v_1$) with 1 on $v_1,v_2$
+and 4 on $v_2,v_3$ and 2 on $v_3,v_4$ and 3 on $v_4,v_1$.  Assume instead that
+4 is available on $v_2,v_4$.  Now Fixer swaps 4 for 3 at $v_1$.  Again Fixer
+wins (whether or not Breaker swaps 3 for 4 at $v_2$) with 1 on $v_1v_2$ and 2
+on $v_2v_3$ and 3 on $v_3v_4$ and 4 on $v_4v_1$.
+
+\noindent
+\textbf{Case 2.b.} 
+Triples are available only on $v_1,v_2,v_3$ and $v_2,v_3,v_4$.\\
+Without loss of generality, Color 1 is available on $v_1,v_2,v_3$ and color 2
+is available on $v_2,v_3,v_4$.  
+By superabundance, some color 3 is available on $v_4,v_1$.  By
+superabundance, another pair 4 is available.  First suppose 4 is a diagonal
+pair, by symmetry on $v_1,v_3$ (or 4 is a triple, on vertices including
+$v_1,v_3$).  Fixer swaps 4 for 2 at $v_2$.  Breaker cannot
+swap 4 for 2 at $v_4$, since Claim 3 implies that Fixer wins if $L$ contains a
+quadruple.  Regardless of whether or not Breaker swaps 2 for 4 at $v_1$, Fixer
+wins with 1 on $v_1v_2$ and 4 on $v_2v_3$ and 2 on $v_3v_4$ and 3 on $v_4v_1$. 
+So instead 4 must be an adjacent pair or triple.  If 4 is available on any edge
+other than $v_4v_1$, then Fixer wins immediately.  So assume that 4 is
+available only on $v_4,v_1$.
+Fixer swaps 3 for 2 at $v_2$.  Breaker cannot swap 3 for 2 at $v_3$, since then
+3 is a quadruple.  So Breaker must swap 2 for 3 at $v_1$.  Now Fixer swaps 3 for
+1 at $v_3$.  Breaker cannot swap 3 for 1 at $v_1$, since then 3 would be a
+quadruple.  Now Fixer wins (whether or not Breaker swaps 1 for 3 at $v_4$) with
+1 on $v_1v_2$ and 3 on $v_2v_3$ and 2 on $v_3v_4$ and 4 on $v_4v_1$.
+
+\noindent
+\textbf{Case 2.c.} Triples are available only on $v_1,v_2,v_3$ and
+$v_3,v_4,v_1$.\\
+Without loss of generality, color 1 is available on $v_1,v_2,v_3$ and color 2
+is available on $v_3,v_4,v_1$.\\
+Case 2.c.1: If 3 is available on $v_2, v_4$, then swap 2 for 3 at $v_2$. 
+Breaker must respond, since otherwise 2 is a quadruple, and Fixer wins by Claim
+3.  By symmetry, Breaker swaps 3 for 2 at $v_3$.  It is easy to check that the
+new list assignment is still superabundant with two triples, so it reduces to
+Case 2.b.~or Case 2.a.\\
+Case 2.c.2: 
+If $v_2$ and $v_4$ each is available in an adjacent pair, then Fixer wins.  \\
+Case 2.c.3: Hence, by
+symmetry, assume that $L(v_2)$ contains a singleton 3 and $v_2$ is available in
+no adjacent pair (and no triple other than 1).  \\
+Case 2.c.3.a: If $L$ contains a
+diagonal pair 4, then it must be available on $v_1,v_3$.  Swap 4 for 3 at $v_2$.
+Breaker must respond; otherwise Fixer increased the number of triples
+(contradicting our extremal choice of $L$).  So Breaker swaps 3 for 4 at $v_1$
+(by symmetry).  But now Fixer has increased the number of adjacent pairs.  All
+that remains is to check that the lists are
+superabundant, which they are.  So $L$ contains no diagonal pairs.  \\
+%Case 1.c.3.b: If some color is available for $v_1v_2$ or $v_2v_3$, then Fixer
+%wins.  Thus 
+Case 2.c.3.b:  Since $L$ is superabundant and contains no diagonal pair, and
+$v_2$ is available in no adjacent pair and no triple other than 1,
+two more adjacent pairs are available on $v_3v_4$ and $v_4v_1$
+(possibly both pairs are available on the same edge).\\
+Case 2.c.3.b.1: Colors 4 and 5 both are available on $v_3v_4$.\\
+Fixer swaps 4 for 3 at $v_2$.  Breaker must respond, so swaps 3 for 4 at $v_3$.
+Now Fixer swaps 2 for 4 at $v_2$.  If Breaker swaps 4 for 2 at $v_1$, then Fixer
+wins with 1 on $v_1v_2$ and 2 on $v_2v_3$ and 5 on $v_3v_4$ and 4 on $v_4v_1$.
+If Breaker passes, then Fixer wins with 1 on $v_1v_2$ and 2 on $v_2v_3$ and 5 on
+$v_3v_4$ and 2 on $v_4v_1$.  So Breaker swaps 4 for 2 at $v_3$.
+The resulting list assignment is superabundant, so it reduces to Case 1.b.
+%, the Fixer wins with 2 on $v_1v_2$ and 1 on $v_2v_3$ and 
+
+\noindent
+Case 2.c.3.b.2: Color 4 is available on $v_3,v_4$ and color 5 is available on
+$v_4,v_1$.\\
+Fixer swaps 4 for 3 at $v_2$.  Breaker must swap 3 for 4 at $v_3$ (otherwise
+Fixer wins with 1 on $v_1v_2$ and 4 on $v_2v_3$ and 2 on $v_3v_4$ and 5 on
+$v_4v_1$).  Fixer swaps 4 for 2 at $v_1$, threatening to reduce to Case 2.b.
+Breaker can't swap 4 for 2 at $v_3$, since then 4 is a quadruple.  Thus, Breaker
+swaps 2 for 4 at $v_2$; but this case again reduces to Case 2.b.
+%
+\end{proof}
+
+\section{Adjacency lemmas}
+\subsection{Precursors}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G \subseteq Q$.  For a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$, put $L_\pi(v) = \irange{\Delta(Q)} - \pi\parens{E_Q(v) - E(G)}$ for all $v \in V(G)$.  We say that $G$ is a \emph{$\Psi$-subgraph} of $Q$ if there is a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such that each $H \subsetneq G$ is abundant. Put $E_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}} \text{ is even}}}$ and $O_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}} \text{ is odd}}}$.  Plainly, $Pot(L) = E_{L}(G) + O_{L}(G)$.
+
+\begin{lem}\label{LowPsiGivesManyOddColors}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$. If $G
+\subseteq Q$ and $\pi$ is a $\Delta(Q)$-edge-coloring of $Q - E(G)$ such that
+$\psi_L(G) \le \size{G}$, then $\card{O_{L_\pi}(G)} \ge \sum_{v \in V(G)}
+\Delta(Q) - d_Q(v)$.  Furthermore, if $\psi_L(G) < \size{G}$, then
+$\card{O_{L_\pi}(G)} > \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.
+\end{lem}
+\begin{proof}
+The proof is a straightforward counting argument.  For fixed degrees and list
+sizes, as $\card{O_L(G)}$ gets larger, $\psi_L(G)$ gets smaller (half as
+quickly).  The details forthwith.  Put $L = L_\pi$.
+
+Since $\size{G} \ge \psi_L(G)$, we have 
+
+\begin{align}
+\label{edge-crit1}
+\size{G} \ge 
+\sum_{\alpha \in \pot(L)} \floor{\frac{\card{G_{L, \alpha}}}{2}}  =
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} -  \sum_{\alpha \in
+O_L(H)} \frac12 
+.\end{align}
+
+\noindent 
+Also,
+
+\begin{align}
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} 
+&= \sum_{v \in V(G)} \frac{\Delta(Q) - (d_Q(v)-d_G(v))}{2} \notag\\
+&= \sum_{v \in V(G)} \frac{d_G(v)}{2} + \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}\notag\\
+&= \size{G} +  \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}.
+\label{edge-crit2}
+\end{align}
+
+\noindent Now we solve for $\size{G}-
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2}$ in 
+\eqref{edge-crit1} and \eqref{edge-crit2}, set the expressions equal, and then
+simplify.  The result is \eqref{edge-crit3}.
+
+\begin{align}
+\card{O_L(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v).
+\label{edge-crit3}
+\end{align}
+Finally, if the inequality in \eqref{edge-crit1} is strict, then the inequality
+in \eqref{edge-crit3} is also strict.
+\end{proof}
+
+\newpage
+
+\begin{lem}\label{AdjacencyPrecursor}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$.  Suppose $H$ is a $\Psi$-subgraph of $Q$ where $H$ is a star with one edge subdivided.  Let $r$ be the center of the star, $t$ the vertex at distance two from $r$ and $s$ the intervening vertex. Then there is $X \subseteq N(r)$ with $V(H - r - t) \subseteq X$ such that 
+\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 0.\]  
+
+\noindent Moreover, if $\set{r,s,t}$ does not induce a triangle in $Q$, then 
+\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 1.\]
+Furthermore, if $d_Q(r)<\Delta(Q)$ or $d_Q(s)<\Delta(Q)$, then we can improve both lower bounds by 1.
+\end{lem}
+\begin{proof}
+Let $G$ be a maximal $\Psi$-subgraph of $Q$ containing $H$ such that $G$ is a star with one edge subdivided.  Let $\pi$ be a coloring of $Q - E(G)$ showing that $G$ is a $\Psi$-subgraph and put $L = L_\pi$.  
+
+We first show that $\card{E_{L}(G)} \ge d_Q(r) - d_G(r) - 1$ if $rst$ induces a triangle; otherwise, $\card{E_{L}(G)} \ge d_Q(r) - d_G(r)$.
+Suppose $rst$ does not induce a triangle; for arbitrary $x \in N_Q(r) - V(G)$,
+let $\alpha=\pi(rx)$.  If $\alpha \in O_{L}(G)$, then adding $x$ to $G$ gives a
+larger $\Psi$-subgraph of the required form; this contradicts the maximality of
+$G$.  Hence $\alpha \in E_{L}(G)$.  Therefore, $\card{E_{L}(G)} \ge d_Q(r) -
+d_G(r)$ as desired.  If $rst$ induces a triangle, then we lose one off this
+bound from the $rt$ edge.
+
+By Theorem \ref{SubdividedStarWithExtraPsi}, we have $\psi_L(G) \le
+\size{G}$.  By Lemma \ref{LowPsiGivesManyOddColors}, we have
+$\card{O_{L}(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.  Suppose $rst$ does not induce a triangle. Then
+
+\begin{align*}
+\Delta(Q) &\ge \pot(L)\\
+&= \card{E_{L}(G)} + \card{O_{L}(G)}\\
+&\ge d_Q(r) - d_G(r) + \sum_{v \in V(G)} \Delta(Q) - d_Q(v) \numberthis
+\label{strict-ineq}\\
+&= \Delta(Q) - d_G(r) + \sum_{v \in V(G - r)} \Delta(Q) - d_Q(v)\\
+&= \Delta(Q) + 1 \sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v).
+\end{align*}
+
+Therefore, $\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v) \le -1$.  Negating gives the desired inequality.  If $rst$ induces a triangle, we lose one off the bound.  Theorem \ref{SubdividedStarWithLowCenter} and Theorem \ref{SubdividedStarWithLowIntermediate} give the final statement.
+\end{proof}
+
+\subsection{Improvement on Woodall's adjacency lemma}
+
+Woodall \cite{woodall2007average} proved some beautiful adjacency lemmas generalizing lemmas of Sanders and Zhao \cite{sanders2001planar} as well as lemmas of Luo and Zhang \cite{luo2004edge}.
+In their edge coloring book, Stiebitz et al. \cite{stiebitz2012graph} restated Woodall's results and we follow their presentation.  Let $Q$ be an edge-critical graph and $xy \in E(Q)$.  We would like to find as many $\Psi$-subgraphs of $Q$ of the form $zxy$ as possible, because we can apply Lemma \ref{AdjacencyPrecursor} and get lots of information about the neighbors of $x$. If $\pi$ is a $\Delta$-edge-coloring of $Q - xy$, then every $\alpha \in \bar{\pi}(y)$ must appear on an edge $x_\alpha x$ (in general, we write $x_\tau$ for the end of the edge colored $\tau$ incident to $x$ if there is one).  But then $x_\alpha xy$ is a $\Psi$-subgraph.  So, the number of $\Psi$-subgraphs of the form $zxy$ is at least $\card{\bar{\pi}(x)}$.  Woodall showed that there can be more, to state his result we need a couple definitions.
+
+For $t \in \IN$ and $xy \in E(Q)$, the \emph{$t$-Kierstead set} of the pair $(x,y)$ is 
+
+\[K_t(x,y) = \setb{z}{N(y) - x}{d(x) + d(y) + d(z) \ge 2\Delta(Q) + 2 + t}.\] 
+
+\noindent The \emph{$t$-Kierstead number} of $(x,y)$ is $\sigma_t(x,y) = \card{K_t(x,y)}$.  For all of the $zxy$ above, that we showed were $\Psi$-subgraphs, we have $z \in K_0(y,x)$ since, by Lemma \ref{HallGame}, $zxy$ is not superabundant.  Hence $\sigma_0(y,x) \ge \Delta(Q) + 1 - d(y)$. Let $Z(x, y)$ be all the $z \in N(x) - y$ for which there is a coloring $\pi$ of $G-xy$ such that $\pi(zx) \in \bar{\pi}(y)$.  Then $Z(x, y) \subseteq K_0(y, x)$.
+Also, by Theorem \ref{HallGame}, we have $d_Q(z) \ge 2\Delta(Q) + 2 - d_Q(x) - d_Q(y)$ for $z \in Z(x, y)$.  Woodall proved the following.
+
+\begin{lem}\label{WoodallLotsOfPsiSubgraphs}
+Let $Q$ be an edge-critical graph and $xy \in E(Q)$.  Then $\card{Z(x, y)} \ge \Delta(Q) - \sigma_0(x, y) \ge \Delta(Q) + 1 - d(y)$.  In particular, $\sigma_0(y,x) + \sigma_0(x,y) \ge \Delta(Q)$.  
+\end{lem}
+
+We improve Lemma \ref{WoodallLotsOfPsiSubgraphs} in the case when $d(x) + d(y) \ge \Delta(G) + 3$ and $\sigma_0(x, y) > \sigma_1(x, y) + 1$.
+
+\begin{lem}\label{WoodallEvenMorePsiSubgraphs}
+Let $Q$ be an edge-critical graph and $xy \in E(Q)$ with $d(x) + d(y) \ge \Delta(G) + 3$.  Then $\card{Z(x, y)} \ge \Delta(Q) - 1 - \sigma_1(x, y)$.  In particular, $\sigma_1(y,x) + \sigma_1(x,y) \ge \Delta(Q) - 1$.  
+\end{lem}
+\begin{proof}
+Note that $Z(x, y) \subseteq K_1(y, x)$ since $d(x) + d(y) \ge \Delta(G) + 3$.  Let $\pi$ be a $\Delta$-edge-coloring of $G-xy$.  Then $x_\alpha$ exists for each $\alpha \in \bar{\pi}(y)$.  Let $A = \setbs{x_\alpha}{\alpha \in \bar{\pi}(y)}$.  Then $A \subseteq Z(x, y)$.  
+
+Suppose $\alpha \in \pi(x) \cap \pi(y)$ is such that $y_\alpha \not \in K_1(x,y)$. We will show that $x_\alpha \in Z(x,y)$. Now $\card{\bar{\pi}(x) \cup \bar{\pi}(y)} = 2\Delta(Q) + 2 - d_Q(x) - d_Q(y)$ and $\card{\bar{\pi}(y_\alpha)} = \Delta(Q) - d_Q(y_\alpha) \ge \Delta(Q) - (2\Delta(Q) + 2 - d_Q(x) - d_Q(y)) = d_Q(x) + d_Q(y) - 2 - \Delta(Q)$.  Since $\alpha \not \in \bar{\pi}(x) \cup \bar{\pi}(y)$ and $\alpha \not \in \bar{\pi}(y_\alpha)$, there must be $\beta \in \bar{\pi}(y_\alpha) \cap \parens{\bar{\pi}(x) \cup \bar{\pi}(y)}$.  Also, there is $\tau \in \bar{\pi}(y)$.  Clearly, $\tau \ne \beta$ and $\tau \not \in \bar{\pi}(x)$.  If $\beta \in \bar{\pi}(y)$, then recoloring $yy_\alpha$ with $\beta$ shows that $x_\alpha \in Z(x,y)$ and we are done.  Otherwise, the $\tau-\beta$ path starting at $x$ must end at $y$.  Change colors on this path and then color $yy_\alpha$ with $\beta$ to again show that $x_\alpha \in Z(x,y)$.
+
+Putting this together with $A$, we see that the lemma holds if there is at most one $\alpha \in \bar{\pi}(x) \cap \pi(y)$ such that $y_\alpha \not \in K_1(x,y)$.  Suppose not and pick $\tau, \gamma \in \bar{\pi}(x) \cap \pi(y)$ such that $y_\tau, y_\gamma \not \in K_1(x,y)$.  Applying Theorem \ref{HallGame} shows that $\card{\bar{\pi}(x)} + \card{\bar{\pi}(y)} + \card{\bar{\pi}(y_\tau)} + \card{\bar{\pi}(y_\gamma)} \le \Delta(Q)$.  But that implies that $d_Q(x) + d_Q(y) \le \Delta(Q) + 2$, contradicting our assumption.
+\end{proof}
+
+We improve the adjacency lemma of Woodall \cite{woodall2007average} using Lemma \ref{AdjacencyPrecursor} and Lemma \ref{FixP5}. Let $Q$ be edge-critical, $xy \in E(Q)$ and $z \in N(x) - y$.  The goal is to show
+that each $z \in Z(x,y)$ has a lot of neighbors of high degree.  To this end it will help to separate the vertices in $N(z) - \set{x, y}$ into two groups.  Let $\Pi(x,y,z)$ be the set of all $\Delta$-edge-colorings $\pi$ of $G-xy$ such that $\pi(zx) \in \bar{\pi}(y)$.  For $\pi \in \Pi(x,y,z)$, let $C_\pi(x, y, z) = \parens{\bar{\pi}(x) \cup \bar{\pi}(y)} - \pi(zx)$.  Then each $\beta \in C_\pi(x,y,z)$ must be incident to $z$ since, by Theorem \ref{HallGame}, $zxy$ is not superabundant.  Let $W_\pi(x, y, z) = \setbs{z_\beta}{\beta \in C_\pi(x,y,z)}$ and let $U_\pi(x,y,z) = N(z) - \set{x,y} - W_\pi(x, y, z)$.  To make stating the bounds easier, we put $a(y, z) = a(z, y) = 0$ if $z$ is adjacent to $y$ and $a(y, z) = a(z, y) = 1$ otherwise.  Also, put $b(x, z) = b(z, x) = 0$ if $d_Q(z) = d_Q(x) = \Delta(Q)$ and $b(x, z) = b(z, x) = 1$ otherwise.  We allow a \emph{partition} of a set to contain empty sets. By definition, we have $\card{W_\pi(x, y, z)} = 2\Delta(Q) - d_Q(x) - d_Q(y) + a(y, z)$. We'll prove two lemmas, the first tells us about $W_\pi(x, y, z)$ and the second tells us about $U_\pi(x,y,z)$.
+
+\begin{lem}\label{WoodallImprovementW}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  For each $z \in Z(x, y)$ and $\pi \in \Pi(x,y,z)$, we have a partition $\set{M, S}$ of $W_\pi(x, y, z)$ such that:
+\begin{enumerate}
+\item $M$ consists of major vertices and $\card{M} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) - 2 + a(y, z) + b(x, z)$; and
+\item for each $v \in S$, we have $d_Q(v) \ge \Delta(Q) + \card{S} - 3 + b(x, z)$ and $d_Q(v) \ge 3\Delta(Q) - d_Q(x) - d_Q(y) - d_Q(z) + 1 + b(x, z)$. 
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Pick $\beta \in C_\pi(x,y,z)$ to minimize $d_Q(z_\beta)$.  If $z_\beta$ is a major vertex, then $M = W_\pi(x, y, z)$ and we are done.
+
+So, suppose $z_\beta$ is not a major vertex. Since $z_\beta zxy$ is a $\Psi$-subgraph, we can apply Lemma \ref{AdjacencyPrecursor} with $z$ as the root to get $X \subseteq N(z)$ with $z_\beta, x \in X$ such that $\sum_{v \in X \cup \set{y}} (d_Q(v) + 1 - \Delta(Q)) \ge a(y, z) + b(x, z)$.  But then $d_Q(x) + d_Q(y) + d_Q(z_\beta) + 3 - 3\Delta(Q) + \sum_{v \in X - x - z_\beta} (d_Q(v) + 1 - \Delta(Q)) \ge a(y, z) + b(x, z)$ and hence $\sum_{v \in X - x - z_\beta} (d_Q(v) + 1 - \Delta(Q)) \ge 3\Delta(Q) - d_Q(x) - d_Q(y) - d_Q(z_\beta) - 3 + a(y, z) + b(x, z)$.  Since only major vertices add to the sum, $X - x - z_\beta$ must contain at least $3\Delta(Q) - d_Q(x) - d_Q(y) - d_Q(z_\beta) - 3 + a(y, z) + b(x, z)$ major vertices.  Let $M$ be the major vertices in $W_\pi(x, y, z)$. Since $z_\beta$ is not a major vertex, we have $\card{M} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) - 2 + a(y, z) + b(x, z)$.  This proves (1). 
+
+Now we prove (2). Let $S = W_\pi(x, y, z) - M$.  Then, we must have $d_Q(z_\beta) \ge 3\Delta(Q) - d_Q(x) - d_Q(y) - 3 - M + a(y, z) + b(x, z) = \Delta(Q) + \card{S} - 3 + b(x, z)$.  Now our minimality condition on $d(z_\beta)$ proves the first inequality.  For the second  we just apply Lemma \ref{AdjacencyPrecursor} to the path $vzxy$.
+\end{proof}
+
+For $z \in Z(x, y)$ and $\pi \in \Pi(x,y,z)$, let $\pi^* \in \Pi(x, z, y)$ be the $\Delta$-edge coloring of $G-xz$ obtained from $\pi$ by uncoloring $xz$ and coloring $xy$ with $\pi(xz)$.
+
+\begin{lem}\label{WoodallImprovementU}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  For each $z \in Z(x, y)$ and $\pi \in \Pi(x,y,z)$, we have 
+\begin{enumerate}
+\item $\card{U_\pi(x,y,z) - K_0(x, z)} \le \card{U_\pi(x,y,z) - K_1(x, z)} \le \card{U_{\pi^*}(x, z, y) \cap K_0(x, y)}$; and
+\item $\card{U_\pi(x,y,z) - K_0(x, z)} \le \card{U_{\pi^*}(x, z, y) \cap K_1(x, y)} \le \card{U_{\pi^*}(x, z, y) \cap K_0(x, y)}$; and
+\item if $b(x, z) = 1$, then either
+	\begin{enumerate}
+	\item $\card{U_\pi(x,y,z) - K_1(x, z)} \le \card{U_{\pi^*}(x, z, y) \cap K_1(x, y)}$; or
+	\item $d_Q(x) = 3$, $d_Q(y) = d_Q(z) = \Delta(Q)$, $a(y, z) = 1$, the unique $u \in U_\pi(x,y,z)$ has $d_Q(u) \ge \Delta(Q) - 1$ and $U_{\pi^*}(x, z, y) \cap K_1(x, y) = \emptyset$.
+	\end{enumerate}
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Since the proofs of (1) and (2) are both easier versions of the proof of (3), we omit them.  Half of the inequalities in (1) and (2) just follow from $K_1(x, z) \subseteq K_0(x, z)$ and $K_1(x, y) \subseteq K_0(x, y)$.
+
+Suppose $b(x, z) = 1$ and (3b) does not hold.  We will prove (3a) by showing that $h$ given by $h(u) = y_{\pi(zu)}$ maps $U_\pi(x,y,z) - K_1(x, z)$ into $U_{\pi^*}(x, z, y) \cap K_1(x, y)$. 
+
+Since at most one edge of any given color is incident to $y$, we see that $h$ is injective. Fix $u \in U_\pi(x,y,z) - K_1(x, z)$.  Then $h(u) \in U_{\pi^*}(x, z, y)$ since $\pi(zu)$ is missing at neither $z$ or $x$ and the change to $\pi^*$ has no effect on this fact.  So, it will suffice to show that $h(u) \in K_1(x, y)$.  Suppose not.  Let $\beta = \pi(zu)$ and $\alpha = \pi(xz)$, then $h(u) = y_\beta$.
+
+Since $y_\beta \not \in K_1(x,y)$, we have $d_Q(y_\beta) \le 2\Delta(Q) - d_Q(x) - d_Q(y) + 2$.  Since $b(x, z) = 1$, at most one of $x$ or $z$ is major. 
+
+Consider the path $P = uzxyy_\beta$.  Uncolor all the edges of $P$, let $\pi'$ be the resulting edge-coloring and put $L = L_{\pi'}$.  We will show that $(P, L)$ is superabundant and either at most one of $x,y,z$ is major or $\psi_L(P) > \size{P}$.  Since at least one of $x, y, z$ is not major, this contradicts Lemma \ref{FixP5}.  We have $\beta \in L(u)$, $\alpha, \beta \in L(z)$, $\alpha \in L(x)$, $\alpha, \beta \in L(y)$ and $\beta \in L(y_\beta)$.  Hence every subgraph of $P$ with at most two edges is abundant.  Since $d_Q(u) \le 2\Delta(Q) - d_Q(x) - d_Q(z) + 2$ and $d_Q(y_\beta) \le 2\Delta(Q) - d_Q(x) - d_Q(y) + 2$, we have $\card{L(u)} \ge d_Q(x) + d_Q(z) - \Delta(Q) - 1$ and $\card{L(y_\beta)} \ge d_Q(x) + d_Q(y) - \Delta(Q) - 1$.  Now $\card{L(x) \cup L(y)} \ge 2\Delta(Q) + 3 - d_Q(x) - d_Q(y)$, so $L(y_\beta)$ has at least two colors in $L(x) \cup L(y)$, one of which is $\beta$, call the other one $\tau$.  Similarly, $L(u)$ has at least two colors in $L(x) \cup L(z)$, one of which is $\beta$, call the other one $\gamma$. 
+
+Using $\tau$ and $\gamma$ (one or both of which could be $\alpha$), we see that $(P, L)$ is superabundant.  If $\tau \ne \gamma$, then $\psi_L(P) > \size{P}$ and we are done.  If at most one of $x,y,z$ is major, we are done, so either both $x$ and $y$ are major or both $y$ and $z$ are major.  
+
+Suppose $x$ and $y$ are major.  Then $d_Q(y_\beta) = 2$ and hence $\card{L(y_\beta)} = \Delta(Q) - 1$.  If $L(y_\beta)$ has at least $3$ colors in $L(x) \cup L(z)$, then $\psi_L(P) > \size{P}$, so we must have $\Delta(Q) - 1 + 2\Delta(Q) + 3 - d_Q(x) - d_Q(z) \le \Delta(Q) + 2$ which gives $d_Q(z) \ge \Delta(Q)$, a contradiction.  
+
+Hence it must be that $y$ and $z$ are major.  Since $L(u)$ and $L(y_\beta)$ have exactly two colors in common, we have $\card{L(u) \cup L(y_\beta)} = \card{L(u)} + \card{L(y_\beta)} - 2 \ge 2d_Q(x) + d_Q(y) + d_Q(z) - 2\Delta(Q) - 4 = 2d_Q(x) - 4$.  Since $\beta \not \in L(x)$, there is at most one color in $L(x)$ that is in $L(u) \cup L(y_\beta)$ (it is $\tau$ whether or not $\tau = \alpha$).  So, $2d_Q(x) - 4 + \Delta(Q) + 2 - d_Q(x) \le \card{L(u) \cup L(y_\beta)} + \card{L(x)} \le \Delta(Q) + 1$ which gives $d_Q(x) \le 3$.  Then $\card{U_\pi(x,y,z)} = d_Q(z) - 2 + a(y, z) - \card{W_\pi(x,y,z)} =  \Delta(Q) - 2 + a(y, z) - (2\Delta(Q) - d_Q(x) - d_Q(y) + 1) = a(y, z)$.  So $a(y, z) = 1$. We conclude that (3b) holds, a contradiction.
+\end{proof}
+
+For $p \in \IN$, $xy \in E(Q)$ and $z \in Z(x, y)$ put $t_p(x, y, z) = 1$ if $y \in K_p(x, z)$ and $t_p(x, y, z) = 0$ otherwise.  Since $\card{K_p(x, z)} + \card{K_q(x, y)} = \card{K_p(x, z) \cap W_\pi(x, y, z)} + \card{K_p(x, z) \cap U_\pi(x, y, z)} + \card{K_q(x, y)  \cap W_{\pi^*}(x, z, y)} + \card{K_q(x, y) \cap U_{\pi^*}(x, z, y)} + t_p(x, y, z) + t_q(x, z, y)$, Lemma \ref{WoodallImprovementU} has the following immediate consequence.  
+
+\begin{cor}\label{AdditionOfUParts}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  For each $z \in Z(x, y)$ and $\pi \in \Pi(x,y,z)$, we have 
+\begin{enumerate}
+\item $\sigma_0(x, z) + \sigma_0(x, y) \ge \card{K_0(x, z) \cap W_\pi(x, y, z)} + \card{K_0(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_0(x, y, z) + t_0(x, z, y)$; and
+\item $\sigma_1(x, z) + \sigma_0(x, y) \ge \card{K_1(x, z) \cap W_\pi(x, y, z)} + \card{K_0(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_1(x, y, z) + t_0(x, z, y)$; and
+\item $\sigma_0(x, z) + \sigma_1(x, y) \ge \card{K_0(x, z) \cap W_\pi(x, y, z)} + \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_0(x, y, z) + t_1(x, z, y)$; and
+\item if $b(x, z) = 1$ and $d_Q(x) > 3$, then $\sigma_1(x, z) + \sigma_1(x, y) \ge \card{K_1(x, z) \cap W_\pi(x, y, z)} + \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_1(x, y, z) + t_1(x, z, y)$.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}\label{SigmaW}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  For each $z \in Z(x, y)$ and $\pi \in \Pi(x,y,z)$ we have:
+\begin{enumerate}
+\item $W_\pi(x, y, z) \subseteq K_0(x, z)$.  In particular, $\card{K_0(x, z) \cap W_\pi(x, y, z)} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) + a(y, z)$; and
+\item if $\Delta(Q) \ge 5$ and $d(x) + d(z) \ge \Delta(Q) + 3$, then $\card{K_1(x, z) \cap W_\pi(x, y, z)} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) - 1 + a(y, z)$.
+\end{enumerate}
+\end{cor}
+\begin{proof}
+First we prove (1). By Lemma \ref{WoodallImprovementW}, for each $v \in W_\pi(x, y, z)$ we have $d_Q(v) \ge 3\Delta(Q) - d_Q(x) - d_Q(y) - d_Q(z) + 1 + b(x, z)$.  So, if $d_Q(x) + d_Q(z) + d_Q(v) < 2\Delta(Q) + 2$, then $d_Q(y) = \Delta(Q)$ and $b(x, z) = 0$, but then $d_Q(v) < 2$ which is impossible since $Q$ is edge-critical.  Hence $v \in K_0(x, z)$.
+
+Now we prove (2). Let $\set{M, S}$ be the partition of $W_\pi(x, y, z)$ given by Lemma \ref{WoodallImprovementW}.  Now if $v \in W_\pi(x, y, z)$ and $d_Q(v) = \Delta(Q) - p$ then $v \in K_1(x, z)$ unless $d(x) + d(z) + \Delta(Q) - p \le 2\Delta(Q) + 2$ and hence $d(x) + d(z) \le \Delta(Q) + 2 + p$.  Since we assumed $d(x) + d(z) \ge \Delta(Q) + 3$, we have $M \subseteq K_1(x, z)$.  So, if $\card{M} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) - 1 + a(y, z)$ we are done.  Otherwise, $\card{M} = 2\Delta(Q) - d_Q(x) - d_Q(y) - 2 + a(y, z)$ and $b(x, z) = 0$.  Also, we are done unless $S \cap  K_1(x, z) = \emptyset$. Since $\card{W_\pi(x, y, z)} = 2\Delta(Q) - d_Q(x) - d_Q(y) + a(y, z)$ and $M$ and $S$ partition $W_\pi(x, y, z)$, we have $\card{S} = 2 - a(y, z)$. Then by part (2) of Lemma \ref{WoodallImprovementW}, we have $d_Q(v) \ge \Delta(Q) - 1 - a(y, z)$ for $v \in S$.  Since $S \cap  K_1(x, z) = \emptyset$, we must have $d(x) + d(z) = \Delta(Q) + 3 + a(y, z)$.  But $b(x, z) = 0$, so that gives $2\Delta(Q) = \Delta(Q) + 3 + a(y, z)$ and hence $\Delta(Q) \le 4$, contradicting our assumption.
+\end{proof}
+
+\begin{cor}\label{WoodallImprovement}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  For each $z \in Z(x, y)$ we have:
+\begin{enumerate}
+\item $\sigma_0(x, z) + \sigma_0(x, y) \ge 2\Delta(Q) - d_Q(x)$; and
+\item if $\Delta(Q) \ge 5$ and $d_Q(x) + d_Q(y) \ge \Delta(Q) + 3$, then
+	\begin{enumerate}
+	\item $\sigma_0(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 2 + a(y, z) + t_1(x, y, z)$; and
+    \item if $b(x, z) = 1$ and $d_Q(x) + d_Q(z) \ge \Delta(Q) + 3$, then $\sigma_1(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 5 + 3a(y, z) + 2t_1(x, y, z)$.
+	\end{enumerate}
+\end{enumerate}
+\end{cor}
+\begin{proof}
+Pick $\pi \in \Pi(x,y,z)$.  Then $\card{U_\pi(x, y, z)} = d_Q(z) - 2 + a(y, z) - \card{W_\pi(x, y, z)}$.
+
+For (1), Corollary \ref{AdditionOfUParts} and Corollary \ref{SigmaW} give $\sigma_0(x, z) + \sigma_0(x, y) \ge \card{K_0(x, z) \cap W_\pi(x, y, z)} + \card{K_0(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_0(x, y, z) + t_0(x, z, y) =\card{W_\pi(x, y, z)} + \card{W_{\pi^*}(x, z, y)} + d_Q(z) - 2 + a(y, z) - \card{W_\pi(x, y, z)} + t_0(x, y, z) + t_0(x, z, y) =\card{W_{\pi^*}(x, z, y)} + d_Q(z) - 2 + a(y, z) + t_0(x, y, z) + t_0(x, z, y)
+= 2\Delta(Q) - d_Q(x) - 2 + 2a(y, z) + t_0(x, y, z) + t_0(x, z, y)$. Since we always have $d_Q(x) + d_Q(y) + d_Q(z) \ge 2\Delta(Q) + 2$ for $z \in Z(x, y)$, we see that $t_0(x, y, z) = t_0(x, z, y) = 1$ if $a(y, z) = 0$.  Therefore, $\sigma_0(x, z) + \sigma_0(x, y) \ge 2\Delta(Q) - d_Q(x)$.
+
+For (2a), Corollary \ref{AdditionOfUParts} and Corollary \ref{SigmaW} give $\sigma_0(x, z) + \sigma_1(x, y) \ge \card{K_0(x, z) \cap W_\pi(x, y, z)} + \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_0(x, y, z) + t_1(x, z, y) = \card{W_\pi(x, y, z)} + \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + d_Q(z) - 2 + a(y, z) - \card{W_\pi(x, y, z)} + t_0(x, y, z) + t_1(x, z, y) = \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + d_Q(z) - 2 + a(y, z) + t_0(x, y, z) + t_1(x, z, y) \ge 2\Delta(Q) - d_Q(x) - 3 + a(z, y) + a(y, z) + t_0(x, y, z) + t_1(x, z, y)$.  Now $a(z, y) = a(y, z)$ and $t_0(x, y, z) = 1$ if $a(y, z) = 0$, so this gives $\sigma_0(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 2 + a(y, z) + t_1(x, z, y)$.  Since $t_1(x, z, y) = t_1(x, y, z)$, we are done.
+
+For (2b), first assume $d_Q(x) > 3$.  Then applying Corollary \ref{SigmaW} gives $\sigma_1(x, z) + \sigma_1(x, y) \ge \card{K_1(x, z) \cap W_\pi(x, y, z)} + \card{K_1(x, y) \cap W_{\pi^*}(x, z, y)} + \card{U_\pi(x, y, z)} + t_1(x, y, z) + t_1(x, z, y) \ge (2\Delta(Q) - d_Q(x) - d_Q(z) - 1 + a(z, y)) + (2\Delta(Q) - d_Q(x) - d_Q(y) - 1 + a(y, z)) + (d_Q(z) - 2 + a(y, z) - \card{W_\pi(x, y, z)}) + t_1(x, y, z) + t_1(x, z, y) = (2\Delta(Q) - d_Q(x) - d_Q(z) - 1 + a(y, z)) + (-2 + a(y, z)) + (d_Q(z) - 2 + a(y, z)) + t_1(x, y, z) + t_1(x, z, y) = 2\Delta(Q) - d_Q(x) - 5 + 3a(y, z) + 2t_1(x, y, z)$. 
+
+If $d_Q(x) \le 3$, (2b) follows from VAL.
+\end{proof}
+
+Now some less general formulations.
+\begin{cor}\label{WoodallImprovementSimple}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1 \ge 6$ and $xy \in E(Q)$.  If $d_Q(x) < \Delta(Q)$, then for each $z \in Z(x, y) - N(y)$ we have:
+\begin{enumerate}
+\item $\sigma_0(x, z) + \sigma_0(x, y) \ge 2\Delta(Q) - d_Q(x)$; and
+\item if $d_Q(x) + d_Q(y) \ge \Delta(Q) + 3$, then
+	\begin{enumerate}
+	\item $\sigma_0(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 1$; and
+    \item if $d_Q(x) + d_Q(z) \ge \Delta(Q) + 3$, then $\sigma_1(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 2$.
+	\end{enumerate}
+\end{enumerate}
+\end{cor}
+
+When $d_Q(x) + d_Q(y) = \Delta(Q) + 2$ or  $d_Q(x) + d_Q(z) = \Delta(Q) + 2$, we already have very good control of the degrees of vertices at distance at most two.  The following is what we get when this doesn't happen. 
+
+\begin{cor}\label{WoodallImprovementSimpler}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1 \ge 6$ and $xy \in E(Q)$.  If $d_Q(x) < \Delta(Q)$ and $d_Q(x) + d_Q(y) \ge \Delta(Q) + 3$, then for each $z \in Z(x, y) - N(y)$ 
+with $d_Q(x) + d_Q(z) \ge \Delta(Q) + 3$, we have:
+\begin{enumerate}
+\item $\sigma_0(x, z) + \sigma_0(x, y) \ge 2\Delta(Q) - d_Q(x)$; and
+\item $\sigma_0(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 1$; and
+\item $\sigma_1(x, z) + \sigma_0(x, y) \ge 2\Delta(Q) - d_Q(x) - 1$; and
+\item $\sigma_1(x, z) + \sigma_1(x, y) \ge 2\Delta(Q) - d_Q(x) - 2$.
+\end{enumerate}
+\end{cor}
+
+We get more information about $z \in Z(x, y)$ from Lemma \ref{WoodallImprovementW}.
+
+\begin{cor}\label{WoodallImprovementSimpleW}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $xy \in E(Q)$.  If $d_Q(x) < \Delta(Q)$, then for each $z \in Z(x, y) - N(y)$ there is $A \subseteq N(z) - x$ with $\card{A} \ge 2\Delta(Q) - d_Q(x) - d_Q(y) + 1$ such that all but at most one vertex in $A$ is major and if there is one that is not, it has degree $\Delta(Q) - 1$.
+\end{cor}
+
+Let $Q$ be an edge-critical graph and $x \in V(Q)$. For $t \in \IN$, put $p_t(x) = d_Q(x) - 1 - \Delta(Q) + \min_{y \in N(x)} \sigma_t(x,y)$.  This first one is all Woodall \cite{woodall2007average} used to prove that
+edge-critical graphs have average degree at least $\frac23 (\Delta + 1)$.
+
+\begin{cor}\label{SigmaZeroMin}
+If $Q$ is an edge-critical graph and $x \in V(Q)$, then $x$ has at least $d_Q(x) - p_0(x) - 1$ neighbors $z$ with $\sigma_0(x,z) \ge \Delta(Q) - p_0(x) - 1$.
+\end{cor}
+
+We get an improvement of similar form.
+
+\begin{cor}\label{SigmaOneMin}
+Let $Q$ be an edge-critical graph with $\Delta(Q) \ge 5$ and $x \in V(Q)$ with $d_Q(x) < \Delta(Q)$.  Further, suppose $d_Q(x) + d_Q(y) \ge \Delta(Q) + 3$ for all $y \in N(x)$.  For any $y_0 \in N(x)$ minimizing $\sigma_0(x,y_0)$ and $y_1 \in N(x)$ minimizing $\sigma_1(x,y_1)$, we have
+\begin{enumerate}
+\item $x$ has at least $d_Q(x) - p_1(x) - 2$ neighbors $z$ with $\sigma_0(x,z) \ge \Delta(Q) - p_1(x) - 3 + a(y_1, z) + t_1(x, y_1, z)$; and
+\item $x$ has at least $d_Q(x) - p_0(x) - 1$ neighbors $z$ with $\sigma_1(x,z) \ge \Delta(Q) - p_0(x) - 3 + a(y_0, z) + t_1(x, y_0, z)$; and
+\item $x$ has at least $d_Q(x) - p_1(x) - 2$ neighbors $z$ with $\sigma_1(x,z) \ge \Delta(Q) - p_1(x) - 6 + 3a(y_1, z) + 2t_1(x, y_1, z)$.
+\end{enumerate}
+\end{cor}
+
+The following is what we use when $d_Q(x) + d_Q(y) = \Delta(Q) + 2$.
+
+\begin{lem}\label{ZhangLemma}[Zhang \cite{zhang2000every}]
+For all $xy \in E(Q)$, we have
+
+\begin{enumerate}
+\item $d_Q(x) + d_Q(y) \ge \Delta(Q) + 2$; and
+\item vertices at distance one from $\set{x, y}$ have degree $\Delta(Q)$; and
+\item If $d_Q(x) + d_Q(y) = \Delta(Q) + 2$, then
+	\begin{enumerate}
+	\item vertices at distance two from $\set{x, y}$ have degree at least $\Delta(Q) - 1$; and
+	\item if $u$ is at distance two from $\set{x, y}$ and $d_Q(u) = \Delta(Q) - 1$, then $\set{x, y} = \set{v_2, v_\Delta}$ where $d_Q(v_2) = 2$, $d_Q(v_\Delta) = \Delta(Q)$ and
+	$u$ is at distance $2$ from $v_\Delta$ and distance $3$ from $v_2$.
+	\end{enumerate}
+\end{enumerate}
+\end{lem}
+
+It seems like Conjecture \ref{OneDefectiveConjecture} in the next section could be strengthened where we have one fewer internal vertex with $f(v) \ge d_G(v) + 1$, but also $\psi_L(G) > \size{G}$. 
+
+\section{A stronger conjecture and free strengthening}
+For $h \in \IN$, we say that $G$ is \emph{$h$-defective} if $G$ is $f$-fixable in the chronicled game for every valid $f$ where $\card{\setb{v}{V(G)}{f(v) > d(v) \ge 2}} \le h$.  For example, Theorem \ref{HallGame} shows that stars are $0$-defective and Theorems \ref{SubdividedStarWithLowCenter} and \ref{SubdividedStarWithLowIntermediate} together show that stars with one edge subdivided are $1$-defective.  These results and many computer simulations motivate the following conjecture.  For a tree $T$, let $\iota(T)$ be the number of internal vertices in $T$.
+
+\begin{conj}\label{OneDefectiveConjecture}
+Any tree $T$ is $(\iota(T) - 1)$-defective.
+\end{conj}
+
+This implies that a Tashkinov tree $T$ in a simple class 2 graph $G$ is elementary when $d_G(v) < \Delta(G)$ for all but at most one internal vertex of $T$.   No restrictions are placed on the leaves, so they could each have degree $\Delta(G)$.  We'll see that to prove this result, it would suffice to do so for trees where the leaves all have degree less than $\Delta(G)$.  Is this conjecture for class 2 graphs even true when $T$ is a path? 
+
+Conjecture \ref{OneDefectiveConjecture} strengthens Conjecture \ref{GameTashkinovTrees} for the chronicled game in two ways.  First, Conjecture \ref{GameTashkinovTrees} requires the leaves of the tree to have lists of size at least $2$ whereas Conjecture \ref{OneDefectiveConjecture} does not.  We will show how to get this improvement from Conjecture \ref{GameTashkinovTrees} and conclude that if Conjecture \ref{GameTashkinovTrees} is true, then any tree $T$ is $\iota(T)$-defective in the chronicled game.  The second improvement is replacing $\iota(T)$ with $\iota(T) - 1$.
+
+Let $\T$ be a hereditary collection of trees.  A \emph{bundle} on $\T$ is a collection $\set{f_T}_{T \in \T}$ where each $f_T$ is a function from $V(T)$ to $\IN$ such that for all $T', T \in \T$ with $T' \subseteq T$, we have $f_{T'}(v) \le f_T(v) - \parens{d_T(v) - d_{T'}(v)}$ for all $v \in V(T')$.  A bundle $\set{f_T}_{T \in \T}$ is \emph{fixable} if $T$ is $f_T$-fixable in the chronicled game for every $T \in \T$.
+
+\begin{lem}\label{FreeStrengthening}
+Let $\T$ be a hereditary collection of trees and $\set{f_T}_{T \in \T}$ a fixable bundle on $\T$ where, for each $T \in \T$ we have $f_T(v) \le 2$ for all leaves $v$ of $T$.  Then the bundle formed by, for each $T \in \T$, setting $f_T(v) = 1$ for all leaves $v$ of $T$ is fixable.
+\end{lem}
+\begin{proof}
+First, since a leaf in a tree is either not present or present with the same degree in any given subtree, we do actually get a bundle $\set{g_T}_{T \in \T}$ this way.  Suppose the bundle is not fixable and choose $T \in \T$ minimal such that $T$ is not $g_T$-fixable in the chronicled game.  Then we have a superabundant list assignment $L$ on $T$ with $\card{L(v)} \ge g_T(v)$ for all $v \in V(T)$ where Fixer has no winning strategy in the chronicled game.  By assumption, there must be a leaf $x$ of $T$ where $\card{L(x)} < f_T(x) = 2$ and hence $\card{L(x)} = 1$.  Let $w$ be $x$'s neighbor.  Since $(xw, L)$ is abundant, 
+we have $\alpha \in L(x) \cap L(w)$.  Let $L'$ be the list assignment on $T-x$ formed from $L$ by removing $\alpha$ from $L(w)$.  
+
+Suppose $(T-x, L')$ is not superabundant and choose non-abundant $T' \subseteq T$.  Then $w \in V(T')$ and $\psi_{L'}(T') = \size{T'} - 1$.  But $\psi_L(T' + x) \ge \size{T'} + 1$, so adding $x$ back adds two to $\psi$, but this is impossible since $L(x)$ has only one color.  
+
+Since $T-x \in \T$, by the definition of bundle, we have $g_{T-x}(v) \le g_T(v) - \parens{d_T(v) - d_{T-x}(v)}$ for all $v \in V(T-x)$.  Minimality of $T$ shows that $T-x$ is $g_{T-x}$-fixable in the chronicled game, but since $\card{L'(v)} \ge g_{T-x}(v)$ for all $v \in V(T-x)$, this means that Fixer has a winning strategy in the chronicled game on $T-x$ with lists $L'$.  Applying Lemma \ref{CanColorAndPlayOnRest} now gives a winning strategy for Fixer on $T$ with $L$, a contradiction.
+\end{proof}
+
+For an example, let's see how Conjecture \ref{GameTashkinovTrees} can be strengthened. Suppose $\T$ is the collection of all trees and for each $T \in \T$, let $f_T(v) = d_T(v) + 1$ for all $v \in V(T)$.  Then $\set{f_T}_{T \in \T}$ is clearly a bundle.  By Conjecture \ref{GameTashkinovTrees}, it is fixable.  Consider the bundle $\set{g_T}_{T \in \T}$ where $g_T(v) = d_T(v) + 1$ for all internal vertices of $T$ and $g_T(v) = d_T(v)$ for all leaves of $T$. Then Lemma \ref{FreeStrengthening} shows that $\set{g_T}_{T \in \T}$ is fixable as well.
+
+\section{Kierstead paths in the chronicled game}
+\begin{thm}\label{KiersteadChronicled}
+Let $L$ be a KTV-assignment on a multigraph $G$ with respect to $x_1x_2 \in E(G)$, coloring $\pi$, and ordering $<$ induced by a spanning path $x_1x_2\cdots x_n$ in $G$.  If $\card{L(v)} \ge d_G(v) + 1$ for all $v \in V(G)$, then Fixer has a winning strategy against Breaker in the chronicled game on $(G, L)$.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  Suppose
+there is $uw \in E(G) - E(x_1x_2\cdots x_n)$.  Define $L'$ on $G-uw$ by $L'(v)
+\DefinedAs L(v)$ for $v \not \in \set{u, w}$ and $L'(v) = L(v) -
+\pi(uw)$ for $v \in \set{u, w}$.  Then $L'$ is a KTV-assignment on $G-uw$. By
+minimality of $\size{G}$, Fixer has a winning strategy on $G-uw$; hence Fixer
+has a winning strategy on $G$ by Lemma \ref{ColorOneEdgeAndPlayOnRest}, a
+contradiction.
+
+Hence $G$ is the path $x_1x_2\cdots x_n$.  Let $\tau$ be the color guaranteed by property (5) of KTV-assignments.  If there is $\alpha \in L(x_s) \cap L(x_t) - \setbs{\pi(e)}{e \in E(s) \cup E(t)}$ for $1 \le s < t < n$, then Fixer gets a winning strategy on $G$ by coloring $x_{n-1}x_n$ using $\pi(x_{n-1}x_n)$ and applying minimality and Lemma \ref{ColorOneEdgeAndPlayOnRest}.  In particular, we must have $\tau \in L(x_n)$.  By letting Fixer play for awhile if needed, we can assume that $\max\setbs{j \in \irange{n-1}}{\tau \in L(x_j)}$ is as large as Fixer can get it while maintaining a KTV-assignment.  If $j = n - 1$, then Fixer gets a winning strategy by coloring $x_{n-1}x_n$ with $\tau$ and then applying minimality using $\pi(x_{n-1}x_n)$ for property (5), and finally applying Lemma \ref{ColorOneEdgeAndPlayOnRest}. Hence $j < n - 1$. Moreover, by property (4) of KTV-assignments, $\tau \not \in L(x_s)$ for $s \in \irange{j - 1}$.
+
+Since $\card{L(x_{j+1})} \ge d_G(x_{j+1}) + 1$, we can pick $\gamma \in L(x_{j+1}) - \setbs{\pi(e)}{e \in E(x_{j+1})}$. By property (4) of KTV-assignments, $\gamma \not \in L(x_s)$ for $s \in \irange{j}$. 
+
+Let $S \subseteq V(G)$ be those vertices $v$ with $\card{\set{\tau, \gamma} \cap L(v)} = 1$. Let $A_S$ be as in Lemma \ref{MultiMoveCombination}.  From the above, we know that $S \subseteq \set{x_j, \ldots, x_n}$.
+Fixer can swap $\tau$ for $\gamma$ at $x_{j+1}$ without breaking any $\tau$-edges or $\gamma$-edges by using $A_S$ and fixing anything that Breaker breaks until Breaker runs out of options (we should extract a general lemma here).  But then we still have a KTV-assignment and either $j$ has increased or we moved $\tau$ from $x_n$ to a lower vertex and Fixer wins.
+\end{proof}
+
+
+
+\section{Hall's theorem on trees}
+The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
+
+
+\begin{lem}\label{MultiTreeHall}
+Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an edge-coloring $\func{\pi}{E(T)}{\pot(L)}$ such that
+$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(T)$.
+\end{lem}
+
+When $T$ is a star, this is Hall's theorem.  In the proof of Theorem \ref{HallGame}, we used Hall's theorem to reduce to a smaller game when $\eta_L(G) \ge \size{G}$.  For more general trees, it seems reasonable that we might be able to use Lemma \ref{MultiTreeHall} instead (haven't been able to get it to work yet).
+
+
+\section{The fix number}
+For $k \in \IN$, we say that $G$ is $k$-fixable (in the chronicled game) if $G$ is $f$-fixable where $f(v) = k$ for all $v \in V(G)$.  The \emph{fix number} of $G$, writen $\fix{G}$, is the least $k$ for which $G$ is $k$-fixable.  Similarly, we define the \emph{chronicled fix number} of $G$, written $\cfix{G}$, as the least $k$ for which $G$ is $k$-fixable in the chronicled game.  For all $G$, we have $\Delta(G) \le \cfix{G} \le \fix{G}$.  We haven't even proved that there is a finite upper bound, but the following should be true.
+
+\begin{conj}
+Every multigraph $G$ satisfies $\cfix{G} \le \fix{G} \le \Delta(G) + 1$.
+\end{conj}
+
+This implies Goldberg.  The point is that requiring superabundance forbids overfull subgraphs when the lists are all the same. For now let's focus on the chronicled game.
+
+For a graph $G$ and $p \in \IN$, put $d_p(v) = d_G(v) + p$ for all $v \in V(G)$.  We say that $G$ is $k$-fix-critical if $G$ is not $k$-fixable in the chronicled game, but every proper subgraph of $G$ is. 
+If $G$ is $k$-fix-critical where $k = \Delta(G) + 1 + p$, then no subgraph of $G$ is $d_p$-fixable in the chronicled game.  Hmm, maybe not, what if the strategy to win on $G - E(H)$ breaks superabundance on $H$?  Can color all but one edge.
+
+
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

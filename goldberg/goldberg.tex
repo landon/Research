@@ -1,0 +1,119 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+
+\title{Goldberg's Conjecture from a game}
+\author{Landon Rabern}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\pot}{\operatorname{Pot}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We characterize the initial positions from which the first player has a winning
+strategy in a certain two-player game.  Goldberg's Conjecture on edge-coloring follows from a special case.
+\end{abstract}
+
+\section{Introduction}
+The game is played on a multigraph $G$ by \emph{Fixer} and
+\emph{Breaker}.  To setup, we assign a list of colors $L(v)$ to each
+$v \in V(G)$. Put  $\pot(L) \DefinedAs \bigcup_{v \in V(G)} L(v)$.
+Fixer always gets the first move and he wins if and only if on some turn, before moving, he can construct a proper edge coloring of $G$, say $\func{\pi}{E(G)}{\pot(L)}$ such that
+$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(G)$.
+
+\begin{FixerMove}
+Pick $\alpha \in \pot(L)$ and $v \in V(G)$ with $\alpha \not \in L(v)$ and set $L(v)
+\DefinedAs L(v) \cup \set{\alpha} \smallsetminus \set{\beta}$ for some $\beta
+\in L(v)$.
+\end{FixerMove}
+
+\begin{BreakerMove}
+If Fixer modified $L(v)$ by inserting $\alpha$ and removing $\beta$, Breaker can
+pick at most one vertex in $V(G) \smallsetminus \set{v}$ and modify its list by
+swapping $\alpha$ for $\beta$ or $\beta$ for $\alpha$.
+\end{BreakerMove}
+
+For $\alpha \in \pot(L)$ and $H \subseteq G$, put $d_H(\alpha) \DefinedAs \card{\setb{v}{V(H)}{\alpha \in L(v)}}$.
+
+\begin{conj}\label{MainTheorem}
+If $|L(v)| \ge d(v) + 1$ for all $v \in V(G)$, then Fixer has a winning strategy against Breaker if and only if for each $H \subseteq G$,
+\[\sum_{\alpha \in \pot(L)} \floor{\frac{d_H(\alpha)}{2}} \ge \size{H}.\]
+\end{conj}
+
+Suppose $G$ is not $k$-edge-colorable for some $k \ge \Delta(G) + 1$. Let $L(v) = \irange{k}$ for all $v \in V(G)$.  Then Fixer has no moves, so Fixer has a winning strategy if and only if $G$ is $k$-edge-colorable.  By Conjecture \ref{MainTheorem}, there must be $H \subseteq G$ with 
+\[k\floor{\frac{|H|}{2}} = \sum_{\alpha \in \pot(L)} \floor{\frac{|H|}{2}} = \sum_{\alpha \in \pot(L)} \floor{\frac{d_H(\alpha)}{2}} < \size{H}.\] 
+
+\noindent That is, $k \le \floor{\frac{\size{H} - 1}{\floor{\frac{|H|}{2}}}}$.  Hence $G$ is $w(G)$-edge-colorable where $w(G) \DefinedAs \max_{\substack{H \subseteq G\\|H| \ge 2}}\ceil{\frac{\size{H}}{\floor{\frac{|H|}{2}}}}$ if it is not $(\Delta(G) + 1)$-edge-colorable.  This is Goldberg's Conjecture.
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
+\end{document}
+
+

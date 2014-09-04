@@ -1,0 +1,780 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage, amssymb, amsmath, amsthm, mathabx}
+
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{KonigEgervary}{The K{\"o}nig-Egerv{\'a}ry Theorem}
+\newtheorem*{Konig}{K{\"o}nig's Theorem}
+\newtheorem*{Hall}{Hall's Theorem}
+\newtheorem*{Dilworth}{Dilworth's Theorem}
+\newtheorem*{Turan}{Tur{\'a}n's Theorem}
+\newtheorem*{Berge}{Berge's Theorem}
+\newtheorem*{TutteMatching}{Tutte's Matching Theorem}
+\newtheorem*{TutteBergeMatching}{Tutte-Berge Matching Formula}
+\newtheorem*{Richardson}{Richardson's Theorem}
+\newtheorem*{GallaiMilgram}{Gallai-Milgram Theorem}
+\newtheorem*{GallaiRoy}{Gallai-Roy Theorem}
+\newtheorem*{StableMatchingLemma}{Stable Matching Lemma}
+\newtheorem*{Galvin}{Galvin's Theorem}
+\newtheorem*{Mader}{Mader's Average Degree Theorem}
+\newtheorem*{Brooks}{Brooks' Theorem}
+\newtheorem*{NashWilliamsTutte}{Nash-Williams and Tutte Theorem}
+\newtheorem*{NashWilliams}{Nash-Williams Theorem}
+\newtheorem*{GallaiEdmonds}{Gallai-Edmonds Decomposition}
+\newtheorem*{Menger}{Menger's Theorem}
+\newtheorem*{VizingSimple}{Vizing's Simple Theorem}
+\newtheorem*{Vizing}{Vizing's Theorem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{TuranGraph}{Tur{\'a}n Graph}
+\newtheorem*{AugmentingPath}{Augmenting Path}
+\newtheorem*{StableMatching}{Stable Matching}
+\newtheorem*{NormalTree}{Normal Tree}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\defic}[1]{\text{def}(#1)}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+
+\begin{document}
+
+\section{Eulerian Circuits}
+\begin{defn}
+A graph is \emph{Eulerian} if it has a closed trail containing all the edges.
+\end{defn}
+
+\begin{lem}\label{Eulerian}
+A connected graph is Eulerian iff every vertex has even degree.
+\end{lem}
+\begin{proof}
+Let $G$ be a connected graph.  
+
+If $G$ has an eulerian tour $C$, then each passage of $C$ through a vertex uses two edges and the first edge is paired with the last edge at the first vertex.  Hence each vertex of $G$ is even.
+
+Assume every vertex of $G$ has even degree.  Let $T$ be a trail in $G$ with maximum number of edges.  If $T$ is not closed, then it contains an odd number of edges incident to its end vertex $x$.  But $x$ has even degree, so we can extend $T$ to a larger trail.  This contradiction shows that $T$ must be closed.
+
+Now suppose $T$ misses some edge of $G$ and pick $xy \in E(G) - E(T)$ such that the distance from $x$ to $V(T)$ is minimized.  Then $x \in V(T)$ since $G$ is connected.  $T$ is closed, so we may rotate it so that it starts (and ends) at $x$.  But then extending $T$ along $xy$ contradicts the maximality of $T$.  Hence $T$ is a closed trail containing every edge of $G$.
+\end{proof}
+
+\section{Connectivity}
+\begin{lem}\label{OrderingLemma}
+For any connected graph $G$ and any $z \in V(G)$, there exists a total ordering $\leq$ of $V(G)$ with $z$ minimum, such that $G\left[x \mid x \leq y\right]$ is connected for each $y \in V(G)$.
+\end{lem}
+\begin{proof}
+Let $G$ be a connected graph and $z \in V(G)$.  Let $H$ be a maximal induced subgraph of $G$ which has such an ordering with $z$ minimum.  If $H \neq G$, then, since $G$ is connected, some $w \in V(G) - V(H)$ has an edge into $H$. Thus we may add $w$ to $H$ as the last vertex in the ordering contradicting the maximality of $H$.  Hence $H = G$ and we have our ordering.
+\end{proof}
+
+\begin{Mader}
+Fix $k \in \mathbb{N}_{\geq 1}$.  Every graph $G$ with $d(G) \geq 4k$ has a $(k+1)$-connected subgraph $H$ such that $d(H) > d(G) - 2k$.
+\end{Mader}
+\begin{proof}
+Let $G$ be a graph with $d(G) \geq 4k$.  Let $t = \frac{d(G)}{2} \geq 2k$. Of all subgraphs $G'$ of $G$ satisfying
+\begin{equation}\label{condition}
+\card{G'} \geq 2k \text{ and } \size{G'} > t(\card{G'} - k),
+\end{equation}
+choose $H$ minimizing $\card{H}$.
+
+If $\card{H} = 2k$, then $\size{H} > tk \geq 2k^2 > {\card{H} \choose 2}$ which is impossible.  Hence $\card{H} > 2k$. Then $\delta(H) > t$ for otherwise removing a vertex of degree at most $t$ gets a smaller subgraph satisfying (\ref{condition}).  In particular, $\card{H} \geq t$ and hence $d(H) = \frac{2\size{H}}{\card{H}} > d(G) - 2k$ as desired.
+
+It remains to show that $H$ is $(k+1)$-connected.  Assume otherwise that $H$ has a proper seperation $\{U_1, U_2\}$ of order at most $k$.  Put $H_i = G[U_i]$.  Each $x \in U_1 - U_2$ has edges only into $H_1$ and hence $\card{H_1} > d(x) > t \geq 2k$.  Similarly, $\card{H_2} \geq 2k$.  By the minimality of $\card{H}$, no $H_i$ can satisfy (\ref{condition}) and hence $\size{H_i} \leq t(\card{H_i} - k)$.  But then $\size{H} \leq \size{H_1} + \size{H_2} \leq t(\card{H_1} + \card{H_2} - 2k) \leq t(\card{H} + k - 2k) \leq t(\card{H} - k)$ condtradicting (\ref{condition}).
+\end{proof}
+
+\subsection{Connected and $2$-connected graphs}
+\begin{lem}
+A graph is $2$-connected iff it can be constructed from a cycle by successively adding $H$-paths to graphs $H$ already constructed.
+\end{lem}
+\begin{proof}
+Plainly, any graph constructed thusly is $2$-connected.  Let $G$ be a $2$-connected graph.  Then $G$ contains a cycle and hence contains a maximal subgraph $H$ constructed as described.  Since any edge $xy \in E(G) - E(H)$ with $x, y \in H$ would define an $H$-path, $H$ must be an induced subgraph of $G$.  Assume $H \neq G$.  Then, since $G$ is connected, there is an edge $xy \in E(G)$ where $x \in V(H)$ and $y \in V(G - H)$.  Since $G$ is $2$-connected, there must be a shortest path $P$ from $y$ to $H$ in $G - x$.  But then $xyP$ is an $H$-path and $H \cup xyP$ is constructible, contradicting the maximality of $H$.
+\end{proof}
+
+\begin{defn}
+A \emph{block} in a graph $G$ is a maximal connected subgraph without a cutvertex.  
+\end{defn}
+
+Thus a block is either a maximal $2$-connected subgraph, an edge with its ends, or an isolated vertex.  By their maximality, any two different blocks of a graph overlap in at most one vertex (which must be a cutvertex of $G$).  Hence every edge of $G$ lies in a unique block and $G$ is the union of its blocks.
+
+\begin{lem}
+Let $G$ be a graph.
+\begin{enumerate}
+\item The cycles of $G$ are precisely the cycles of its blocks.
+\item The bonds of $G$ are precisely the minimal cuts of its blocks.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Proof of (1): Any cycle of $G$ is a connected subgraph without a cutvertex and hence is contained in a maximal such subgraph -- a block.
+Proof of (2): Let $F$ be a bond in $G$.  Let $xy \in F$. Then $xy$ is in a unique block $B$.  By the maximality condition on blocks, $G$ contains no $B$-path.  In particular, any $xy$-path in $G$ is contained in $B$.  Hence $x$ and $y$ are seperated by $F \cap E(B)$, but then by minimality of $F$, we must have $F = F \cap E(B)$ and hence $F \subseteq E(B)$. As we saw above, any cut seperating $x$ and $y$ in $B$ also seperates them in $G$, hence $F$ is a bond in $B$.
+\end{proof}
+
+\begin{lem}
+The following statements are equivalent for distinct edges $e, f$ of a graph $G$.
+\begin{enumerate}
+\item $e$ and $f$ belong to a common block of $G$;
+\item $e$ and $f$ belong to a common cycle of $G$;
+\item $e$ and $f$ belong to a common bond of $G$;
+\end{enumerate}
+\end{lem}
+\begin{proof}
+$(1) \Rightarrow (2)$: Say $e$ and $f$ are in a block $B$. Since $G$ is $2$-connected, there are $2$ disjoint $e-f$ paths by Menger's theorem (or induction on the construction above).  These together with $e$ and $f$ give a cycle containing them.
+
+$(2) \Rightarrow (3)$: Let $C$ be a cycle containing $e$ and $f$.  Then $\set{e,f}$ cuts $C$ into two connected sets $A$ and $B$.  Let $A'$ be a maximal connected subset of $V(G)$ containing $A$ and disjoint from $B$.  Let $B'$ be a maximal connected subset of $V(G)$ containing $B$ and disjoint from $A'$.  Then $E(A', B')$ is a bond in $G$ containing $e$ and $f$.
+
+$(3) \Rightarrow (1)$: This is immediate from the previous lemma.
+\end{proof}
+
+\subsection{Structure of $3$-connected graphs}
+Given an edge $e$ in a graph $G$, we write $G \dotdiv e$ for the multigraph obtained from $G-e$ by suppressing any end of $e$ that has degree $2$ in $G-e$.  
+
+\begin{lem}\label{DotDivPreserves}
+Let $e$ be an edge in a graph $G$.  If $G \dotdiv e$ is $3$-connected, then so is $G$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{lem}\label{CanDotDiv}
+Every $3$ connected graph $G \neq K^4$ has an edge $e$ such that $G \dotdiv e$ is a $3$-connected graph.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{thm}
+A graph $G$ is $3$-connected iff there exists a sequence $G_0, \ldots, G_n$ of graphs such that
+\begin{enumerate}
+\item $G_0 = K^4$ and $G_n = G$;
+\item $G_{i+1}$ has an edge $e$ such that $G_i = G_{i+1} \dotdiv e$ for every $i < n$.
+\end{enumerate}
+Moreover, the graphs in any such sequence are all $3$-connected.
+\end{thm}
+\begin{proof}
+If $G$ is $3$-connected, use Lemma \ref{CanDotDiv} to get the graphs $G_n, \ldots, G_0$ in turn.  The moreover is immediate from Lemma \ref{DotDivPreserves}.
+\end{proof}
+
+\begin{lem}
+Every $3$ connected graph $G \neq K^4$ has an edge $e$ such that $G/e$ is again $3$-connected. 
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{thm}
+A graph $G$ is $3$-connected iff there exists a sequence $G_0, \ldots, G_n$ of graphs with the following two properties
+\begin{enumerate}
+\item $G_0 = K^4$ and $G_n = G$;
+\item $G_{i+1}$ has an edge $xy$ such that $d(x), d(y) \geq 3$ and $G_i = G_{i+1} / xy$, for every $i < n$.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\end{proof}
+
+\begin{thm}
+The cycle space of a $3$-connected graph is generated by its non-separating induced cycles.
+\end{thm}
+
+\subsection{Menger's Theorem}
+\begin{Menger}
+For any graph $G$ and $A, B \subseteq V(G)$, the minimum number of vertices separating $A$ from $B$ in $G$ is the maximum number of disjoint $A-B$ paths in $G$.
+\end{Menger}
+\begin{proof}
+Assume not and choose a counterexample $G$ minimizing $\size{G}$.  Let $k$ be the minimum number of vertices that separate $A$ from $B$ in $G$.  If $\size{G} = 0$, then $\card{A \cap B} = k$ and there are $k$ disjoint $A-B$ paths of length one in $G$.  Thus $G$ has an edge $e = xy$.  Let $v_e$ be the vertex resulting from contracting $e$ to form $G / e$.  Put $A' = (A - \set{x, y}) \cup \set{v_e}$ if $\set{x, y} \cap A \neq \emptyset$ and $A' = A$ otherwise.  Similarly for $B'$.  Since a collection of $k$ disjoint $A'-B'$ paths in $G/e$ would induce a collection of $k$ disjoint $A-B$ paths in $G$, the minimality of $\size{G}$ gives an $A'-B'$ separator $Y$ in $G/e$ with $\card{Y} \leq k - 1$.  Then $v_e \in Y$ since otherwise $Y$ would be too small of an $A-B$ separator in $G$.  Hence $X = (Y - \set{v_e}) \cup \set{x, y}$ is an $A-B$ separator in $G$ with $\card{X} = k$.
+
+Then, any $A-X$ separator or $X-B$ separator in $G$ is also an $A-B$ seperator in $G$.  Since $x, y \in X$, the same goes for any $A-X$ separator or $X-B$ separator in $G-e$.  In particular, any $A-X$ seperator in $G-e$ must have at least $k$ vertices and thus by minimality of $\size{G}$ there must be $k$ disjoint $A-X$ paths in $G-e$.  Similarly, there are $k$ disjoint $X-B$ paths in $G-e$.  Since $X$ separates $A$ from $B$, these two path systems cannot meet outside of $X$ and thus can be combined into $k$ disjoint $A-B$ paths.
+\end{proof}
+
+\subsection{Linking}
+\begin{defn}
+Let $G$ be a graph and $X \subseteq V(G)$.  We call $X$ \emph{linked} in $G$ if whenever we pick different vertices $s_1, \ldots, s_l, t_1, \ldots, t_l \in X$ we can find disjoint paths $P_1, \ldots, P_l$ in $G$ such that each $P_i$ links $s_i$ to $t_i$ and has no inner vertex in $X$.
+\end{defn}
+
+\begin{defn}
+If $\card{G} \geq 2k$ and every set $X$ with $\card{X} \leq 2k$ is linked in $G$, then $G$ is \emph{$k$-linked}.
+\end{defn}
+
+\begin{lem}
+There is a function $h\colon \mathbb{N} \rightarrow \mathbb{N}$ such that every graph of average degree at least $h(r)$ contains $K^r$ as a topological minor, for every $r \in \mathbb{N}$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{thm}[Jung, Larman and Mani]
+There is a function $f\colon \mathbb{N} \rightarrow \mathbb{N}$ such that every $f(k)$-connected graph is $k$-linked, for all $k \in \mathbb{N}$.
+\end{thm}
+\begin{proof}
+\end{proof}
+
+\section{Trees}
+\begin{lem}\label{Tree}
+The following assertions are equivalent for a graph $T$:
+\begin{enumerate}
+\item $T$ is a tree (a connected acyclic graph); 
+\item there is a unique path between any $x, y \in V(T)$; 
+\item $T$ is connected and the removal of any edge of $T$ disconnects $T$; 
+\item $T$ is acyclic and the addition of any edge of $\overline{T}$ creates a cycle.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+$(1) \Rightarrow (2)$: As $T$ is connected, there is at least one path. Assume some pair of vertice has more than one path and choose $x, y \in V(T)$ such that there are at least two different paths $xPy$ and $xQy$ minimizing $d(x, y)$.  Then $P$ and $Q$ are internally disjoint by minimality of $d(x,y)$.  But then $xPyQx$ is a cycle in $T$.
+
+$(2) \Rightarrow (3)$:  By assumption, $T$ is connected.  Assume there is some $xy \in E(T)$ such that $T-xy$ is connected and let $xPy$ be a path in $T-xy$.  Then $xy$ and $xPy$ are different paths from $x$ to $y$ contradicting (2).
+
+$(3) \Rightarrow (4)$: If $T$ had a cycle, then removing an edge $xy$ on the cycle would leave a connected graph (any path using $xy$ can be rerouted around the cycle) contradicting (3).  If there was some edge $xy$ that could be added that did not create a cycle, then $T + xy$ would be a tree and hence the removal of $xy$ must disconnected it, but it doesn't.
+
+$(4) \Rightarrow (1)$: $T$ is acyclic by assumption. If $T$ were disconnected, then we could add an edge between two of its components without creating a cycle contradicting (4).
+\end{proof}
+
+\begin{lem}\label{SpanningTree}
+Every connected graph contains a spanning tree.
+\end{lem}
+\begin{proof}
+Let $G$ be a connected graph.  Let $T$ be a minimal spanning connected subgraph of $G$.  Plainly, any edge in $T$ with an endpoint of degree one in $T$ is not on a cycle.  Let $xy \in E(T)$ with $d(x) \geq d(y) \geq 2$.  Then $T - xy$ still spans $G$, so must be disconnected.  Hence $xy$ is not on a cycle in $T$.  Since no edge of $T$ is on a cycle, $T$ is acyclic and hence a tree.
+\end{proof}
+
+\begin{lem}
+A connected graph with $n$ vertices is a tree iff it has $n-1$ edges.
+\end{lem}
+\begin{proof}
+Assume not and let $n$ be minimal such that the lemma fails.  Let $G$ be a graph with $n$ vertices.  Let $v_1, \ldots, v_n$ be the vertices of $G$ in the order guaranteed by Lemma \ref{OrderingLemma} and put $H = [v_1, \ldots, v_{n-1}]$.  Then $H$ is connected and thus by minimality is a tree iff it has $n-2$ edges.  Now $G$ is a tree iff $H$ is a tree and $v_n$ has exactly one edge into $H$.  Hence $G$ is a tree iff $G$ has $n-1$ edges.
+\end{proof}
+
+\begin{lem}
+Let $G$ be a graph.  If $T$ is a tree with $\card{T} \leq \delta(G) + 1$, then $T \subseteq G$.
+\end{lem}
+\begin{proof}
+Assume not and let $T$ be a tree with $\card{T} \leq \delta(G) + 1$ such that $T \not \subseteq G$ and $\card{T}$ minimal.  Then $\card{T} \geq 2$ and hence $T$ has a leaf $x$.  By minimality, $G$ contains the tree $T - x$.  Let $y$ be $x$'s neighbor in $T$.  We have $d_G(y) \geq \card{T} - 1$, but $y$ has at most $\card{T} - 2$ neighbors in $T - x$ and thus $y$ has an unused neighbor for $x$ to use.  Hence $T \subseteq G$.
+\end{proof}
+
+\subsection{Normal Trees}
+Given a tree $T$ with root $r$, the \emph{tree-order} on $T$ with respect to $r$ is given by $x \leq y$ iff $x \in rTy$.
+
+\begin{NormalTree}
+Let $G$ be a graph.  A rooted tree $T$ contained in $G$ is called \emph{normal} if the ends of every $T$-path in $G$ are comparable in the tree order of $T$.
+\end{NormalTree}
+
+\begin{lem}\label{NormalTreesExist}
+For any connected graph $G$, any $r \in V(G)$ and any path $P$ in $G$ starting at $r$, there is a normal spanning tree of $G$ with root $r$ containing $P$.
+\end{lem}
+\begin{proof}
+Assume not and let $G$ be a counterexample minimizing $\card{G}$. Let $r \in V(G)$ and $P$ a path in $G$ starting at $r$. Let $M$ be a maximal path starting at $r$ and containing $P$.  Say the other end of $M$ is $x$.  Then, as $M$ is maximal, $x$ is not a cut vertex in $G$.  Hence, by minimality of $\card{G}$, $G-x$ has a normal spanning tree $T$ with root $r$ containing $M - x$.  Extend $T$ along $M$ to a spanning tree $T'$ in $G$.  To see that $T'$ is normal, let $ab \in E(G)$. If both $a$ and $b$ are in $T$ then they are comparable in $T$ and hence $T'$.  Otherwise, without loss of generality, $a = x$.  But $M$ is a maximal path, so $x$ only has neighbors in $M$ and thus $b < x = a$.  Thus $T'$ is a normal spanning tree in $G$ with root $r$ containing $P$.
+\end{proof}
+
+\begin{cor}
+Every bridgeless connected graph has a strong orientation. 
+\end{cor}
+\begin{proof}
+Let $G$ be a bridgeless connected graph.
+Pick $r \in V(G)$. By Lemma \ref{NormalTreesExist}, $G$ has a normal spanning tree $T$ with root $r$.  Let $xy \in E(G)$ with $x \leq y$ in the tree-order on $T$.  If $xy \in E(T)$ orient $xy$ towards $y$ otherwise orient $xy$ towards $x$.  We claim this is a strong orientation.  It will be enough to show that for any $z \in V(G)$ there is a directed path from $r$ to $z$ and a directed path from $z$ to $r$.  Since $T$ spans $G$, for any $z \in V(G)$ there is a directed path from $r$ to $z$ on $T$.  Assume there is some vertex which has no directed path to $r$ and let $z$ be such a vertex minimal in the tree-order.  Then $z \neq r$ and hence we have $w \in V(T)$ such that $wz \in E(T)$. Let $U = \setb{x}{V(G)}{z \leq x}$ and $B = \setb{x}{V(G)}{x < z}$.  Since $T - wz$ is disconnected and $G - wz$ is connected there must be some $ub \in E(G) - E(T)$ from $U$ to $G-U$. Since $T$ is normal, $ub$ must be from $U$ to $B$.  But then composing the directed path in $T$ from $z$ to $u$, the directed edge $ub$ and the directed path from $b$ to $r$ guaranteed by minimality of $z$ gives us a directed path from $z$ to $r$.  This contradiction completes the proof.
+\end{proof}
+
+\section{Bipartite Coloring and Matching}
+
+\begin{lem}
+A graph is bipartite iff it contains no odd cycle.
+\end{lem}
+\begin{proof}
+The forward direction is plain.  For the reverse, assume the lemma is false and let $G$ be a graph containing no odd cycle which is not bipartite minimizing $\card{G}$.  Plainly $G$ is $3$-critical.  Pick $x \in V(G)$ and let $\set{\set{x}, A, B}$ be a proper coloring of $G$.  For $z \in N(x) \cap A$, let $C_z$ be the component of $z$ in $G[A \cup B]$.  
+
+First, assume there is $z \in N(x) \cap A$ such that there exists $y \in N(x) \cap B \cap C_z$.  Let $P$ be a path from $z$ to $y$ in $C_z$.  Then $\card{P}$ is even as $P$ alternates between $A$ and $B$. Thus $xPx$ is an odd cycle in $G$ giving a contradiction.
+
+Put $C = \bigcup_{z \in N(x) \cap A} C_z$.  Then $N(x) \cap B \cap C = \emptyset$. Move $A \cap C$ into $B$ and $B \cap C$ into $A$ to get a new $3$-coloring $\set{\set{x}, A', B'}$ of $G$.  Then, we have moved all of $N(x) \cap A$ into $B$ and moved none of $N(x) \cap B$.  Hence $x$ has no neighbors in $A'$ and we have the bipartition $\set{A' \cup \set{x}, B'}$ of $G$ giving a contradiction.
+\end{proof}
+
+\begin{lem}[Lov{\'a}sz, proof by Gasparian]\label{ComplementOfPerfectGraph}
+A graph $G$ is perfect iff $\alpha(H)\omega(H) \geq \card{H}$ for each $H \unlhd G$.  In particular, a graph is perfect iff its complement is perfect.
+\end{lem}
+\begin{proof}
+For the forward direction, just note that if $G$ is perfect, then $\alpha(H)\omega(H) = \alpha(H)\chi(H) \geq \card{H}$ for every $H \unlhd G$.
+
+Assume the reverse direction is false and let $G$ be a counterexample with the minimum number of vertices.  Then, by minimality, every proper induced subgraph of $G$ is perfect and $\omega(G) < \chi(G)$.  Thus, for each independent $I \subseteq V(G)$, we must have $\chi(G-I) = \omega(G-I) = \omega(G) = \chi(G) - 1$.
+
+Put $n = \card{G}$, $\alpha = \alpha(G)$ and $\omega = \omega(G)$.  Let $A_0 = \set{v_1, \ldots, v_\alpha}$ be a maximum independent set in $G$.  For $1 \leq i \leq \alpha$, let $\set{A_{(i - 1)\omega + 1}, \ldots, A_{i\omega}}$ be a proper $\omega$-coloring of $G - v_i$.  
+
+Let $K$ be an $\omega$-clique in $G$.  We claim that $A_i \cap K = \emptyset$ for at most one $0 \leq i \leq \alpha\omega$.  To prove the claim, first assume $A_0 \cap K = \emptyset$. Then $K \subseteq V(G - v)$ for each $v \in A_0$.  Hence, for each $v \in A_0$, $K$ intersects every color class in any $\omega$-coloring of $G-v$ and in particular, $A_t \cap K \neq \emptyset$ for all $t \geq 1$.  Now assume $A_0 \cap K = \set{w}$. For each $v \in A_0 - \set{w}$, $K$ intersects every color class in any $\omega$-coloring of $G-v$.  Also, $K$ intersects all but one color class in any $\omega$-coloring of $G-w$.  In particular, $K$ intersects all but one $A_t$ for $0 \leq t \leq \alpha\omega$.  This proves the claim.
+
+Since $\omega(G-A_i) = \omega$, we have an $\omega$-clique $K_i$ in $G - A_i$ for each $0 \leq i \leq \alpha\omega$.  We know that $\card{A_i \cap K_j} \leq 1$ for each $i, j$, since $A_i$ is independent and $K_j$ is complete. Since $A_i \cap K_i = \emptyset$, by the above claim, we have $\card{A_i \cap K_j} = \delta_{ij}$.
+
+Let $A$ be the $(\alpha\omega + 1) \times n$ matrix whose $i$-th row is the incidence vector of $A_i$.  Let $B$ be the $n \times (\alpha\omega + 1)$ matrix whose $i$-th column is the incidence vector of $K_i$.  Put $X = AB$.  Then, since $\card{A_i \cap K_j} = \delta_{ij}$, we see that $X$ is the $(\alpha\omega + 1) \times (\alpha\omega + 1)$ matrix with $X_{ij} = \delta_{ij}$. Plainly, $\det X \neq 0$ and hence $X\colon \mathbb{R}^{\alpha\omega + 1} \rightarrow \mathbb{R}^{\alpha\omega + 1}$ is injective.  Thus, $B\colon \mathbb{R}^{\alpha\omega + 1} \rightarrow \mathbb{R}^n$ is injective and in particular, $n \geq \alpha\omega + 1$.  But this contradicts our assumption that $\alpha\omega \geq n$.
+\end{proof}
+
+\begin{lem}\label{BipartiteComplement}
+The complement of any bipartite graph is perfect.
+\end{lem}
+\begin{proof}
+Plainly bipartite graphs are perfect.  Hence so are their complements by Lemma \ref{ComplementOfPerfectGraph}.
+\end{proof}
+
+\begin{KonigEgervary}\label{KonigEgervary}
+Every bipartite graph satisfies $\tau = \nu$.
+\end{KonigEgervary}
+\begin{proof}
+Let $G$ be a bipartite graph.  By Lemma \ref{BipartiteComplement}, we have
+\[\card{G} - \tau(G) = \alpha(G) = \omega(\overline{G}) = \chi(\overline{G}) = \card{G} - \nu(G).\]
+
+Hence $\tau(G) = \nu(G)$.
+\end{proof}
+
+\begin{Hall}\label{Hall}
+A bipartite graph with parts $A$ and $B$ has a matching of $A$ into $B$ iff
+$\card{N(X)} \geq \card{X}$ for all $X \subseteq A$.
+\end{Hall}
+\begin{proof}
+Let $G$ be a bipartite graph with parts $A$ and $B$.  The reverse implication is plain.  For the forward implication, assume $\card{N(X)} \geq \card{X}$ for all $X \subseteq A$.  Then, in $\overline{G}$, each $X \subseteq A$ is joined to at most $\card{B} - \card{X}$ vertices in $B$.  Hence $\omega(\overline{G}) \leq \card{B}$.  By Lemma \ref{BipartiteComplement}, we have $\card{G} - \nu(G) = \chi(\overline{G}) = \omega(\overline{G}) \leq \card{B}$.  Hence $\nu(G) \geq \card{A}$.  Since $A$ and $B$ are independent, any matching of size $\card{A}$ is a matching of $A$ into $B$.  This completes the proof.
+\end{proof}
+
+\begin{Konig}
+Every bipartite graph satisfies $\chi' = \Delta$.
+\end{Konig}
+\begin{proof}
+Let $H$ be the line graph of a bipartite graph $G$.  By Lemma \ref{BipartiteComplement}, $\overline{G}$ is perfect.  Hence $\omega(\overline{H}) = \alpha(H) = \nu(G) = \card{G} - \chi(\overline{G}) = \card{G} - \omega(\overline{G}) = \tau(G) = \chi(\overline{H})$.  
+
+Since removing edges from a bipartite graph leaves a bipartite graph, being the complement of the line graph of a bipartite graph is a hereditary property.  Hence the above shows that the complement of the line graph of a bipartite graph is perfect.
+
+Now, let $G$ be a bipartite graph. Then $\overline{L(G)}$ is perfect and hence $L(G)$ is perfect by Lemma \ref{ComplementOfPerfectGraph}. But
+$G$ has no triangles, so $\Delta(G) = \omega(L(G)) = \chi(L(G)) = \chi'(G)$.
+\end{proof}
+
+\begin{Dilworth}
+In any poset $(P, <)$, the maximum size of an antichain in $P$ equals the minimum size of a chain parition of $P$.
+\end{Dilworth}
+\begin{proof}
+Let $(P, <)$ be an arbitrary poset.  For $i \geq 1$, let $A_i$ be the $x \in P$ such that the longest chain in $P$ ending in $x$ has $i$ elements.  Then, each $A_i$ is an antichain since if $y, z \in A_i$ with $y < z$, then the union of $\set{z}$ with any length $i$ chain ending in $y$ gives the contradiction $z \not \in A_i$.  Let $c(P)$ be the length of the longest chain in $P$. Then $A_i = \emptyset$ for $i > c(P)$.  Hence $A_1, \ldots, A_{c(P)}$ is a partition of $P$ into $c(P)$ antichains.
+
+Let $G_P$ be the graph with $V(G_P) = P$ and $E(G_P) = \setbs{uv}{u < v \text{ or } v < u}$.  Then, from the above, $\chi(G_P) \leq c(P) = \omega(G_P)$ and hence $\chi(G_P) = \omega(G_P)$.  Call such a $G_P$ a \emph{comparability graph}.
+
+Since the class of comparability graphs is plainly hereditary, the above proves that they are perfect.  Hence by Lemma \ref{ComplementOfPerfectGraph}, so are their complements.  Thus, if $(P, <)$ is a poset, we have $\chi(\overline{G_P}) = \omega(\overline{G_P}) = \alpha(G_P)$.  But a clique in $G_P$ is precisely a chain in $P$ and an independent set is precisely an antichain in $P$.  Hence, the maximum size of an antichain in $P$ equals the minimum number of chains into which $P$ can be partitioned.
+\end{proof}
+
+\subsection{Stable Matchings}
+\begin{defn}
+Let $G$ be a graph.  A \emph{set of preferences} for $G$ is a collection of total orderings $\set{\leq_v}_{v \in V(G)}$ where $\leq_v$ orders $E(v)$.  A matching $M$ in $G$ is called \emph{stable} if for every $e \in E(G) - M$, there exists $f \in M$ such that $e$ and $f$ have a common vertex $v$ with $e <_v f$.
+\end{defn}
+
+\begin{StableMatchingLemma}
+Let $G$ be a bipartite graph.  For every set of preferences, $G$ has a stable matching.
+\end{StableMatchingLemma}
+\begin{proof}
+Say $G$ has parts $A$ and $B$.  Let $\set{\leq_v}_{v \in V(G)}$ be a set of preferences on $G$. Define a partial order $\leq$ on the matchings of $G$ by $M' \leq M$ iff for every $b \in B$ and $ab \in M'$, there exists $cb \in M$ such that $ab \leq_b cb$.
+
+Given a matching $M$, call a vertex $a \in A$ \emph{acceptable} to $b \in B$ if $ab \in E(G) - M$ and any $cb \in M$ satisfies $cb <_b ab$.  Call $a \in A$ \emph{happy with} $M$ if either $a$ is unmatched in $M$ or its matching edge $f \in M$ satisfies $f >_a e$ for all edges $e=ab$ such that $a$ is acceptable to $b$.  If every vertex in $A$ is happy with $M$, call $M$ \emph{happy}.
+
+Note that the empty matching is happy.  Thus, since $G$ is finite, we may choose a maximal (under $\leq$) happy matching $M$. Assume there is some $a \in A$ which is unmatched in $M$ but acceptable to some vertex in $B$.  Choose $b \in B$ such that $a$ is acceptable to $b$ maximizing $ab$ under $\leq_a$.  Remove any edge incident to $b$ in $M$ and then add $ab$ to get a new matching $M'$.  By our choice of $ab$, $M'$ is happy.  Clearly, $M \leq M'$ and since $M \neq M'$ we have $M < M'$ contradicting the maximality of $M$.
+
+Hence, in $M$, every unmatched $a \in A$ is unacceptable to all $b \in B$ and every $a \in A$ is happy with $M$.  Let $xy \in E(G) - M$ with $x \in A$. First assume $x$ is unmatched in $M$.  Then $x$ is unacceptable to $y$ and hence there is $zy \in M$ such that $xy <_y zy$.  Otherwise, we have $xw \in M$ and $xw >_x xt$ for all $t$ such that $x$ is acceptable to $t$.  Hence, either $xt <_x xw$ or $x$ is unacceptable to $t$ and so we have $ft \in M$ such that $xt <_t ft$.  Thus $M$ is stable.
+\end{proof}
+
+\subsection{Applications}
+\begin{cor}\label{RegularBipartitePerfectMatching}
+For every $k \geq 1$, every $k$-regular bipartite graph has a perfect matching.
+\end{cor}
+\begin{proof}
+Let $G$ be a $k$-regular bipartite graph with parts $A$ and $B$. For, $X \subseteq A$ we have $k\card{X} = \card{E(X, N(X))} \leq k\card{N(X)}$ and thus $\card{X} \leq \card{N(X)}$.  By Lemma \ref{Hall}, there exists a matching of $A$ into $B$.  By symmetry we also have a matching of $B$ into $A$, thus $\card{A} = \card{B}$ and either of these matchings will do for the desired perfect matching.
+\end{proof}
+
+\begin{cor}[Peterson 1891]
+Every regular graph of positive even degree has a $2$-factor (a $2$-regular spanning subgraph).
+\end{cor}
+\begin{proof}
+Let $k \geq 1$ and let $G$ be a $2k$-regular graph.  Without loss of generality, assume $G$ is connected.  By Lemma \ref{Eulerian}, $G$ has an Euler tour $v_0e_0\cdots e_{r-1}v_{r}$ with $v_r = v_0$.  Create a graph $H$ by replacing every $v \in V(G)$ by a pair $(v^-, v^+)$ and each edge $v_iv_{i+1}$ by the edge $v_i^+v_{i+1}^-$.  Then $H$ is bipartite and $k$-regular and hence by Corollary \ref{RegularBipartitePerfectMatching} has a perfect matching.  Now collapsing each pair $(v_i^-, v_i^+)$ back into $v_i$ gives a $2$-factor in $G$.
+\end{proof}
+
+\section{General Matching}
+Given a graph $G$, let $q(G)$ be the number of odd components of $G$.  A graph $G$ is called \emph{factor-critical} if $G \neq \emptyset$ and $G-v$ has a perfect matching for each $v \in V(G)$.  For $S \subseteq V(G)$, put $\defic{S} = q(G - S) - \card{S}$.  Let $\defic{G} = \max_{S \subseteq V(G)} \defic{S}$.
+
+\begin{lem}\label{FactorCriticalMakingSet}
+For every graph $G$ and any maximal $S \subseteq V(G)$ maximizing $\defic{S}$ we have:
+\begin{enumerate}
+\item Each component of $G-S$ is factor-critical.
+\item $S$ is matchable into the components of $G-S$; in particular, $\card{S} \leq q(G-S)$;
+\item $G$ has a perfect matching iff $q(G-S) = \card{S}$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample minimizing $\card{G}$.  Let $S \subseteq V(G)$ be a maximal set maximizing $\defic{S}$.  
+
+Let $C$ be a component of $G - S$.  First assume $\card{C}$ is even.  Pick $c \in C$ and put $T = S \cup \set{c}$.  Then some component of $C - c$ is odd and hence $q(G-T) \geq q(G - S) + 1$, but then $\defic{T} \geq \defic{S}$ contradicting the maximality of $S$.  Hence $\card{C}$ is odd.
+
+Now assume $C$ is not factor critical.  Then we have $c \in V(C)$ such that $C' = C - c$ has no perfect matching.  By the minimality of $\card{G}$ we have $S' \subseteq V(C')$ satisfying the statement of the lemma.  Since $C'$ has no perfect matching, $C'-S'$ has more than $\card{S'}$ components all of which are factor-critical and hence odd.  Thus $q(C'-S') > \card{S'}$.  Now $\card{C}$ is odd, so $\card{C'}$ is even.  Hence $q(C'-S')$ and $\card{S'}$ have the same parity.  In particular, we must have $q(C'-S') \geq \card{S'} + 2$.  Put $T = S \cup \set{c} \cup S'$.  Then $q(G - T) = q(G - S) - 1 + q(C'-S')$ giving $\defic{T} = q(G - S) - \card{S} + q(C'-S') - \card{S'} - 2 \geq \defic{S} + 2- 2 = \defic{S}$.  But this contradicts the maximality of $S$.   Hence $C$ is factor critical.  This completes the proof of (1).
+
+To prove (2), assume otherwise that $S$ is not matchable into the components of $G-S$.  Then, by Hall's theorem, there is $B \subseteq S$ which has edges into fewer than $\card{B}$ components of $G-S$.  Put $T = S - B$.  Then $\defic{T} = q(G-T) - \card{T} = q(G-T) - \card{S} + \card{B} > q(G-S) - \card{B} - \card{S} + \card{B} = \defic{S}$ where the penultimate inequality follows since $B$ connects up fewer than $\card{B}$ components.  This contradicts the maximality of $\defic{S}$.
+
+To prove (3), first assume that $G$ has a perfect matching.  By (2),$\card{S} \leq q(G-S)$.  Also plainly to have a perfect matching we must have $q(G-S) \leq \card{S}$.  For the reverse, assume $q(G-S) = \card{S}$.  Now (1) and (2) together easily give us a perfect matching in $G$.
+\end{proof}
+
+\begin{TutteBergeMatching}
+A maximum matching in a graph $G$ has size $\frac12 (\card{G} - \defic{G})$.
+\end{TutteBergeMatching}
+\begin{proof}
+Let $S \subseteq V(G)$ be a maximal set maximizing $\defic{S}$.  By Lemma \ref{FactorCriticalMakingSet} we have a matching from $S$ into the components of $G-S$.  Let $C_1, \ldots, C_{\card{S}}$ be the components in this matching and $C_{\card{S} + 1}, \ldots, C_k$ be the other components.  Then as each $C_i$ is factor critical, we have a matching in $G$ of size $\frac12 (\card{G} - (k - \card{S})) = \frac12 (\card{G} - \defic{G})$ since each $C_i$ is odd.  Hence any maximum matching in $G$ has at least $\frac12 (\card{G} - \defic{G})$ edges.
+
+Now let $M$ be a maximum matching in $G$.  For $T \subseteq V(G)$, let $M_T \subseteq M$ be the edges with at least one end in $T$. Then $\card{M} \leq \card{M_T} + \card{M-M_T} \leq \card{T} + \frac12(\card{G} - \card{T} - q(G - T)) = \frac12(\card{G} - \defic{T})$.  Hence $\card{M} \leq \frac12(\card{G} - \defic{G})$.
+\end{proof}
+
+An immediate consequence is Tutte's matching theorem.
+
+\begin{TutteMatching}
+A graph $G$ has a perfect matching iff $q(G - S) \leq \card{S}$ for every $S \subseteq V(G)$.
+\end{TutteMatching}
+
+
+\begin{GallaiEdmonds}
+Let $G$ be a graph and let $D \subseteq V(G)$ be the vertices which are missed by some maximum matching of $G$.  Let $A$ be the vertices of $G - D$ which are adjacent to at least one vertex of $D$.  Finally, let $C = V(G - A - D)$. The following statements hold.
+\begin{enumerate}
+\item the components of $G[D]$ are factor-critical; 
+\item $G[C]$ has a perfect matching; 
+\item the bipartite graph obtained from $G - C$ by removing the edges of $G[A]$ and contracting each component of $G[D]$ to a single vertex has positive surplus (as viewed from $A$); 
+\item if $M$ is a maximum matching in $G$, it contains a near-perfect matching of each component of $G[D]$, a perfect matching of each component of $G[C]$ and matches all vertices of $A$ with vertices in distinct components of $G[D]$; 
+\item $\nu(G) = \frac12 \left(\card{G} - c(G[D]) + \card{A}\right)$. 
+\end{enumerate}
+\end{GallaiEdmonds}
+\begin{proof}
+Let $T \subseteq V(G)$ be a maximal set maximizing $\defic{T}$.  By Lemma \ref{FactorCriticalMakingSet}, we have a matching from $T$ into the components of $G-T$.  Hence every $S \subseteq T$ must have neighbors in at least $\card{S}$ components of $G-T$.  Since $\emptyset \subseteq T$ has neighbors in zero components of $G-T$, we can choose a maximal $R \subseteq T$ such that $R$ has neighbors in exactly $\card{R}$ components of $G-T$.  Let $R'$ be the vertices in the components of $G-T$ in which $R$ has a neighbor.
+
+Let $M$ be a maximum matching in $G$.  Since each component of $G-T$ is factor critical, $M$ must contain a near perfect matching in each component of $G-T$.  But then since $M$ is maximum, the rest of the edges of $M$ must be a matching of $T$ into the components of $G-T$.  In particular, the vertices of $T$ are in every maximum matching.  Since $R$ has neighbors in only $\card{R}$ components of $G-T$, $R$ must be matched with these components in every maximum matching.  Hence the vertices of $R' \cup T$ are in every maximum matching.
+
+Let $D' = V(G - T - R')$.  If $R = T$, then $D' = D = \emptyset$.  So, let's assume that $R \neq T$.  By maximality of $R$, each $\emptyset \neq S \subseteq T - R$ must have neighbors in at least $\card{S} + 1$ components of $G[D']$.  Thus, by Hall's theorem, we have a matching of $T - R$ into any set of all but one component of $G[D']$.  In particular, each vertex of $D'$ is missed by some maximum matching.  Since the vertices of $R' \cup T$ are in every maximum matching we conclude that $D' = D$.  Also, $T-R$ is precisely the set of vertices not in $D$ that have an edge into $D$; that is, $A = T-R$.  This leaves $C = R \cup R'$.
+
+With these facts the proof is easy.  By Lemma \ref{FactorCriticalMakingSet}, the components of $G[D] = G - T - R'$ are factor-critical.  As we saw above, every maximum matching of $G$ induces a perfect matching of $G[C] = G[R \cup R']$.  This proves (1) and (2).  Now (3) follows from maximality of $R$ as above.  Finally, (4) and (5) are immediate.
+\end{proof}
+
+\subsection{Applications}
+\begin{cor}[Peterson 1891]
+Every bridgeless cubic graph has a perfect matching.
+\end{cor}
+\begin{proof}
+Let $G$ be a bridgeless cubic graph.  Let $S \subseteq V(G)$ and $C$ an odd component of $G-S$.  Then as $\sum_{v \in V(C)} d_C(v) = 2 \size{C}$ is even and
+$\sum_{v \in V(C)} d_G(v) = 3 \card{C}$ is odd, there must be an odd number of edges from $C$ to $S$.  Since $G$ has no bridge, there must be at least $3$ edges from $C$ to $S$.  Hence there are at least $3q(G-S)$ edges from $S$ to $G-S$.  But also, there are at most $3\card{S}$ such edges.  Hence $q(G-S) \leq \card{S}$.  Thus $G$ has a perfect matching by Tutte's theorem.
+\end{proof}
+
+\subsection{Augmenting Paths}
+\begin{AugmentingPath}
+Given a matching $M$, an \emph{$M$-alternating path} is a path that alternates
+between edges in $M$ and edges not in $M$.  An $M$-alternating path whose endpoints are not indicent with $M$ is called an \emph{$M$-augmenting path}.
+\end{AugmentingPath}
+\begin{Berge}
+A matching $M$ in a graph $G$ is a maximum matching in $G$ iff $G$ has no $M$-augmenting path.
+\end{Berge}
+\begin{proof}
+The forward direction is plain since replacing the $M$-edges in an $M$-augmenting path with the non-$M$-edges yields a larger matching.
+
+For the reverse direction we prove the contrapositive. Assume $M'$ and $M$ are matchings in a graph $G$ with $\card{M'} > \card{M}$.  We will construct an $M$-augmenting path in $G$.  Consider the symmetric difference $F = M \Delta M'$.  Then we have $\Delta(F) \leq 2$ and hence $F$ is a disjoint union of paths and cycles.  Moreover, the edges of any cycle in $F$ must alternate between $M$ and $M'$ and thus the number from $M$ equals the number from $M'$.  But $\card{M'} > \card{M}$, so some component of $F$ must have more edges from $M'$ than $M$.  The only possibility for such a component is a path that both starts and ends with an edge from $M'$.  But such a path must be $M$-augmenting.
+\end{proof}
+
+\subsection{Packing and Covering}
+Skipped Erdos-Posa for now.
+
+\begin{lem}\label{TreePackingHelper}
+Let $G$ be a multigraph.  Let $\set{F_1, \ldots, F_k}$ be a set of edge-disjoint spanning forests in $G$ maximizing $\card{E(F_1 \cup \cdots \cup F_k)}$.  Then for every edge $xy \in E(G) - E(F_1 \cup \cdots \cup F_k)$ there exists $U \subseteq V(G)$ such that $x,y \in U$ and $F_i[U]$ is connected for each $i \in [k]$.
+\end{lem}
+\begin{proof}
+Long.  Assume we will be given this as an assumption like before.
+\end{proof}
+
+\begin{NashWilliamsTutte}
+A multigraph contains $k$ edge-disjoint spanning trees iff for every partition $P$ of its vertex set it has at least $k(\card{P} - 1)$ cross-edges.
+\end{NashWilliamsTutte}
+\begin{proof}
+The forward implication is plain since collapsing each part to a vertex we get a connected graph with $\card{P}$ vertices and hence each spanning tree must have at least $\card{P} - 1$ cross-edges.
+
+For the forward direction, let $G$ be a counterexample minimizing $\card{G}$.  Let $\set{F_1, \ldots, F_k}$ be a set of edge-disjoint spanning forests in $G$ maximizing $\card{E(F_1 \cup \cdots \cup F_k)}$.  If all the $F_i$ are trees, we are done, so assume some $F_i$ is not a tree.  Then
+
+\[\sum_{i \in [k]} \size{F_i} < k(\card{G} - 1).\]
+
+The parition of $G$ into singletons together with our assumption shows that $\size{G} \geq k(\card{G} - 1)$.  Hence there exists an edge $xy \in E(G) - E(F_1 \cup \cdots \cup F_k)$.  By Lemma \ref{TreePackingHelper}, we have $U \subseteq V(G)$ such that $x,y \in U$ and $F_i[U]$ is connected for each $i \in [k]$.  
+
+Let $H = G/U$; that is, the graph formed from $G$ by collapsing $U$ to a single vertex $v_U$.  Since $v_U$ is in a single part in any partition $P$ of $H$, $P$ has the same number of cross edges as the partition of $G$ formed by expanding $v_U$ back to $U$.  In particular, $P$ has at least $k(\card{P} - 1)$ cross edges.  Since $x, y \in U$, $\card{H} < \card{G}$ and hence by the minimality of $\card{G}$, $H$ has $k$ edge-disjoint spanning trees $T_1, \ldots, T_k$.  Now $F_i[U]$ is connected for each $i$ and hence is a spanning tree of $U$. Thus replacing $v_U$ in $T_i$ with $F_i[U]$ gives $k$ edge-disjoint spanning trees in $G$.
+\end{proof}
+
+\begin{cor}
+A $2k$-edge-connected multigraph contains $k$ edge-disjoint spanning trees.
+\end{cor}
+\begin{proof}
+Let $G$ be a $2k$-edge-connected multigraph.  Let $P$ be a partition of $V(G)$.  Since $G$ is $2k$-edge-connected, there must be at least $2k$ edges from any part to the rest of the graph. Adding these up for each part, we count each edge twice and thus there are at least $\frac12 (2k\card{P}) = k\card{P} \geq k(\card{P} - 1)$ cross-edges.  Hence $G$ has $k$ edge-disjoint spanning trees by the Nash-Williams Tutte Theorem.
+\end{proof}
+
+\begin{NashWilliams}
+A multigraph $G$ can be partitioned into at most $k$ forests iff $\size{G[U]} \leq k(\card{U} - 1)$ for each $\emptyset \neq U \subseteq V(G)$.
+\end{NashWilliams}
+\begin{proof}
+For the forward implication, just note that a forest on $\card{U}$ vertices has at most $\card{U} - 1$ edges.
+
+Let $\set{F_1, \ldots, F_k}$ be a set of edge-disjoint spanning forests in $G$ maximizing $\card{E(F_1 \cup \cdots \cup F_k)}$.  If the $F_i$ don't partition $G$, then pick some $xy \in E(G) - E(F_1 \cup \cdots \cup F_k)$.  By Lemma \ref{TreePackingHelper}, we have $U \subseteq V(G)$ such that $x,y \in U$ and $F_i[U]$ is connected for each $i \in [k]$.  In particular, $\size{F_i[U]} \geq \card{U} - 1$ for each $i \in [k]$. But $xy$ is an edge in $U$ as well, so $\size{G[U]} > k(\card{U} - 1)$ contradicting our assumption.
+\end{proof}
+
+\section{General Coloring}
+\subsection{Vertex Coloring}
+\begin{thm}
+For every graph $G$ we have $\chi(G) \leq \frac12 + \sqrt{2\size{G} + \frac14}$.
+\end{thm}
+\begin{proof}
+In any $\chi(G)$ coloring of $G$, there must be at least one edge between any two color classes and thus $\size{G} \geq {\chi(G) \choose 2}$.  Solving for $\chi(G)$ proves the theorem.
+\end{proof}
+
+\begin{lem}
+For every graph $G$ we have $\chi(G) \leq col(G) = \max_{H \subseteq G} \delta(H) + 1$.
+\end{lem}
+\begin{proof}
+Let $G$ be a graph and $F$ a $\chi(G)$-critical subgraph of $G$.  Then $\delta(F) \geq \chi(G) - 1$ and hence $\chi(G) \leq \delta(F) + 1 \leq  \max_{H \subseteq G} \delta(H) + 1$.
+\end{proof}
+
+\begin{lem}\label{TwoConnectedHasGoodP3}
+Let $G$ be a non-complete $2$-connected graph with $\delta(G) \geq 3$. Then $G$ contains an induced $P_3$, say $abc$, such that $G - a - c$ is connected.
+\end{lem}
+\begin{proof}
+Since $G$ is connected and not complete, it contains induced $P_3$'s. If $G$ is $3$-connected, any induced $P_3$ will do.  Otherwise, let $\set{b, x} \subseteq V(G)$ be a cutset.  Since $G - b$ is not $2$-connected, it has at least two endblocks $B_1, B_2$.  But $G$ is $2$-connected, so $b$ must be adjacent to non cut vertices $a \in B_1$ and $c \in B_2$.  Thus $G - a - c$ is connected since $d(b) \geq 3$.  Whence $abc$ is our desired $P_3$.
+\end{proof}
+
+\begin{Brooks}
+Every graph with $\Delta \geq 3$ satisfies $\chi \leq \max\set{\omega, \Delta}$.
+\end{Brooks}
+\begin{proof}
+Assume not and let $G$ be a counterexample minimizing $\card{G}$.  Plainly, $G$ must be regular, $2$-connected and not complete.  Let $abc$ be the induced $P_3$ guaranteed by Lemma \ref{TwoConnectedHasGoodP3}.  By Lemma \ref{OrderingLemma}, we have an ordering $b, x_1, x_2, \ldots, x_k$ of $V(G - a - c)$ such that $G\left[b, x_1 ,\ldots, x_i\right]$ is connected for each $1 \leq i \leq k$.  Thus, greedily coloring with $V(G)$ ordered $a, c, x_k, x_{k-1}, \ldots, x_1, b$ uses only $\Delta(G)$ colors.
+\end{proof}
+
+
+\begin{defn}
+For each $k \in \mathbb{N}$, define the class of \emph{$k$-constructible} graphs as follows:
+
+\begin{enumerate}
+\item $K^k$ is $k$-constructible.
+\item If $G$ is $k$-constructible and $xy \in E(\overline{G})$, then $(G + xy) / xy$ is $k$-constructible.
+\item If $G_1, G_2$ are $k$-constructible and there are vertices $x, y_1, y_2$ such that $G_1 \cap G_2 = \set{x}$ and $xy_1 \in E(G_1)$ and $xy_2 \in E(G_2)$, then also $(G_1 \cup G_2) - xy_1 - xy_2 + y_1y_2$ is $k$-constructible.
+\end{enumerate}
+\end{defn}
+
+\begin{thm}[Haj{\'o}s 1961]
+Let $G$ be a graph and $k \in \mathbb{N}$.  Then $\chi(G) \geq k$ iff $G$ has a $k$-constructible subgraph.
+\end{thm}
+\begin{proof}
+We first prove that any $k$-constructible graph (and hence any supergraph) satisfies $\chi \geq k$.  Operation (2) cannot decrease the chromatic number of $G$ since any coloring of $(G + xy) / xy$ gives a coloring of $G$ where $x$ and $y$ are colored the same.  If a graph resulting from operation (3) had a $(k-1)$-coloring $\pi$, then $\pi(y_1) \neq \pi(y_2)$ and hence without loss of generality $\pi(x) \neq \pi(y_1)$.  But then $\pi$ is a proper $(k-1)$-coloring of $G_1$ which is impossible by induction.
+
+Now, assume the other direction is false and choose a graph $G$ with $\chi(G) \geq k$ having no $k$-constructible subgraph first minimizing $\card{G}$ and then maximizing $\size{G}$.  
+
+Note that $G$ cannot be a complete multipartite graph since then it would contain $K^k$.  Hence $\overline{G}$ contains an induced $P_3$, say $y_1xy_2$.  By maximality of $\size{G}$, for $i = 1, 2$ the edge $xy_i$ lies in a $k$-constructible subgraph $H_i$ of $G + xy_i$.
+
+Let $H'_2$ be a copy of $H_2$ such that $V(H'_2) \cap V(G) = \set{x} \cup V(H_2 - H_1)$ and there is an isomorphism $\func{\phi}{V(H_2)}{V(H'_2)}$ with $\phi(z) = z$ for $z \in V(H_2) \cap V(H'_2)$.  Then $H_1 \cap H'_2 = \set{x}$ and hence using operation (3) we see that $H = (H_1 \cup H'_2) - xy_1 - xy'_2 + y_1y'_2$ is $k$-constructible.  Identifying in $H$ each vertex in $H'_2 - G$ with the vertex it is a copy of in $H_2$ is a sequence of applications of operation (2) and hence $(H_1 \cup H_2) - xy_1 - xy_2 + y_1y_2$ is the desired $k$-constructible subgraph of $G$.
+
+\end{proof}
+
+\subsection{Edge Coloring}
+For a $k$-edge-coloring $\pi$ of a graph $G$, let $\pi(x) = \setbs{\pi(xy)}{xy \in E(G)}$ for $x \in V(G)$ and for $i \in \irange{k}$ put $\pi_i = \setb{x}{N(v)}{i \not \in \pi(x)}$.
+
+\begin{lem}\label{SimpleVizPrecursor}
+If $G$ is a simple graph and there exists $k \in \mathbb{N}$ and $v \in V(G)$ such that each of the following hold:
+\begin{enumerate}
+\item $\chi'(G - v) \leq k$;
+\item $d(v) \leq k$;
+\item $d(x) \leq k$ for all $x \in N(v)$;
+\item $d(x) = k$ for at most one $x \in N(v)$.
+\end{enumerate}
+Then $\chi'(G) \leq k$.
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample $G$, vertex $v \in V(G)$ and $k \in \mathbb{N}$ minimizing $k$.  Then $v$ satisfies each of (1), (2), (3) and (4).  By adding dummy pendant edges to $v$ and its neighbors if necessary, we may assume that $d(v) = k$, $d(x) = k$ for exactly one $x \in N(v)$ and $d(y) = k - 1$ for $y \in N(v) - \set{x}$.
+
+Choose a $k$-edge-coloring $\pi$ of $G - v$ minimizing $\sum_{i \in \irange{k}} \card{\pi_i}^2$.  First, assume $\card{\pi_i} \neq 1$ for all $i \in \irange{k}$.  Then, we have $\sum_{i \in \irange{k}} \card{\pi_i} = \card{\setb{(i, x)}{ \irange{k} \times N(v)}{i \not \in \pi(x)}} = \sum_{x \in N(v)} \left(k - d_{G-v}(x)\right) = 2d(v) - 1 < 2k$.  Hence there exists $a \in \irange{k}$ such that $\card{\pi_a} = 0$.  Also, since $2d(v) - 1$ is odd, there must be $b \in \irange{k}$ such that $\card{\pi_b}$ is odd and hence at least $3$.  Pick $z \in \pi_b$ and consider a maximum length path $zPw$ with edges alternating between color $a$ and color $b$ starting at $z$.  Exchange colors $a$ and $b$ on $P$ to get a new $k$-edge-coloring $\pi'$ of $G-v$.  Note that for any internal vertex $x$ of $P$ we have $\pi'(x) = \pi(x)$.  Since every vertex in $N(v)$ is incident with color $a$, if $w \in N(v)$, then by maximality of $P$, the last edge of $P$ must be colored $a$.  Hence, in any case, $\card{\pi'_a}^2 + \card{\pi'_b}^2 < \card{\pi_a}^2 + \card{\pi_b}^2$ contradicting our minimality assumption on $\pi$.
+
+Hence, we may assume $\pi_i = \set{z}$ for some $z \in N(v)$ and $i \in \irange{k}$.  Make a graph $H$ by removing $vz$ as well as all $e \in E(G)$ with $\pi(e) = i$ from $G$.  Then $H-v$ is $(k-1)$-edge-colored and we have removed exactly one neighbor from $v$ and each of its neighbors.  Hence, by minimality of $k$, we must have $\chi'(H) \leq k - 1$.  But then adding back in the edges we removed all colored with the same new color gives a $k$-edge-coloring of $G$. This final contradiction completes the proof.
+\end{proof}
+
+\begin{VizingSimple}
+Every simple graph satisfies $\Delta \leq \chi' \leq \Delta + 1$.
+\end{VizingSimple}
+\begin{proof}
+Let $G$ be a simple graph.  Plainly, $\chi'(G) \geq \Delta(G)$.  Applying Lemma \ref{SimpleVizPrecursor} inductively with $k = \Delta(G) + 1$ proves that $\chi'(G) \leq \Delta(G) + 1$.
+\end{proof}
+
+\begin{lem}\label{MultiVizPrecursor}
+If $G$ is a multigraph and there exists $k \in \mathbb{N}$ and $v \in V(G)$ such that each of the following hold:
+\begin{enumerate}
+\item $\chi'(G - v) \leq k$;
+\item $d(v) \leq k$;
+\item $d(x) + \mu(vx) \leq k + 1$ for all $x \in N(v)$;
+\item $d(x) + \mu(vx) = k + 1$ for at most one $x \in N(v)$.
+\end{enumerate}
+Then $\chi'(G) \leq k$.
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample $G$, vertex $v \in V(G)$ and $k \in \mathbb{N}$ minimizing $k$.  Then $v$ satisfies each of (1), (2), (3) and (4).  By adding dummy pendant edges to $v$ and its neighbors if necessary, we may assume that $d(v) = k$, $d(x) + \mu(vx) = k + 1$ for exactly one $x \in N(v)$ and $d(y) + \mu(vy) = k$ for $y \in N(v) - \set{x}$.
+
+Choose a $k$-edge-coloring $\pi$ of $G - v$ minimizing $\sum_{i \in \irange{k}} \card{\pi_i}^2$.  First, assume $\card{\pi_i} \neq 1$ for all $i \in \irange{k}$.  Then, we have $\sum_{i \in \irange{k}} \card{\pi_i} = \card{\setb{(i, x)}{\irange{k} \times N(v)}{i \not \in \pi(x)}} = \sum_{x \in N(v)} \left(k - d_{G-v}(x)\right) = -1 + \sum_{x \in N(v)} 2\mu(vx) = 2d(v) - 1 < 2k$.  Hence there exists $a \in \irange{k}$ such that $\card{\pi_a} = 0$.  Also, since $2d(v) - 1$ is odd, there must be $b \in \irange{k}$ such that $\card{\pi_b}$ is odd and hence at least $3$.  Pick $z \in \pi_b$ and consider a maximum length path $zPw$ with edges alternating between color $a$ and color $b$ starting at $z$.  Exchange colors $a$ and $b$ on $P$ to get a new $k$-edge-coloring $\pi'$ of $G-v$.  Note that for any internal vertex $x$ of $P$ we have $\pi'(x) = \pi(x)$.  Since every vertex in $N(v)$ is incident with color $a$, if $w \in N(v)$, then by maximality of $P$, the last edge of $P$ must be colored $a$.  Hence, in any case, $\card{\pi'_a}^2 + \card{\pi'_b}^2 < \card{\pi_a}^2 + \card{\pi_b}^2$ contradicting our minimality assumption on $\pi$.
+
+Hence, we may assume $\pi_i = \set{z}$ for some $z \in N(v)$ and $i \in \irange{k}$.  Make a multigraph $H$ by removing one edge between $v$ and $z$ as well as all $e \in E(G)$ with $\pi(e) = i$ from $G$.  Then $H-v$ is $(k-1)$-edge-colored and we have removed exactly one neighbor from $v$ and each of its neighbors.  Hence, by minimality of $k$, we must have $\chi'(H) \leq k - 1$.  But then adding back in the edges we removed all colored with the same new color gives a $k$-edge-coloring of $G$. This final contradiction completes the proof.
+\end{proof}
+
+\begin{Vizing}
+Every multigraph satisfies $\Delta \leq \chi' \leq \Delta + \mu$.
+\end{Vizing}
+\begin{proof}
+Let $G$ be a multigraph.  Plainly, $\chi'(G) \geq \Delta(G)$.  Applying Lemma \ref{MultiVizPrecursor} inductively with $k = \Delta(G) + \mu(G)$ proves that $\chi'(G) \leq \Delta(G) + \mu(G)$.
+\end{proof}
+
+\subsection{List Coloring}
+\begin{lem}\label{ThomassenPrecursor}
+Let $G$ be a plane graph with $\card{G} \geq 3$.  Suppose that every inner face of $G$ is bounded by a triangle and its outer face by a cycle $C = v_1\ldots v_kv_1$.  Let $L$ be a list assignment on $V(G)$ such that $\card{L(v_1)} = \card{L(v_2)} = 1$, $L(v_1) \neq L(v_2)$, $\card{L(x)} \geq 3$ for each $x \in V(C-v_1-v_2)$, and finally $\card{L(x)} \geq 5$ for each $x \in V(G - C)$.  Then $G$ can be colored from the $L$.
+\end{lem}
+\begin{proof}
+Assume not and let $G$ be a counterexample minimizing $\card{G}$. If $\card{G} = 3$, then $G$ is a triangle and the result follows.  Hence $\card{G} \geq 4$.
+
+First assume $C$ has a chord $vw$.  Then $C + vw$ breaks into two cycles $C_1$ and $C_2$ with $v_1v_2$ in exactly one of them.  Without loss of generality, assume $v_1v_2 \in E(C_1)$.  For $i = 1,3$, let $G_i$ be the subgraph of $G + vw$ induced on the vertices on and inside $C_i$.  Then, by minimality of $\card{G}$, we can color $G_1$ from its lists.  Since $vw \in E(G_1)$, $v$ and $w$ get different colors in this coloring, say $c_v$ and $c_w$ respectively.  Define a list assignment $L'$ on $G_2$ by setting $L'(v) = \set{c_v}$, $L'(w) = \set{c_w}$ and $L'(x) = L(x)$ for each $x \in V(G_2 - v - w)$.  Then again by minimality of $\card{G}$, we can color $G_2$ from $L'$.  But these colorings together give a coloring of $G$ from the $L$, contradiction.
+
+Thus we may assume that $C$ has no chord.  Let $v_1, u_1, \ldots, u_m, v_{k-1}$ be the neighbors of $v_k$ in their natural cyclic order around $v_k$.  By assumption, the inner faces of $C$ are bounded by triangles.  In particular, $v_1u_1\cdots u_mv_{k-1}$ is a path $P$ in $G$.  Let $C'$ be the cycle $P \cup (C-V_k)$.  Pick different $a,b \in L(v_k) - L(v_1)$ and remove them from $L(u_i)$ for each $i \in [m]$ to get a new list assignment $L'$ on $G - v_k$.  By minimality of $\card{G}$, $G-v_k$ has a coloring from $L'$.  Since $v_{k-1}$ used at most one of $a$ or $b$, we have a color left to use to complete the coloring to $v_k$.  This contradiction completes the proof.
+\end{proof}
+
+\begin{thm}[Thomassen 1994]
+Every planar graph is $5$-choosable.
+\end{thm}
+\begin{proof}
+Let $G$ be a plane graph and $L$ a $5$-assignment on $V(G)$. Add edges to $G$ until it is a maximal plane graph $H$.  Then, by maximality, $H$ is a plane triangulation with boundary $v_1v_2v_3v_1$.  Pick different colors, $c_1 \in L(v_1)$ and $c_2 \in L(v_2)$ and set $L(v_1) = \set{c_1}$, $L(v_2) = \set{v_2}$.  Then we have a coloring of $H$ (and hence $G$) from $L$ by Lemma \ref{ThomassenPrecursor}.
+\end{proof}
+
+\begin{lem}\label{KernelColoring}
+Let $D$ be a kernel-perfect digraph and $L$ a list assignment on $V(D)$.  If $d_D^+(v) < \card{L(v)}$ for every $v \in V(D)$, then $D$ can be colored from the lists.
+\end{lem}
+\begin{proof}
+Assume not and choose a counterexample $D$ minimizing $\card{D}$.  Pick some $a \in \bigcup_{v \in V(D)} L(v)$ and let $U = \setb{v}{V(D)}{a \in L(v)}$.  By assumption, $D[U]$ has a kernel $K$.  Color the vertices of $K$ with $a$ to get a list assignment $L'$ on $D - K$.  Since $\card{L'(v)} < \card{L(v)}$ implies that $v \in U$ and hence has an edge into $K$ we see that $d_{D - K}^+(v) < \card{L'(v)}$ for each $v \in V(D - K)$.  Since $D - K$ is again kernel-perfect we can complete the coloring by minimality of $\card{D}$.
+\end{proof}
+
+\begin{Galvin}
+Every bipartite graph satisfies $ch' = \chi'$.
+\end{Galvin}
+\begin{proof}
+By definition, every graph satisfies $ch' \geq \chi'$.  To prove the reverse inequality, let $G$ be a bipartite graph with parts $A$ and $B$ and let $c$ be a $k = \chi'(G)$ edge-coloring of $G$.  Put $H = L(G)$ and define a partial order $<$ on $V(H)$ by $e < f$ iff $e \cap f \subseteq A$ and $c(e) < c(f)$ or $e \cap f \subseteq B$ and $c(e) > c(f)$.  For each $v \in V(G)$, the restriction of $<$ to the edges incident with $v$ is then a total order $<_v$.  
+
+Now, $<$ defines an orientation $D$ of $H$ by directing $e$ to $f$ iff $e < f$.  Let $L$ be a list assignment on $V(D)$ with $\card{L(v)} = k$ for each $v \in V(D)$.  For $e \in V(D)$ we have 
+\begin{align*}
+d^+(e) &= \card{\setb{f}{V(D)}{e < f}} \\
+&= \card{\setb{f}{V(D)}{e \cap f \subseteq A \text{ and } c(e) < c(f)}} + \card{\setb{f}{V(D)}{e \cap f \subseteq B \text{ and } c(e) > c(f)}} \\
+&\leq \card{\set{c(e) + 1, \ldots, k}} + \card{\set{1, \ldots, c(e) - 1}} \leq k-1.
+\end{align*}
+
+For any $F \unlhd H$, we have $R \subseteq G$ such that $F = L(R)$ and the $<_v$ for $v \in V(R)$ give a set of preferences for $R$ and hence by the Stable Matching lemma, $R$ has a stable matching $M$.  But then $M$ is independent in $F$ and for any $xy \in E(F) - M$, either there exists $xz \in M$ with $xy <_x xz$ or $wy \in M$ with $xy <_y wy$ -- thus $xy$ has an edge into $M$ in $F$.  Whence $D$ is kernel-perfect and $d_D^+(v) < \card{L(v)}$ for every $v \in V(D)$ and is therefore colorable from the lists by Lemma \ref{KernelColoring}.
+\end{proof}
+
+\subsection{Perfect Graphs}
+\begin{thm}
+Chordal graphs are perfect.
+\end{thm}
+\begin{proof}
+Assume not and choose a chordal non-perfect graph $G$ minimizing $\card{G}$.  Then every induced subgraph of $G$ is again chordal and hence perfect.  Thus for any $v \in V(G)$ we must have $\chi(G - v) = \omega(G - v) \leq \omega(G) < \chi(G)$.  That is, $G$ is vertex critical and hence $G$ has no clique cutset.
+
+Let $S$ be a minimal cutset in $G$.  Since $S$ is not a clique, we have non-adjacent $x,y \in S$.  Let $C_1, C_2$ be components of $G-S$.  By minimality of $S$, both $x$ and $y$ must have neighbors in both $C_1$ and $C_2$. But then putting together a shortest path from $x$ to $y$ through $C_1$ with one through $C_2$ gives an induced cycle in $G$ of length at least $4$ contradicting the chordality of $G$.  This contradiction completes the proof.
+\end{proof}
+
+\begin{thm}
+The graph resulting from replacing all vertices of a perfect graph with perfect graphs is perfect.
+\end{thm}
+\begin{proof}
+Clearly it is enough to show that replacing a single vertex of a perfect graph by a perfect graph gives a perfect graph.  Assume this is not the case and choose a perfect graph $G$, $v \in V(G)$ and a perfect graph $F$ first minimizing $\card{F}$ and then minimizing $\card{G}$ such that replacing $v$ by $F$ in $G$ yields an imperfect graph.  Let $D$ be $G$ with $v$ replaced by $F$.  Then any induced subgraph of $D$ is perfect by minimality of $\card{F}$ and $\card{G}$.  Hence we must have $\omega(D) < \chi(D)$.  Thus $\omega(D) = \omega(D - y) = \chi(D - y) = \chi(D) - 1$ for any $y \in V(D)$.
+
+Pick $x \in V(F)$ and let $\pi$ be an $\omega(D)$-coloring of $D-x$.  Let $C_1, \ldots, C_k$ be the color classes of $\pi$ that contain a vertex of $F-x$.  Then each $y \in V(F)$ is non-adjacent to all of $\bigcup_i C_i - V(F)$.  Hence we must have $\omega(F) = \chi(F) \geq k + 1$ and hence $\omega(F) = \chi(F) = k + 1$. Note that $x$ must be in every $(k+1)$-clique in $F$. But this was for any $x \in V(F)$, thus every vertex of $F$ is in every $(k+1)$-clique in $F$ showing that $F = K^{k+1}$.  If $k > 1$, then by minimality of $\card{F}$ replacing $v$ with $K^k$ and then one of the vertices of the $K^k$ with $K^2$ shows that $D$ is perfect.  Hence $k = 1$.
+
+Say $V(F) = \set{x, y}$ with $y \in C_1$. Then $y$ cannot be in an $\omega(D)$-clique $K$ in $D-x$ since then $K \cup \set{x}$ would be an $(\omega(D) + 1)$-clique in $D$.  Hence $\omega(D) - 1 = \omega(D - x - (C_1 - \set{y})) = \chi(D - x - (C_1 - \set{y}))$.  Putting this coloring together with the color class $(C_1 - \set{y}) \cup \set{x}$ gives an $\omega(D)$-coloring of $D$.  This final contradiction completes the proof.
+\end{proof}
+
+\section{Extremal Graphs}
+\begin{TuranGraph}
+Let $r \leq n$ be positive integers.  We write $T_{n, r}$ for the complete $r$-partite graph $K_{n_1, \ldots, n_r}$ where $\sum_i n_i = n$ and $|n_i - n_j| \leq 1$ for all $i, j$.  
+\end{TuranGraph}
+
+\begin{Turan}
+Let $r \leq n$ be positive integers.  If $G$ is a $K_{r+1}$-free graph with $n$ vertices and the maximum number of edges, then $G = T_{n, r}$.
+\end{Turan}
+\begin{proof}
+Let $G$ be a $K_{r+1}$-free graph with $n$ vertices and the maximum number of edges.
+
+First, assume $G$ is a complete multipartite graph $K_{n_1, \ldots, n_s}$ with $n_i \geq n_j$ for $i \leq j$.  Then $s \leq r$ since $G$ is $K_{r+1}$-free.  If $s < r$, then $n_1 \geq 2$ and $K_{1, n_1 - 1, n_2, \ldots, n_s}$ is $K_{r+1}$-free and has more edges.  Thus $s = r$.  If $n_1 - n_s \geq 2$, then $K_{n_1 - 1, n_2, \ldots, n_{s-1}, n_s + 1}$ is $K_{r+1}$-free and has more edges.  Thus $G = T_{n, r}$ and we are done.
+
+Therefore, we may assume that $\overline{G}$ is not a disjoint union of cliques. Hence $G$ contains an induced $\overline{P_3}$, say with vertices $x, y, z$ where $yz \in E(G)$ and $xy, xz \not \in E(G)$.
+
+First, assume $d(x) \geq d(y)$ and $d(x) \geq d(z)$.  Create a new graph $H$ by adding two copies of $x$ to $G$ and removing $y$ and $z$.  Plainly, $H$ is $K_{r+1}$-free and $\card{E(H)} = \card{E(G)} + 2d(x) - (d(y) + d(z) - 1) > \card{E(G)}$.  This is a contradiction.
+
+Hence, without loss of generality, we may assume that $d(x) < d(y)$.  Now create a new graph $F$ by adding a copy of $y$ to $G$ and removing $x$.  Plainly, $F$ is $K_{r+1}$-free and $\card{E(F)} = \card{E(G)} + d(y) - d(x) > \card{E(G)}$.  This final contradiction completes the proof.
+\end{proof}
+
+\section{Directed Graphs}
+\begin{defn}
+A \emph{path cover} of a directed graph $G$ is a set of vertex disjoint directed paths in $G$ which together cover all the vertices of $G$.  If $P$ is a path cover of $G$, we let ter$(P)$ be the set of endpoints of the paths in $P$.
+\end{defn}
+
+\begin{GallaiMilgram}
+For any directed graph $G$, every path cover $P$ of $G$ with ter$(P)$ minimal has an independent transversal.
+\end{GallaiMilgram}
+\begin{proof}
+Assume the theorem is false and let $G$ be a counterexample with $\card{G}$ minimal. Let $P = \set{P_1, \ldots, P_k}$ be a path cover of $G$ with ter$(P)$ minimal.  For $1 \leq i \leq k$, let $x_i$ be the endpoint of $P_i$.  If $\set{x_1, \ldots, x_k}$ is independent, then we have the desired transversal.  Thus we may assume that $x_2x_1 \in E(G)$.  If $P_1$ has length zero, then removing $P_1$ from the cover and replacing $P_2$ with $P_2x_2x_1$ gives a path cover $P'$ with ter$(P') \subset \text{ter}(P)$ contradicting the minimality of ter$(P)$.  Hence we may let $y$ be the second to last vertex on $P_1$.
+
+Now $Q = \set{P_1y, P_2, \ldots, P_k}$ is a path cover of $G-x_1$.  Assume there is some path cover $Q'$ of $G-x_1$ with ter$(Q') \subset \text{ter}(Q)$.  If $y \in \text{ter}(Q')$, then we may extend the path ending in $y$ by $yx_1$ to get a path cover of $G$ violating the minimality of ter$(P)$.  Now, if $x_2 \in \text{ter}(Q')$, then we may extend the path ending in $x_2$ by $x_2x_1$ to again get a path cover of $G$ violating the minimality of ter$(P)$.  Hence ter$(Q') \subseteq \set{x_3, x_4, \ldots, x_k}$.  But then adding $x_1$ as a path of length zero to the cover again contradicts the minimality of ter$(P)$. 
+
+Hence ter$(Q)$ is minimal among path covers of $G-x_1$.  Now, by the minimality of $\card{G}$, we get an independent transversal in $\set{P_1y, P_2, \ldots, P_k}$ which is also an independent transversal in $P$.
+\end{proof}
+
+
+\begin{GallaiRoy}
+Every directed graph $G$ contains a directed path of length $\chi(G)$.
+\end{GallaiRoy}
+\begin{proof}
+Let $G$ be a directed graph and $G'$ a maximal acyclic induced
+subgraph of $G$.  Define a coloring $\pi$ on $V(G')$ by letting
+$\pi(x)$ be the length of the longest directed path in $G'$ starting
+at $x$. Then $\pi$ is proper since if $xy \in E(G')$, then tacking
+$xy$ onto the front of a longest path starting at $y$ (which cannot
+end at $x$ since $G'$ is acyclic) shows that $\pi(x) > \pi(y)$.  By
+maximality of $G'$, $G' + wz$ must contain a cycle for any edge $wz
+\in E(G) - E(G')$.  Hence $G'$ contains a directed path from $z$ to
+$w$ in $G'$ and therefore $\pi(z) > \pi(w)$ as above.  Thus $\pi$ is a
+proper coloring of $G$ as well.  But then $G$ contains a directed path
+of length at least $\card{im(\pi)} \geq \chi(G)$.
+\end{proof}
+
+\begin{Richardson}
+Any directed graph without odd directed cycles has a kernel.
+\end{Richardson}
+\begin{proof}
+Assume not and let $G$ be a kernel-less directed graph without odd directed cycles minimizing $\card{G}$.  Then $G$ is connected.  First assume $G$ is not strongly connected and let $A$ be a a sink the the finite acyclic graph formed by collapsing each strong component of $G$ to a single vertex.  Then $A$ has a kernel $U$ by minimality of $\card{G}$.  Let $T$ be the vertices in $G$ that have an edge into $U$.  Put $H = G - (U \cup T)$.  Then, by minimality, $H$ has a kernel $V$.  Put $W = U \cup V$.  Plainly, $W$ is a kernel in $G$.
+
+Hence we may assume that $G$ is strongly connected.  If $G$ is biparite, then each part is a kernel in $G$.  Hence we may assume that the underlying undirected graph of $G$ contains an odd cycle $v_0v_2\cdots v_rv_0$.  We construct an odd closed directed walk in $G$ starting and ending at $v_0$. Consider our indices modulo $r$. If $v_iv_{i+1} \in E(G)$, let $P_i = v_iv_{i+1}$; otherwise let $P_i$ be a shortest directed path from $v_i$ to $v_{i+1}$.  Then $P_i$ has odd length for each $i$ since otherwise $P_iv_{i+1}v_i$ would be an odd directed cycle in $G$.  Joining the $P_i$ end-to-end in order gives the desired odd closed directed walk in $G$.
+
+Hence we may let $Z$ be a minimal length odd closed directed walk in $G$.  Since $Z$ is not a directed cycle, it hits some vertex more than once.  Pick such a $v \in Z$ minimizing the length of the walk $L$ between $v$ and itself.  Then $L$ must be an even directed cycle.  But then removing $L$ from $Z$ gives a shorter odd closed directed walk. This final contradiction completes the proof.
+\end{proof}
+
+\section{Constructions}
+Triangle free graphs with large chromatic number, etc. Mycielski graphs and shift graphs.
+
+\section{Problems}
+\begin{prob}
+Any tree with an even number of vertices contains a unique spanning subgraph in which every vertex has odd degree.
+\end{prob}
+\begin{proof}
+First we prove that such a spanning subgraph exists and then we prove uniqueness.  
+
+To get a contradiction, assume there is some tree with an even number of vertices that does not contain a spanning subgraph in which every vertex has odd degree.  Let $T$ be a such a tree with the minimum number of vertices.  If every vertex of $T$ has odd degree, then $T$ itself is the desired spanning subgraph.  Hence we may assume that we have $v \in V(T)$ such that $d(v)$ is even.  Assume some component $A$ of $T - v$ has an even number of vertices. Then, since $\card{T}$ is even, $\card{T-A}$ is even as well.  Both $A$ an $T-A$ are connected, so we may apply minimality of $T$ to get spanning subgraphs in each of them in which every vertex has odd degree.  The union of these spanning subgraphs is a spanning subgraph of $T$ in which every vertex has odd degree.  Hence it must be that each component of $T-v$ has an odd number of vertices.  Now, $T-v$ has $d(v)$ components and since $d(v)$ is even, we conclude that $\card{T-v}$ is even and hence $\card{T}$ is odd.  This contradiction completes the proof.
+
+Now we prove uniqueness.  Assume $S_1$ and $S_2$ are distinct spanning subgraphs of $T$ in which each vertex has odd degree.  Consider the symmetric difference $F = S_1 \Delta S_2$.  Clearly, every vertex of $F$ has even degree.  Since $S_1$ and $S_2$ are distinct, some vertex $v \in V(F)$ has positive degree.  Hence every vertex in the component of $v$ in $F$ has degree at least $2$.  Since $T$ is finite, the component of $v$ in $F$ must contain a cycle contradicting the fact that $T$ is a tree.
+\end{proof}
+
+
+\end{document}

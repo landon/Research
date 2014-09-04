@@ -1,0 +1,77 @@
+\section{A general framework}
+\label{GeneralCompactness}
+So far, all of our applications of Zorn's lemma have had a similar flavor.  Here we discern the basic ingredients of these proofs and build a general framework for proving such results.  As a benefit we get a direct proof of Lemma \ref{LocalFinite} as well as a strengthening of Theorem \ref{OrientationDangerous}.
+
+\begin{defn}
+A \emph{directed graph property} is a collection $P$ of directed
+graphs.  If $G \in P$, we say that $G$ is a $P$-graph.
+\end{defn}
+
+\begin{defn}
+A \emph{vertex set property} $Q$ gives a collection $Q_G$ of subsets of
+$V(G)$ for each directed graph $G$.  If $G$ is a directed graph and $A \in
+Q_G$, we say that $A$ is a $Q$-set.
+\end{defn}
+
+\begin{defn}
+Let $P$ be a directed graph property and $Q$ a vertex set property.
+We call the pair $(P, Q)$ a \emph{constraint}.
+\end{defn}
+
+\begin{defn}
+We say that the constraint $(P, Q)$ is \emph{closed} if for every $P$-graph $G$,
+$\bigcup_j A_j$ is a $Q$-set for every chain $A_1 \subseteq A_2 \subseteq \cdots$
+of $Q$-sets in $V(G)$.
+\end{defn}
+
+\begin{defn}
+We say that the constraint $(P, Q)$ is \emph{interior-preserving} if for every
+$P$-graph $G$ and every chain $A_1 \subseteq A_2 \subseteq \cdots$ of $Q$-sets in $V(G)$ we have $\I(\bigcup_j A_j) = \bigcup_j \I(A_j)$.
+\end{defn}
+
+\begin{defn}
+Let $G$ be a directed graph and d a denotation assignment on $V(G)$.
+For $A \subseteq V(G)$, let $d_A$ be $d$ restricted to $A$.  A function $v$ from
+$A$ to ${0, 1}$ is called acceptable on $A$ relative to $d_A$ if for each $x
+\in I(A)$ we have $\ll d(x) \rr (v) = v(x)$.
+\end{defn}
+
+\begin{defn}
+Let $G$ be a directed graph and $d$ a denotation assignment on
+$V(G)$. A pair $(A, v_A)$ where $A \subseteq V(G)$ is \emph{solved} if $v_A$ is
+acceptable (in the extended sense above) on $A$ with respect to $d_A$.  Let $Q$ be a vertex set property. If $(A, v_A)$ is solved and $A$ is a $Q$-set, then we
+say that $(A, v_A)$ is \emph{$Q$-solved}.
+\end{defn}
+
+\begin{defn}
+Let $(P, Q)$ be a constraint, $G$ a $P$-graph and $d$ a denotation
+assignment on $V(G)$. We let $X_{P, Q, G, d}$ be the collection of
+$Q$-solved pairs with respect to $G$ and $d$.  We define a partial order $<$
+on $X_{P, Q, G, d}$ by $(A, v_A) < (B, v_B)$ if and only if $A \subsetneq B$ and $v_B$ is $v_A$ restricted to $A$.
+\end{defn}
+
+\begin{lem}\label{ConstraintMax}
+If $(P, Q)$ is a closed and interior-preserving constraint,
+then for any graph $G$ and denotation assignment $d$ on $V(G)$, there exists
+a maximal element in $X_{P, Q, G, d}$ with respect to $<$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\begin{defn}
+We say that the constraint $(P, Q)$ is extensible if for any
+$P$-graph $G$ and denotation assignment $d$ on $V(G)$ any maximal $(A, v_A) \in
+X_{P, Q, G, d}$ has $A = V(G)$.
+\end{defn}
+
+\begin{lem}
+Let $P$ be a directed graph property.  If there exists a
+vertex-set property $Q$ such that the constraint $(P, Q)$ is closed,
+interior-preserving and extensible then no $P$-graph is dangerous.
+\end{lem}
+\begin{proof}
+Let $Q$ be a vertex-set property such that the constraint $(P, Q)$
+is closed, interior-preserving and extensible.  Let $G$ be a $P$-graph and $d$ a
+denotation assignment on $V(G)$. By Lemma \ref{ConstraintMax}, we have $(M, v_M)$ which is maximal in $X_{P, Q, G, d}$.  Since $(P,Q)$ is extensible, we must have $M = V(G)$ and thus $v_M$ is an acceptable truth assignment on $(V(G),
+d)$.  Since $d$ was arbitrary, $G$ is not dangerous.
+\end{proof}

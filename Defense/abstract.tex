@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+
+\title{Coloring graphs from almost maximum degree sized palettes}
+\author{Landon Rabern}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Every graph can be colored with one more color than its maximum degree. A
+well-known theorem of Brooks gives the precise conditions under which a graph
+can be colored with maximum degree colors.  It is natural to ask for the
+required conditions on a graph to color with one less color than the maximum
+degree; in 1977 Borodin and Kostochka conjectured a solution for graphs with maximum degree at least 9: as long as the graph doesn't contain a maximum-degree-sized clique, it can be colored with one
+fewer than the maximum degree colors.
+
+This study attacks the conjecture on multiple fronts.  The first technique is an
+extension of a vertex shuffling procedure of Catlin and is used to prove the
+conjecture for graphs with edgeless high vertex subgraphs.  This general
+approach also bears more theoretical fruit.
+
+The second technique is an extension of a method Kostochka used to reduce the
+Borodin-Kostochka conjecture to the maximum degree 9 case.  Results on the
+existence of independent transversals are used to find an independent set
+intersecting every maximum clique in a graph.  
+
+The third technique uses list coloring results to exclude induced subgraphs in a
+counterexample to the conjecture. The classification of such excludable graphs
+that decompose as the join of two graphs is the backbone of
+many of the results presented here.
+
+The fourth technique uses the structure theorem for quasi-line graphs of 
+Chudnovsky and Seymour in concert with the third technique to prove the
+Borodin-Kostochka conjecture for claw-free graphs.
+
+The fifth technique adds edges to proper induced subgraphs of a minimum
+counterexample to gain control over the colorings produced by minimality.
+
+The sixth technique adapts a recoloring technique originally developed for
+strong coloring by Haxell and by Aharoni, Berger and Ziv to general coloring. 
+Using this recoloring technique, the Borodin-Kostochka conjectured is proved for
+graphs where every vertex is in a large clique.
+
+The final technique is naive probabilistic coloring as employed by
+Reed in the proof of the Borodin-Kostochka conjecture for large maximum degree. 
+The technique is adapted to prove the Borodin-Kostochka conjecture for list
+coloring for large maximum degree.
+\end{abstract}
+\end{document}

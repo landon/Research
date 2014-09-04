@@ -1,0 +1,317 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+% any changes to \claim should be mirrored in \claimnonum and \subclaim
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\title{Coloring vertex-transitive graphs}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+\begin{conjecture}\label{MainConjecture}
+If $G$ is vertex-transitive, then $\chi(G) \le \max \set{\omega(G), \ceil{\frac{5\Delta(G) + 3}{6}}}$.
+\end{conjecture}
+
+This would be tight by Catlin's counterexamples to the Haj{\'o}s conjecture \cite{catlin1979hajos}.  Catlin computed the chromatic number of line graphs of odd cycles where each edge has been duplicated $k$ times; in particular, he showed that $\chi(G_{t,k}) = 2k + \ceil{\frac{k}{t}}$ for $t \ge 2$ where $G_{t,k} \DefinedAs L(kC_{2t+1})$.  Since $\Delta(G_{t,k}) = 3k-1$ and $\omega(G_{t,k}) = 2k$ we have $\chi(G_{2, k}) = \max \set{\omega(G_{2,k}), \ceil{\frac{5\Delta(G_{2,k}) + 3}{6}}}$ for all $k \ge 1$.
+
+\begin{thm}\label{BKTransitive}
+If $G$ is vertex-transitive with $\Delta(G) \ge 10$ and $K_{\Delta(G)} \not \subseteq G$, then $\chi(G) \le \Delta(G) - 1$.
+\end{thm}
+
+We conjecture that the $10$ in Theorem \ref{BKTransitive} can be reduced to $9$.  This would be best possible and follows from Conjecture \ref{MainConjecture}.
+\section{Clustering of maximum cliques}
+\subsection{The clique graph}
+\begin{defn}
+Let $G$ be a graph. For a collection of cliques $\Q$ in $G$, let $X_\Q$ be the intersection graph of $\Q$; that is, the vertex set of $X_\Q$ is $\Q$ and there is an edge between $Q_1, Q_2 \in \Q$ iff $Q_1 \ne Q_2$ and $Q_1$ and $Q_2$ intersect.
+\end{defn}
+
+When $\Q$ is a collection of maximum cliques, we get a lot of information about $X_\Q$.  Kostochka \cite{kostochkaRussian} used the following lemma of Hajnal \cite{HajnalSaturation} to show that the components of $X_\Q$ are complete in a graph with $\omega > \frac23 (\Delta + 1)$.
+
+\begin{lem}[Hajnal \cite{HajnalSaturation}]\label{HajnalLemma}
+Let $G$ be a graph and $\Q$ a collection of maximum cliques in $G$. Then \[\card{\bigcup \Q} + \card{\bigcap \Q} \geq 2\omega(G).\]
+\end{lem}
+
+Hajnal's lemma follows by an easy induction (see \cite{rabernhitting}).  The proof of Kostochka's lemma in \cite{kostochkaRussian} is in Russian, for a reproduction of his original proof in English, see \cite{rabernhitting}.  Here is a shorter proof from \cite{raberndiss}.
+
+\begin{lem}[Kostochka \cite{kostochkaRussian}]\label{KostochkaCliqueGraph}
+If $\Q$ is a collection of maximum cliques in a graph $G$ with $\omega(G) > \frac23 (\Delta(G) + 1)$ such that $X_\Q$ is connected, then $\cap \Q \neq \emptyset$. 
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $\Q \DefinedAs \set{Q_1, \ldots, Q_r}$ minimizing $r$. Plainly, $r \geq 3$. Let $A$ be a noncutvertex in $X_{\Q}$ and $B$ a neighbor of $A$. Put $\fancy{Z} \DefinedAs \Q - \set{A}$. Then $X_{\fancy{Z}}$ is connected and hence by minimality of $r$, $\cap \fancy{Z} \neq \emptyset$. In particular, $\card{\cup \fancy{Z}} \leq \Delta(G) + 1$. Hence $\card{\cup \Q} \leq \card{\cup \fancy{Z}} + \card{A - B} \leq 2(\Delta(G) + 1) - \omega(G) < 2\omega(G)$. This contradicts Lemma \ref{HajnalLemma}.
+\end{proof}
+
+As shown by Christofides, Edwards and King \cite{christofides2012note}, components of $X_\Q$ have nice structure in the $\omega = \frac23 (\Delta + 1)$ case as well.  We'll need this stronger result to get our bounds on coloring vertex-transitive graphs to be tight.
+
+\begin{lem}[Christofides, Edwards and King \cite{christofides2012note}]\label{TwoThirdsEqualityStructure}
+If $\Q$ is a collection of maximum cliques in a graph $G$ with $\omega(G) \ge \frac23 (\Delta(G) + 1)$ such that $X_\Q$ is connected, then either 
+\begin{itemize}
+\item $\cap \Q \ne \emptyset$; or
+\item $\Delta(X_\Q) \le 2$ and if $B, C \in \Q$ are different neighbors of $A \in \Q$, then $B \cap C = \emptyset$ and $\card{A \cap B} = \card{A \cap C} = \frac12 \omega(G)$.
+\end{itemize}
+
+\end{lem}
+\subsection{In vertex-transitive graphs}
+Let $G$ be a vertex-transitive graph and $\Q$ the collection of all maximum cliques in $G$.  Plainly, $X_\Q$ is vertex-transitive as well; the following lemma shows we get even more.
+
+\begin{lem}\label{transitiveClustering}
+Let $G$ be a vertex transitive graph and $\Q$ the collection of all maximum cliques in $G$.  For each component $C$ of $X_\Q$, put $G_C \DefinedAs G\brackets{\bigcup V(C)}$.  Then $G_C$ is vertex transitive for
+each component $C$ of $X_\Q$ and $G_{C_1} \cong G_{C_2}$ for components $C_1$ and $C_2$ of $X_\Q$.
+\end{lem}
+
+A basic consequence of Lemma \ref{transitiveClustering} is that if $G$ is vertex-transitive and $G_C$ has a universal vertex, then $G_C$ is complete.  In particular, $X_\Q$ is edgeless for vertex-transitive graphs with $\omega > \frac23 (\Delta + 1)$.   Using Lemma \ref{TwoThirdsEqualityStructure}, we get a bit more.
+
+\begin{lem}\label{TransitiveClusteringBigCliques}
+Let $G$ be a connected vertex-transitive graph and $\Q$ the collection of all maximum cliques in $G$.  If $\omega(G) \ge \frac23 \parens{\Delta(G) + 1}$, then either
+\begin{itemize}
+\item $X_\Q$ is edgeless; or
+\item $X_\Q$ is a cycle and $G$ is the graph obtained from $X_\Q$ by blowing up each vertex to a $K_{\frac12 \omega(G)}$.
+\end{itemize}
+\end{lem}
+\begin{proof}
+If $\omega(G) > \frac23 \parens{\Delta(G) + 1}$, then $X_\Q$ is edgeless as shown above.  Hence we may assume $\omega(G) = \frac23 \parens{\Delta(G) + 1}$.  Let $Z$ be a component of $X_\Q$ and put $\Z \DefinedAs V(Z)$.
+By Lemma \ref{TwoThirdsEqualityStructure}, $\Delta(X_\Z) \le 2$ and if $B, C \in \Z$ are different neighbors of $A \in \Z$, then $B \cap C = \emptyset$ and $\card{A \cap B} = \card{A \cap C} = \frac12 \omega(G)$.  By Lemma \ref{transitiveClustering}, $X_\Z$ must be a cycle.  But then every vertex in $G_Z$ has $\frac12 \omega(G) + \frac12 \omega(G) + \frac12 \omega(G) - 1 = \Delta(G)$ neighbors in $G_Z$ and thus $G = G_Z$.  Hence $X_\Q = X_\Z$ is a cycle and $G$ is the graph obtained from $X_\Q$ by blowing up each vertex to a $K_{\frac12 \omega(G)}$.
+\end{proof}
+
+\section{The fractional version}
+Fractional coloring of vertex-transitive graphs is easy since $\chi_f(G) = \frac{|G|}{\alpha(G)}$. We need Haxell's condition \cite{haxell2001note} for the existence of an independent transversal.
+
+\begin{lem}\label{HaxellTransversal}
+Let $H$ be a graph and $V_1 \cup \cdots \cup V_r$ a partition of $V(H)$. 
+Suppose that $\card{V_i} \geq 2\Delta(H)$ for each $i \in \irange{r}$. Then $H$ has an independent set $\set{v_1, \ldots, v_r}$
+where $v_i \in V_i$ for each $i \in \irange{r}$.
+\end{lem}
+
+\begin{lem}\label{TransitiveFractionalColoringWithBigCliques}
+If $G$ is a vertex-transitive graph with $\omega(G) \ge \frac23 \parens{\Delta(G) + 1}$, then $\alpha(G) = \floor{\frac{|G|}{\omega(G)}}$.  Moreover, if $\omega(G) > \frac23 \parens{\Delta(G) + 1}$, then $\omega(G)$ divides $|G|$.
+\end{lem}
+\begin{proof}
+We may assume that $G$ is connected. Since $G$ is vertex-transitive, every vertex of $G$ is in an $\omega(G)$-clique. First, suppose $\omega(G) > \frac23 \parens{\Delta(G) + 1}$.  Then Lemma \ref{TransitiveClusteringBigCliques} shows that the vertex set of $G$ can be partitioned into cliques $V_1, \ldots, V_r$ with $|V_i| \ge \ceil{\frac23 \parens{\Delta(G) + 1}}$ for each $i \in \irange{r}$.  Let $H$ be the graph formed from $G$ by making each $V_i$ independent.  Then $\Delta(H) \le \Delta(G) + 1 - \ceil{\frac23 \parens{\Delta(G) + 1}}$ and hence by Lemma \ref{HaxellTransversal}, there is an independent set in $G$ with a vertex in each $V_i$.  But then $|G| = \alpha(G)\omega(G)$ and we're done.
+
+So, suppose $\omega(G) = \frac23 \parens{\Delta(G) + 1}$.  Then Lemma \ref{TransitiveClusteringBigCliques} shows that $G$ is obtained from a cycle $C$ by blowing up each vertex of $C$ to a $K_{\frac12 \omega(G)}$.  Hence $\alpha(G) = \floor{\frac{|C|}{2}} = \floor{\frac{|G|}{\omega(G)}}$ as desired.
+\end{proof}
+
+Reed's $\omega$, $\Delta$ and $\chi$ conjecture states that every graph satisfies
+\[\chi \leq\ceil{\frac{\omega + \Delta + 1}{2}}.\]
+
+In \cite{molloy2002graph}, Molloy and Reed prove this bound without the round-up for the fractional chromatic number $\chi_f$.  
+Since $\chi_f(G) = \frac{|G|}{\alpha(G)}$ for vertex-transitive graphs, an earlier result of Fajtlowicz \cite{fajtlowicz1984independence} suffices for our purposes.
+
+\begin{lem}[Fajtlowicz \cite{fajtlowicz1984independence}]\label{fajtlowicz}
+For every graph $G$, we have $\alpha(G) \ge \frac{2|G|}{\omega(G) + \Delta(G) + 1}$.
+\end{lem}
+
+\begin{thm}
+If $G$ is vertex-transitive, then $\alpha(G) \ge \frac{|G|}{\max\set{\omega(G), \frac56\parens{\Delta(G) + 1}}}$.
+\end{thm}
+\begin{proof}
+Suppose $\omega(G) > \frac23 \parens{\Delta(G) + 1}$.  Then Lemma \ref{TransitiveFractionalColoringWithBigCliques} shows $\alpha(G) = \frac{|G|}{\omega(G)}$ and we're done.  Otherwise, $\omega(G) \le \frac23 \parens{\Delta(G) + 1}$ and Lemma \ref{fajtlowicz} gives $\alpha(G) \ge \frac{2|G|}{\frac23 (\Delta(G) + 1) + \Delta(G) + 1} = \frac{|G|}{\frac56 (\Delta(G) + 1)}$ as desired.
+\end{proof}
+
+Restating in terms of fractional coloring, we have the following.
+
+\begin{cor}
+If $G$ is vertex-transitive, then $\chi_f(G) \le \max\set{\omega(G), \frac56\parens{\Delta(G) + 1}}$.
+\end{cor}
+\section{A generalization of Haxell's strong coloring theorem}
+In \cite{haxell2004strong}, Haxell proved that the strong chromatic number of any graph is at most $3\Delta - 1$.  The following is a restatement of this result in terms of ordinary coloring.
+\begin{thm}[Haxell \cite{haxell2004strong}]\label{HaxellStrong}
+If $G$ is a graph whose vertex set can be partitioned into cliques each of size at least $\frac{3\Delta(G) + 2}{4}$, then $\chi(G) = \omega(G)$.
+\end{thm}
+
+The strong $2\Delta$-colorability conjecture \cite{aharoni2007independent} says Theorem \ref{HaxellStrong} should hold with $\frac{3\Delta(G) + 2}{4}$ replaced by $\frac23 \parens{\Delta(G) + 1}$.  In this section we prove an intermediate result.  For a graph $G$ and a partition $\set{V_1, \ldots, V_r}$ of $V(G)$, the \emph{external degree} of $v \in V_i$ is $d_G(v) - \card{V_i \cap N(v)}$.
+
+\begin{thm}\label{HaxellGeneralized}
+If the vertex set of a graph $G$ has a partition into cliques with maximum external degree $d$, then $\chi(G) \le \max\set{\omega(G), d + \frac{\Delta(G) + 1}{2}}$.
+\end{thm}
+\begin{proof}
+Suppose not.  Let $G$ be a counterexample with clique partition $\set{V_1, \ldots, V_r}$ with $|V_1| \ge |V_2| \ge \cdots \ge |V_r|$ having maximum external degree $d$.  Suppose $|V_1| > |V_r|$.  Form $G'$ by adding a new vertex to $G$ joined to $V_r$.  This doesn't change the external degrees or clique number.  If $\Delta(G') > \Delta(G)$, then $\Delta(G') \le |V_r| + d$ and hence $\Delta(G) \le |V_1| + d-2$, but then the clique partition has maximum external degree at most $d-1$, a contradiction.  Hence $\Delta(G') = \Delta(G)$ and $G'$ is a counterexample as well.  Repeating this argument we conclude that there must be counterexamples where $|V_1|=|V_2|=\cdots=|V_r|$ for some clique partition with maximum external degree $d$.  We only work with such \emph{balanced} counterexamples. Note that since some $V_j$ has a vertex with external degree $d$, we have $\Delta = d + |V_j| - 1$ and hence the common size of the parts is $\Delta + 1 - d$.
+
+Choose a balanced counterexample $G$ minimizing $\card{G} + \size{G}$.  Put $\Delta \DefinedAs \Delta(G)$, $\omega \DefinedAs \omega(G)$ and $\kappa \DefinedAs \max\set{\omega, d + \frac{\Delta + 1}{2}}$. Let $\set{V_1, \ldots, V_r}$ be a partition of $V(G)$ into equal sized cliques with maximum external degree $d$.  By symmetry, we have $xw \in E(G)$ where $x \in V_1$ and $w \in V_2$.  Since $G - xw$ satisfies the hypotheses of the theorem, by minimality we must have $\chi(G - xw) \le \kappa$.  
+
+Let $\pi$ be a $\kappa$-coloring of $G-xw$ chosen so that $\pi(x) = 1$ so as to minimize $\card{\pi^{-1}(1)}$.  The rest of the proof is quite similar to Haxell's proof in \cite{haxell2004strong}.  Before getting into the details, let's see an intuitive explanation of the recoloring process. Considering $\pi$ as a coloring of $G-x$, we first color $x$ with $1$, then note the $V_i$ where there is a conflict (neighbors of $x$ colored $1$).  Suppose there is a conflict in $V_i$, say $z_i \in V_i$ got colored $1$.  We fix this conflict by (carefully) choosing $y \in V_i - z_i$, stealing its color for $z_i$ and then coloring $y$ with $1$.  We must be wary of two issues when choosing $y$.  First, it may be that $z_i$ has a neighbor besides $y$ with color $\pi(y)$; in this case, coloring $z_i$ with $\pi(y)$ would cause a secondary conflict which we cannot manage.  We will exclude such $y$ from our options and dub them \emph{badly colored}.  The second issue is adjacencies between $y$ and vertices we have already recolored---if $y$ is adjacent to vertices previously recolored in the process then we run the risk of breaking $V_i$ we have fixed.  We exclude such $y$ from our options as well and call them \emph{dangerous}.  With these two restrictions in place, as long as we can always find legal $y$ for some conflicted $V_i$, then we can fix $V_i$, but by the exclusion of dangerous vertices, we never need to fix the same $V_i$ more than once and hence we conclude that our finite graph has infinitely many vertices, a contradiction.  That's the basic idea of the recoloring process our argument is modeling.  The following formal argument will look a bit different since it is cleaner to write down in a static manner instead of as a dynamic recoloring process.
+
+Let $\tau$ be a $\kappa$-coloring of $G-x$ minimizing $\card{\tau^{-1}(1)}$.  Put $Z \DefinedAs \tau^{-1}(1)$.. For $v \in V(G)$, put $Z_{\tau}(v) \DefinedAs N(v) \cap Z$ and let $\ell(v)$ be such that $v \in V_{\ell(v)}$. A \emph{$\tau$-recoloring tree} of is a set of vertices $F \DefinedAs \set{y_1, \ldots, y_h} \cup \bigcup_{m \in \irange{h}} X_m$ in $G$ with the following properties:
+
+\begin{enumerate}
+\item $y_1 = x$;
+\item For $1 \le i \le h$, $X_i \DefinedAs Z_{\tau}(y_i) \ne \emptyset$ and $X_i \cap X_j = \emptyset$ for $i \neq j$;
+\item For $2 \le i \le h$, $y_i \in R_j$ for some $j < i$ where $R_j \DefinedAs \bigcup \setbs{V_{\ell(v)}}{v \in \bigcup_{m \in \irange{j}} X_m}$,\\
+we write $v(y_i)$ for the unique $v \in \bigcup_{m \in \irange{j}} X_m$ for which $y_i \in V_{\ell(v)}$;
+\item For $2 \le i \le h$, $y_i$ is nonadjacent to $\parens{\set{y_1, \ldots, y_{i-1}} \cup \bigcup_{m \in \irange{i-1}} X_m} - V_{\ell(y_i)}$;
+\item For $2 \le i \le h$, 
+\begin{itemize}
+\item $\tau^{-1}(\tau(y_i)) \cap N(v(y_i)) = \set{y_i}$.
+\end{itemize}
+\end{enumerate}
+
+Note that condition (4) is excluding dangerous vertices and condition (5) is excluding badly colored vertices. For a $\tau$-recoloring tree $F$ put $R(F) \DefinedAs  \bigcup \setbs{V_{\ell(v)}}{v \in F - y_1}$.  Then $R(F) - F$ is the set of all $y$ we might try to use to fix conflicts.  But we can only use such $y$ that are not dangerous and not badly colored.  We call $y \in R(F) - F$ a \emph{qualifying vertex} if $y$ satisfies conditions (4) and (5) and we let $\fancy{Q}(F)$ be the set of qualifying vertices for $F$.
+
+\claim{1}{Let $\tau$ be a $\kappa$-coloring of $G-x$ where $1 \not \in \tau(V_1 - x)$ minimizing $\card{\tau^{-1}(1)}$ and suppose $F$ is a $\tau$-recoloring tree. Then $\fancy{Q}(F) \ne \emptyset$.}
+
+\bigskip
+
+Let's see how the theorem follows given Claim 1.  For a $\tau$-recoloring tree $F$ we define the \emph{profile} of $F$ as the tuple $\fancy{P}(F) \DefinedAs \parens{|X_1|, \ldots, |X_h|}$.  Consider the partial ordering defined on recoloring trees by $F < F'$ iff $\fancy{P}(F')$ is a proper prefix of $\fancy{P}(F)$ or there is $s$ such that $\parens{a_1, \ldots, a_{s-1}, a_s}$ is a proper prefix of $\fancy{P}(F)$, $\parens{a_1, \ldots, a_{s-1}, a_s'}$ is a proper prefix of $\fancy{P}(F')$ and $a_s < a_s'$ (in other words, the order induced by the Kleene-Brouwer order on their profiles).  This order is well-founded and hence we may pick a minimal recoloring tree $F$.  By Claim 1, we may pick $y \in \fancy{Q}(F)$.  
+
+First, suppose $Z_{\tau}(y) \ne \emptyset$.  Then put $F' \DefinedAs \set{y_1, \ldots, y_h, y_{h+1}} \cup \bigcup_{m \in \irange{h+1}} X_m$ where $y_{h+1} \DefinedAs y$ and $X_{h+1} \DefinedAs Z_{\tau}(y)$.  Plainly $F'$ is a $\tau$-recoloring tree, but $\fancy{P}(F)$ is a proper prefix of $\fancy{P}(F')$, so $F' < F$ contradicting minimality of $F$.
+
+Hence we must have $Z_{\tau}(y) = \emptyset$.  In terms of our intuitive explanation this means $y$ can be colored $1$ without causing any new conflicts.  Note that such a recoloring step never makes more vertices colored $1$, so always preserves the minimality condition on $\card{\tau^{-1}(1)}$. The precise details of the recoloring here are nearly identical to those in Haxell's proof, so we omit them.  Here is the intuitive explanation. The process starts by coloring $v(y)$ with $\tau(y)$ and coloring $y$ with $1$.  If $F' \DefinedAs \set{y_1, \ldots, y_h} \cup \bigcup_{m \in \irange{h}} X_m - v(y)$ is a recoloring tree, then we contradict minimality of $F$.  But the only way for it to not be a recoloring tree is if by removing $v(y)$ we made some $X_i = \emptyset$ and hence we are right back in the situation we were at the start of the paragraph.  So, we can repeat this recoloring step.  Since the graph is finite we must either fix all conflicts giving a proper $\kappa$-coloring of $G$ or land at a smaller recoloring tree, either way we have a contradiction.
+
+\begin{proof}[Proof of Claim 1]
+We just need to count vertices in $R(F) - F$ disqualified by (4) or (5).  For each $j \ge 1$, there are at most $d - |X_j| + |X_j|(d-1)$ neighbors of $\set{y_j} \cup X_j$ outside $F$.  Put $S \DefinedAs \sum_{j \in \irange{h}} |X_j|$. Then in total (4) disqualifies at most $hd + (d-2)S$ vertices of $R(F) - F$.
+
+Now consider vertices disqualified by (5).  Put $k \DefinedAs \Delta - \kappa$. By the minimality of $\card{\tau^{-1}(1)}$, every vertex $v$ with $\tau(v) = 1$ has a neighbor in every other color class.  In particular, there are at most $k+1$ color classes in which $v$ has two or more neighbors.  Since the vertices in $X_1$ are adjacent to the uncolored $y_1$ as well, if $v \in X_1$, then there are at most $k$ color classes in which $v$ has two or more neighbors.  Thus for $j \ge 2$ at most $k+1$ vertices are disqualified by (5) for $z \in X_j$.  For $z \in X_1$ at most $k$ vertices are disqualified by (5). Hence in total (5) disqualifies at most $-|X_1| + (k+1)S$ vertices.  
+
+Now $\card{R(F)} \ge (\Delta + 1 - d)S$.  Also, $|F| = h + S$.  Hence $\card{R(F) - F} \ge -h + (\Delta - d)S$.  Disqualifying by (4) we have at least $-h(d+1) + (\Delta + 2 - 2d)S$ vertices remaining.  Then disqualifying by (5), we conclude $\card{\fancy{Q}(F)} \ge -h(d+1) + |X_1| + \parens{\Delta + 2 - 2d - (k+1)}S$.
+\end{proof}
+\end{proof}
+
+\begin{cor}
+If $G$ is a graph whose vertex set can be partitioned into cliques each of size at least $\frac32 (\Delta(G) + 1) - \chi(G)$, then $\chi(G) = \omega(G)$.
+\end{cor}
+\begin{proof}
+Let $G$ be such a graph.  Put $k \DefinedAs \Delta(G) - \omega(G)$.
+\end{proof}
+
+\section{Reed's conjecture is enough}
+Here we show that Conjecture \ref{MainConjecture} holds if Reed's $\omega$, $\Delta$ and $\chi$ conjecture \cite{reed1998omega} holds for vertex-transitive graphs.  
+
+\begin{thm}
+If Reed's conjecture holds and $G$ is vertex-transitive, then 
+$$\chi(G) \le \max \set{\omega(G), \ceil{\frac{5\Delta(G) + 3}{6}}}.$$
+\end{thm}
+\begin{proof}
+We may assume that $G$ is connected. Put $\Delta \DefinedAs \Delta(G)$, $\omega \DefinedAs \omega(G)$ and $\chi \DefinedAs \chi(G)$. Suppose $\omega < \frac23 \parens{\Delta + 1}$.  So, we have $\omega \le \frac{2\Delta + 1}{3}$ and moreover, when $\Delta \equiv 3 \text{ (mod $6$)}$, we have $\omega \le \frac23 \Delta$.  Plugging the first inequality into Reed's conjecture gives $\chi \le \ceil{\frac{5\Delta + 4}{6}} = \ceil{\frac{5\Delta + 3}{6}}$ when $\Delta \not \equiv 3 \text{ (mod $6$)}$, by using the improved bound in the remaining case, we win.
+
+Now suppose $\omega \ge \frac23 (\Delta + 1)$ and let $\fancy{Q}$ be the maximum cliques in $G$.  Applying Lemma \ref{TransitiveClusteringBigCliques}, either $X_\fancy{Q}$ is edgeless or $G$ is obtained from an odd cycle by blowing up each vertex to a $K_{\frac{\omega}{2}}$.  In the latter case, $G$ is one of Catlin's examples from \cite{catlin1979hajos} and the bound holds as mentioned in the introduction.  Hence we may assume that $X_\fancy{Q}$ is edgeless; that is, $V(G)$ can be partitioned into $\omega(G)$-cliques.
+\end{proof}
+
+
+\section{Borodin-Kostochka}
+\subsection{When maximum degree is at least 15}
+In \cite{bigcliques}, we proved the following.
+\begin{thm}\label{BigCliquesExist}
+If $G$ is a graph with $\Delta(G) \ge 13$ and $K_{\Delta(G) - 3} \not \subseteq G$, then $\chi(G) \le \Delta(G) - 1$.
+\end{thm} 
+
+In \cite{denseneighborhoods}, the second author proved the following.
+\begin{thm}\label{DenseNeighbors}
+If $G$ is a graph with $\Delta(G) \ge 9$ and $K_{\Delta(G)} \not \subseteq G$ such that every vertex is in a clique on $\frac23 \Delta(G) + 2$ vertices, then $\chi(G) \le \Delta(G) - 1$.
+\end{thm}
+
+In a vertex-transitive graph, the existence of a large clique implies that every vertex is in a large clique.  In fact, the following theorem holds when only assuming this weaker consequence of vertex-transitivity.
+\begin{thm}
+If $G$ is a vertex-transitive graph with $\Delta(G) \ge 15$ and $K_{\Delta(G)} \not \subseteq G$, then $\chi(G) \le \Delta(G) - 1$.
+\end{thm}
+\begin{proof}
+By Theorem \ref{DenseNeighbors}, we may assume some vertex of $G$ is in no $K_{\frac23 \Delta(G) + 2}$.  But $G$ is vertex-transitive, so then $\omega(G) < \frac23 \Delta(G) + 2 \le \Delta(G) - 3$ since $\Delta(G) \ge 15$.  Applying Theorem \ref{BigCliquesExist} no shows  $\chi(G) \le \Delta(G) - 1$.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}

@@ -1,0 +1,528 @@
+\documentclass[oneside,12pt]{memoir}
+
+%%% Garamond
+%\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+%\usepackage{garamond}
+
+\DoubleSpacing         % memoir's double spacing
+\usepackage{pwasu}     % this package
+\usepackage[paperwidth=8.5in,paperheight=11.0in,
+  left=1.25in,right=1.25in,top=1.0in,bottom=1.0in,
+  includefoot]{geometry}
+
+\usepackage{amssymb, amsmath, amsthm}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+%\usepackage[pdftex, colorlinks, hyperfootnotes]{hyperref}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem*{CliqueGraph}{Clique Graph}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mov}[2]{#1^{#2}}
+\newcommand{\wt}[1]{w\parens{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ex}{\operatorname{E}}
+
+\newcommand{\texorpdfstring}[2]{#1}
+
+% any changes to \claim should be mirrored in \claimnonum and \subclaim
+\renewcommand{\claim}[2]{\textbf{Claim #1.}~\textit{#2}~~}
+\newcommand{\claimnonum}[1]{\textbf{Claim.}~\textit{#1}~~}
+\newcommand{\subclaim}[2]{\textbf{Subclaim #1.}~\textit{#2}~~}
+
+\setcounter{tocdepth}{3}
+\maxsecnumdepth{subsection}
+
+%\%\topmargin -0.4in        % read Lamport p.163
+%\topmargin -0.36in        % read Lamport p.163
+%\oddsidemargin 0.5in   % read Lamport p.163
+%\evensidemargin 0.5in  	% same as oddsidemargin but for left-hand pages
+%\textwidth 6in
+%\usepackage[textheight = 9.6in]{geometry}
+%\textheight 9.03in 
+%\pagestyle{empty}       % Uncomment if you don't want page numbers
+\parskip 7.2pt           % sets spacing between paragraphs
+%\renewcommand{\baselinestretch}{1.5} % Uncomment for 1.5 spacing between lines
+\parindent 0pt          % sets leading space for paragraphs
+ %%%%%%%%
+
+\DoubleSpacing
+\begin{document}
+\maxtocdepth{subparagraph}
+\pagestyle{plain}
+\frontmatter
+\thetitlepage
+
+\asuabstract
+\setcounter{page}{1}
+\setlength{\parindent}{.5in} 
+Every graph can be colored with one more color than its maximum degree. A
+well-known theorem of Brooks gives the precise conditions under which a graph
+can be colored with maximum degree colors.  It is natural to ask for the
+required conditions on a graph to color with one less color than the maximum
+degree; in 1977 Borodin and Kostochka conjectured a solution for graphs with maximum degree at least 9: as long as the
+graph doesn't contain a maximum-degree-sized clique, it can be colored with one
+fewer than the maximum degree colors.
+
+This study attacks the conjecture on multiple fronts.  The first technique is an
+extension of a vertex shuffling procedure of Catlin and is used to prove the
+conjecture for graphs with edgeless high vertex subgraphs.  This general
+approach also bears more theoretical fruit.
+
+The second technique is an extension of a method Kostochka used to reduce the
+Borodin-Kostochka conjecture to the maximum degree 9 case.  Results on the
+existence of independent transversals are used to find an independent set
+intersecting every maximum clique in a graph.  
+
+The third technique uses list coloring results to exclude induced subgraphs in a
+counterexample to the conjecture. The classification of such excludable graphs
+that decompose as the join of two graphs is the backbone of
+many of the results presented here.
+
+The fourth technique uses the structure theorem for quasi-line graphs of 
+Chudnovsky and Seymour in concert with the third technique to prove the
+Borodin-Kostochka conjecture for claw-free graphs.
+\newpage
+The fifth technique adds edges to proper induced subgraphs of a minimum
+counterexample to gain control over the colorings produced by minimality.
+
+The sixth technique adapts a recoloring technique originally developed for
+strong coloring by Haxell and by Aharoni, Berger and Ziv to general coloring. 
+Using this recoloring technique, the Borodin-Kostochka conjectured is proved for
+graphs where every vertex is in a large clique.
+
+The final technique is naive probabilistic coloring as employed by
+Reed in the proof of the Borodin-Kostochka conjecture for large maximum degree. 
+The technique is adapted to prove the Borodin-Kostochka conjecture for list
+coloring for large maximum degree.
+
+\newgeometry{paperwidth=8.5in,paperheight=11.0in,
+  left=1.25in,right=1.25in,top=1.1in,bottom=1.0in,
+  includefoot}
+\vspace*{-0.13in}
+\tableofcontents*
+\restoregeometry
+
+\listoffigures
+
+\mainmatter
+\pagestyle{asu}
+
+\addcontentsline{toc}{chapter}{CHAPTER}
+\pagestyle{plain}
+\setlength{\parindent}{.5in}
+\input{History}
+\input{Brooks}
+\input{VertexShuffle}
+\input{Reduce}
+\input{ListColoring}
+\input{ClawFree}
+\input{mules}
+\input{StrongColoring}
+\input{ChoiceLargeDelta}
+\newpage
+\begingroup
+\let\clearpage\relax
+\vspace*{0.22in}
+\SingleSpace
+\begin{thebibliography}{99}
+\bibitem{aharoni2007independent}
+R.~Aharoni, E.~Berger, and R.~Ziv, \emph{Independent systems of representatives
+  in weighted graphs}, Combinatorica \textbf{27} (2007), no.~3, 253--267.
+
+\bibitem{Alon19997}
+N.~Alon, \emph{Combinatorial nullstellensatz}, Combinatorics Probability and
+  Computing \textbf{8} (1999), no.~1--2, 7--29.
+
+\bibitem{Alon1992125}
+N.~Alon and M.~Tarsi, \emph{Colorings and orientations of graphs},
+  Combinatorica \textbf{12} (1992), no.~2, 125--134.
+
+\bibitem{anderson1977edge}
+L.D. Andersen, \emph{On edge-colorings of graphs}, Math. Scand \textbf{40}
+  (1977), 161--175.
+
+\bibitem{beutelspacher1984minimal}
+A.~Beutelspacher and P.R. Hering, \emph{Minimal graphs for which the chromatic
+  number equals the maximal degree}, Ars Combin \textbf{18} (1984), 201--216.
+
+\bibitem{bollobasManvel}
+B.~Bollob{\'a}s and B.~Manvel, \emph{Optimal vertex partitions}, Bulletin of
+  the London Mathematical Society \textbf{11} (1979), no.~2, 113.
+
+\bibitem{BorodinKostochkaWoodall}
+O.V. Borodin, A.V. Kostochka, and D.R. Woodall, \emph{List edge and list
+  total colourings of multigraphs}, J. Combin. Theory Ser. B \textbf{71}
+  (1997), no.~2, 184--204.
+
+\bibitem{borodin1976decomposition}
+O.V. Borodin, \emph{On decomposition of graphs into degenerate subgraphs},
+  Metody Diskretn. Analiz \textbf{28} (1976), 3--11 (in Russian).
+
+\bibitem{borodin1977criterion}
+O.V. Borodin, \emph{{Criterion of chromaticity of a degree prescription}}, Abstracts
+  of IV All-Union Conf. on Th. Cybernetics, 1977, pp.~127--128.
+
+\bibitem{borodin1977upper}
+O.V. Borodin and A.V. Kostochka, \emph{{On an upper bound of a graph's
+  chromatic number, depending on the graph's degree and density}}, Journal of
+  Combinatorial Theory, Series B \textbf{23} (1977), no.~2-3, 247--250.
+
+\bibitem{borodin2000variable}
+O.V. Borodin, A.V. Kostochka, and B.~Toft, \emph{{Variable degeneracy:
+  extensions of Brooks' and Gallai's theorems}}, Discrete Mathematics
+  \textbf{214} (2000), no.~1-3, 101--112.
+
+\bibitem{brooks1941colouring}
+R.L. Brooks, \emph{{On colouring the nodes of a network}}, Mathematical
+  Proceedings of the Cambridge Philosophical Society, vol.~37, Cambridge Univ
+  Press, 1941, pp.~194--197.
+
+\bibitem{cariolaro2006fans}
+D.~Cariolaro, \emph{On fans in multigraphs}, Journal of Graph Theory
+  \textbf{51} (2006), no.~4, 301--318.
+
+\bibitem{CatlinAnotherBound}
+P.A. Catlin, \emph{{Another bound on the chromatic number of a graph}},
+  Discrete Mathematics \textbf{24} (1978), no.~1, 1--6.
+
+\bibitem{catlin1978bound}
+P.A. Catlin, \emph{A bound on the chromatic number of a graph}, Discrete
+  Mathematics \textbf{22} (1978), no.~1, 81--83.
+
+\bibitem{catlin1979hajos}
+P.A. Catlin, \emph{Haj{\'o}s’ graph-coloring conjecture: variations and
+  counterexamples}, J. Combin. Theory Ser. B \textbf{26} (1979), no.~2,
+  268--274.
+
+\bibitem{chudnovskyFradkin}
+M.~Chudnovsky and A.~Ovetsky, \emph{Coloring quasi-line graphs}, Journal of
+  Graph Theory \textbf{54} (2007), no.~1, 41--50.
+
+\bibitem{chudnovsky2005structure}
+M.~Chudnovsky and P.~Seymour, \emph{The structure of claw-free graphs}, Surveys
+  in combinatorics \textbf{327} (2005), 153--171.
+
+\bibitem{cranstonrabernclaw}
+D.W. Cranston and L.~Rabern, \emph{{Coloring claw-free graphs with $\Delta-1$
+  colors}}, SIAM J. Discrete Math. (Forthcoming).
+
+\bibitem{mules}
+D.W. Cranston and L.~Rabern, \emph{{Conjectures equivalent to the Borodin-Kostochka Conjecture that
+  appear weaker}}, arXiv:1203.5380 (2012).
+
+\bibitem{dhurandhar1982improvement}
+M.~Dhurandhar, \emph{Improvement on {Brooks}' chromatic bound for a class of
+  graphs}, Discrete Mathematics \textbf{42} (1982), no.~1, 51--56.
+
+\bibitem{diestel2010}
+R.~Diestel, \emph{{Graph Theory}}, 4 ed., Springer-Verlag, Heidelberg, 2010.
+
+\bibitem{Entringer1985367}
+R.C. Entringer, \emph{{A Short Proof of Rubin's Block Theorem}}, {Annals of
+  Discrete Mathematics 27 - Cycles in Graphs} (B.R. Alspach and C.D. Godsil,
+  eds.), North-Holland Mathematics Studies, vol. 115, North-Holland, 1985,
+  pp.~367--368.
+
+\bibitem{erdos1979choosability}
+P.~Erd\H{o}s, A.L. Rubin, and H.~Taylor, \emph{{Choosability in graphs}}, Proc.
+  West Coast Conf. on Combinatorics, Graph Theory and Computing, Congressus
+  Numerantium, vol.~26, 1979, pp.~125--157.
+
+\bibitem{StiebitzVizingGoldberg}
+L.M. Favrholdt, M.~Stiebitz, and B.~Toft, \emph{Graph edge colouring: Vizing's
+  theorem and goldberg's conjecture},  (2006).
+
+\bibitem{gallai1963kritische}
+T.~Gallai, \emph{Kritische graphen i.}, Math. Inst. Hungar. Acad. Sci
+  \textbf{8} (1963), 165--192 (in German).
+
+\bibitem{GoldbergJGT}
+M.K. Goldberg, \emph{Edge-coloring of multigraphs: Recoloring technique},
+  Journal of Graph Theory \textbf{8} (1984), no.~1, 123--137.
+
+\bibitem{gravier1998graphs}
+S.~Gravier and F.~Maffray, \emph{Graphs whose choice number is equal to their
+  chromatic number}, Journal of Graph Theory \textbf{27} (1998), no.~2, 87--97.
+
+\bibitem{grötschel1981ellipsoid}
+M.~Gr\"{o}tschel, L.~Lov\'{a}sz, and A.~Schrijver, \emph{{The ellipsoid method
+  and its consequences in combinatorial optimization}}, Combinatorica
+  \textbf{1} (1981), no.~2, 169--197.
+
+\bibitem{HajnalSaturation}
+A.~Hajnal, \emph{{A theorem on $k$-saturated graphs}}, Canadian Journal of
+  Mathematics \textbf{17} (1965), no.~5, 720.
+
+\bibitem{haxell2001note}
+P.~Haxell, \emph{A note on vertex list colouring}, Combinatorics, Probability
+  and Computing \textbf{10} (2001), no.~04, 345--347.
+
+\bibitem{haxell2004strong}
+P.~Haxell, \emph{On the strong chromatic number}, Combinatorics, Probability
+  and Computing \textbf{13} (2004), no.~06, 857--865.
+
+\bibitem{haxell2011forming}
+P.~Haxell, \emph{On forming committees}, The American Mathematical Monthly
+  \textbf{118} (2011), no.~9, 777--788.
+
+\bibitem{haxell2006odd}
+P.~Haxell and T.~Szab{\'o}, \emph{Odd independent transversals are odd},
+  Combinatorics Probability and Computing \textbf{15} (2006), no.~1/2, 193.
+
+\bibitem{Hladky}
+J.~Hladk{\`y}, D.~Kr{\'a}l, and U.~Schauz, \emph{{Brooks' Theorem via the
+  Alon-Tarsi Theorem}}, Discrete Mathematics (2010).
+
+\bibitem{GraphColoringProblems}
+T.R. Jensen and B.~Toft, \emph{Graph coloring problems}, John Wiley \& Sons,
+  1995.
+
+\bibitem{kierstead2000choosability}
+H.A. Kierstead, \emph{{On the choosability of complete multipartite graphs with
+  part size three}}, Discrete Mathematics \textbf{211} (2000), no.~1-3,
+  255--259.
+
+\bibitem{kierstead2009ore}
+H.A. Kierstead and A.V. Kostochka, \emph{{Ore-type versions of Brooks'
+  theorem}}, Journal of Combinatorial Theory, Series B \textbf{99} (2009),
+  no.~2, 298--305.
+
+\bibitem{kierstead1986chromatic}
+H.A. Kierstead and J.H. Schmerl, \emph{The chromatic number of graphs which
+  induce neither {$K_{1,3}$} nor {$K_5-e$}}, Discrete mathematics \textbf{58}
+  (1986), no.~3, 253--262.
+
+\bibitem{KingPersonalKostochkaGeneralized}
+A.~King, personal communication, 2009.
+
+\bibitem{king2009claw}
+A. King, \emph{{Claw-free graphs and two conjectures on omega, Delta, and
+  chi}}, Ph.D. thesis, McGill University, 2009.
+
+\bibitem{KingHitting}
+A. King, \emph{Hitting all maximum cliques with a stable set using lopsided
+  independent transversals}, Journal of Graph Theory (2010).
+
+\bibitem{king2008bounding}
+A. King and B.A. Reed, \emph{{Bounding $\chi$ in terms of $\omega$ and
+  $\Delta$ for quasi-line graphs}}, Journal of Graph Theory \textbf{59} (2008),
+  no.~3, 215--228.
+
+\bibitem{king2007upper}
+A. King, B.A. Reed, and A.~Vetta, \emph{{An upper bound for the chromatic
+  number of line graphs}}, European Journal of Combinatorics \textbf{28}
+  (2007), no.~8, 2182--2187.
+
+\bibitem{kostochkaRussian}
+A.V. Kostochka, \emph{{Degree, density, and chromatic number}}, Metody
+  Diskretn. Analiz \textbf{35} (1980), 45--70 (in Russian).
+
+\bibitem{KostochkaTriangleFree}
+A.V. Kostochka, \emph{{A modification of Catlin's algorithm}}, Methods and Programs of
+  Solutions Optimization Problems on Graphs and Networks (1982), no.~2, 75--79
+  (in Russian).
+
+\bibitem{PersonalComms}
+A.V. Kostochka, personal communication, 2012.
+
+\bibitem{krs_one}
+A.V. Kostochka, L.~Rabern, and M.~Stiebitz, \emph{{Graphs with chromatic number
+  close to maximum degree}}, Discrete Mathematics \textbf{312} (2012), no.~6,
+  1273--1281.
+
+\bibitem{BrooksExtended}
+A.V. Kostochka, M.~Stiebitz, and B.~Wirth, \emph{{The colour theorems of Brooks
+  and Gallai extended}}, Discrete Mathematics \textbf{162} (1996), no.~1-3,
+  299--303.
+
+\bibitem{lawrence1978covering}
+J.~Lawrence, \emph{Covering the vertex set of a graph with subgraphs of smaller
+  degree}, Discrete Mathematics \textbf{21} (1978), no.~1, 61--68.
+
+\bibitem{lovasz1966decomposition}
+L.~Lov\'{a}sz, \emph{On decomposition of graphs}, Studia Sci. Math. Hungar.
+  \textbf{1} (1966), 237--238.
+
+\bibitem{Lovasz1975269}
+L. Lov\'{a}sz, \emph{Three short proofs in graph theory}, Journal of Combinatorial
+  Theory, Series B \textbf{19} (1975), no.~3, 269--271.
+
+\bibitem{mader}
+W.~Mader, \emph{{Existenz n-fach zusammenh{\"a}ngender Teilgraphen in Graphen
+  gen{\"u}gend gro{\ss}er Kantendichte}}, {Abhandlungen aus dem Mathematischen
+  Seminar der Universit{\"a}t Hamburg}, vol.~37, Springer, 1972, pp.~86--97.
+
+\bibitem{molloy2002graph}
+M.S. Molloy and B.A. Reed, \emph{{Graph colouring and the probabilistic
+  method}}, Springer Verlag, 2002.
+
+\bibitem{mozhan1983}
+N.N. Mozhan, \emph{{Chromatic number of graphs with a density that does not
+  exceed two-thirds of the maximal degree}}, Metody Diskretn. Analiz
+  \textbf{39} (1983), 52--65 (in Russian).
+
+\bibitem{naserasr}
+R.~Naserasr, personal communication, 2008.
+
+\bibitem{niessen2000round}
+T.~Niessen and J.~Kind, \emph{The round-up property of the fractional chromatic
+  number for proper circular arc graphs}, Journal of Graph Theory \textbf{33}
+  (2000), no.~4, 256--267.
+
+\bibitem{2009arXiv0907.3705R}
+L.~Rabern, \emph{{On hitting all maximum cliques with an independent set}},
+  Arxiv preprint arXiv:0907.3705 (2009).
+
+\bibitem{rabernhitting}
+L. Rabern, \emph{{On hitting all maximum cliques with an independent set}},
+  Journal of Graph Theory \textbf{66} (2011), no.~1, 32--37.
+
+\bibitem{rabern2010b}
+L. Rabern, \emph{{An improvement on Brooks' theorem}}, Manuscript (2010).
+
+\bibitem{rabern2011strengthening}
+L. Rabern, \emph{{A strengthening of Brooks' Theorem for line graphs}}, Electron.
+  J. Combin. \textbf{18} (2011), no.~p145, 1.
+
+\bibitem{partitionnote}
+L. Rabern, \emph{A note on vertex partitions}, Manuscript (2011).
+
+\bibitem{rabern2010a}
+L. Rabern, \emph{{$\Delta$-critical graphs with small high vertex cliques}},
+  Journal of Combinatorial Theory, Series B \textbf{102} (2012), no.~1,
+  126--130.
+
+\bibitem{rabern2010destroying}
+L. Rabern, \emph{Destroying non-complete regular components in graph partitions},
+  J. Graph Theory (Forthcoming).
+
+\bibitem{rabern2012partitioning}
+L. Rabern, \emph{Partitioning and coloring with degree constraints}, Discrete
+  Math. (Forthcoming).
+
+\bibitem{reed1998omega}
+B.~Reed, \emph{{$\omega$, $\Delta$, and $\chi$}}, Journal of Graph Theory
+  \textbf{27} (1998), no.~4, 177--212.
+
+\bibitem{reed1999strengthening}
+B. Reed, \emph{{A strengthening of Brooks' theorem}}, Journal of Combinatorial
+  Theory, Series B \textbf{76} (1999), no.~2, 136--149.
+
+\bibitem{ReedSudakov}
+B.~Reed and B.~Sudakov, \emph{{List colouring when the chromatic number is
+  close to the order of the graph}}, Combinatorica \textbf{25} (2004), no.~1,
+  117--123.
+
+\bibitem{schauz2009mr}
+U.~Schauz, \emph{{Mr. Paint and Mrs. Correct}}, {The Electronic Journal of
+  Combinatorics} \textbf{16} (2009), no.~1, R77.
+
+\bibitem{stacho2001new}
+L.~Stacho, \emph{{New upper bounds for the chromatic number of a graph}},
+  Journal of Graph Theory \textbf{36} (2001), no.~2, 117--120.
+
+\bibitem{stiebitz1982proof}
+M.~Stiebitz, \emph{{Proof of a conjecture of T. Gallai concerning connectivity
+  properties of colour-critical graphs}}, Combinatorica \textbf{2} (1982),
+  no.~3, 315--323.
+
+\bibitem{szabo2006extremal}
+T.~Szab{\'o} and G.~Tardos, \emph{Extremal problems for transversals in graphs
+  with bounded degree}, Combinatorica \textbf{26} (2006), no.~3, 333--351.
+
+\bibitem{tverberg1983brooks}
+H.~Tverberg, \emph{{On Brooks' theorem and some related results}}, Mathematics
+  Scandinavia \textbf{52} (1983), 37--40.
+\end{thebibliography}
+
+\endgroup
+
+\addcontentsline{toc}{chapter}{APPENDIX}
+\clearpage
+\appendix
+\chapter{NOTATION}\label{NotationAppendix}
+\newpage
+\begin{Spacing}{1}
+\vspace*{-0.5in}
+\input{Notation}
+\end{Spacing}
+\end{document}
+

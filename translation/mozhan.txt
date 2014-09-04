@@ -1,0 +1,17 @@
+lemma 4:
+let in A_i vertices x_1, ..., x_t form a connected component K_t and painted in colors A_i.
+assume w is not colored and is adjacent to at least two vertices, for example, x_1, x_2, from x_n, n = 1,2 ,..., t.
+if w is adjacent to at most t + 1 vertices in A_i, then w is adjacent to all x_n.
+
+
+lemma 5:
+in lemma 4, we can paint the color of w in A_i, freeing up the color of x_1.
+
+proof.  
+
+from lemma 4 that w and x_1, x_2, ..., x_t form K_ {t+1} in A_i, 
+where each x_n is not adjacent to any other vertices of A_i, 
+and w can be adjacent to only one other vertex of A_i, call it w'.
+if w' and x_1 are colored with different colors, then paint the color of w x_1, x_1 and deprive of color, 
+thereby obtaining a proper coloring A_i, and the lemma is proved in this case.
+blah, easy.

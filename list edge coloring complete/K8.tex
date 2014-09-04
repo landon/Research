@@ -1,0 +1,193 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\sign}{\operatorname{sign}}
+\newcommand{\Stab}{\operatorname{Stab}}
+\newcommand{\Aut}{\operatorname{Aut}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{The list-chromatic index of $K_8$ and $K_{10}$}
+\author{Landon Rabern}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In \cite{cariolaro2014list}, Cariolaro et al. demonstrated how colorability problems can be approached numerically by the use of computer
+algebra systems and the Combinatorial Nullstellensatz.  In particular, they verified a case of the List Coloring Conjecture by proving that the list-chromatic index of $K_6$ is $5$.  In this short note, we show that using the coefficient formula of Schauz \cite{schauz2008algebraically} is much more efficient than using partial derivatives.  As a consequence we are able to show that list-chromatic index of $K_8$ is $7$ and the list-chromatic index of $K_{10}$ is $9$.
+\end{abstract}
+
+\section{Introduction}
+\emph{List coloring} was introduced by Vizing \cite{vizing1976} and independently Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  Let $G$ be a graph. A list assignment on $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.   For $k \in \IN$, a list assignment $L$ is a \emph{$k$-assignment} if $\card{L(v)} = k$ for each $v \in V(G)$. We say that $G$ is \emph{$k$-choosable} if $G$ is $L$-colorable for every $k$-assignment $L$. The least $k$ for which $G$ is $k$-choosable is the \emph{choice number} of $G$, written $\ch(G)$.  The choice number of the line graph of $G$ is the \emph{list-chromatic index} of $G$, written $\ch'(G)$.  We write $\chi'(G)$ for the chromatic index of $G$; that is, the chromatic number of the line graph of $G$.
+
+Since any $k$-choosable graph is $L$-colorable from the $k$-assignment given by $L(v) = \irange{k}$, we have $\ch'(G) \ge \chi'(G)$.  That this inequality is always an equality has been conjectured independently by multiple researchers (see \cite{GraphColoringProblems}, Section 12.20).  This is the \emph{List Coloring Conjecture}.  
+
+\begin{conjecture}[List Coloring Conjecture]
+$ch'(G) = \chi'(G)$ for every multigraph $G$.
+\end{conjecture}
+
+This conjecture is open even for complete graphs.  H{\"a}ggkvist and Janssen \cite{haggkvist1997new} settled the conjecture for $K_n$ when $n$ is odd by showing that $\ch'(K_n) = \chi'(K_n) = n$.  When $n$ is even, we have $\chi'(K_n) = n - 1$, so the conjecture reduces to the following.
+
+\begin{conjecture}\label{CCC}
+$\ch'(K_{2k}) = 2k - 1$ for all $k \ge 1$.
+\end{conjecture}
+
+Conjecture \ref{CCC} holds trivially for $k = 1$.  Since $K_4$ is planar, then $k=2$ case follows from the result of  Ellingham and Goddyn \cite{ellingham1996list} that the List Coloring Conjecture holds for every $1$-factorable planar graph.   Moreover, Ellingham and Goddyn \cite{ellingham1996list} state that they have verified the $k \le 5$ cases by computer. Cariolaro et al. verified the $k = 3$ case using the Combinatorial Nullstellensatz and a computer algebra system.  We verify the $k=4,5$ cases using Schauz's coefficient formula for the Combinatorial Nullstellensatz \cite{schauz2008algebraically}.  The ability to quickly determine coefficients of the graph polynomial has many other uses.  With Cranston, in \cite{shades} we proved that the choice number of the square of a graph is at most its degree squared minus one unless the graph is one of a few exceptions.  This proof involved showing that many small induced subgraphs could be excluded by the Combinatorial Nullstellensatz.  There is a web version of the author's graph software at \url{http://bit.ly/webraphs} which may be useful to others.
+
+\section{Combinatorial Nullstellensatz}
+In \cite{Alon1992125}, Alon and Tarsi introduced a beautiful algebraic technique for proving the existence of list colorings.  Alon \cite{Alon19997} further developed this technique into the \emph{Combinatorial Nullstellensatz}.  Fix an arbitrary field $\mathbb{F}$. We write $f_{k_1, \ldots, k_n}$ for the coefficient of $x_1^{k_1}\cdots x_n^{k_n}$ in the polynomial $f \in \mathbb{F}[x_1, \ldots, x_n]$. 
+
+\begin{lem}[Alon \cite{Alon19997}]\label{null}
+Suppose $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$.  If $f_{k_1, \ldots, k_n} \ne 0$, then for any $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} \ge k_i + 1$, there exists $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$ with $f(a_1, \ldots, a_n) \ne 0$.
+\end{lem}
+
+Micha{\l}ek \cite{michalek} gave a very short proof of Lemma \ref{null} just using long division.  Schauz \cite{schauz2008algebraically} sharpened the Combinatorial Nullstellensatz by proving the following coefficient formula.  Versions of this result were also proved by Hefetz \cite{hefetz2011two} and Laso{\'n} \cite{lason2010generalization}. Our presentation follows Laso{\'n}.
+
+\begin{lem}[Schauz \cite{schauz2008algebraically}]\label{nullCoefficient}
+Suppose $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$.  For any $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} = k_i + 1$, we have
+\[f_{k_1, \ldots, k_n} = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} \frac{f(a_1, \ldots, a_n)}{N(a_1, \ldots, a_n)},\]
+where
+\[N(a_1, \ldots, a_n) \DefinedAs \prod_{i \in \irange{n}} \prod_{b \in A_i - a_i} (a_i - b).\]
+\end{lem}
+
+\section{List edge-coloring complete graphs}
+To apply the Combinatorial Nullstellensatz to graph coloring, we need one further definition. The \emph{graph polynomial} of a graph $G$ with vertex set $\set{1,\ldots, n}$ is 
+\[P_G(x_1, \ldots, x_n) \DefinedAs \prod_{\substack{ij \in E(G)\\i<j}} (x_i - x_j).\]
+
+For a graph $G$, let $L(G)$ be the line graph of $G$. Applying Lemma \ref{null} to the graph polynomial of $L(G)$ gives the following.
+\begin{cor}\label{simplified}
+Let $G$ be a $d$-regular graph with $\chi'(G) = d$. Let $f$ be the graph polynomial of $L(G)$.  If $f_{d-1, \ldots, d-1} \ne 0$, then $\ch'(G) = d$.
+\end{cor}
+
+Cariolaro et al. used partial derivatives and the $k=3$ case of Corollary \ref{simplified} to show that $\ch'(K_6) = 5$.  In particular, they showed that $f_{4,\ldots, 4} = -720$.  Using Lemma \ref{nullCoefficient}, this coefficient can be computed in under a second on a basic laptop. To try this out, go to \url{http://bit.ly/webgraphs_LK_6}, in the ``Orientations'' menu, select ``compute coefficient'' and then ``use current orientation''.  For $k=4$, the same method gives $f_{6,\ldots,6} = 21772800$, but the computation takes about six hours to complete.  To do $K_{10}$, we need a more efficient method.
+
+To get a more efficient method, we use the fact that Lemma \ref{nullCoefficient} simplifies greatly in the case of $d$-regular graphs with chromatic index $d$.  In fact each term of the sum is either $1$ or $-1$. Alon \cite{alon1993restricted} proved this in slightly different form; we follow the presentation in Hefetz \cite{hefetz2011two}.  Put $\sign(x) \DefinedAs \frac{x}{|x|}$ for $x \ne 0$ and $\sign(0) \DefinedAs 0$.  
+
+\begin{lem}\label{nullSign}
+Let $G$ be a $d$-regular graph with $\chi'(G) = d$. Let $n = \card{E(G)}$ and let $f$ be the graph polynomial of $L(G)$. Then
+\[f_{d-1, \ldots, d-1} = \sum_{(a_1, \ldots, a_n) \in \irange{d}^n} \sign(f(a_1, \ldots, a_n)).\]
+\end{lem}
+
+\begin{lem}\label{permuteColors}
+Let $G$ be a $d$-regular graph with $\chi'(G) = d$. Let $n = \card{E(G)}$ and let $f$ be the graph polynomial of $L(G)$.  For any permutation $\pi$ of $\irange{d}$ and any $(a_1, \ldots, a_n) \in \irange{d}^n$, we have
+$\sign(f(\pi(a_1), \ldots, \pi(a_n)) = \sign(f(a_1, \ldots, a_n))$.
+\end{lem}
+\begin{proof}
+Since every permutation can be written as a product of adjacent transpositions, it will suffice to prove the lemma for $\pi = (c\;\; c\!+\!1)$.  Also, we may assume $\sign(f(a_1, \ldots, a_n)) \ne 0$.  For a factor $(a_i - a_j)$ of $f(a_1, \ldots, a_n)$ we have $\sign(\pi(a_i) - \pi(a_j)) = \sign(a_i-a_j)$ unless $\set{a_i, a_j} = \set{c, c+1}$ in which case $\sign(\pi(a_i) - \pi(a_j)) = -\sign(a_i-a_j)$.  Consider the edge-coloring of $L(G)$ given by $(a_1, \ldots, a_n)$.  In this edge-coloring, each vertex is incident to an edge colored $c$ and an edge colored $c+1$. So there is a factor $(a_i - a_j)$ with $\set{a_i, a_j} = \set{c, c+1}$ for each vertex of $G$.  Since $\card{G}$ is even, we have
+$\sign(f(\pi(a_1), \ldots, \pi(a_n)) = \sign(f(a_1, \ldots, a_n))$.
+\end{proof}
+
+So, by Lemma \ref{permuteColors}, to compute $f_{d-1, \ldots, d-1}$, we only need to sum $\sign(f(a_1, \ldots, a_n))$ over all one-factorizations up to color permutation and then multiply by $d!$.  For $K_6$ there are $6$ distinct one-factorizations, plugging them into $f$ shows that they all have negative sign.  So for $K_6$, we have $f_{4,\ldots, 4} = 5!(-6) = -720$ which agrees with the result in \cite{cariolaro2014list}.
+
+\begin{thm}
+$K_8$ has $5280$ positive one-factorizations and $960$ negative one-factorizations.  Therefore $f_{6,\ldots, 6} = 7!(5280 - 960) = 21772800$.  In particular, $ch'(K_8) = 7$.
+\end{thm}
+
+We also conclude that the total number of one-factorizations of $K_{8}$ is $6240$ which is in agreement with \cite{DicksonSafford}.
+
+\begin{thm}
+$K_{10}$ has $598993920$ positive one-factorizations and $626572800$ negative one-factorizations.  Therefore $f_{8,\ldots, 8} = 9!(598993920 - 626572800) = -10007823974400$.  In particular, $ch'(K_{10}) = 9$.
+\end{thm}
+
+We also conclude that the total number of one-factorizations of $K_{10}$ is $1225566720$ which is in agreement with \cite{gelling19741}.  There was a bit of confusion around the correctness of this count because it is incorrectly cited in \cite{wallis} as $1255566720$; this discrepancy was noted by Dinitz, Garnick and McKay \cite{dinitz1994there}.
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

@@ -1,0 +1,84 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{headings}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\begin{document}
+
+\begin{lem}\label{OrderingLemma}
+For any connected graph $G$ and any $z \in V(G)$, there exists a total ordering $\leq$ of $V(G)$ with $z$ minimum, such that $G\left[x \mid x \leq y\right]$ is connected for each $y \in V(G)$.
+\end{lem}
+\begin{proof}
+Let $G$ be a connected graph and $z \in V(G)$.  Let $H$ be a maximal induced subgraph of $G$ which has such an ordering with $z$ minimum.  If $H \neq G$, then, since $G$ is connected, some $w \in V(G) - V(H)$ has an edge into $H$. Thus we may add $w$ to $H$ as the last vertex in the ordering contradicting the maximality of $H$.  Hence $H = G$ and we have our ordering.
+\end{proof}
+
+\begin{lem}\label{TwoConnectedHasGoodP3}
+Let $G$ be an incomplete $2$-connected graph with $\delta(G) \geq 3$. Then $G$ contains an induced $P_3$, say $abc$, such that $G - a - c$ is connected.
+\end{lem}
+\begin{proof}
+Since $G$ is connected and not complete, it contains induced $P_3$'s. If $G$ is $3$-connected, any induced $P_3$ will do.  Otherwise, let $\set{b, x} \subseteq V(G)$ be a cutset.  Since $G - b$ is not $2$-connected, it has at least two endblocks $B_1, B_2$.  But $G$ is $2$-connected, so $b$ must be adjacent to 
+noncutvertices $a \in B_1$ and $c \in B_2$.  Thus $G - a - c$ is connected since $d(b) \geq 3$.  Whence $abc$ is our desired $P_3$.
+\end{proof}
+
+\begin{thm}[Brooks 1941]
+Every graph with $\Delta \geq 3$ satisfies $\chi \leq \max\set{\omega, \Delta}$.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Plainly, $G$ must be regular, $2$-connected and not complete.  Let $abc$ be the induced $P_3$ guaranteed by Lemma \ref{TwoConnectedHasGoodP3}.  By Lemma \ref{OrderingLemma}, we have an ordering $b, x_1, x_2, \ldots, x_k$ of $V(G - a - c)$ such that $G\left[b, x_1 ,\ldots, x_i\right]$ is connected for each $1 \leq i \leq k$.  Thus, greedily coloring with $V(G)$ ordered $a, c, x_k, x_{k-1}, \ldots, x_1, b$ uses only $\Delta(G)$ colors.
+\end{proof}
+\end{document}

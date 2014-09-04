@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Sun May 06 13:29:11 MST 2012
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=shortbrooks.tex
+outputFile=shortbrooks.pdf
+langSpell=en
+markDer=true
+srcDir=

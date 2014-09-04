@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}
+\usepackage{e-jc}
+\usepackage{amsmath, amsthm}
+\usepackage{color}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{CapRizz}{Caprara and Rizzi}
+\newtheorem*{FractionalTheorem}{Fractional Version}
+\newtheorem*{ReedConjecture}{Reed's Conjecture}
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BrooksTheorem}{Brooks' Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem*{unnumberedClaim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{n(#1)}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\title{A strengthening of Brooks' Theorem for line graphs}
+\author{Landon Rabern\\
+\small \texttt{314 Euclid Way, Boulder CO} \\
+\small \texttt{landon.rabern@gmail.com}}
+\date{\dateline{Feb 10, 2010}{Jun 20, 2011}\\
+\small Mathematics Subject Classification: 05C15}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\noindent We prove that if $G$ is the line graph of a multigraph, then the
+chromatic number $\chi(G)$ of $G$ is at most $\max\left\{\omega(G), \frac{7\Delta(G) + 10}{8}\right\}$ where $\omega(G)$ and $\Delta(G)$ are the  clique number and the maximum degree of $G$, respectively.  Thus Brooks' Theorem holds for line graphs of multigraphs in much stronger form.  Using similar methods we then prove that if $G$ is the line graph of a multigraph with $\chi(G) \geq \Delta(G) \geq 9$, then $G$ contains a clique on $\Delta(G)$ vertices. Thus the Borodin-Kostochka Conjecture holds for line graphs of multigraphs.
+\end{abstract}
+
+\section{Introduction}
+We define nonstandard notation when it is first used.  For standard notation and terminology see \cite{bondy2008graph}. The clique number of a graph is a trivial lower bound on the chromatic number. Brooks' Theorem gives a sufficient condition for this lower bound to be achieved.
+
+\begin{thm}[Brooks \cite{brooks1941colouring}]
+If $G$ is a graph with $\Delta(G) \geq 3$ and $\chi(G) \geq \Delta(G) + 1$, then $\omega(G) = \chi(G)$.
+\end{thm}
+
+We give a much weaker condition for the lower bound to be achieved when $G$ is the line graph of a multigraph.
+
+\begin{thm}
+If $G$ is the line graph of a multigraph with $\chi(G) > \frac{7\Delta(G) + 10}{8}$, then $\omega(G) = \chi(G)$.
+\end{thm}
+
+Combining this with an upper bound of Molloy and Reed \cite{molloy2002graph} on the fractional chromatic number and partial results on the Goldberg Conjecture \cite{StiebitzVizingGoldberg} yields yet another proof of the following result (see \cite{king2007upper} for the original proof and \cite{rabernhitting} for further remarks and a different proof).
+
+\begin{thm}[King, Reed and Vetta \cite{king2007upper}]
+If $G$ is the line graph of a multigraph, then $\chi(G) \leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil$.
+\end{thm}
+
+Reed \cite{reed1998omega} conjectures that the bound $\chi(G) \leq \left\lceil \frac{\omega(G) + \Delta(G) + 1}{2}\right\rceil$ holds for all graphs $G$.
+For further information about Reed's conjecture, see King's thesis \cite{king2009claw} and King and Reed's proof of the conjecture for quasi-line graphs \cite{king2008bounding}. Back in the 1970's Borodin and Kostochka \cite{borodin1977upper} conjectured the following. 
+
+\begin{conjecture}[Borodin and Kostochka \cite{borodin1977upper}]
+If $G$ is a graph with $\chi(G) \geq \Delta(G) \geq 9$, then $G$ contains a $K_{\Delta(G)}$.
+\end{conjecture}
+
+In \cite{reed1999strengthening} Reed proved this conjecture for $\Delta(G) \geq 10^{14}$.  The only known connected counterexample for the $\Delta(G) = 8$ case is the line graph of a $5$-cycle where each edge has multiplicity $3$ (that is, $G = L(3\cdot C_5)$).  We prove that there are no counterexamples that are the line graph of a multigraph for $\Delta(G) \geq 9$. This is tight since the above counterexample for $\Delta(G) = 8$ is a line graph of a multigraph.
+
+\begin{thm}\label{BKForLine}
+If $G$ is the line graph of a multigraph with $\chi(G) \geq \Delta(G) \geq 9$, then  $G$ contains a $K_{\Delta(G)}$.
+\end{thm}
+
+In \cite{dhurandhar1982improvement}, Dhurandhar proved the Borodin-Kostochka Conjecture for a superset of line graphs of \emph{simple} graphs defined by excluding the claw, $K_5 - e$ and another graph $D$ as induced subgraphs.  Kierstead and Schmerl \cite{kierstead1986chromatic} improved this by removing the need to exclude $D$.  We note that there is no containment relation between the line graphs of multigraphs and the class of graphs containing no induced claw and no induced $K_5 - e$.
+
+\section{The proofs}
+\begin{lem}\label{muBoundLemma}
+Fix $k \geq 0$. Let $H$ be a multigraph and put $G = L(H)$.  Suppose $\chi(G) = \Delta(G) + 1 - k$. If $xy \in E(H)$ is critical and $\mu(xy) \geq 2k + 2$, then $xy$ is contained in a $\chi(G)$-clique in $G$.
+\end{lem}
+\begin{proof}
+Let $xy \in E(H)$ be a critical edge with $\mu(xy) \geq 2k + 2$.  Let $A$ be the set of all edges incident with both $x$ and $y$.  Let $B$ be the set of edges incident with either $x$ or $y$ but not both.  Then, in $G$, $A$ is a clique joined to $B$ and $B$ is the complement of a bipartite graph.  Put $F = G[A \cup B]$.  Since $xy$ is critical, we have a $\chi(G) - 1$ coloring of $G - F$.  Viewed as a partial $\chi(G) - 1$ coloring of $G$ this leaves a list assignment $L$ on $F$ with 
+$|L(v)| = \chi(G) - 1 - (d_G(v) - d_F(v)) = d_F(v) - k + \Delta(G) - d_G(v)$ for each $v \in V(F)$.  Put $j = k + d_G(xy) - \Delta(G)$.
+
+Let $M$ be a maximum matching in the complement of $B$.  First suppose $|M| \leq j$.  Then, since $B$ is perfect, $\omega(B) = \chi(B)$ and we have
+
+\begin{align*}
+\omega(F) &= \omega(A) + \omega(B) = |A| + \chi(B) \\
+&\geq |A| + |B| - j = d_G(xy) + 1 - j \\
+&= \Delta(G) + 1 - k = \chi(G).
+\end{align*}
+
+\noindent Thus $xy$ is contained in a $\chi(G)$-clique in $G$.
+
+Hence we may assume that $|M| \geq j + 1$.  Let $\{\{x_1, y_1\}, \ldots, \{x_{j+1}, y_{j+1}\}\}$ be a matching in the complement of $B$.  Then, for each $1 \leq i \leq j + 1$ we have
+
+\begin{align*}
+|L(x_i)| + |L(y_i)| &\geq d_F(x_i) + d_F(y_i) - 2k \\
+&\geq |B| - 2 + 2|A| - 2k \\
+&= d_G(xy) + |A| - 2k - 1 \\
+&\geq d_G(xy) + 1.
+\end{align*}
+
+Here the second inequality follows since $\alpha(B) \leq 2$ and the last since $|A| = \mu(xy) \geq 2k + 2$.  Since the lists together contain at most $\chi(G) - 1 = \Delta(G) - k$ colors we see that for each $i$,
+
+\begin{align*}
+\left|L(x_i) \cap L(y_i)\right| &\geq |L(x_i)| + |L(y_i)| - (\Delta(G) - k) \\
+&\geq d_G(xy) + 1 - \Delta(G) + k \\
+&=j + 1.
+\end{align*}
+
+Thus we may color the vertices in the pairs $\{x_1, y_1\}, \ldots, \{x_{j+1}, y_{j+1}\}$ from $L$ using one color for each pair.  Since $|A| \geq k + 1$ we can extend this to a coloring of $B$ from $L$ by coloring greedily.  But each vertex in $A$ has $j+1$ colors used twice on its neighborhood, thus each vertex in $A$ is left with a list of size at least $d_A(v) - k + \Delta(G) - d_G(v) + j + 1 = d_A(v) + 1$.  Hence we can complete the $(\chi(G) - 1)$-coloring to all of $F$ by coloring greedily.  This contradiction completes the proof.
+\end{proof}
+
+\begin{thm}\label{CriticalMuBound}
+If $G$ is the line graph of a multigraph $H$ and $G$ is vertex critical, then
+\[\chi(G) \leq \max\left\{\omega(G), \Delta(G) + 1 - \frac{\mu(H) - 1}{2}\right\}.\]
+\end{thm}
+\begin{proof}
+Let $G$ be the line graph of a multigraph $H$ such that $G$ is vertex critical. Say $\chi(G) = \Delta(G) + 1 - k$.  Suppose $\chi(G) > \omega(G)$.  Since $G$ is vertex critical, every edge in $H$ is critical.  Hence, by Lemma \ref{muBoundLemma}, $\mu(H) \leq 2k+1$.  That is, $\mu(H) \leq 2(\Delta(G) + 1 - \chi(G)) + 1$.  The theorem follows.
+\end{proof}
+
+This upper bound is tight.  To see this, let $H_t = t \cdot C_5$ (i.e. $C_5$ where each edge has multiplicity $t$) and put $G_t = L(H_t)$.  As Catlin \cite{catlin1979hajos} showed, for odd $t$ we have $\chi(G_t) = \frac{5t + 1}{2}$, $\Delta(G_t) = 3t - 1$, and $\omega(G_t) = 2t$.  Since $\mu(H_t) = t$, the upper bound is achieved.\newline
+
+\noindent We need the following lemma which is a consequence of the fan equation (see \cite{anderson1977edge, cariolaro2006fans, StiebitzVizingGoldberg, GoldbergJGT}).
+\begin{lem}\label{FanEquation}
+Let $G$ be the line graph of a multigraph $H$.  Suppose $G$ is vertex critical with $\chi(G) > \Delta(H)$. Then, for any $x \in V(H)$ there exist $z_1, z_2 \in N_H(x)$ such that $z_1 \neq z_2$ and 
+\begin{itemize}
+\item $\chi(G) \leq d_H(z_1) + \mu(xz_1)$,
+\item $2\chi(G) \leq d_H(z_1) + \mu(xz_1) + d_H(z_2) + \mu(xz_2)$.
+\end{itemize}
+\end{lem}
+
+\begin{lem}\label{Goldberg}
+Let $G$ be the line graph of a multigraph $H$.  If $G$ is vertex critical with $\chi(G) > \Delta(H)$, then
+\[\chi(G) \leq \frac{3\mu(H) + \Delta(G) + 1}{2}.\]
+\end{lem}
+\begin{proof}
+Let $x \in V(H)$ with $d_H(x) = \Delta(H)$.  By Lemma \ref{FanEquation} we have $z \in N_H(x)$ such that $\chi(G) \leq d_H(z) + \mu(xz)$.  Hence
+\[\Delta(G) + 1 \geq d_H(x) + d_H(z) - \mu(xz) \geq d_H(x) + \chi(G) - 2\mu(xz).\]
+
+\noindent Which gives
+
+\[\chi(G) \leq \Delta(G) + 1 - \Delta(H) + 2\mu(H).\]
+
+\noindent Adding Vizing's inequality $\chi(G) \leq \Delta(H) + \mu(H)$ gives the desired result.
+\end{proof}
+
+\noindent Combining this with Theorem \ref{CriticalMuBound} we get the following upper bound.
+
+\begin{thm}\label{TheoremL}
+If $G$ is the line graph of a multigraph, then
+\[\chi(G) \leq \max\left\{\omega(G), \frac{7\Delta(G) + 10}{8}\right\}.\]
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ with the minimum number of vertices.  Say $G = L(H)$. Plainly, $G$ is vertex critical.  Suppose $\chi(G) > \omega(G)$. By Theorem \ref{CriticalMuBound} we have
+
+\[\chi(G) \leq \Delta(G) + 1 - \frac{\mu(H) - 1}{2}.\]
+
+\noindent By Lemma \ref{Goldberg} we have
+
+\[\chi(G) \leq \frac{3\mu(H) + \Delta(G) + 1}{2}.\]
+
+\noindent Adding three times the first inequality to the second gives
+
+\[4\chi(G) \leq \frac72(\Delta(G) + 1) + \frac32.\]
+
+\noindent The theorem follows.
+\end{proof}
+
+\begin{cor}
+If $G$ is the line graph of a multigraph with $\chi(G) \geq \Delta(G) \geq 11$, then $G$ contains a $K_{\Delta(G)}$.
+\end{cor}
+
+With a little more care we can get the $11$ down to $9$.  Our analysis will be simpler if we can inductively reduce to the $\Delta(G) = 9$ case.  This reduction is easy using the following lemma from \cite{rabernhitting} (it also follows from a lemma of Kostochka in \cite{kostochkaRussian}).  Recently, King \cite{king2010hitting} improved the $\omega(G) \geq \frac{3}{4}(\Delta(G) + 1)$ condition to the weakest possible condition $\omega(G) > \frac23(\Delta(G) + 1)$.
+
+\begin{lem}\label{HittingCliques}
+If $G$ is a graph with $\omega(G) \geq \frac{3}{4}(\Delta(G) + 1)$, then $G$ has an independent set $I$ such that $\omega(G - I) < \omega(G)$.
+\end{lem}
+
+\begin{proof}[Proof of Theorem \ref{BKForLine}]
+
+Suppose the theorem is false and choose a counterexample $F$ minimizing $\Delta(F)$.  By Brooks' Theorem we must have $\chi(F) = \Delta(F)$.  Suppose $\Delta(F) \geq 10$. By Lemma \ref{HittingCliques}, we have an independent set $I$ in $F$ such that $\omega(F - I) < \omega(F)$.  Expand $I$ to a maximal independent set $M$ and put $T = F - M$.  Then $\chi(T) \geq \Delta(F) - 1$ and $\Delta(T) \leq \Delta(F) - 1$.  Hence, by minimality of $\Delta(F)$ and Brooks' Theorem, $\omega(F) \geq \omega(T) + 1 \geq \Delta(F)$.  This is a contradiction, hence $\chi(F) = \Delta(F) = 9$.
+
+Let $G$ be a $9$-critical subgraph of $F$.  Then $G$ is a line graph of a multigraph.  If $\Delta(G) \leq 8$, then $G$ is $K_9$ by Brooks' Theorem giving a contradiction.  Hence $\Delta(G) \geq 9$.  Since $G$ is critical, it is also connected. 
+
+Let $H$ be such that $G = L(H)$.  Then by Lemma \ref{muBoundLemma} and Lemma \ref{Goldberg} we know that $\mu(H) = 3$. Let $x \in V(H)$ with $d_H(x) = \Delta(H)$.  Then we have $z_1, z_2 \in N_H(x)$ as in Lemma \ref{FanEquation}.  This gives
+\begin{eqnarray}
+9 &\leq& d_H(z_1) + \mu(xz_1), \\
+18 &\leq& d_H(z_1) + \mu(xz_1) + d_H(z_2) + \mu(xz_2).
+\end{eqnarray}
+
+\noindent In addition, we have for $i = 1,2$, 
+
+\[9 \geq d_H(x) + d_H(z_i) - \mu(xz_i) - 1 = \Delta(H) + d_H(z_i) - \mu(xz_i) - 1.\]
+
+\noindent Thus,
+
+\begin{eqnarray}
+\Delta(H) &\leq& 2\mu(xz_1) + 1 \leq 7, \\
+\Delta(H) &\leq& \mu(xz_1) + \mu(xz_2) + 1.
+\end{eqnarray}
+
+Now, let $ab \in E(H)$ with $\mu(ab) = 3$.  Then, since $G$ is vertex critical, we have $8 = \Delta(G) - 1 \leq d_H(a) + d_H(b) - \mu(ab) - 1 \leq 2\Delta(H) - 4$.  Thus $\Delta(H) \geq 6$.  Hence we have $6 \leq \Delta(H) \leq 7$.  Thus, by $(3)$, we must have $\mu(xz_1) = 3$.
+
+First, suppose $\Delta(H) = 7$.  Then, by $(4)$ we have $\mu(xz_2) = 3$.  Let $y$ be the other neighbor of $x$.  Then $\mu(xy) = 1$ and thus $d_H(x) + d_H(y) - 2 \leq 9$.  That gives $d_H(y) \leq 4$.  Then we have vertices $w_1, w_2 \in N_H(y)$ guaranteed by Lemma \ref{FanEquation}. Note that $x \not \in \{w_1, w_2\}$.  Now $4 \geq d_H(y) \geq 1 + \mu(yw_1) + \mu(yw_2)$.  Thus $\mu(yw_1) + \mu(yw_2) \leq 3$.  This gives $d_H(w_1) + d_H(w_2) \geq 2\Delta(G) - 3 = 15$ contradicting $\Delta(H) \leq 7$.
+
+Thus we must have $\Delta(H) = 6$.  By $(1)$ we have $d_H(z_1) = 6$.  Then, applying $(2)$ gives $\mu(xz_2) = 3$ and $d_H(z_2) = 6$.  Since $x$ was an arbitrary vertex of maximum degree and $H$ is connected we conclude that $G = L(3\cdot C_n)$ for some $n \geq 4$.  But no such graph is $9$-chromatic by Brooks' Theorem.
+\end{proof}
+
+\section{Some conjectures}
+
+The graphs $G_t = L(t \cdot C_5)$ discussed above show that the following upper bounds would be tight.  Creating a counterexample would require some new construction technique that might lead to more counterexamples to Borodin-Kostochka for $\Delta=8$.
+
+\begin{conjecture}\label{BestPossibleWithJustDelta}
+If $G$ is the line graph of a multigraph, then
+\[\chi(G) \leq \max\left\{\omega(G),\frac{5\Delta(G) + 8}{6}\right\}.\]
+\end{conjecture}
+
+\noindent This would follow if the $3\mu(H)$ in Lemma \ref{Goldberg} could be improved to $2\mu(H) + 1$.  The following weaker statement would imply Conjecture \ref{BestPossibleWithJustDelta} in a similar fashion.
+
+\begin{conjecture}[\textcolor{red}{Examples exist showing that this is false}]
+If $G$ is the line graph of a multigraph $H$, then
+\[\chi(G) \leq  \max\left\{\omega(G), \frac{\Delta(G) + 2}{2} + \mu(H)\right\}.\]
+\end{conjecture}
+
+\noindent Since we always have $\Delta(H) \geq \frac{\Delta(G) + 2}{2}$, this can be seen as an improvement of Vizing's Theorem for graphs with $\omega(G) < \chi(G)$.
+
+\section*{Acknowledgments}
+Thanks to anonymous referee for helping to improve the readability of the paper.
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

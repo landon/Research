@@ -1,0 +1,322 @@
+\documentclass{beamer}
+\usepackage{tkz-graph}
+%===============BEGIN GLOBAL BEAMER OPTIONS=====================
+
+%THIS CHANGES THE BACKGROUND COLOUR OF BOXES, AND ROUNDS OFF THEIR EDGES
+%\setbeamercolor{block title}{bg=yellow!50}
+%\setbeamercolor{block body}{}
+%\setbeamertemplate{blocks}[default]
+
+%THIS REMOVES NAVIGATION BAR ON THE BOTTOM
+\setbeamertemplate{navigation symbols}{}
+
+
+%%THIS ADDS FRAME NUMBERS TO THE Right (x/y)
+%\newcommand*\oldmacro{}
+%\let\oldmacro\insertshorttitle
+%\renewcommand*\insertshorttitle{
+ %\oldmacro\hfill
+ %\insertframenumber\,/\,\inserttotalframenumber}
+
+%+++++++++++++ MODES AND THEMES +++++++++
+\mode<presentation>
+
+\usetheme[hideothersubsections]{Hannover}
+\addtobeamertemplate{footline}
+{
+  \usebeamercolor[fg]{author in sidebar}
+  \vskip-1cm\hskip2pt
+  %\insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+}
+
+%\usecolortheme{beaver}
+%\usecolortheme{crane}
+%\usecolortheme{default}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle} 
+%\usecolortheme{dove} 
+%\usecolortheme{fly} 
+%\usecolortheme{seagull}
+%\usecolortheme{rose}
+\usecolortheme{orchid}
+%\usecolortheme{seahorse}
+
+
+
+%\useoutertheme{split}
+%\useoutertheme{shadow}
+
+% USE TO CREATE PRINTER FRIENDLY HANDOUT VERSION, TOGETHER WITH [HANDOUT]
+%ALSO USE ALTERNATE FIRST SLIDE
+%\usecolortheme{dove}
+
+%THIS CHANGES THE DEFAULT TRANSPARENCY GRADE FOR UNCOVERING COMMANDS
+%\setbeamercovered{transparent=30}
+
+%\beamertemplateshadingbackground{yellow!70}{black!20}
+
+%====================================
+
+\title[An Improvement On Brooks' Theorem]{An Improvement On Brooks' Theorem}
+\author{Landon Rabern}
+\date{February 28, 2011}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{OreBrooks}{Rabern (2010)}
+\newtheorem*{DeltaTwo}{Rabern (2010)}
+\newtheorem*{OreBrooksKK}{Kierstead and Kostochka (2009)}
+\newtheorem*{krs1}{Kostochka, Rabern and Stiebitz (2010)}
+\newtheorem*{krs2}{Kostochka, Rabern and Stiebitz (2010)}
+\newtheorem*{BrooksTheorem}{Brooks (1941)}
+\newtheorem*{MozhansLemma}{Mozhan (1983)}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+\newtheorem*{TemptingThought}{Tempting Thought}
+
+\AtBeginSubsection
+{
+  \begin{frame}<beamer>{outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\AtBeginSection
+{
+  \begin{frame}<beamer>{outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+
+\begin{document}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{Introduction}
+\uncover<1->{Brooks' Theorem \cite{brooks1941colouring} gives an upper bound on a graph's chromatic number in terms of its maximum degree and clique number.}  
+
+\uncover<2->{
+\begin{BrooksTheorem}
+Every graph with $\Delta \geq 3$ satisfies $\chi \leq \max\{\omega, \Delta\}$.
+\end{BrooksTheorem}}
+
+\uncover<3->{
+In \cite{kierstead2009ore}, Kierstead and Kostochka showed that Brooks' theorem can be tightened by looking at the maximum Ore-degree of edges in a graph.}
+
+\uncover<4->{
+\begin{defn}
+The \emph{Ore-degree} of an edge $xy$ in a graph $G$ is $\theta(xy) = d(x) + d(y)$.  The \emph{Ore-degree} of a graph $G$ is $\theta(G) = \max_{xy \in E(G)}\theta(xy)$.
+\end{defn}
+
+Note that every graph satisfies $\left\lfloor\frac{\theta}{2} \right \rfloor \leq \Delta$.}
+\end{frame}
+
+\begin{frame}
+\uncover<1->{
+By coloring greedily (in any order), we see that every graph satisfies 
+$\chi \leq \left\lfloor\frac{\theta}{2} \right\rfloor + 1$. Kierstead and Kostochka improved this as follows and conjectured that the $12$ could be reduced to $10$.}
+
+\uncover<2->{
+\begin{OreBrooksKK}
+Every graph with $\theta \geq 12$ satisfies $\chi \leq \max \left\{\omega, \left\lfloor\frac{\theta}{2} \right \rfloor\right\}$.
+\end{OreBrooksKK}}
+
+\uncover<3->{
+That $10$ would be best possible can be seen from the following example which has $\theta = 9$, $\omega = 4$ and $\chi = 5$.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 1pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[x = 0.270266681909561, y = 0.890800006687641, L = \tiny {4}]{v0}
+\Vertex[x = 0.336266696453094, y = 0.962799992412329, L = \tiny {4}]{v1}
+\Vertex[x = 0.334666579961777, y = 0.821199983358383, L = \tiny {4}]{v2}
+\Vertex[x = 0.56306654214859, y = 0.890800006687641, L = \tiny {5}]{v3}
+\Vertex[x = 0.244666695594788, y = 0.731600046157837, L = \tiny {4}]{v4}
+\Vertex[x = 0.417866677045822, y = 0.732000052928925, L = \tiny {4}]{v5}
+\Vertex[x = 0.243866696953773, y = 0.543200016021729, L = \tiny {4}]{v6}
+\Vertex[x = 0.415866762399673, y = 0.542800068855286, L = \tiny {4}]{v7}
+\Vertex[x = 0.0926666706800461, y = 0.890000000596046, L = \tiny {5}]{v8}
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v7)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v4)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v0)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v8)
+\end{tikzpicture}
+
+\caption{$O_5$, a counterexample with $\theta = 9$.}
+\end{figure}}
+\end{frame}
+
+\section{Rephrasing the Problem}
+\begin{frame}{Rephrasing the Problem}
+\uncover<1->{
+Let $G$ be a graph with $\chi = \left\lfloor\frac{\theta}{2} \right\rfloor + 1$. Then $G$ must satisfy $\theta \leq 2\chi - 1$.  We may also assume that $G$ is critical and hence satisfies $\delta \geq \chi - 1$.  But then $G$ must have $\Delta \leq \chi$.  Also, no two vertices of degree $\Delta$ in $G$ can be adjacent.  These considerations give us an equivalent formulation of the problem that is easier to work with.}
+
+\uncover<2->{
+\begin{defn}
+Given a graph $G$, let $\mathcal{H}(G)$ be the subgraph of $G$ induced on the vertices of degree at least $\chi(G)$.
+\end{defn}}
+
+\uncover<3->{
+\begin{problem}
+Prove that $K_{\Delta(G)}$ is the only critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ such that $\mathcal{H}(G)$ is edgeless.
+\end{problem}}
+\end{frame}
+
+\section{A Simpler Proof via Mozhan's Lemma}
+\subsection{Problem Solved}
+\begin{frame}
+\uncover<1->{
+In \cite{rabern2010a} we solved the problem in a more general fashion.}
+\uncover<2->{
+\begin{OreBrooks}
+$K_{\Delta(G)}$ is the only critical graph $G$ with $\chi(G) \geq \Delta(G) \geq 6$ and $\omega(\mathcal{H}(G)) \leq \left \lfloor \frac{\Delta(G)}{2} \right \rfloor - 2$.
+\end{OreBrooks}
+
+Setting $\omega(\mathcal{H}(G)) = 1$ proves the conjecture of Kierstead and Kostochka. In the following sections we will outline the proof.}
+\end{frame}
+
+\subsection{Mozhan's Lemma}
+\begin{frame}{Kierstead and Kostochka's Proof}
+\uncover<1->{
+Kierstead and Kostochka's proof combines a list coloring argument on an auxiliary bipartite graph with Gallai's characterization of the low vertex subgraph $L(G)$ of a critical graph $G$ and a result from \cite{stiebitz1982proof} saying that if $G$ is a critical graph, then the high vertex subgraph $H(G)$ has at most as many components as $L(G)$ has.  It is an elegant use of known results, but unfortunately only works for $\theta \geq 12$.\newline}
+
+\uncover<2->{
+We obtained the proof that also works for $\theta \geq 10$ by employing the following useful observation of Mozhan \cite{mozhan1983} together with a carefully chosen recoloring algorithm.}
+\end{frame}
+
+\begin{frame}{Partitioned Colorings}
+\begin{defn}
+Let $G$ be a vertex critical graph.  Let $a \geq 1$ and $r_1, \ldots, r_a$ be such that $1 + \sum_i r_i = \chi(G)$. By a \emph{$(r_1, \ldots, r_a)$-partitioned coloring} of $G$ we mean a proper coloring of $G$ of the form
+\[\left\{\{x\}, L_{11}, L_{12}, \ldots, L_{1r_1}, L_{21}, L_{22}, \ldots, L_{2r_2}, \ldots, L_{a1}, L_{a2}, \ldots, L_{ar_a}\right\}.\]
+
+Here $\{x\}$ is a singleton color class and each $L_{ij}$ is a color class.
+\end{defn}
+\end{frame}
+
+\begin{frame}{Mozhan's Lemma}
+\begin{MozhansLemma}
+Let $G$ be a vertex critical graph.   Let $a \geq 1$ and $r_1, \ldots, r_a$ be such that $1 + \sum_i r_i = \chi(G)$. Of all $(r_1, \ldots, r_a)$-partitioned colorings of $G$ pick one (call it $\pi$) minimizing
+
+\[\sum_{i = 1}^a \left|E\left(G\left[\bigcup_{j = 1}^{r_i} L_{ij}\right]\right)\right|.\]
+
+Remember that $\{x\}$ is a singleton color class in the coloring. Put $U_i = \bigcup_{j = 1}^{r_i} L_{ij}$ and let $Z_i(x)$ be the component of $x$ in $G[\{x\} \cup U_i]$.  If $d_{Z_i(x)}(x) = r_i$, then $Z_i(x)$ is complete if $r_i \geq 3$ and $Z_i(x)$ is an odd cycle if $r_i = 2$.
+\end{MozhansLemma}
+\end{frame}
+
+\subsection{The Recoloring Algorithm}
+Add stuff.
+
+\section{A Stronger Bound}
+\subsection{A Useful Observation}
+\begin{frame}{A Useful Observation}
+\uncover<1->{
+Our proof of the above relied heavily on the high vertex subgraph being edgeless.  Intuitively, if this property could be captured by a numerical graph invariant $\phi$, then we should be able to get an upper bound on $\chi$ in terms of $\phi$. It turns out that such a graph parameter has already been studied in the literature.\newline}
+
+\uncover<2->{
+In \cite{stacho2001new} Stacho introduced the graph parameter $\Delta_2$ as the largest degree that a vertex $v$ can have subject to the condition that $v$ is adjacent to a vertex whose degree is at least as large as its own. By coloring greedily (in any order), we see that every graph satisfies $\chi \leq \Delta_2 + 1$.}
+
+\uncover<3->{
+\begin{observation}
+For any graph $G$, $\chi(G) > \Delta_2(G)$ if and only if $\mathcal{H}(G)$ is edgeless.  
+\end{observation}}
+\end{frame}
+
+\subsection{A Tempting Thought}
+\begin{frame}{A Tempting Thought}
+\uncover<1->{
+From our experiences above with Brooks' Theorem and the Ore-degree version of Brook's Theorem, it is very tempting to conjecture the following.}
+
+\uncover<2->{
+\begin{TemptingThought}
+There exists $t$ such that every graph with $\Delta_2 \geq t$ satisfies $\chi \leq \max \{\omega, \Delta_2\}$.
+\end{TemptingThought}}
+
+\uncover<3->{
+Unfortunately, the tempting thought cannot hold for any $t$ unless \emph{P}=\emph{NP}. To see this, note that if the tempting thought held for some $t$, then using Lov\'{a}sz's $\vartheta$ parameter \cite{grötschel1981ellipsoid} which can be computed in polynomial time and has the property that $\omega(G) \leq \vartheta(\overline{G}) \leq \chi(G)$, we could determine whether or not $\chi(G) \leq \Delta_2(G)$ in polynomial time.  But Stacho proved in \cite{stacho2001new} that for any fixed $t \geq 3$, the problem of determining whether or not $\chi(G) \leq \Delta_2(G)$ for graphs with $\Delta_2(G) = t$ is \emph{NP}-complete.}
+\end{frame}
+
+\subsection{What We Can Prove}
+\begin{frame}
+\uncover<1->{
+Even though the tempting thought likely fails, if we limit how far from $\Delta + 1$ our upper bound can stray, we can get a generalization of Brooks' theorem involving $\Delta_2$.}
+
+\uncover<2->{
+\begin{DeltaTwo}
+Every graph with $\Delta \geq 3$ satisfies \[\chi \leq \max \left\{\omega, \Delta_2, \frac{5}{6}(\Delta + 1)\right\}.\]
+\end{DeltaTwo}
+
+Note that this also generalizes the Ore-degree version of Brooks' Theorem.  The proof uses a recoloring algorithm similar to the above.}
+\end{frame}
+
+\section{Further Improvements}
+\begin{frame}
+\uncover<1->{
+In joint work with Kostochka and Stiebitz \cite{krs_one} similar techniques were used to improve the bounds further.  We give some highlights.}
+
+\uncover<2->{
+\begin{krs1}
+Every graph with $\theta \geq 8$, except $O_5$, satisfies $\chi \leq \max \left\{\omega, \left\lfloor\frac{\theta}{2} \right \rfloor\right\}$.
+\end{krs1}}
+
+\uncover<3->{
+\begin{krs2}
+Every graph with $\Delta \geq 3$ satisfies \[\chi \leq \max \left\{\omega, \Delta_2, \frac{3}{4}(\Delta + 2)\right\}.\]
+\end{krs2}}
+\end{frame}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}

@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Thu Aug 16 20:12:45 EDT 2012
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=main_fancy.tex
+outputFile=main_fancy.pdf
+langSpell=en
+markDer=true
+srcDir=

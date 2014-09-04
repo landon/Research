@@ -1,0 +1,368 @@
+\documentclass{beamer}
+\usepackage{tkz-graph}
+\usetikzlibrary{shapes}
+
+%===============BEGIN GLOBAL BEAMER OPTIONS=====================
+
+%THIS CHANGES THE BACKGROUND COLOUR OF BOXES, AND ROUNDS OFF THEIR EDGES
+%\setbeamercolor{block title}{bg=yellow!50}
+%\setbeamercolor{block body}{}
+%\setbeamertemplate{blocks}[default]
+
+%THIS REMOVES NAVIGATION BAR ON THE BOTTOM
+\setbeamertemplate{navigation symbols}{}
+
+
+%%THIS ADDS FRAME NUMBERS TO THE Right (x/y)
+%\newcommand*\oldmacro{}
+%\let\oldmacro\insertshorttitle
+%\renewcommand*\insertshorttitle{
+ %\oldmacro\hfill
+ %\insertframenumber\,/\,\inserttotalframenumber}
+
+%+++++++++++++ MODES AND THEMES +++++++++
+\mode<presentation>
+
+\usetheme{Madrid}
+
+\usecolortheme{whale}
+%\usecolortheme{crane}
+%\usecolortheme{default}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle} 
+%\usecolortheme{dove} 
+%\usecolortheme{fly} 
+%\usecolortheme{seagull}
+%\usecolortheme{rose}
+%\usecolortheme{orchid}
+%\usecolortheme{seahorse}
+
+
+
+%\useoutertheme{split}
+%\useoutertheme{shadow}
+
+% USE TO CREATE PRINTER FRIENDLY HANDOUT VERSION, TOGETHER WITH [HANDOUT]
+%ALSO USE ALTERNATE FIRST SLIDE
+%\usecolortheme{dove}
+
+%THIS CHANGES THE DEFAULT TRANSPARENCY GRADE FOR UNCOVERING COMMANDS
+%\setbeamercovered{transparent=30}
+
+%\beamertemplateshadingbackground{yellow!70}{black!20}
+
+%====================================
+
+\title[Extending Alon-Tarsi Orientations]{Extending Alon-Tarsi Orientations}
+\author[landon rabern]{{\large landon rabern}}
+\institute[]{~~\\~~\\
+Joint with Hal Kierstead\\
+Arizona State University\\
+\bigskip
+\bigskip
+\bigskip
+AMS Special Session on Structural and Extremal Problems\\
+January 15, 2014}
+\date{}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{OreBrooks}{Theorem}
+\newtheorem*{DeltaTwo}{Theorem}
+\newtheorem*{Spectrum}{Theorem}
+\newtheorem*{OreBrooksKK}{Theorem}
+\newtheorem*{krs1}{Theorem}
+\newtheorem*{krs2}{Theorem}
+\newtheorem*{BrooksTheorem}{Theorem}
+\newtheorem*{MozhansLemma}{Lemma}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{PartyGame}{A prison problem}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{goal}{Goal}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+%\AtBeginSubsection
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+%\AtBeginSection
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+\newcommand{\1}{\item<1-> }
+\newcommand{\2}{\item<2-> }
+\newcommand{\3}{\item<3-> }
+\newcommand{\4}{\item<4-> }
+\newcommand{\5}{\item<5-> }
+\newcommand{\6}{\item<6-> }
+\newcommand{\7}{\item<7-> }
+\newcommand{\8}{\item<8-> }
+\newcommand{\9}{\item<9-> }
+\newcommand{\ten}{\item<10-> }
+\newcommand{\ele}{\item<11-> }
+\newcommand{\twe}{\item<12-> }
+\newcommand{\thi}{\item<13-> }
+\newcommand{\fou}{\item<14-> }
+\newcommand{\fif}{\item<15-> }
+\newcommand{\six}{\item<16-> }
+\newcommand{\sev}{\item<17-> }
+\newcommand{\eig}{\item<18-> }
+
+\newenvironment{dbluenv}{\color[rgb]{.2,.2,.6}}{\normalcolor}
+\newcommand<>{\dblue}[1]{\begin{dbluenv}#1\end{dbluenv}}
+\newcommand{\bhead}[1]{\textbf{\dblue{#1}}}
+
+\newenvironment{whiteenv}{\color[rgb]{1,1,1}}{\normalcolor}
+\newcommand<>{\white}[1]{\begin{whiteenv}#1\end{whiteenv}}
+\newenvironment{redenv}{\color[rgb]{.9,0,0}}{\normalcolor}
+\newcommand<>{\red}[1]{\begin{redenv}#1\end{redenv}}
+\newenvironment{purenv}{\color[rgb]{.8,0,.9}}{\normalcolor}
+\newcommand<>{\purple}[1]{\begin{purenv}#1\end{purenv}}
+\newenvironment{greenv}{\color[rgb]{0,.8,0}}{\normalcolor}
+\newcommand<>{\green}[1]{\begin{greenv}#1\end{greenv}}
+\newenvironment{bluenv}{\color[rgb]{0,0,.8}}{\normalcolor}
+\newcommand<>{\blue}[1]{\begin{bluenv}#1\end{bluenv}}
+\newenvironment{broenv}{\color[rgb]{.58,.35,.2}}{\normalcolor}
+\newcommand<>{\brown}[1]{\begin{broenv}#1\end{broenv}}
+\newenvironment{oraenv}{\color[rgb]{1,.41,.12}}{\normalcolor}
+\newcommand<>{\orange}[1]{\begin{oraenv}#1\end{oraenv}}
+\newenvironment{aquenv}{\color[cmyk]{1,0,0,0}}{\normalcolor}
+\newcommand<>{\aqua}[1]{\begin{aquenv}#1\end{aquenv}}
+\newenvironment{blaenv}{\color[rgb]{0,0,0}}{\normalcolor}
+\newcommand<>{\black}[1]{\begin{blaenv}#1\end{blaenv}}
+\newenvironment{yelenv}{\color[cmyk]{0,0,1,0}}{\normalcolor}
+\newcommand<>{\yellow}[1]{\begin{yelenv}#1\end{yelenv}}
+
+\definecolor{cf9f9f9}{RGB}{249,249,249}
+
+\begin{document}
+\setbeamertemplate{caption}{\insertcaption}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{a motivating problem}{coloring a graph with around $\Delta$ colors}
+\begin{overprint} 
+\onslide<1> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\green{colorable}
+\onslide<2> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\orange{list-colorable}
+\onslide<3> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\onslide<4> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\onslide<5> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\onslide<6> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\onslide<7> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\onslide<8> \bhead{by greed:} every graph is \green{$(\Delta + 1)$-}\red{online-list-colorable}
+\end{overprint}
+
+\bigskip
+\uncover<4->{\bhead{with more work:}}
+
+\begin{itemize}
+\5 can \green{$\Delta$-color} when no $K_{\Delta+1}$ \scriptsize{(Brooks 1941)}
+\6 can \green{$\Delta$-}\orange{list-color} when no $K_{\Delta+1}$ \scriptsize{(Vizing 1976)}
+\7 can \green{$\Delta$-}\red{online-list-color} when no $K_{\Delta+1}$ \scriptsize{(Hladk{\`y}-Kr{\'a}l-Schauz 2010)}
+\end{itemize}
+
+\bigskip
+
+\uncover<8->{\bhead{hard conjecture:} can \green{$(\Delta-1)$-color} when no $K_{\Delta}$ and $\Delta \ge 9$ \scriptsize{(Borodin-Kostochka 1977)}}
+\end{frame}
+
+\begin{frame}{a motivating problem}{between $\Delta$-coloring and $(\Delta-1)$-coloring}
+\uncover<1->{\bhead{def:} the \green{ore-degree} \purple{$\theta(G)$} of a graph \green{$G$} is \purple{$\max_{xy \in E(G)} d(x) + d(y)$}}
+\begin{itemize}
+\2 can \green{$\floor{\frac{\theta}{2}}$-color} when \green{$\theta \ge 12$} and no $K_{\floor{\frac{\theta}{2}} + 1}$ \scriptsize{(Kierstead-Kostochka 2009)}
+\3 can \green{$\floor{\frac{\theta}{2}}$-color} when \orange{$\theta \ge 10$} and no $K_{\floor{\frac{\theta}{2}} + 1}$ \scriptsize{(R. 2010)}
+\4 can \green{$\floor{\frac{\theta}{2}}$-color} when \red{$\theta \ge 8$} and no $K_{\floor{\frac{\theta}{2}} + 1}$ nor \purple{$O_5$} \scriptsize{(Kostochka-Stiebtiz-R. 2011)}
+\end{itemize}
+\uncover<4->{
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle}=[shape = circle,	
+								 minimum size = 1pt,
+								 inner sep = 1.2pt,
+                         draw]
+\Vertex[x = 0.270266681909561, y = 0.890800006687641, L = \tiny {}]{v0}
+\Vertex[x = 0.336266696453094, y = 0.962799992412329, L = \tiny {}]{v1}
+\Vertex[x = 0.334666579961777, y = 0.821199983358383, L = \tiny {}]{v2}
+\Vertex[x = 0.56306654214859, y = 0.890800006687641, L = \tiny {}]{v3}
+\Vertex[x = 0.244666695594788, y = 0.731600046157837, L = \tiny {}]{v4}
+\Vertex[x = 0.417866677045822, y = 0.732000052928925, L = \tiny {}]{v5}
+\Vertex[x = 0.243866696953773, y = 0.543200016021729, L = \tiny {}]{v6}
+\Vertex[x = 0.415866762399673, y = 0.542800068855286, L = \tiny {}]{v7}
+\Vertex[x = 0.0926666706800461, y = 0.890000000596046, L = \tiny {}]{v8}
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v0)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v3)(v1)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v7)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v4)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v5)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v4)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v6)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v5)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v7)(v3)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v0)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v1)(v8)
+\tikzstyle{EdgeStyle}=[]
+\Edge[](v2)(v8)
+\end{tikzpicture}
+\caption{the graph \purple{$O_5$}}
+\end{figure}}
+\end{frame}
+
+\begin{frame}{a motivating problem}{for (online) list coloring}
+\uncover<1->{\bhead{problem:} \purple{none} of these methods work for list coloring}\\
+\bigskip
+\uncover<2->{\bhead{a new method:} combine lower bounds on edges in critical graphs together with Kernel Lemma \scriptsize{(Kostochka-Yancey 2012)}\normalsize }\\
+\bigskip
+\uncover<3->{\bhead{known bounds:} combining with best known lower bound on edges in list-critical graphs \scriptsize{(Kostochka-Stiebitz 2003)} \normalsize can \green{$\floor{\frac{\theta}{2}}$-}\orange{list-color} when $\theta \ge 56$ and no $K_{\floor{\frac{\theta}{2}} + 1}$}\\
+\bigskip
+\uncover<4->{\bhead{our improvement:} can \green{$\floor{\frac{\theta}{2}}$}-\red{online-list-color} when \purple{$\theta \ge 18$} and no $K_{\floor{\frac{\theta}{2}} + 1}$}\\
+\smallskip
+
+\begin{itemize}
+\5 small improvement of Kernel Lemma application
+\6 new lower bound on edges in online-list-critical graphs proved via \purple{extending Alon-Tarsi orientations}
+\end{itemize}
+\end{frame}
+\begin{frame}{extending Alon-Tarsi orientations}{many edges or nicely orientable subgraph}
+\uncover<1->{\bhead{def:}  A digraph \green{$D$} is \purple{$f$-Alon-Tarsi} for \purple{$\func{f}{V(D)}{\IN}$} if}
+\begin{itemize}
+\2 $d^{+}(v) < f(v)$ for all $v$; and
+\3 $D$ has differing numbers of even and odd spanning eulerian subgraphs
+\end{itemize}
+\bigskip
+
+\uncover<4->{\bhead{the point:} if \green{$D$} is \purple{$f$-Alon-Tarsi}, then \green{$D$} is \purple{online $f$-choosable} (Schauz 2010)}
+
+\bigskip
+\uncover<5->{\bhead{main result:} for a graph \green{$G$} with $\delta(G) \ge 5$ and $K_{\delta(G) + 1} \not \subseteq G$, either}
+\begin{itemize}
+\6 \green{$G$} has ``lots'' of edges; or
+\7 there is an orientation of some induced subgraph \green{$H$} which is \purple{$f$-Alon-Tarsi} where $\purple{f(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)}$
+\end{itemize}
+\bigskip
+\uncover<8->{\bhead{corollary:}  since we can complete a $\delta(G)$-coloring of \green{$G-H$} to such an \green{$H$}, this implies that online-list-critical graphs have ``lots'' of edges}
+\end{frame}
+
+\begin{frame}{extending Alon-Tarsi orientations}{key lemma}
+\uncover<1->{
+\begin{lem}
+Let $G$ be a multigraph without loops and $\func{f}{V(G)}{\IN}$. If there are $F \subseteq G$ and
+$Y \subseteq V(G)$ such that:
+\begin{enumerate}
+\item any multiple edges in $G$ are contained in $G[Y]$; and
+\item $f(v) \geq d_G(v)$ for all $v \in V(G - Y)$; and
+\item $f(v) \geq d_{G[Y]}(v) + d_F(v) + 1$ for all $v \in Y$; and
+\item For each component $T$ of $G-Y$ there are different $x_1, x_2 \in V(T)$ where $N_T[x_1] = N_T[x_2]$ and $T - \set{x_1, x_2}$ is connected such that either:
+	\begin{enumerate}
+	\item there are $x_1y_1, x_2y_2 \in E(F)$ where $y_1 \neq y_2$ and $N(x_i) \cap Y = \set{y_i}$ for $i \in \irange{2}$; or
+	\item $\card{N(x_2) \cap Y} = 0$ and there is $x_1y_1 \in E(F)$ where $N(x_1) \cap Y = \set{y_1}$,
+	\end{enumerate}
+\end{enumerate}
+
+\noindent then $G$ is $f$-Alon-Tarsi.
+\end{lem}}
+
+\uncover<2->{\red{\large \bf we need a picture}}
+\end{frame}
+
+\begin{frame}{extending Alon-Tarsi orientations}{key lemma in pictures}
+\resizebox{\textwidth}{!}{
+\includegraphics<1>{extend1}
+\includegraphics<2>{extend2}
+\includegraphics<3>{extend3}
+\includegraphics<4>{extend4}
+\includegraphics<5>{extend5}
+\includegraphics<6>{extend6}
+\includegraphics<7>{extend7}
+\includegraphics<8>{extend8}
+\includegraphics<9>{extend9}
+\includegraphics<10>{extend10}
+\includegraphics<11>{extend11}
+\includegraphics<12>{extend12}
+\includegraphics<13>{extend13}
+}
+\end{frame}
+
+\begin{frame}{conjectures}{please prove}
+
+\uncover<1->{can \red{$\floor{\frac{\theta}{2}}$-online-list-color} when \orange{$\theta \ge 10$} and no $K_{\floor{\frac{\theta}{2}} + 1}$}\\
+\bigskip
+\uncover<2->{or even better:}\\
+\bigskip
+\uncover<3->{can \red{$\floor{\frac{\theta}{2}}$-online-list-color} when \red{$\theta \ge 8$} and no $K_{\floor{\frac{\theta}{2}} + 1}$ nor \purple{$O_5$}}\\
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\uncover<4->{\centering \bf{\huge thanks for watching}}
+\end{frame}
+\end{document}

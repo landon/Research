@@ -145,7 +145,7 @@ Q \arrow[r, hookrightarrow, "\iota"'] & G_h
 \end{figure}
 For a graph $T$ together with positive integers $a$, $b$ and $c$, let $\C_{T,a,b,c}$ be the set of graphs $G$ such that $G \not \rightarrow T$ and $\hat{\rho}_{a,b}(G) \ge c$.  
 
-\begin{lem}
+\begin{lem}\label{Criticality}
 Let $G$ be a $\C_{T,a,b,c}$-mule.  If $H \lhd G$, then $H \rightarrow T$.
 \end{lem}
 \begin{proof}
@@ -164,6 +164,15 @@ Suppose to the contrary that there is $H \unlhd G$ with $H \ne Q$ such that $H \
 Let $h$ be an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) \le  \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \hat{\rho}_{a,b}(Q) = \rho_{a,b}(W) < c$, a contradiction since $\hat{\rho}_{a,b}(G) \ge c$.
 \end{proof}
 
+We can easily weaken the condition $H \surj Q$ to $H \rightarrow Q$.
+
+\begin{cor}\label{ArbitraryQInto}
+Let $G$ be a $\C_{T,a,b,c}$-mule and $Q$ an arbitrary graph.  If $H \unlhd G$ with $H \ne Q$ such that $H \rightarrow Q$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(Q)$.
+\end{cor}
+\begin{proof}
+Let $h$ be a homomorphism from $H$ into $Q$ and put $Q' \DefinedAs \im(h)$.  Then $H \ne Q'$ and $H \surj Q'$, so Lemma \ref{ArbitraryQ} gives $\rho_{a,b}(H) > \hat{\rho}_{a,b}(Q') \ge  \hat{\rho}_{a,b}(Q)$.
+\end{proof}
+
 We have the following basic bound on the potential of non-complete subgraphs of $G$.
 \begin{cor}\label{CompleteQ}
 Let $G$ be a $\C_{T,a,b,c}$-mule. If $H \unlhd G$ is not complete and $\chi(H) \le \frac{2a}{b}$, then $\rho_{a,b}(H) > a$.
@@ -174,7 +183,25 @@ $\rho_{a,b}(H) > \hat{\rho}_{a,b}(K_k)$.  But $\hat{\rho}_{a,b}(K_k) = \min_{t \
 \end{proof}
 
 There is room for improvement in the proof of Lemma \ref{ArbitraryQ}; in particular, the bound 
-\[\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H)\] can be improved in many cases. Put $X \DefinedAs V(W) - V(Q)$ and $Y \DefinedAs h^{-1}(V(W) \cap V(Q))$.  We did not count any of the edges between $X$ and $H - Y$ in our estimate, so in fact we can improve the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)}.\]  Furthermore, we gain when a vertex in $X$ has more than $\card{V(W) \cap V(Q)}$ neighbors in $Y$ because multi-edges get replaced by single edges.  Taking this into account, improves the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)} - b\sum_{v \in X} \max\set{0, \card{N_G(v) \cap Y} - \card{V(W) \cap V(Q)}}.\]  Finally, we may be able to improve on the use of $\hat{\rho}_{a,b}(Q)$ when $\card{V(W) \cap V(Q)} > 1$.  There is a tension between this final improvement and the previous two.  For many $Q$ in the wild, $\rho_{a,b}(Q') > \rho_{a,b}(K_1)$ for all $Q' \unlhd Q$ with $\card{Q'} > 1$.  When this occurs, our upper bound is improved by $1$ unless $\card{V(W) \cap V(Q)} = 1$ and $\card{E(X,H - Y)} = 0$ and $\card{N(v) \cap Y} \le 1$ for all $v \in X$.
+\[\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H)\] can be improved in many cases. Put $X \DefinedAs V(W) - V(Q)$ and $Y \DefinedAs h^{-1}(V(W) \cap V(Q))$.  We did not count any of the edges between $X$ and $H - Y$ in our estimate, so in fact we can improve the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)}.\]  Furthermore, we gain when a vertex in $X$ has more than $\card{V(W) \cap V(Q)}$ neighbors in $Y$ because multi-edges get replaced by single edges.  Taking this into account, improves the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)} - b\sum_{v \in X} \max\set{0, \card{N_G(v) \cap Y} - \card{V(W) \cap V(Q)}}.\]  Finally, we may be able to improve on the use of $\hat{\rho}_{a,b}(Q)$ when $\card{V(W) \cap V(Q)} > 1$.  There is a tension between this final improvement and the previous two.  For many $Q$ in the wild, $\rho_{a,b}(Q') > \rho_{a,b}(K_1)$ for all $Q' \unlhd Q$ with $\card{Q'} > 1$.  When this occurs, our upper bound is improved by $1$ unless $\card{V(W) \cap V(Q)} = 1$ and $\card{E(X,H - Y)} = 0$ and $\card{N(v) \cap Y} \le 1$ for all $v \in X$.  To apply this observation, we need some control over $W$. We can get this control when $Q = T$, we will be able to conclude that $(V(W) - V(Q)) \cup V(H) = V(G)$. 
+
+\begin{defn}
+We call $Q$ \emph{$\text{tame}_{a,b}$} if $\rho_{a,b}(Q') > \rho_{a,b}(K_1)$ for all $Q' \unlhd Q$ with $\card{Q'} > 1$.
+\end{defn}
+
+
+\begin{lem}\label{UsingT}
+Let $G$ be a $2$-connected $\C_{T,a,b,c}$-mule where $T$ is $\text{tame}_{a,b}$ and $\hat{\rho}_{a,b}(T) \ge b + c - 1$.  If $H \lhd G$ with $H \not \inj T$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T) + 1$.
+\end{lem}
+\begin{proof}
+Suppose to the contrary that we have such an $H$ with $\rho_{a,b}(H) \le \hat{\rho}_{a,b}(T) + 1$. Since $H \lhd G$, Lemma \ref{Criticality} shows that $H \rightarrow T$. Applying Corollary \ref{ArbitraryQInto} gives $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T)$.  The same holds for any induced subgraph of $H$, so $\hat{\rho}_{a,b}(H) > \hat{\rho}_{a,b}(T)$ and hence $\hat{\rho}_{a,b}(H) = \hat{\rho}_{a,b}(T) + 1$.  
+
+Since $G$ is $2$-connected, $H$ has at least two vertices $x, y$ with neighbors outside $H$.  If $x$ is adjacent to $y$, put $H' \DefinedAs H$, otherwise put $H' \DefinedAs H + xy$.  We have $\hat{\rho}_{a,b}(H') \ge \hat{\rho}_{a,b}(H) - b \ge \hat{\rho}_{a,b}(T) + 1 - b \ge c$.   Since $H' \prec G$, we must have $H' \rightarrow T$ as $G$ is a $\C_{T,a,b,c}$-mule.
+
+Let $h$ be a homomorphism from $H'$ into $T$.  Then $h$ is a homomorphism from $H$ into $T$ with the property that $h(x) \ne h(y)$. Put $Q \DefinedAs \im(h)$. Now $H \ne Q$ since $H \not \inj T$ and $h$ is an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) \le c$.  Suppose $(V(W) - V(Q)) \cup V(H) \ne V(G)$.  Then Lemma \ref{Criticality} shows that $G\brackets{(V(W) - V(Q)) \cup V(H)} \rightarrow T$.  Applying Corollary \ref{ArbitraryQInto} gives $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} > \hat{\rho}_{a,b}(T)$ and hence $\hat{\rho}_{a,b}(T) < c$, a contradiction.  
+
+So, we have $(V(W) - V(Q)) \cup V(H) \ne V(G)$.  Since $T$ is $\text{tame}_{a,b}$, if $\card{V(W) \cap V(Q)} > 1$, then our above estimate on $\rho_{a,b}(G)$ is decreased by one, giving $\hat{\rho}_{a,b}(G) < c$, a contradiction.  So we must have $V(W) \cap V(Q) = \set{z}$ for some $z$.  By the discussion before this lemma, we must also have $\card{E(G - H , H - h^{-1}(z))} = 0$.  But $h(x) \ne h(y)$, so by symmetry, we may assume that $h(y) \ne h(z)$.  Therefore $y \in V(H - h^{-1}(z))$ and $y$ has a neighbor in $G-H$, a contradiction.
+\end{proof}
 
 \bibliographystyle{plain}
 \bibliography{GraphColoring}

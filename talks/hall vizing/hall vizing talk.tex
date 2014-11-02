@@ -73,6 +73,7 @@ November 6, 2014}
 \newtheorem*{PlayerMove}{Player's Move}
 \newtheorem*{DealerMove}{Dealer's Move}
 \newtheorem*{NecessaryCondition}{Necessary Condition}
+\newtheorem*{WinningCondition}{Winning Condition}
 \newtheorem*{Winning}{Winning}
 \newtheorem*{Spectrum}{Theorem}
 \newtheorem*{OreBrooksKK}{Theorem}
@@ -507,7 +508,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 \end{frame}
 
-\begin{frame}{some card games}{winning conditions}
+\begin{frame}{some card games}{necessary condition}
 \begin{itemize}
 \1 if the same card appears on three stacks, Player can force the addition of a new card to these stacks
 \2 it is not hard to show that this is essentially all Player can do
@@ -524,6 +525,20 @@ The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C
 If Player has a winning strategy, then for every set of stacks $S$ we must have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
 \end{NecessaryCondition}}
+\end{frame}
+
+\begin{frame}{some card games}{winning condition}
+\begin{itemize}
+\1 \red{\textbf{this necessary condition is also suffcient}}
+\end{itemize}
+\uncover<2->{
+\begin{WinningCondition}
+Player has a winning strategy if and only if for every set of stacks $S$ we have 
+\[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
+\end{WinningCondition}}
+\end{frame}
+
+\begin{frame}{some card games}{proof outline}
 \end{frame}
 
 \end{document}

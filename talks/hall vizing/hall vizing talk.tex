@@ -795,9 +795,9 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 \1 \textbf{\red{exchanging colors on a two-colored path is just a Player move followed by a Dealer move}}
 \2 we can make any of Player's legal moves this way, so if the winning conditions are satisfied, Vizing's theorem is true
 \3 each stack has at least two colors, so counting the `cards' in two ways we get for each set of stacks $S$,
-\[\sum_{C \in S} d_S(C) \ge 2|S|\]
+\[\sum_{C \in \bigcup S} d_S(C) \ge 2|S|\]
 \4 so, we have the desired winning condition
-\[\sum_{C \in S} \frac{d_S(C)}{2} \ge |S|\]
+\[\sum_{C \in \bigcup S} \frac{d_S(C)}{2} \ge |S|\]
 \end{itemize}
 \end{frame}
 
@@ -807,7 +807,7 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 \2 Player can pick any card $A$ from the deck and swap it for another card $B$ in one stack (not containing $A$).
 \3 Dealer can either do nothing or swap $A$ and $B$ in at most one other stack.
 \4 Player wins if he can pick a Royal Flush at the start of one of his turns, otherwise Dealer wins.
-\5 Player has a simple winning strategy exactly when a Hall-like condition is satisfied
+\5 Player has a winning strategy exactly when a Hall-like condition is satisfied
 \6 the fact that Player wins quickly implies Vizing's edge-coloring theorem
 \7 most other classical edge-coloring results follow easily as well
 \8 there is a straightforward generalization to multigraphs

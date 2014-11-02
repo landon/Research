@@ -73,7 +73,9 @@ November 6, 2014}
 \newtheorem*{PlayerMove}{Player's Move}
 \newtheorem*{DealerMove}{Dealer's Move}
 \newtheorem*{NecessaryCondition}{Necessary Condition}
+\newtheorem*{Vizing}{Vizing's theorem}
 \newtheorem*{WinningCondition}{Winning Condition}
+\newtheorem*{WinningCondition2}{Winning Condition}
 \newtheorem*{Winning}{Winning}
 \newtheorem*{Spectrum}{Theorem}
 \newtheorem*{OreBrooksKK}{Theorem}
@@ -311,7 +313,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \6 Player wins no matter what Dealer does
 \end{itemize}
 \only<1>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.6,0.6){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
 \put(0.8,0.6){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -327,7 +329,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 
 \only<2>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.6,0.6){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
 \put(0.8,0.6){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -346,7 +348,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 
 \only<3>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.6,0.6){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
 \put(0.8,0.6){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -362,7 +364,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 
 \only<4>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.6,0.6){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
 \put(0.8,0.6){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -381,7 +383,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 
 \only<5>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.6,0.6){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
 \put(0.8,0.6){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -397,7 +399,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \end{picture}}
 
 \only<6>{
-\begin{picture}(1,1)
+\begin{picture}(1,1)(0,-0.01)
 \put(0.4,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.6){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 
@@ -478,7 +480,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \setlength{\unitlength}{3.5in}
 \begin{itemize}
 \2 in the top game, Dealer can prevent Player from increasing the number of different cards in the first two stacks
-\3 in the bottom game, Dealer cannot prevent this
+\3 in the bottom game, Dealer cannot prevent prevent Player from increasing the number of different cards in the first three stacks
 \end{itemize}
 
 \onslide<1->{
@@ -493,18 +495,18 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \put(0.8,0.75){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.4,0.75){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 
-\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
-\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
-\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
-\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
-\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 
-\put(0.6,0.4){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
-\put(0.8,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.4,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 
-\put(0.0,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.2,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \end{picture}}
 \end{frame}
 
@@ -538,7 +540,279 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \end{WinningCondition}}
 \end{frame}
 
-\begin{frame}{some card games}{proof outline}
+\begin{frame}{some card games}{proof idea}
+\setlength{\unitlength}{5in}
+\begin{enumerate}
+\1 Player looks for a set of card types that give a system of distinct representatives of all the stacks containing them
+\5 Player calls those stacks done and never plays with those card types again
+\end{enumerate}
+
+\only<1>{
+\begin{picture}(1,1)(0.0, -0.11)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\only<2>{
+\begin{picture}(1,1)(0.0, -0.11)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\only<3>{
+\begin{picture}(1,1)(0.0, -0.11)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\only<4>{
+\begin{picture}(1,1)(0.0, -0.11)
+\put(0.6,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\only<5>{
+\begin{picture}(1,1)(0.0, -0.11)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\end{frame}
+
+\begin{frame}{some card games}{proof idea}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\1 if no such set of card types exists, then Hall's theorem shows that there is at least one card appearing on none of the remaining stacks
+\2 but then some card appears at least thrice, so Player can increase the number of card types in the stacks.
+\3 goto step 1
+\end{enumerate}
+
+\only<1>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\only<2>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.52,0.72){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
+\put(0.48,0.88){\thicklines\color{red}\vector(-2 , -1){0.35}}
+\end{picture}}
+\only<3>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+
+\only<4>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+
+\only<5>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+
+\put(0.4,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+
+\only<6>{
+\begin{picture}(1,1)(0.0, -0.1475)
+\put(0.6,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
+\put(0.2,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+
+\put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
+\put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\put(0.4,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+
+\put(0.0,0.45){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
+\end{picture}}
+\end{frame}
+
+\begin{frame}{A generalization of Hall's theorem}{making it harder for Player}
+\begin{itemize}
+\1 allow Dealer to make more swaps in response to Player's move
+\2 for each $t \ge 1$, the $t$-game is where Dealer is allowed to make up to $t$ swaps.
+\end{itemize}
+
+\uncover<3->{
+\begin{WinningCondition}
+Player has a winning strategy in the $t$-game if and only if for every set of stacks $S$ we have 
+\[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{t + 1}} \ge |S|.\]
+\end{WinningCondition}}
+\begin{itemize}
+\4 Hall's theorem is the winning condition in the $(k-1)$-game when there are $k$ total stacks
+\end{itemize}
+\end{frame}
+
+\begin{frame}{edge coloring}{setup}
+\begin{itemize}
+\1 assign colors to the edges of a graph so that incident edges get different colors
+\2 how few colors can we use?
+\end{itemize}
+
+\uncover<3->{
+\begin{Vizing}
+Any simple graph can be edge-colored using at most one more color than its maximum degree.
+\end{Vizing}}
+\end{frame}
+
+\begin{frame}{edge coloring}{proof of Vizing's theorem}
+\begin{itemize}
+\1 take a minimum counterexample to Vizing's theorem, say it has maximum degree $\Delta$
+\2 remove a vertex of degree $\Delta$ and edge-color the rest with $\Delta + 1$ colors
+\end{itemize}
+
+\begin{center}
+\resizebox{2in}{!}{
+\includegraphics<1>{graphs/g1}
+\includegraphics<2>{graphs/g2}
+\includegraphics<3>{graphs/g3}
+\includegraphics<4>{graphs/g4}
+\includegraphics<5>{graphs/g5}
+\includegraphics<6>{graphs/g6}
+\includegraphics<7>{graphs/g7}
+\includegraphics<8>{graphs/g8}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}{edge coloring}{proof of Vizing's theorem}
+\begin{itemize}
+\1 \textbf{\red{exchanging colors on a two-colored path is just a Player move followed by a Dealer move}}
+\2 we can make any of Player's legal moves this way, so if the winning conditions are satisfied, Vizing's theorem is true
+\3 each stack has at least two colors, so counting the `cards' in two ways we get for each set of stacks $S$,
+\[\sum_{C \in S} d_S(C) \ge 2|S|\]
+\4 so, we have the desired winning condition
+\[\sum_{C \in S} \frac{d_S(C)}{2} \ge |S|\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{summary}
+\begin{itemize}
+\1 we introduced a simple card game
+\2 Player can pick any card $A$ from the deck and swap it for another card $B$ in one stack (not containing $A$).
+\3 Dealer can either do nothing or swap $A$ and $B$ in at most one other stack.
+\4 Player wins if he can pick a Royal Flush at the start of one of his turns, otherwise Dealer wins.
+\5 Player has a simple winning strategy exactly when a Hall-like condition is satisfied
+\6 the fact that Player wins quickly implies Vizing's edge-coloring theorem
+\7 most other classical edge-coloring results follow easily as well
+\8 there is a straightforward generalization to multigraphs
+\9 there is a much more general game that unifies a large chunk of edge-coloring theory
+\end{itemize}
 \end{frame}
 
 \end{document}

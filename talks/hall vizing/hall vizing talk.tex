@@ -72,6 +72,7 @@ November 6, 2014}
 \newtheorem*{OreBrooks}{Theorem}
 \newtheorem*{PlayerMove}{Player's Move}
 \newtheorem*{DealerMove}{Dealer's Move}
+\newtheorem*{NecessaryCondition}{Necessary Condition}
 \newtheorem*{Winning}{Winning}
 \newtheorem*{Spectrum}{Theorem}
 \newtheorem*{OreBrooksKK}{Theorem}
@@ -84,6 +85,7 @@ November 6, 2014}
 \newtheorem{claim}{Claim}
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
+\newtheorem*{Degree}{Degree}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem*{goal}{Goal}
@@ -503,13 +505,25 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \put(0.0,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.2,0.4){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \end{picture}}
+\end{frame}
 
 \begin{frame}{some card games}{winning conditions}
 \begin{itemize}
 \1 if the same card appears on three stacks, Player can force the addition of a new card to these stacks
-\2 this
-\2 Player cannot win if there is a set of $k$ stacks that together have fewer than $k$ different cards
+\2 it is not hard to show that this is essentially all Player can do
+\3 with this we can state a necessary condition
 \end{itemize}
+
+\uncover<4->{
+\begin{Degree}
+The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C$ appears in $S$.  We write $d_S(C)$ for this quantity.
+\end{Degree}}
+
+\uncover<5->{
+\begin{NecessaryCondition}
+If Player has a winning strategy, then for every set of stacks $S$ we must have 
+\[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
+\end{NecessaryCondition}}
 \end{frame}
 
 \end{document}

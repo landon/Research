@@ -187,6 +187,19 @@ November 6, 2014}
 \titlepage
 \end{frame}
 
+\begin{frame}{Hall's theorem}
+\begin{itemize}
+\1 given finite sets $A_1, A_2, \ldots, A_n$
+\2 a \red{system of distinct representatives} (SDR) is a choice of $a_i \in A_i$ for all $i$ where $a_i \ne a_j$ for $i \ne j$
+\3 when can we pick an SDR?
+\4 if $k$ of the sets together have fewer than $k$ elements, we can't
+\begin{itemize}
+\5 $A_1 = \set{1,2}$, $A_2 = \set{1,2}$, $A_3 = \set{1,2}$
+\end{itemize}
+\6 \red{Hall's theorem: this is the only thing that can go wrong}
+\[\text{SDR exists } \Leftrightarrow \card{\bigcup_{i \in I} A_i} \ge |I| \text{ for all } I \subseteq \set{1,\ldots,n}\]
+\end{itemize}
+\end{frame}
 
 \begin{frame}{some card games}{the simplest variation}
 \begin{itemize}
@@ -235,11 +248,11 @@ November 6, 2014}
 \put(0.8,0.55){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.4,0.55){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 
-\put(0.6,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.8,0.6){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
-\put(0.4,0.6){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
-\put(0.0,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
-\put(0.2,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.61,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.81,0.6){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.41,0.6){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.01,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.21,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \end{picture}}
 \end{frame}
 
@@ -297,7 +310,7 @@ Player can pick any card $A$ from the deck and swap it for another card $B$ in o
 
 \uncover<4->{
 \begin{DealerMove}
-Dealer can either do nothing or swap $A$ and $B$ in at most one other stack.
+Dealer can (i) do nothing or (ii) swap $A$ and $B$ in at most one other stack.
 \end{DealerMove}}
 
 \uncover<5->{
@@ -406,13 +419,13 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 
 \put(0.6,0.55){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
 \put(0.8,0.55){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.4,0.55){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.41,0.55){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
-\put(0.0,0.55){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.01,0.55){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
 \put(0.2,0.55){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
-\put(0.2,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
-\put(0.6,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.8,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.21,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.61,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.81,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \end{picture}}
 \end{frame}
 
@@ -514,7 +527,7 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 \begin{itemize}
 \1 if the same card appears on three stacks, Player can force the addition of a new card to these stacks
 \2 it is not hard to show that this is essentially all Player can do
-\3 with this we can state a necessary condition
+\3 this suggests a necessary condition
 \end{itemize}
 
 \uncover<4->{
@@ -527,6 +540,37 @@ The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C
 If Player has a winning strategy, then for every set of stacks $S$ we must have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
 \end{NecessaryCondition}}
+\end{frame}
+
+\begin{frame}{some card games}{intuition}
+\uncover<1->{
+\begin{Degree}
+The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C$ appears in $S$.  We write $d_S(C)$ for this quantity.
+\end{Degree}}
+
+\uncover<1->{
+\begin{NecessaryCondition}
+If Player has a winning strategy, then for every set of stacks $S$ we must have 
+\[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
+\end{NecessaryCondition}}
+
+\begin{itemize}
+\1 in Hall's theorem, each $C$ is `worth' $1$ in $\displaystyle\sum_{C \in \bigcup S} 1 = \card{\bigcup S} \ge |S|$
+\2 Player can turn $2t+1$ of the same card into $t + 1$ different cards, so $C$ is `worth' $\ceil{\frac{d_S(C)}{2}}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{some card games}{Dealer's strategy}
+\begin{itemize}
+\1 given a set of stacks $S$ with $\displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$
+\2 Dealer's strategy: \red{maintain this invariant}
+\begin{itemize}
+\3 this is good enough since then $\card{\bigcup S} \le \displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$ always
+\4 if Player's swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
+\5 Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(B)}{2}}$ and not increasing $\ceil{\frac{d_S(A)}{2}}$
+\6 Dealer has maintained $\displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{some card games}{winning condition}
@@ -565,12 +609,12 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \only<2>{
 \begin{picture}(1,1)(0.0, -0.11)
 \put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
-\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 
-\put(0.6,0.45){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.61,0.45){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 
@@ -594,8 +638,8 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \end{picture}}
 \only<4>{
 \begin{picture}(1,1)(0.0, -0.11)
-\put(0.6,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.61,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -630,7 +674,7 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \begin{enumerate}
 \setcounter{enumi}{2}
 \1 if no such set of card types exists, then Hall's theorem shows that there is at least one card appearing on none of the remaining stacks
-\2 but then some card appears at least thrice, so Player can increase the number of card types in the stacks.
+\2 but then some card appears at least thrice, so Player can increase the number of card types in the stacks
 \3 goto step 1
 \end{enumerate}
 
@@ -714,12 +758,12 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
-\put(0.2,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.21,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
 
 \put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 
-\put(0.4,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.41,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
 \put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 \put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
@@ -727,17 +771,17 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 
 \only<6>{
 \begin{picture}(1,1)(0.0, -0.1475)
-\put(0.6,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.8,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.61,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
-\put(0.2,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.21,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
 
 \put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.4,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.41,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
-\put(0.0,0.45){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.01,0.45){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
 \put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \end{picture}}
 \end{frame}
@@ -745,7 +789,7 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \begin{frame}{A generalization of Hall's theorem}{making it harder for Player}
 \begin{itemize}
 \1 allow Dealer to make more swaps in response to Player's move
-\2 for each $t \ge 1$, the $t$-game is where Dealer is allowed to make up to $t$ swaps.
+\2 for each $t \ge 1$, the \red{$t$-game} allows Dealer to make up to $t$ swaps
 \end{itemize}
 
 \uncover<3->{
@@ -754,7 +798,12 @@ Player has a winning strategy in the $t$-game if and only if for every set of st
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{t + 1}} \ge |S|.\]
 \end{WinningCondition}}
 \begin{itemize}
-\4 Hall's theorem is the winning condition in the $(k-1)$-game when there are $k$ total stacks
+\4 Hall's theorem is the winning condition in the $(k-1)$-game when there are $k$ total stacks:
+\begin{itemize}
+\5 $1 \le d_S(C) \le k$, so $\ceil{\frac{d_S(C)}{t + 1}} = 1$
+\6 so, the sum equals $\card{\bigcup S}$
+\7 Player's moves are useless
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -772,8 +821,8 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 
 \begin{frame}{edge coloring}{proof of Vizing's theorem}
 \begin{itemize}
-\1 take a minimum counterexample to Vizing's theorem, say it has maximum degree $\Delta$
-\2 remove a vertex of degree $\Delta$ and edge-color the rest with $\Delta + 1$ colors
+\1 proceed by induction on the number of vertices
+\2 remove a vertex and edge-color the rest with one more color than its maximum degree
 \end{itemize}
 
 \begin{center}
@@ -804,14 +853,16 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 \begin{frame}{summary}
 \begin{itemize}
 \1 we introduced a simple card game
-\2 Player can pick any card $A$ from the deck and swap it for another card $B$ in one stack (not containing $A$).
-\3 Dealer can either do nothing or swap $A$ and $B$ in at most one other stack.
-\4 Player wins if he can pick a Royal Flush at the start of one of his turns, otherwise Dealer wins.
+\begin{itemize}
+\2 Player can pick any card $A$ from the deck and swap it for another card $B$ in one stack (not containing $A$)
+\3 Dealer can (i) do nothing or (ii) swap $A$ and $B$ in at most one other stack
+\4 Player wins if he can pick a Royal Flush at the start of one of his turns, otherwise Dealer wins
+\end{itemize}
 \5 Player has a winning strategy exactly when a Hall-like condition is satisfied
-\6 the fact that Player wins quickly implies Vizing's edge-coloring theorem
+\6 Vizing's edge-coloring theorem is an easy corollary
 \7 most other classical edge-coloring results follow easily as well
-\8 there is a straightforward generalization to multigraphs
-\9 there is a much more general game that unifies a large chunk of edge-coloring theory
+\8 generalizes easily to multigraphs
+\9 a more general game unifies much of edge-coloring theory
 \end{itemize}
 \end{frame}
 

@@ -566,7 +566,7 @@ If Player has a winning strategy, then for every set of stacks $S$ we must have
 \2 Dealer's strategy: \red{maintain this invariant}
 \begin{itemize}
 \3 this is good enough since then $\card{\bigcup S} \le \displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$ always
-\4 if Player's swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
+\4 if Player swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
 \5 Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(B)}{2}}$ and not increasing $\ceil{\frac{d_S(A)}{2}}$
 \6 Dealer has maintained $\displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$
 \end{itemize}

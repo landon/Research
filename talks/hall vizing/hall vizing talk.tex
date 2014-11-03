@@ -203,7 +203,7 @@ November 6, 2014}
 
 \begin{frame}{some card games}{the simplest variation}
 \begin{itemize}
-\1 two players, Dealer and Player
+\1 Dealer vs. Player
 \2 the deck has just many copies of the high spade cards
 \3 Dealer makes 5 stacks of cards with no duplicates, all cards face-up
 \4 Player wins if he can pick a Royal Flush, one card from each stack
@@ -248,11 +248,11 @@ November 6, 2014}
 \put(0.8,0.55){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.4,0.55){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 
-\put(0.61,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.81,0.6){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
-\put(0.41,0.6){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
-\put(0.01,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
-\put(0.21,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.605,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.805,0.6){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.405,0.6){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.005,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.205,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \end{picture}}
 \end{frame}
 
@@ -310,7 +310,7 @@ Player can pick any card $A$ from the deck and swap it for another card $B$ in o
 
 \uncover<4->{
 \begin{DealerMove}
-Dealer can (i) do nothing or (ii) swap $A$ and $B$ in at most one other stack.
+Dealer can (i) do nothing or (ii) swap $A$ and $B$ in one other stack.
 \end{DealerMove}}
 
 \uncover<5->{
@@ -419,13 +419,13 @@ Player wins if he can pick a Royal Flush at the start of one of his turns, other
 
 \put(0.6,0.55){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
 \put(0.8,0.55){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.41,0.55){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.405,0.55){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
-\put(0.01,0.55){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.005,0.55){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
 \put(0.2,0.55){\includegraphics[width=0.15\unitlength]{cards/KS.pdf}}
-\put(0.21,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
-\put(0.61,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.81,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.205,0.6){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.605,0.6){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.805,0.6){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \end{picture}}
 \end{frame}
 
@@ -537,7 +537,7 @@ The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C
 
 \uncover<5->{
 \begin{NecessaryCondition}
-If Player has a winning strategy, then for every set of stacks $S$ we must have 
+If Player can win, then for every set of stacks $S$ we must have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
 \end{NecessaryCondition}}
 \end{frame}
@@ -550,7 +550,7 @@ The \emph{degree} of a card $C$ in a set of stacks $S$ is the number of times $C
 
 \uncover<1->{
 \begin{NecessaryCondition}
-If Player has a winning strategy, then for every set of stacks $S$ we must have 
+If Player can win, then for every set of stacks $S$ we must have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
 \end{NecessaryCondition}}
 
@@ -567,7 +567,7 @@ If Player has a winning strategy, then for every set of stacks $S$ we must have
 \begin{itemize}
 \3 this is good enough since then $\card{\bigcup S} \le \displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$ always
 \4 if Player swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
-\5 Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(B)}{2}}$ and not increasing $\ceil{\frac{d_S(A)}{2}}$
+\5 so, Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(B)}{2}}$ and not increasing $\ceil{\frac{d_S(A)}{2}}$
 \6 Dealer has maintained $\displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$
 \end{itemize}
 \end{itemize}
@@ -579,7 +579,7 @@ If Player has a winning strategy, then for every set of stacks $S$ we must have
 \end{itemize}
 \uncover<2->{
 \begin{WinningCondition}
-Player has a winning strategy if and only if for every set of stacks $S$ we have 
+Player can win if and only if for every set of stacks $S$ we have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} \ge |S|.\]
 \end{WinningCondition}}
 \end{frame}
@@ -609,12 +609,12 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \only<2>{
 \begin{picture}(1,1)(0.0, -0.11)
 \put(0.6,0.5){\includegraphics[width=0.15\unitlength]{cards/AS.pdf}}
-\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.805,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 
-\put(0.61,0.45){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.605,0.45){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \put(0.4,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 
@@ -638,8 +638,8 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 \end{picture}}
 \only<4>{
 \begin{picture}(1,1)(0.0, -0.11)
-\put(0.61,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.605,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.805,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.2,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
@@ -758,12 +758,12 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
-\put(0.21,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.205,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
 
 \put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 
-\put(0.41,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.405,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
 \put(0.0,0.45){\includegraphics[width=0.15\unitlength]{cards/back.pdf}}
 \put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
@@ -771,17 +771,17 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 
 \only<6>{
 \begin{picture}(1,1)(0.0, -0.1475)
-\put(0.61,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
-\put(0.81,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
+\put(0.605,0.5){\includegraphics[width=0.17\unitlength]{cards/AS.pdf}}
+\put(0.805,0.5){\includegraphics[width=0.17\unitlength]{cards/10S.pdf}}
 \put(0.4,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
 \put(0.0,0.5){\includegraphics[width=0.15\unitlength]{cards/JS.pdf}}
-\put(0.21,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
+\put(0.205,0.5){\includegraphics[width=0.17\unitlength]{cards/JS.pdf}}
 
 \put(0.6,0.45){\includegraphics[width=0.15\unitlength]{cards/10S.pdf}}
 \put(0.8,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
-\put(0.41,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
+\put(0.405,0.45){\includegraphics[width=0.17\unitlength]{cards/QS.pdf}}
 
-\put(0.01,0.45){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
+\put(0.005,0.45){\includegraphics[width=0.17\unitlength]{cards/KS.pdf}}
 \put(0.2,0.45){\includegraphics[width=0.15\unitlength]{cards/QS.pdf}}
 \end{picture}}
 \end{frame}
@@ -794,7 +794,7 @@ Player has a winning strategy if and only if for every set of stacks $S$ we have
 
 \uncover<3->{
 \begin{WinningCondition}
-Player has a winning strategy in the $t$-game if and only if for every set of stacks $S$ we have 
+Player can win in the $t$-game if and only if for every set of stacks $S$ we have 
 \[\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{t + 1}} \ge |S|.\]
 \end{WinningCondition}}
 \begin{itemize}
@@ -855,14 +855,17 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 \1 we introduced a simple card game
 \begin{itemize}
 \2 Player can pick any card $A$ from the deck and swap it for another card $B$ in one stack (not containing $A$)
-\3 Dealer can (i) do nothing or (ii) swap $A$ and $B$ in at most one other stack
+\3 Dealer can (i) do nothing or (ii) swap $A$ and $B$ in one other stack
 \4 Player wins if he can pick a Royal Flush at the start of one of his turns, otherwise Dealer wins
 \end{itemize}
-\5 Player has a winning strategy exactly when a Hall-like condition is satisfied
+\5 Player can win exactly when a Hall-like condition is satisfied
 \6 Vizing's edge-coloring theorem is an easy corollary
-\7 most other classical edge-coloring results follow easily as well
-\8 generalizes easily to multigraphs
-\9 a more general game unifies much of edge-coloring theory
+\7 taking it further
+\begin{itemize}
+\8 most other classical edge-coloring results follow easily
+\9 generalizes easily to multigraphs
+\ten a more general game unifies much of edge-coloring theory
+\end{itemize}
 \end{itemize}
 \end{frame}
 

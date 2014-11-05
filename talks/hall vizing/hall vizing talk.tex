@@ -69,6 +69,9 @@ November 6, 2014}
 \newtheorem{prop}[thm]{Proposition}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{cor}[thm]{Corollary}
+
+\newtheorem*{ChronicleUpdate}{\bf {Chronicle update}}
+\newtheorem*{EquivalentGame}{\bf {Equivalent game}}
 \newtheorem*{FixerMove}{\bf {Fixer's turn}}
 \newtheorem*{BreakerMove}{\bf {Breaker's turn}}
 \newtheorem*{OreBrooks}{Theorem}
@@ -90,7 +93,9 @@ November 6, 2014}
 \newtheorem{claim}{Claim}
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
+\newtheorem*{Def}{Definition}
 \newtheorem*{Degree}{Degree}
+\newtheorem*{Superabundance}{Superabundance}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem*{goal}{Goal}
@@ -158,6 +163,7 @@ November 6, 2014}
 \newenvironment{dbluenv}{\color[rgb]{.2,.2,.6}}{\normalcolor}
 \newcommand<>{\dblue}[1]{\begin{dbluenv}#1\end{dbluenv}}
 \newcommand{\bhead}[1]{\textbf{\dblue{#1}}}
+\newcommand{\pot}{\operatorname{Pot}}
 
 \newenvironment{whiteenv}{\color[rgb]{1,1,1}}{\normalcolor}
 \newcommand<>{\white}[1]{\begin{whiteenv}#1\end{whiteenv}}
@@ -892,6 +898,77 @@ If Fixer modified $L(v)$ by inserting $\alpha$ and removing $\beta$, then
 Breaker can either do nothing or pick $w \in V(G - v)$ and modify its list by
 swapping $\alpha$ for $\beta$ or $\beta$ for $\alpha$.
 \end{BreakerMove}}
+\end{frame}
+
+
+\begin{frame}{the more general game}{necessary condition}
+\uncover<1->{
+\begin{Def}
+For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
+subgraph of $H$ induced on the vertices $v$ with $L(v) \cap C \ne \emptyset$. For $H \subseteq G$, put
+
+\[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
+\end{Def}}
+
+\uncover<2->{
+\begin{Superabundance}
+We say that $(H, L)$ is \red{abundant} if $\psi_L(H) \ge \size{H}$ and that $(H,L)$ is \red{superabundant} if for every
+$H' \subseteq H$, the pair $(H', L)$ is abundant.
+\end{Superabundance}}
+
+\uncover<3->{
+\begin{NecessaryCondition}
+If Fixer can win, then $(G, L)$ is superabundant.
+\end{NecessaryCondition}}
+\end{frame}
+
+\begin{frame}{the more general game}{adding a chronicle}
+\begin{itemize}
+\1 we can get more power for Fixer and still imply edge-coloring results by modifying the game slightly
+\2 we do this by adding a \red{chronicle}
+\3 basically, this ensures that Breaker's moves are consistent with begin embedded \emph{some} graph
+\4 the \red{chronicle} $C$ is a multigraph with vertex set $V(G) \cup \set{\infty}$ that will be updated as the game progresses.  Each edge of
+$C$ will be labeled with a doubleton of colors $\set{\alpha, \beta} \subseteq \pot(L)$.  At the start of the game $C$ is edgeless.
+\end{itemize}
+
+\uncover<5->{
+\begin{BreakerMove}
+If there is a $vx \in E(C - \infty)$ labeled $\set{\alpha, \beta}$, then Breaker swaps $\alpha$ and $\beta$ at $x$.
+If instead $v\infty \in E(C)$, Breaker does nothing.
+Otherwise, Breaker can do nothing, or pick $w \in V(G - v)$ with $\card{\set{\alpha, \beta} \cap L(w)} = 1$ such that no edge incident to $w$ in $C$ has label $\set{\alpha, \beta}$, and swap $\alpha$ and $\beta$ at $w$.
+\end{BreakerMove}}
+\end{frame}
+
+\begin{frame}{the more general game}{adding a chronicle}
+\uncover<1->{
+\begin{BreakerMove}
+If there is a $vx \in E(C - \infty)$ labeled $\set{\alpha, \beta}$, then Breaker swaps $\alpha$ and $\beta$ at $x$.
+If instead $v\infty \in E(C)$, Breaker does nothing.
+Otherwise, Breaker can do nothing, or pick $w \in V(G - v)$ with $\card{\set{\alpha, \beta} \cap L(w)} = 1$ such that no edge incident to $w$ in $C$ has label $\set{\alpha, \beta}$, and swap $\alpha$ and $\beta$ at $w$.
+\end{BreakerMove}}
+
+\uncover<2->{
+\begin{ChronicleUpdate}
+Remove all edges of $C$ whose label intersects $\set{\alpha, \beta}$ in exactly one color.  
+If Breaker swapped $\alpha$ and $\beta$ at $z$ and there is no $vz$ edge in $C$ labeled $\set{\alpha, \beta}$, then add one.
+Otherwise, if Breaker did nothing and there is no $v\infty$ edge in $C$ labeled $\set{\alpha, \beta}$, then add one.
+\end{ChronicleUpdate}}
+\end{frame}
+
+\begin{frame}{the more general game}{an equivalent game}
+\uncover<1->{
+\begin{NecessaryCondition}
+If Fixer can win the chronicled game, then $(G, L)$ is superabundant.
+\end{NecessaryCondition}}
+
+\begin{itemize}
+\2 there is a simpler-looking game that is equivalent to the chronicled game
+\end{itemize}
+
+\uncover<3->{
+\begin{EquivalentGame}
+Fixer picks different colors $\alpha, \beta \in \pot(L)$.  Let $S$ be the $w \in V(G)$ with $\card{\set{\alpha, \beta} \cap L(w)} = 1$.  Breaker picks a partition $P_1, ..., P_k$ of $S$ where $|P_i| \le 2$ for all $i$.  For each $i$, Fixer either chooses to swap $\alpha$ and $\beta$ on all vertices in $P_i$ or on no vertices in $P_i$.
+\end{EquivalentGame}}
 \end{frame}
 
 \end{document}

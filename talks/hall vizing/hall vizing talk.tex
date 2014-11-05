@@ -69,6 +69,8 @@ November 6, 2014}
 \newtheorem{prop}[thm]{Proposition}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{cor}[thm]{Corollary}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
 \newtheorem*{OreBrooks}{Theorem}
 \newtheorem*{PlayerMove}{Player's Move}
 \newtheorem*{DealerMove}{Dealer's Move}
@@ -566,8 +568,8 @@ If Player can win, then for every set of stacks $S$ we must have
 \2 Dealer's strategy: \red{maintain this invariant}
 \begin{itemize}
 \3 this is good enough since then $\card{\bigcup S} \le \displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$ always
-\4 if Player swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
-\5 so, Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(B)}{2}}$ and not increasing $\ceil{\frac{d_S(A)}{2}}$
+\4 if Player swaps $A$ in for $B$, increasing $\ceil{\frac{d_S(A)}{2}} + \ceil{\frac{d_S(B)}{2}}$, then $d_S(A)$ and $d_S(B)$ both changed from even to odd
+\5 so, Dealer can swap $A$ for $B$ somewhere else, decreasing $\ceil{\frac{d_S(A)}{2}} + \ceil{\frac{d_S(B)}{2}}$
 \6 Dealer has maintained $\displaystyle\sum_{C \in \bigcup S} \ceil{\frac{d_S(C)}{2}} < |S|$
 \end{itemize}
 \end{itemize}
@@ -867,6 +869,29 @@ Any simple graph can be edge-colored using at most one more color than its maxim
 \ten a more general game unifies much of edge-coloring theory
 \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}{the more general game}
+\begin{itemize}
+\1 Fixer vs. Breaker
+\2 played on a multigraph $G$
+\3 assign a list of colors $L(v)$ to each vertex
+\4 let the \red{pot} be $\bigcup_{v \in V(G)} L(v)$
+\5 Fixer wins if at the start of his turn he can construct an edge-coloring $\pi$ of $G$ where $\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(G)$
+\end{itemize}
+\uncover<6->{
+\begin{FixerMove}
+Pick $\alpha$ in the pot and $v \in V(G)$ with $\alpha \not \in L(v)$ and set $L(v)
+\DefinedAs L(v) \cup \set{\alpha} - \beta$ for some $\beta
+\in L(v)$.
+\end{FixerMove}}
+
+\uncover<7->{
+\begin{BreakerMove}
+If Fixer modified $L(v)$ by inserting $\alpha$ and removing $\beta$, then
+Breaker can either do nothing or pick $w \in V(G - v)$ and modify its list by
+swapping $\alpha$ for $\beta$ or $\beta$ for $\alpha$.
+\end{BreakerMove}}
 \end{frame}
 
 \end{document}

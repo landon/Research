@@ -91,9 +91,7 @@
 \def\Q{\fancy{Q}}
 \def\Z{\fancy{Z}}
 
-\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
-\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
-\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+\newcommand{\pot}{\operatorname{Pot}}
 
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -101,16 +99,131 @@
 \newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
 
 \begin{document}
-\title{fixable}
+\title{Edge-coloring via fixable subgraphs}
 \maketitle
 
-Let $G$ be a loopless multigraph and $L$ a list assignment on $V(G)$.  For different colors $a,b \in Pot(L)$, let $S_{a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  We say that $G$ is \emph{$L$-fixable} if
+\section{Introduction}
+All multigraphs are loopless.
+
+\section{Completing edge-colorings}
+Our goal is to convert a partial $k$-edge-coloring of a multigraph $M$ into a (total) $k$-edge-coloring of $M$.  For a partial $k$-edge-coloring $\pi$ of $M$, let $M_\pi$ be the subgraph of $M$ induced on the uncolored edges and let $L_\pi$ be the list assignment on the vertices of $M_\pi$ given by 
+$L_\pi(v) = \irange{k} - \setbs{\tau}{\pi(vx) = \tau \text{ for some  } vx \in E(M)}$. 
+
+Kempe chains give a powerful technique for converting a partial $k$-edge-coloring into a total $k$-edge-coloring.  The idea is to repeatedly exchange colors on two-colored paths until $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(xy) \in L_\zeta(x) \cap L_\zeta(y)$ for all $xy \in E(M_\pi)$.  In this sense the original list assignment $L_\pi$ on $M_\pi$ is \emph{fixable}. In the next section, we give an abstract definition of this notion that frees us from the embedding in the ambient graph $M$.
+
+\subsection{Fixable graphs}
+Let $G$ be a multigraph and $L$ a list assignment on $V(G)$.  For different colors $a,b \in \pot(L)$, let $S_{a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  We say that $G$ is \emph{$L$-fixable} if either
 \begin{enumerate}
-\item $G$ has an edge coloring $\pi$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$; or
-\item There are different $a,b \in Pot(L)$ such that for every partition $P_1, ..., P_k$ of $S_{a,b}$ into sets of size at most two, 
+\item $G$ has an edge-coloring $\pi$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$; or
+\item there are different $a,b \in \pot(L)$ such that for every partition $P_1, \ldots, P_k$ of $S_{a,b}$ into sets of size at most two, 
       there is $J \subseteq \irange{k}$ so that $G$ is $L'$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} P_i$.
 \end{enumerate}
 
+\begin{lem}\label{FixableCompletesColoring}
+If a multigraph $M$ has a partial $k$-edge-coloring $\pi$ such that $M_\pi$ is $L_\pi$-fixable, then $M$ is $k$-edge-colorable.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\subsection{A necessary condition}
+Since the edges incident to a given vertex must all get different colors, we have the following.
+
+\begin{lem}\label{DegreeNecessaryCondition}
+If $G$ is $L$-fixable, then $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+\end{lem}
+
+By considering the maximum size of matchings in each color, we get a much more interesting necessary condition.
+For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
+subgraph of $H$ induced on the vertices $v$ with $L(v) \cap C \ne \emptyset$. 
+When $L$ is clear from context, we may write $H_C$ for $H_{L,C}$. If $C =
+\set{\alpha}$, we may write $H_\alpha$ for $H_C$.  For $H \subseteq G$, put
+
+\[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
+
+Each term in the sum gives an upper bound on the size of a matching in color
+$\alpha$. So $\psi_L(H)$ is an upper bound on the the number of edges in a
+partial $L$-edge-coloring of $H$.  We say that $(H, L)$ is \emph{abundant} if
+$\psi_L(H) \ge \size{H}$ and that $(G,L)$ is \emph{superabundant} if for every
+$H \subseteq G$, the pair $(H, L)$ is abundant.  
+
+\begin{lem}\label{SuperabundanceIsNecessary}
+If $G$ is $L$-fixable, then $(G, L)$ is superabundant.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+\subsection{Fixability of stars}
+When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem.  In particular, Theorem \ref{FixabilityOfStars} holds for multistars as well; the proof for multistars is nearly identical, but notationally cumbersome.
+
+\begin{thm}\label{FixabilityOfStars}
+If $G$ is a star, then $G$ is $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+\end{thm}
+\begin{proof}
+\end{proof}
+
+\subsection{Kierstead-Tashkinov-Vizing assignments}
+Many edge-coloring results have been proved using a specific kind of
+superabundant pair $(G, L)$ where superabundance can be proved via a special
+ordering. That is, the orderings given by the definition of Vizing fans,
+Kierstead paths, and Tashkinov trees.  In this section, we show how
+superabundance easily follows from these orderings.
+
+We say that a list assignment $L$ on $G$ is a \emph{Kierstead-Tashkinov-Vizing} assignment (henceforth \emph{KTV-assignment}) if for some $xy \in E(G)$, there is a total ordering `$<$' of $V(G)$ such that
+
+\begin{enumerate}
+\item there is and edge-coloring $\pi$ of $G-xy$ such that $\pi(uv) \in L(u) \cap L(v)$ for each $uv \in E(G - xy)$; 
+\item $x < z$ for all $z \in V(G - x)$; 
+\item $G\brackets{w \mid w \le z}$ is connected for all $z \in V(G)$; 
+\item for each $wz \in E(G - xy)$, there is $u < \max\set{w, z}$ such that $\pi(wz) \in L(u) - \setbs{\pi(e)}{e \in E(u)}$;
+\item there are different $s, t \in V(G)$ such that $L(s) \cap L(t) - \setbs{\pi(e)}{e \in E(s) \cup E(t)} \ne \emptyset$.
+\end{enumerate}
+
+\begin{lem}\label{KTVImpliesSuperabundant}
+If $L$ is a KTV-assignment on $G$, then $(G, L)$ is superabundant.
+\end{lem}
+\begin{proof}
+Let $L$ be a KTV-assignment on $G$, and let $H \subseteq G$.  We will show that
+$(H,L)$ is abundant.  
+Clearly it suffices to consider the case when $H$ is an induced subgraph, so we
+assume this.
+Property (1) gives that $G-xy$ has an edge-coloring
+$\pi$, so $\psi_L(H)\ge \size{H}-1$; also $\psi_L(H)\ge \size{H}$ if
+$\{x,y\}\not\subseteq V(H)$.  Furthermore $\psi_L(H)\ge \size{H}$ if $s$ and
+$t$ from property (5) are both in $V(H)$, since then $\psi_L(H)$ gains 1 over
+the naive lower bound, due to the color in $L(s)\cap L(t)$.  So $V(G)-
+V(H)\ne \emptyset$.
+
+Now choose $z \in V(G) - V(H)$ that is smallest under $<$.  
+Put $H' = G\brackets{w \mid w \le z}$.  By the minimality of $z$, we have $H' - z \subseteq H$. By property (2), $\card{H'} \ge 2$.  
+By property (3), $H'$ is connected and thus there is $w \in V(H' - z)$ adjacent to $z$. So, we have $w < z$ and $wz\in E(G)-E(H)$.
+Now $\pi(wz)\in L(w)$.  By the definition of a KTV-assignment, 
+property (4) implies that there exists $u$ with $u < \max\set{w, z} = z$ and $\pi(wz) \in
+L(u)-\{\pi(e)|e\in E(u)\}$.  Then $u \in V(H' - z) \subseteq V(H)$ and
+again we gain 1 over the naive lower bound on $\psi_L(H)$, due to the color
+in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
+\end{proof}
+
+\subsection{Stars with one edge subdivided}
+\begin{thm}
+Let $G$ be a star with one edge subdivided and root $r$. If $(G, L)$ is superabundant, $|L(v)| \ge d_G(v)$ for all $v \in V(G)$ and $|L(r)| > d_G(r)$, then $G$ is $L$-fixable.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+\section{Applications}
+
+\section{Conjectures}
+\begin{conjecture}
+Any multigraph $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+\end{conjecture}
+
+\begin{conjecture}
+Any tree $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+\end{conjecture}
+
+\begin{conjecture}
+Any path $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+\end{conjecture}
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}

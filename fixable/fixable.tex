@@ -152,6 +152,16 @@ If $G$ is $L$-fixable, then $(G, L)$ is superabundant.
 \begin{proof}
 \end{proof}
 
+Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger requirement that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
+For a list assignment $L$ on $H$, put $\eta_L(G) = \sum_{\alpha \in \pot(L)} \nu(G_\alpha)$.
+
+The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
+
+\begin{lem}\label{MultiTreeHall}
+Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an edge-coloring $\func{\pi}{E(T)}{\pot(L)}$ such that
+$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(T)$.
+\end{lem}
+
 \subsection{Fixability of stars}
 When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem.  In particular, Theorem \ref{FixabilityOfStars} holds for multistars as well; the proof for multistars is nearly identical, but notationally cumbersome.
 

@@ -91,8 +91,6 @@
 \def\Q{\fancy{Q}}
 \def\Z{\fancy{Z}}
 
-\newcommand{\pot}{\operatorname{Pot}}
-
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
 \newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
@@ -103,7 +101,7 @@
 \maketitle
 
 \section{Introduction}
-All multigraphs are loopless.
+All multigraphs are loopless.  Fix a positive integer $k$.  A \emph{list assignment} on a multigraph $M$ is a function from $V(M)$ to the subsets of $\irange{k}$.
 
 \section{Completing edge-colorings}
 Our goal is to convert a partial $k$-edge-coloring of a multigraph $M$ into a (total) $k$-edge-coloring of $M$.  For a partial $k$-edge-coloring $\pi$ of $M$, let $M_\pi$ be the subgraph of $M$ induced on the uncolored edges and let $L_\pi$ be the list assignment on the vertices of $M_\pi$ given by 
@@ -112,17 +110,26 @@ $L_\pi(v) = \irange{k} - \setbs{\tau}{\pi(vx) = \tau \text{ for some  } vx \in E
 Kempe chains give a powerful technique for converting a partial $k$-edge-coloring into a total $k$-edge-coloring.  The idea is to repeatedly exchange colors on two-colored paths until $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(xy) \in L_\zeta(x) \cap L_\zeta(y)$ for all $xy \in E(M_\pi)$.  In this sense the original list assignment $L_\pi$ on $M_\pi$ is \emph{fixable}. In the next section, we give an abstract definition of this notion that frees us from the embedding in the ambient graph $M$.
 
 \subsection{Fixable graphs}
-Let $G$ be a multigraph and $L$ a list assignment on $V(G)$.  For different colors $a,b \in \pot(L)$, let $S_{a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  We say that $G$ is \emph{$L$-fixable} if either
+Let $G$ be a multigraph and $L$ a list assignment on $G$.  For different colors $a,b \in \irange{k}$, let $S_{a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
+
+\begin{defn}
+A multigraph $G$ is \emph{$L$-fixable} if either
 \begin{enumerate}
-\item $G$ has an edge-coloring $\pi$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$; or
-\item there are different $a,b \in \pot(L)$ such that for every partition $P_1, \ldots, P_k$ of $S_{a,b}$ into sets of size at most two, 
-      there is $J \subseteq \irange{k}$ so that $G$ is $L'$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} P_i$.
+\item[(1)] $G$ has an edge-coloring $\pi$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$; or
+\item[(2)] there are different $a,b \in \irange{k}$ such that for every partition $P_1, \ldots, P_t$ of $S_{a,b}$ into sets of size at most two, 
+      there is $J \subseteq \irange{t}$ so that $G$ is $L'$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} P_i$.
 \end{enumerate}
+\end{defn}
+
+When $G$ is $L$-fixable, the choices of $a,b$ and $J$ in each application of (2) determine a tree where all leaves have lists satisfying (1).  The \emph{height} of $L$ is minimum possible height of such a tree.  We write $h_G(L)$ for this height and let $h_G(L) = \infty$ when $G$ is not $L$-fixable. 
 
 \begin{lem}\label{FixableCompletesColoring}
 If a multigraph $M$ has a partial $k$-edge-coloring $\pi$ such that $M_\pi$ is $L_\pi$-fixable, then $M$ is $k$-edge-colorable.
 \end{lem}
 \begin{proof}
+Choose a partial $k$-edge-coloring $\pi$ of $M$ such that $M_\pi$ is $L_\pi$-fixable minimizing $h_{M_\pi}\parens{L_\pi}$. If $h_{M_\pi}\parens{L_\pi} = 0$, then (1) must hold for $M_\pi$ and $L_\pi$; that is, $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(x) \in L_\pi(x) \cap L_\pi(y)$ for all $xy \in E(M_\pi)$.  But that means that $\pi \cup \zeta$ is the desired $k$-edge-coloring of $M$.  
+
+So, we may assume that $h_{M_\pi}\parens{L_\pi} > 0$.  Let $a,b \in \irange{k}$ be a choice in (2) that leads to a tree of height $h_{M_\pi}\parens{L_\pi}$.  Let $H$ be the subgraph of $M$ induced on all edges $e$ with $\pi(e) \in \set{a,b}$.  Let $S$ be the vertices in $M_\pi$ with degree exactly one in $H$.  Consider the component $C_x$ in $H$ for each $x \in S$.  We have $\card{V(C_x) \cap S} \in \set{1,2}$ and hence the components of $H$ give a partition $P_1, \ldots, P_t$ of $S$ into sets of size at most two.  Moreover, exchanging colors $a$ and $b$ on $C_x$ has the effect of swapping $a$ and $b$ in $L_\pi(v)$ for each $v \in V(C_x) \cap S$.  Hence we can achieve the needing swapping of colors in the lists in (2) by exchanging colors on the components of $H$.  By (2) there is $J \subseteq \irange{t}$ so that $M_\pi$ is $L'$-fixable where $L'$ is formed from $L_\pi$ by swapping $a$ and $b$ in $L_\pi(v)$ for every $v \in \bigcup_{i \in J} P_i$.  Choose such a $J$ that leads to a tree of height $h_{M_\pi}\parens{L_\pi}$.  Let $\pi'$ be the partial $k$-edge-coloring of $M$ created from $\pi$ by performing the color exchanges to create $L'$ from $L_\pi$.  Then $M_{\pi'}$ is $L_{\pi'}$-fixable and $h_{M_{\pi'}}\parens{L_{\pi'}} < h_{M_\pi}\parens{L_\pi}$, contradicting the minimality of $h_{M_\pi}\parens{L_\pi}$.
 \end{proof}
 
 \subsection{A necessary condition}
@@ -133,15 +140,15 @@ If $G$ is $L$-fixable, then $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{lem}
 
 By considering the maximum size of matchings in each color, we get a much more interesting necessary condition.
-For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
+For $C \subseteq \irange{k}$ and $H \subseteq G$, let $H_{L, C}$ be the
 subgraph of $H$ induced on the vertices $v$ with $L(v) \cap C \ne \emptyset$. 
 When $L$ is clear from context, we may write $H_C$ for $H_{L,C}$. If $C =
 \set{\alpha}$, we may write $H_\alpha$ for $H_C$.  For $H \subseteq G$, put
 
-\[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
+\[\psi_L(H) = \sum_{\alpha \in \irange{k}} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
 
 Each term in the sum gives an upper bound on the size of a matching in color
-$\alpha$. So $\psi_L(H)$ is an upper bound on the the number of edges in a
+$\alpha$. So $\psi_L(H)$ is an upper bound on the number of edges in a
 partial $L$-edge-coloring of $H$.  We say that $(H, L)$ is \emph{abundant} if
 $\psi_L(H) \ge \size{H}$ and that $(G,L)$ is \emph{superabundant} if for every
 $H \subseteq G$, the pair $(H, L)$ is abundant.  
@@ -153,12 +160,12 @@ If $G$ is $L$-fixable, then $(G, L)$ is superabundant.
 \end{proof}
 
 Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger requirement that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
-For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \pot(L)} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
+For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \irange{k}} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
 
 The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
 
 \begin{lem}\label{MultiTreeHall}
-Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an edge-coloring $\func{\pi}{E(T)}{\pot(L)}$ such that
+Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an edge-coloring $\func{\pi}{E(T)}{\irange{k}}$ such that
 $\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(T)$.
 \end{lem}
 

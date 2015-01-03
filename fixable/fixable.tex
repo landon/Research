@@ -82,6 +82,7 @@
 \newcommand{\brackets}[1]{\left[ #1 \right]}
 \newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
 \newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\pot}{\operatorname{pot}}
 
 \def\adj{\leftrightarrow}
 \def\nonadj{\not\!\leftrightarrow}
@@ -101,7 +102,8 @@
 \maketitle
 
 \section{Introduction}
-All multigraphs are loopless.  Let $G$ be a multigraph and $L$ a list assignment on $V(G)$.  An \emph{$L$-pot} is a set $X$ containing $\bigcup_{v\in V(G)} L(v)$.
+All multigraphs are loopless.  Let $G$ be a multigraph and $L$ a list assignment on $V(G)$ and $\pot(L) = \bigcup_{v\in V(G)} L(v)$. An \emph{$L$-pot} is a set $X$ containing $\pot(L)$. 
+An edge-coloring $\pi$ of $G$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$ is called an \emph{$L$-edge-coloring}.
 
 \section{Completing edge-colorings}
 Our goal is to convert a partial $k$-edge-coloring of a multigraph $M$ into a (total) $k$-edge-coloring of $M$.  For a partial $k$-edge-coloring $\pi$ of $M$, let $M_\pi$ be the subgraph of $M$ induced on the uncolored edges and let $L_\pi$ be the list assignment on the vertices of $M_\pi$ given by 
@@ -117,13 +119,13 @@ For different colors $a,b \in P$, let $S_{a,b}$ be all the vertices of $G$ that 
 \begin{defn}
 $G$ is \emph{$(L, P)$-fixable} if either
 \begin{enumerate}
-\item[(1)] $G$ has an edge-coloring $\pi$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$; or
+\item[(1)] $G$ has an $L$-edge-coloring; or
 \item[(2)] there are different $a,b \in P$ such that for every partition $X_1, \ldots, X_t$ of $S_{a,b}$ into sets of size at most two, 
       there is $J \subseteq \irange{t}$ so that $G$ is $(L', P)$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} X_i$.
 \end{enumerate}
 \end{defn}
 
-When $G$ is $(L, P)$-fixable, the choices of $a,b$ and $J$ in each application of (2) determine a tree where all leaves have lists satisfying (1).  The \emph{height} of $(L, P)$ is the minimum possible height of such a tree.  We write $h_G(L, P)$ for this height and let $h_G(L, P) = \infty$ when $G$ is not $(L,P)$-fixable. 
+We write $L$-fixable as shorthand for $(L, \pot(L))$-fixable. When $G$ is $(L, P)$-fixable, the choices of $a,b$ and $J$ in each application of (2) determine a tree where all leaves have lists satisfying (1).  The \emph{height} of $(L, P)$ is the minimum possible height of such a tree.  We write $h_G(L, P)$ for this height and let $h_G(L, P) = \infty$ when $G$ is not $(L,P)$-fixable. 
 
 \begin{lem}\label{FixableCompletesColoring}
 If a multigraph $M$ has a partial $k$-edge-coloring $\pi$ such that $M_\pi$ is $(L_\pi, \irange{k})$-fixable, then $M$ is $k$-edge-colorable.
@@ -175,21 +177,24 @@ $\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(T)$.
 \end{lem}
 
 \subsection{Basic properties}
-For $i \in \irange{2}$, let $G_i$ be a multigraph, $L_i$ a list assignment on $V(G_i)$ and $P_i$ an $L_i$-pot.
+For $i \in \irange{2}$, let $G_i$ be a multigraph, $L_i$ a list assignment on $V(G_i)$ and $P_i$ an $L_i$-pot.  Let $L_1 \cup L_2$ be the list assignment $L'$ on $G_1 \cup G_2$ given by $L'(v) = L_1(v) \cup L_2(v)$ for all $v \in V(G_1) \cap V(G_2)$ and $L'(v) = L_i(v)$ for all $v \in V(G_i) \setminus V(G_{3-i})$ and $i \in \irange{2}$.
 
 \begin{lem}
 Suppose $G_1 \subseteq G_2$ and $G_2$ is $(L_2, P_2)$-fixable.  If $L_2(v) \subseteq L_1(v)$ for all $v \in V(G_1)$ and $P_2 \subseteq P_1$, then $G_1$ is $(L_1, P_1)$-fixable.
 \end{lem}
 
 \begin{lem}
-Suppose $G_i$ is $(L_i, P_i)$-fixable for $i \in \irange{2}$.  If $P_1 \cap P_2 = \emptyset$, then $G_1 \cup G_2$ is $(L', P_1 \cup P_2)$-fixable where $L'(v) = L_1(v) \cup L_2(v)$ for all $v \in V(G_1) \cap V(G_2)$ and $L'(v) = L_i(v)$ for all $v \in V(G_i) \setminus V(G_{3-i})$ and $i \in \irange{2}$.
+Suppose $G_i$ is $(L_i, P_i)$-fixable for $i \in \irange{2}$.  If $P_1 \cap P_2 = \emptyset$, then $G_1 \cup G_2$ is $(L_1 \cup L_2, P_1 \cup P_2)$-fixable.
+\end{lem}
+\begin{lem}
+Suppose $G_1$ is $(L_1, P_1)$-fixable.  If $G_2$ has an $L_2$-edge-coloring $\pi$ such that $L_1(v) \cap \setbs{\pi(vx)}{vx \in E(G_2)} = \emptyset$ for all $v \in V(G_1)$, then $G_1 \cup G_2$ is $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable.
 \end{lem}
 
 \subsection{Fixability of stars}
 When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem.  In particular, Theorem \ref{FixabilityOfStars} holds for multistars as well; the proof for multistars is nearly identical, but notationally cumbersome.
 
 \begin{thm}\label{FixabilityOfStars}
-If $G$ is a star, then $G$ is $(L, P)$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+If $G$ is a star, then $G$ is $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{thm}
 \begin{proof}
 \end{proof}
@@ -238,7 +243,7 @@ in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 
 \subsection{Stars with one edge subdivided}
 \begin{thm}
-Suppose $G$ is a star with one edge subdivided and root $r$. If $(G, L)$ is superabundant, $|L(v)| \ge d_G(v)$ for all $v \in V(G)$ and $|L(r)| > d_G(r)$, then $G$ is $(L, P)$-fixable.
+Suppose $G$ is a star with one edge subdivided and root $r$. If $(G, L)$ is superabundant, $|L(v)| \ge d_G(v)$ for all $v \in V(G)$ and $|L(r)| > d_G(r)$, then $G$ is $L$-fixable.
 \end{thm}
 \begin{proof}
 
@@ -247,15 +252,15 @@ Suppose $G$ is a star with one edge subdivided and root $r$. If $(G, L)$ is supe
 
 \section{Conjectures}
 \begin{conjecture}
-Any multigraph $G$ is $(L, P)$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+Any multigraph $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
 \end{conjecture}
 
 \begin{conjecture}
-Any tree $G$ is $(L, P)$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+Any tree $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
 \end{conjecture}
 
 \begin{conjecture}
-Any path $G$ is $(L, P)$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
+Any path $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
 \end{conjecture}
 
 \bibliographystyle{amsplain}

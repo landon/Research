@@ -144,12 +144,12 @@ If $G$ is $(L, P)$-fixable, then $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{lem}
 
 By considering the maximum size of matchings in each color, we get a more interesting necessary condition.
-For $C \subseteq \irange{k}$ and $H \subseteq G$, let $H_{L, C}$ be the
+For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
 subgraph of $H$ induced on the vertices $v$ with $L(v) \cap C \ne \emptyset$. 
 When $L$ is clear from context, we may write $H_C$ for $H_{L,C}$. If $C =
 \set{\alpha}$, we may write $H_\alpha$ for $H_C$.  For $H \subseteq G$, put
 
-\[\psi_L(H) = \sum_{\alpha \in \irange{k}} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
+\[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
 
 Each term in the sum gives an upper bound on the size of a matching in color
 $\alpha$. So $\psi_L(H)$ is an upper bound on the number of edges in a
@@ -167,13 +167,12 @@ Pick different $a,b \in P$.  Let $S = S_{a,b} \cap V(H)$ and let $S_a$ be the $v
 \end{proof}
 
 Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger requirement that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
-For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \irange{k}} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
+For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \pot(L)} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
 
 The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
 
 \begin{lem}\label{MultiTreeHall}
-Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an edge-coloring $\func{\pi}{E(T)}{\irange{k}}$ such that
-$\pi(xy) \in L(x) \cap L(y)$ for each $xy \in E(T)$.
+Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an $L$-edge-coloring.
 \end{lem}
 
 \subsection{Basic properties}

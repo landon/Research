@@ -3,6 +3,20 @@
 \usepackage{fullpage}
 \usepackage[hidelinks]{hyperref}
 \usepackage{epigraph}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{xspace}
+\makeatletter
+\DeclareRobustCommand{\maybefakesc}[1]{%
+  \ifnum\pdfstrcmp{\f@series}{\bfdefault}=\z@
+    {\fontsize{\dimexpr0.8\dimexpr\f@size pt\relax}{0}\selectfont\uppercase{#1}}%
+  \else
+    \textsc{#1}%
+  \fi
+}
+\newcommand\AM{\,\maybefakesc{am}\xspace}
+\newcommand\PM{\,\maybefakesc{pm}\xspace}
+\makeatother
 
 \pagestyle{plain}
 \title{Math 109: Calculus 1\\ \bigskip\small{Spring 2015}}
@@ -14,14 +28,21 @@
 \textbf{instructor:}& landon rabern\\
 \textbf{email:}& \href{mailto:lrabern@fandm.edu}{\nolinkurl{lrabern@fandm.edu}}\\
 \textbf{class webpage:}& \href{http://bit.ly/calculus2015}{\nolinkurl{bit.ly/calculus2015}}\\
-\textbf{class meetings:}& TBA\\
-\textbf{office hours:}& TBA\\
-\textbf{textbook:}& \textit{Calculus, Concepts and Contexts 4E}, by James Stewart\\
+\textbf{class meetings:}& 9:00\AM--9:50\AM MWF in STA 217\\
+& 1:15\PM--2:05\PM T in HAC 412\\
+\textbf{office hours:}& 9:50\AM--10:50\AM MWF in STA 108\\
+\textbf{textbook:}&\textit{Calculus, Concepts and Contexts 4E}, by James Stewart\\
 \end{tabular}
 
 \section*{What is this class about?}
+You are driving your car down a lonely highway and out of pure boredom you start thinking about how far you have traveled and how long it has taken.  You remember
+that semi an hour back that cut you off and made you let up on the gas, how much of your time did that waste?  What about all the other times you have braked or accelerated?
+We can answer any such question by playing with functions.  Say $d(t)$ is the distance you have traveled after $t$ hours where $t = 0$ is when you got on the highway.   Say $s(t)$ is the value on your speedometer at time $t$ in miles per hour.  When $s(t)$ is small (when you are driving slow) $d(t)$ increases more slowly and when $s(t)$ is large (when you are driving fast) $d(t)$ increases more quickly.  So, to answer your original questions, what we need is a better understanding of the relationship between $d(t)$ and $s(t)$. This relationship is precisely what \emph{Calculus} is about. We study a procedure for determining $s(t)$ given $d(t)$ similarly to how your speedometer works (computing your average speed over a short period of time); in fancy math words, this procedure is called \emph{differentiation} and the function $s$ is the \emph{derivative} of the function $d$. We study this procedure for arbitrary functions. This might seem much more general, but if you move your foot just right on the gas pedal (and perhaps shift into reverse), you can make $d(t)$ any function you like.  So, in reality, the whole course is just about driving your car.
 
-\section*{Homework}
+The procedure for getting $d(t)$ given $s(t)$ is the main topic of Calculus 2, we will see a little of this at the end of the course.  The idea is that if we add up our speed over time, we get how far we have traveled. Again switching to fancy math words, this adding up procedure is called \emph{integration} and the function $d$ is the \emph{integral} of the function $s$.  Differentiation and integration are inverses of each other. If we have $s(t)$ and apply our integration procedure, we get $d(t)$.  If we then apply our differentiation procedure we get $s(t)$ back.  That the procedures ``add speeds up'' and ``take average speed over short time period'' are inverses of each other is The Fundamental Theorem of Calculus.
+
+
+\section*{Homework} 
 \epigraph{I can only show you the door. You're the one that has to walk through it.}{}
 To achieve fluency in this subject, you will need to immerse yourself in the material.  
 Working tons of problems is a great way to do this.  How many problems?  

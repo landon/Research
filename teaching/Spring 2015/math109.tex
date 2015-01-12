@@ -6,6 +6,10 @@
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage{xspace}
+\usepackage{termcal}
+\usepackage{color}
+\usepackage{fmtcount}
+
 \makeatletter
 \DeclareRobustCommand{\maybefakesc}[1]{%
   \ifnum\pdfstrcmp{\f@series}{\bfdefault}=\z@
@@ -18,6 +22,22 @@
 \newcommand\PM{\,\maybefakesc{pm}\xspace}
 \makeatother
 
+
+\newcommand{\MWFClass}{%
+\calday[Monday]{\classday}
+\skipday % Tuesday (no class)
+\calday[Wednesday]{\classday}
+\skipday % Thursday (no class)
+\calday[Friday]{\classday}
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\Holiday}[2]{%
+\options{#1}{\noclassday}
+\caltext{#1}{#2}
+}
+
+
 \pagestyle{plain}
 \title{Math 109: Calculus 1\\ \bigskip\small{Spring 2015}}
 \date{}
@@ -28,9 +48,9 @@
 \textbf{instructor:}& landon rabern\\
 \textbf{email:}& \href{mailto:lrabern@fandm.edu}{\nolinkurl{lrabern@fandm.edu}}\\
 \textbf{class webpage:}& \href{http://bit.ly/calculus2015}{\nolinkurl{bit.ly/calculus2015}}\\
-\textbf{class meetings:}& 9:00\AM--9:50\AM MWF in STA 217\\
-& 1:15\PM--2:05\PM T in HAC 412\\
-\textbf{office hours:}& 9:50\AM--10:50\AM MWF in STA 108\\
+\textbf{class meetings:}& 9:00\AM--9:50\AM MWF in STA 217 (lecture / group work)\\
+& 1:15\PM--2:05\PM T in HAC 412 (working problems)\\
+\textbf{office hours:}& 10:00\AM--10:50\AM MWF in STA 108\\
 \textbf{textbook:}&\textit{Calculus, Concepts and Contexts 4E}, by James Stewart\\
 \end{tabular}
 
@@ -49,17 +69,17 @@ Working tons of problems is a great way to do this.  How many problems?
 My recommendation would be to work problems of a given type until they become easy for you.
 
 I will put a list of practice problems for each class period on the class webpage.  These will not be collected.  
-Each week, I will select a couple of the more interesting problems and assign them with a due date.  
+Each Wednesday, I will select a couple of the more interesting problems and assign them---due the following Wednesday.
 These will be graded both for correctness and clarity of exposition.
 
 \section*{Quizzes}
 \epigraph{Pop quiz, hotshot.}{}
-There will 5 minute quizzes at random times throughout the course.  
-These are intended to reinforce basic concepts as well as encourage attendance.
+There will 5 minute quizzes at random times throughout the course.  I will set the random number generator so that the expected number of quizzes is 10.
+Quizzes are intended to reinforce basic concepts as well as encourage attendance.
 Unlike exams, quizzes will be closed-book.  Your lowest three quiz scores will be dropped.
 
 \section*{Exams}
-There will be two in-class exams and a final exam. 
+There will be two in-class exams and then a final exam during finals week. 
 The purpose of the exams is to test your understanding of, and ability to reason about, the mathematical concepts. Since you can use your textbook as well as any other written material, no memorization is required; however, these exams occur in a finite time period, so rapid recall of facts will serve you well.  All electronic devices should be stowed in your bag for the duration of the exam and any brain implants should be turned off.
 
 \section*{Graded work breakdown}
@@ -67,10 +87,10 @@ The purpose of the exams is to test your understanding of, and ability to reason
 what & \% & when \\
 \hline
 homework & 10 & weekly\\
-quizzes & 10 & weekly\\
-in-class exam \#1 & 20 & TBD \\
-in-class exam \#2 & 25 & TBD \\
-final exam & 35 & TBA \\
+quizzes & 10 & random times\\
+in-class exam \#1 & 20 & Friday, February \ordinalnum{13} \\
+in-class exam \#2 & 25 &  Friday, March \ordinalnum{13} \\
+final exam & 35 & TBA, in finals week \\
 \end{tabular}
 
 \section*{Help}
@@ -80,4 +100,77 @@ If you need help or just want to know more about something, please come to my sc
 Please be advised that Math Department and F\&M policy state that penalties (including
 grade reduction and/or dismissal from the course) may be assessed for
 excessive, unexcused absences.
+
+\begin{center}
+\begin{calendar}{1/12/2015}{16}
+\setlength{\calboxdepth}{.3in}
+\MWFClass
+
+\options{1/12/2015}{\noclassday} 
+
+% schedule
+\caltexton{1}{1.1, 1.2 Review}
+\caltextnext{1.3 Review}
+\caltextnext{2.1}
+\caltextnext{2.2}
+\caltextnext{2.3}
+\caltextnext{2.4}
+\caltextnext{2.5}
+\caltextnext{2.6}
+\caltextnext{2.7}
+\caltextnext{2.8}
+\caltextnext{\textcolor{blue}{exam \#1 review}}
+\caltextnext{\textcolor{blue}{exam \#1 review}}
+\caltextnext{\textcolor{blue}{\textbf{in-class exam \#1}}}
+\caltextnext{3.1}
+\caltextnext{1.5, 3.1}
+\caltextnext{3.2}
+\caltextnext{3.3, Appendix C}
+\caltextnext{3.4}
+\caltextnext{3.5}
+\caltextnext{1.6, 3.6}
+\caltextnext{3.7}
+\caltextnext{Taylor series, imaginary numbers, and magic}
+\caltextnext{\textcolor{blue}{exam \#2 review}}
+\caltextnext{\textcolor{blue}{exam \#2 review}}
+\caltextnext{\textcolor{blue}{\textbf{in-class exam \#2}}}
+\caltextnext{4.2, 4.3}
+\caltextnext{4.2, 4.3}
+\caltextnext{4.2, 4.3}
+\caltextnext{4.6}
+\caltextnext{4.6}
+\caltextnext{4.6}
+\caltextnext{4.8}
+\caltextnext{5.1}
+\caltextnext{5.2}
+\caltextnext{5.2}
+\caltextnext{5.3}
+\caltextnext{5.3}
+\caltextnext{\textcolor{blue}{final exam review}}
+\caltextnext{\textcolor{blue}{final exam review}}
+
+% Holidays
+\Holiday{1/19/2015}{Martin Luther King Day}
+\Holiday{3/14/2015}{Spring Break}
+\Holiday{3/15/2015}{Spring Break}
+\Holiday{3/16/2015}{Spring Break}
+\Holiday{3/17/2015}{Spring Break}
+\Holiday{3/18/2015}{Spring Break}
+\Holiday{3/19/2015}{Spring Break}
+\Holiday{3/20/2015}{Spring Break}
+\Holiday{3/21/2015}{Spring Break}
+\Holiday{3/22/2015}{Spring Break}
+
+\Holiday{4/24/2015}{Reading Day}
+\Holiday{4/25/2015}{Reading Day}
+\Holiday{4/26/2015}{Reading Day}
+\Holiday{4/27/2015}{Reading Day}
+
+\Holiday{4/28/2015}{Finals week}
+\Holiday{4/29/2015}{Finals week}
+\Holiday{4/30/2015}{Finals week}
+\Holiday{5/1/2015}{Finals week}
+\Holiday{5/2/2015}{Finals week}
+\end{calendar}
+\end{center}
 \end{document}

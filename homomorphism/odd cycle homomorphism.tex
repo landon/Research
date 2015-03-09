@@ -77,6 +77,8 @@
 \newcommand{\mic}{\operatorname{mic}}
 \newcommand{\pot}{\operatorname{Pot}}
 \newcommand{\mad}{\operatorname{mad}}
+\renewcommand{\hom}{\operatorname{Hom}}
+\newcommand{\aut}{\operatorname{Aut}}
 
 \begin{document}
 
@@ -163,8 +165,12 @@ Let $G$ be a $\C_{T,a,b,c}$-mule and $Q$ an arbitrary graph.  If $H \unlhd G$ wi
 \end{lem}
 \begin{proof}
 Suppose to the contrary that there is $H \unlhd G$ with $H \ne Q$ such that $H \surj Q$ and $\rho_{a,b}(H) \le \hat{\rho}_{a,b}(Q)$.  
-Let $h$ be an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) \le  \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \hat{\rho}_{a,b}(Q) = \rho_{a,b}(W) < c$, a contradiction since $\hat{\rho}_{a,b}(G) \ge c$.
+Let $h$ be an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \hat{\rho}_{a,b}(Q) = \rho_{a,b}(W) < c$, a contradiction since $\hat{\rho}_{a,b}(G) \ge c$.
 \end{proof}
+
+\begin{lem}\label{ArbitraryQInto}
+Let $G$ be a $\C_{T,a,b,c}$-mule and $Q$ an arbitrary graph.  If $H \unlhd G$ is not isomorphic to an induced subgraph of $Q$ and $H \rightarrow Q$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(Q)$.
+\end{lem}
 
 We have the following basic bound on the potential of non-complete subgraphs of $G$.
 \begin{cor}\label{CompleteQ}
@@ -175,9 +181,31 @@ Suppose $\chi(H) = k \le \frac{2a}{b}$.  Then there is an epimorphism from $H$ o
 $\rho_{a,b}(H) > \hat{\rho}_{a,b}(K_k)$.  But $\hat{\rho}_{a,b}(K_k) = \min_{t \in \irange{k}} at - b\binom{t}{2} = a$ since $k \le \frac{2a}{b}$, so we have the desired bound.
 \end{proof}
 
-\begin{lem}
-Let $G$ be a $\C_{T,a,b,c}$-mule.  If $H \unlhd G$ with $H \ne T$ such that $H \surj T$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T) + 1$.
+We need that mules cannot have uniquely $T$-colorable cutsets.
+\begin{lem}\label{UniquelyColorable}
+Let $G$ be a $\C_{T,a,b,c}$-mule.  If $X \subset V(G)$ is a cutset, then there is no $\pi \in \hom(G[X], T)$ such that every element of $\hom(G[X], T)$ is of the form $\tau \circ \pi$ for some $\tau \in \aut(T)$. 
 \end{lem}
+\begin{proof}
+Suppose $X \subset V(G)$ is a cutset and there is $\pi \in \hom(G[X], T)$ such that every element of $\hom(G[X], T)$ is of the form $\tau \circ \pi$ for some $\tau \in \aut(T)$.   
+
+Let $\set{A,B}$ be a separation of $G$ with $A \cap B = X$.  By Lemma \ref{Criticality} we have $\zeta_A \in \hom(G[A], T)$ and $\zeta_B \in \hom(G[B], T)$.  Now $\zeta_A$ restricted to $G[X]$ is $\tau_A \circ \pi$ for some $\tau_A \in \aut(T)$ and $\zeta_B$ restricted to $G[X]$ is $\tau_B \circ \pi$ for some $\tau_B \in \aut(T)$.  But then $\zeta_A \cup (\tau_A \circ \tau_B^{-1} \circ \zeta_B)$ is a homomorphism from $G$ to $T$, a contradiction.
+\end{proof}
+
+Lemma \ref{UniquelyColorable} immediately implies the following.
+\begin{cor}\label{TwoConnected}
+If $T$ is vertex-transitive, then all $\C_{T,a,b,c}$-mules are $2$-connected. 
+\end{cor}
+
+\begin{lem}
+Let $G$ be a $\C_{T,a,b,c}$-mule where $T$ is vertex-transitive. Suppose $a \ge c$, $b \ge 1$ and $\hat{\rho}_{a,b}(T) \ge b + c - 1$. If $H \lhd G$ and $H$ is not isomorphic to an induced subgraph of $T$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T) + 1$.
+\end{lem}
+\begin{proof}
+Suppose to the contrary that we have $H \lhd G$ where $H$ is not isomorphic to an induced subgraph of $T$ and $\rho_{a,b}(H) \le \hat{\rho}_{a,b}(T) + 1$.  By Lemma \ref{Criticality}, $H \rightarrow T$, so $\rho_{a,b}(H) = \hat{\rho}_{a,b}(T) + 1$ by Lemma \ref{ArbitraryQInto}.  Let $F$ be all $x \in V(H)$ with neighbors in $G - V(H)$.  Since $G$ is $2$-connected by Lemma \ref{TwoConnected}, we have $|F| \ge 2$.  Pick different $x,y \in F$ and let $H' = H + xy$ if $xy \not \in E(H)$ and $H' = H$ otherwise.  Then $\hat{\rho}_{a,b}(H') \ge \min\set{a, \hat{\rho}_{a,b}(T) + 1 - b} \ge c$.  Since $H' \prec G$ and $G$ is a $\C_{T,a,b,c}$-mule, we must have $H' \rightarrow T$.
+
+So, we have a homomorphism $\func{h}{H}{T}$ such that $h(x) \ne h(y)$.  Put $Q = \im(h)$. Then $H \surj Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H$ is not isomorphic to $Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) < \rho_{a,b}(H)$ since $\hat{\rho}_{a,b}(Q) \ge \hat{\rho}_{a,b}(T) \ge c$.  Since $H$ is not isomorphic to an induced subgraph of $T$, neither is $G\brackets{(V(W) - V(Q)) \cup V(H)}$.  But then, by Lemma \ref{ArbitraryQInto}, we must have $G\brackets{(V(W) - V(Q)) \cup V(H)} \not \rightarrow T$ and hence $(V(W) - V(Q)) \cup V(H) = V(G)$.
+
+Suppose $\card{V(W) \cap V(Q)} \ne 1$.
+\end{proof}
 
 
 %There is room for improvement in the proof of Lemma \ref{ArbitraryQ}; in particular, the bound 

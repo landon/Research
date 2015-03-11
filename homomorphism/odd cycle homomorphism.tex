@@ -1,4 +1,3 @@
-% !TeX root = odd cycle homomorphism.tex
 \documentclass[12pt]{amsart}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
@@ -40,7 +39,7 @@
 
 \title{Sparse graphs admit homomorphisms into odd cycles}
 \author{Landon Rabern}
-\date{\today}
+\date{}
 
 \newcommand{\fancy}[1]{\mathcal{#1}}
 \newcommand{\C}{\fancy{C}}
@@ -201,7 +200,7 @@ Put $\tilde{\rho}_{a,b}(G) \DefinedAs \min\setbs{\rho_{a,b}(H)}{H \unlhd G \text
 \end{defn}
 
 \begin{lem}\label{PlusOne}
-Let $G$ be a $\C_{T,a,b,c}$-mule where $T$ is vertex-transitive. Suppose $\tilde{\rho}_{a,b}(T) \ge a + 1 \ge b + c$. If $H \lhd G$ and $H$ is not isomorphic to an induced subgraph of $T$, then $\rho_{a,b}(H) > a + 1$.
+Let $G$ be a $\C_{T,a,b,c}$-mule where $T$ is vertex-transitive and $\tilde{\rho}_{a,b}(T) \ge a + 1 \ge b + c$. If $H \lhd G$ and $H$ is not isomorphic to an induced subgraph of $T$, then $\rho_{a,b}(H) > a + 1$.
 \end{lem}
 \begin{proof}
 Suppose to the contrary that we have $H \lhd G$ where $H$ is not isomorphic to an induced subgraph of $T$ and $\rho_{a,b}(H) \le a + 1$.  Note that the hypotheses imply $\hat{\rho}_{a,b}(T) = a$.  By Lemma \ref{Criticality}, $H \rightarrow T$, so $\rho_{a,b}(H) = a + 1$ by Lemma \ref{ArbitraryQInto}.  Let $F$ be all $x \in V(H)$ with neighbors in $G - V(H)$.  Since $G$ is $2$-connected by Lemma \ref{TwoConnected}, we have $|F| \ge 2$.  Pick different $x,y \in F$ and let $H' = H + xy$ if $xy \not \in E(H)$ and $H' = H$ otherwise.  Then $\hat{\rho}_{a,b}(H') \ge \min\set{a, a + 1 - b} \ge c$.  Since $H' \prec G$ and $G$ is a $\C_{T,a,b,c}$-mule, we must have $H' \rightarrow T$.
@@ -214,57 +213,17 @@ So, we must have $\card{V(W) \cap V(Q)} \ge 2$.  Then our estimate is $\rho_{a,b
 \rho_{a,b}(W) + \rho_{a,b}(H) - (a+1)$.  Since $\rho_{a,b}(W) < c$, we must have $\rho_{a,b}(H) - (a+1) \ge 1$.  That is, $a + 1 = \rho_{a,b}(H) \ge a + 2$, a contradiction.
 \end{proof}
 
-%There is room for improvement in the proof of Lemma \ref{ArbitraryQ}; in particular, the bound 
-%\[\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H)\] can be improved in many cases. Put $X \DefinedAs V(W) - V(Q)$ and $Y \DefinedAs h^{-1}(V(W) \cap V(Q))$.  We did not count any of the edges between $X$ and $H - Y$ in our estimate, so in fact we can improve the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)}.\]  Furthermore, we gain when a vertex in $X$ has more than $\card{V(W) \cap V(Q)}$ neighbors in $Y$ because multi-edges get replaced by single edges.  Taking this into account, improves the upper bound to \[\rho_{a,b}(W) - \hat{\rho}_{a,b}(Q) + \rho_{a,b}(H) - b\card{E_G(X,H - Y)} - b\sum_{v \in X} \max\set{0, \card{N_G(v) \cap Y} - \card{V(W) \cap V(Q)}}.\]  Finally, we may be able to improve on the use of $\hat{\rho}_{a,b}(Q)$ when $\card{V(W) \cap V(Q)} > 1$.  There is a tension between this final improvement and the previous two.  For many $Q$ in the wild, $\rho_{a,b}(Q') > \rho_{a,b}(K_1)$ for all $Q' \unlhd Q$ with $\card{Q'} > 1$.  When this occurs, our upper bound is improved by $1$ unless $\card{V(W) \cap V(Q)} = 1$ and $\card{E(X,H - Y)} = 0$ and $\card{N(v) \cap Y} \le 1$ for all $v \in X$.  To apply this observation, we need some control over $W$. We can get this control when $Q = T$, we will be able to conclude that $(V(W) - V(Q)) \cup V(H) = V(G)$. 
-%
-%\begin{defn}
-%Put $\tilde{\rho}_{a,b}(G) \DefinedAs \min\setbs{\rho_{a,b}(H)}{H \unlhd G \text{ with } |H| \ge 2}$.
-%\end{defn}
-%
-%\begin{lem}\label{UsingT}
-%Let $G$ be a $2$-connected $\C_{T,a,b,c}$-mule where $\tilde{\rho}_{a,b}(T) > \hat{\rho}_{a,b}(T) \ge b + c - 1$.  If $H \lhd G$ with $H \not \inj T$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T) + 1$.
-%\end{lem}
-%\begin{proof}
-%Suppose to the contrary that we have such an $H$ with $\rho_{a,b}(H) \le \hat{\rho}_{a,b}(T) + 1$. Since $H \lhd G$, Lemma \ref{Criticality} shows that $H \rightarrow T$. Applying Corollary \ref{ArbitraryQInto} gives $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T)$.  The same holds for any induced subgraph of $H$, so $\hat{\rho}_{a,b}(H) > \hat{\rho}_{a,b}(T)$ and hence $\hat{\rho}_{a,b}(H) = \hat{\rho}_{a,b}(T) + 1$.  
-%
-%Since $G$ is $2$-connected, $H$ has at least two vertices $x, y$ with neighbors outside $H$.  If $x$ is adjacent to $y$, put $H' \DefinedAs H$, otherwise put $H' \DefinedAs H + xy$.  We have $\hat{\rho}_{a,b}(H') \ge \hat{\rho}_{a,b}(H) - b \ge \hat{\rho}_{a,b}(T) + 1 - b \ge c$.   Since $H' \prec G$, we must have $H' \rightarrow T$ as $G$ is a $\C_{T,a,b,c}$-mule.
-%
-%Let $h$ be a homomorphism from $H'$ into $T$.  Then $h$ is a homomorphism from $H$ into $T$ with the property that $h(x) \ne h(y)$. Put $Q \DefinedAs \im(h)$. Now $H \ne Q$ since $H \not \inj T$ and $h$ is an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) \le c$.  Suppose $(V(W) - V(Q)) \cup V(H) \ne V(G)$.  Then Lemma \ref{Criticality} shows that $G\brackets{(V(W) - V(Q)) \cup V(H)} \rightarrow T$.  Applying Corollary \ref{ArbitraryQInto} gives $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} > \hat{\rho}_{a,b}(T)$ and hence $\hat{\rho}_{a,b}(T) < c$, a contradiction.  
-%
-%So, we have $(V(W) - V(Q)) \cup V(H) \ne V(G)$.  Since $\tilde{\rho}_{a,b}(T) > \hat{\rho}_{a,b}(T)$, if $\card{V(W) \cap V(Q)} > 1$, then our above estimate on $\rho_{a,b}(G)$ is decreased by one, giving $\hat{\rho}_{a,b}(G) < c$, a contradiction.  So we must have $V(W) \cap V(Q) = \set{z}$ for some $z$.  By the discussion before this lemma, we must also have $\card{E(G - H , H - h^{-1}(z))} = 0$.  But $h(x) \ne h(y)$, so by symmetry, we may assume that $h(y) \ne h(z)$.  Therefore $y \in V(H - h^{-1}(z))$ and $y$ has a neighbor in $G-H$, a contradiction.
-%\end{proof}
+This is a useful form for excluding small subgraphs.
+\begin{cor}
+Let $G$ be a $\C_{T,a,b,c}$-mule where $T$ is vertex-transitive, $\tilde{\rho}_{a,b}(T) \ge a + 1 \ge b + c$, and $a > b$.  If $H \lhd G$ and $H$ is not isomorphic to an induced subgraph of $T$, then 
+\[\card{H} \ge \frac{a + 2 + \parens{\size{H} - \card{H}}b}{a-b}.\]
+\end{cor}
 
-%*** not sure we need/can use this more general statement for odd cycle homomorphisms
-%*** need to be able to exclude small edge cuts to use it
-%*** note for future reference if we want to use this stuff that the formulation below isn't quite right, the bound on $\tilde{\rho}_{a,b}(T)$ can be improved using minimality of $\rho_{a,b}(H)$ like the kostochka
-% yancey proof
-%
 %We need a lemma from Kostochka and Yancey \cite{kostochkayancey2012ore}.
 %
 %\begin{lem}[Kostochka and Yancey \cite{kostochkayancey2012ore}]\label{EdgeAddingLemma}
 %Let $S$ be a finite set, $\ell \ge 2$ an integer and $\func{f}{S}{\IN_{\ge 1}}$ such that $\sum_{v \in S} f(v) \ge \ell$.  Then, for any $i \in \irange{\frac{\ell}{2}}$, there is a graph $H$ with $V(H) = S$ and $||H|| = i$ such that for any independent set $I$ in $H$ with $\card{I} \ge 2$, we have \[\sum_{v \in S - M} f(v) \ge i.\]
 %\end{lem}
-%
-%\begin{lem}
-%Let $G$ be a $2$-connected $\C_{T,a,b,c}$-mule where $\hat{\rho}_{a,b}(T) \ge c$ and $\tilde{\rho}_{a,b}(T) \le 2\hat{\rho}_{a,b}(T) + 2 - b - c$.  If $H \lhd G$ with $|H| > 1$ and $H \not \inj T$ such that $\card{E(H, G-H)} \ge 2\floor{\frac{\tilde{\rho}_{a,b}(T) - 1}{b}}$, then $\rho_{a,b}(H) > \tilde{\rho}_{a,b}(T)$.
-%\end{lem}
-%\begin{proof}
-%Suppose not and choose $H \lhd G$ with $|H| > 1$ and $H \not \inj T$ minimizing $\rho_{a,b}(H)$. Since $H \lhd G$, Lemma \ref{Criticality} shows that $H \rightarrow T$. Applying Corollary \ref{ArbitraryQInto} gives $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T)$.  The same holds for any induced subgraph of $H$, so $\hat{\rho}_{a,b}(H) > \hat{\rho}_{a,b}(T)$.
-%
-%Let $H'$ be a graph formed from $H$ by adding $i \DefinedAs \floor{\frac{\hat{\rho}_{a,b}(H) - c}{b}}$ edges (**IN A GOOD WAY**).  Then $\hat{\rho}_{a,b}(H') \ge \hat{\rho}_{a,b}(H) - ib \ge c$.  Since $H' \prec G$, we must have $H' \rightarrow T$ as $G$ is a $\C_{T,a,b,c}$-mule.
-%
-%Let $h$ be a homomorphism from $H'$ into $T$.  Then $h$ is a homomorphism from $H$ into $T$ with special properties we will use later.   Put $Q \DefinedAs \im(h)$. Now $H \ne Q$ since $H \not \inj T$ and $h$ is an epimorphism from $H$ onto $Q$. Since $G$ is a $\C_{T,a,b,c}$-mule, $G_h$ cannot be a child of $G$.  But we have an epimorphism $h'$ from $G$ onto $G_h$ and $G_h \ne G$ since $H \ne Q$, so it must be that $G_h \not \in \C_{T,a,b,c}$.  Since $G \rightarrow G_h$ and $G \not \rightarrow T$, we must have $G_h \not \rightarrow T$.  Therefore $\hat{\rho}_{a,b}(G_h) < c$.  Pick $W \unlhd G_h$ with $\rho_{a,b}(W) < c$.  Since $W \not \subseteq G$, we must have $V(W) \cap V(Q) \ne \emptyset$.  Hence $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) < \rho_{a,b}(H) + c - \hat{\rho}_{a,b}(T) \le \rho_{a,b}(H)$.  This contradicts the minimality of $\rho_{a,b}(H)$ unless $(V(W) - V(Q)) \cup V(H) \ne V(G)$.  Also, if $\card{V(W) \cap V(Q)} > 1$, then we have $\rho_{a,b}\parens{G\brackets{(V(W) - V(Q)) \cup V(H)}} \le \rho_{a,b}(W) - \tilde{\rho}_{a,b}(T) + \rho_{a,b}(H) < c$, a contradiction.
-%
-%Hence $(V(W) - V(Q)) \cup V(H) = V(G)$ and $V(W) \cap V(Q) = \set{z}$ for some $z$.  When forming $H'$, we added edges to $H$ in a way that guarantees $\card{E(G - H , H - h^{-1}(z))} \ge i$.
-%By the discussion before this lemma we get $\rho_{a,b}(G) < c - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) - b\card{E(G - H , H - h^{-1}(z))} \le c - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) - ib \le c - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) - (\hat{\rho}_{a,b}(H) - c - (b-1)) = 2c + b-1 - \hat{\rho}_{a,b}(T) + \rho_{a,b}(H) - \hat{\rho}_{a,b}(H)$.
-%\end{proof}
-
-%\begin{lem}\label{VertexTransitive}
-%Let $G$ be $\C_{T,a,b,c}$-mule where $T$ is vertex-transitive and $\tilde{\rho}_{a,b}(T) > \hat{\rho}_{a,b}(T) \ge b + c - 1$.  If $H \lhd G$ with $H \not \inj T$, then $\rho_{a,b}(H) > \hat{\rho}_{a,b}(T) + 1$.
-%\end{lem}
-%\begin{proof}
-%Suppose $G$ has a cutvertex $x$.  Then, by Lemma \ref{Criticality}, each lobe has a homomorphism into $T$.  Since $T$ is vertex-transitive, we can match these up on $x$ to get $G \rightarrow T$, a contradiction.  So, $G$ is $2$-connected and we are done by Lemma \ref{UsingT}.
-%\end{proof}
 
 \bibliographystyle{plain}
 \bibliography{GraphColoring}

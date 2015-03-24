@@ -1,0 +1,142 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{Theorem}{Theorem}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\L{\fancy{L}}
+\def\H{\fancy{H}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
+Stiebitz's proof of Gallai's conjecture on the number of components in the high and low vertex subgraphs of critical graphs}
+\date{}
+\begin{document}
+\maketitle
+
+Tibor Gallai conjectured the following in 1963 \cite{gallai1963kritische, gallai1963kritische2} and Michael Stiebitz proved it in 1982 \cite{stiebitz1982proof}.  For a graph $G$,
+let $\L(G)$ be the subgraph of $G$ induced on the vertices of degree $\delta(G)$ and let $\H(G)$ be the subgraph of $G$ induced on the vertices of degree larger than $\delta(G)$.
+
+\begin{Theorem}[Stiebitz]
+If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ has at most as many components as $\L(G)$.
+\end{Theorem}
+
+In fact, Stiebitz proved a stronger statement.
+\begin{Lemma}
+If $G$ is a connected graph, then for every $X \subseteq V(G)$ at least one of the following holds:
+\begin{enumerate}
+\item $G - X$ has at most as many components as $G[X]$; or
+\item $X$ contains a vertex of degree at least $\chi(G)$; or
+\item $G[X]$ has a component $C$ such that $\chi(G - V(C)) = \chi(G)$.
+\end{enumerate}
+\end{Lemma}
+
+Applying the Lemma with $X = V(\L(G))$ yields the Theorem since neither (2) nor (3) can occur in a color-critical graph.
+
+\begin{proof}[Proof of Lemma]
+Suppose the Lemma is false and choose a counterexample $G$ and $X \subseteq G$ minimizing $|G|$ and subject to that, minimizing $|X|$.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

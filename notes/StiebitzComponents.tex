@@ -105,6 +105,8 @@
 \def\H{\fancy{H}}
 
 \newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
 
 \title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
 Stiebitz's proof of Gallai's conjecture on the number of components in the high and low vertex subgraphs of critical graphs}
@@ -119,20 +121,27 @@ let $\L(G)$ be the subgraph of $G$ induced on the vertices of degree $\delta(G)$
 If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ has at most as many components as $\L(G)$.
 \end{Theorem}
 
-In fact, Stiebitz proved a stronger statement.
 \begin{Lemma}
-If $G$ is a connected graph, then for every nonempty $X \subseteq V(G)$, at least one of the following holds:
-\begin{enumerate}
-\item $G - X$ has at most as many components as $G[X]$; or
-\item $X$ contains a vertex of degree at least $\chi(G)$; or
-\item $G[X]$ has a component $C$ such that $\chi(G - V(C)) = \chi(G)$.
-\end{enumerate}
+Let $G$ be a connected graph and $\emptyset \ne X \subseteq V(G)$ such that
+\begin{itemize}
+\item $d_G(x) \le k - 1$ for all $x \in X$; and
+\item for each component $C$ of $G-X$, we have $\chi(G - V(C)) \le k - 1$; and
+\item $G[X]$ has $\ell$ components and $G-X$ has at least $\ell + 1$ components.
+\end{itemize}
+If $G-X$ is the disjoint union of (possibly not connected) graphs $M_1, \ldots, M_{\ell + 1}$ and $f_i$ is a $(k-1)$-coloring of $M_i$ for each $i \in \irange{\ell + 1}$, 
+then there are permutations $\pi_1, \ldots, \pi_{\ell + 1}$ of $\irange{k-1}$ such that the $(k-1)$-coloring of $G-X$ given by $(\pi_1 \circ f_1) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G$.
 \end{Lemma}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $G$ and nonempty $X \subseteq V(G)$ so that $|X|$ is as small as possible.  So, $G-X$ is the disjoint union of graphs $M_1, \ldots, M_{\ell + 1}$ and we have $(k-1)$-colorings $f_i$ of $M_i$ for each $i \in \irange{\ell + 1}$ so that no permutations allow us to extend to a $(k - 1)$-coloring of $G$.
 
-Applying the Lemma with $X = V(\L(G))$ yields the Theorem since neither (2) nor (3) can occur in a color-critical graph.
+\claim{1}{Each component of $G[X]$ has edges to at least two of the $M_i$.}
+Suppose to the contrary that we have a component $C$ of $G[X]$ that has edges to at most one of the $M_i$.  Then, since $G$ is connected, we must have $\ell \ge 2$. But now the hypotheses of the lemma are satisfied with $X' = X \setminus V(C)$ in place of $X$, so by minimality of $|X|$ we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$, a contradiction.
 
-\begin{proof}[Proof of Lemma]
-Suppose the Lemma is false and choose a counterexample $G$ and nonempty $X \subseteq V(G)$ minimizing $|X|$.
+\claim{2}{Each non-separating vertex in $G[X]$ has neighbors in at least two of the $M_i$.}
+Suppose to the contrary that we have a component $C$ of $G[X]$ and $x \in V(C)$ a non-separating vertex that has neighbors in at most one of the $M_i$.  Then, by Claim 1, we must have $|C| \ge 2$.  But then $x$ has at most $k-2$ neighbors in $G-X$, so we can greedily complete any $(k-1)$-coloring of $G-X$ to $G-X'$ where $X' = X \setminus \set{x}$.  So, the hypotheses of the lemma are satisfied with $X'$ in place of $X$.  Again, by minimality of $|X|$, we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$, a contradiction.
+
+\claim{3}{The lemma is true.}
+Pick a component $C$ in $G[X]$ and a non-separating vertex $x \in V(C)$.  By Claim 2 and symmetry, we may assume that $x$ has neighbors $y_1, y_2$ in $M_1, M_2$ respectively.  Let $G' = G - V(C)$ and $X' = X \setminus V(C)$.  Then $G'$ is the disjoint union of the $\ell$ graphs $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$.  Let $\tau$ be a permutation of $\irange{k-1}$ such that $(\tau \circ f_2)(y_2) = f_1(y_1)$ and let $f_* = f_1 \cup (\tau \circ f_2)$. WHY $G'$ CONNECTED? By minimality of $|X|$, we can apply the lemma to $G'$ with $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$ and colorings $f_*, f_3, \ldots, f_{\ell +1}$ to get permutations $\pi_*, \pi_3, \ldots, \pi_{\ell+1}$ such that the $(k-1)$-coloring of $G'-X'$ given by $(\pi_* \circ f_*) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G'$.  But this is the same as the $(k-1)$-coloring $(\pi_* \circ f_1) \cup (\pi_* \circ \tau \circ f_2) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$, so using the permutations $\pi_*, \pi_* \circ \tau, \pi_3, \ldots, \pi_{\ell + 1}$ we get a coloring of $G - X$ that extends to $G - V(C)$.  But in this coloring, $y_1$ and $y_2$ receive the same color. This means that $x$ has $k - 1 - (d_G(x) - d_C(x)) + 1 \ge d_C(x) + 1$ colors available and each other vertex $v$ in $C$ has $k - 1 - (d_G(v) - d_C(v)) + 1 \ge d_C(v) \ge d_C(v)$ colors available.  So, coloring $C$ greedily in order of decreasing distance from $x$ gives an extension to a $(k - 1)$-coloring of $G$, a contradiction.
 \end{proof}
 
 \bibliographystyle{amsplain}

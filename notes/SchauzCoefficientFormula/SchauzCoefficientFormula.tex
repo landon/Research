@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{mathscinet}
+\usepackage{tikz,tkz-graph,tkz-berge}
+\usetikzlibrary{positioning}
+\usepackage{verbatim, xcolor}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\newcommand{\boundellipse}[3]% center, xdim, ydim
+{(#1) ellipse (#2 and #3)
+}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{Theorem}{Theorem}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{Nullstellensatz}{Combinatorial Nullstellensatz}
+\newtheorem*{CoefficientFormula}{Coefficient Formula}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\newcommand{\erdos}{Erd\H{o}s}
+\newcommand{\CondOne}{\hyperref[cond1]{Condition (1)}}
+\newcommand{\CondTwo}{\hyperref[cond2]{Condition (2)}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\L{\fancy{L}}
+\def\H{\fancy{H}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
+The combinatorial nullstellensatz and Schauz's coefficient formula}
+\date{}
+\begin{document}
+\maketitle
+
+In \cite{Alon1992125}, Alon and Tarsi introduced a beautiful algebraic technique for proving the existence of list colorings.  Alon \cite{Alon19997} further developed this technique into the \emph{Combinatorial Nullstellensatz}. Fix an arbitrary field $\mathbb{F}$. We write $f_{k_1, \ldots, k_n}$ for the coefficient of $x_1^{k_1}\cdots x_n^{k_n}$ in the polynomial $f \in \mathbb{F}[x_1, \ldots, x_n]$. 
+
+\begin{Nullstellensatz}[Alon]
+Suppose $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$.  If $f_{k_1, \ldots, k_n} \ne 0$, then for any $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} \ge k_i + 1$, there exists $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$ with $f(a_1, \ldots, a_n) \ne 0$.
+\end{Nullstellensatz}
+
+Micha{\l}ek \cite{michalek} gave a very short proof of the Combinatorial Nullstellensatz just using long division.  Schauz \cite{schauz2008algebraically} sharpened the Combinatorial Nullstellensatz by proving the following coefficient formula.  Versions of this result were also proved by Hefetz \cite{hefetz2011two} and Laso{\'n} \cite{lason2010generalization}. Our presentation is similar to Laso{\'n}'s.
+
+\begin{CoefficientFormula}[Schauz]
+Suppose $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$.  For any $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} = k_i + 1$, we have
+\[f_{k_1, \ldots, k_n} = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} \frac{f(a_1, \ldots, a_n)}{N(a_1, \ldots, a_n)},\]
+where
+\[N(a_1, \ldots, a_n) \DefinedAs \prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (a_i - b).\]
+\end{CoefficientFormula}
+
+We first give Micha{\l}ek's proof of the Combinatorial Nullstellensatz and use this to derive the coefficient formula.
+
+\begin{proof}[Proof of  Combinatorial Nullstellensatz]
+Suppose the result is false and choose $f \in \mathbb{F}[x_1, \ldots, x_n]$ for which it fails minimizing $\deg(f)$. Then $\deg(f) \ge 2$ and we have $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$ and $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} \ge k_i + 1$ such that $f(a_1, \ldots, a_n) = 0$ for all $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$.  By symmetry, we may assume that $k_1 > 0$.  Fix $a \in A_1$ and divide $f$ by $x_1 - a$ to get $f = (x_1 - a)Q + R$ where the degree of $x_1$ in $R$ is zero.  Then the coefficient of $x_1^{k_1-1}x_2^{k_2} \cdots x_n^{k_n}$ in $Q$ must be non-zero and $\deg(Q) < \deg(f)$.  So, by minimality of $\deg(f)$ there is $(a_1, \ldots, a_n) \in (A_1 \setminus \set{a}) \times \cdots \times A_n$ such that $Q(a_1,\ldots, a_n) \ne 0$.  Since $0 = f(a_1,\ldots, a_n) = (a_1 - a)Q(a_1,\ldots, a_n) + R(a_1,\ldots, a_n)$ we must have $R(a_1,\ldots, a_n) \ne 0$.  But $x_1$ has degree zero in $R$, so $R(a,\ldots, a_n) = R(a_1,\ldots, a_n) \ne 0$.  Finally, this means that $f(a,\ldots, a_n) = (a-a)Q(a,\ldots, a_n) + R(a,\ldots, a_n) \ne 0$, a contradiction.
+\end{proof}
+
+
+
+\begin{proof}[Proof of Coefficient Formula]
+Let $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$. Also, let $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} = k_i + 1$.  For each $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$, let $\chi_{(a_1, \ldots, a_n)}$ be the characteristic function of the set $\set{(a_1, \ldots, a_n)}$; that is $\func{\chi_{(a_1, \ldots, a_n)}}{A_1 \times \cdots \times A_n}{\mathbb{F}}$ with $\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = 1$ when $(x_1, \ldots, x_n) = (a_1, \ldots, a_n)$ and $\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = 0$ otherwise.  Consider the function
+\[F = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} f(a_1, \ldots, a_n)\chi_{(a_1, \ldots, a_n)}.\]
+Then $F$ agrees with $f$ on all of $A_1 \times \cdots \times A_n$ and hence $f - F$ is zero on $A_1 \times \cdots \times A_n$.  We will apply the Combinatorial Nullstellensatz to $f - F$ to conclude that $(f-F)_{k_1, \ldots, k_n} = 0$ and hence $f_{k_1, \ldots, k_n} = F_{k_1, \ldots, k_n}$ where  $F_{k_1, \ldots, k_n}$ will turn out to be our desired sum.  To apply the Combinatorial Nullstellensatz, we need to represent $F$ as a polynomial, we can do so by representing each $\chi_{(a_1, \ldots, a_n)}$ as a polynomial as follows.  For $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$, let 
+\[N(a_1, \ldots, a_n) \DefinedAs \prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (a_i - b).\]
+\noindent Then it is readily verified that
+\[\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = \frac{\prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (x_i - b)}{N(a_1, \ldots, a_n)}.\]
+\noindent Using this to define $F$ we get $\deg(F) = \deg(f)$.  Since $f - F$ is zero on $A_1 \times \cdots \times A_n$, applying the Combinatorial Nullstellensatz to $f - F$ with $k_1, \ldots, k_n$ and sets $A_1, \ldots, A_n$ gives $(f-F)_{k_1, \ldots, k_n} = 0$ and hence 
+\[f_{k_1, \ldots, k_n} = F_{k_1, \ldots, k_n} = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} \frac{f(a_1, \ldots, a_n)}{N(a_1, \ldots, a_n)}.\]
+\end{proof}
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

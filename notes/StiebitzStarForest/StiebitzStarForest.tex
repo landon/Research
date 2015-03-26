@@ -125,13 +125,13 @@ The union of a forest and a star forest is $3$-colorable}
 \maketitle
 Norbert Sauer conjectured the following in 1993 \cite{sauer} and Michael Stiebitz proved it in 1994 \cite{stiebitz1994forest}.  A \emph{star forest} is a forest where each component has a dominating vertex called the \emph{root}.
 It is easy to see that for two forests $F_1$ and $F_2$ we have $\chi(F_1 \cup F_2) \le 4$.  We can do better when one of the forests is a star forest.
-\begin{Theorem}
+\begin{Theorem}[Stiebitz]
 If $F_1$ is a star forest and $F_2$ is a forest, then $\chi(F_1 \cup F_2) \le 3$.
 \end{Theorem}
 
 In fact, Stiebitz proved a stronger statement.  Theorem follows immediately by applying Lemma with $k=3$, $F = F_2$ and $H$ the subgraph of $G$ induced on the set of roots of $F_1$.  The following proof and picture are from the paper \emph{Brooks' Theorem and Beyond} with Dan Cranston \cite{brooksbeyond}.
 
-\begin{Lemma}
+\begin{Lemma}[Stiebitz]
 \label{stiebitz}
 Let $H$ be an induced subgraph of a graph $G$ with $\chi(H) \le k$ for some $k \ge 3$.  Then $\chi(G) \le k$ if $G$ has a spanning forest $F$ where
 \begin{enumerate}

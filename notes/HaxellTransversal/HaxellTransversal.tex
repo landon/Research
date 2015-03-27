@@ -1,0 +1,206 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{mathscinet}
+\usepackage{tikz,tkz-graph,tkz-berge}
+\usetikzlibrary{positioning}
+\usepackage{verbatim, xcolor}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\newcommand{\boundellipse}[3]% center, xdim, ydim
+{(#1) ellipse (#2 and #3)
+}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{Theorem}{Theorem}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{Nullstellensatz}{Combinatorial Nullstellensatz}
+\newtheorem*{TransversalLemma}{Transversal Lemma}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\newcommand{\erdos}{Erd\H{o}s}
+\newcommand{\CondOne}{\hyperref[cond1]{Condition (1)}}
+\newcommand{\CondTwo}{\hyperref[cond2]{Condition (2)}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\L{\fancy{L}}
+\def\H{\fancy{H}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
+Haxell's independent transversal lemma}
+\date{}
+\begin{document}
+\maketitle
+
+In 1995, Penny Haxell \cite{haxell1995condition, haxell2001note} proved a lemma that gives a necessary condition for the existence of an independent transversal.  This lemma is very powerful tool for many coloring problems.
+In \cite{haxell2011forming}, Haxell gave a simpler proof of her lemma using the technique from Haxell and Szab{\'o} \cite{haxell2006odd}.  We prove the following variation of the lemma using the same technique (see \cite{KingHitting, aharoni2007independent} for the original proof).  
+
+\begin{TransversalLemma}[Haxell, Aharoni-Berger-Ziv, King]
+Let $H$ be a graph and $V_1 \cup \cdots \cup V_r$ a partition of $V(H)$.  
+Suppose there exists $t \geq 1$ such that for each $i \in \irange{r}$ and each $v \in V_i$ we have $d(v) \leq \min\set{t, \card{V_i}-t}$.  For any $S \subseteq V(H)$ with $\card{S} < \min\set{\card{V_1}, \ldots, \card{V_r}}$, there is an independent transversal $I$ of $V_1, \ldots, V_r$ with $I \cap S = \emptyset$.
+\end{TransversalLemma}
+
+In fact, a more general statement holds. First we need some notation. Write $\funcsurj{f}{A}{B}$ for a surjective function from $A$ to $B$.  Let $G$ be a graph.  For a $k$-coloring $\funcsurj{\pi}{V(G)}{\irange{k}}$ of $G$ and a subgraph $H$ of $G$ we say that $I \DefinedAs \set{x_1, \ldots, x_k} \subseteq V(H)$ is an $H$-independent transversal of $\pi$ if $I$ is an independent set in $H$ and $\pi(x_i) = i$ for all $i \in \irange{k}$.
+
+\begin{lem}\label{BaseTransversalLemma}
+Let $G$ be a graph and $\funcsurj{\pi}{V(G)}{\irange{k}}$ a proper $k$-coloring of
+$G$.  Suppose that $\pi$ has no $G$-independent transversal, but for every $e
+\in E(G)$, $\pi$ has a $(G-e)$-independent transversal. Then for every $xy \in
+E(G)$ there is $J \subseteq \irange{k}$ with $\pi(x), \pi(y) \in J$ and an 
+induced matching $M$ of $G\brackets{\pi^{-1}(J)}$ with $xy \in M$ such that:
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $G\brackets{\pi^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\pi(u) = a$ and $\pi(v) = b$ is a (simple) tree.  In
+  particular $\card{M} = \card{J} - 1$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $G$ with
+$\funcsurj{\pi}{V(G)}{\irange{k}}$ so as to minimize $k$.  Let $xy \in E(G)$.
+By assumption $\pi$ has a $(G-xy)$-independent transversal $T$.  Note that we
+must have $x,y \in T$ lest $T$ be a $G$-independent transversal of $\pi$.
+
+By symmetry we may assume that $\pi(x) = k-1$ and $\pi(y) = k$. Put $X
+\DefinedAs \pi^{-1}(k-1)$, $Y \DefinedAs \pi^{-1}(k)$ and $H \DefinedAs G -
+N(\set{x, y}) - E(X,Y)$. Define $\func{\zeta}{V(H)}{\irange{k-1}}$ by $\zeta(v)
+\DefinedAs \min\set{\pi(v), k-1}$. Note that since $x,y \in T$, we have
+$\card{\zeta^{-1}(i)} \geq 1$ for each $i \in \irange{k-2}$.  Put $Z \DefinedAs
+\zeta^{-1}(k-1)$. Then $Z \neq \emptyset$ for otherwise $M \DefinedAs \set{xy}$
+totally dominates $G[X \cup Y]$ giving a contradiction.
+
+Suppose $\zeta$ has an $H$-independent transversal $S$.  Then we have $z \in S
+\cap Z$ and by symmetry we may assume $z \in X$.  But then $S \cup \set{y}$ is
+a $G$-independent transversal of $\pi$, a contradiction.
+
+Let $H' \subseteq H$ be a minimal spanning subgraph such that $\zeta$ has no
+$H'$-independent transversal.  Now $d(z) \geq 1$ for each $z \in Z$ for
+otherwise $T - \set{x,y} \cup \set{z}$ would be an $H'$-independent transversal
+of $\zeta$.  Pick $zw \in E(H')$.  By minimality of $k$, we have $J \subseteq
+\irange{k-1}$ with $\zeta(z), \zeta(w) \in J$ and an induced matching $M$ of
+$H'\brackets{\zeta^{-1}(J)}$ with $zw \in M$ such that
+\begin{enumerate}
+  \item $\bigcup M$ totally dominates $H'\brackets{\zeta^{-1}(J)}$,
+  \item the multigraph with vertex set $J$ and an edge between $a, b \in J$ for
+  each $uv \in M$ with $\zeta(u) = a$ and $\zeta(v) = b$ is a (simple) tree.
+\end{enumerate}
+
+Put $M' \DefinedAs M \cup \set{xy}$ and $J' \DefinedAs J \cup \set{k}$.
+Since $H'$ is a spanning subgraph of $H$, $\bigcup M$ totally dominates
+$H\brackets{\zeta^{-1}(J)}$ and hence $\bigcup M'$ totally dominates
+$G\brackets{\pi^{-1}(J')}$.  Moreover, the multigraph in (2) for $M'$ and $J'$
+is formed by splitting the vertex $k-1 \in J$ into two vertices and adding an edge
+between them and hence it is still a tree.  This final contradiction proves the
+lemma.
+\end{proof}
+
+\begin{proof}[Proof of Transversal Lemma]
+Suppose the lemma fails for such an $S \subseteq V(H)$.  Put $H' \DefinedAs H - S$ and let $V_1', \ldots, V_r'$ be the induced partition of $H'$. Then there is no independent transversal of $V_1', \ldots, V_r'$ and $\card{V_i'} \geq 1$ for each $i \in \irange{r}$. Create a graph $Q$ by removing edges from $H'$ until it is edge minimal without an independent transversal. Pick $yz \in E(Q)$ and apply Lemma 
+\ref{BaseTransversalLemma} on $yz$ with the induced partition to get the guaranteed 
+$J \subseteq \irange{r}$ and the tree $T$ with vertex set $J$ and an edge between $a, b \in
+J$ for each $uv \in M$ with $u \in V_a'$ and $v \in V_b'$.  By our condition, for each $uv \in E(V_i, V_j)$, we have $\card{N_H(u) \cup N_H(v)} \leq \min\set{\card{V_i}, \card{V_j}}$.
+
+Choose a root $c$ of $T$. Traversing $T$ in leaf-first order and for each leaf $a$ with parent $b$ picking $|V_a|$ from $\min\set{|V_a|, |V_b|}$ we get that the vertices in $M$ together dominate at most $\sum_{i \in J \setminus \set{c}} \card{V_i}$ vertices in $H$.  Since $\card{S} < \card{V_c}$, $M$ cannot totally dominate $\bigcup_{i \in J} V_i'$, a contradiction.
+\end{proof}
+
+Note that the condition on $S$ can be weakened slightly.  Suppose we have ordered the $V_i$ so that $\card{V_1} \leq \card{V_2} \leq \cdots \leq \card{V_r}$.  Then for any $S \subseteq V(H)$ with $\card{S} < \card{V_2}$ such that $V_1 \not \subseteq S$, there is an independent transversal $I$ of $V_1, \ldots, V_r$ with $I \cap S = \emptyset$.  The proof is the same except when we choose our root $c$, choose it so as to maximize $\card{V_c}$.  Since $\card{J} \geq 2$, we get $\card{V_c} \geq \card{V_2} > \card{S}$ at the end.
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

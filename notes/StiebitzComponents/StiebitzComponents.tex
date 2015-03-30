@@ -22,7 +22,7 @@
 \makeatother
 
 \theoremstyle{plain}
-\newtheorem{thm}{Theorem}[section]
+\newtheorem{thm}{Theorem}
 \newreptheorem{thm}{Theorem}
 \newtheorem{prop}[thm]{Proposition}
 \newreptheorem{prop}{Proposition}
@@ -121,37 +121,59 @@ let $\L(G)$ be the subgraph of $G$ induced on the vertices of degree $\delta(G)$
 If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ has at most as many components as $\L(G)$.
 \end{Theorem}
 
-In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemma using $X = V(\L(G))$.
-\begin{Lemma}[Stiebitz]
-Let $G$ be a connected graph and $\emptyset \ne X \subseteq V(G)$ such that
+In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemm \ref{MainLemma} using $X = V(\L(G))$.  
+
+
+A bipartite graph with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously.  We first need a lemma about bipartite graphs with positive surplus.
+
+\begin{lem}\label{BipartiteLemma}
+Let $G$ be a bipartite graph with parts $A$ and $B$ such that $G$ has positive surplus with respect to $A$.  Then there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph formed by contracting $\set{y,z}$ and removing $x$ has positive surplus with respect to $A \setminus \set{x}$.
+\end{lem}
+\begin{proof}
+
+\end{proof}
+
+Note that following lemma is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ is connected separately.
+\begin{lem}[Stiebitz]
+Let $G$ be a graph and $X \subseteq V(G)$ such that
 \begin{itemize}
 \item $d_G(x) \le k - 1$ for all $x \in X$; and
-\item for each component $C$ of $G[X]$, we have $\chi(G - V(C)) \le k - 1$; and
-\item $G[X]$ has $\ell$ components and $G-X$ has at least $\ell + 1$ components.
+\item $\chi(G-X) \le k-1$; and
+\item for each component $C$ of $G[X]$, we have $\chi(G - V(C)) \le k - 1$.
 \end{itemize}
-If $G-X$ is the disjoint union of (possibly not connected) graphs $M_1, \ldots, M_{\ell + 1}$ and $f_i$ is a $(k-1)$-coloring of $M_i$ for each $i \in \irange{\ell + 1}$, 
-then there are permutations $\pi_1, \ldots, \pi_{\ell + 1}$ of $\irange{k-1}$ such that the $(k-1)$-coloring of $G-X$ given by $(\pi_1 \circ f_1) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G$.
-\end{Lemma}
+Suppose $G-X$ is the disjoint union of (possibly not connected) graphs $M_1, \ldots, M_{\ell + 1}$ such that the bipartite graph $\B$ formed by contracting each $M_i$ and each component of $G[X]$ has positive surplus with respect to the $G[X]$ side.  If $f_i$ is a $(k-1)$-coloring of $M_i$ for each $i \in \irange{\ell + 1}$, then there are permutations $\pi_1, \ldots, \pi_{\ell + 1}$ of $\irange{k-1}$ such that the $(k-1)$-coloring of $G-X$ given by $(\pi_1 \circ f_1) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G$.
+\label{WithPositiveSurplus}
+\end{lem}
 \begin{proof}
 Suppose the lemma is false and choose a counterexample $G$ and nonempty $X \subseteq V(G)$ so that $|X|$ is as small as possible.  So, $G-X$ is the disjoint union of graphs $M_1, \ldots, M_{\ell + 1}$ and we have $(k-1)$-colorings $f_i$ of $M_i$ for each $i \in \irange{\ell + 1}$ so that no permutations allow us to extend to a $(k - 1)$-coloring of $G$.
 
-\claim{1}{Each component of $G[X]$ has edges to at least two of the $M_i$.}
-Suppose to the contrary that we have a component $C$ of $G[X]$ that has edges to at most one of the $M_i$.  Then, since $G$ is connected, we must have $\ell \ge 2$. But now the hypotheses of the lemma are satisfied with $X' = X \setminus V(C)$ in place of $X$, so by minimality of $|X|$ we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$, a contradiction.
+\claim{1}{Each non-separating vertex in $G[X]$ has neighbors in at least two of the $M_i$.}
+Suppose to the contrary that we have a component $C$ of $G[X]$ and $x \in V(C)$ a non-separating vertex that has neighbors in at most one of the $M_i$.  Let $X' = X \setminus \set{x}$.  The hypotheses of the lemma are satisfied with $X'$ in place of $X$ and $M_i' = G[V(M_i) \cup \set{x}]$ in place of $M_i$ since $\B$ remains the same and hence still has positive surplus. Since $\B$ has positive surplus, we must have $|C| \ge 2$ and hence $x$ has at most $k-2$ neighbors in $G-X$, so we can greedily complete the given $(k-1)$-coloring of $G-X$ to $G-X'$. Applying minimality of $|X|$ to this coloring of $G-X'$, we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$.  But these same permutations also allow us to extend the given $(k-1)$-coloring of $G-X$ to $G$, a contradiction.
 
-\claim{2}{Each non-separating vertex in $G[X]$ has neighbors in at least two of the $M_i$.}
-Suppose to the contrary that we have a component $C$ of $G[X]$ and $x \in V(C)$ a non-separating vertex that has neighbors in at most one of the $M_i$.  Then, by Claim 1, we must have $|C| \ge 2$.  But then $x$ has at most $k-2$ neighbors in $G-X$, so we can greedily complete any $(k-1)$-coloring of $G-X$ to $G-X'$ where $X' = X \setminus \set{x}$.  So, the hypotheses of the lemma are satisfied with $X'$ in place of $X$.  Again, by minimality of $|X|$, we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$, a contradiction.
+\claim{2}{There is a component $C$ of $G[X]$ and $i \ne j$ such that some non-separating $x \in V(C)$ has neighbors in $M_i$ and $M_j$ and the bipartite graph formed from $\B$ by contracting $\set{M_i, M_j}$ and removing $C$ has positive surplus.}
 
-\claim{3}{If $G[X]$ has at least two components, then $G - V(C)$ is connected for every component $C$ of $G[X]$.}
-Suppose $G[X]$ has at least two components and let $C$ be a component of $G[X]$.  If $G-V(C)$ is disconnected, then with $X'=V(C)$ in place of $X$, the hypotheses of the lemma are satisfied. By minimality of $|X|$, we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$, a contradiction.
-
-\claim{4}{The lemma is true.}
-Pick a component $C$ in $G[X]$ and a non-separating vertex $x \in V(C)$.  By Claim 2 and symmetry, we may assume that $x$ has neighbors $y_1, y_2$ in $M_1, M_2$ respectively.  Let $G' = G - V(C)$ and $X' = X \setminus V(C)$.  Then $G' - X'$ is the disjoint union of the $\ell$ graphs $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$.  Let $\tau$ be a permutation of $\irange{k-1}$ such that $(\tau \circ f_2)(y_2) = f_1(y_1)$ and let $f_* = f_1 \cup (\tau \circ f_2)$. 
-
-Suppose $G'$ is connected. By minimality of $|X|$, we can apply the lemma to $G'$ with $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$ and colorings $f_*, f_3, \ldots, f_{\ell +1}$ to get permutations $\pi_*, \pi_3, \ldots, \pi_{\ell+1}$ such that the $(k-1)$-coloring of $G'-X'$ given by $(\pi_* \circ f_*) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G'$.  But this is the same as the $(k-1)$-coloring $(\pi_* \circ f_1) \cup (\pi_* \circ \tau \circ f_2) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$, so using the permutations $\pi_*, \pi_* \circ \tau, \pi_3, \ldots, \pi_{\ell + 1}$ we get a coloring of $G - X$ that extends to $G - V(C)$.  
-
-If $G'$ is not connected, then $X = V(C)$ by Claim 3.  So, $\ell = 1$ and $f_*$ is a $(k-1)$-coloring of $G-V(C)$.
-
+\claim{3}{The lemma is true.}
+Let $C, x,i,j$ be as in Claim 2, by symmetry we may assume $i=1$ and $j=2$. Let $G' = G - V(C)$ and $X' = X \setminus V(C)$.  Then $G' - X'$ is the disjoint union of the $\ell$ graphs $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$.  Pick $y_1 \in N(x) \cap V(M_1)$ and $y_2 \in N(x) \cap V(M_2)$. We permute the colors in the coloring of $f_2$ so that $y_1$ and $y_2$ get the same color.  This will save one color for $x$ so that we can greedily color $C$, ending at $x$. Formally, let $\tau$ be a permutation of $\irange{k-1}$ such that $(\tau \circ f_2)(y_2) = f_1(y_1)$ and let $f_* = f_1 \cup (\tau \circ f_2)$.   
+By Claim 2 and minimality of $|X|$, we can apply the lemma to $G'$ with $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$ and colorings $f_*, f_3, \ldots, f_{\ell +1}$ to get permutations $\pi_*, \pi_3, \ldots, \pi_{\ell+1}$ such that the $(k-1)$-coloring of $G'-X'$ given by $(\pi_* \circ f_*) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$ extends to a $(k - 1)$-coloring of $G'$.  But this is the same as the $(k-1)$-coloring $(\pi_* \circ f_1) \cup (\pi_* \circ \tau \circ f_2) \cup (\pi_3 \circ f_3) \cup \cdots \cup (\pi_{\ell + 1} \circ f_{\ell + 1})$, so using the permutations $\pi_*, \pi_* \circ \tau, \pi_3, \ldots, \pi_{\ell + 1}$ we get a coloring of $G - X$ that extends to $G - V(C)$.  
 In these colorings, $y_1$ and $y_2$ receive the same color. This means that $x$ has $k - 1 - (d_G(x) - d_C(x)) + 1 \ge d_C(x) + 1$ colors available and each other vertex $v$ in $C$ has $k - 1 - (d_G(v) - d_C(v)) + 1 \ge d_C(v) \ge d_C(v)$ colors available.  So, coloring $C$ greedily in order of decreasing distance from $x$ gives an extension to a $(k - 1)$-coloring of $G$, a contradiction.
+\end{proof}
+
+
+Note that, like the previous one, the following lemma is trivially true in the $X = \emptyset$ case, again we allow this to avoid having to handle a base case where $G[X]$ is connected separately.
+\begin{lem}[Stiebitz]
+Let $G$ be a connected graph and $X \subseteq V(G)$ such that
+\begin{itemize}
+\item $d_G(x) \le k - 1$ for all $x \in X$; and
+\item $\chi(G-X) \le k-1$; and
+\item for each component $C$ of $G[X]$, we have $\chi(G - V(C)) \le k - 1$; and
+\item $G[X]$ has $\ell$ components and $G-X$ has at least $\ell + 1$ components.
+\end{itemize}
+Then $G$ is $(k-1)$-colorable.
+\label{MainLemma}
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample minimizing $|X|$.  If $|X| = 0$, the lemma is trivially true, so we must have $|X| \ge 1$.
+Let $\B$ be the bipartite graph formed by contracting each component of $G-X$ and each component of $G[X]$.  If $\B$ has positive surplus with respect to the $G[X]$ side, then applying Lemma \ref{WithPositiveSurplus} to any $(k-1)$-coloring of $G-X$ gives a $(k-1)$-coloring of $G$.  So, we may assume that $\B$ does not have positive surplus.  That is, for some $t$, $G[X]$ has a set of $t$ components $\set{C_1, \ldots, C_t}$ which together have neighbors in at most $t$ components of $G-X$.  But then the other $\ell - t$ components of $G[X]$ together have neighbors in at least $\ell + 1 - t$ components of $G-X$ since $G$ is connected.  Let $X' = X \setminus \bigcup_{i \in \irange{t}} V(C_i)$.  Then the hypotheses of the lemma are satisfied with $X'$ in place of $X$, so minimality of $|X|$ shows that $G$ is $(k-1)$-colorable, a contradiction.
 \end{proof}
 
 \bibliographystyle{amsplain}

@@ -124,13 +124,19 @@ If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ ha
 In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemm \ref{MainLemma} using $X = V(\L(G))$.  
 
 
-A bipartite graph with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously.  We first need a lemma about bipartite graphs with positive surplus.
+A bipartite graph $G$ with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously. We say that $G$ is \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, a $2$-forest has positive surplus.  We first need a couple lemmas about bipartite graphs with positive surplus.  The following is well-known (see \cite{LovaszPlummer)}.
+
+\begin{lem}\label{PositiveSurplusIsTwoForest}
+Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.  If $G-e$ does not have positive surplus for each $e \in E(G)$, then $G$ is a $2$-forest with respect to $A$.
+\end{lem}
 
 \begin{lem}\label{BipartiteLemma}
-Let $G$ be a bipartite graph with parts $A$ and $B$ such that $G$ has positive surplus with respect to $A$.  Then there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph formed by contracting $\set{y,z}$ and removing $x$ has positive surplus with respect to $A \setminus \set{x}$.
+Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $G'$ formed by contracting $\set{y,z}$ and removing $x$ has positive surplus with respect to $A \setminus \set{x}$.
 \end{lem}
 \begin{proof}
+We may assume $|A| \ge 2$ for otherwise the statement is trivially true. We show that there is $x \in A$ such that for any different $y,z \in N(x)$, $G$ contains a $2$-forest $F$ with respect to $A$ containing the edges $xy$ and $xz$.  Consider the graph $F'$ formed from $F$ by contracting $\set{y,z}$ and removing $x$.  Then $F'$ is a $2$-forest with respect to $A$ since the degree of vertices in $A$ don't change and $x$ is a separating vertex in $F$.  Now $G'$ contains $F'$ and hence has positive surplus, so we are done.
 
+By Lemma \ref{PositiveSurplusIsTwoForest}, $G$ contains a $2$-forest with respect to $A$.  So, we can choose a maximal subgraph $H$ of $G$ for which there is $x \in A$ such that for any different $y,z \in N_H(x)$, $H$ contains a $2$-forest with respect to $A$ containing the edges $xy$ and $xz$.  If $H=G$ we are done, so suppose $H \ne G$.  Then we have $y \in N_G(x)$ and $z \in N_G(x) \setminus N_H(x)$ such that $H$ does not contain a $2$-forest with respect to $A$ containing the edges $xy$ and $xz$.
 \end{proof}
 
 Note that following lemma is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ is connected separately.
@@ -151,6 +157,8 @@ Suppose the lemma is false and choose a counterexample $G$ and nonempty $X \subs
 Suppose to the contrary that we have a component $C$ of $G[X]$ and $x \in V(C)$ a non-separating vertex that has neighbors in at most one of the $M_i$.  Let $X' = X \setminus \set{x}$.  The hypotheses of the lemma are satisfied with $X'$ in place of $X$ and $M_i' = G[V(M_i) \cup \set{x}]$ in place of $M_i$ since $\B$ remains the same and hence still has positive surplus. Since $\B$ has positive surplus, we must have $|C| \ge 2$ and hence $x$ has at most $k-2$ neighbors in $G-X$, so we can greedily complete the given $(k-1)$-coloring of $G-X$ to $G-X'$. Applying minimality of $|X|$ to this coloring of $G-X'$, we get permutations that allow us to extend to a $(k - 1)$-coloring of $G$.  But these same permutations also allow us to extend the given $(k-1)$-coloring of $G-X$ to $G$, a contradiction.
 
 \claim{2}{There is a component $C$ of $G[X]$ and $i \ne j$ such that some non-separating $x \in V(C)$ has neighbors in $M_i$ and $M_j$ and the bipartite graph formed from $\B$ by contracting $\set{M_i, M_j}$ and removing $C$ has positive surplus.}
+
+By Lemma \ref{BipartiteLemma}, $G[X]$ has a component $C$ such that for any neighbors $M_i, M_j$ of $C$ in $\B$, the bipartite graph formed from $\B$ by contracting $\set{M_i, M_j}$ and removing $C$ has positive surplus.  Let $x$ be a non-separating vertex in $C$.  By Claim 1, there are different $M_i, M_j$ in which $x$ has neighbors, so $C$ with $x$ and $i,j$ works. 
 
 \claim{3}{The lemma is true.}
 Let $C, x,i,j$ be as in Claim 2, by symmetry we may assume $i=1$ and $j=2$. Let $G' = G - V(C)$ and $X' = X \setminus V(C)$.  Then $G' - X'$ is the disjoint union of the $\ell$ graphs $M_1 \cup M_2, M_3, \ldots, M_{\ell + 1}$.  Pick $y_1 \in N(x) \cap V(M_1)$ and $y_2 \in N(x) \cap V(M_2)$. We permute the colors in the coloring of $f_2$ so that $y_1$ and $y_2$ get the same color.  This will save one color for $x$ so that we can greedily color $C$, ending at $x$. Formally, let $\tau$ be a permutation of $\irange{k-1}$ such that $(\tau \circ f_2)(y_2) = f_1(y_1)$ and let $f_* = f_1 \cup (\tau \circ f_2)$.   

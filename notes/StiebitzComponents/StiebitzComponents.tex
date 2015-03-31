@@ -121,22 +121,31 @@ let $\L(G)$ be the subgraph of $G$ induced on the vertices of degree $\delta(G)$
 If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ has at most as many components as $\L(G)$.
 \end{Theorem}
 
-In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemm \ref{MainLemma} using $X = V(\L(G))$.  
+In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemma \ref{MainLemma} using $X = V(\L(G))$.  
 
 
-A bipartite graph $G$ with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously. We say that $G$ is \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, a $2$-forest has positive surplus.  We first need a couple lemmas about bipartite graphs with positive surplus.  The following is well-known (see \cite{LovaszPlummer)}.
+A bipartite graph $G$ with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously. We say that $G$ is \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, any $2$-forest has positive surplus.  We first need a few lemmas about bipartite graphs with positive surplus.  It is well-known that the edge-minimal positive surplus bipartite graphs are exactly the $2$-forests (see \cite{LovaszPlummer)}).  More precisely,
 
 \begin{lem}\label{PositiveSurplusIsTwoForest}
 Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.  If $G-e$ does not have positive surplus for each $e \in E(G)$, then $G$ is a $2$-forest with respect to $A$.
 \end{lem}
 
+The next lemma says that a positive surplus bipartite graph always has a special vertex in $A$ such that removing most of its incident edges leaves a positive surplus graph.
+
+\begin{lem}\label{MagicVertexExists}
+Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that removing any set of at most $d_G(x) - 2$ edges incident to $x$ leaves a bipartite graph having positive surplus with respect to $A$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+This same special vertex in $A$ has another property that we need in the induction step for Lemma \ref{WithPositiveSurplus}.
+
 \begin{lem}\label{BipartiteLemma}
 Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $G'$ formed by contracting $\set{y,z}$ and removing $x$ has positive surplus with respect to $A \setminus \set{x}$.
 \end{lem}
 \begin{proof}
-We may assume $|A| \ge 2$ for otherwise the statement is trivially true. We show that there is $x \in A$ such that for any different $y,z \in N(x)$, $G$ contains a $2$-forest $F$ with respect to $A$ containing the edges $xy$ and $xz$.  Consider the graph $F'$ formed from $F$ by contracting $\set{y,z}$ and removing $x$.  Then $F'$ is a $2$-forest with respect to $A$ since the degree of vertices in $A$ don't change and $x$ is a separating vertex in $F$.  Now $G'$ contains $F'$ and hence has positive surplus, so we are done.
-
-By Lemma \ref{PositiveSurplusIsTwoForest}, $G$ contains a $2$-forest with respect to $A$.  So, we can choose a maximal subgraph $H$ of $G$ for which there is $x \in A$ such that for any different $y,z \in N_H(x)$, $H$ contains a $2$-forest with respect to $A$ containing the edges $xy$ and $xz$.  If $H=G$ we are done, so suppose $H \ne G$.  Then we have $y \in N_G(x)$ and $z \in N_G(x) \setminus N_H(x)$ such that $H$ does not contain a $2$-forest with respect to $A$ containing the edges $xy$ and $xz$.
+By Lemma \ref{MagicVertexExists}, there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $H$ formed from $G$ by removing all edges incident to $x$ except $xz,yz$ has positive surplus with respect to $A$. But then, by Lemma \ref{PositiveSurplusIsTwoForest}, $H$ contains a $2$-forest $F$ with respect to $A$ containing the edges $xy$ and $xz$.
+Consider the graph $F'$ formed from $F$ by contracting $\set{y,z}$ and removing $x$.  Then $F'$ is a $2$-forest with respect to $A$ since the degree of vertices in $A$ don't change and $x$ is a separating vertex in $F$.  Now $G'$ contains $F'$ and hence has positive surplus, so we are done.
 \end{proof}
 
 Note that following lemma is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ is connected separately.

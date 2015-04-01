@@ -121,34 +121,14 @@ let $\L(G)$ be the subgraph of $G$ induced on the vertices of degree $\delta(G)$
 If $G$ is a color-critical graph with $\delta(G) = \chi(G) - 1$, then $\H(G)$ has at most as many components as $\L(G)$.
 \end{Theorem}
 
-In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemma \ref{MainLemma} using $X = V(\L(G))$.  
+In fact, Stiebitz proved a stronger statement.  Theorem follows immediately from Lemma \ref{MainLemma} using $X = V(\L(G))$.  The main induction step in the proof requires a non-trivial fact about bipartite graphs, we save the proof of this fact until later but state it here.  A bipartite graph $G$ with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $\emptyset \ne S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously. 
 
-
-A bipartite graph $G$ with parts $A$ and $B$ has \emph{positive surplus} with respect to $A$ if $|N(S)| > |S|$ for all $S \subseteq A$.  Note that $A$ could be empty here, in which case the graph has positive surplus vacuously. We say that $G$ is \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, any $2$-forest has positive surplus.  We first need a few lemmas about bipartite graphs with positive surplus.  It is well-known that the edge-minimal positive surplus bipartite graphs are exactly the $2$-forests (see \cite{LovaszPlummer)}).  More precisely,
-
-\begin{lem}\label{PositiveSurplusIsTwoForest}
-Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.  If $G-e$ does not have positive surplus for each $e \in E(G)$, then $G$ is a $2$-forest with respect to $A$.
-\end{lem}
-
-The next lemma says that a positive surplus bipartite graph always has a special vertex in $A$ such that removing most of its incident edges leaves a positive surplus graph.
-
-\begin{lem}\label{MagicVertexExists}
-Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that removing any set of at most $d_G(x) - 2$ edges incident to $x$ leaves a bipartite graph having positive surplus with respect to $A$.
-\end{lem}
-\begin{proof}
-\end{proof}
-
-This same special vertex in $A$ has another property that we need in the induction step for Lemma \ref{WithPositiveSurplus}.
-
-\begin{lem}\label{BipartiteLemma}
+\begin{lem}[Stiebitz]
 Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $G'$ formed by contracting $\set{y,z}$ and removing $x$ has positive surplus with respect to $A \setminus \set{x}$.
+\label{BipartiteLemma}
 \end{lem}
-\begin{proof}
-By Lemma \ref{MagicVertexExists}, there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $H$ formed from $G$ by removing all edges incident to $x$ except $xz,yz$ has positive surplus with respect to $A$. But then, by Lemma \ref{PositiveSurplusIsTwoForest}, $H$ contains a $2$-forest $F$ with respect to $A$ containing the edges $xy$ and $xz$.
-Consider the graph $F'$ formed from $F$ by contracting $\set{y,z}$ and removing $x$.  Then $F'$ is a $2$-forest with respect to $A$ since the degree of vertices in $A$ don't change and $x$ is a separating vertex in $F$.  Now $G'$ contains $F'$ and hence has positive surplus, so we are done.
-\end{proof}
 
-Note that following lemma is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ is connected separately.
+Lemma \ref{BipartiteLemma} is used in Claim 2 of the proof of Lemma \ref{WithPositiveSurplus}. Note that following Lemma \ref{WithPositiveSurplus} is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ has one component separately.
 \begin{lem}[Stiebitz]
 Let $G$ be a graph and $X \subseteq V(G)$ such that
 \begin{itemize}
@@ -191,6 +171,32 @@ Then $G$ is $(k-1)$-colorable.
 \begin{proof}
 Suppose not and choose a counterexample minimizing $|X|$.  If $|X| = 0$, the lemma is trivially true, so we must have $|X| \ge 1$.
 Let $\B$ be the bipartite graph formed by contracting each component of $G-X$ and each component of $G[X]$.  If $\B$ has positive surplus with respect to the $G[X]$ side, then applying Lemma \ref{WithPositiveSurplus} to any $(k-1)$-coloring of $G-X$ gives a $(k-1)$-coloring of $G$.  So, we may assume that $\B$ does not have positive surplus.  That is, for some $t$, $G[X]$ has a set of $t$ components $\set{C_1, \ldots, C_t}$ which together have neighbors in at most $t$ components of $G-X$.  But then the other $\ell - t$ components of $G[X]$ together have neighbors in at least $\ell + 1 - t$ components of $G-X$ since $G$ is connected.  Let $X' = X \setminus \bigcup_{i \in \irange{t}} V(C_i)$.  Then the hypotheses of the lemma are satisfied with $X'$ in place of $X$, so minimality of $|X|$ shows that $G$ is $(k-1)$-colorable, a contradiction.
+\end{proof}
+
+\section*{Bipartite graphs}
+A bipartite graph $G$ with parts $A$ and $B$ is a \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, any $2$-forest has positive surplus.  We first need a few lemmas about bipartite graphs with positive surplus.  It is well-known that the edge-minimal positive surplus bipartite graphs are exactly the $2$-forests (see \cite{LovaszPlummer)}).  More precisely,
+
+\begin{lem}\label{PositiveSurplusIsTwoForest}
+Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.  If $G-e$ does not have positive surplus for each $e \in E(G)$, then $G$ is a $2$-forest with respect to $A$.
+\end{lem}
+
+The next lemma says that a positive surplus bipartite graph always has a special vertex in $A$ such that removing most of its incident edges leaves a positive surplus graph.
+
+\begin{lem}[Stiebitz]
+Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.   Then there is $x \in A$ such that removing any set of $d_G(x) - 2$ edges incident to $x$ leaves a bipartite graph having positive surplus with respect to $A$.
+\label{MagicVertexExists}
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $||G||$.  First, suppose there is $\emptyset \ne A' \subsetneq A$ such that $|N(A')| \le |A'| + 1$.  Let $G' = G[A' \cup N(A')]$.  Then $G'$ has positive surplus with respect to $A'$ and hence by minimality of $||G||$, there is $x \in A'$ such that removing any set of $d_G(x) - 2$ edges incident to $x$ leaves a bipartite graph having positive surplus with respect to $A'$.  If $W \subseteq A \setminus A'$, then $|W| + |A'| + 1 \le |N_G(W) \cup N_G(A')| \le |N_G(W) \setminus N_G(A')| + |N_G(A')| \le |N_G(W) \setminus N_G(A')| + |A'| + 1$ since $G$ has positive surplus.  Therefore $|N_G(W) \setminus N_G(A')| \ge |W|$ for each $W \subseteq A \setminus A'$.  Since $G$ is a counterexample, we have $y,z \in N(x)$ such that the graph $H$ made by removing all edges incident to $x$ except $xy,xz$ does not have positive surplus with respect to $A$.  That is, we have $S \subseteq A$ such that $|N_H(S)| \le |S|$.  Let $S' = S \cap A'$ and $W = S \setminus S'$.  Since $H[A' \cup N(A')]$ has positive surplus with respect to $A'$, we have $|N_H(S')| \ge |S'| + 1$.  But also, $|N_H(W) \setminus N_H(A')| = |N_G(W) \setminus N_G(A')| \ge |W|$, so $|N_H(S)| = |N_H(S')| + |N_H(W) \setminus N_H(A')| \ge |S'| + 1 + |W| = |S| + 1$, a contradiction.
+
+So, for every $\emptyset \ne A' \subsetneq A$ we must have $|N(A')| \ge |A'| + 2$.  Pick $x \in A$ arbitrarily. Since $G$ is a counterexample, we have $y,z \in N(x)$ such that the graph $H$ made by removing all edges incident to $x$ except $xy, xz$ does not have positive surplus with respect to $A$.  Since $d_G(x) \ge 3$, there is $w \in N_G(x) \setminus \set{y,z}$.  Suppose the bipartite graph $G - xw$ has positive surplus with respect to $A$.  Then, by minimality of $||G||$, there is $u \in A$ such that removing any set of $d_{G-xw}(u) - 2$ edges incident to $u$ from $G-xw$ leaves a bipartite graph having positive surplus with respect to $A$.  If $u \ne x$, then $d_{G-xw}(u) - 2 = d_G(u) - 2$, so $u$ works as the special vertex for $G$, a contradiction.  So, $u=x$ and thus $H$ has positive surplus, a contradiction.
+
+Therefore, there is $\emptyset \ne S \subseteq A$ such that $|N_{G-xw}(S)| \le |S|$.  But $|N_{G-xw}(S)| \ge |N_G(S)| - 1$, so if $S \ne A$, then $|N_{G-xw}(S)| \ge |S| + 2 - 1$.  So, we must have $S=A$ and $|N(A)| = |A| + 1$ as well as $|N_{G-xw}(A)| = |N_G(A)| - 1$ and hence $d_G(w) = 1$.  This was for arbitrary $x \in A$, so we conclude that every $x \in A$ has a neighbor in $B$ of degree $1$ and hence all but at most one vertex in $B$ has degree $1$ in $G$.  But then every vertex in $A$ has degree $2$ in $G$ and hence will work for the special vertex, giving the final contradiction.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{BipartiteLemma}]
+By Lemma \ref{MagicVertexExists}, there is $x \in A$ such that for any different $y,z \in N(x)$, the bipartite graph $H$ formed from $G$ by removing all edges incident to $x$ except $xz,yz$ has positive surplus with respect to $A$. But then, by Lemma \ref{PositiveSurplusIsTwoForest}, $H$ contains a $2$-forest $F$ with respect to $A$ containing the edges $xy$ and $xz$.
+Consider the graph $F'$ formed from $F$ by contracting $\set{y,z}$ and removing $x$.  Then $F'$ is a $2$-forest with respect to $A$ since the degree of vertices in $A$ don't change and $x$ is a separating vertex in $F$.  Now $G'$ contains $F'$ and hence has positive surplus, so we are done.
 \end{proof}
 
 \bibliographystyle{amsplain}

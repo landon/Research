@@ -128,7 +128,7 @@ Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ 
 \label{BipartiteLemma}
 \end{lem}
 
-Lemma \ref{BipartiteLemma} is used in Claim 2 of the proof of Lemma \ref{WithPositiveSurplus}. Note that following Lemma \ref{WithPositiveSurplus} is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ has one component separately.
+Lemma \ref{BipartiteLemma} is used in Claim 2 of the proof of Lemma \ref{WithPositiveSurplus}. Note that Lemma \ref{WithPositiveSurplus} is trivially true in the $X = \emptyset$ case, we allow this to avoid having to handle a base case where $G[X]$ has one component separately.
 \begin{lem}[Stiebitz]
 Let $G$ be a graph and $X \subseteq V(G)$ such that
 \begin{itemize}
@@ -174,7 +174,7 @@ Let $\B$ be the bipartite graph formed by contracting each component of $G-X$ an
 \end{proof}
 
 \section*{Bipartite graphs}
-A bipartite graph $G$ with parts $A$ and $B$ is a \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, any $2$-forest has positive surplus.  We first need a few lemmas about bipartite graphs with positive surplus.  It is well-known that the edge-minimal positive surplus bipartite graphs are exactly the $2$-forests (see \cite{LovaszPlummer)}).  More precisely,
+A bipartite graph $G$ with parts $A$ and $B$ is a \emph{2-forest} with respect to $A$ if $G$ is a forest where each vertex in $A$ has degree $2$ in $G$.  Plainly, any $2$-forest has positive surplus.  We first need a few lemmas about bipartite graphs with positive surplus.  It is well-known that the edge-minimal positive surplus bipartite graphs are exactly the $2$-forests (see \cite{laszlo2009matching}).  More precisely,
 
 \begin{lem}\label{PositiveSurplusIsTwoForest}
 Let $G$ be a bipartite graph with parts $A \ne \emptyset$ and $B$ such that $G$ has positive surplus with respect to $A$.  If $G-e$ does not have positive surplus for each $e \in E(G)$, then $G$ is a $2$-forest with respect to $A$.

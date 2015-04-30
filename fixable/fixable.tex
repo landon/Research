@@ -115,13 +115,13 @@ Kempe chains give a powerful technique for converting a partial $k$-edge-colorin
 Let $G$ be a multigraph, $L$ a list assignment on $V(G)$ and $P$ an arbitrary $L$-pot.  Throughout this section, $G$, $L$ and $P$ will refer to these objects.
 
 \subsection{Fixable graphs}
-For different colors $a,b \in P$, let $S_{a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
+For different colors $a,b \in P$, let $S_{L,a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{L,a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
 
 \begin{defn}
 $G$ is \emph{$(L, P)$-fixable} if either
 \begin{enumerate}
 \item[(1)] $G$ has an $L$-edge-coloring; or
-\item[(2)] there are different $a,b \in P$ such that for every partition $X_1, \ldots, X_t$ of $S_{a,b}$ into sets of size at most two, 
+\item[(2)] there are different $a,b \in P$ such that for every partition $X_1, \ldots, X_t$ of $S_{L,a,b}$ into sets of size at most two, 
       there is $J \subseteq \irange{t}$ so that $G$ is $(L', P)$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} X_i$.
 \end{enumerate}
 \end{defn}
@@ -135,6 +135,25 @@ If a multigraph $M$ has a partial $k$-edge-coloring $\pi$ such that $M_\pi$ is $
 Choose a partial $k$-edge-coloring $\pi$ of $M$ such that $M_\pi$ is $(L_\pi, \irange{k})$-fixable minimizing $h_{M_\pi}\parens{L_\pi, \irange{k}}$. If $h_{M_\pi}\parens{L_\pi, \irange{k}} = 0$, then (1) must hold for $M_\pi$ and $L_\pi$; that is, $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(x) \in L_\pi(x) \cap L_\pi(y)$ for all $xy \in E(M_\pi)$.  But that means that $\pi \cup \zeta$ is the desired $k$-edge-coloring of $M$.  
 
 So, we may assume that $h_{M_\pi}\parens{L_\pi, \irange{k}} > 0$.  Let $a,b \in \irange{k}$ be a choice in (2) that leads to a tree of height $h_{M_\pi}\parens{L_\pi, \irange{k}}$.  Let $H$ be the subgraph of $M$ induced on all edges $e$ with $\pi(e) \in \set{a,b}$.  Let $S$ be the vertices in $M_\pi$ with degree exactly one in $H$.  Consider the component $C_x$ in $H$ for each $x \in S$.  We have $\card{V(C_x) \cap S} \in \set{1,2}$ and hence the components of $H$ give a partition $X_1, \ldots, X_t$ of $S$ into sets of size at most two.  Moreover, exchanging colors $a$ and $b$ on $C_x$ has the effect of swapping $a$ and $b$ in $L_\pi(v)$ for each $v \in V(C_x) \cap S$.  Hence we can achieve the needing swapping of colors in the lists in (2) by exchanging colors on the components of $H$.  By (2) there is $J \subseteq \irange{t}$ so that $M_\pi$ is $(L', \irange{k})$-fixable where $L'$ is formed from $L_\pi$ by swapping $a$ and $b$ in $L_\pi(v)$ for every $v \in \bigcup_{i \in J} X_i$.  Choose such a $J$ that leads to a tree of height $h_{M_\pi}\parens{L_\pi, \irange{k}}$.  Let $\pi'$ be the partial $k$-edge-coloring of $M$ created from $\pi$ by performing the color exchanges to create $L'$ from $L_\pi$.  Then $M_{\pi'}$ is $(L_{\pi'}, \irange{k})$-fixable and $h_{M_{\pi'}}\parens{L_{\pi'}, \irange{k}} < h_{M_\pi}\parens{L_\pi, \irange{k}}$, contradicting the minimality of $h_{M_\pi}\parens{L_\pi, \irange{k}}$.
+\end{proof}
+
+The given definition of $L$-fixable was originally motivated as a generalization of the Fixer-Breaker game in \cite{HallGame} from complete graphs to arbitrary graphs.  
+The direct generalization of that game gives us less power because it does not take the fact that two-colored paths cannot cross into account.  Interpreted in the Fixer-Breaker game, the choice of partition
+in (2) is forcing Breaker to choose two-colored paths in a way that is consistent with being embedded in \emph{some} graph.  For stars the two games have identical winning conditions because the obvious necessary condition is sufficient, but in general the extra power does make more graphs fixable.  However, it is more natural to phrase some proofs in terms of the weaker game, so we define that here.
+
+\begin{defn}
+$G$ is \emph{weakly $(L, P)$-fixable} if either
+\begin{enumerate}
+\item[(1)] $G$ has an $L$-edge-coloring; or
+\item[(2)] there are different $a,b \in P$ and $v \in S_{L,a,b}$ such that for every $X \subseteq S_{L,a,b}$ with $|X| \le 2$ and $v \in X$, it holds that $G$ is $(L', P)$-fixable where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in X$.
+\end{enumerate}
+\end{defn}
+
+\begin{lem}\label{weaklyfixable}
+If $G$ is weakly $(L, P)$-fixable, then $G$ is $(L, P)$-fixable.
+\end{lem}
+\begin{proof}
+Clearly if (1) holds we are done.  So, assume we have different $a,b \in P$ and $v \in S_{L,a,b}$ as in (2). Given a partition $X_1, \ldots, X_t$ of $S_{L,a,b}$ into sets of size at most two, let $i$ be the index with $v \in X_i$.  Then $J = \set{i}$ is the desired subset of $\irange{t}$.
 \end{proof}
 
 \subsection{A necessary condition}
@@ -164,10 +183,10 @@ If $G$ is $(L, P)$-fixable, then $(G, L)$ is superabundant.
 \begin{proof}
 Suppose to the contrary that $G$ is $(L, P)$-fixable and there is $H \subseteq G$ such that $(H, L)$ is not abundant. We show that for all different $a,b \in P$ there is a partition $X_1, \ldots, X_t$ of $S_{a,b}$ into sets of size at most two, such that for all $J \subseteq \irange{t}$, the pair $(H,L')$ is not abundant where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} X_i$.  Since $G$ can never be edge-colored from a list assignment that is not superabundant, this contradicts the $(L,P)$-fixability of $G$.
 
-Pick different $a,b \in P$.  Let $S = S_{a,b} \cap V(H)$ and let $S_a$ be the $v \in S$ with $a \in L(v)$.  Put $S_b = S\setminus S_a$.  Swapping $a$ and $b$ will only effect the terms $\floor{\frac{\card{S_a}}{2}}$ and $\floor{\frac{\card{S_b}}{2}}$ in $\psi_L(H)$.  So, if $\psi_L(H)$ is increased by the swapping, it must be that both $|S_a|$ and $|S_b|$ are odd and after swapping they are both even.  Say $S_a = \set{a_1, \ldots,a_p}$ and $S_b = \set{b_1, \ldots,b_q}$.  By symmetry, we may assume $p \le q$.  For $i \in \irange{p}$, let $X_i = \set{a_i, b_i}$.  Since both $p$ and $q$ are odd, $q-p$ is even, so we get a partition by, for each $j \in \irange{\frac{q-p}{2}}$, letting $X_{p + j} = \set{b_{p + 2j - 1}, b_{p + 2j}}$.  For any $i \in \irange{p}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_i$ maintains $|S_a|$ and $|S_b|$.  For any $j \in \irange{\frac{q-p}{2}}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_{p+j}$ maintains the parity of $|S_a|$ and $|S_b|$.  So no choice of $J$ can increase $\psi_L(H)$ and hence $(H,L')$ is never abundant.
+Pick different $a,b \in P$.  Let $S = S_{L,a,b} \cap V(H)$ and let $S_a$ be the $v \in S$ with $a \in L(v)$.  Put $S_b = S\setminus S_a$.  Swapping $a$ and $b$ will only effect the terms $\floor{\frac{\card{S_a}}{2}}$ and $\floor{\frac{\card{S_b}}{2}}$ in $\psi_L(H)$.  So, if $\psi_L(H)$ is increased by the swapping, it must be that both $|S_a|$ and $|S_b|$ are odd and after swapping they are both even.  Say $S_a = \set{a_1, \ldots,a_p}$ and $S_b = \set{b_1, \ldots,b_q}$.  By symmetry, we may assume $p \le q$.  For $i \in \irange{p}$, let $X_i = \set{a_i, b_i}$.  Since both $p$ and $q$ are odd, $q-p$ is even, so we get a partition by, for each $j \in \irange{\frac{q-p}{2}}$, letting $X_{p + j} = \set{b_{p + 2j - 1}, b_{p + 2j}}$.  For any $i \in \irange{p}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_i$ maintains $|S_a|$ and $|S_b|$.  For any $j \in \irange{\frac{q-p}{2}}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_{p+j}$ maintains the parity of $|S_a|$ and $|S_b|$.  So no choice of $J$ can increase $\psi_L(H)$ and hence $(H,L')$ is never abundant.
 \end{proof}
 
-Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger requirement that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
+Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger condition that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
 For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \pot(L)} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
 
 The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
@@ -189,6 +208,14 @@ Suppose $G_i$ is $(L_i, P_i)$-fixable for $i \in \irange{2}$.  If $P_1 \cap P_2 
 \begin{lem}
 Suppose $G_1$ is $(L_1, P_1)$-fixable.  If $G_2$ has an $L_2$-edge-coloring $\pi$ such that $L_1(v) \cap \setbs{\pi(vx)}{vx \in E(G_2)} = \emptyset$ for all $v \in V(G_1)$, then $G_1 \cup G_2$ is $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable.
 \end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample minimizing $\size{G_2}$ and subject to that minimizing $h_{G_1}(L_1, P_1)$.  Suppose $\size{G_2} > 1$. Pick $xy \in E(G_2)$.  Let $G_2' = G_2 - xy$ and define $L_2'$ by $L_2'(v) = L_2(v)$ for $v \not \in \set{x,y}$ and $L_2'(v) = L_2(v) \setminus \set{\pi(xy)}$ for $v \in \set{x,y}$.  Applying minimality of $\size{G_2}$ we conclude that $G_1 \cup G_2'$ is $(L_1 \cup L_2', P_1 \cup \pot(L_2'))$-fixable.  Now let $G_2'' = G_2[x,y]$ and $L_2''(x) = L_2''(y) = \set{\pi(xy)}$.  Since $\size{G_2} > 1$, we can apply minimality of $\size{G_2}$ again to conclude that $G_1 \cup G_2' \cup G_2''$ is $(L_1 \cup L_2' \cup L_2'', P_1 \cup \pot(L_2' \cup L_2''))$-fixable, but $G_1 \cup G_2' \cup G_2'' = G_1 \cup G_2$ and $L_1 \cup L_2' \cup L_2'' = L_1 \cup L_2$, so this is a contradiction.
+
+Hence, we must have $\size{G_2} = 1$. Let $xy$ be $G_2$'s only edge and put $\tau = \pi(xy)$. If $h_{G_1}(L_1, P_1) = 0$, then $G_1$ has an $L_1$-edge-coloring and hence $G_1 \cup G_2$ has an $(L_1 \cup L_2)$-edge-coloring, so we must have $h_{G_1}(L_1, P_1) > 0$.  By the definition of $(L_1, P_1)$-fixable, we have $a,b \in P_1$ such that for every partition $X_1, \ldots, X_t$ of $S_{L_1,a,b}$ into sets of size at most two, 
+there is $J \subseteq \irange{t}$ so that $h_{G_1}(L', P_1) < h_{G_1}(L_1, P_1)$ where $L'$ is formed from $L_1$ by swapping $a$ and $b$ in $L_1(v)$ for every $v \in \bigcup_{i \in J} X_i$.
+
+We will prove that $G_1 \cup G_2$ is weakly $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable, then the lemma will follow by Lemma \ref{weaklyfixable}.
+\end{proof}
 
 \subsection{Fixability of stars}
 When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem.  In particular, Theorem \ref{FixabilityOfStars} holds for multistars as well; the proof for multistars is nearly identical, but notationally cumbersome.

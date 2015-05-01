@@ -211,10 +211,15 @@ Suppose $G_1$ is $(L_1, P_1)$-fixable.  If $G_2$ has an $L_2$-edge-coloring $\pi
 \begin{proof}
 Suppose the lemma is false and choose a counterexample minimizing $\size{G_2}$ and subject to that minimizing $h_{G_1}(L_1, P_1)$.  Suppose $\size{G_2} > 1$. Pick $xy \in E(G_2)$.  Let $G_2' = G_2 - xy$ and define $L_2'$ by $L_2'(v) = L_2(v)$ for $v \not \in \set{x,y}$ and $L_2'(v) = L_2(v) \setminus \set{\pi(xy)}$ for $v \in \set{x,y}$.  Applying minimality of $\size{G_2}$ we conclude that $G_1 \cup G_2'$ is $(L_1 \cup L_2', P_1 \cup \pot(L_2'))$-fixable.  Now let $G_2'' = G_2[x,y]$ and $L_2''(x) = L_2''(y) = \set{\pi(xy)}$.  Since $\size{G_2} > 1$, we can apply minimality of $\size{G_2}$ again to conclude that $G_1 \cup G_2' \cup G_2''$ is $(L_1 \cup L_2' \cup L_2'', P_1 \cup \pot(L_2' \cup L_2''))$-fixable, but $G_1 \cup G_2' \cup G_2'' = G_1 \cup G_2$ and $L_1 \cup L_2' \cup L_2'' = L_1 \cup L_2$, so this is a contradiction.
 
-Hence, we must have $\size{G_2} = 1$. Let $xy$ be $G_2$'s only edge and put $\tau = \pi(xy)$. If $h_{G_1}(L_1, P_1) = 0$, then $G_1$ has an $L_1$-edge-coloring and hence $G_1 \cup G_2$ has an $(L_1 \cup L_2)$-edge-coloring, so we must have $h_{G_1}(L_1, P_1) > 0$.  By the definition of $(L_1, P_1)$-fixable, we have $a,b \in P_1$ such that for every partition $X_1, \ldots, X_t$ of $S_{L_1,a,b}$ into sets of size at most two, 
+Hence, we must have $\size{G_2} = 1$. Let $xy$ be $G_2$'s only edge. If $h_{G_1}(L_1, P_1) = 0$, then $G_1$ has an $L_1$-edge-coloring and hence $G_1 \cup G_2$ has an $(L_1 \cup L_2)$-edge-coloring, so we must have $h_{G_1}(L_1, P_1) > 0$.  By the definition of $(L_1, P_1)$-fixable, we have $a,b \in P_1$ such that for every partition $X_1, \ldots, X_t$ of $S_{L_1,a,b}$ into sets of size at most two, 
 there is $J \subseteq \irange{t}$ so that $h_{G_1}(L', P_1) < h_{G_1}(L_1, P_1)$ where $L'$ is formed from $L_1$ by swapping $a$ and $b$ in $L_1(v)$ for every $v \in \bigcup_{i \in J} X_i$.
 
-We will prove that $G_1 \cup G_2$ is weakly $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable, then the lemma will follow by Lemma \ref{weaklyfixable}.
+We will prove that $G_1 \cup G_2$ is weakly $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable, then the lemma will follow by Lemma \ref{weaklyfixable}.  
+
+\noindent\claim{1}{$\pi(xy) \in \set{a,b}$, by symmetry we may assume $b = \pi(xy)$.}
+
+Suppose not. Pick $v \in S_{L_1,a,b}$ arbitrarily.
+
 \end{proof}
 
 \subsection{Fixability of stars}

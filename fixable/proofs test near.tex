@@ -1,0 +1,2288 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{observation}{Observation}
+\newtheorem*{mainconj}{Main Conjecture}
+\newtheorem*{mainthm}{Main Theorem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\pot}{\operatorname{pot}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+\def\K{\fancy{K}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+
+\newcommand{\wild}{\raisebox{0.75\depth}{$\bigstar$}}
+
+\begin{document}
+\title{fixable proofs}
+\maketitle
+
+\section{Proofs}
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = unlabeledStyle, x = 0.7, y = 0.7, L = \tiny {}]{v0}
+	\Vertex[style = unlabeledStyle, x = 0.8, y = 0.7, L = \tiny {}]{v1}
+	\Vertex[style = labeledStyle, x = 0.9, y = 0.7, L = \tiny {$1$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.8, y = 0.6, L = \tiny {$2$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.7, y = 0.6, L = \tiny {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.9, y = 0.6, L = \tiny {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.3, y = 0.7, L = \tiny {$5$}]{v6}
+	\Vertex[style = unlabeledStyle, x = 0.4, y = 0.7, L = \tiny {}]{v7}
+	\Vertex[style = unlabeledStyle, x = 0.5, y = 0.7, L = \tiny {}]{v8}
+	\Vertex[style = labeledStyle, x = 0.3, y = 0.6, L = \tiny {$6$}]{v9}
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.6, L = \tiny {$7$}]{v10}
+	\Vertex[style = labeledStyle, x = 0.4, y = 0.6, L = \tiny {$8$}]{v11}
+	\Vertex[style = labeledStyle, x = 0.6, y = 0.8, L = \tiny {$9$}]{v12}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v8)
+	\end{tikzpicture}
+	
+	\caption{Solid vertices have lists of size 3 and the labeled vertices have lists of size 2.}\label{fig:a05ccc94-5376-478a-90f7-871009c40003}
+\end{figure}
+\begin{lem}
+	The graph in Figure \ref{fig:a05ccc94-5376-478a-90f7-871009c40003} is reducible.
+\end{lem}
+\begin{proof}Let $X = \{0,1\}$, $Y = \{0,2\}$ and $Z = \{1,2\}$. Then with the vertex ordering in Figure \ref{fig:a05ccc94-5376-478a-90f7-871009c40003}, a string such as YXZYXYZYY, 
+	represents a possible list assignment on $V(H)$ arising from a $3$-edge-coloring of $G-E(H)$.
+	By an $X$-Kempe change, we mean flipping colors $0$ and $1$ on a two-colored path in $G-E(H)$.  We call such a path an $X$-path. 
+	Any endpoint of an $X$-path in $H$ must end at a $Y$ or $Z$ vertex.  The meanings of $Y$-Kempe change, $Z$-Kempe change, $Y$-path and $Z$-path are analogous.
+	Note that if there are an odd number of $Y$'s and $Z$'s, then at least one $X$-path has only one endpoint in $H$.
+	We use shorthand notation like $\K_{X, 2}(YXZYXYZYY,5,6) \Rightarrow XYZYZYZYX,YYZYYZXXX$ (Case 1).
+	This means the $X$-Kempe change on YXZYXYZYY starting at the second vertex and ending at the fifth and sixth result in boards XYZYZYZYX and YYZYYZXXX respectively and these are handled by Case 1.
+	The $\infty$ symbol means starting (or ending) outside $H$.
+	
+	We need to handle all boards up to permutations of $\{X,Y,Z\}$, so it will suffice to handle all boards of the form $\wild \wild \wild \wild \wild \wild \wild YZ$, $\wild \wild \wild \wild \wild \wild YZZ$, $\wild \wild \wild \wild \wild YZZZ$, $\wild \wild \wild \wild YZZZZ$, $\wild \wild \wild YZZZZZ$, $\wild \wild YZZZZZZ$, $\wild YZZZZZZZ$, $YZZZZZZZZ$ or $ZZZZZZZZZ$.
+	
+	
+	\bigskip
+	\case{1}{$B$ is one of $\wild \wild Y\wild \wild YZZZ$, $\wild \wild X\wild \wild YZZZ$, $\wild ZX\wild \wild \wild YZZ$, $\wild YX\wild \wild \wild YZZ$, $\wild \wild Y\wild ZZ\wild YZ$, $\wild \wild X\wild ZZ\wild YZ$, $\wild \wild Y\wild XX\wild YZ$, $\wild \wild X\wild XX\wild YZ$, $\wild ZY\wild \wild \wild XYZ$, $\wild XY\wild \wild \wild XYZ$, $\wild \wild Y\wild YZYZZ$, $\wild \wild Y\wild XZYZZ$, $\wild ZZY\wild \wild YZZ$, $\wild ZZX\wild \wild YZZ$, $\wild \wild Y\wild YYYZZ$, $\wild \wild Y\wild XXYZZ$, $\wild \wild Y\wild ZYZYZ$, $\wild \wild X\wild ZYZYZ$, $\wild \wild Y\wild XYZYZ$, $\wild \wild X\wild XYZYZ$, $\wild \wild X\wild ZYXYZ$, $\wild ZZY\wild \wild YYZ$, $\wild ZZX\wild \wild YYZ$, $\wild ZZY\wild \wild XYZ$, $\wild ZZX\wild \wild XYZ$, $\wild ZY\wild Y\wild YYZ$, $\wild XY\wild Y\wild YYZ$, $\wild \wild X\wild XYXYZ$, $Z\wild ZZ\wild \wild YZZ$, $Z\wild ZZ\wild \wild YYZ$, $Z\wild ZZ\wild \wild XYZ$, $XY\wild X\wild \wild YYZ$, $YX\wild Y\wild \wild YZZ$, $YX\wild X\wild \wild YZZ$, $ZX\wild X\wild \wild YZZ$, $XY\wild Y\wild \wild XYZ$, $XY\wild X\wild \wild XYZ$, $ZY\wild Y\wild \wild XYZ$, $YX\wild Y\wild \wild YYZ$, $XXX\wild \wild \wild XYZ$, $\wild YYZ\wild \wild YZZ$, $\wild YYX\wild \wild YZZ$, $YX\wild Y\wild \wild XYZ$, $ZX\wild Z\wild \wild YZZ$, $ZY\wild Z\wild \wild YYZ$, $ZY\wild Z\wild \wild XYZ$, $XZ\wild X\wild \wild YYZ$, $YZ\wild Y\wild \wild YYZ$, $ZX\wild Z\wild \wild YYZ$, $Y\wild YY\wild \wild YZZ$, $\wild XXZ\wild \wild XYZ$, $XYZY\wild \wild YZZ$, $XYZX\wild \wild YZZ$, $XYZY\wild \wild YYZ$, $XXX\wild Y\wild YYZ$, $\wild \wild YZZZZZZ$, $\wild Z\wild YZZZZZ$, $\wild ZZY\wild YZZZ$, $\wild ZZX\wild YZZZ$, $YXZX\wild \wild YYZ$, $YXZX\wild \wild XYZ$, $Z\wild ZZ\wild YZZZ$, $ZYZY\wild \wild YZZ$, $ZYZY\wild \wild YYZ$, $ZXZX\wild \wild YYZ$, $ZXZX\wild \wild XYZ$, $XZXZ\wild \wild YYZ$, $XYXY\wild \wild YYZ$, $\wild ZY\wild XZYYZ$, $\wild XY\wild XZYYZ$, $\wild ZY\wild ZXYYZ$, $\wild XY\wild ZXYYZ$, $YZXZ\wild \wild YYZ$, $ZYXY\wild \wild YYZ$, $\wild \wild YYZZZZZ$, $\wild \wild XYZZZZZ$, $YYY\wild ZY\wild YZ$, $YYY\wild XY\wild YZ$, $XZYZ\wild \wild YZZ$, $XZYX\wild \wild YZZ$, $XZXZ\wild \wild XYZ$, $XZ\wild X\wild \wild XYZ$, $\wild XX\wild YZYZZ$, $\wild XX\wild XZYZZ$, $YZYZ\wild \wild YZZ$, $\wild XX\wild YYYZZ$, $\wild XX\wild XXYZZ$, $\wild ZX\wild ZYYYZ$, $\wild YX\wild ZYYYZ$, $YZXZ\wild \wild XYZ$, $\wild ZX\wild XYYYZ$, $YZXY\wild \wild XYZ$, $\wild YX\wild XYYYZ$, $ZXXY\wild \wild XYZ$, $XYZY\wild YZZZ$, $XYZX\wild YZZZ$, $XXX\wild \wild ZYYZ$, $XXX\wild ZXYYZ$, $XYYYY\wild YYZ$, $YXZY\wild YZZZ$, $YXZX\wild YZZZ$, $\wild ZZYZZZYZ$, $\wild ZZXZZZYZ$, $\wild ZZYZYZYZ$, $\wild ZZXZYZYZ$, $\wild ZZYXYZYZ$, $\wild ZZXXYZYZ$, $\wild ZZYXXZYZ$, $\wild ZZXXXZYZ$, $YXXZY\wild YYZ$, $ZYZY\wild YZZZ$, $ZXZX\wild YZZZ$, $Z\wild ZZZZZYZ$, $Z\wild ZZZYZYZ$, $Z\wild ZZXYZYZ$, $Z\wild ZZXXZYZ$, $ZYYYY\wild YYZ$, $ZXXYY\wild YYZ$, $YX\wild XZY\wild YZ$, $YX\wild XXY\wild YZ$, $ZX\wild XZY\wild YZ$, $ZX\wild XXY\wild YZ$, $XYYZZY\wild YZ$, $XZYZ\wild YYYZ$, $XYYZXY\wild YZ$, $YZYZ\wild YYYZ$, $ZYYXZY\wild YZ$, $ZYYXXY\wild YZ$, $XYZYZZZZZ$, $XYZYZZZYZ$, $XYZXZZZYZ$, $XYZYZYZYZ$, $XYZXZYZYZ$, $XYZYXYZYZ$, $XYZXXYZYZ$, $XYZYXXZYZ$, $XYZXXXZYZ$, $XYYY\wild ZYYZ$, $XYYYZXYYZ$, $YXZYZZZZZ$, $YXZYZZZYZ$, $YXZXZZZYZ$, $YXZYZYZYZ$, $YXZYXYZYZ$, $YXZYXXZYZ$, $YXZXXXZYZ$, $YXXZXZYYZ$, $YXXZZXYYZ$, $ZZZZZZZZZ$, $ZYZZZZZZZ$, $ZYZYZZZZZ$, $ZYZYZZZYZ$, $ZXZXZZZYZ$, $ZYZYZYZYZ$, $ZYZYXYZYZ$, $ZYZYXXZYZ$, $ZXZXXXZYZ$, $ZYYYXZYYZ$, $ZXXYXZYYZ$, $ZYYYZXYYZ$ or $ZXXYZXYYZ$.}
+	
+	\bigskip
+	
+	In all these cases, $H$ is immediately colorable from the lists.
+	
+	
+	\bigskip
+	\case{2}{$B$ is one of $\wild \wild X\wild YZZYZ$, $XXZZ\wild \wild YYZ$, $XXZX\wild \wild YZZ$, $XXZZ\wild \wild YZZ$, $XYZZ\wild \wild XYZ$, $XXX\wild Z\wild YZZ$, $XZZZ\wild \wild YZZ$, $YYZZ\wild \wild XYZ$, $\wild ZX\wild YYZYZ$, $\wild YX\wild YYZYZ$, $YYZY\wild \wild XYZ$, $\wild YX\wild XZZYZ$, $\wild ZX\wild XZZYZ$, $YXZZ\wild \wild YZZ$, $Y\wild XXY\wild YYZ$, $YZZZ\wild \wild XYZ$, $\wild YX\wild YZZZZ$, $YYYZY\wild \wild YZ$, $\wild ZX\wild YZZZZ$, $Z\wild XXY\wild YYZ$, $XXZ\wild ZZ\wild YZ$, $XXZ\wild XX\wild YZ$, $YX\wild YY\wild ZYZ$, $ZX\wild ZY\wild ZYZ$, $XY\wild XY\wild ZYZ$, $XZ\wild XY\wild ZYZ$, $YYZ\wild ZZ\wild YZ$, $YYZ\wild XX\wild YZ$, $YY\wild \wild YZYYZ$, $YZ\wild YY\wild ZYZ$, $ZY\wild ZY\wild ZYZ$, $YY\wild YY\wild XYZ$, $ZZX\wild Y\wild YYZ$, $X\wild ZZXX\wild YZ$, $X\wild ZZZZ\wild YZ$, $Y\wild ZZXX\wild YZ$, $Y\wild ZZZZ\wild YZ$, $\wild Z\wild YYZZYZ$, $Y\wild XXYY\wild YZ$, $YYY\wild Y\wild YYZ$, $YYX\wild Y\wild YYZ$, $Z\wild XXYY\wild YZ$, $XXZZ\wild YXYZ$, $XXZ\wild XYZYZ$, $XXYXZ\wild YZZ$, $XXYYZ\wild YZZ$, $XXZXZY\wild YZ$, $XYXZY\wild YYZ$, $XYYZYY\wild YZ$, $XYZYY\wild ZYZ$, $XXZX\wild YZZZ$, $XXZZ\wild YZZZ$, $XYZZ\wild YZZZ$, $XXX\wild ZYYYZ$, $XZ\wild XZXZYZ$, $XY\wild XZXZYZ$, $XXX\wild XYYZZ$, $XXX\wild YXYZZ$, $XZXYY\wild YYZ$, $XXY\wild XYYYZ$, $XZZZXY\wild YZ$, $XXX\wild XYYYZ$, $XYYYZ\wild YZZ$, $X\wild ZZZYZYZ$, $YX\wild YXZZYZ$, $YXXXXZ\wild YZ$, $YX\wild ZXYYYZ$, $YX\wild YZXZYZ$, $YYZZ\wild YYZZ$, $YYX\wild ZXXYZ$, $\wild XYXYZZYZ$, $YXZXY\wild ZYZ$, $YYZ\wild XXYZZ$, $YZ\wild YZXZYZ$, $YYY\wild XZXYZ$, $YYY\wild ZXXYZ$, $YYZ\wild ZYZYZ$, $YYZ\wild YYZZZ$, $YYY\wild XZYYZ$, $YYZ\wild XYZYZ$, $Y\wild XXYXXYZ$, $\wild ZZYXZZYZ$, $YYZ\wild ZYZZZ$, $YXZZZY\wild YZ$, $YX\wild YYZZZZ$, $YYYXY\wild XYZ$, $YX\wild XYZZZZ$, $\wild YYXYZZZZ$, $YZZZY\wild YYZ$, $YXZZ\wild YZZZ$, $\wild ZZXXZZYZ$, $\wild YYZYZZZZ$, $ZXZYXX\wild YZ$, $ZY\wild ZZXZYZ$, $ZYZXZZ\wild YZ$, $ZX\wild ZZXZYZ$, $ZXZYZZ\wild YZ$, $Z\wild XXYXXYZ$, $ZXYYZ\wild YZZ$, $ZZX\wild ZXXYZ$, $ZX\wild ZXZZYZ$, $ZYZYY\wild ZYZ$, $ZZY\wild ZYYZZ$, $ZYZXXX\wild YZ$, $ZXZXY\wild ZYZ$, $ZX\wild XXZZYZ$, $ZZY\wild XYYYZ$, $ZX\wild XYZZZZ$, $ZZZ\wild YYZYZ$, $ZX\wild ZYZZZZ$, $XY\wild ZYXXYZ$, $XXZ\wild XYXYZ$, $XY\wild ZYZYYZ$, $XY\wild ZZXXYZ$, $XY\wild XXZZYZ$, $X\wild YYXYYYZ$, $XZ\wild XYZZZZ$, $XZZZZY\wild YZ$, $YYXXXZ\wild YZ$, $YXYXY\wild ZYZ$, $YX\wild ZZYYZZ$, $YYXYXZ\wild YZ$, $\wild ZZXYZZYZ$, $YXZZXY\wild YZ$, $YX\wild XXZZYZ$, $Y\wild XXZXXYZ$, $Y\wild YYYZZZZ$, $Y\wild ZZXZYZZ$, $YYZ\wild YYYZZ$, $ZXYXY\wild ZYZ$, $ZZX\wild YYXYZ$, $ZZX\wild YXXYZ$, $ZZXXXZ\wild YZ$, $ZY\wild ZXZZYZ$, $ZZYYZ\wild YZZ$, $ZYXXXZ\wild YZ$, $Z\wild XXZXXYZ$, $Z\wild YYXYYYZ$, $ZZ\wild ZYZZYZ$, $XYYZXZYYZ$, $XYXYZXZYZ$, $XYXZYYXYZ$, $XYZZXYZYZ$, $XYZYXZZYZ$, $XYZZYYYZZ$, $XXZYZYXYZ$, $XXZYXXYZZ$, $XYZYZXZYZ$, $XXZYXZYZZ$, $XXYXZYYYZ$, $XYXYYXZYZ$, $XZXZYXZYZ$, $XXZXXYYYZ$, $XXZYYZYZZ$, $XZXZZXZYZ$, $XZY\wild YZZYZ$, $XXYYZYYYZ$, $XXZYYYYZZ$, $XXYYYXYZZ$, $XXYYXYYZZ$, $XZXYYXXYZ$, $XZZYYYZYZ$, $XYYZYXYYZ$, $XXZ\wild ZYZYZ$, $XXZ\wild YYZZZ$, $XX\wild XXYYZZ$, $XX\wild XYXYZZ$, $XZXYYY\wild YZ$, $XZYYZYYZZ$, $XZXYZXXYZ$, $XZYXXZZYZ$, $XYZZXXYZZ$, $X\wild ZZZYZZZ$, $X\wild ZZYZYYZ$, $XXXZYZZZZ$, $XYYYXYYZZ$, $XYYYYXYZZ$, $XY\wild XYZZZZ$, $XYZYYZZZZ$, $XYYYZYYYZ$, $X\wild ZZYYZZZ$, $XZYZYZZZZ$, $XYZZZZZZZ$, $YXXXYZXYZ$, $YYYZZXZYZ$, $YYXXYZXYZ$, $YYXZYXXYZ$, $YYYZXZZYZ$, $YZYYXZZYZ$, $YXYXZXZYZ$, $YYZXZYXYZ$, $YYXXZXYYZ$, $YZXZYXZYZ$, $YYZXXYXYZ$, $YZXZZXZYZ$, $YYZZZZYZZ$, $YZZXYYZYZ$, $YYZYXYZZZ$, $YYXZYYXYZ$, $YYZZXYZZZ$, $YYZYXZYYZ$, $YXZXZXZYZ$, $YXXXZXYYZ$, $YZYXZYYZZ$, $YZZZZYZZZ$, $YZZZXXYZZ$, $YYYXZXYYZ$, $YYXYZXYYZ$, $YZYXXYYYZ$, $YZZZZXYYZ$, $YZZZXZYYZ$, $YZZZXYZYZ$, $YZZZYYYZZ$, $YYYYZXYYZ$, $YZZZZYZYZ$, $YZZZYYZZZ$, $YZZZYZYZZ$, $YZZYYZZZZ$, $YZYZYZZZZ$, $YYZYZZZZZ$, $YYZZZZZZZ$, $ZYZXYZYYZ$, $ZYZXZYZYZ$, $ZYZYZXZYZ$, $ZYZXXYXYZ$, $ZYZYXZZYZ$, $ZXZYXYXYZ$, $ZYXXYZXYZ$, $ZYYXZXXYZ$, $ZYXXZXYYZ$, $ZYXYYXZYZ$, $ZYYXYXXYZ$, $ZYZXXYZYZ$, $ZYZXZYXYZ$, $ZXZYXXYZZ$, $ZYXYZXZYZ$, $ZZXXZXYYZ$, $ZXXYZYYZZ$, $ZXZYXZYZZ$, $ZXZYYZYZZ$, $ZXZYYYYZZ$, $ZYZXYYYZZ$, $ZYZXYYZZZ$, $ZXZXZXZYZ$, $ZXZYZYZYZ$, $ZXZYYYZZZ$, $ZZZYYXZYZ$, $ZZZYZXZYZ$, $ZYZXZYZZZ$, $ZXZYZYXYZ$, $ZXZYXYZYZ$, $ZYZXXXYZZ$, $ZXYXZXZYZ$, $ZXXYXYYYZ$, $ZZYYYXYZZ$, $ZZYYXYYZZ$, $ZXYYYXYZZ$, $ZXYYXYYZZ$, $ZXYYZYYYZ$, $ZZZXYZZZZ$, $ZZZYYZZZZ$, $ZYYXYYXYZ$, $ZYYXYXYYZ$, $ZZYYZYYYZ$, $ZYYYZYYZZ$, $ZYYXYYYYZ$, $ZYZYYZZZZ$, $ZZZZXZZYZ$ or $ZYZZYZZZZ$.}
+	
+	\bigskip
+	
+	$\K_{X,9}(YYZZZZZZZ,\infty,1, 2, 3, 4, 6, 8)\Rightarrow $$ZZYYYYYYZ$, $YZYYYYYYZ$, $ZYYYYYYYZ$, $ZZZYYYYYZ$, $ZZYZYYYYZ$, $ZZYYYZYYZ$, $ZZYYYYYZZ$(Case 1).
+	
+	$\K_{X,3}(YYZZZZZZZ,\infty,1, 2, 4, 6, 7, 8)\Rightarrow $$YYYZZZZZZ$, $ZYYZZZZZZ$, $YZYZZZZZZ$, $YYYYZZZZZ$, $YYYZZYZZZ$, $YYYZZZYZZ$, $YYYZZZZYZ$(Case 1).
+	
+	$\K_{X,1}(YYZZZZZZZ,\infty,2, 4, 6, 8)\Rightarrow $$ZYZZZZZZZ$, $ZZZZZZZZZ$, $ZYZYZZZZZ$, $ZYZZZYZZZ$, $ZYZZZZZYZ$(Case 1).
+	
+	$\K_{X,2}(YYZZZZZZZ,4)\Rightarrow $$YZZYZZZZZ$(Case 1).
+	
+	
+	
+	$(1 8 3 4 5 2 6 7 9)\Rightarrow YZZZZZZYZ$, $(5 2 7 6 1 3 4 8 9)\Rightarrow ZYZZYZZZZ$ and $(5 8 7 6 1 2 3 4 9)\Rightarrow ZZZZYZZYZ$
+	
+	
+	$\K_{X,4}(XYZZZZZZZ,2, 3, 6, 7, 8, 9)\Rightarrow $$XZZYZZZZZ$, $XYYYZZZZZ$, $XYZYZYZZZ$, $XYZYZZYZZ$, $XYZYZZZYZ$, $XZYZYYYYZ$(Case 1).
+	
+	$\K_{X,9}(XYZZZZZZZ,3, 6, 8)\Rightarrow $$XZZYYYYYZ$, $XZYYYZYYZ$, $XZYYYYYZZ$(Case 1).
+	
+	$\K_{X,3}(XYZZZZZZZ,2, 6, 7, 8)\Rightarrow $$XZYZZZZZZ$, $XYYZZYZZZ$, $XYYZZZYZZ$, $XYYZZZZYZ$(Case 1).
+	
+	
+	
+	$(1 8 3 4 5 2 6 7 9)\Rightarrow XZZZZZZYZ$, $(3 5 6 7 8 1 2 4 9)\Rightarrow ZZXZYZZZZ$, $(5 2 6 7 1 3 4 8 9)\Rightarrow ZXZZYZZZZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow ZZZZXZZYZ$, $(7 1 3 4 2 5 6 8 9)\Rightarrow XZZZZZYZZ$, $(9 3 1 2 4 5 6 7 8)\Rightarrow YYXYYYYYZ$, $(9 4 1 2 3 5 6 7 8)\Rightarrow YYYXYYYYZ$, $(9 6 1 2 3 4 7 5 8)\Rightarrow YYYYYXYYZ$ and $(9 7 1 2 3 4 6 5 8)\Rightarrow YYYYYYXYZ$
+	
+	
+	$\K_{X,9}(YYZYZZZZZ,\infty,1, 2, 3, 4, 6, 8)\Rightarrow $$ZZYZYYYYZ$, $YZYZYYYYZ$, $ZYYZYYYYZ$, $ZZZZYYYYZ$, $ZZYYYYYYZ$, $ZZYZYZYYZ$, $ZZYZYYYZZ$(Case 1).
+	
+	$\K_{X,3}(YYZYZZZZZ,\infty,1, 2, 4, 6, 7, 8)\Rightarrow $$YYYYZZZZZ$, $ZYYYZZZZZ$, $YZYYZZZZZ$, $YYYZZZZZZ$, $YYYYZYZZZ$, $YYYYZZYZZ$, $YYYYZZZYZ$(Case 1).
+	
+	$\K_{X,2}(YYZYZZZZZ,\infty,1, 6, 7, 8)\Rightarrow $$YZZYZZZZZ$, $ZZZYZZZZZ$, $YZZYZYZZZ$, $YZZYZZYZZ$, $YZZYZZZYZ$(Case 1).
+	
+	$\K_{X,1}(YYZYZZZZZ,\infty,6, 8)\Rightarrow $$ZYZYZZZZZ$, $ZYZYZYZZZ$, $ZYZYZZZYZ$(Case 1).
+	
+	
+	
+	$(3 9 1 8 5 6 4 7 2)\Rightarrow YYZYYYYZZ$, $(5 8 7 6 1 2 3 4 9)\Rightarrow ZZZZYYZYZ$ and $(7 9 5 2 1 3 6 4 8)\Rightarrow YZYYYYZYZ$
+	
+	
+	$\K_{X,7}(ZXXZYZZZZ,\infty,5, 6, 8, 9)\Rightarrow $$ZXXZYZYZZ$, $ZXXZZZYZZ$, $ZXXZYYYZZ$, $ZXXZYZYYZ$, $YXXYZYZYZ$(Case 1).
+	
+	$\K_{X,9}(ZXXZYZZZZ,\infty,5, 6, 8)\Rightarrow $$YXXYZYYYZ$, $YXXYYYYYZ$, $YXXYZZYYZ$, $YXXYZYYZZ$(Case 1).
+	
+	$\K_{X,5}(ZXXZYZZZZ,\infty,6)\Rightarrow $$ZYYZZZZZZ$, $ZXXZZYZZZ$(Case 1).
+	
+	$\K_{X,6}(ZXXZYZZZZ,\infty)\Rightarrow $$ZXXZYYZZZ$(Case 1).
+	
+	
+	
+	$(2 7 8 5 1 9 3 6 4)\Rightarrow XZZZZZYYZ$
+	
+	
+	$\K_{X,9}(YYYZYZZZZ,\infty,2, 4, 5, 6, 7, 8)\Rightarrow $$ZZZYZYYYZ$, $ZYZYZYYYZ$, $ZZZZZYYYZ$, $ZZZYYYYYZ$, $ZZZYZZYYZ$, $ZZZYZYZYZ$, $ZZZYZYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYYZYZZZZ,\infty,2, 4, 6, 7, 8)\Rightarrow $$YYYZZZZZZ$, $YZYZZZZZZ$, $YYYYZZZZZ$, $YYYZZYZZZ$, $YYYZZZYZZ$, $YYYZZZZYZ$(Case 1).
+	
+	$\K_{X,6}(YYYZYZZZZ,\infty,2, 4, 7)\Rightarrow $$YYYZYYZZZ$, $YZYZYYZZZ$, $YYYYYYZZZ$, $YYYZYYYZZ$(Case 1).
+	
+	$\K_{X,7}(YYYZYZZZZ,\infty,2, 4)\Rightarrow $$YYYZYZYZZ$, $YZYZYZYZZ$, $YYYYYZYZZ$(Case 1).
+	
+	
+	
+	$(1 3 4 2 5 6 7 8 9)\Rightarrow YZYYYZZZZ$, $(1 8 9 6 5 3 4 2 7)\Rightarrow ZYYYZYYZZ$, $(5 2 9 4 1 3 6 8 7)\Rightarrow ZZYYZYYYZ$, $(5 6 7 8 1 3 4 2 9)\Rightarrow YZZZYYYZZ$ and $(5 8 7 6 1 3 4 2 9)\Rightarrow YZZZYZYYZ$
+	
+	
+	$\K_{X,9}(XYYZYZZZZ,5, 6, 7, 8)\Rightarrow $$XZZYYYYYZ$, $XZZYZZYYZ$, $XZZYZYZYZ$, $XZZYZYYZZ$(Case 1).
+	
+	$\K_{X,5}(XYYZYZZZZ,2, 4, 6, 7, 8)\Rightarrow $$XZYZZZZZZ$, $XYYYZZZZZ$, $XYYZZYZZZ$, $XYYZZZYZZ$, $XYYZZZZYZ$(Case 1).
+	
+	$\K_{X,6}(XYYZYZZZZ,2, 4, 7)\Rightarrow $$XZYZYYZZZ$, $XYYYYYZZZ$, $XYYZYYYZZ$(Case 1).
+	
+	$\K_{X,7}(XYYZYZZZZ,2, 4)\Rightarrow $$XZYZYZYZZ$, $XYYYYZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XYZYYZZZZ$, $(1 8 9 2 5 3 7 4 6)\Rightarrow XYYYZYYZZ$, $(3 1 4 2 5 6 7 8 9)\Rightarrow YZXYYZZZZ$, $(3 2 4 1 5 6 7 8 9)\Rightarrow ZYXYYZZZZ$, $(3 5 7 1 8 4 9 6 2)\Rightarrow ZZXZYZYYZ$, $(4 2 3 1 5 6 7 8 9)\Rightarrow ZYYXYZZZZ$, $(5 2 9 4 1 3 6 7 8)\Rightarrow ZZYYXYYYZ$, $(5 8 6 2 1 3 9 7 4)\Rightarrow YZZZXYZYZ$, $(5 8 7 6 1 3 4 2 9)\Rightarrow YZZZXZYYZ$, $(6 8 7 5 1 3 4 2 9)\Rightarrow YZZZZXYYZ$, $(7 1 3 4 2 5 9 8 6)\Rightarrow XXXZZZYZZ$, $(7 5 6 2 1 3 9 4 8)\Rightarrow XZZZXXYZZ$, $(7 6 8 2 1 3 9 4 5)\Rightarrow YZZZZYXYZ$, $(9 3 2 1 4 6 8 7 5)\Rightarrow YXXXYYYYZ$ and $(9 6 8 1 7 2 3 4 5)\Rightarrow XXXXXYYYZ$
+	
+	
+	$\K_{X,9}(YYXZYZZZZ,4, 6, 7, 8)\Rightarrow $$ZZXZZYYYZ$, $ZZXYZZYYZ$, $ZZXYZYZYZ$, $ZZXYZYYZZ$(Case 1).
+	
+	$\K_{X,6}(YYXZYZZZZ,1, 2, 4, 5, 7)\Rightarrow $$ZYXZYYZZZ$, $YZXZYYZZZ$, $YYXYYYZZZ$, $YYXZZYZZZ$, $YYXZYYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYXZYZZZZ,4, 7, 8)\Rightarrow $$YYXYZZZZZ$, $YYXZZZYZZ$, $YYXZZZZYZ$(Case 1).
+	
+	$\K_{X,7}(YYXZYZZZZ,1, 2, 4)\Rightarrow $$ZYXZYZYZZ$, $YZXZYZYZZ$, $YYXYYZYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 3 4 2 9)\Rightarrow YZZZYZXYZ$
+	
+	
+	$\K_{X,9}(XYXZYZZZZ,\infty,6, 7, 8)\Rightarrow $$XZXYZYYYZ$, $XZXYZZYYZ$, $XZXYZYZYZ$, $XZXYZYYZZ$(Case 1).
+	
+	$\K_{X,6}(XYXZYZZZZ,\infty,2, 4, 5, 7)\Rightarrow $$XYXZYYZZZ$, $XZXZYYZZZ$, $XYXYYYZZZ$, $XYXZZYZZZ$, $XYXZYYYZZ$(Case 1).
+	
+	$\K_{X,7}(XYXZYZZZZ,\infty,2, 4, 5)\Rightarrow $$XYXZYZYZZ$, $XZXZYZYZZ$, $XYXYYZYZZ$, $XYXZZZYZZ$(Case 1).
+	
+	$\K_{X,5}(XYXZYZZZZ,\infty)\Rightarrow $$YXYZZZZZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XYZXYZZZZ$, $(1 2 9 3 5 6 7 8 4)\Rightarrow ZXYYXYYYZ$, $(1 3 4 2 5 6 7 8 9)\Rightarrow XZYXYZZZZ$, $(1 4 3 2 5 6 7 8 9)\Rightarrow XZXYYZZZZ$, $(1 6 9 3 4 5 8 7 2)\Rightarrow ZYYXYXYYZ$, $(1 7 9 3 4 5 8 6 2)\Rightarrow ZYYXYYXYZ$, $(2 1 4 3 5 6 7 8 9)\Rightarrow YXZXYZZZZ$, $(2 1 9 3 5 6 7 8 4)\Rightarrow XZYYXYYYZ$, $(2 3 4 1 5 6 7 8 9)\Rightarrow ZXYXYZZZZ$, $(2 4 9 1 5 6 7 8 3)\Rightarrow YZYXXYYYZ$, $(3 1 4 2 5 6 7 8 9)\Rightarrow YZXXYZZZZ$, $(3 2 4 1 5 6 7 8 9)\Rightarrow ZYXXYZZZZ$, $(5 3 9 4 6 1 8 7 2)\Rightarrow YYXYZXYYZ$, $(5 4 9 3 6 1 8 7 2)\Rightarrow YYYXZXYYZ$, $(5 6 7 8 1 3 4 2 9)\Rightarrow XZZZYXYZZ$, $(5 7 6 2 1 3 9 8 4)\Rightarrow YZZZXXYZZ$, $(5 8 6 2 1 3 9 7 4)\Rightarrow YZZZXXZYZ$, $(5 8 7 6 1 3 4 2 9)\Rightarrow YZZZXZXYZ$, $(5 8 9 7 1 3 4 2 6)\Rightarrow YXXXZXXYZ$, $(6 5 7 8 1 3 4 2 9)\Rightarrow XZZZXYYZZ$, $(6 5 8 2 1 3 9 7 4)\Rightarrow XZZZXYZYZ$, $(6 7 8 2 1 3 9 5 4)\Rightarrow XZZZZYXYZ$, $(6 8 7 5 1 3 4 2 9)\Rightarrow YZZZZXXYZ$, $(8 1 9 5 6 3 4 2 7)\Rightarrow XYYYYXYZZ$ and $(8 1 9 6 5 3 4 2 7)\Rightarrow XYYYXYYZZ$
+	
+	
+	$\K_{X,7}(ZZZYYZZZZ,\infty,1, 2, 3, 4, 5, 6, 8, 9)\Rightarrow $$ZZZYYZYZZ$, $YZZYYZYZZ$, $ZYZYYZYZZ$, $ZZYYYZYZZ$, $ZZZZYZYZZ$, $ZZZYZZYZZ$, $ZZZYYYYZZ$, $ZZZYYZYYZ$, $YYYZZYZYZ$(Case 1).
+	
+	$\K_{X,9}(ZZZYYZZZZ,\infty,4, 6, 8)\Rightarrow $$YYYZZYYYZ$, $YYYYZYYYZ$, $YYYZZZYYZ$, $YYYZZYYZZ$(Case 1).
+	
+	$\K_{X,5}(ZZZYYZZZZ,\infty,2, 3, 4, 6, 8)\Rightarrow $$ZZZYZZZZZ$, $ZYZYZZZZZ$, $ZZYYZZZZZ$, $ZZZZZZZZZ$, $ZZZYZYZZZ$, $ZZZYZZZYZ$(Case 1).
+	
+	$\K_{X,6}(ZZZYYZZZZ,\infty,2, 3, 4)\Rightarrow $$ZZZYYYZZZ$, $ZYZYYYZZZ$, $ZZYYYYZZZ$, $ZZZZYYZZZ$(Case 1).
+	
+	
+	
+	$(2 5 7 6 1 4 3 8 9)\Rightarrow YZZZZYZZZ$
+	
+	
+	$\K_{X,9}(ZZXYYZZZZ,4, 6, 7, 8)\Rightarrow $$YYXYZYYYZ$, $YYXZZZYYZ$, $YYXZZYZYZ$, $YYXZZYYZZ$(Case 1).
+	
+	$\K_{X,6}(ZZXYYZZZZ,1, 2, 4, 5, 7)\Rightarrow $$YZXYYYZZZ$, $ZYXYYYZZZ$, $ZZXZYYZZZ$, $ZZXYZYZZZ$, $ZZXYYYYZZ$(Case 1).
+	
+	$\K_{X,5}(ZZXYYZZZZ,4, 7, 8)\Rightarrow $$ZZYZZZZZZ$, $ZZXYZZYZZ$, $ZZXYZZZYZ$(Case 1).
+	
+	$\K_{X,7}(ZZXYYZZZZ,1, 2, 4)\Rightarrow $$YZXYYZYZZ$, $ZYXYYZYZZ$, $ZZXZYZYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 3 4 2 9)\Rightarrow XZZZZXYZZ$
+	
+	
+	$\K_{X,9}(YYYYYZZZZ,\infty,2, 4, 5, 6, 7, 8)\Rightarrow $$ZZZZZYYYZ$, $ZYZZZYYYZ$, $ZZZYZYYYZ$, $ZZZZYYYYZ$, $ZZZZZZYYZ$, $ZZZZZYZYZ$, $ZZZZZYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYYYYZZZZ,\infty,2, 4, 6, 7, 8)\Rightarrow $$YYYYZZZZZ$, $YZYYZZZZZ$, $YYYZZZZZZ$, $YYYYZYZZZ$, $YYYYZZYZZ$, $YYYYZZZYZ$(Case 1).
+	
+	$\K_{X,6}(YYYYYZZZZ,\infty,2, 4, 7)\Rightarrow $$YYYYYYZZZ$, $YZYYYYZZZ$, $YYYZYYZZZ$, $YYYYYYYZZ$(Case 1).
+	
+	$\K_{X,7}(YYYYYZZZZ,\infty,2, 4)\Rightarrow $$YYYYYZYZZ$, $YZYYYZYZZ$, $YYYZYZYZZ$(Case 1).
+	
+	
+	
+	$(5 6 7 8 1 3 4 2 9)\Rightarrow YZZZYYYYZ$
+	
+	
+	$\K_{X,9}(YYXYYZZZZ,4, 6, 7, 8)\Rightarrow $$ZZXYZYYYZ$, $ZZXZZZYYZ$, $ZZXZZYZYZ$, $ZZXZZYYZZ$(Case 1).
+	
+	$\K_{X,6}(YYXYYZZZZ,1, 2, 4, 5, 7)\Rightarrow $$ZYXYYYZZZ$, $YZXYYYZZZ$, $YYXZYYZZZ$, $YYXYZYZZZ$, $YYXYYYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYXYYZZZZ,4, 7, 8)\Rightarrow $$XXYZZZZZZ$, $YYXYZZYZZ$, $YYXYZZZYZ$(Case 1).
+	
+	$\K_{X,7}(YYXYYZZZZ,1, 2, 4)\Rightarrow $$ZYXYYZYZZ$, $YZXYYZYZZ$, $YYXZYZYZZ$(Case 1).
+	
+	
+	
+	$(2 3 9 6 4 1 8 7 5)\Rightarrow YXXXYXYYZ$, $(2 3 9 7 4 1 8 6 5)\Rightarrow YXXXYYXYZ$, $(3 8 9 6 7 1 2 4 5)\Rightarrow XXYXXYYYZ$, $(4 8 9 6 7 1 2 3 5)\Rightarrow XXXYXYYYZ$ and $(5 6 7 8 1 3 4 2 9)\Rightarrow YZZZYYXYZ$
+	
+	
+	$\K_{X,9}(YYYXYZZZZ,5, 6, 7, 8)\Rightarrow $$ZZZXYYYYZ$, $ZZZXZZYYZ$, $ZZZXZYZYZ$, $ZZZXZYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYYXYZZZZ,1, 2, 6, 7, 8)\Rightarrow $$ZXXYZZZZZ$, $XZXYZZZZZ$, $YYYXZYZZZ$, $YYYXZZYZZ$, $YYYXZZZYZ$(Case 1).
+	
+	$\K_{X,6}(YYYXYZZZZ,1, 2, 7)\Rightarrow $$ZYYXYYZZZ$, $YZYXYYZZZ$, $YYYXYYYZZ$(Case 1).
+	
+	$\K_{X,7}(YYYXYZZZZ,1, 2)\Rightarrow $$ZYYXYZYZZ$, $YZYXYZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 6 3 9 4 8 7 5)\Rightarrow ZZXYYZYYZ$, $(1 6 3 7 2 5 9 8 4)\Rightarrow XXXZZXYZZ$, $(2 8 9 1 5 3 7 4 6)\Rightarrow XZYYZYYZZ$, $(2 8 9 4 5 6 7 1 3)\Rightarrow YZYXZYYZZ$, $(2 8 9 5 1 3 6 7 4)\Rightarrow ZZYYXYYZZ$, $(2 8 9 6 1 3 4 5 7)\Rightarrow ZZYYYXYZZ$ and $(5 8 7 6 1 3 4 2 9)\Rightarrow YZZZYXYYZ$
+	
+	
+	$\K_{X,9}(YYXXYZZZZ,\infty,6, 7, 8)\Rightarrow $$ZZXXZYYYZ$, $ZZXXZZYYZ$, $ZZXXZYZYZ$, $ZZXXZYYZZ$(Case 1).
+	
+	$\K_{X,6}(YYXXYZZZZ,\infty,1, 2, 5, 7)\Rightarrow $$YYXXYYZZZ$, $ZYXXYYZZZ$, $YZXXYYZZZ$, $YYXXZYZZZ$, $YYXXYYYZZ$(Case 1).
+	
+	$\K_{X,7}(YYXXYZZZZ,\infty,1, 2, 5)\Rightarrow $$YYXXYZYZZ$, $ZYXXYZYZZ$, $YZXXYZYZZ$, $YYXXZZYZZ$(Case 1).
+	
+	$\K_{X,5}(YYXXYZZZZ,\infty)\Rightarrow $$XXYYZZZZZ$(Case 1).
+	
+	
+	
+	$(1 6 2 9 3 5 8 7 4)\Rightarrow XZXYYXYYZ$, $(1 7 2 9 3 5 8 6 4)\Rightarrow XZXYYYXYZ$, $(1 7 5 9 8 3 4 2 6)\Rightarrow YXXXZXYYZ$, $(2 3 1 9 5 6 7 8 4)\Rightarrow ZXXYXYYYZ$, $(3 5 8 9 7 1 2 4 6)\Rightarrow XXYXYXYZZ$, $(3 6 2 9 4 5 8 7 1)\Rightarrow YZXXYXYYZ$, $(3 6 8 9 7 1 2 4 5)\Rightarrow XXYXXYYZZ$, $(3 7 2 9 4 5 8 6 1)\Rightarrow YZXXYYXYZ$, $(4 5 8 9 7 1 2 3 6)\Rightarrow XXXYYXYZZ$, $(4 6 8 9 7 1 2 3 5)\Rightarrow XXXYXYYZZ$ and $(5 8 6 7 1 3 4 2 9)\Rightarrow YZZZYXXYZ$
+	
+	
+	$\K_{X,7}(XYXXYZZZZ,5, 6, 8, 9)\Rightarrow $$XYXXZZYZZ$, $XYXXYYYZZ$, $XYXXYZYYZ$, $XZXXZYZYZ$(Case 1).
+	
+	$\K_{X,9}(XYXXYZZZZ,5, 6, 8)\Rightarrow $$XZXXYYYYZ$, $XZXXZZYYZ$, $XZXXZYYZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 6 8 3 7 5 9)\Rightarrow XYZXZXZYZ$, $(1 2 5 9 8 3 4 7 6)\Rightarrow ZYXXZXXYZ$, $(1 2 6 7 5 3 4 8 9)\Rightarrow YXZZXYYZZ$, $(1 2 6 7 8 3 4 5 9)\Rightarrow XYZZZXXYZ$, $(1 3 2 9 4 6 5 7 8)\Rightarrow ZZXXYYYYZ$, $(1 3 4 6 8 2 7 5 9)\Rightarrow XZYXZXZYZ$, $(1 5 3 4 8 2 7 6 9)\Rightarrow XZXXYZZYZ$, $(1 5 4 6 8 2 7 3 9)\Rightarrow XZZXYXZYZ$, $(2 1 4 6 8 3 7 5 9)\Rightarrow YXZXZXZYZ$, $(2 3 4 6 8 1 7 5 9)\Rightarrow ZXYXZXZYZ$, $(2 5 4 6 8 1 7 3 9)\Rightarrow ZXZXYXZYZ$, $(2 9 3 4 1 6 5 7 8)\Rightarrow ZXXXYYYYZ$, $(3 1 4 5 8 2 6 7 9)\Rightarrow YZXXXZZYZ$, $(3 2 4 5 8 1 6 7 9)\Rightarrow ZYXXXZZYZ$, $(4 1 5 6 2 7 3 8 9)\Rightarrow XXZYYYZZZ$, $(4 1 6 8 2 5 3 7 9)\Rightarrow XXZYZYZYZ$, $(4 2 5 6 7 1 3 8 9)\Rightarrow ZYZXXXYZZ$, $(4 2 5 6 8 1 3 7 9)\Rightarrow ZYZXXXZYZ$, $(4 2 6 8 5 1 3 7 9)\Rightarrow ZXZYXYZYZ$, $(4 2 6 8 7 1 3 5 9)\Rightarrow ZXZYZYXYZ$, $(5 1 6 7 2 4 3 8 9)\Rightarrow XXZZYYYZZ$, $(5 1 6 7 8 2 3 4 9)\Rightarrow YZZZXXXYZ$, $(5 7 8 9 6 3 1 4 2)\Rightarrow XXXXZYYZZ$ and $(6 9 7 8 5 3 1 4 2)\Rightarrow XXXXZYYYZ$
+	
+	
+	$\K_{X,9}(YXXXYZZZZ,6, 7, 8)\Rightarrow $$ZXXXZZYYZ$, $ZXXXZYZYZ$, $ZXXXZYYZZ$(Case 1).
+	
+	$\K_{X,6}(YXXXYZZZZ,1, 5, 7)\Rightarrow $$ZXXXYYZZZ$, $YXXXZYZZZ$, $YXXXYYYZZ$(Case 1).
+	
+	$\K_{X,7}(YXXXYZZZZ,1, 5)\Rightarrow $$ZXXXYZYZZ$, $YXXXZZYZZ$(Case 1).
+	
+	
+	
+	$(1 5 8 9 6 3 4 2 7)\Rightarrow XYYYZXYZZ$, $(1 6 7 8 5 3 4 2 9)\Rightarrow XZZZXYYYZ$, $(3 5 6 7 9 2 8 4 1)\Rightarrow YYZYXXXYZ$, $(4 1 2 9 5 6 7 8 3)\Rightarrow ZZYXXYYYZ$ and $(7 1 3 4 9 2 8 6 5)\Rightarrow XYXXYYZYZ$
+	
+	
+	$\K_{X,9}(YYZZZYZZZ,\infty,2, 3, 4, 5, 6, 8)\Rightarrow $$ZZYYYZYYZ$, $ZYYYYZYYZ$, $ZZZYYZYYZ$, $ZZYZYZYYZ$, $ZZYYZZYYZ$, $ZZYYYYYYZ$, $ZZYYYZYZZ$(Case 1).
+	
+	$\K_{X,3}(YYZZZYZZZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$YYYZZYZZZ$, $ZYYZZYZZZ$, $YZYZZYZZZ$, $YYYYZYZZZ$, $YYYZYYZZZ$, $YYYZZZZZZ$, $YYYZZYYZZ$, $YYYZZYZYZ$(Case 1).
+	
+	$\K_{X,1}(YYZZZYZZZ,\infty)\Rightarrow $$ZYZZZYZZZ$(Case 1).
+	
+	$\K_{X,2}(YYZZZYZZZ,4)\Rightarrow $$YZZYZYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZZZYYZZYZ$
+	
+	
+	$\K_{X,9}(XYZZZYZZZ,3, 4, 5, 6, 8)\Rightarrow $$XZZYYZYYZ$, $XZYZYZYYZ$, $XZYYZZYYZ$, $XZYYYYYYZ$, $XZYYYZYZZ$(Case 1).
+	
+	$\K_{X,4}(XYZZZYZZZ,3, 5, 6, 7, 8)\Rightarrow $$XYYYZYZZZ$, $XYZYYYZZZ$, $XYZYZZZZZ$, $XYZYZYYZZ$, $XYZYZYZYZ$(Case 1).
+	
+	$\K_{X,3}(XYZZZYZZZ,5, 6, 8)\Rightarrow $$XYYZYYZZZ$, $XYYZZZZZZ$, $XYYZZYZYZ$(Case 1).
+	
+	
+	
+	$(5 4 6 7 1 8 3 2 9)\Rightarrow ZZZYXZZYZ$, $(9 3 1 5 2 4 6 7 8)\Rightarrow YYXXYYYYZ$, $(9 3 1 5 2 6 7 4 8)\Rightarrow YYXYYXYYZ$, $(9 3 1 5 2 7 6 4 8)\Rightarrow YYXYYYXYZ$, $(9 4 1 5 2 6 7 3 8)\Rightarrow YYYXYXYYZ$, $(9 4 1 5 2 7 6 3 8)\Rightarrow YYYXYYXYZ$ and $(9 6 1 2 3 7 4 8 5)\Rightarrow YYYYYXXYZ$
+	
+	
+	$\K_{X,9}(ZYZXZYZZZ,3, 5, 6, 8)\Rightarrow $$YZZXYZYYZ$, $YZYXZZYYZ$, $YZYXYYYYZ$, $YZYXYZYZZ$(Case 1).
+	
+	$\K_{X,3}(ZYZXZYZZZ,1, 2, 5, 6, 7, 8)\Rightarrow $$YYYXZYZZZ$, $ZZYXZYZZZ$, $ZYYXYYZZZ$, $ZXXYZZZZZ$, $ZYYXZYYZZ$, $ZYYXZYZYZ$(Case 1).
+	
+	$\K_{X,2}(ZYZXZYZZZ,5, 6, 8)\Rightarrow $$ZZZXYYZZZ$, $ZZZYZZZZZ$, $ZZZXZYZYZ$(Case 1).
+	
+	
+	
+	$(1 4 8 3 2 9 7 5 6)\Rightarrow YYXZYYYYZ$, $(1 6 2 7 5 9 3 8 4)\Rightarrow YYYYYZXYZ$, $(1 8 7 6 2 4 3 5 9)\Rightarrow ZZZYZXZYZ$, $(4 1 9 7 5 2 6 8 3)\Rightarrow XXZZZZYZZ$ and $(4 5 9 3 1 8 6 2 7)\Rightarrow ZZXZYZZYZ$
+	
+	
+	$\K_{X,9}(YYZYZYZZZ,\infty,2, 3, 4, 5, 6, 8)\Rightarrow $$ZZYZYZYYZ$, $ZYYZYZYYZ$, $ZZZZYZYYZ$, $ZZYYYZYYZ$, $ZZYZZZYYZ$, $ZZYZYYYYZ$, $ZZYZYZYZZ$(Case 1).
+	
+	$\K_{X,3}(YYZYZYZZZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$YYYYZYZZZ$, $ZYYYZYZZZ$, $YZYYZYZZZ$, $YYYZZYZZZ$, $YYYYYYZZZ$, $YYYYZZZZZ$, $YYYYZYYZZ$, $YYYYZYZYZ$(Case 1).
+	
+	$\K_{X,2}(YYZYZYZZZ,\infty,5, 6, 8)\Rightarrow $$YZZYZYZZZ$, $YZZYYYZZZ$, $YZZYZZZZZ$, $YZZYZYZYZ$(Case 1).
+	
+	$\K_{X,1}(YYZYZYZZZ,\infty)\Rightarrow $$ZYZYZYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZZZYYYZYZ$, $(9 3 1 5 7 6 4 8 2)\Rightarrow YYZYZZYYZ$ and $(9 7 5 1 2 4 6 3 8)\Rightarrow ZYYZYYZYZ$
+	
+	
+	$\K_{X,9}(YYZXZYZZZ,3, 5, 6, 8)\Rightarrow $$ZZZXYZYYZ$, $ZZYXZZYYZ$, $ZZYXYYYYZ$, $ZZYXYZYZZ$(Case 1).
+	
+	$\K_{X,3}(YYZXZYZZZ,1, 2, 5, 6, 7, 8)\Rightarrow $$ZYYXZYZZZ$, $YZYXZYZZZ$, $YYYXYYZZZ$, $XXXYZZZZZ$, $YYYXZYYZZ$, $YYYXZYZYZ$(Case 1).
+	
+	$\K_{X,2}(YYZXZYZZZ,5, 6, 8)\Rightarrow $$YZZXYYZZZ$, $XZZYZZZZZ$, $YZZXZYZYZ$(Case 1).
+	
+	
+	
+	$(1 5 9 3 4 8 2 6 7)\Rightarrow YZXZYZZYZ$, $(1 9 5 3 2 7 6 4 8)\Rightarrow ZYXYYYZYZ$, $(1 9 8 3 4 2 6 7 5)\Rightarrow ZZXYYYYYZ$, $(2 5 9 3 4 8 1 6 7)\Rightarrow ZYXZYZZYZ$, $(2 9 5 3 1 7 6 4 8)\Rightarrow YZXYYYZYZ$, $(3 9 1 7 5 6 4 8 2)\Rightarrow YYZYYZXYZ$, $(3 9 1 7 5 8 4 6 2)\Rightarrow XXZXXXYZZ$, $(3 9 1 7 6 5 4 8 2)\Rightarrow YYZYZYXYZ$, $(4 1 9 7 5 2 6 8 3)\Rightarrow XXZXZZYZZ$, $(4 5 9 3 1 8 6 2 7)\Rightarrow ZZXYYZZYZ$, $(4 6 1 7 5 9 3 8 2)\Rightarrow YYYZYZXYZ$, $(4 6 5 3 1 9 7 2 8)\Rightarrow YYXZYZYYZ$, $(4 7 5 3 1 9 6 2 8)\Rightarrow YYXZYYZYZ$, $(4 8 7 6 1 5 3 2 9)\Rightarrow ZZZYYXZYZ$, $(5 1 9 7 4 2 8 6 3)\Rightarrow XXZZXZYZZ$, $(5 9 2 7 3 8 4 6 1)\Rightarrow XXXXZXYZZ$, $(6 1 9 7 5 2 4 8 3)\Rightarrow XXZZZXYZZ$, $(6 5 9 3 1 8 4 2 7)\Rightarrow ZZXZYYZYZ$ and $(8 1 9 7 4 2 5 6 3)\Rightarrow YYZZZZXYZ$
+	
+	
+	$\K_{X,9}(YYZZYYZZZ,\infty,1, 2, 3, 4, 5, 7)\Rightarrow $$ZZYYZZYYZ$, $YZYYZZYYZ$, $ZYYYZZYYZ$, $ZZZYZZYYZ$, $ZZYZZZYYZ$, $ZZYYYZYYZ$, $ZZYYZZZYZ$(Case 1).
+	
+	$\K_{X,3}(YYZZYYZZZ,\infty,1, 2, 4, 5, 7)\Rightarrow $$YYYZYYZZZ$, $ZYYZYYZZZ$, $YZYZYYZZZ$, $YYYYYYZZZ$, $YYYZZYZZZ$, $YYYZYYYZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZYYZZZ,\infty,2, 4, 5, 7)\Rightarrow $$ZYZZYYZZZ$, $ZZZZYYZZZ$, $ZYZYYYZZZ$, $ZYZZZYZZZ$, $ZYZZYYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZZYYZZZ,4)\Rightarrow $$YZZYYYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 6 4 8 7 5 9)\Rightarrow YYZYZZZYZ$, $(3 4 1 2 6 7 8 9 5)\Rightarrow ZZYYZYYZZ$, $(3 9 1 6 7 5 8 4 2)\Rightarrow YYZYZYZYZ$, $(5 8 7 3 2 6 4 1 9)\Rightarrow ZYZZYYZYZ$, $(5 8 7 6 1 4 3 2 9)\Rightarrow YZZYYZZYZ$ and $(7 9 5 2 3 1 4 6 8)\Rightarrow ZYZYYYZYZ$
+	
+	
+	$\K_{X,9}(XYZZYYZZZ,2, 3, 4, 5, 7)\Rightarrow $$XYYYZZYYZ$, $XZZYZZYYZ$, $XZYZZZYYZ$, $XZYYYZYYZ$, $XZYYZZZYZ$(Case 1).
+	
+	$\K_{X,4}(XYZZYYZZZ,2, 3, 5, 7)\Rightarrow $$XZZYYYZZZ$, $XYYYYYZZZ$, $XYZYZYZZZ$, $XYZYYYYZZ$(Case 1).
+	
+	$\K_{X,3}(XYZZYYZZZ,2, 5, 7)\Rightarrow $$XZYZYYZZZ$, $XYYZZYZZZ$, $XYYZYYYZZ$(Case 1).
+	
+	
+	
+	$(5 1 6 7 8 4 3 2 9)\Rightarrow YZZYXZZYZ$
+	
+	
+	$\K_{X,3}(YYZZXYZZZ,1, 2, 4, 7, 8, 9)\Rightarrow $$ZYYZXYZZZ$, $YZYZXYZZZ$, $YYYYXYZZZ$, $YYYZXYYZZ$, $YYYZXYZYZ$, $ZZZYXZYYZ$(Case 1).
+	
+	$\K_{X,9}(YYZZXYZZZ,1, 2, 4, 8)\Rightarrow $$YZYYXZYYZ$, $ZYYYXZYYZ$, $ZZYZXZYYZ$, $ZZYYXZYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZZXYZZZ,1, 4)\Rightarrow $$ZZZZXYZZZ$, $YZZYXYZZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZXYZZZ,4)\Rightarrow $$ZYZYXYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow XZZYYZZYZ$
+	
+	
+	$\K_{X,4}(XYZZXYZZZ,\infty,2, 3, 7, 8, 9)\Rightarrow $$XYZYXYZZZ$, $XZZYXYZZZ$, $XYYYXYZZZ$, $XYZYXYYZZ$, $XYZYXYZYZ$, $XZYZXZYYZ$(Case 1).
+	
+	$\K_{X,9}(XYZZXYZZZ,\infty,3, 8)\Rightarrow $$XZYYXZYYZ$, $XZZYXZYYZ$, $XZYYXZYZZ$(Case 1).
+	
+	$\K_{X,3}(XYZZXYZZZ,\infty,2, 7, 8)\Rightarrow $$XYYZXYZZZ$, $XZYZXYZZZ$, $XYYZXYYZZ$, $XYYZXYZYZ$(Case 1).
+	
+	
+	
+	$(1 2 4 9 7 5 8 6 3)\Rightarrow YXZZXZYZZ$, $(1 2 4 9 7 8 5 6 3)\Rightarrow XYZZZZXYZ$, $(1 8 6 7 5 4 3 2 9)\Rightarrow XZZYXZZYZ$, $(3 1 6 9 5 8 2 4 7)\Rightarrow YZXZXZZYZ$, $(3 2 6 9 5 8 1 4 7)\Rightarrow ZYXZXZZYZ$, $(4 1 2 5 9 6 7 3 8)\Rightarrow XYYZYXYYZ$, $(4 1 2 5 9 7 6 3 8)\Rightarrow XYYZYYXYZ$, $(4 3 2 5 9 6 7 1 8)\Rightarrow YYXZYXYYZ$, $(4 3 2 5 9 7 6 1 8)\Rightarrow YYXZYYXYZ$, $(6 3 1 8 9 5 4 7 2)\Rightarrow YYXYXZYYZ$, $(6 3 1 8 9 7 4 5 2)\Rightarrow YYXYYZXYZ$, $(6 4 1 8 9 5 3 7 2)\Rightarrow YYYXXZYYZ$ and $(6 4 1 8 9 7 3 5 2)\Rightarrow YYYXYZXYZ$
+	
+	
+	$\K_{X,9}(ZYZXYYZZZ,1, 2, 3, 5, 7)\Rightarrow $$ZZYXZZYYZ$, $YYYXZZYYZ$, $YZZXZZYYZ$, $YZYXYZYYZ$, $YZYXZZZYZ$(Case 1).
+	
+	$\K_{X,3}(ZYZXYYZZZ,1, 2, 5, 7)\Rightarrow $$YYYXYYZZZ$, $ZZYXYYZZZ$, $ZYYXZYZZZ$, $ZYYXYYYZZ$(Case 1).
+	
+	$\K_{X,2}(ZYZXYYZZZ,1, 5, 7)\Rightarrow $$YZZXYYZZZ$, $ZZZXZYZZZ$, $ZZZXYYYZZ$(Case 1).
+	
+	
+	
+	$(3 8 7 6 1 4 5 2 9)\Rightarrow YZZYZXZYZ$, $(3 8 7 6 2 5 4 1 9)\Rightarrow ZYZZYXZYZ$ and $(6 2 3 4 1 8 7 5 9)\Rightarrow YYZXZZZYZ$
+	
+	
+	$\K_{X,9}(YYZYYYZZZ,\infty,1, 2, 3, 4, 5, 7)\Rightarrow $$ZZYZZZYYZ$, $YZYZZZYYZ$, $ZYYZZZYYZ$, $ZZZZZZYYZ$, $ZZYYZZYYZ$, $ZZYZYZYYZ$, $ZZYZZZZYZ$(Case 1).
+	
+	$\K_{X,3}(YYZYYYZZZ,\infty,1, 2, 4, 5, 7)\Rightarrow $$YYYYYYZZZ$, $ZYYYYYZZZ$, $YZYYYYZZZ$, $YYYZYYZZZ$, $YYYYZYZZZ$, $YYYYYYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZYYYZZZ,\infty,1, 5, 7)\Rightarrow $$YZZYYYZZZ$, $ZZZYYYZZZ$, $YZZYZYZZZ$, $YZZYYYYZZ$(Case 1).
+	
+	$\K_{X,1}(YYZYYYZZZ,\infty,5, 7)\Rightarrow $$ZYZYYYZZZ$, $ZYZYZYZZZ$, $ZYZYYYYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow YZZYYYZYZ$
+	
+	
+	$\K_{X,9}(YYZXYYZZZ,1, 2, 3, 5, 7)\Rightarrow $$YZYXZZYYZ$, $ZYYXZZYYZ$, $ZZZXZZYYZ$, $ZZYXYZYYZ$, $ZZYXZZZYZ$(Case 1).
+	
+	$\K_{X,3}(YYZXYYZZZ,1, 2, 5, 7)\Rightarrow $$ZYYXYYZZZ$, $YZYXYYZZZ$, $YYYXZYZZZ$, $YYYXYYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZXYYZZZ,1, 5, 7)\Rightarrow $$ZZZXYYZZZ$, $YZZXZYZZZ$, $YZZXYYYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 8 5 9 6 7 4)\Rightarrow ZZXXZXXYZ$, $(1 2 3 8 6 9 5 7 4)\Rightarrow ZZXXXZXYZ$, $(1 5 6 2 8 9 4 3 7)\Rightarrow ZXYYZYYZZ$, $(1 6 5 2 7 3 4 9 8)\Rightarrow YXYZZYYZZ$, $(1 7 5 2 4 9 3 6 8)\Rightarrow ZXYZYYZYZ$, $(1 8 7 6 5 4 3 2 9)\Rightarrow YZZYYXZYZ$, $(1 9 5 3 2 7 4 6 8)\Rightarrow ZZXYYYZYZ$, $(1 9 5 3 4 7 2 6 8)\Rightarrow ZYXZYYZYZ$, $(2 1 3 5 4 6 8 7 9)\Rightarrow YYZYXYZZZ$, $(2 1 3 5 8 6 4 7 9)\Rightarrow YYZZXYZYZ$, $(2 1 3 7 4 5 6 8 9)\Rightarrow XXZXXZYZZ$, $(2 1 3 7 4 8 6 5 9)\Rightarrow YYZYZZXYZ$, $(2 1 3 7 6 5 4 8 9)\Rightarrow XXZZXXYZZ$, $(2 1 3 7 6 8 4 5 9)\Rightarrow YYZZZYXYZ$, $(2 5 7 1 8 4 6 3 9)\Rightarrow XYZYYZZYZ$, $(2 9 5 3 4 7 1 6 8)\Rightarrow YZXZYYZYZ$, $(3 7 5 4 9 2 1 6 8)\Rightarrow YZZXYYZYZ$, $(3 8 7 6 4 1 5 2 9)\Rightarrow YZYYZXZYZ$, $(3 9 1 7 5 8 6 4 2)\Rightarrow XXZXZXYZZ$, $(4 5 7 3 8 1 6 2 9)\Rightarrow YZXYYZZYZ$, $(4 5 7 3 8 2 6 1 9)\Rightarrow ZYXYYZZYZ$, $(5 3 1 8 6 9 7 4 2)\Rightarrow XXZXZZXYZ$, $(6 2 3 4 7 5 1 8 9)\Rightarrow ZYZXYYYZZ$, $(6 5 7 1 8 4 2 3 9)\Rightarrow XZZYYYZYZ$ and $(7 3 1 6 9 8 5 4 2)\Rightarrow XXZXXYZZZ$
+	
+	
+	$\K_{X,3}(YYZZZZYZZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$YYYZZZYZZ$, $ZYYZZZYZZ$, $YZYZZZYZZ$, $YYYYZZYZZ$, $YYYZYZYZZ$, $YYYZZYYZZ$, $YYYZZZZZZ$, $YYYZZZYYZ$(Case 1).
+	
+	$\K_{X,9}(YYZZZZYZZ,5, 7, 8)\Rightarrow $$ZZYYZYZYZ$, $ZZYYYYYYZ$, $ZZYYYYZZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZZZYZZ,\infty,2, 4, 5, 6, 7, 8)\Rightarrow $$ZYZZZZYZZ$, $ZZZZZZYZZ$, $ZYZYZZYZZ$, $ZYZZYZYZZ$, $ZYZZZYYZZ$, $ZYZZZZZZZ$, $ZYZZZZYYZ$(Case 1).
+	
+	$\K_{X,2}(YYZZZZYZZ,4)\Rightarrow $$YZZYZZYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZZYZYZZYZ$
+	
+	
+	$\K_{X,8}(ZZYYZZYZZ,\infty,1, 2, 3, 4, 5, 7)\Rightarrow $$ZZYYZZYYZ$, $YZYYZZYYZ$, $ZYYYZZYYZ$, $ZZZYZZYYZ$, $ZZYZZZYYZ$, $ZZYYYZYYZ$, $ZZYYZZZYZ$(Case 1).
+	
+	$\K_{X,7}(ZZYYZZYZZ,\infty,2, 3, 4, 6)\Rightarrow $$ZZYYZZZZZ$, $ZYYYZZZZZ$, $ZZZYZZZZZ$, $ZZYZZZZZZ$, $ZZYYZYZZZ$(Case 1).
+	
+	$\K_{X,5}(ZZYYZZYZZ,\infty,2, 3, 4, 6)\Rightarrow $$ZZYYYZYZZ$, $ZYYYYZYZZ$, $ZZZYYZYZZ$, $ZZYZYZYZZ$, $ZZYYYYYZZ$(Case 1).
+	
+	$\K_{X,3}(ZZYYZZYZZ,\infty,1, 2, 4, 6)\Rightarrow $$ZZZYZZYZZ$, $YZZYZZYZZ$, $ZYZYZZYZZ$, $ZZZZZZYZZ$, $ZZZYZYYZZ$(Case 1).
+	
+	$\K_{X,1}(ZZYYZZYZZ,\infty,2, 4)\Rightarrow $$YZYYZZYZZ$, $YYYYZZYZZ$, $YZYZZZYZZ$(Case 1).
+	
+	$\K_{X,2}(ZZYYZZYZZ,4)\Rightarrow $$ZYYZZZYZZ$(Case 1).
+	
+	
+	
+	$(1 8 7 6 5 4 3 2 9)\Rightarrow ZZYZZYYZZ$
+	
+	
+	$\K_{X,9}(YYZZXZYZZ,1, 2, 3, 4, 8)\Rightarrow $$YZYYXYZYZ$, $ZYYYXYZYZ$, $ZZZYXYZYZ$, $ZZYZXYZYZ$, $ZZYYXYZZZ$(Case 1).
+	
+	$\K_{X,3}(YYZZXZYZZ,1, 2, 4, 6)\Rightarrow $$ZYYZXZYZZ$, $YZYZXZYZZ$, $YYYYXZYZZ$, $YYYZXYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZZXZYZZ,1, 4)\Rightarrow $$ZZZZXZYZZ$, $YZZYXZYZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZXZYZZ,4)\Rightarrow $$ZYZYXZYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow XZYZYZZYZ$
+	
+	
+	$\K_{X,3}(YYZZZYYZZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$YYYZZYYZZ$, $ZYYZZYYZZ$, $YZYZZYYZZ$, $YYYYZYYZZ$, $YYYZYYYZZ$, $YYYZZZYZZ$, $YYYZZYZZZ$, $YYYZZYYYZ$(Case 1).
+	
+	$\K_{X,1}(YYZZZYYZZ,\infty,2, 4, 5, 6, 7, 8)\Rightarrow $$ZYZZZYYZZ$, $ZZZZZYYZZ$, $ZYZYZYYZZ$, $ZYZZYYYZZ$, $ZYZZZZYZZ$, $ZYZZZYZZZ$, $ZYZZZYYYZ$(Case 1).
+	
+	$\K_{X,9}(YYZZZYYZZ,5, 7)\Rightarrow $$ZZYYZZZYZ$, $ZZYYYZYYZ$(Case 1).
+	
+	$\K_{X,2}(YYZZZYYZZ,4)\Rightarrow $$YZZYZYYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZZYYYZZYZ$
+	
+	
+	$\K_{X,7}(XXXYZYYZZ,5, 6, 8, 9)\Rightarrow $$XXXYYYZZZ$, $XXXYZZZZZ$, $XXXYZYZYZ$, $XXXZYZYYZ$(Case 1).
+	
+	$\K_{X,6}(XXXYZYYZZ,5, 8)\Rightarrow $$XXXYYZYZZ$, $XXXYZZYYZ$(Case 1).
+	
+	$\K_{X,5}(XXXYZYYZZ,8)\Rightarrow $$XXXYYYYYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 8 5 7 9)\Rightarrow XXXYYZZYZ$, $(1 2 9 4 3 5 8 6 7)\Rightarrow ZZXYYXXYZ$, $(1 2 9 4 5 6 3 8 7)\Rightarrow ZZXXYXYYZ$, $(1 2 9 4 5 7 3 8 6)\Rightarrow ZZXXYYXYZ$, $(1 3 4 2 5 7 9 6 8)\Rightarrow XZXXYYZYZ$, $(1 3 4 2 6 5 8 7 9)\Rightarrow XYXXYZZYZ$, $(1 4 6 2 3 7 9 8 5)\Rightarrow XZYXYXZYZ$, $(1 4 6 2 7 3 8 9 5)\Rightarrow XYYXZXZYZ$, $(1 4 6 2 7 5 8 9 3)\Rightarrow XYZXYXZYZ$, $(1 5 9 3 2 4 6 8 7)\Rightarrow ZYXXZXYYZ$, $(1 5 9 3 4 2 8 6 7)\Rightarrow ZYYXZXXYZ$, $(1 6 9 5 2 3 4 8 7)\Rightarrow ZYXXXZYYZ$, $(1 6 9 5 3 2 8 4 7)\Rightarrow ZYXXYZXYZ$, $(2 3 4 1 5 6 9 8 7)\Rightarrow ZXXXYZYYZ$, $(2 3 4 1 5 7 9 8 6)\Rightarrow ZXXXYYZYZ$, $(2 3 4 1 6 5 8 9 7)\Rightarrow YXXXYZZYZ$, $(2 4 6 1 3 7 9 8 5)\Rightarrow ZXYXYXZYZ$, $(2 4 6 1 7 3 8 9 5)\Rightarrow YXYXZXZYZ$, $(2 4 6 1 7 5 8 9 3)\Rightarrow YXZXYXZYZ$, $(4 5 6 1 2 3 9 7 8)\Rightarrow ZYZXXXYYZ$, $(4 5 6 1 3 7 2 9 8)\Rightarrow YYZXXXYZZ$, $(4 5 6 1 3 8 2 9 7)\Rightarrow YYZXXXZYZ$, $(4 5 9 1 2 7 6 8 3)\Rightarrow XYYZZXXYZ$, $(4 5 9 1 6 8 2 7 3)\Rightarrow YYXZZXXYZ$, $(4 6 8 1 2 3 9 5 7)\Rightarrow ZXZYXYXYZ$, $(4 6 8 1 3 5 2 9 7)\Rightarrow XXZYXYZYZ$, $(4 6 8 1 3 7 2 9 5)\Rightarrow XXZYZYXYZ$, $(5 6 7 2 3 4 1 9 8)\Rightarrow XXZXYYYZZ$, $(5 6 7 2 3 8 1 9 4)\Rightarrow YYZZXXXYZ$, $(5 7 8 6 3 2 1 4 9)\Rightarrow XXZZYXYYZ$, $(5 8 9 3 1 4 7 2 6)\Rightarrow XXYYZXYZZ$, $(5 8 9 3 1 6 7 2 4)\Rightarrow XXYXZYYZZ$, $(6 7 8 3 1 4 9 2 5)\Rightarrow XXZZXYYYZ$, $(6 7 8 3 1 5 9 2 4)\Rightarrow XXZXZYYYZ$ and $(6 7 8 3 4 1 2 9 5)\Rightarrow XXXZZYYYZ$
+	
+	
+	$\K_{X,9}(YYZZYYYZZ,\infty,1, 2, 3, 4, 6, 7, 8)\Rightarrow $$ZZYYZZZYZ$, $YZYYZZZYZ$, $ZYYYZZZYZ$, $ZZZYZZZYZ$, $ZZYZZZZYZ$, $ZZYYZYZYZ$, $ZZYYZZYYZ$, $ZZYYZZZZZ$(Case 1).
+	
+	$\K_{X,3}(YYZZYYYZZ,\infty,1, 2, 4, 5, 6, 7)\Rightarrow $$YYYZYYYZZ$, $ZYYZYYYZZ$, $YZYZYYYZZ$, $YYYYYYYZZ$, $YYYZZYYZZ$, $YYYZYZYZZ$, $YYYZYYZZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZYYYZZ,\infty,2, 4, 6, 7)\Rightarrow $$ZYZZYYYZZ$, $ZZZZYYYZZ$, $ZYZYYYYZZ$, $ZYZZYZYZZ$, $ZYZZYYZZZ$(Case 1).
+	
+	$\K_{X,2}(YYZZYYYZZ,4)\Rightarrow $$YZZYYYYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 3 4 2 9)\Rightarrow YZYYYZZYZ$
+	
+	
+	$\K_{X,9}(XYZZYYYZZ,3, 4, 6, 7, 8)\Rightarrow $$XZZYZZZYZ$, $XZYZZZZYZ$, $XZYYZYZYZ$, $XZYYZZYYZ$, $XZYYZZZZZ$(Case 1).
+	
+	$\K_{X,4}(XYZZYYYZZ,2, 3, 5, 6, 7, 8)\Rightarrow $$XZZYYYYZZ$, $XYYYYYYZZ$, $XYZYZYYZZ$, $XYZYYZYZZ$, $XYZYYYZZZ$, $XYZYYYYYZ$(Case 1).
+	
+	$\K_{X,3}(XYZZYYYZZ,6, 7)\Rightarrow $$XYYZYZYZZ$, $XYYZYYZZZ$(Case 1).
+	
+	
+	
+	$(5 1 7 6 3 4 8 2 9)\Rightarrow YZYYXZZYZ$ and $(9 3 8 1 4 6 7 2 5)\Rightarrow YYXXYXXYZ$
+	
+	
+	$\K_{X,3}(YYZZXYYZZ,1, 2, 4, 6, 7, 8)\Rightarrow $$ZYYZXYYZZ$, $YZYZXYYZZ$, $YYYYXYYZZ$, $YYYZXZYZZ$, $YYYZXYZZZ$, $YYYZXYYYZ$(Case 1).
+	
+	$\K_{X,9}(YYZZXYYZZ,6, 7)\Rightarrow $$ZZYYXYZYZ$, $ZZYYXZYYZ$(Case 1).
+	
+	$\K_{X,1}(YYZZXYYZZ,2, 4, 6, 7, 8)\Rightarrow $$ZZZZXYYZZ$, $ZYZYXYYZZ$, $ZYZZXZYZZ$, $ZYZZXYZZZ$, $ZYZZXYYYZ$(Case 1).
+	
+	$\K_{X,2}(YYZZXYYZZ,4)\Rightarrow $$YZZYXYYZZ$(Case 1).
+	
+	
+	
+	$(1 2 9 4 7 5 8 6 3)\Rightarrow YYZZYZXYZ$, $(5 8 7 6 1 3 4 2 9)\Rightarrow XZYYYZZYZ$ and $(5 8 9 6 3 1 2 4 7)\Rightarrow YYXZYZZYZ$
+	
+	
+	$\K_{X,9}(YYZXYYYZZ,2, 3, 6, 7, 8)\Rightarrow $$ZYYXZZZYZ$, $ZZZXZZZYZ$, $ZZYXZYZYZ$, $ZZYXZZYYZ$, $ZZXYZZZZZ$(Case 1).
+	
+	$\K_{X,3}(YYZXYYYZZ,2, 5, 6, 7)\Rightarrow $$YZYXYYYZZ$, $YYYXZYYZZ$, $YYYXYZYZZ$, $YYYXYYZZZ$(Case 1).
+	
+	$\K_{X,2}(YYZXYYYZZ,1, 5, 6, 7, 8)\Rightarrow $$ZZZXYYYZZ$, $YZZXZYYZZ$, $YZZXYZYZZ$, $YZZXYYZZZ$, $YZZXYYYYZ$(Case 1).
+	
+	
+	
+	$(1 5 7 2 4 3 8 6 9)\Rightarrow YXYYYZZYZ$, $(1 8 7 6 3 4 5 2 9)\Rightarrow YZYYYXZYZ$, $(4 5 7 3 1 2 8 6 9)\Rightarrow YYXYYZZYZ$, $(5 1 3 8 6 2 7 4 9)\Rightarrow XXZZXXXYZ$ and $(6 1 3 7 2 5 8 4 9)\Rightarrow YYZZYYXYZ$
+	
+	
+	$\K_{X,9}(YYZZZZZYZ,\infty,1, 2, 3, 4, 6, 7, 8)\Rightarrow $$ZZYYYYYZZ$, $YZYYYYYZZ$, $ZYYYYYYZZ$, $ZZZYYYYZZ$, $ZZYZYYYZZ$, $ZZYYYZYZZ$, $ZZYYYYZZZ$, $ZZYYYYYYZ$(Case 1).
+	
+	$\K_{X,3}(YYZZZZZYZ,\infty,1, 2, 4, 6, 7, 8)\Rightarrow $$YYYZZZZYZ$, $ZYYZZZZYZ$, $YZYZZZZYZ$, $YYYYZZZYZ$, $YYYZZYZYZ$, $YYYZZZYYZ$, $YYYZZZZZZ$(Case 1).
+	
+	$\K_{X,1}(YYZZZZZYZ,\infty)\Rightarrow $$ZYZZZZZYZ$(Case 1).
+	
+	$\K_{X,2}(YYZZZZZYZ,4)\Rightarrow $$YZZYZZZYZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 3 4 2 9)\Rightarrow ZYZZYZZYZ$
+	
+	
+	$\K_{X,9}(XYZZZZZYZ,3, 4, 6, 7, 8)\Rightarrow $$XZZYYYYZZ$, $XZYZYYYZZ$, $XZYYYZYZZ$, $XZYYYYZZZ$, $XZYYYYYYZ$(Case 1).
+	
+	$\K_{X,4}(XYZZZZZYZ,3, 6, 7, 8)\Rightarrow $$XYYYZZZYZ$, $XYZYZYZYZ$, $XYZYZZYYZ$, $XYZYZZZZZ$(Case 1).
+	
+	$\K_{X,3}(XYZZZZZYZ,6, 7, 8)\Rightarrow $$XYYZZYZYZ$, $XYYZZZYYZ$, $XYYZZZZZZ$(Case 1).
+	
+	
+	
+	$(5 2 6 7 1 3 4 8 9)\Rightarrow ZYZZXZZYZ$
+	
+	
+	$\K_{X,9}(ZYZXZZZYZ,2, 3, 6, 7, 8)\Rightarrow $$YYYXYYYZZ$, $YZZXYYYZZ$, $YZYXYZYZZ$, $YZYXYYZZZ$, $YZYXYYYYZ$(Case 1).
+	
+	$\K_{X,3}(ZYZXZZZYZ,2, 6, 7, 8)\Rightarrow $$ZZYXZZZYZ$, $ZYYXZYZYZ$, $ZYYXZZYYZ$, $ZXXYZZZZZ$(Case 1).
+	
+	$\K_{X,2}(ZYZXZZZYZ,6, 7, 8)\Rightarrow $$ZZZXZYZYZ$, $ZZZXZZYYZ$, $ZZZYZZZZZ$(Case 1).
+	
+	
+	
+	$(1 8 7 6 3 4 5 2 9)\Rightarrow ZYZZZXZYZ$
+	
+	
+	$\K_{X,7}(ZYYZYZZYZ,\infty,2, 3, 4, 5, 6, 8, 9)\Rightarrow $$ZYYZYZYYZ$, $ZZYZYZYYZ$, $ZYZZYZYYZ$, $ZYYYYZYYZ$, $ZYYZZZYYZ$, $ZYYZYYYYZ$, $ZYYZYZYZZ$, $YZZYZYZZZ$(Case 1).
+	
+	$\K_{X,9}(ZYYZYZZYZ,\infty,3, 5, 6, 8)\Rightarrow $$YZZYZYYZZ$, $YZYYZYYZZ$, $YZZYYYYZZ$, $YZZYZZYZZ$, $YZZYZYYYZ$(Case 1).
+	
+	$\K_{X,5}(ZYYZYZZYZ,\infty,2, 3, 4, 6, 8)\Rightarrow $$ZYYZZZZYZ$, $ZZYZZZZYZ$, $ZYZZZZZYZ$, $ZYYYZZZYZ$, $ZYYZZYZYZ$, $ZYYZZZZZZ$(Case 1).
+	
+	$\K_{X,6}(ZYYZYZZYZ,8)\Rightarrow $$ZYYZYYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow ZYZYYZZYZ$, $(5 6 8 7 1 4 3 2 9)\Rightarrow YYZZZYZYZ$ and $(5 8 7 6 1 4 3 2 9)\Rightarrow YYZZZZYYZ$
+	
+	
+	$\K_{X,7}(ZYYZXZZYZ,2, 3, 4, 6, 8, 9)\Rightarrow $$ZZYZXZYYZ$, $ZYZZXZYYZ$, $ZYYYXZYYZ$, $ZYYZXYYYZ$, $ZYYZXZYZZ$, $YZZYXYZZZ$(Case 1).
+	
+	$\K_{X,6}(ZYYZXZZYZ,2, 3, 4, 8, 9)\Rightarrow $$ZZYZXYZYZ$, $ZYZZXYZYZ$, $ZYYYXYZYZ$, $ZYYZXYZZZ$, $YZZYXZYZZ$(Case 1).
+	
+	$\K_{X,9}(ZYYZXZZYZ,3, 8)\Rightarrow $$YZYYXYYZZ$, $YZZYXYYYZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow ZYZYXZZYZ$, $(5 2 6 7 1 3 4 8 9)\Rightarrow XYZZZYZYZ$ and $(5 8 2 6 1 3 4 7 9)\Rightarrow XYZZZZYYZ$
+	
+	
+	$\K_{X,9}(YYYZYZZYZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$ZZZYZYYZZ$, $YZZYZYYZZ$, $ZYZYZYYZZ$, $ZZZZZYYZZ$, $ZZZYYYYZZ$, $ZZZYZZYZZ$, $ZZZYZYZZZ$, $ZZZYZYYYZ$(Case 1).
+	
+	$\K_{X,5}(YYYZYZZYZ,\infty,1, 2, 4, 6, 7, 8)\Rightarrow $$YYYZZZZYZ$, $ZYYZZZZYZ$, $YZYZZZZYZ$, $YYYYZZZYZ$, $YYYZZYZYZ$, $YYYZZZYYZ$, $YYYZZZZZZ$(Case 1).
+	
+	$\K_{X,8}(YYYZYZZYZ,6, 7)\Rightarrow $$YYYZYYZZZ$, $YYYZYZYZZ$(Case 1).
+	
+	$\K_{X,2}(YYYZYZZYZ,7)\Rightarrow $$YZYZYZYYZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow YYZZYZYYZ$
+	
+	
+	$\K_{X,7}(YXXZYZZYZ,\infty,4, 5, 6, 8, 9)\Rightarrow $$YXXZYZYYZ$, $YXXYYZYYZ$, $YXXZZZYYZ$, $YXXZYYYYZ$, $YXXZYZYZZ$, $ZXXYZYZZZ$(Case 1).
+	
+	$\K_{X,5}(YXXZYZZYZ,\infty,4, 6, 8, 9)\Rightarrow $$YXXZZZZYZ$, $YXXYZZZYZ$, $YXXZZYZYZ$, $XYYZZZZZZ$, $ZXXYYYYZZ$(Case 1).
+	
+	$\K_{X,6}(YXXZYZZYZ,8)\Rightarrow $$YXXZYYZZZ$(Case 1).
+	
+	
+	
+	$(1 4 8 5 2 9 3 7 6)\Rightarrow XXZYZZXYZ$, $(2 7 8 4 1 9 3 5 6)\Rightarrow XXZZXZYYZ$, $(2 7 8 4 1 9 3 6 5)\Rightarrow XXZZZXYYZ$, $(3 2 6 1 8 9 7 5 4)\Rightarrow ZXYZYXZYZ$, $(3 6 7 5 9 2 1 4 8)\Rightarrow YYZZYXXYZ$, $(4 2 3 1 5 6 7 8 9)\Rightarrow ZXXYYZZYZ$ and $(6 3 4 1 9 8 5 7 2)\Rightarrow YYXXYZZYZ$
+	
+	
+	$\K_{X,9}(YYYZXZZYZ,1, 2, 4, 6, 7, 8)\Rightarrow $$YZZYXYYZZ$, $ZYZYXYYZZ$, $ZZZZXYYZZ$, $ZZZYXZYZZ$, $ZZZYXYZZZ$, $ZZZYXYYYZ$(Case 1).
+	
+	$\K_{X,6}(YYYZXZZYZ,1, 2, 4, 7, 8)\Rightarrow $$ZYYZXYZYZ$, $YZYZXYZYZ$, $YYYYXYZYZ$, $YYYZXYYYZ$, $YYYZXYZZZ$(Case 1).
+	
+	$\K_{X,7}(YYYZXZZYZ,2, 8)\Rightarrow $$YZYZXZYYZ$, $YYYZXZYZZ$(Case 1).
+	
+	
+	
+	$(2 5 7 6 1 4 3 8 9)\Rightarrow XYZZYZYYZ$
+	
+	
+	$\K_{X,9}(YYXZXZZYZ,\infty,2, 4, 6, 7, 8)\Rightarrow $$ZZXYXYYZZ$, $ZYXYXYYZZ$, $ZZXZXYYZZ$, $ZZXYXZYZZ$, $ZZXYXYZZZ$, $ZZXYXYYYZ$(Case 1).
+	
+	$\K_{X,6}(YYXZXZZYZ,\infty,2, 4, 7, 8)\Rightarrow $$YYXZXYZYZ$, $YZXZXYZYZ$, $YYXYXYZYZ$, $YYXZXYYYZ$, $YYXZXYZZZ$(Case 1).
+	
+	$\K_{X,7}(YYXZXZZYZ,8)\Rightarrow $$YYXZXZYZZ$(Case 1).
+	
+	
+	
+	$(1 6 4 3 9 2 8 7 5)\Rightarrow XYYZYXXYZ$, $(2 5 1 6 7 4 3 8 9)\Rightarrow XYZZYZXYZ$, $(3 5 6 7 9 1 2 4 8)\Rightarrow YYXXXZYYZ$, $(3 6 4 1 9 2 8 7 5)\Rightarrow YYXZYXXYZ$ and $(3 7 6 5 9 1 2 4 8)\Rightarrow YYXXYZXYZ$
+	
+	
+	$\K_{X,7}(YXZYYZZYZ,5, 6, 8, 9)\Rightarrow $$YXZYZZYYZ$, $YXZYYYYYZ$, $YXZYYZYZZ$, $ZXYZZYZZZ$(Case 1).
+	
+	$\K_{X,8}(YXZYYZZYZ,5, 6, 9)\Rightarrow $$YXZYZZZZZ$, $YXZYYYZZZ$, $ZXYZZYYYZ$(Case 1).
+	
+	$\K_{X,6}(YXZYYZZYZ,5, 9)\Rightarrow $$YXZYZYZYZ$, $ZXYZZZYZZ$(Case 1).
+	
+	$\K_{X,5}(YXZYYZZYZ,9)\Rightarrow $$ZXYZYYYZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 3 4 2 9)\Rightarrow XXZZXXZYZ$
+	
+	
+	$\K_{X,7}(YXZYXZZYZ,\infty,3, 6, 8, 9)\Rightarrow $$YXZYXZYYZ$, $YXYYXZYYZ$, $YXZYXYYYZ$, $YXZYXZYZZ$, $ZXYZXYZZZ$(Case 1).
+	
+	$\K_{X,9}(YXZYXZZYZ,\infty,3, 6, 8)\Rightarrow $$ZXYZXYYZZ$, $ZXZZXYYZZ$, $ZXYZXZYZZ$, $ZXYZXYYYZ$(Case 1).
+	
+	$\K_{X,6}(YXZYXZZYZ,\infty,3, 8)\Rightarrow $$YXZYXYZYZ$, $YXYYXYZYZ$, $YXZYXYZZZ$(Case 1).
+	
+	
+	
+	$(5 1 7 6 8 3 4 2 9)\Rightarrow YXZZXXZYZ$
+	
+	
+	$\K_{X,9}(ZXXXXZZYZ,\infty,6, 7, 8)\Rightarrow $$YXXXXYYZZ$, $YXXXXZYZZ$, $YXXXXYZZZ$, $YXXXXYYYZ$(Case 1).
+	
+	$\K_{X,6}(ZXXXXZZYZ,\infty,7, 8)\Rightarrow $$ZXXXXYZYZ$, $ZXXXXYYYZ$, $ZXXXXYZZZ$(Case 1).
+	
+	$\K_{X,7}(ZXXXXZZYZ,8)\Rightarrow $$ZXXXXZYZZ$(Case 1).
+	
+	
+	
+	$(5 1 6 7 8 4 3 2 9)\Rightarrow YXZZZYYYZ$
+	
+	
+	$\K_{X,6}(XXYXYZZYZ,5, 7, 8)\Rightarrow $$XXYXZYZYZ$, $XXYXYYYYZ$, $XXYXYYZZZ$(Case 1).
+	
+	$\K_{X,7}(XXYXYZZYZ,5, 8)\Rightarrow $$XXYXZZYYZ$, $XXYXYZYZZ$(Case 1).
+	
+	$\K_{X,5}(XXYXYZZYZ,8)\Rightarrow $$YYXYZZZZZ$(Case 1).
+	
+	
+	
+	$(5 6 7 8 1 3 4 2 9)\Rightarrow XXZZYYXYZ$
+	
+	
+	$\K_{X,7}(XXXXYZZYZ,\infty,5, 6, 8, 9)\Rightarrow $$XXXXYZYYZ$, $XXXXZZYYZ$, $XXXXYYYYZ$, $XXXXYZYZZ$, $XXXXZYZZZ$(Case 1).
+	
+	$\K_{X,5}(XXXXYZZYZ,\infty)\Rightarrow $$XXXXZZZYZ$(Case 1).
+	
+	$\K_{X,6}(XXXXYZZYZ,8)\Rightarrow $$XXXXYYZZZ$(Case 1).
+	
+	
+	
+	$(5 6 7 8 1 4 3 2 9)\Rightarrow XXZZYYYYZ$
+	
+	
+	$\K_{X,7}(YXYYXZZYZ,\infty,3, 4, 6, 8, 9)\Rightarrow $$YXYYXZYYZ$, $YXZYXZYYZ$, $YXYZXZYYZ$, $YXYYXYYYZ$, $YXYYXZYZZ$, $ZXZZXYZZZ$(Case 1).
+	
+	$\K_{X,6}(YXYYXZZYZ,\infty,3, 4, 8, 9)\Rightarrow $$YXYYXYZYZ$, $YXZYXYZYZ$, $YXYZXYZYZ$, $YXYYXYZZZ$, $ZXZZXZYZZ$(Case 1).
+	
+	$\K_{X,9}(YXYYXZZYZ,\infty,8)\Rightarrow $$ZXZZXYYZZ$, $ZXZZXYYYZ$(Case 1).
+	
+	
+	
+	$(2 1 5 6 8 3 4 7 9)\Rightarrow YXZZXXXYZ$
+	
+	
+	$\K_{X,9}(YYXYXZZYZ,\infty,2, 4, 6, 7, 8)\Rightarrow $$ZZXZXYYZZ$, $ZYXZXYYZZ$, $ZZXYXYYZZ$, $ZZXZXZYZZ$, $ZZXZXYZZZ$, $ZZXZXYYYZ$(Case 1).
+	
+	$\K_{X,6}(YYXYXZZYZ,\infty,2, 4, 7, 8)\Rightarrow $$YYXYXYZYZ$, $YZXYXYZYZ$, $YYXZXYZYZ$, $YYXYXYYYZ$, $YYXYXYZZZ$(Case 1).
+	
+	$\K_{X,7}(YYXYXZZYZ,8)\Rightarrow $$YYXYXZYZZ$(Case 1).
+	
+	
+	
+	$(1 3 4 6 9 2 8 7 5)\Rightarrow XYXZYXXYZ$, $(2 5 1 6 7 4 3 8 9)\Rightarrow XYZZYYXYZ$ and $(3 5 6 7 9 1 2 4 8)\Rightarrow YYXXXZXYZ$
+	
+	
+	$\K_{X,7}(XYXYXZZYZ,6, 8, 9)\Rightarrow $$XYXYXYYYZ$, $XYXYXZYZZ$, $XZXZXYZZZ$(Case 1).
+	
+	$\K_{X,8}(XYXYXZZYZ,6, 9)\Rightarrow $$XYXYXYZZZ$, $XZXZXYYYZ$(Case 1).
+	
+	$\K_{X,6}(XYXYXZZYZ,9)\Rightarrow $$XZXZXZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 5 7 8 9)\Rightarrow XYXYZXZYZ$, $(1 2 4 3 5 6 7 8 9)\Rightarrow XYYXXZZYZ$, $(1 2 5 7 6 3 4 8 9)\Rightarrow XYZZXXYYZ$, $(1 2 6 5 8 3 4 7 9)\Rightarrow YXZZXYXYZ$, $(1 5 6 8 7 3 4 2 9)\Rightarrow XYZZYXXYZ$, $(1 5 7 6 8 3 4 2 9)\Rightarrow YXZZXXYYZ$, $(1 6 5 8 7 3 4 2 9)\Rightarrow XYZZXYXYZ$, $(2 1 3 4 5 6 7 8 9)\Rightarrow YXXYXZZYZ$, $(2 1 3 4 6 5 7 8 9)\Rightarrow YXXYZXZYZ$, $(2 1 4 3 5 6 7 8 9)\Rightarrow YXYXXZZYZ$, $(3 1 4 2 5 6 7 8 9)\Rightarrow YYXXXZZYZ$, $(4 5 7 6 8 1 3 2 9)\Rightarrow ZXZYXXYYZ$ and $(4 6 5 8 7 1 3 2 9)\Rightarrow ZYZXXYXYZ$
+	
+	
+	$\K_{X,7}(ZYYZZXZYZ,2, 3, 4, 5, 8, 9)\Rightarrow $$ZZYZZXYYZ$, $ZYZZZXYYZ$, $ZYYYZXYYZ$, $ZYYZYXYYZ$, $ZYYZZXYZZ$, $XZZXXYZZZ$(Case 1).
+	
+	$\K_{X,8}(ZYYZZXZYZ,2, 3, 4, 5, 9)\Rightarrow $$ZZXZZYZZZ$, $ZXZZZYZZZ$, $ZXXXZYZZZ$, $ZXXZXYZZZ$, $YZZYYXYYZ$(Case 1).
+	
+	$\K_{X,9}(ZYYZZXZYZ,3, 5)\Rightarrow $$YZYYYXYZZ$, $YZZYZXYZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow ZYZYZXZYZ$, $(5 6 8 7 1 4 3 2 9)\Rightarrow ZYZXZYZYZ$ and $(5 8 7 6 1 4 3 2 9)\Rightarrow ZYZXZZYYZ$
+	
+	
+	$\K_{X,8}(YYYZZXZYZ,1, 2, 4, 5, 7, 9)\Rightarrow $$ZXXZZYZZZ$, $XZXZZYZZZ$, $XXXXZYZZZ$, $XXXZXYZZZ$, $YYYZZXYZZ$, $ZZZYYXYYZ$(Case 1).
+	
+	$\K_{X,9}(YYYZZXZYZ,1, 2, 4, 5, 7)\Rightarrow $$YZZYYXYZZ$, $ZYZYYXYZZ$, $ZZZZYXYZZ$, $ZZZYZXYZZ$, $ZZZXXYZZZ$(Case 1).
+	
+	$\K_{X,2}(YYYZZXZYZ,7)\Rightarrow $$YZYZZXYYZ$(Case 1).
+	
+	
+	
+	$(3 9 1 2 4 6 5 7 8)\Rightarrow ZYZYYXZYZ$, $(4 9 1 2 3 6 5 7 8)\Rightarrow ZYYZYXZYZ$, $(5 8 7 1 6 4 3 2 9)\Rightarrow ZYZXYZYYZ$, $(6 9 5 1 8 4 7 3 2)\Rightarrow YYZXZZYYZ$ and $(7 9 5 1 6 4 8 3 2)\Rightarrow YYZXZYZYZ$
+	
+	
+	$\K_{X,7}(YXZYZXZYZ,\infty,3, 5, 8, 9)\Rightarrow $$YXZYZXYYZ$, $YXYYZXYYZ$, $YXZYYXYYZ$, $YXZYZXYZZ$, $ZYXZXYZZZ$(Case 1).
+	
+	$\K_{X,8}(YXZYZXZYZ,\infty,3, 5, 9)\Rightarrow $$XYZXZYZZZ$, $XYXXZYZZZ$, $XYZXXYZZZ$, $ZXYZYXYYZ$(Case 1).
+	
+	$\K_{X,9}(YXZYZXZYZ,\infty,3, 5)\Rightarrow $$ZXYZYXYZZ$, $ZXZZYXYZZ$, $ZXYZZXYZZ$(Case 1).
+	
+	
+	
+	$(5 4 1 6 7 8 3 2 9)\Rightarrow ZXZYXXZYZ$
+	
+	
+	$\K_{X,9}(YYYZYYZYZ,\infty,1, 2, 4, 5, 6, 7, 8)\Rightarrow $$ZZZYZZYZZ$, $YZZYZZYZZ$, $ZYZYZZYZZ$, $ZZZZZZYZZ$, $ZZZYYZYZZ$, $ZZZYZYYZZ$, $ZZZYZZZZZ$, $ZZZYZZYYZ$(Case 1).
+	
+	$\K_{X,5}(YYYZYYZYZ,\infty,1, 2, 4, 6, 7, 8)\Rightarrow $$YYYZZYZYZ$, $ZYYZZYZYZ$, $YZYZZYZYZ$, $YYYYZYZYZ$, $YYYZZZZYZ$, $YYYZZYYYZ$, $YYYZZYZZZ$(Case 1).
+	
+	$\K_{X,8}(YYYZYYZYZ,\infty,2, 4, 7)\Rightarrow $$YYYZYYZZZ$, $YZYZYYZZZ$, $YYYYYYZZZ$, $YYYZYYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYYZYYZYZ,7)\Rightarrow $$YZYZYYYYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 5 7 6 8 9)\Rightarrow YYYZYZYYZ$ and $(4 5 7 6 1 8 3 2 9)\Rightarrow YYZYYZYYZ$
+	
+	
+	$\K_{X,8}(YYYZYXZYZ,1, 2, 4, 5, 7, 9)\Rightarrow $$ZXXZXYZZZ$, $XZXZXYZZZ$, $XXXXXYZZZ$, $XXXZZYZZZ$, $YYYZYXYZZ$, $ZZZYZXYYZ$(Case 1).
+	
+	$\K_{X,9}(YYYZYXZYZ,1, 2, 4, 5, 7)\Rightarrow $$YZZYZXYZZ$, $ZYZYZXYZZ$, $ZZZZZXYZZ$, $ZZZYYXYZZ$, $ZZZXZYZZZ$(Case 1).
+	
+	$\K_{X,2}(YYYZYXZYZ,7)\Rightarrow $$YZYZYXYYZ$(Case 1).
+	
+	
+	
+	$(1 5 7 6 8 4 3 2 9)\Rightarrow YYZXYZYYZ$
+	
+	
+	$\K_{X,7}(YXZYYYZYZ,3, 5, 6, 8, 9)\Rightarrow $$YXYYYYYYZ$, $YXZYZYYYZ$, $YXZYYZYYZ$, $YXZYYYYZZ$, $ZXYZZZZZZ$(Case 1).
+	
+	$\K_{X,9}(YXZYYYZYZ,3, 5, 6, 8)\Rightarrow $$ZXZZZZYZZ$, $ZXYZYZYZZ$, $ZXYZZYYZZ$, $ZXYZZZYYZ$(Case 1).
+	
+	$\K_{X,5}(YXZYYYZYZ,3, 6, 8)\Rightarrow $$YXYYZYZYZ$, $YXZYZZZYZ$, $YXZYZYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 2 3 4 9)\Rightarrow XXZXXXZYZ$
+	
+	
+	$\K_{X,3}(YYZXXYZYZ,\infty,1, 2, 7, 8, 9)\Rightarrow $$YYYXXYZYZ$, $ZYYXXYZYZ$, $YZYXXYZYZ$, $YYYXXYYYZ$, $YYYXXYZZZ$, $ZZZXXZYZZ$(Case 1).
+	
+	$\K_{X,9}(YYZXXYZYZ,\infty,2, 8)\Rightarrow $$ZZYXXZYZZ$, $ZYYXXZYZZ$, $ZZYXXZYYZ$(Case 1).
+	
+	$\K_{X,2}(YYZXXYZYZ,\infty,1, 7, 8)\Rightarrow $$YZZXXYZYZ$, $ZZZXXYZYZ$, $YZZXXYYYZ$, $YZZXXYZZZ$(Case 1).
+	
+	
+	
+	$(2 8 7 1 6 4 3 5 9)\Rightarrow XYZYYXZYZ$
+	
+	
+	$\K_{X,7}(YXZYYXZYZ,\infty,3, 5, 8, 9)\Rightarrow $$YXZYYXYYZ$, $YXYYYXYYZ$, $YXZYZXYYZ$, $YXZYYXYZZ$, $ZYXZZYZZZ$(Case 1).
+	
+	$\K_{X,8}(YXZYYXZYZ,\infty,3, 5, 9)\Rightarrow $$XYZXXYZZZ$, $XYXXXYZZZ$, $XYZXZYZZZ$, $ZXYZZXYYZ$(Case 1).
+	
+	$\K_{X,9}(YXZYYXZYZ,\infty,3, 5)\Rightarrow $$ZXYZZXYZZ$, $ZXZZZXYZZ$, $ZXYZYXYZZ$(Case 1).
+	
+	
+	
+	$(5 4 7 6 1 8 3 2 9)\Rightarrow XXZYXXZYZ$
+	
+	
+	$\K_{X,8}(XYYZXZYYZ,\infty,2, 4, 6, 9)\Rightarrow $$XYYZXZYZZ$, $XZYZXZYZZ$, $XYYYXZYZZ$, $XYYZXYYZZ$, $XZZYXYZYZ$(Case 1).
+	
+	$\K_{X,2}(XYYZXZYYZ,\infty,4, 6, 9)\Rightarrow $$XZYZXZYYZ$, $XZYYXZYYZ$, $XZYZXYYYZ$, $XYZYXYZZZ$(Case 1).
+	
+	$\K_{X,9}(XYYZXZYYZ,\infty,3, 7)\Rightarrow $$XZZYXYZZZ$, $XZYYXYZZZ$, $XZZYXYYZZ$(Case 1).
+	
+	$\K_{X,6}(XYYZXZYYZ,\infty,7)\Rightarrow $$XYYZXYYYZ$, $XYYZXYZYZ$(Case 1).
+	
+	$\K_{X,4}(XYYZXZYYZ,\infty,3)\Rightarrow $$XYYYXZYYZ$, $XYZYXZYYZ$(Case 1).
+	
+	$\K_{Y,7}(YZYZYZZZZ,6, 8, 9)\Rightarrow $$XZXZXYYZZ$, $XZXZXZYYZ$, $XYXYXYZYZ$(Case 1).
+	
+	$\K_{Y,8}(YZYZYZZZZ,6, 9)\Rightarrow $$XZXZXYZYZ$, $XYXYXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(YZYZYZZZZ,9)\Rightarrow $$XYXYXZYYZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow YZZYYZZZZ$, $(1 2 5 6 7 3 4 8 9)\Rightarrow YZZZYZYZZ$, $(1 2 5 7 6 3 4 8 9)\Rightarrow YZZZYYZZZ$, $(1 2 6 5 8 3 4 7 9)\Rightarrow YZZZZYZYZ$, $(1 5 7 6 8 2 3 4 9)\Rightarrow YZZZZZYYZ$, $(2 1 3 4 5 6 7 8 9)\Rightarrow ZYYZYZZZZ$ and $(2 1 4 3 5 6 7 8 9)\Rightarrow ZYZYYZZZZ$
+	
+	
+	$\K_{Y,7}(XZYZYZZZZ,\infty,4, 6, 8, 9)\Rightarrow $$YZXZXZYZZ$, $YZXYXZYZZ$, $YZXZXYYZZ$, $YZXZXZYYZ$, $ZYXYXYZYZ$(Case 1).
+	
+	$\K_{Y,9}(XZYZYZZZZ,\infty,4, 6, 8)\Rightarrow $$ZYXYXYYYZ$, $ZYXZXYYYZ$, $ZYXYXZYYZ$, $ZYXYXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(XZYZYZZZZ,\infty,4, 8)\Rightarrow $$YZXZXYZZZ$, $YZXYXYZZZ$, $YZXZXYZYZ$(Case 1).
+	
+	
+	
+	$(1 2 5 6 7 3 4 8 9)\Rightarrow XZZZYZYZZ$, $(1 2 5 7 6 3 4 8 9)\Rightarrow XZZZYYZZZ$, $(1 2 5 7 9 3 4 8 6)\Rightarrow XYYYZYYYZ$, $(1 2 6 5 7 3 4 8 9)\Rightarrow XZZZZYYZZ$, $(1 2 6 5 8 3 4 7 9)\Rightarrow XZZZZYZYZ$, $(2 1 3 4 5 6 7 8 9)\Rightarrow ZXYZYZZZZ$, $(3 4 1 2 5 6 7 8 9)\Rightarrow YZXZYZZZZ$, $(3 4 6 5 9 1 2 7 8)\Rightarrow YYXYYZYYZ$, $(4 3 1 6 9 2 5 7 8)\Rightarrow ZYYXYYYYZ$, $(4 3 6 5 9 1 2 7 8)\Rightarrow YYYXYZYYZ$, $(5 2 1 6 7 3 4 8 9)\Rightarrow YZZZXZYZZ$, $(5 8 1 2 3 6 7 4 9)\Rightarrow XZXZYZZZZ$, $(5 8 1 2 4 6 7 3 9)\Rightarrow XZZXYZZZZ$, $(5 8 1 2 9 4 6 3 7)\Rightarrow ZYYYXYYYZ$, $(5 8 2 1 4 6 7 3 9)\Rightarrow ZXZXYZZZZ$, $(5 8 3 1 4 6 7 2 9)\Rightarrow ZZXXYZZZZ$, $(6 7 4 1 9 2 5 3 8)\Rightarrow YYYZYXYYZ$, $(6 7 5 3 9 1 2 4 8)\Rightarrow YYYYZXYYZ$, $(7 6 1 2 5 3 4 8 9)\Rightarrow XZZZXZYZZ$, $(7 6 4 1 9 2 5 3 8)\Rightarrow YYYZYYXYZ$ and $(8 2 1 5 7 3 4 6 9)\Rightarrow XZZZZZXYZ$
+	
+	
+	$\K_{Y,7}(ZYXZYZZZZ,\infty,3, 4, 6, 8, 9)\Rightarrow $$ZXYZXZYZZ$, $ZXZZXZYZZ$, $ZXYYXZYZZ$, $ZXYZXYYZZ$, $ZXYZXZYYZ$, $YXZYXYZYZ$(Case 1).
+	
+	$\K_{Y,6}(ZYXZYZZZZ,\infty,3, 4, 8, 9)\Rightarrow $$ZXYZXYZZZ$, $ZXZZXYZZZ$, $ZXYYXYZZZ$, $ZXYZXYZYZ$, $YXZYXZYYZ$(Case 1).
+	
+	$\K_{Y,9}(ZYXZYZZZZ,\infty,8)\Rightarrow $$YXZYXYYYZ$, $YXZYXYYZZ$(Case 1).
+	
+	
+	
+	$(2 4 8 3 5 6 7 1 9)\Rightarrow ZZZXXZZYZ$, $(5 1 7 6 8 3 4 2 9)\Rightarrow YZZZZZXYZ$ and $(8 1 2 7 6 3 4 5 9)\Rightarrow YXZZZYZZZ$
+	
+	
+	$\K_{Y,9}(XXXZYZZZZ,1, 2, 4, 6, 7, 8)\Rightarrow $$YZZYXYYYZ$, $ZYZYXYYYZ$, $ZZZZXYYYZ$, $ZZZYXZYYZ$, $ZZZYXYZYZ$, $ZZZYXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(XXXZYZZZZ,1, 2, 4, 7, 8)\Rightarrow $$ZYYZXYZZZ$, $YZYZXYZZZ$, $YYYYXYZZZ$, $YYYZXYYZZ$, $YYYZXYZYZ$(Case 1).
+	
+	$\K_{Y,7}(XXXZYZZZZ,2, 4)\Rightarrow $$YZYZXZYZZ$, $YYYYXZYZZ$(Case 1).
+	
+	
+	
+	$(1 3 4 2 5 6 9 8 7)\Rightarrow XZXXYZZZZ$, $(3 4 6 2 9 1 8 7 5)\Rightarrow YYXXYXYYZ$, $(3 4 7 2 9 1 8 6 5)\Rightarrow YYXXYYXYZ$, $(3 6 7 2 9 1 8 4 5)\Rightarrow YYXYYXXYZ$, $(4 6 7 2 9 1 8 3 5)\Rightarrow YYYXYXXYZ$, $(5 6 7 2 1 3 9 8 4)\Rightarrow XZZZYYYZZ$ and $(5 8 7 6 1 4 3 2 9)\Rightarrow XZZZYZYYZ$
+	
+	
+	$\K_{Y,7}(ZZZXYZZZZ,1, 2, 3, 4, 6, 8, 9)\Rightarrow $$YZZYXZYZZ$, $ZYZYXZYZZ$, $ZZYYXZYZZ$, $ZZZZXZYZZ$, $ZZZYXYYZZ$, $ZZZYXZYYZ$, $YYYZXYZYZ$(Case 1).
+	
+	$\K_{Y,8}(ZZZXYZZZZ,6, 9)\Rightarrow $$ZZZYXYZYZ$, $YYYZXYYZZ$(Case 1).
+	
+	$\K_{Y,4}(ZZZXYZZZZ,6, 9)\Rightarrow $$ZZZZXYZZZ$, $YYYYXYYYZ$(Case 1).
+	
+	$\K_{Y,6}(ZZZXYZZZZ,2, 3)\Rightarrow $$ZYZYXYZZZ$, $ZZYYXYZZZ$(Case 1).
+	
+	
+	
+	$(2 5 7 6 1 4 3 8 9)\Rightarrow XZZZZYZZZ$
+	
+	
+	$\K_{Y,7}(YXZYYZZZZ,6, 8, 9)\Rightarrow $$XYZXXYYZZ$, $XYZXXZYYZ$, $XZYXXYZYZ$(Case 1).
+	
+	$\K_{Y,8}(YXZYYZZZZ,6, 9)\Rightarrow $$XYZXXYZYZ$, $XZYXXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(YXZYYZZZZ,9)\Rightarrow $$XZYXXZYYZ$(Case 1).
+	
+	
+	
+	$(1 2 5 6 8 3 4 7 9)\Rightarrow YXZZZYZYZ$, $(1 2 7 5 6 3 4 8 9)\Rightarrow YXZZYYZZZ$, $(1 2 8 5 9 3 4 6 7)\Rightarrow ZXYYZYYYZ$, $(1 8 2 4 5 3 6 7 9)\Rightarrow XZZXXZZYZ$, $(1 8 2 5 6 3 4 7 9)\Rightarrow XZZZXXZYZ$, $(1 8 2 5 9 3 4 6 7)\Rightarrow ZXXXZXXYZ$, $(2 5 8 3 4 1 6 7 9)\Rightarrow ZXXXYZZZZ$, $(2 8 1 4 5 3 6 7 9)\Rightarrow ZXZXXZZYZ$ and $(6 1 2 7 8 3 4 5 9)\Rightarrow XZZZZYYYZ$
+	
+	
+	$\K_{Y,7}(YXYYYZZZZ,\infty,6, 8, 9)\Rightarrow $$XYXXXZYZZ$, $XYXXXYYZZ$, $XYXXXZYYZ$, $XZXXXYZYZ$(Case 1).
+	
+	$\K_{Y,9}(YXYYYZZZZ,\infty,6, 8)\Rightarrow $$XZXXXYYYZ$, $XZXXXZYYZ$, $XZXXXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(YXYYYZZZZ,\infty)\Rightarrow $$XYXXXYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 5 6 7 3 4 8 9)\Rightarrow YXZZYYYZZ$, $(1 8 3 4 5 6 7 2 9)\Rightarrow XZXXXZZYZ$ and $(1 8 5 6 7 3 4 2 9)\Rightarrow XZZZXXXYZ$
+	
+	
+	$\K_{Y,7}(XYXYYZZZZ,6, 8, 9)\Rightarrow $$YXYXXYYZZ$, $YXYXXZYYZ$, $ZXZXXYZYZ$(Case 1).
+	
+	$\K_{Y,8}(XYXYYZZZZ,6, 9)\Rightarrow $$YXYXXYZYZ$, $ZXZXXYYZZ$(Case 1).
+	
+	$\K_{Y,6}(XYXYYZZZZ,9)\Rightarrow $$ZXZXXZYYZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XYYXYZZZZ$, $(1 2 8 4 5 3 6 7 9)\Rightarrow YXZXXZZYZ$, $(1 2 8 5 9 3 4 6 7)\Rightarrow YZXXZXXYZ$, $(2 1 3 4 5 6 7 8 9)\Rightarrow YXXYYZZZZ$, $(2 1 4 3 5 6 7 8 9)\Rightarrow YXYXYZZZZ$, $(2 1 5 6 8 3 4 7 9)\Rightarrow YXZZXYZYZ$, $(2 1 5 8 9 3 4 6 7)\Rightarrow ZXYYXYYZZ$, $(2 1 6 5 7 3 4 8 9)\Rightarrow YXZZYXYZZ$, $(2 1 6 8 9 3 4 5 7)\Rightarrow ZXYYYXYZZ$, $(2 1 7 5 6 3 4 8 9)\Rightarrow XYZZXXYZZ$, $(2 1 7 6 8 3 4 5 9)\Rightarrow YXZZZYXYZ$, $(2 1 8 3 5 4 6 7 9)\Rightarrow XYXZXZZYZ$, $(2 1 8 4 5 3 6 7 9)\Rightarrow XYZXXZZYZ$, $(2 1 8 5 6 3 4 7 9)\Rightarrow XYZZXXZYZ$, $(2 1 8 5 7 3 4 6 9)\Rightarrow XYZZXZXYZ$, $(3 1 8 4 5 2 6 7 9)\Rightarrow XZYXXZZYZ$, $(3 2 8 4 5 1 6 7 9)\Rightarrow ZXYXXZZYZ$, $(4 1 8 3 5 2 6 7 9)\Rightarrow XZXYXZZYZ$, $(4 2 8 5 9 1 3 6 7)\Rightarrow XZXYZXXYZ$, $(5 1 6 7 8 2 3 4 9)\Rightarrow YZZZXXYYZ$, $(5 1 7 6 8 2 3 4 9)\Rightarrow YZZZXYXYZ$, $(6 1 8 5 7 2 3 4 9)\Rightarrow XZZZXYXYZ$ and $(7 1 8 5 6 2 3 4 9)\Rightarrow XZZZXXYYZ$
+	
+	
+	$\K_{Y,3}(XXZZZYZZZ,1, 2, 4, 5, 7, 9)\Rightarrow $$ZXXZZYZZZ$, $XZXZZYZZZ$, $XXXXZYZZZ$, $XXXZXYZZZ$, $YYYZZXYZZ$, $ZZZYYXYYZ$(Case 1).
+	
+	$\K_{Y,9}(XXZZZYZZZ,1, 2, 4, 5)\Rightarrow $$YZYYYXYYZ$, $ZYYYYXYYZ$, $ZZYZYXYYZ$, $ZZYYZXYYZ$(Case 1).
+	
+	$\K_{Y,2}(XXZZZYZZZ,1, 4)\Rightarrow $$ZZZZZYZZZ$, $XZZXZYZZZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZZYZZZ,4)\Rightarrow $$ZXZXZYZZZ$(Case 1).
+	
+	
+	
+	$(3 9 1 5 6 7 4 8 2)\Rightarrow YYZYYYXYZ$, $(3 9 1 7 5 8 4 6 2)\Rightarrow XXZXXXXYZ$, $(5 8 7 6 1 4 3 2 9)\Rightarrow ZZZXYZZYZ$, $(7 9 5 1 2 3 4 6 8)\Rightarrow YYXYYYZYZ$ and $(7 9 5 3 1 2 4 6 8)\Rightarrow YXYYYYZYZ$
+	
+	
+	$\K_{Y,3}(XXZXZYZZZ,1, 2, 4, 5, 7, 9)\Rightarrow $$ZXXXZYZZZ$, $XZXXZYZZZ$, $XXXZZYZZZ$, $XXXXXYZZZ$, $YYYYZXYZZ$, $ZZZZYXYYZ$(Case 1).
+	
+	$\K_{Y,9}(XXZXZYZZZ,1, 2, 4, 5)\Rightarrow $$YZYZYXYYZ$, $ZYYZYXYYZ$, $ZZYYYXYYZ$, $ZZYZZXYYZ$(Case 1).
+	
+	$\K_{Y,2}(XXZXZYZZZ,1, 5, 7)\Rightarrow $$ZZZXZYZZZ$, $XZZXXYZZZ$, $YZZYZXYZZ$(Case 1).
+	
+	$\K_{Y,1}(XXZXZYZZZ,5)\Rightarrow $$ZXZXXYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 6 5 3 9 4 8 7)\Rightarrow XXYYXYYYZ$, $(1 5 3 8 4 9 6 2 7)\Rightarrow YXXXYXXYZ$, $(2 1 3 5 4 6 7 8 9)\Rightarrow XXZZXYZZZ$, $(2 1 3 7 4 8 5 6 9)\Rightarrow XXZZZZXYZ$, $(3 9 1 6 8 5 4 7 2)\Rightarrow YYZYXZYYZ$, $(3 9 1 7 8 5 4 6 2)\Rightarrow YYZYXYZYZ$, $(4 3 1 7 8 6 5 9 2)\Rightarrow ZZYYZXYZZ$, $(4 9 1 6 2 5 3 7 8)\Rightarrow YYYZXZYYZ$, $(5 8 7 6 1 4 3 2 9)\Rightarrow ZZZXYYZYZ$, $(6 7 5 3 2 4 1 9 8)\Rightarrow ZZYXZYYZZ$, $(6 9 5 4 2 1 7 3 8)\Rightarrow XYYZYZYYZ$, $(7 9 5 3 2 1 6 4 8)\Rightarrow XYZYYYZYZ$, $(7 9 5 4 2 1 6 3 8)\Rightarrow XYYZYYZYZ$, $(8 5 7 1 6 4 3 2 9)\Rightarrow YZZXYZZYZ$ and $(8 5 7 3 6 2 1 4 9)\Rightarrow ZXYZYZZYZ$
+	
+	
+	$\K_{Y,9}(XXZZYYZZZ,\infty,2, 3, 4, 7, 8)\Rightarrow $$ZZYYXXYYZ$, $ZYYYXXYYZ$, $ZZZYXXYYZ$, $ZZYZXXYYZ$, $ZZYYXXZYZ$, $ZZYYXXYZZ$(Case 1).
+	
+	$\K_{Y,3}(XXZZYYZZZ,\infty,2, 4, 7, 8)\Rightarrow $$XXXZYYZZZ$, $XZXZYYZZZ$, $XXXXYYZZZ$, $YYYZXXYZZ$, $YYYZXXZYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZYYZZZ,\infty)\Rightarrow $$ZXZZYYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 8 5 7 9)\Rightarrow XXZZZYZYZ$, $(1 3 4 5 2 9 6 7 8)\Rightarrow XZXYYYYYZ$, $(3 4 5 1 2 9 6 7 8)\Rightarrow YZXXYYYYZ$, $(4 3 5 2 1 9 6 7 8)\Rightarrow ZYXXYYYYZ$, $(5 7 2 1 8 9 3 4 6)\Rightarrow XXXXYXYZZ$, $(5 8 7 1 2 4 3 6 9)\Rightarrow ZXZXYZZYZ$, $(5 8 7 2 1 4 3 6 9)\Rightarrow XZZXYZZYZ$, $(6 7 1 3 5 9 4 8 2)\Rightarrow YYYYZXXYZ$, $(6 7 2 1 8 9 3 4 5)\Rightarrow XXXXXYYZZ$, $(9 4 5 2 1 3 6 7 8)\Rightarrow XYXZYYYYZ$ and $(9 6 1 3 5 7 4 8 2)\Rightarrow YYYYXZXYZ$
+	
+	
+	$\K_{Y,4}(YXZZXYZZZ,\infty,2, 3, 5, 7, 9)\Rightarrow $$YXZXXYZZZ$, $YZZXXYZZZ$, $YXXXXYZZZ$, $YXZXZYZZZ$, $XYZYYXYZZ$, $XZYZZXYYZ$(Case 1).
+	
+	$\K_{Y,9}(YXZZXYZZZ,\infty,3, 5)\Rightarrow $$XZYYZXYYZ$, $XZZYZXYYZ$, $XZYYYXYYZ$(Case 1).
+	
+	$\K_{Y,3}(YXZZXYZZZ,\infty,2, 5, 7)\Rightarrow $$YXXZXYZZZ$, $YZXZXYZZZ$, $YXXZZYZZZ$, $XYYZYXYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 7 8 5 6 9)\Rightarrow YXZZZZXYZ$, $(2 3 6 7 8 5 1 4 9)\Rightarrow ZXYZXZZYZ$ and $(4 1 6 7 8 5 3 2 9)\Rightarrow YZZXXZZYZ$
+	
+	
+	$\K_{Y,9}(ZXZYYYZZZ,2, 3, 7, 8)\Rightarrow $$YYYXXXYYZ$, $YZZXXXYYZ$, $YZYXXXZYZ$, $YZYXXXYZZ$(Case 1).
+	
+	$\K_{Y,3}(ZXZYYYZZZ,2, 7, 8)\Rightarrow $$ZZXYYYZZZ$, $ZYYXXXYZZ$, $ZYYXXXZYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 8 5 7 9)\Rightarrow ZXZYZYZYZ$, $(1 8 6 2 3 5 4 9 7)\Rightarrow ZXXZXZZYZ$, $(1 8 6 3 4 5 2 7 9)\Rightarrow ZZXXXZZYZ$, $(1 8 7 2 4 6 3 5 9)\Rightarrow ZXZXZXZYZ$, $(2 8 6 1 3 5 4 7 9)\Rightarrow XZXZXZZYZ$, $(2 8 7 1 4 6 3 5 9)\Rightarrow XZZXZXZYZ$, $(3 2 4 1 5 7 6 8 9)\Rightarrow YXZZYZYZZ$, $(3 2 4 1 6 7 5 8 9)\Rightarrow YXZZZYYZZ$ and $(5 2 3 1 7 8 6 9 4)\Rightarrow YXZZZZYYZ$
+	
+	
+	$\K_{Y,9}(XXZXYYZZZ,\infty,2, 3, 4, 7, 8)\Rightarrow $$ZZYZXXYYZ$, $ZYYZXXYYZ$, $ZZZZXXYYZ$, $ZZYYXXYYZ$, $ZZYZXXZYZ$, $ZZYZXXYZZ$(Case 1).
+	
+	$\K_{Y,3}(XXZXYYZZZ,\infty,2, 4, 7, 8)\Rightarrow $$XXXXYYZZZ$, $XZXXYYZZZ$, $XXXZYYZZZ$, $YYYYXXYZZ$, $YYYYXXZYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZXYYZZZ,\infty)\Rightarrow $$ZXZXYYZZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZXYYZZZ,\infty)\Rightarrow $$XZZXYYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 8 5 7 9)\Rightarrow XXZXZYZYZ$, $(1 5 3 8 2 9 6 7 4)\Rightarrow YZXXYXXYZ$, $(4 5 1 8 2 9 6 7 3)\Rightarrow XZXYYXXYZ$, $(5 1 6 2 8 9 3 4 7)\Rightarrow XXYYXYYZZ$, $(5 8 7 6 1 4 2 3 9)\Rightarrow XZZXYYZYZ$, $(5 8 7 6 2 4 1 3 9)\Rightarrow ZXZXYYZYZ$ and $(6 1 5 2 8 9 3 4 7)\Rightarrow XXYYYXYZZ$
+	
+	
+	$\K_{Y,9}(YXZZZZYZZ,\infty,3, 4, 5, 6, 8)\Rightarrow $$XZYYYYXYZ$, $XZZYYYXYZ$, $XZYZYYXYZ$, $XZYYZYXYZ$, $XZYYYZXYZ$, $YZXXXXYZZ$(Case 1).
+	
+	$\K_{Y,4}(YXZZZZYZZ,\infty,3, 5, 6, 8)\Rightarrow $$YXZXZZYZZ$, $YXXXZZYZZ$, $YXZXXZYZZ$, $YXZXZXYZZ$, $XYZYZZXYZ$(Case 1).
+	
+	
+	
+	$(3 8 1 6 2 4 5 7 9)\Rightarrow ZZXZXZZYZ$
+	
+	
+	$\K_{Y,9}(XXZZYZYZZ,\infty,1, 2, 3, 4, 6, 8)\Rightarrow $$ZZYYXYXYZ$, $YZYYXYXYZ$, $ZYYYXYXYZ$, $ZZZYXYXYZ$, $ZZYZXYXYZ$, $ZZYYXZXYZ$, $ZZXXYXYZZ$(Case 1).
+	
+	$\K_{Y,3}(XXZZYZYZZ,\infty,2, 4)\Rightarrow $$XXXZYZYZZ$, $XZXZYZYZZ$, $XXXXYZYZZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZYZYZZ,\infty)\Rightarrow $$ZXZZYZYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZZYZYZZ,4)\Rightarrow $$XZZXYZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 7 3 5 4 9 8 6)\Rightarrow XXYYZYYYZ$, $(1 2 9 4 7 5 8 6 3)\Rightarrow XXZZZZYYZ$, $(3 9 2 5 6 4 8 7 1)\Rightarrow XXZXXYXYZ$, $(3 9 2 6 5 4 7 8 1)\Rightarrow YYZYXYXYZ$, $(3 9 2 7 5 4 6 8 1)\Rightarrow YYZYXXYYZ$, $(5 8 3 6 1 2 9 7 4)\Rightarrow ZXXXYXXYZ$, $(5 8 7 6 1 2 3 4 9)\Rightarrow XZXZYZZYZ$, $(5 8 9 6 2 1 3 4 7)\Rightarrow ZXXZYZZYZ$, $(7 9 8 1 2 3 4 6 5)\Rightarrow YXYXYYZYZ$, $(7 9 8 2 1 3 4 6 5)\Rightarrow XYYXYYZYZ$, $(7 9 8 2 1 4 3 6 5)\Rightarrow XYXYYYZYZ$, $(9 3 2 5 7 4 8 6 1)\Rightarrow XXZXXXYYZ$ and $(9 7 8 1 2 4 3 6 5)\Rightarrow YXXYYYZYZ$
+	
+	
+	$\K_{Y,9}(ZXZYYZYZZ,2, 3, 6, 8)\Rightarrow $$YYYXXYXYZ$, $YZZXXYXYZ$, $YZYXXZXYZ$, $XZXYYXYZZ$(Case 1).
+	
+	$\K_{Y,2}(ZXZYYZYZZ,3, 6, 8)\Rightarrow $$ZZXYYZYZZ$, $ZZZYYXYZZ$, $ZZZXXZXYZ$(Case 1).
+	
+	
+	
+	$(1 2 5 4 7 6 8 9 3)\Rightarrow ZXZYZZYYZ$, $(1 8 4 2 3 5 6 9 7)\Rightarrow ZXXZZXZYZ$ and $(2 8 4 1 3 5 6 7 9)\Rightarrow XZXZZXZYZ$
+	
+	
+	$\K_{Y,9}(ZXZYXZYZZ,\infty,2, 3, 5, 6, 8)\Rightarrow $$YZYXZYXYZ$, $YYYXZYXYZ$, $YZZXZYXYZ$, $YZYXYYXYZ$, $YZYXZZXYZ$, $XZXYZXYZZ$(Case 1).
+	
+	$\K_{Y,3}(ZXZYXZYZZ,\infty,2, 6)\Rightarrow $$ZXXYXZYZZ$, $ZZXYXZYZZ$, $ZXXYXXYZZ$(Case 1).
+	
+	$\K_{Y,2}(ZXZYXZYZZ,\infty,5, 6, 8)\Rightarrow $$ZZZYXZYZZ$, $ZZZYZZYZZ$, $ZZZYXXYZZ$, $ZZZXYZXYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 8 6 7 5 9)\Rightarrow ZYZXZZXYZ$, $(1 8 7 3 2 4 6 5 9)\Rightarrow ZYXZZXZYZ$, $(1 8 9 2 3 5 6 4 7)\Rightarrow ZXYZZXZYZ$, $(1 9 8 3 6 2 4 7 5)\Rightarrow YYXXYZYYZ$, $(1 9 8 3 7 2 4 6 5)\Rightarrow YYXXYYZYZ$, $(2 8 7 3 1 4 6 5 9)\Rightarrow YZXZZXZYZ$, $(3 9 1 6 4 5 7 8 2)\Rightarrow YYYZYXXYZ$, $(4 9 1 6 3 5 7 8 2)\Rightarrow YYZYYXXYZ$ and $(5 2 9 4 7 1 8 6 3)\Rightarrow ZXZYZZXYZ$
+	
+	
+	$\K_{Y,9}(XXZYYZYZZ,2, 3, 6, 8)\Rightarrow $$ZYYXXYXYZ$, $ZZZXXYXYZ$, $ZZYXXZXYZ$, $ZZXYYXYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZYYZYZZ,3, 6, 8)\Rightarrow $$XZXYYZYZZ$, $XZZYYXYZZ$, $YZZXXZXYZ$(Case 1).
+	
+	
+	
+	$(1 2 5 4 7 6 8 9 3)\Rightarrow XXZYZZYYZ$, $(2 1 3 5 8 4 9 6 7)\Rightarrow XXYYZYYZZ$, $(2 1 3 6 7 4 8 5 9)\Rightarrow XXZZZYYYZ$, $(2 1 4 5 7 6 8 9 3)\Rightarrow XXZZYZYYZ$, $(2 8 3 1 6 5 9 7 4)\Rightarrow ZYXXXZXYZ$, $(3 4 2 1 6 5 9 7 8)\Rightarrow ZYXXYZYYZ$, $(3 7 2 5 8 4 9 6 1)\Rightarrow XXYXZXYZZ$, $(3 9 1 4 5 6 7 8 2)\Rightarrow YYZXXYXYZ$, $(3 9 1 4 5 7 6 8 2)\Rightarrow YYZXXXYYZ$, $(3 9 1 4 6 5 8 7 2)\Rightarrow XXZYXYXYZ$, $(3 9 2 6 7 4 8 5 1)\Rightarrow XXZXXYYYZ$, $(4 3 2 5 7 6 8 9 1)\Rightarrow ZZXXYZYYZ$, $(4 7 2 5 8 3 9 6 1)\Rightarrow XXXYZXYZZ$, $(4 9 2 6 7 3 8 5 1)\Rightarrow XXXZXYYYZ$, $(5 8 1 2 3 4 6 9 7)\Rightarrow ZXXZYXZYZ$, $(5 8 2 1 3 4 6 7 9)\Rightarrow XZXZYXZYZ$, $(6 3 4 1 2 7 9 8 5)\Rightarrow ZZXYYXYYZ$, $(6 7 4 1 2 8 3 9 5)\Rightarrow XXXZZYYZZ$, $(6 9 1 2 3 7 4 8 5)\Rightarrow YXXXYZYYZ$, $(7 3 4 1 2 6 9 8 5)\Rightarrow ZZXYYYXYZ$, $(7 6 1 4 5 3 9 8 2)\Rightarrow YYYZZXXYZ$, $(7 9 1 2 3 6 4 8 5)\Rightarrow YXXXYYZYZ$, $(7 9 1 2 4 3 6 5 8)\Rightarrow YXYXYXZYZ$, $(7 9 2 1 3 4 6 5 8)\Rightarrow XYXYYXZYZ$, $(7 9 2 1 4 3 6 5 8)\Rightarrow XYYXYXZYZ$, $(8 2 1 4 5 3 9 7 6)\Rightarrow XYXZZXXYZ$, $(8 5 1 2 3 6 4 7 9)\Rightarrow ZXXXYZZYZ$, $(8 5 4 1 2 6 3 9 7)\Rightarrow XXXZYZZYZ$, $(8 5 4 1 2 6 9 7 3)\Rightarrow ZZXXYXXYZ$, $(9 3 1 4 7 5 8 6 2)\Rightarrow XXZYXXYYZ$ and $(9 7 1 2 3 4 6 5 8)\Rightarrow YXXYYXZYZ$
+	
+	
+	$\K_{Y,9}(XXZXYZYZZ,\infty,1, 2, 3, 4, 6, 8)\Rightarrow $$ZZYZXYXYZ$, $YZYZXYXYZ$, $ZYYZXYXYZ$, $ZZZZXYXYZ$, $ZZYYXYXYZ$, $ZZYZXZXYZ$, $ZZXZYXYZZ$(Case 1).
+	
+	$\K_{Y,3}(XXZXYZYZZ,\infty,2, 4)\Rightarrow $$XXXXYZYZZ$, $XZXXYZYZZ$, $XXXZYZYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZXYZYZZ,\infty,6, 8)\Rightarrow $$XZZXYZYZZ$, $XZZXYXYZZ$, $YZZYXZXYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZXYZYZZ,\infty)\Rightarrow $$ZXZXYZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 7 3 5 4 9 8 6)\Rightarrow XXXYZYYYZ$, $(1 2 7 4 5 3 9 8 6)\Rightarrow XXYXZYYYZ$, $(1 2 9 4 7 5 8 6 3)\Rightarrow XXZXZZYYZ$, $(1 7 4 6 2 8 3 9 5)\Rightarrow YXXZZYYZZ$, $(2 9 4 6 1 7 3 8 5)\Rightarrow XZXYYZYYZ$, $(3 9 2 5 6 4 8 7 1)\Rightarrow XXZXZYXYZ$, $(3 9 2 7 5 4 6 8 1)\Rightarrow YYZYXXZYZ$, $(3 9 2 7 6 4 8 5 1)\Rightarrow XXZXXYZYZ$, $(3 9 2 8 5 4 6 7 1)\Rightarrow YYZYXXYZZ$, $(4 7 1 6 2 8 3 9 5)\Rightarrow ZXXYZYYZZ$, $(4 9 2 6 1 7 3 8 5)\Rightarrow XYXZYZYYZ$, $(5 3 6 4 7 2 8 9 1)\Rightarrow ZZXXXZYYZ$, $(5 8 3 6 1 2 9 7 4)\Rightarrow ZXXXYYXYZ$, $(5 8 3 7 1 2 9 6 4)\Rightarrow ZXXXYXYYZ$, $(5 8 7 6 1 2 3 4 9)\Rightarrow XZXZYYZYZ$, $(5 8 9 6 2 1 3 4 7)\Rightarrow ZXXZYYZYZ$, $(6 3 5 4 7 2 8 9 1)\Rightarrow ZZXXZXYYZ$, $(6 9 2 4 5 3 7 8 1)\Rightarrow YYYZXZXYZ$, $(7 9 8 1 2 3 4 6 5)\Rightarrow ZXYXYYZYZ$, $(7 9 8 2 1 3 4 6 5)\Rightarrow XZYXYYZYZ$, $(7 9 8 3 1 2 4 6 5)\Rightarrow XYZXYYZYZ$, $(7 9 8 3 2 1 4 6 5)\Rightarrow YXZXYYZYZ$ and $(8 9 2 4 5 3 7 6 1)\Rightarrow XXXZYXYZZ$
+	
+	
+	$\K_{Y,9}(XXZYXZYZZ,\infty,2, 3, 5, 6, 8)\Rightarrow $$ZZYXZYXYZ$, $ZYYXZYXYZ$, $ZZZXZYXYZ$, $ZZYXYYXYZ$, $ZZYXZZXYZ$, $ZZXYZXYZZ$(Case 1).
+	
+	$\K_{Y,3}(XXZYXZYZZ,\infty,2, 6)\Rightarrow $$XXXYXZYZZ$, $XZXYXZYZZ$, $XXXYXXYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZYXZYZZ,\infty,5, 6, 8)\Rightarrow $$XZZYXZYZZ$, $XZZYZZYZZ$, $XZZYXXYZZ$, $YZZXYZXYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 8 6 7 5 9)\Rightarrow YYZXZZXYZ$, $(1 5 7 2 8 3 4 6 9)\Rightarrow YXZXYZZYZ$, $(1 8 7 3 4 5 6 2 9)\Rightarrow YZXYZXZYZ$, $(1 8 7 3 5 4 6 2 9)\Rightarrow YZXZYXZYZ$, $(1 9 8 3 7 2 4 6 5)\Rightarrow ZYXXYYZYZ$, $(2 1 3 5 7 4 6 8 9)\Rightarrow YYZZXXYZZ$, $(2 1 3 5 8 4 6 7 9)\Rightarrow YYZZXXZYZ$, $(2 1 3 6 5 4 8 7 9)\Rightarrow XXZZXYZYZ$, $(2 1 3 6 7 4 8 5 9)\Rightarrow XXZZZYXYZ$, $(2 5 7 1 8 3 4 6 9)\Rightarrow XYZXYZZYZ$, $(2 8 7 3 4 5 6 1 9)\Rightarrow ZYXYZXZYZ$, $(2 8 7 3 5 4 6 1 9)\Rightarrow ZYXZYXZYZ$, $(2 9 8 1 7 4 3 6 5)\Rightarrow XZXYYYZYZ$, $(2 9 8 3 6 1 4 7 5)\Rightarrow YZXXYZYYZ$, $(2 9 8 3 7 1 4 6 5)\Rightarrow YZXXYYZYZ$, $(3 4 8 1 6 2 9 7 5)\Rightarrow ZYXXYXYYZ$, $(3 4 8 1 7 2 9 6 5)\Rightarrow ZYXXYYXYZ$, $(3 5 7 1 8 2 4 6 9)\Rightarrow XZYXYZZYZ$, $(3 5 7 2 8 1 4 6 9)\Rightarrow ZXYXYZZYZ$, $(3 6 2 5 7 8 9 4 1)\Rightarrow YYXYZXXYZ$, $(3 6 8 5 4 2 9 7 1)\Rightarrow YYXXZXYYZ$, $(3 9 2 5 6 8 7 4 1)\Rightarrow YYZYXZXYZ$, $(3 9 2 5 8 6 7 4 1)\Rightarrow XXZXYXYZZ$, $(3 9 2 6 5 8 7 4 1)\Rightarrow YYZYZXXYZ$, $(3 9 2 6 8 5 7 4 1)\Rightarrow XXZXXYYZZ$, $(4 6 2 5 7 8 9 3 1)\Rightarrow YYYXZXXYZ$, $(4 8 9 1 2 5 6 3 7)\Rightarrow XYZYZXZYZ$, $(4 9 2 6 8 5 7 3 1)\Rightarrow XXXZXYYZZ$, $(4 9 8 1 7 2 3 6 5)\Rightarrow XYXZYYZYZ$, $(5 2 3 4 6 1 7 8 9)\Rightarrow ZXZYXXYZZ$, $(6 2 3 4 8 1 7 5 9)\Rightarrow ZYZXZYXYZ$, $(6 2 9 4 8 1 5 7 3)\Rightarrow ZYZXXYZYZ$ and $(6 4 2 1 7 8 9 3 5)\Rightarrow ZYYXYXXYZ$
+	
+	
+	$\K_{Y,9}(XXZZZYYZZ,\infty,1, 2, 3, 4, 5, 8)\Rightarrow $$ZZYYYXXYZ$, $YZYYYXXYZ$, $ZYYYYXXYZ$, $ZZZYYXXYZ$, $ZZYZYXXYZ$, $ZZYYZXXYZ$, $ZZXXXYYZZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZZYYZZ,\infty)\Rightarrow $$ZXZZZYYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZZZYYZZ,3, 4)\Rightarrow $$XZXZZYYZZ$, $XZZXZYYZZ$(Case 1).
+	
+	
+	
+	$(3 9 1 7 5 4 8 6 2)\Rightarrow XXZYXXXYZ$, $(5 8 6 7 1 3 4 2 9)\Rightarrow ZZXXYZZYZ$ and $(7 9 3 5 1 2 6 4 8)\Rightarrow YXYYYXZYZ$
+	
+	
+	$\K_{Y,9}(YXZZZXYZZ,\infty,3, 4, 5, 6, 8)\Rightarrow $$XZYYYZXYZ$, $XZZYYZXYZ$, $XZYZYZXYZ$, $XZYYZZXYZ$, $XZYYYYXYZ$, $YZXXXZYZZ$(Case 1).
+	
+	$\K_{Y,4}(YXZZZXYZZ,\infty,3, 5, 6, 8)\Rightarrow $$YXZXZXYZZ$, $YXXXZXYZZ$, $YXZXXXYZZ$, $YXZXZZYZZ$, $XYZYZYXYZ$(Case 1).
+	
+	
+	
+	$(3 4 1 6 2 8 5 7 9)\Rightarrow ZZXYXZZYZ$
+	
+	
+	$\K_{Y,9}(XXZXZYYZZ,\infty,1, 2, 3, 4, 5, 8)\Rightarrow $$ZZYZYXXYZ$, $YZYZYXXYZ$, $ZYYZYXXYZ$, $ZZZZYXXYZ$, $ZZYYYXXYZ$, $ZZYZZXXYZ$, $ZZXZXYYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZXZYYZZ,\infty,3, 5, 8)\Rightarrow $$XZZXZYYZZ$, $XZXXZYYZZ$, $XZZXXYYZZ$, $YZZYZXXYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZXZYYZZ,\infty)\Rightarrow $$ZXZXZYYZZ$(Case 1).
+	
+	
+	
+	$(3 9 1 5 6 4 7 8 2)\Rightarrow YYZXZYXYZ$, $(3 9 1 8 5 4 7 6 2)\Rightarrow XXZYXXYZZ$, $(3 9 2 4 5 6 8 7 1)\Rightarrow XXZZXYXYZ$, $(3 9 2 4 6 5 7 8 1)\Rightarrow YYZZXYXYZ$, $(3 9 2 4 7 5 6 8 1)\Rightarrow YYZZXXYYZ$, $(5 8 1 6 2 3 4 7 9)\Rightarrow ZZXXYYZYZ$, $(7 9 1 2 4 3 6 5 8)\Rightarrow YZXYYXZYZ$, $(7 9 1 6 3 2 4 8 5)\Rightarrow YXYXYZZYZ$, $(7 9 2 1 4 3 6 5 8)\Rightarrow ZYXYYXZYZ$, $(7 9 2 6 3 1 4 8 5)\Rightarrow XYYXYZZYZ$, $(7 9 2 6 4 1 3 8 5)\Rightarrow XYXYYZZYZ$, $(9 3 2 4 5 7 8 6 1)\Rightarrow XXZZXXYYZ$, $(9 3 5 1 6 4 8 7 2)\Rightarrow ZXZYXXXYZ$, $(9 7 1 5 3 2 6 4 8)\Rightarrow YXYYZXZYZ$ and $(9 7 1 6 4 2 3 8 5)\Rightarrow YXXYYZZYZ$
+	
+	
+	$\K_{Y,9}(XXZZXYYZZ,\infty,1, 2, 3, 4, 5, 8)\Rightarrow $$ZZYYZXXYZ$, $YZYYZXXYZ$, $ZYYYZXXYZ$, $ZZZYZXXYZ$, $ZZYZZXXYZ$, $ZZYYYXXYZ$, $ZZXXZYYZZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZXYYZZ,\infty)\Rightarrow $$ZXZZXYYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXZZXYYZZ,3, 4)\Rightarrow $$XZXZXYYZZ$, $XZZXXYYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 5 7 8 9)\Rightarrow XXZZYXYZZ$, $(1 2 3 4 8 5 7 6 9)\Rightarrow YYZZXZXYZ$, $(1 2 3 4 8 5 9 7 6)\Rightarrow YYXXZXXYZ$, $(1 2 3 4 8 6 7 5 9)\Rightarrow YYZZZXXYZ$, $(5 8 6 7 1 3 4 2 9)\Rightarrow YZXXYZZYZ$, $(5 8 6 7 2 1 3 4 9)\Rightarrow XYXZYZZYZ$, $(5 8 6 7 2 1 9 3 4)\Rightarrow ZYXXYXXYZ$, $(5 8 6 7 2 3 4 1 9)\Rightarrow ZYXXYZZYZ$ and $(5 8 6 7 4 1 3 2 9)\Rightarrow XZXYYZZYZ$
+	
+	
+	$\K_{Y,9}(YXZZXXYZZ,\infty,3, 4, 5, 6, 8)\Rightarrow $$XZYYZZXYZ$, $XZZYZZXYZ$, $XZYZZZXYZ$, $XZYYYZXYZ$, $XZYYZYXYZ$, $YZXXZZYZZ$(Case 1).
+	
+	$\K_{Y,4}(YXZZXXYZZ,\infty,3, 5, 6, 8)\Rightarrow $$YXZXXXYZZ$, $YXXXXXYZZ$, $YXZXZXYZZ$, $YXZXXZYZZ$, $XYZYYYXYZ$(Case 1).
+	
+	$\K_{Y,3}(YXZZXXYZZ,\infty)\Rightarrow $$YXXZXXYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 6 8 7 5 9)\Rightarrow XYZZZYXYZ$, $(1 4 9 6 2 8 5 3 7)\Rightarrow XYZYXZZYZ$, $(1 6 9 3 2 8 5 7 4)\Rightarrow XYZZXYZYZ$, $(3 1 7 6 4 8 5 2 9)\Rightarrow YZXYXZZYZ$, $(3 2 7 6 4 8 5 1 9)\Rightarrow ZYXYXZZYZ$, $(4 1 8 2 3 6 9 7 5)\Rightarrow XYXZYXYYZ$, $(4 1 8 2 3 7 9 6 5)\Rightarrow XYXZYYXYZ$, $(6 3 2 1 5 7 9 4 8)\Rightarrow YYXYXZXYZ$ and $(6 4 2 1 5 7 9 3 8)\Rightarrow YYYXXZXYZ$
+	
+	
+	$\K_{Y,4}(YXZZZZZYZ,\infty,2, 3, 7, 9)\Rightarrow $$YXZXZZZYZ$, $YZZXZZZYZ$, $YXXXZZZYZ$, $YXZXZZXYZ$, $YZXZXXXYZ$(Case 1).
+	
+	$\K_{Y,9}(YXZZZZZYZ,\infty,2, 3, 7)\Rightarrow $$YZXXXXXYZ$, $YXXXXXXYZ$, $YZZXXXXYZ$, $YZXXXXZYZ$(Case 1).
+	
+	$\K_{Y,3}(YXZZZZZYZ,\infty,2, 7)\Rightarrow $$YXXZZZZYZ$, $YZXZZZZYZ$, $YXXZZZXYZ$(Case 1).
+	
+	
+	
+	$(2 8 6 7 1 4 3 5 9)\Rightarrow ZXZZXZZYZ$
+	
+	
+	$\K_{Y,9}(XXZZZZZYZ,1, 2, 3, 4, 7)\Rightarrow $$XZXXXXXYZ$, $ZXXXXXXYZ$, $ZZZXXXXYZ$, $ZZXZXXXYZ$, $ZZXXXXZYZ$(Case 1).
+	
+	$\K_{Y,3}(XXZZZZZYZ,1, 2, 4, 7)\Rightarrow $$ZXXZZZZYZ$, $XZXZZZZYZ$, $XXXXZZZYZ$, $XXXZZZXYZ$(Case 1).
+	
+	$\K_{Y,2}(XXZZZZZYZ,1, 4)\Rightarrow $$ZZZZZZZYZ$, $XZZXZZZYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZZZZZYZ,4)\Rightarrow $$ZXZXZZZYZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZXZZYZZYZ$
+	
+	
+	$\K_{Y,3}(ZXZYZZZYZ,\infty,1, 2, 7, 9)\Rightarrow $$ZXXYZZZYZ$, $XXXYZZZYZ$, $ZZXYZZZYZ$, $ZXXYZZXYZ$, $XZZYXXXYZ$(Case 1).
+	
+	$\K_{Y,9}(ZXZYZZZYZ,\infty,1, 2, 7)\Rightarrow $$XZXYXXXYZ$, $ZZXYXXXYZ$, $XXXYXXXYZ$, $XZXYXXZYZ$(Case 1).
+	
+	$\K_{Y,2}(ZXZYZZZYZ,\infty,1, 7)\Rightarrow $$ZZZYZZZYZ$, $XZZYZZZYZ$, $ZZZYZZXYZ$(Case 1).
+	
+	
+	
+	$(3 8 7 2 1 4 5 6 9)\Rightarrow ZXZZZXZYZ$
+	
+	
+	$\K_{Y,3}(XXZYZZZYZ,\infty,1, 2, 7, 9)\Rightarrow $$XXXYZZZYZ$, $ZXXYZZZYZ$, $XZXYZZZYZ$, $XXXYZZXYZ$, $ZZZYXXXYZ$(Case 1).
+	
+	$\K_{Y,9}(XXZYZZZYZ,\infty,1, 2, 7)\Rightarrow $$ZZXYXXXYZ$, $XZXYXXXYZ$, $ZXXYXXXYZ$, $ZZXYXXZYZ$(Case 1).
+	
+	$\K_{Y,2}(XXZYZZZYZ,\infty,1, 7)\Rightarrow $$XZZYZZZYZ$, $ZZZYZZZYZ$, $XZZYZZXYZ$(Case 1).
+	
+	
+	
+	$(5 8 7 2 1 4 3 6 9)\Rightarrow ZXZZYXZYZ$
+	
+	
+	$\K_{Y,9}(XXZXZZZYZ,1, 2, 3, 4, 7)\Rightarrow $$XZXZXXXYZ$, $ZXXZXXXYZ$, $ZZZZXXXYZ$, $ZZXXXXXYZ$, $ZZXZXXZYZ$(Case 1).
+	
+	$\K_{Y,3}(XXZXZZZYZ,1, 2, 4, 7)\Rightarrow $$ZXXXZZZYZ$, $XZXXZZZYZ$, $XXXZZZZYZ$, $XXXXZZXYZ$(Case 1).
+	
+	$\K_{Y,2}(XXZXZZZYZ,1, 7)\Rightarrow $$ZZZXZZZYZ$, $XZZXZZXYZ$(Case 1).
+	
+	$\K_{Y,1}(XXZXZZZYZ,7)\Rightarrow $$ZXZXZZXYZ$(Case 1).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow ZXZZYYZYZ$
+	
+	
+	$\K_{Z,3}(ZXYYZZYZZ,4, 7)\Rightarrow $$ZXXXZZYZZ$, $ZYYXZZYZZ$(Case 1).
+	
+	$\K_{Z,4}(ZXYYZZYZZ,7)\Rightarrow $$ZYXYZZYZZ$(Case 1).
+	
+	
+	
+	$(1 8 3 6 2 4 7 5 9)\Rightarrow ZZXZZXXYZ$
+	
+	
+	$\K_{Z,3}(XYYYZZYZZ,\infty,4, 7)\Rightarrow $$XYXYZZYZZ$, $XYXXZZYZZ$, $YXYXZZYZZ$(Case 1).
+	
+	$\K_{Z,4}(XYYYZZYZZ,\infty,7)\Rightarrow $$XYYXZZYZZ$, $YXXYZZYZZ$(Case 1).
+	
+	$\K_{Z,1}(XYYYZZYZZ,\infty)\Rightarrow $$YYYYZZYZZ$(Case 1).
+	
+	$\K_{Z,7}(XYYYZZYZZ,\infty)\Rightarrow $$YXXXZZYZZ$(Case 1).
+	
+	
+	
+	$(5 8 3 6 1 2 7 4 9)\Rightarrow ZZYZXYYYZ$
+	
+	
+	$\K_{Z,7}(XXYYZZYZZ,\infty,1, 2, 3, 4)\Rightarrow $$YYXXZZYZZ$, $XYXXZZYZZ$, $YXXXZZYZZ$, $YYYXZZYZZ$, $YYXYZZYZZ$(Case 1).
+	
+	$\K_{Z,1}(XXYYZZYZZ,\infty)\Rightarrow $$YXYYZZYZZ$(Case 1).
+	
+	$\K_{Z,2}(XXYYZZYZZ,3, 4)\Rightarrow $$XYXYZZYZZ$, $XYYXZZYZZ$(Case 1).
+	
+	
+	
+	$(3 9 1 8 4 5 2 6 7)\Rightarrow YYZXXXXYZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow ZZXZYXXYZ$ and $(7 9 2 5 1 3 8 4 6)\Rightarrow XYXXYXZYZ$
+	
+	
+	$\K_{Z,7}(XXXYZZYZZ,\infty,1, 2, 3, 4)\Rightarrow $$YYYXZZYZZ$, $XYYXZZYZZ$, $YXYXZZYZZ$, $YYXXZZYZZ$, $YYYYZZYZZ$(Case 1).
+	
+	$\K_{Z,2}(XXXYZZYZZ,\infty,4)\Rightarrow $$XYXYZZYZZ$, $XYXXZZYZZ$(Case 1).
+	
+	$\K_{Z,1}(XXXYZZYZZ,\infty)\Rightarrow $$YXXYZZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XXYXZZYZZ$, $(3 9 1 8 4 5 2 6 7)\Rightarrow ZYZXXXXYZ$, $(3 9 8 1 4 5 2 6 7)\Rightarrow XXZYYYYZZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow ZZXZYYXYZ$, $(5 8 7 6 1 2 3 4 9)\Rightarrow ZZXZYXYYZ$, $(7 9 2 5 1 3 8 4 6)\Rightarrow XZXXYXZYZ$ and $(7 9 5 2 1 3 8 4 6)\Rightarrow XYXXZXZYZ$
+	
+	
+	$\K_{Z,2}(XXXXZZYZZ,\infty,3, 4, 7)\Rightarrow $$XYXXZZYZZ$, $XYYXZZYZZ$, $XYXYZZYZZ$, $YXYYZZYZZ$(Case 1).
+	
+	$\K_{Z,7}(XXXXZZYZZ,\infty,3, 4)\Rightarrow $$YYYYZZYZZ$, $YYXYZZYZZ$, $YYYXZZYZZ$(Case 1).
+	
+	$\K_{Z,1}(XXXXZZYZZ,\infty)\Rightarrow $$YXXXZZYZZ$(Case 1).
+	
+	
+	
+	$(3 9 1 8 4 5 2 6 7)\Rightarrow ZXZYYYYZZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow ZZXZYYYYZ$ and $(7 9 2 5 1 3 8 4 6)\Rightarrow XZXXZXZYZ$
+	
+	
+	$\K_{Z,4}(ZXYYZXYZZ,\infty,3, 6, 7)\Rightarrow $$ZXYXZXYZZ$, $ZXXXZXYZZ$, $ZXYXZYYZZ$, $ZYXYZYYZZ$(Case 1).
+	
+	$\K_{Z,7}(ZXYYZXYZZ,\infty,3, 6)\Rightarrow $$ZYXXZYYZZ$, $ZYYXZYYZZ$, $ZYXXZXYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 5 8 9 6 7)\Rightarrow XYZZXXXYZ$, $(1 2 3 4 6 5 9 7 8)\Rightarrow YXZZXYYYZ$, $(1 2 6 7 3 8 9 4 5)\Rightarrow XYXXXZZYZ$, $(1 4 7 3 2 8 6 5 9)\Rightarrow ZZXYZXXYZ$ and $(2 1 7 6 3 8 9 4 5)\Rightarrow YXXXXZZYZ$
+	
+	
+	$\K_{Z,8}(YYYYYZYYZ,\infty,2, 3, 4, 5, 7)\Rightarrow $$XXXXXZXYZ$, $XYXXXZXYZ$, $XXYXXZXYZ$, $XXXYXZXYZ$, $XXXXYZXYZ$, $XXXXXZYYZ$(Case 1).
+	
+	$\K_{Z,2}(YYYYYZYYZ,\infty,3, 4, 5, 7)\Rightarrow $$YXYYYZYYZ$, $YXXYYZYYZ$, $YXYXYZYYZ$, $YXYYXZYYZ$, $YXYYYZXYZ$(Case 1).
+	
+	$\K_{Z,1}(YYYYYZYYZ,\infty)\Rightarrow $$XYYYYZYYZ$(Case 1).
+	
+	
+	
+	$(2 5 1 3 6 4 7 8 9)\Rightarrow YYYZYYYYZ$
+	
+	
+	$\K_{Z,8}(YYYYXZYYZ,\infty,2, 3, 4, 5, 7)\Rightarrow $$XXXXYZXYZ$, $XYXXYZXYZ$, $XXYXYZXYZ$, $XXXYYZXYZ$, $XXXXXZXYZ$, $XXXXYZYYZ$(Case 1).
+	
+	$\K_{Z,2}(YYYYXZYYZ,\infty,3, 4, 5, 7)\Rightarrow $$YXYYXZYYZ$, $YXXYXZYYZ$, $YXYXXZYYZ$, $YXYYYZYYZ$, $YXYYXZXYZ$(Case 1).
+	
+	$\K_{Z,1}(YYYYXZYYZ,\infty)\Rightarrow $$XYYYXZYYZ$(Case 1).
+	
+	
+	
+	$(2 5 3 6 1 4 7 8 9)\Rightarrow XYYZYYYYZ$
+	
+	
+	$\K_{Z,8}(YXXXXZYYZ,\infty,3, 4, 5, 7)\Rightarrow $$XYYYYZXYZ$, $XYXYYZXYZ$, $XYYXYZXYZ$, $XYYYXZXYZ$, $XYYYYZYYZ$(Case 1).
+	
+	$\K_{Z,4}(YXXXXZYYZ,\infty,3, 5, 7)\Rightarrow $$YXXYXZYYZ$, $YXYYXZYYZ$, $YXXYYZYYZ$, $YXXYXZXYZ$(Case 1).
+	
+	$\K_{Z,3}(YXXXXZYYZ,\infty,5, 7)\Rightarrow $$YXYXXZYYZ$, $YXYXYZYYZ$, $YXYXXZXYZ$(Case 1).
+	
+	$\K_{Z,1}(YXXXXZYYZ,\infty)\Rightarrow $$XXXXXZYYZ$(Case 1).
+	
+	
+	
+	$(1 2 3 4 7 6 5 8 9)\Rightarrow YXXXYZXYZ$, $(2 8 6 7 1 4 3 5 9)\Rightarrow YXXZXYYYZ$ and $(2 8 6 7 3 4 1 5 9)\Rightarrow XXYZXYYYZ$
+	
+	
+	$\K_{Z,8}(YXXXXZXYZ,\infty,3, 4, 5, 7)\Rightarrow $$XYYYYZYYZ$, $XYXYYZYYZ$, $XYYXYZYYZ$, $XYYYXZYYZ$, $XYYYYZXYZ$(Case 1).
+	
+	$\K_{Z,4}(YXXXXZXYZ,\infty,3, 5, 7)\Rightarrow $$YXXYXZXYZ$, $YXYYXZXYZ$, $YXXYYZXYZ$, $YXXYXZYYZ$(Case 1).
+	
+	$\K_{Z,3}(YXXXXZXYZ,\infty,5, 7)\Rightarrow $$YXYXXZXYZ$, $YXYXYZXYZ$, $YXYXXZYYZ$(Case 1).
+	
+	$\K_{Z,1}(YXXXXZXYZ,\infty)\Rightarrow $$XXXXXZXYZ$(Case 1).
+	
+	
+	
+	$(2 8 6 7 1 4 3 5 9)\Rightarrow YXYZXYYYZ$
+	
+	
+	$\K_{Z,8}(YYYYYYYYZ,2, 3, 4, 5, 6, 7)\Rightarrow $$XYXXXXXYZ$, $XXYXXXXYZ$, $XXXYXXXYZ$, $XXXXYXXYZ$, $XXXXXYXYZ$, $XXXXXXYYZ$(Case 1).
+	
+	$\K_{Z,5}(YYYYYYYYZ,2, 3, 4, 6, 7)\Rightarrow $$YXYYXYYYZ$, $YYXYXYYYZ$, $YYYXXYYYZ$, $YYYYXXYYZ$, $YYYYXYXYZ$(Case 1).
+	
+	$\K_{Z,5}(XYYYXYYYZ,3, 4, 6, 7, 8)\Rightarrow $$XYXYYYYYZ$, $XYYXYYYYZ$, $XYYYYXYYZ$, $XYYYYYXYZ$, $YXXXXXXYZ$(Case 1).
+	
+	$\K_{Z,4}(XYYYXYYYZ,3, 6, 7, 8)\Rightarrow $$XYXXXYYYZ$, $XYYXXXYYZ$, $XYYXXYXYZ$, $YXXYYXXYZ$(Case 1).
+	
+	$\K_{Z,6}(XYYYXYYYZ,3, 7)\Rightarrow $$XYXYXXYYZ$, $XYYYXXXYZ$(Case 1).
+	
+	$\K_{Z,3}(XYYYXYYYZ,7)\Rightarrow $$XYXYXYXYZ$(Case 1).
+	
+	
+	
+	\bigskip
+	\case{3}{$B$ is one of $XX\wild \wild XZZYZ$, $YXZZY\wild \wild YZ$, $Y\wild ZZY\wild ZYZ$, $XXYYY\wild ZYZ$, $XXZ\wild YXXYZ$, $XXZ\wild YZZYZ$, $XYZZ\wild YYYZ$, $XXZ\wild YYZYZ$, $XXZ\wild ZXXYZ$, $XY\wild ZYXZYZ$, $XX\wild XYXZYZ$, $XX\wild ZYXZYZ$, $XXZY\wild YYYZ$, $XXX\wild YYZYZ$, $XXZXY\wild YYZ$, $XXYZZ\wild YZZ$, $XY\wild ZZXYYZ$, $XZZZYY\wild YZ$, $XXZ\wild XZXYZ$, $X\wild YYYZZZZ$, $XX\wild XYZZZZ$, $XY\wild ZZXZYZ$, $XXX\wild ZXZYZ$, $XYYYY\wild ZYZ$, $XZZZXZ\wild YZ$, $XYZZ\wild ZYZZ$, $X\wild ZZYZZZZ$, $YYZX\wild YYYZ$, $YYYYY\wild ZYZ$, $\wild YYYXZZYZ$, $Y\wild XXYXZYZ$, $YYZXXZ\wild YZ$, $YXZZXZ\wild YZ$, $YXZZZX\wild YZ$, $YYZ\wild ZXZYZ$, $YYZZ\wild YYYZ$, $YZYZY\wild ZYZ$, $YYZ\wild YZYZZ$, $Y\wild XXZXZYZ$, $YXYZY\wild ZYZ$, $YY\wild ZZXYYZ$, $YYZYY\wild ZYZ$, $YYZXZ\wild YZZ$, $YX\wild ZYZZZZ$, $YYZ\wild YZZZZ$, $YYYXY\wild ZYZ$, $YYZ\wild YXYYZ$, $\wild ZYZXZZYZ$, $\wild ZZZZXZYZ$, $Z\wild YYYXZYZ$, $ZX\wild YXZZYZ$, $ZYZXY\wild ZYZ$, $ZZ\wild XYXZYZ$, $ZZX\wild YZXYZ$, $ZYYXXZ\wild YZ$, $ZYZXY\wild XYZ$, $Z\wild XXZXZYZ$, $ZYZXXZ\wild YZ$, $ZYYXYZ\wild YZ$, $ZXZY\wild YYYZ$, $ZXZYZ\wild YZZ$, $Z\wild YYYZZZZ$, $ZZ\wild ZYXZYZ$, $XXZYY\wild XYZ$, $XXZYY\wild YYZ$, $XYZZY\wild ZYZ$, $XYZZZ\wild YZZ$, $YX\wild ZXZZYZ$, $YY\wild YZXZYZ$, $YZ\wild XYXZYZ$, $YYZ\wild XZZYZ$, $YYZXYY\wild YZ$, $\wild ZZZYZZZZ$, $ZXYYY\wild ZYZ$, $Z\wild XXYXZYZ$, $ZXZYY\wild YYZ$, $ZZX\wild ZXZYZ$, $ZZY\wild XZZYZ$, $XXZYZXYYZ$, $XXYYZXZYZ$, $XXYXYYZYZ$, $XXZXYYXYZ$, $XXZZZXZYZ$, $XYXZXZXYZ$, $XYZZXZYYZ$, $XYYZXZZYZ$, $XXZZYZXYZ$, $XYYZYZXYZ$, $XXYZYZZYZ$, $XXZXZXZYZ$, $XYYZYZZYZ$, $XYZZXZZYZ$, $XZYYYYZYZ$, $XXZYXYYZZ$, $XYXZXZYYZ$, $XYXZYZXYZ$, $XYYZXZXYZ$, $XXZYXZYYZ$, $XXYZXYYZZ$, $XZXYZXZYZ$, $XZXYXZXYZ$, $X\wild YYYXZYZ$, $XXZYZYYZZ$, $XXZXXZYYZ$, $X\wild YZYXZYZ$, $XZYZYYZYZ$, $XZZYZXZYZ$, $XXZYZZYZZ$, $XXZYZYZZZ$, $XZZZYXYYZ$, $X\wild YYXZZYZ$, $XYZZXYYZZ$, $XXXYYZZZZ$, $XXX\wild YXZYZ$, $XXZYXYZZZ$, $XZYYYXYZZ$, $XYZZYXYZZ$, $XZZZYXXYZ$, $XZZYYXZYZ$, $XYZZYXYYZ$, $XZYYZXYZZ$, $XZYYXYYZZ$, $XXYZZYYYZ$, $XZYYZZYZZ$, $XZYZZXZYZ$, $XZYYZYYYZ$, $XZZZZXXYZ$, $X\wild ZZYZZYZ$, $XZZZXYZZZ$, $XZZYYZZZZ$, $XXZYZZZZZ$, $YYZYYYYYZ$, $YYZXZXXYZ$, $YYZXYXXYZ$, $YXXZZXZYZ$, $YYXZXZYYZ$, $YYZZXZYYZ$, $YYZXYZZYZ$, $YYZYXYYZZ$, $YZXXXZYYZ$, $YZXXZXYYZ$, $YXXZXYYZZ$, $YZXXYZXYZ$, $YXXZYXZYZ$, $YYXZXZXYZ$, $YYZXYXYZZ$, $YYZXXYYZZ$, $YYXZYZXYZ$, $YYXZZXZYZ$, $YXYZYXYZZ$, $YYZYZYYZZ$, $YXXZZXYZZ$, $YXXZYYZYZ$, $YYZXXZYZZ$, $YZYXYZZYZ$, $YYZZYXYZZ$, $YYZYXZYZZ$, $YYXYYXZYZ$, $YZZXZXZYZ$, $YZXXXZXYZ$, $YYYXZXZYZ$, $YXYZZXYZZ$, $YYYXXZZYZ$, $YYZXXYZZZ$, $YZYXZXYZZ$, $YZYXXYYZZ$, $YZYXXZZYZ$, $YXYZXYYZZ$, $YXXZZYYYZ$, $YZZZXYYYZ$, $YXYZZYYYZ$, $YZZZXYYZZ$, $YYZZZXYZZ$, $YZZZZYYYZ$, $YYZYZXYYZ$, $YZYZZXZYZ$, $YXYZZZYZZ$, $YYZYXYYYZ$, $YZZZXYZZZ$, $YZZXYZZZZ$, $YZZZXZZYZ$, $YZZZZYYZZ$, $YZZZZZYZZ$, $YZZZZZZZZ$, $ZXXXZXYYZ$, $ZXXYZYYYZ$, $ZYYYZYYYZ$, $ZXZYYXXYZ$, $ZXXYYXZYZ$, $ZYZXYYYYZ$, $ZYZXZXZYZ$, $ZXZYYZZYZ$, $ZXZYXZYYZ$, $ZXZYYYZYZ$, $ZXXYXYYZZ$, $ZYZXZXXYZ$, $ZXZYYXYZZ$, $ZXZYXYYZZ$, $ZZYYYYZYZ$, $ZYYXZXYYZ$, $ZZXYXZYYZ$, $ZZYYZXZYZ$, $ZYZXZYYZZ$, $ZYYYYZZYZ$, $ZZYZZZYZZ$, $ZYZXXYZZZ$, $ZXZYXYZZZ$, $ZZYXZXYZZ$, $ZXXXXZYYZ$, $ZZYXYXYZZ$, $ZXXXYZXYZ$, $ZZYXXYYZZ$, $ZZXYXZXYZ$, $ZXXYZXYZZ$, $ZYZXYXYYZ$, $ZZXYZXYYZ$, $ZYYYZXYZZ$, $ZZYXZYYYZ$, $ZZYZXYYZZ$, $ZZYXYZZYZ$, $ZXXXXZXYZ$, $ZZYZZYYYZ$, $ZYYYZZYZZ$, $ZYZXYZZZZ$, $ZYZXXZYZZ$, $ZZXZXZXYZ$, $ZYZXYZYZZ$, $ZYYYXYYZZ$, $ZYYXYYZYZ$, $ZXZYYZZZZ$, $ZZYZYZZZZ$, $ZZZXZXZYZ$, $ZXZYZYZZZ$, $ZZYZZXYZZ$, $ZZYXZZYZZ$ or $ZXZYZZZZZ$.}
+	
+	\bigskip
+	
+	$\K_{Y,6}(YZZZZZZZZ,3, 4, 5, 7, 8, 9)\Rightarrow $$XZYZZYZZZ$, $XZZYZYZZZ$, $XZZZYYZZZ$, $XZZZZYYZZ$, $XZZZZYZYZ$, $XYYYYZYYZ$(Case 1 and 2).
+	
+	$\K_{Y,8}(YZZZZZZZZ,3, 4, 7, 9)\Rightarrow $$XZYZZZZYZ$, $XZZYZZZYZ$, $XZZZZZYYZ$, $XYYYYYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,5}(YZZZZZZZZ,7, 9)\Rightarrow $$XZZZYZYZZ$, $XYYYZYYYZ$(Case 2).
+	
+	$\K_{Y,4}(YZZZZZZZZ,3, 7, 9)\Rightarrow $$XZYYZZZZZ$, $XZZYZZYZZ$, $XYYZYYYYZ$(Case 1 and 2).
+	
+	
+	
+	$(5 1 2 8 3 4 6 9 7)\Rightarrow ZZZZYZZZZ$
+	
+	
+	$\K_{Y,9}(YZZZYZZZZ,\infty,3, 4, 6, 7, 8)\Rightarrow $$XYYYXYYYZ$, $XYZYXYYYZ$, $XYYZXYYYZ$, $XYYYXZYYZ$, $XYYYXYZYZ$, $XYYYXYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,7}(YZZZYZZZZ,\infty,4, 6)\Rightarrow $$XZZZXZYZZ$, $XZZYXZYZZ$, $XZZZXYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(YZZZYZZZZ,\infty,4, 6)\Rightarrow $$YZXZYZZZZ$, $YZXXYZZZZ$, $XZYZXYZZZ$(Case 1 and 2).
+	
+	$\K_{Y,6}(YZZZYZZZZ,4, 8)\Rightarrow $$XZZYXYZZZ$, $XZZZXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,4}(YZZZYZZZZ,8)\Rightarrow $$XZZYXZZYZ$(Case 2).
+	
+	
+	
+	$(1 2 3 4 7 6 5 8 9)\Rightarrow YZZZZZYZZ$ and $(3 1 2 4 5 6 7 8 9)\Rightarrow ZZYZYZZZZ$
+	
+	
+	$\K_{Y,7}(YYZZYZZZZ,6, 8, 9)\Rightarrow $$XXZZXYYZZ$, $XXZZXZYYZ$, $XXYYXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,8}(YYZZYZZZZ,6, 9)\Rightarrow $$XXZZXYZYZ$, $XXYYXYYZZ$(Case 2).
+	
+	$\K_{Y,6}(YYZZYZZZZ,9)\Rightarrow $$XXYYXZYYZ$(Case 1).
+	
+	
+	
+	$(1 5 6 7 8 2 3 4 9)\Rightarrow YZZZYZZYZ$, $(1 6 2 5 7 3 4 8 9)\Rightarrow YZZZZYYZZ$ and $(3 4 1 2 5 6 7 8 9)\Rightarrow ZZYYYZZZZ$
+	
+	
+	$\K_{Y,6}(XYZZYZZZZ,\infty,4, 7, 9)\Rightarrow $$YXZZXYZZZ$, $YXZYXYZZZ$, $YXZZXYYZZ$, $ZXYYXZYYZ$(Case 1 and 2).
+	
+	$\K_{Y,7}(XYZZYZZZZ,\infty,4, 9)\Rightarrow $$YXZZXZYZZ$, $YXZYXZYZZ$, $ZXYYXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,4}(XYZZYZZZZ,\infty,9)\Rightarrow $$XYZXYZZZZ$, $ZXYZXYYYZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(XYZZYZZZZ,\infty)\Rightarrow $$ZYZZYZZZZ$(Case 2).
+	
+	$\K_{Y,3}(XYZZYZZZZ,\infty)\Rightarrow $$XYXZYZZZZ$(Case 2).
+	
+	$\K_{Y,9}(XYZZYZZZZ,\infty)\Rightarrow $$ZXYYXYYYZ$(Case 2).
+	
+	
+	
+	$(5 1 7 3 8 4 6 2 9)\Rightarrow YZZZXZZYZ$
+	
+	
+	$\K_{Y,7}(YXXZYZZZZ,\infty,4, 6, 8, 9)\Rightarrow $$XYYZXZYZZ$, $XYYYXZYZZ$, $XYYZXYYZZ$, $XYYZXZYYZ$, $XZZYXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,9}(YXXZYZZZZ,\infty,4, 6, 8)\Rightarrow $$XZZYXYYYZ$, $XZZZXYYYZ$, $XZZYXZYYZ$, $XZZYXYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,6}(YXXZYZZZZ,\infty,4, 8)\Rightarrow $$XYYZXYZZZ$, $XYYYXYZZZ$, $XYYZXYZYZ$(Case 1).
+	
+	$\K_{Y,2}(YXXZYZZZZ,\infty)\Rightarrow $$YZXZYZZZZ$(Case 2).
+	
+	$\K_{Y,4}(YXXZYZZZZ,\infty)\Rightarrow $$YXXXYZZZZ$(Case 2).
+	
+	
+	
+	$(1 8 7 6 5 3 4 2 9)\Rightarrow XZZZXZYYZ$, $(2 1 5 6 7 3 4 8 9)\Rightarrow XYZZXZYZZ$, $(2 1 6 9 8 4 5 3 7)\Rightarrow XYZZZXZYZ$, $(2 4 5 6 7 1 3 8 9)\Rightarrow ZYZXXZYZZ$, $(2 4 5 9 8 1 3 7 6)\Rightarrow ZYZXXZZYZ$, $(3 5 1 4 8 6 7 2 9)\Rightarrow XZYZXZZYZ$ and $(3 6 1 4 8 5 7 2 9)\Rightarrow XZYZZXZYZ$
+	
+	
+	$\K_{Y,4}(ZYZXYZZZZ,\infty,3, 6, 7, 8, 9)\Rightarrow $$ZYZZYZZZZ$, $ZYXZYZZZZ$, $ZXZZXYZZZ$, $ZXZZXZYZZ$, $ZXZZXZZYZ$, $YXYYXYYYZ$(Case 1 and 2).
+	
+	$\K_{Y,9}(ZYZXYZZZZ,\infty,3, 6, 7)\Rightarrow $$YXYZXYYYZ$, $YXZZXYYYZ$, $YXYZXZYYZ$, $YXYZXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(ZYZXYZZZZ,\infty,7)\Rightarrow $$ZYXXYZZZZ$, $ZXYYXZYZZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(ZYZXYZZZZ,\infty)\Rightarrow $$XYZXYZZZZ$(Case 2).
+	
+	$\K_{Y,7}(ZYZXYZZZZ,\infty)\Rightarrow $$ZXZYXZYZZ$(Case 2).
+	
+	
+	
+	$(5 1 3 6 8 4 7 2 9)\Rightarrow YZZZZXZYZ$
+	
+	
+	$\K_{Y,6}(YYZYYZZZZ,\infty,7, 9)\Rightarrow $$XXZXXYZZZ$, $XXZXXYYZZ$, $XXYXXZYYZ$(Case 1 and 2).
+	
+	$\K_{Y,7}(YYZYYZZZZ,\infty,9)\Rightarrow $$XXZXXZYZZ$, $XXYXXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(YYZYYZZZZ,\infty)\Rightarrow $$YYXYYZZZZ$(Case 2).
+	
+	$\K_{Y,9}(YYZYYZZZZ,\infty)\Rightarrow $$XXYXXYYYZ$(Case 2).
+	
+	
+	
+	$(1 5 3 6 8 4 7 2 9)\Rightarrow YZZZYYZYZ$, $(1 6 2 7 8 3 4 5 9)\Rightarrow YZZZZYYYZ$, $(2 3 5 4 7 1 8 6 9)\Rightarrow ZYYYZZYZZ$, $(2 3 7 4 5 6 8 1 9)\Rightarrow ZYYYYZZZZ$ and $(3 6 1 7 8 2 5 4 9)\Rightarrow ZZYZZYYYZ$
+	
+	
+	$\K_{Y,9}(YYZXYZZZZ,3, 4, 6, 7)\Rightarrow $$XXZZXYYYZ$, $XXYYXYYYZ$, $XXYZXZYYZ$, $XXYZXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,4}(YYZXYZZZZ,3, 6, 7)\Rightarrow $$YYXZYZZZZ$, $XXZZXYZZZ$, $XXZZXZYZZ$(Case 2).
+	
+	$\K_{Y,6}(YYZXYZZZZ,8)\Rightarrow $$XXZYXYZYZ$(Case 2).
+	
+	
+	
+	$(1 2 3 5 4 6 8 7 9)\Rightarrow XXZXYZZZZ$, $(1 2 3 6 7 5 9 4 8)\Rightarrow YYZZZXYZZ$, $(1 2 3 8 5 6 9 4 7)\Rightarrow XXZZXZZYZ$, $(1 5 3 6 8 4 7 2 9)\Rightarrow YZZZYXZYZ$, $(1 5 7 2 8 4 9 6 3)\Rightarrow YXZZYZZYZ$, $(1 6 2 5 7 3 4 8 9)\Rightarrow YZZZXYYZZ$, $(1 6 2 8 9 3 5 4 7)\Rightarrow ZXXXXZXYZ$, $(3 4 1 8 6 2 5 7 9)\Rightarrow ZZXXZXZYZ$, $(3 4 2 1 7 5 8 6 9)\Rightarrow XZYYZZYZZ$, $(3 4 6 1 5 7 8 2 9)\Rightarrow XZYYYZZZZ$, $(3 5 1 4 8 7 9 6 2)\Rightarrow ZZYXYZZYZ$, $(3 6 1 5 7 2 4 8 9)\Rightarrow ZZYZXYYZZ$, $(3 6 4 8 9 5 7 1 2)\Rightarrow XXZXXZXYZ$, $(4 5 1 2 9 7 8 6 3)\Rightarrow YXYZZYYYZ$, $(4 6 1 2 7 3 5 8 9)\Rightarrow ZXZYZYYZZ$, $(4 7 1 2 9 3 6 5 8)\Rightarrow YXYZYYZYZ$ and $(5 6 2 1 8 3 4 7 9)\Rightarrow XZZZYYZYZ$
+	
+	
+	$\K_{Y,7}(XYYYYZZZZ,\infty,8, 9)\Rightarrow $$YXXXXZYZZ$, $YXXXXZYYZ$, $ZXXXXYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,8}(XYYYYZZZZ,\infty,9)\Rightarrow $$YXXXXZZYZ$, $ZXXXXYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,6}(XYYYYZZZZ,\infty)\Rightarrow $$YXXXXYZZZ$(Case 1).
+	
+	$\K_{Y,9}(XYYYYZZZZ,\infty)\Rightarrow $$ZXXXXYYYZ$(Case 1).
+	
+	
+	
+	$(1 2 5 6 8 3 4 7 9)\Rightarrow XYZZYYZYZ$, $(1 5 6 7 8 2 3 4 9)\Rightarrow XZZZYYYYZ$, $(4 1 2 5 9 7 3 6 8)\Rightarrow ZZYXZYYYZ$, $(5 1 2 3 4 6 7 8 9)\Rightarrow XXXXYZZZZ$, $(5 1 2 4 8 7 3 6 9)\Rightarrow YYZYXZZYZ$, $(5 1 6 7 8 4 2 3 9)\Rightarrow YZZZXYYYZ$ and $(6 1 5 8 9 2 3 4 7)\Rightarrow ZYYYZXYZZ$
+	
+	
+	$\K_{Y,4}(ZYZXXYZZZ,\infty,1, 3, 5, 7, 8, 9)\Rightarrow $$ZYZZXYZZZ$, $XYZZXYZZZ$, $ZYXZXYZZZ$, $ZYZZZYZZZ$, $ZXZZYXYZZ$, $ZXZZYXZYZ$, $YXYYZXYYZ$(Case 1 and 2).
+	
+	$\K_{Y,5}(ZYZXXYZZZ,\infty,3, 9)\Rightarrow $$ZYZXZYZZZ$, $ZYXXZYZZZ$, $YXYZYXYYZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(ZYZXXYZZZ,\infty)\Rightarrow $$XYZXXYZZZ$(Case 1).
+	
+	$\K_{Y,3}(ZYZXXYZZZ,\infty)\Rightarrow $$ZYXXXYZZZ$(Case 1).
+	
+	$\K_{Y,9}(ZYZXXYZZZ,\infty)\Rightarrow $$YXYZZXYYZ$(Case 1).
+	
+	
+	
+	$(2 4 5 3 9 7 1 6 8)\Rightarrow YYZXYYXYZ$, $(5 4 7 6 1 8 2 3 9)\Rightarrow XZZYZXZYZ$ and $(8 3 1 7 9 6 4 5 2)\Rightarrow YYXYYXZYZ$
+	
+	
+	$\K_{Y,9}(ZZYZZZYZZ,\infty,2, 4, 5, 6, 8)\Rightarrow $$YYXYYYXYZ$, $YZXYYYXYZ$, $YYXZYYXYZ$, $YYXYZYXYZ$, $YYXYYZXYZ$, $XXYXXXYZZ$(Case 1 and 2).
+	
+	$\K_{Y,8}(ZZYZZZYZZ,\infty,4, 6)\Rightarrow $$ZZXZZZXYZ$, $ZZXYZZXYZ$, $ZZXZZYXYZ$(Case 1).
+	
+	$\K_{Y,5}(ZZYZZZYZZ,\infty,4, 6)\Rightarrow $$ZZYZXZYZZ$, $ZZYXXZYZZ$, $ZZYZXXYZZ$(Case 1).
+	
+	$\K_{Y,2}(ZZYZZZYZZ,\infty,4, 6)\Rightarrow $$ZXYZZZYZZ$, $ZXYXZZYZZ$, $ZXYZZXYZZ$(Case 1).
+	
+	$\K_{Y,1}(ZZYZZZYZZ,\infty)\Rightarrow $$XZYZZZYZZ$(Case 1).
+	
+	$\K_{Y,9}(XXYZZZYZZ,\infty,2, 4, 5, 8)\Rightarrow $$ZZXYYYXYZ$, $ZYXYYYXYZ$, $ZZXZYYXYZ$, $ZZXYZYXYZ$, $ZZYXXXYZZ$(Case 1 and 2).
+	
+	$\K_{Y,4}(XXYZZZYZZ,\infty,2, 5, 8)\Rightarrow $$XXYXZZYZZ$, $XZYXZZYZZ$, $XXYXXZYZZ$, $YYXYZZXYZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(XXYZZZYZZ,\infty)\Rightarrow $$ZXYZZZYZZ$(Case 1).
+	
+	$\K_{Y,2}(XXYZZZYZZ,\infty)\Rightarrow $$XZYZZZYZZ$(Case 1).
+	
+	$\K_{Y,5}(XXYZZZYZZ,\infty)\Rightarrow $$XXYZXZYZZ$(Case 1).
+	
+	$\K_{Y,8}(XXYZZZYZZ,\infty)\Rightarrow $$YYXZZZXYZ$(Case 1).
+	
+	
+	
+	$(5 8 3 6 1 4 7 2 9)\Rightarrow ZZXZYZXYZ$
+	
+	
+	$\K_{Y,9}(YYZZYZYZZ,\infty,3, 4, 6, 8)\Rightarrow $$XXYYXYXYZ$, $XXZYXYXYZ$, $XXYZXYXYZ$, $XXYYXZXYZ$, $YYXXYXYZZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(YYZZYZYZZ,\infty)\Rightarrow $$YYXZYZYZZ$(Case 1).
+	
+	$\K_{Y,6}(YYZZYZYZZ,8)\Rightarrow $$XXZZXYXYZ$(Case 2).
+	
+	
+	
+	$(1 3 7 6 5 2 8 4 9)\Rightarrow YZYZYZZYZ$, $(1 6 8 5 7 2 9 4 3)\Rightarrow ZYYYYZZYZ$, $(2 4 3 1 7 5 9 6 8)\Rightarrow YZYZYYZYZ$, $(3 4 2 1 5 6 9 8 7)\Rightarrow YYZZZYYYZ$ and $(3 6 1 4 8 2 9 5 7)\Rightarrow YYZYYZYZZ$
+	
+	
+	$\K_{Y,9}(XXZYZYYZZ,2, 3, 5, 8)\Rightarrow $$ZYYXYXXYZ$, $ZZZXYXXYZ$, $ZZYXZXXYZ$, $ZZXYXYYZZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(XXZYZYYZZ,2, 5, 8)\Rightarrow $$XZXYZYYZZ$, $XXXYXYYZZ$, $YYYXZXXYZ$(Case 1 and 2).
+	
+	
+	
+	$(1 6 3 2 4 7 9 5 8)\Rightarrow XZYYYXZYZ$, $(1 6 4 2 3 5 8 9 7)\Rightarrow XYZZYXZYZ$, $(1 8 4 2 6 3 5 7 9)\Rightarrow YXXZXZZYZ$, $(1 8 7 3 2 4 6 5 9)\Rightarrow YZXXZXZYZ$, $(2 5 3 1 4 7 8 6 9)\Rightarrow YXZZXZYYZ$, $(2 5 3 4 1 6 7 8 9)\Rightarrow ZXZYXYYZZ$, $(2 6 1 4 3 5 7 8 9)\Rightarrow ZXZYYXYZZ$, $(2 6 1 4 3 8 9 5 7)\Rightarrow YXYZYXYZZ$, $(2 6 3 1 4 7 8 5 9)\Rightarrow YXZZZXYYZ$, $(2 6 5 1 3 7 9 4 8)\Rightarrow ZXYYYXZYZ$, $(2 6 5 4 1 7 9 3 8)\Rightarrow YXYZYXZYZ$, $(2 8 1 4 3 5 7 6 9)\Rightarrow ZYZXXZXYZ$, $(2 8 3 4 1 6 7 5 9)\Rightarrow ZYZXZXXYZ$, $(2 8 4 1 5 3 6 7 9)\Rightarrow XYXZZXZYZ$, $(2 8 7 3 1 4 6 5 9)\Rightarrow ZYXXZXZYZ$, $(3 6 4 1 7 2 8 9 5)\Rightarrow YYXZZXZYZ$, $(3 7 2 4 1 6 9 5 8)\Rightarrow YYXZYZXYZ$, $(3 8 4 1 7 2 5 9 6)\Rightarrow XXYZXZZYZ$, $(3 9 1 5 2 7 8 4 6)\Rightarrow XXZXYXYYZ$, $(4 5 1 3 2 8 9 6 7)\Rightarrow YYZXXYYZZ$, $(4 6 1 2 3 5 8 7 9)\Rightarrow ZYZXYXZYZ$, $(4 6 1 2 3 7 9 5 8)\Rightarrow YZYXYXZYZ$, $(4 6 1 3 2 8 9 5 7)\Rightarrow YYZXYXYZZ$, $(4 6 3 1 5 2 8 7 9)\Rightarrow YYZXZXZYZ$, $(4 8 1 2 3 6 9 5 7)\Rightarrow XZXYXZXYZ$, $(4 8 1 2 6 3 5 7 9)\Rightarrow ZXXYXZZYZ$, $(4 8 1 3 5 6 9 7 2)\Rightarrow XXZYXZXYZ$, $(4 8 1 3 6 5 9 7 2)\Rightarrow XXZYZXXYZ$, $(4 8 2 1 5 3 6 7 9)\Rightarrow XZXYZXZYZ$, $(4 8 3 1 6 2 5 7 9)\Rightarrow XXZYXZZYZ$, $(5 4 3 1 7 2 8 9 6)\Rightarrow YYZXXZZYZ$, $(5 8 7 3 1 4 6 2 9)\Rightarrow ZZXXYXZYZ$, $(6 2 7 1 3 5 8 4 9)\Rightarrow YXZZYXZYZ$, $(7 2 4 1 3 5 8 9 6)\Rightarrow YXZZYZXYZ$, $(7 4 1 2 3 5 8 9 6)\Rightarrow ZYZXYZXYZ$ and $(7 9 4 1 6 2 3 8 5)\Rightarrow XXXYYYZYZ$
+	
+	
+	$\K_{Y,4}(XXYZYZZYZ,1, 2, 7, 9)\Rightarrow $$ZXYXYZZYZ$, $XZYXYZZYZ$, $XXYXYZXYZ$, $ZZYZYXXYZ$(Case 1 and 2).
+	
+	$\K_{Y,6}(XXYZYZZYZ,7, 9)\Rightarrow $$XXYZYXXYZ$, $ZZYXYZXYZ$(Case 1).
+	
+	$\K_{Y,2}(XXYZYZZYZ,1, 7, 9)\Rightarrow $$ZZYZYZZYZ$, $XZYZYZXYZ$, $ZXYXYXXYZ$(Case 1 and 2).
+	
+	
+	
+	$(1 7 4 2 6 8 3 9 5)\Rightarrow XYYZYZXYZ$, $(3 5 4 1 6 7 2 9 8)\Rightarrow YYXZXZYYZ$ and $(5 8 1 6 2 4 3 7 9)\Rightarrow XXZZYZXYZ$
+	
+	
+	$\K_{Y,2}(ZXZYYZZYZ,1, 3, 6, 7, 9)\Rightarrow $$XZZYYZZYZ$, $ZZXYYZZYZ$, $ZZZYYXZYZ$, $ZZZYYZXYZ$, $XXXYYXXYZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(ZXZYYZZYZ,7, 9)\Rightarrow $$ZXXYYZXYZ$, $XZZYYXXYZ$(Case 1).
+	
+	
+	
+	$(3 8 5 1 2 4 7 6 9)\Rightarrow XXZZZXZYZ$
+	
+	
+	$\K_{Y,3}(XXZYYZZYZ,1, 2, 7, 9)\Rightarrow $$ZXXYYZZYZ$, $XZXYYZZYZ$, $XXXYYZXYZ$, $ZZZYYXXYZ$(Case 1 and 2).
+	
+	$\K_{Y,2}(XXZYYZZYZ,1, 7, 9)\Rightarrow $$ZZZYYZZYZ$, $XZZYYZXYZ$, $ZXXYYXXYZ$(Case 1 and 2).
+	
+	
+	
+	$(1 2 9 5 6 7 3 8 4)\Rightarrow XXZZYYZYZ$, $(3 9 1 5 6 2 4 8 7)\Rightarrow XXZXYYXYZ$, $(3 9 2 4 6 1 5 7 8)\Rightarrow YYZXYXXYZ$, $(3 9 4 1 2 6 5 7 8)\Rightarrow XXZYYYXYZ$, $(5 8 7 1 2 4 3 6 9)\Rightarrow XXZZYXZYZ$, $(5 8 9 1 2 3 6 4 7)\Rightarrow XXZXYZZYZ$, $(7 9 1 3 5 2 4 8 6)\Rightarrow XXYXYXZYZ$, $(7 9 5 1 2 3 6 4 8)\Rightarrow XXYXYYZYZ$, $(7 9 8 3 4 1 2 6 5)\Rightarrow YYXXYXZYZ$, $(9 3 2 4 5 7 1 8 6)\Rightarrow XXZYYXXYZ$ and $(9 7 8 1 2 3 4 6 5)\Rightarrow XXYYYXZYZ$
+	
+	
+	$\K_{Y,4}(ZYZXZXZYZ,\infty,3, 5, 6, 7, 9)\Rightarrow $$ZYZZZXZYZ$, $ZYXZZXZYZ$, $ZYZZXXZYZ$, $ZYZZZZZYZ$, $ZYZZZXXYZ$, $XYXXXZXYZ$(Case 1 and 2).
+	
+	$\K_{Y,6}(ZYZXZXZYZ,\infty,7, 9)\Rightarrow $$ZYZXZZZYZ$, $ZYZXZZXYZ$, $XYXZXXXYZ$(Case 1 and 2).
+	
+	$\K_{Y,5}(ZYZXZXZYZ,\infty,7, 9)\Rightarrow $$ZYZXXXZYZ$, $ZYZXXXXYZ$, $XYXZZZXYZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(ZYZXZXZYZ,\infty)\Rightarrow $$XYZXZXZYZ$(Case 2).
+	
+	$\K_{Y,7}(ZYZXZXZYZ,3, 9)\Rightarrow $$ZYXXZXXYZ$, $XYXZXZZYZ$(Case 2).
+	
+	$\K_{Y,3}(ZYZXZXZYZ,9)\Rightarrow $$XYZZXZXYZ$(Case 2).
+	
+	$\K_{Y,9}(XXZYYYZYZ,\infty,2, 3, 7)\Rightarrow $$ZZXYYYXYZ$, $ZXXYYYXYZ$, $ZZZYYYXYZ$, $ZZXYYYZYZ$(Case 1 and 2).
+	
+	$\K_{Y,2}(XXZYYYZYZ,\infty,3, 7)\Rightarrow $$XZZYYYZYZ$, $XZXYYYZYZ$, $XZZYYYXYZ$(Case 1 and 2).
+	
+	$\K_{Y,3}(XXZYYYZYZ,7)\Rightarrow $$XXXYYYXYZ$(Case 1).
+	
+	
+	
+	$(5 8 3 1 2 4 7 6 9)\Rightarrow XXZXYXZYZ$
+	
+	
+	$\K_{Y,5}(ZXXYZYYYZ,\infty,1, 2, 9)\Rightarrow $$ZXXYXYYYZ$, $XXXYXYYYZ$, $ZZXYXYYYZ$, $XZZYZYYYZ$(Case 1 and 2).
+	
+	$\K_{Y,1}(ZXXYZYYYZ,\infty)\Rightarrow $$XXXYZYYYZ$(Case 2).
+	
+	$\K_{Y,2}(ZXXYZYYYZ,\infty)\Rightarrow $$ZZXYZYYYZ$(Case 1).
+	
+	$\K_{Y,9}(ZXXYZYYYZ,\infty)\Rightarrow $$XZZYXYYYZ$(Case 1).
+	
+	
+	
+	$(1 8 7 2 5 3 4 6 9)\Rightarrow ZXXXZXYYZ$
+	
+	
+	$\K_{Y,\infty}(XYZZXZZYZ,1, 3, 4, 5, 6, 7, 9)\Rightarrow $$ZYZZXZZYZ$, $XYXZXZZYZ$, $XYZXXZZYZ$, $XYZZZZZYZ$, $XYZZXXZYZ$, $XYZZXZXYZ$, $ZYXXZXXYZ$( Case 2).
+	
+	$\K_{Y,\infty}(YYZYYYZYZ,3, 7, 9)\Rightarrow $$YYXYYYZYZ$, $YYZYYYXYZ$, $YYXYYYXYZ$( Case 2).
+	
+	
+	
+	$(2 3 1 4 6 7 5 8 9)\Rightarrow ZYYYZYYYZ$
+	
+	
+	$\K_{X,8}(ZXZYZZZZZ,3, 4, 6, 7, 9)\Rightarrow $$ZXYYZZZYZ$, $ZXZZZZZYZ$, $ZXZYZYZYZ$, $ZXZYZZYYZ$, $YXYZYYYZZ$(Case 1 and 2).
+	
+	$\K_{X,6}(ZXZYZZZZZ,3, 4, 5, 9)\Rightarrow $$ZXYYZYZZZ$, $ZXZZZYZZZ$, $ZXZYYYZZZ$, $YXYZYZYYZ$(Case 1 and 2).
+	
+	$\K_{X,4}(ZXZYZZZZZ,1, 3, 5, 7, 9)\Rightarrow $$XYZZZZZZZ$, $ZXYZZZZZZ$, $ZXZZYZZZZ$, $ZXZZZZYZZ$, $YXYYYYYYZ$(Case 1 and 2).
+	
+	$\K_{X,5}(ZXZYZZZZZ,7)\Rightarrow $$ZXZYYZYZZ$(Case 2).
+	
+	
+	
+	$(1 6 3 8 4 2 5 7 9)\Rightarrow ZZZZZXZYZ$ and $(2 1 3 5 4 6 8 7 9)\Rightarrow XZZZYZZZZ$
+	
+	
+	$\K_{X,9}(YXZZYZZZZ,4, 5, 6, 7, 8)\Rightarrow $$ZXYZZYYYZ$, $ZXYYYYYYZ$, $ZXYYZZYYZ$, $ZXYYZYZYZ$, $ZXYYZYYZZ$(Case 1 and 2).
+	
+	$\K_{X,5}(YXZZYZZZZ,4, 6, 7, 8)\Rightarrow $$YXZYZZZZZ$, $YXZZZYZZZ$, $YXZZZZYZZ$, $YXZZZZZYZ$(Case 1 and 2).
+	
+	$\K_{X,6}(YXZZYZZZZ,4, 7)\Rightarrow $$YXZYYYZZZ$, $YXZZYYYZZ$(Case 1 and 2).
+	
+	$\K_{X,4}(YXZZYZZZZ,7)\Rightarrow $$YXZYYZYZZ$(Case 1).
+	
+	
+	
+	$(1 4 2 6 5 8 9 3 7)\Rightarrow YZZXYZZZZ$, $(1 8 5 3 6 4 7 2 9)\Rightarrow XZZZZXZYZ$, $(2 5 4 3 1 6 7 8 9)\Rightarrow XXZZYZZZZ$, $(3 8 2 1 6 4 7 9 5)\Rightarrow ZZXZZXZYZ$, $(4 1 2 3 5 6 7 9 8)\Rightarrow XZZYYZZZZ$, $(5 2 1 3 4 6 7 8 9)\Rightarrow ZXZYYZZZZ$, $(5 6 8 2 1 3 9 7 4)\Rightarrow XZZZXYZZZ$, $(5 8 2 3 1 4 7 9 6)\Rightarrow XZZZXZZYZ$, $(6 5 2 3 1 8 9 7 4)\Rightarrow YZZZXYZZZ$, $(7 2 8 1 4 3 6 9 5)\Rightarrow ZXZYZZYZZ$, $(8 1 2 3 5 4 7 6 9)\Rightarrow XZZZYZZYZ$, $(9 1 4 2 7 3 6 8 5)\Rightarrow XYYYYYZYZ$ and $(9 5 2 4 3 7 8 6 1)\Rightarrow YYZYXYYYZ$
+	
+	
+	$\K_{X,4}(ZXZYXYZZZ,\infty,1, 3, 6, 7, 8, 9)\Rightarrow $$ZXZZXYZZZ$, $YXZZXYZZZ$, $ZXYZXYZZZ$, $ZYZZYZZZZ$, $ZXZZXYYZZ$, $ZXZZXYZYZ$, $YXYYXZYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(ZXZYXYZZZ,\infty,6, 8)\Rightarrow $$YXYZXZYYZ$, $YXYZXYYYZ$, $YXYZXZYZZ$(Case 1 and 2).
+	
+	$\K_{X,3}(ZXZYXYZZZ,\infty,8)\Rightarrow $$ZXYYXYZZZ$, $ZXYYXYZYZ$(Case 1).
+	
+	$\K_{X,1}(ZXZYXYZZZ,\infty)\Rightarrow $$YXZYXYZZZ$(Case 1).
+	
+	$\K_{X,8}(ZXZYXYZZZ,\infty)\Rightarrow $$ZXZYXYZYZ$(Case 2).
+	
+	
+	
+	$(1 3 2 8 6 5 4 7 9)\Rightarrow ZZXZYXZYZ$, $(2 1 7 6 8 4 3 5 9)\Rightarrow YZZXZXZYZ$ and $(3 4 5 2 7 1 6 9 8)\Rightarrow XXZYZZYZZ$
+	
+	
+	$\K_{X,7}(XYZZZYYZZ,3, 4, 5, 6, 8, 9)\Rightarrow $$XYYZZYZZZ$, $XYZYZYZZZ$, $XYZZYYZZZ$, $XYZZZZZZZ$, $XYZZZYZYZ$, $XZYYYZYYZ$(Case 1 and 2).
+	
+	$\K_{X,4}(XYZZZYYZZ,3, 5, 6, 8, 9)\Rightarrow $$XYYYZYYZZ$, $XYZYYYYZZ$, $XYZYZZYZZ$, $XYZYZYYYZ$, $XZYZYZZYZ$(Case 1 and 2).
+	
+	$\K_{X,6}(XYZZZYYZZ,8)\Rightarrow $$XYZZZZYYZ$(Case 2).
+	
+	$\K_{X,5}(XYZZZYYZZ,9)\Rightarrow $$XZYYZZZYZ$(Case 1).
+	
+	
+	
+	$(1 6 2 5 3 9 7 4 8)\Rightarrow XYYYYZZYZ$, $(4 6 1 3 5 2 7 8 9)\Rightarrow ZYZXZYYZZ$, $(5 4 1 6 7 8 3 2 9)\Rightarrow ZZYYXZZYZ$, $(5 4 2 1 6 9 3 7 8)\Rightarrow YYZZXYYYZ$ and $(6 4 2 7 1 8 3 5 9)\Rightarrow ZZYYZXZYZ$
+	
+	
+	$\K_{X,4}(ZXZYZXYZZ,\infty,1, 3, 5, 7, 8, 9)\Rightarrow $$ZXZZZXYZZ$, $YXZZZXYZZ$, $ZXYZZXYZZ$, $ZXZZYXYZZ$, $ZYZZZYZZZ$, $ZXZZZXYYZ$, $YXYYYXZYZ$(Case 1 and 2).
+	
+	$\K_{X,7}(ZXZYZXYZZ,\infty,3, 9)\Rightarrow $$ZYZXZYZZZ$, $ZYXXZYZZZ$, $YXYZYXYYZ$(Case 1 and 2).
+	
+	$\K_{X,3}(ZXZYZXYZZ,\infty,5, 8)\Rightarrow $$ZXYYZXYZZ$, $ZXYYYXYZZ$, $ZXYYZXYYZ$(Case 1 and 2).
+	
+	$\K_{X,1}(ZXZYZXYZZ,\infty)\Rightarrow $$YXZYZXYZZ$(Case 1).
+	
+	$\K_{X,8}(ZXZYZXYZZ,9)\Rightarrow $$XYXZXYZZZ$(Case 1).
+	
+	
+	
+	$(4 2 9 8 5 6 1 7 3)\Rightarrow YXZZZXZYZ$, $(5 4 7 6 1 8 3 2 9)\Rightarrow ZZXYZXZYZ$ and $(6 4 9 2 1 8 5 3 7)\Rightarrow ZXZYXZZYZ$
+	
+	
+	$\K_{X,7}(YYZYZYYZZ,\infty,3, 4, 5, 6, 8, 9)\Rightarrow $$YYZYZYZZZ$, $YYYYZYZZZ$, $YYZZZYZZZ$, $YYZYYYZZZ$, $YYZYZZZZZ$, $YYZYZYZYZ$, $ZZYZYZYYZ$(Case 1 and 2).
+	
+	$\K_{X,4}(YYZYZYYZZ,\infty,3, 5, 6, 9)\Rightarrow $$YYZZZYYZZ$, $YYYZZYYZZ$, $YYZZYYYZZ$, $YYZZZZYZZ$, $ZZYYYZZYZ$(Case 1 and 2).
+	
+	$\K_{X,5}(YYZYZYYZZ,\infty,3, 9)\Rightarrow $$YYZYYYYZZ$, $YYYYYYYZZ$, $ZZYZZZZYZ$(Case 1 and 2).
+	
+	$\K_{X,3}(YYZYZYYZZ,\infty,9)\Rightarrow $$YYYYZYYZZ$, $ZZZZYZZYZ$(Case 1 and 2).
+	
+	$\K_{X,1}(YYZYZYYZZ,\infty)\Rightarrow $$ZYZYZYYZZ$(Case 1).
+	
+	$\K_{X,2}(YYZYZYYZZ,\infty)\Rightarrow $$YZZYZYYZZ$(Case 1).
+	
+	$\K_{X,9}(YYZYZYYZZ,\infty)\Rightarrow $$ZZYZYZZYZ$(Case 2).
+	
+	
+	
+	$(5 6 1 3 7 4 8 2 9)\Rightarrow ZZYYYYZYZ$
+	
+	
+	$\K_{X,6}(XXYZXYYZZ,4, 7, 8, 9)\Rightarrow $$XXYYXZYZZ$, $YYXZYZZZZ$, $XXYZXZYYZ$, $XXZYXYZYZ$(Case 1 and 2).
+	
+	$\K_{X,7}(XXYZXYYZZ,4, 8)\Rightarrow $$XXYYXYZZZ$, $XXYZXYZYZ$(Case 1).
+	
+	$\K_{X,4}(XXYZXYYZZ,8)\Rightarrow $$XXYYXYYYZ$(Case 2).
+	
+	
+	
+	$(1 2 3 4 7 6 9 5 8)\Rightarrow XXZYYZXYZ$, $(1 2 3 4 8 5 7 6 9)\Rightarrow YYXZXZXYZ$, $(1 2 3 5 4 9 6 8 7)\Rightarrow XXZXYZYYZ$, $(1 2 3 5 4 9 7 8 6)\Rightarrow XXZXYYZYZ$, $(1 2 3 5 8 6 4 7 9)\Rightarrow YYXXZXZYZ$, $(1 2 3 6 5 8 4 7 9)\Rightarrow XXYYXZZYZ$, $(1 2 4 5 3 7 9 6 8)\Rightarrow XXXZYYZYZ$, $(1 2 7 3 5 4 8 9 6)\Rightarrow XXZYXZYYZ$, $(1 5 3 7 8 6 2 9 4)\Rightarrow YXXZYXZYZ$, $(1 5 7 2 8 4 3 6 9)\Rightarrow YZXXYZXYZ$, $(1 5 7 3 8 2 6 4 9)\Rightarrow YXZZYXXYZ$, $(1 6 2 4 7 3 5 8 9)\Rightarrow YXXZXYYZZ$, $(1 6 2 4 9 3 8 5 7)\Rightarrow ZYYXXZXYZ$, $(1 7 2 3 8 9 5 4 6)\Rightarrow YZXXZXYYZ$, $(1 7 2 3 8 9 6 4 5)\Rightarrow YZXXXZYYZ$, $(2 3 1 4 5 8 9 6 7)\Rightarrow ZXXYXYYZZ$, $(2 3 1 4 8 5 7 6 9)\Rightarrow XYYZXZXYZ$, $(2 5 7 1 8 4 6 3 9)\Rightarrow ZYZXYXXYZ$, $(2 5 7 4 8 1 3 6 9)\Rightarrow XYXZYZXYZ$, $(2 7 1 4 8 3 5 9 6)\Rightarrow XYXZXZYYZ$, $(2 7 1 4 8 3 6 9 5)\Rightarrow XYXZZXYYZ$, $(3 4 2 1 6 9 7 8 5)\Rightarrow YZXXYXZYZ$, $(3 5 1 4 8 2 6 7 9)\Rightarrow XXYZYXZYZ$ and $(4 6 1 3 7 2 5 9 8)\Rightarrow XXZYXYYZZ$
+	
+	
+	$\K_{X,8}(YYZYXYYZZ,2, 3, 6, 7, 9)\Rightarrow $$YZZYXYYYZ$, $YYYYXYYYZ$, $YYZYXZYYZ$, $YYZYXYZYZ$, $ZZXZYZZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(YYZYXYYZZ,2, 3, 6, 7)\Rightarrow $$ZYYZXZZYZ$, $ZZZZXZZYZ$, $ZZYZXYZYZ$, $ZZYZXZYYZ$(Case 1 and 2).
+	
+	$\K_{X,4}(YYZYXYYZZ,3, 6, 7)\Rightarrow $$YYYZXYYZZ$, $YYZZXZYZZ$, $YYZZXYZZZ$(Case 1 and 2).
+	
+	$\K_{X,3}(YYZYXYYZZ,2, 6, 7)\Rightarrow $$YZYYXYYZZ$, $YYYYXZYZZ$, $YYYYXYZZZ$(Case 1).
+	
+	
+	
+	$(3 2 6 1 5 4 8 7 9)\Rightarrow YYYYXZZYZ$, $(3 5 7 4 2 6 8 1 9)\Rightarrow ZXYYYYZYZ$, $(5 8 7 6 1 3 4 2 9)\Rightarrow XZYYYYZYZ$, $(6 4 5 7 8 1 2 3 9)\Rightarrow XXZXZXXYZ$ and $(7 8 3 5 1 2 6 4 9)\Rightarrow XYZZYYYYZ$
+	
+	
+	$\K_{X,9}(YYZZYZZYZ,\infty,2, 3, 4, 5, 6, 7, 8)\Rightarrow $$ZZYYZYYZZ$, $ZYYYZYYZZ$, $ZZZYZYYZZ$, $ZZYZZYYZZ$, $ZZYYYYYZZ$, $ZZYYZZYZZ$, $ZZYYZYZZZ$, $ZZYYZYYYZ$(Case 1 and 2).
+	
+	$\K_{X,5}(YYZZYZZYZ,\infty,2, 3, 4, 6, 7, 8)\Rightarrow $$YYZZZZZYZ$, $YZZZZZZYZ$, $YYYZZZZYZ$, $YYZYZZZYZ$, $YYZZZYZYZ$, $YYZZZZYYZ$, $YYZZZZZZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(YYZZYZZYZ,\infty,3, 4)\Rightarrow $$YYZZYZYYZ$, $YYYZYZYYZ$, $YYZYYZYYZ$(Case 2).
+	
+	$\K_{X,3}(YYZZYZZYZ,\infty,6, 8)\Rightarrow $$YYYZYZZYZ$, $YYYZYYZYZ$, $YYYZYZZZZ$(Case 2).
+	
+	$\K_{X,1}(YYZZYZZYZ,\infty)\Rightarrow $$ZYZZYZZYZ$(Case 2).
+	
+	$\K_{X,6}(YYZZYZZYZ,8)\Rightarrow $$YYZZYYZZZ$(Case 2).
+	
+	$\K_{X,5}(XYZZYZZYZ,2, 3, 4, 6, 7, 8, 9)\Rightarrow $$XZZZZZZYZ$, $XYYZZZZYZ$, $XYZYZZZYZ$, $XYZZZYZYZ$, $XYZZZZYYZ$, $XYZZZZZZZ$, $XZYYYYYZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(XYZZYZZYZ,4, 9)\Rightarrow $$XYZYYZYYZ$, $XZYYZYZZZ$(Case 1).
+	
+	$\K_{X,6}(XYZZYZZYZ,4, 8)\Rightarrow $$XYZYYYZYZ$, $XYZZYYZZZ$(Case 2).
+	
+	$\K_{X,4}(XYZZYZZYZ,8, 9)\Rightarrow $$XYZYYZZZZ$, $XZYZZYYZZ$(Case 1 and 2).
+	
+	
+	
+	$(5 2 4 3 1 6 7 8 9)\Rightarrow YYZZXZZYZ$
+	
+	
+	$\K_{X,7}(XXZZYZZYZ,\infty,5, 6, 8, 9)\Rightarrow $$XXZZYZYYZ$, $XXZZZZYYZ$, $XXZZYYYYZ$, $XXZZYZYZZ$, $XXYYZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XXZZYZZYZ,\infty,5, 6, 8)\Rightarrow $$XXYYZYYZZ$, $XXYYYYYZZ$, $XXYYZZYZZ$, $XXYYZYYYZ$(Case 1 and 2).
+	
+	$\K_{X,5}(XXZZYZZYZ,\infty,6, 8)\Rightarrow $$XXZZZZZYZ$, $XXZZZYZYZ$, $YYZZZZZZZ$(Case 2).
+	
+	$\K_{X,6}(XXZZYZZYZ,8)\Rightarrow $$XXZZYYZZZ$(Case 2).
+	
+	
+	
+	$(1 8 6 7 5 3 4 2 9)\Rightarrow YXZZXZZYZ$
+	
+	
+	$\K_{X,7}(XYYZYZZYZ,5, 6, 8, 9)\Rightarrow $$XYYZZZYYZ$, $XYYZYYYYZ$, $XYYZYZYZZ$, $XZZYZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(XYYZYZZYZ,5, 6, 9)\Rightarrow $$XYYZZZZZZ$, $XYYZYYZZZ$, $XZZYZYYYZ$(Case 1).
+	
+	$\K_{X,6}(XYYZYZZYZ,5, 9)\Rightarrow $$XYYZZYZYZ$, $XZZYZZYZZ$(Case 1).
+	
+	$\K_{X,5}(XYYZYZZYZ,9)\Rightarrow $$XZZYYYYZZ$(Case 1).
+	
+	
+	
+	$(1 5 9 6 3 2 7 4 8)\Rightarrow XYZZZYYYZ$, $(2 1 3 9 5 4 6 8 7)\Rightarrow YXYZYZZYZ$, $(2 1 6 3 7 4 5 9 8)\Rightarrow ZXYYYZZYZ$, $(2 3 5 8 1 4 6 9 7)\Rightarrow ZXZYZYYYZ$, $(2 5 6 1 4 3 7 8 9)\Rightarrow ZXZYYYZYZ$, $(4 2 3 1 5 6 7 8 9)\Rightarrow ZYYXYZZYZ$, $(4 3 6 8 7 1 2 9 5)\Rightarrow YYZXYZZYZ$, $(5 1 9 2 6 3 4 7 8)\Rightarrow ZYYYXZZYZ$, $(5 2 7 4 1 3 6 8 9)\Rightarrow YYZZXZYYZ$, $(6 4 7 2 3 1 5 9 8)\Rightarrow YYZZYXZYZ$, $(6 7 8 4 1 3 5 2 9)\Rightarrow YYZZZXYYZ$, $(8 1 4 5 2 3 7 6 9)\Rightarrow XXZXZXZYZ$, $(8 1 7 2 5 3 4 9 6)\Rightarrow ZXXXZXZYZ$, $(8 1 7 5 2 3 4 6 9)\Rightarrow XXZZZXXYZ$ and $(8 5 7 9 1 3 4 2 6)\Rightarrow XXZZXZXYZ$
+	
+	
+	$\K_{X,7}(XYYZXZZYZ,\infty,4, 6, 8, 9)\Rightarrow $$XYYZXZYYZ$, $XYYYXZYYZ$, $XYYZXYYYZ$, $XYYZXZYZZ$, $XZZYXYZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XYYZXZZYZ,\infty,4, 6, 8)\Rightarrow $$XZZYXYYZZ$, $XZZZXYYZZ$, $XZZYXZYZZ$, $XZZYXYYYZ$(Case 1 and 2).
+	
+	$\K_{X,6}(XYYZXZZYZ,\infty,4, 8)\Rightarrow $$XYYZXYZYZ$, $XYYYXYZYZ$, $XYYZXYZZZ$(Case 1).
+	
+	
+	
+	$(1 2 7 5 8 3 4 6 9)\Rightarrow YXZZZXXYZ$, $(1 2 7 6 5 3 4 8 9)\Rightarrow XYZZXZYYZ$, $(1 3 6 4 8 5 7 2 9)\Rightarrow YXXZZXZYZ$, $(2 3 4 1 5 6 7 8 9)\Rightarrow ZXYYXZZYZ$ and $(2 4 7 6 5 1 3 8 9)\Rightarrow ZXZYXZYYZ$
+	
+	
+	$\K_{X,6}(YXYZXZZYZ,\infty,4, 7, 8, 9)\Rightarrow $$YXYZXYZYZ$, $YXYYXYZYZ$, $YXYZXYYYZ$, $YXYZXYZZZ$, $ZXZYXZYZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(YXYZXZZYZ,\infty,4, 8)\Rightarrow $$YXYZXZYYZ$, $YXYYXZYYZ$, $YXYZXZYZZ$(Case 1).
+	
+	$\K_{X,4}(YXYZXZZYZ,\infty,8)\Rightarrow $$YXYYXZZYZ$, $XYXXYZZZZ$(Case 2).
+	
+	$\K_{X,1}(YXYZXZZYZ,\infty)\Rightarrow $$ZXYZXZZYZ$(Case 2).
+	
+	$\K_{X,8}(YXYZXZZYZ,\infty)\Rightarrow $$XYXZYZZZZ$(Case 2).
+	
+	
+	
+	$(1 3 5 6 9 4 7 2 8)\Rightarrow XXZYXYYYZ$, $(4 2 9 1 8 5 3 6 7)\Rightarrow XYXZXZXYZ$, $(5 1 7 3 8 4 6 2 9)\Rightarrow YXZZXZXYZ$ and $(5 7 1 3 9 6 4 8 2)\Rightarrow YXXXYXZYZ$
+	
+	
+	$\K_{X,5}(ZYZXYZZYZ,1, 2, 3, 6, 7, 9)\Rightarrow $$YYZXZZZYZ$, $ZZZXZZZYZ$, $ZYYXZZZYZ$, $ZYZXZYZYZ$, $ZYZXZZYYZ$, $YZYXYYYZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(ZYZXYZZYZ,1, 2, 3, 7)\Rightarrow $$ZZYXZYYZZ$, $YYYXZYYZZ$, $YZZXZYYZZ$, $YZYXZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(ZYZXYZZYZ,2, 3, 6)\Rightarrow $$ZZZXYZZZZ$, $ZYYXYZZZZ$, $ZYZXYYZZZ$(Case 2).
+	
+	$\K_{X,2}(ZYZXYZZYZ,1, 6, 7)\Rightarrow $$YZZXYZZYZ$, $ZZZXYYZYZ$, $ZZZXYZYYZ$(Case 1 and 2).
+	
+	$\K_{X,1}(ZYZXYZZYZ,7)\Rightarrow $$YYZXYZYYZ$(Case 2).
+	
+	
+	
+	$(3 8 7 6 1 4 5 2 9)\Rightarrow YYZZZXZYZ$
+	
+	
+	$\K_{X,5}(YYZYYZZYZ,\infty,1, 2, 3, 4, 6, 7, 8, 9)\Rightarrow $$YYZYZZZYZ$, $ZYZYZZZYZ$, $YZZYZZZYZ$, $YYYYZZZYZ$, $YYZZZZZYZ$, $YYZYZYZYZ$, $YYZYZZYYZ$, $YYZYZZZZZ$, $ZZYZYYYZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(YYZYYZZYZ,\infty,2, 3, 4, 9)\Rightarrow $$YYZYYZYYZ$, $YZZYYZYYZ$, $YYYYYZYYZ$, $YYZZYZYYZ$, $ZZYZZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(YYZYYZZYZ,\infty,2, 3, 4)\Rightarrow $$ZZYZZYYZZ$, $ZYYZZYYZZ$, $ZZZZZYYZZ$, $ZZYYZYYZZ$(Case 1 and 2).
+	
+	$\K_{X,2}(YYZYYZZYZ,\infty,3)\Rightarrow $$YZZYYZZYZ$, $YZYYYZZYZ$(Case 2).
+	
+	$\K_{X,1}(YYZYYZZYZ,\infty)\Rightarrow $$ZYZYYZZYZ$(Case 2).
+	
+	$\K_{X,8}(YYZYYZZYZ,3, 6)\Rightarrow $$YYYYYZZZZ$, $YYZYYYZZZ$(Case 2).
+	
+	$\K_{X,3}(YYZYYZZYZ,4)\Rightarrow $$YYYZYZZYZ$(Case 2).
+	
+	
+	
+	$(5 8 7 6 1 4 3 2 9)\Rightarrow YYZZYYZYZ$
+	
+	
+	$\K_{X,6}(ZYYXXZZYZ,\infty,1, 2, 3, 7, 8, 9)\Rightarrow $$ZYYXXYZYZ$, $YYYXXYZYZ$, $ZZYXXYZYZ$, $ZYZXXYZYZ$, $ZYYXXYYYZ$, $ZYYXXYZZZ$, $YZZXXZYZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(ZYYXXZZYZ,\infty,7, 8)\Rightarrow $$YZZXXYYZZ$, $YZZXXYZZZ$, $YZZXXYYYZ$(Case 1).
+	
+	$\K_{X,7}(ZYYXXZZYZ,2, 8)\Rightarrow $$ZZYXXZYYZ$, $ZYYXXZYZZ$(Case 1).
+	
+	$\K_{X,2}(ZYYXXZZYZ,8)\Rightarrow $$ZZXYYZZZZ$(Case 2).
+	
+	
+	
+	$(5 8 7 1 6 4 3 2 9)\Rightarrow XYZZZXYYZ$
+	
+	
+	$\K_{X,7}(YYYYYZZYZ,\infty,4, 5, 6, 8, 9)\Rightarrow $$YYYYYZYYZ$, $YYYZYZYYZ$, $YYYYZZYYZ$, $YYYYYYYYZ$, $YYYYYZYZZ$, $ZZZZZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(YYYYYZZYZ,\infty,4, 5, 6, 9)\Rightarrow $$YYYYYZZZZ$, $YYYZYZZZZ$, $YYYYZZZZZ$, $YYYYYYZZZ$, $ZZZZZYYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(YYYYYZZYZ,\infty,4, 5, 6)\Rightarrow $$ZZZZZYYZZ$, $ZZZYZYYZZ$, $ZZZZYYYZZ$, $ZZZZZZYZZ$(Case 1).
+	
+	$\K_{X,5}(YYYYYZZYZ,\infty,4, 6)\Rightarrow $$YYYYZZZYZ$, $YYYZZZZYZ$, $YYYYZYZYZ$(Case 1).
+	
+	$\K_{X,2}(YYYYYZZYZ,\infty)\Rightarrow $$YZYYYZZYZ$(Case 2).
+	
+	$\K_{X,4}(YYYYYZZYZ,\infty)\Rightarrow $$YYYZYZZYZ$(Case 2).
+	
+	
+	
+	$(5 6 7 1 2 4 3 8 9)\Rightarrow YYZZYYYYZ$
+	
+	
+	$\K_{X,7}(XXYYYZZYZ,\infty,5, 6, 8, 9)\Rightarrow $$XXYYYZYYZ$, $XXYYZZYYZ$, $XXYYYYYYZ$, $XXYYYZYZZ$, $XXZZZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XXYYYZZYZ,\infty,5, 6, 8)\Rightarrow $$XXZZZYYZZ$, $XXZZYYYZZ$, $XXZZZZYZZ$, $XXZZZYYYZ$(Case 2).
+	
+	$\K_{X,5}(XXYYYZZYZ,\infty,6, 8)\Rightarrow $$XXYYZZZYZ$, $XXYYZYZYZ$, $XXYYZZZZZ$(Case 1).
+	
+	$\K_{X,6}(XXYYYZZYZ,8)\Rightarrow $$XXYYYYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 6 7 1 4 3 2 9)\Rightarrow XXZZYXXYZ$
+	
+	
+	$\K_{X,8}(XYYZZXZYZ,\infty,2, 3, 4, 5, 7, 9)\Rightarrow $$YXXZZYZZZ$, $YZXZZYZZZ$, $YXZZZYZZZ$, $YXXXZYZZZ$, $YXXZXYZZZ$, $XYYZZXYZZ$, $XZZYYXYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XYYZZXZYZ,\infty,4, 5, 7)\Rightarrow $$XZZYYXYZZ$, $XZZZYXYZZ$, $XZZYZXYZZ$, $YZZXXYZZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(XYYZZXZYZ,4, 5)\Rightarrow $$XYYYZXYYZ$, $XYYZYXYYZ$(Case 1 and 2).
+	
+	
+	
+	$(4 7 8 1 6 5 3 2 9)\Rightarrow ZYZXXZYYZ$
+	
+	
+	$\K_{X,8}(YYYYZXZYZ,2, 3, 4, 5, 7, 9)\Rightarrow $$XZXXZYZZZ$, $XXZXZYZZZ$, $XXXZZYZZZ$, $XXXXXYZZZ$, $YYYYZXYZZ$, $ZZZZYXYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(YYYYZXZYZ,2, 4, 5, 7)\Rightarrow $$ZYZZYXYZZ$, $ZZZYYXYZZ$, $ZZZZZXYZZ$, $ZZZZXYZZZ$(Case 1).
+	
+	$\K_{X,5}(YYYYZXZYZ,2, 4, 7)\Rightarrow $$YZYYYXZYZ$, $YYYZYXZYZ$, $YYYYYXYYZ$(Case 2).
+	
+	
+	
+	$(5 6 7 8 1 4 3 2 9)\Rightarrow ZYZXYYYYZ$
+	
+	
+	$\K_{X,7}(XXYYZXZYZ,5, 8, 9)\Rightarrow $$XXYYYXYYZ$, $XXYYZXYZZ$, $YYZZXYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(XXYYZXZYZ,5, 9)\Rightarrow $$YYXXXYZZZ$, $XXZZYXYYZ$(Case 1 and 2).
+	
+	$\K_{X,5}(XXYYZXZYZ,9)\Rightarrow $$XXZZZXYZZ$(Case 2).
+	
+	
+	
+	$(1 2 7 8 3 6 5 4 9)\Rightarrow XXZYZXYYZ$, $(3 6 1 8 4 9 5 2 7)\Rightarrow YYZXXZXYZ$, $(4 5 2 3 1 8 7 6 9)\Rightarrow ZXXYYXZYZ$, $(4 5 6 7 1 8 3 2 9)\Rightarrow ZXZYYXXYZ$ and $(4 7 2 5 1 9 3 8 6)\Rightarrow XYXZYXZYZ$
+	
+	
+	$\K_{X,8}(XYYZYXZYZ,\infty,2, 3, 4, 5, 7, 9)\Rightarrow $$YXXZXYZZZ$, $YZXZXYZZZ$, $YXZZXYZZZ$, $YXXXXYZZZ$, $YXXZZYZZZ$, $XYYZYXYZZ$, $XZZYZXYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XYYZYXZYZ,\infty,4, 5, 7)\Rightarrow $$XZZYZXYZZ$, $XZZZZXYZZ$, $XZZYYXYZZ$, $YZZXZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,7}(XYYZYXZYZ,\infty,4)\Rightarrow $$XYYZYXYYZ$, $XYYYYXYYZ$(Case 1 and 2).
+	
+	
+	
+	$(4 1 7 6 8 5 3 2 9)\Rightarrow YYZXXZYYZ$
+	
+	
+	$\K_{X,7}(ZYXXYXZYZ,1, 2, 5, 8, 9)\Rightarrow $$YYXXYXYYZ$, $ZZXXYXYYZ$, $ZYXXZXYYZ$, $ZYXXYXYZZ$, $XZYYZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,5}(ZYXXYXZYZ,8, 9)\Rightarrow $$ZXYYZYZZZ$, $YZXXYXYZZ$(Case 1).
+	
+	
+	
+	$(5 1 4 6 8 7 3 2 9)\Rightarrow YYZXZXXYZ$
+	
+	
+	$\K_{X,7}(YYYYYYZYZ,\infty,4, 5, 6, 8, 9)\Rightarrow $$YYYYYYYYZ$, $YYYZYYYYZ$, $YYYYZYYYZ$, $YYYYYZYYZ$, $YYYYYYYZZ$, $ZZZZZZZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(YYYYYYZYZ,\infty,4, 5, 6, 9)\Rightarrow $$YYYYYYZZZ$, $YYYZYYZZZ$, $YYYYZYZZZ$, $YYYYYZZZZ$, $ZZZZZZYYZ$(Case 1 and 2).
+	
+	$\K_{X,9}(YYYYYYZYZ,\infty,4, 5, 6)\Rightarrow $$ZZZZZZYZZ$, $ZZZYZZYZZ$, $ZZZZYZYZZ$, $ZZZZZYYZZ$(Case 1).
+	
+	$\K_{X,5}(YYYYYYZYZ,\infty,4, 6)\Rightarrow $$YYYYZYZYZ$, $YYYZZYZYZ$, $YYYYZZZYZ$(Case 1).
+	
+	$\K_{X,2}(YYYYYYZYZ,\infty)\Rightarrow $$YZYYYYZYZ$(Case 2).
+	
+	$\K_{X,4}(YYYYYYZYZ,\infty)\Rightarrow $$YYYZYYZYZ$(Case 2).
+	
+	
+	
+	$(5 6 7 1 2 4 3 8 9)\Rightarrow YYZYYYYYZ$
+	
+	
+	$\K_{X,7}(XXYYYYZYZ,\infty,5, 6, 8, 9)\Rightarrow $$XXYYYYYYZ$, $XXYYZYYYZ$, $XXYYYZYYZ$, $XXYYYYYZZ$, $YYZZZZZZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(XXYYYYZYZ,\infty,5, 6, 8)\Rightarrow $$XXZZZZYZZ$, $XXZZYZYZZ$, $XXZZZYYZZ$, $XXZZZZYYZ$(Case 2).
+	
+	$\K_{X,5}(XXYYYYZYZ,\infty,8)\Rightarrow $$XXYYZYZYZ$, $XXYYZYZZZ$(Case 1).
+	
+	$\K_{X,8}(XXYYYYZYZ,\infty)\Rightarrow $$XXYYYYZZZ$(Case 1).
+	
+	
+	
+	$(5 8 6 7 1 4 3 2 9)\Rightarrow XXZXYXXYZ$
+	
+	
+	$\K_{X,7}(YYYYYXZYZ,4, 5, 8, 9)\Rightarrow $$YYYZYXYYZ$, $YYYYZXYYZ$, $YYYYYXYZZ$, $ZZZZZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(YYYYYXZYZ,4, 5, 9)\Rightarrow $$XXXZXYZZZ$, $XXXXZYZZZ$, $ZZZZZXYYZ$(Case 1).
+	
+	$\K_{X,5}(YYYYYXZYZ,4, 9)\Rightarrow $$YYYZZXZYZ$, $ZZZZYXYZZ$(Case 1 and 2).
+	
+	$\K_{X,4}(YYYYYXZYZ,9)\Rightarrow $$ZZZYZXYZZ$(Case 1).
+	
+	
+	
+	$(5 6 7 1 2 4 3 8 9)\Rightarrow YYZXYYYYZ$
+	
+	
+	$\K_{X,7}(XYYYYXZYZ,\infty,2, 3, 4, 5, 8, 9)\Rightarrow $$XYYYYXYYZ$, $XZYYYXYYZ$, $XYZYYXYYZ$, $XYYZYXYYZ$, $XYYYZXYYZ$, $XYYYYXYZZ$, $YZZZZYZZZ$(Case 1 and 2).
+	
+	$\K_{X,8}(XYYYYXZYZ,\infty,4, 5)\Rightarrow $$YXXXXYZZZ$, $YXXZXYZZZ$, $YXXXZYZZZ$(Case 1).
+	
+	$\K_{X,9}(XYYYYXZYZ,\infty,4, 5)\Rightarrow $$XZZZZXYZZ$, $XZZYZXYZZ$, $XZZZYXYZZ$(Case 1 and 2).
+	
+	$\K_{X,3}(XYYYYXZYZ,\infty,5)\Rightarrow $$XYZYYXZYZ$, $XYZYZXZYZ$(Case 2).
+	
+	
+	
+	$(4 8 7 6 1 5 3 2 9)\Rightarrow YYZXXYYYZ$
+	
+	
+	$\K_{X,6}(ZYYXYZXYZ,\infty,1, 2, 5, 8, 9)\Rightarrow $$ZYYXYYXYZ$, $YYYXYYXYZ$, $ZZYXYYXYZ$, $ZYYXZYXYZ$, $ZXXYXXYZZ$, $XZZYZZYZZ$(Case 1 and 2).
+	
+	$\K_{X,9}(ZYYXYZXYZ,\infty,5, 8)\Rightarrow $$XZZYZXYZZ$, $XZZYXXYZZ$, $YZZXZYXYZ$(Case 1).
+	
+	$\K_{X,1}(ZYYXYZXYZ,\infty)\Rightarrow $$YYYXYZXYZ$(Case 2).
+	
+	$\K_{X,2}(ZYYXYZXYZ,\infty)\Rightarrow $$ZZYXYZXYZ$(Case 1).
+	
+	$\K_{X,5}(ZYYXYZXYZ,\infty)\Rightarrow $$ZYYXZZXYZ$(Case 1).
+	
+	$\K_{X,8}(ZYYXYZXYZ,\infty)\Rightarrow $$ZXXYXZYZZ$(Case 1).
+	
+	
+	
+	$(4 8 7 3 1 5 6 2 9)\Rightarrow YYXZZXYYZ$
+	
+	
+	$\K_{Z,\infty}(XXZYZZZZZ,1, 2, 4)\Rightarrow $$YXZYZZZZZ$, $XYZYZZZZZ$, $YYZYZZZZZ$( Case 1 and 2).
+	
+	
+	
+	$(2 7 3 1 4 5 6 8 9)\Rightarrow XYZZZZYZZ$, $(3 7 1 4 2 5 6 8 9)\Rightarrow ZZYXZZYZZ$, $(3 7 1 6 2 4 5 8 9)\Rightarrow ZZYZZXYZZ$, $(3 8 1 5 2 4 6 7 9)\Rightarrow ZZYZXZZYZ$, $(3 9 1 6 2 4 5 7 8)\Rightarrow YYZYYXYYZ$, $(4 6 1 2 3 5 7 8 9)\Rightarrow ZXZYZYZZZ$, $(4 6 1 8 2 3 5 7 9)\Rightarrow ZZZXZXZYZ$, $(5 8 1 6 2 3 4 7 9)\Rightarrow ZZZZYXZYZ$ and $(7 9 1 4 2 3 5 6 8)\Rightarrow YYYXYYZYZ$
+	
+	
+	$\K_{Z,2}(YXYZYZZZZ,3, 5)\Rightarrow $$YYXZYZZZZ$, $XXXZYZZZZ$(Case 2).
+	
+	$\K_{Z,3}(YXYZYZZZZ,5)\Rightarrow $$XYYZYZZZZ$(Case 2).
+	
+	
+	
+	$(1 2 3 4 7 5 6 8 9)\Rightarrow YXYZZZYZZ$, $(1 2 3 4 9 5 6 7 8)\Rightarrow ZXZYYYYYZ$, $(1 4 2 3 7 5 6 8 9)\Rightarrow YYZXZZYZZ$, $(1 4 6 2 9 3 5 7 8)\Rightarrow ZYYXYZYYZ$, $(1 4 7 2 9 3 5 6 8)\Rightarrow ZYYXYYZYZ$, $(1 5 3 2 8 4 6 7 9)\Rightarrow YZYZXZZYZ$, $(1 5 8 2 9 3 4 6 7)\Rightarrow ZYYYXYYZZ$, $(1 6 3 2 8 4 5 7 9)\Rightarrow YZYZZXZYZ$, $(1 8 5 2 7 3 4 6 9)\Rightarrow XZZZXZXYZ$, $(1 8 6 2 7 3 4 5 9)\Rightarrow XZZZZXXYZ$, $(2 1 5 3 7 4 6 8 9)\Rightarrow XYZZYZYZZ$, $(2 1 5 3 9 4 6 7 8)\Rightarrow XZYYZYYYZ$, $(2 4 5 1 7 3 6 8 9)\Rightarrow ZYZXYZYZZ$, $(3 2 4 1 5 6 7 8 9)\Rightarrow ZXYYYZZZZ$, $(3 2 4 1 9 5 6 7 8)\Rightarrow YXZZYYYYZ$, $(3 4 7 1 9 2 5 6 8)\Rightarrow YYZXYYZYZ$, $(3 6 4 1 9 2 5 7 8)\Rightarrow YYZZYXYYZ$, $(3 6 5 1 8 2 4 7 9)\Rightarrow ZZYZYXZYZ$, $(3 6 5 1 9 2 4 7 8)\Rightarrow YYZYZXYYZ$, $(3 6 7 1 9 2 4 5 8)\Rightarrow YYZYYXZYZ$, $(3 8 5 1 7 2 4 6 9)\Rightarrow ZZXZXZXYZ$, $(4 6 5 1 9 2 3 7 8)\Rightarrow YYYZZXYYZ$, $(5 8 7 1 9 2 3 4 6)\Rightarrow XXXXZXZYZ$, $(6 4 7 1 9 2 3 5 8)\Rightarrow YYYXYZZYZ$ and $(6 8 7 1 9 2 3 4 5)\Rightarrow XXXXXZZYZ$
+	
+	
+	$\K_{Z,5}(XXYYYZZZZ,\infty,1, 2, 3, 4)\Rightarrow $$YYXXYZZZZ$, $XYXXYZZZZ$, $YXXXYZZZZ$, $YYYXYZZZZ$, $YYXYYZZZZ$(Case 2).
+	
+	$\K_{Z,1}(XXYYYZZZZ,\infty)\Rightarrow $$YXYYYZZZZ$(Case 2).
+	
+	$\K_{Z,2}(XXYYYZZZZ,3, 4)\Rightarrow $$XYXYYZZZZ$, $XYYXYZZZZ$(Case 2).
+	
+	
+	
+	$(1 2 5 9 4 3 6 7 8)\Rightarrow XXYZZYYYZ$, $(1 5 2 8 9 3 4 6 7)\Rightarrow XZYYXYYZZ$, $(1 6 3 4 7 2 5 8 9)\Rightarrow XZYYZXYZZ$, $(1 6 3 4 9 2 5 7 8)\Rightarrow XYZZYXYYZ$, $(1 6 4 5 8 2 3 7 9)\Rightarrow XZZYYXZYZ$, $(1 6 4 9 5 2 3 7 8)\Rightarrow XYYZZXYYZ$, $(2 3 4 9 5 1 6 7 8)\Rightarrow YXXZZYYYZ$, $(2 5 4 8 9 1 3 6 7)\Rightarrow YXYZXYYZZ$, $(2 6 3 4 9 1 5 7 8)\Rightarrow YXZZYXYYZ$, $(3 6 7 8 4 1 2 5 9)\Rightarrow ZZXYZXYYZ$, $(3 7 1 6 2 4 5 8 9)\Rightarrow XXYZZXYZZ$, $(3 9 1 6 2 4 5 7 8)\Rightarrow XXZYYXYYZ$, $(3 9 2 4 1 5 6 7 8)\Rightarrow XXZXYYYYZ$, $(4 5 1 3 8 2 6 7 9)\Rightarrow YZYXXZZYZ$, $(4 5 2 8 9 1 3 6 7)\Rightarrow YZYXXYYZZ$, $(4 6 1 3 7 2 5 8 9)\Rightarrow YZYXZXYZZ$, $(4 6 1 3 9 2 5 7 8)\Rightarrow ZYZXYXYYZ$, $(4 6 1 5 8 2 3 7 9)\Rightarrow YZZXYXZYZ$, $(4 7 2 3 6 1 5 8 9)\Rightarrow ZXXYZXYZZ$, $(4 7 3 9 1 2 5 6 8)\Rightarrow ZYZXYYXYZ$, $(4 8 5 7 3 1 2 6 9)\Rightarrow ZZXYXZXYZ$, $(5 4 1 6 2 3 7 8 9)\Rightarrow YYZXXYZZZ$, $(5 4 3 6 7 1 2 8 9)\Rightarrow ZZYXXYYZZ$, $(5 4 6 7 9 1 2 3 8)\Rightarrow YYYXXZZYZ$, $(5 4 6 9 1 2 3 7 8)\Rightarrow ZYYXXZYYZ$, $(5 8 1 9 6 2 3 4 7)\Rightarrow ZXXXYZXYZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow XZZZYXXYZ$, $(6 1 2 5 7 3 4 8 9)\Rightarrow XYZZYXYZZ$, $(6 1 2 8 9 3 4 5 7)\Rightarrow XZYYYXYZZ$, $(6 2 1 3 7 4 5 8 9)\Rightarrow YXYZZXYZZ$, $(6 3 7 9 5 1 2 4 8)\Rightarrow YYXYZXZYZ$, $(6 4 1 5 2 3 7 8 9)\Rightarrow XXZYXYZZZ$, $(6 4 3 5 7 1 2 8 9)\Rightarrow ZZYXYXYZZ$, $(6 4 5 7 9 1 2 3 8)\Rightarrow YYYXZXZYZ$, $(7 3 4 5 8 1 2 6 9)\Rightarrow ZZXYYZXYZ$, $(7 8 6 9 1 2 3 4 5)\Rightarrow ZXXXXZYYZ$, $(7 9 4 5 8 1 2 3 6)\Rightarrow XXXYYXZYZ$, $(7 9 6 8 5 1 2 3 4)\Rightarrow XXXXYYZYZ$, $(8 1 2 6 9 3 4 5 7)\Rightarrow YZXXXZXYZ$ and $(8 4 6 7 9 1 2 3 5)\Rightarrow XXXYXZZYZ$
+	
+	
+	$\K_{Z,5}(XXXYYZZZZ,\infty,1, 2, 3, 4)\Rightarrow $$YYYXYZZZZ$, $XYYXYZZZZ$, $YXYXYZZZZ$, $YYXXYZZZZ$, $YYYYYZZZZ$(Case 2).
+	
+	$\K_{Z,2}(XXXYYZZZZ,\infty,4)\Rightarrow $$XYXYYZZZZ$, $XYXXYZZZZ$(Case 2).
+	
+	$\K_{Z,1}(XXXYYZZZZ,\infty)\Rightarrow $$YXXYYZZZZ$(Case 2).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XXYXYZZZZ$, $(2 7 6 5 1 3 4 8 9)\Rightarrow XYZZXYYZZ$, $(3 8 4 1 5 2 6 7 9)\Rightarrow XZYYXZZYZ$, $(3 9 1 5 2 4 6 7 8)\Rightarrow ZXZYXYYYZ$, $(3 9 1 6 2 4 5 7 8)\Rightarrow ZXZYYXYYZ$, $(3 9 5 1 2 4 6 7 8)\Rightarrow XXZYZYYYZ$, $(3 9 6 1 2 4 5 7 8)\Rightarrow XXZYYZYYZ$, $(5 8 6 7 1 2 3 4 9)\Rightarrow XZZZYYXYZ$, $(5 8 7 6 1 2 3 4 9)\Rightarrow XZZZYXYYZ$, $(7 9 1 5 8 2 3 4 6)\Rightarrow ZXXXYXZYZ$, $(7 9 4 5 8 1 2 3 6)\Rightarrow XXXZYXZYZ$, $(7 9 5 1 8 2 3 4 6)\Rightarrow YXXXZXZYZ$ and $(7 9 5 4 8 1 2 3 6)\Rightarrow XXXYZXZYZ$
+	
+	
+	$\K_{Z,2}(XXZYZYZZZ,4, 6)\Rightarrow $$XYZXZYZZZ$, $YXZXZYZZZ$(Case 1).
+	
+	$\K_{Z,4}(XXZYZYZZZ,6)\Rightarrow $$YYZYZYZZZ$(Case 2).
+	
+	
+	
+	$(1 2 4 3 5 9 6 7 8)\Rightarrow XXZYYYYYZ$, $(1 6 3 2 4 7 5 8 9)\Rightarrow XYZZZXYZZ$, $(3 7 1 4 2 6 5 8 9)\Rightarrow ZZYXZXYZZ$, $(3 8 1 4 2 5 6 7 9)\Rightarrow ZZYXXZZYZ$, $(3 9 1 4 2 6 5 7 8)\Rightarrow YYZXYXYYZ$, $(4 6 1 5 2 8 3 7 9)\Rightarrow ZZZXYXZYZ$, $(4 6 1 7 2 9 3 5 8)\Rightarrow YYYXYXZYZ$ and $(5 8 1 7 2 9 3 4 6)\Rightarrow XXXXYXZYZ$
+	
+	
+	$\K_{Z,2}(YYZXYZYZZ,\infty,4, 5, 7)\Rightarrow $$YXZXYZYZZ$, $YXZYYZYZZ$, $YXZXXZYZZ$, $XYZYXZYZZ$(Case 1).
+	
+	$\K_{Z,7}(YYZXYZYZZ,\infty,4, 5)\Rightarrow $$XXZYXZYZZ$, $XXZXXZYZZ$, $XXZYYZYZZ$(Case 2).
+	
+	$\K_{Z,1}(YYZXYZYZZ,\infty)\Rightarrow $$XYZXYZYZZ$(Case 1).
+	
+	
+	
+	$(1 2 3 5 4 6 7 8 9)\Rightarrow YYZYXZYZZ$, $(1 3 2 4 7 5 9 6 8)\Rightarrow ZYZXYYZYZ$, $(2 5 3 6 1 4 7 8 9)\Rightarrow YYZZYXYZZ$, $(3 1 2 4 5 6 8 7 9)\Rightarrow YZYXYZZYZ$, $(3 4 1 2 6 5 9 7 8)\Rightarrow YXZZYZYYZ$, $(3 5 2 1 6 4 8 7 9)\Rightarrow XZYZYYZYZ$, $(3 5 2 6 1 4 8 7 9)\Rightarrow YZYZYXZYZ$, $(5 7 1 6 3 2 9 4 8)\Rightarrow YYZYZXZYZ$ and $(6 7 1 8 4 2 9 3 5)\Rightarrow XXXZXZZYZ$
+	
+	
+	$\K_{Z,2}(YYZXXZYZZ,\infty,4, 5, 7)\Rightarrow $$YXZXXZYZZ$, $YXZYXZYZZ$, $YXZXYZYZZ$, $XYZYYZYZZ$(Case 1).
+	
+	$\K_{Z,7}(YYZXXZYZZ,\infty,4, 5)\Rightarrow $$XXZYYZYZZ$, $XXZXYZYZZ$, $XXZYXZYZZ$(Case 2).
+	
+	$\K_{Z,1}(YYZXXZYZZ,\infty)\Rightarrow $$XYZXXZYZZ$(Case 1).
+	
+	
+	
+	$(3 4 1 2 7 5 9 6 8)\Rightarrow YXZZYYXYZ$, $(3 5 2 1 6 4 8 7 9)\Rightarrow XZYZYXZYZ$, $(3 6 1 7 8 2 9 4 5)\Rightarrow XXZXXZYYZ$, $(7 4 1 2 3 5 9 6 8)\Rightarrow YXXZYYZYZ$ and $(7 6 1 3 8 2 9 4 5)\Rightarrow XXYXXZZYZ$
+	
+	
+	$\K_{Z,3}(XXYZZYYZZ,\infty,1, 2, 7)\Rightarrow $$XXXZZYYZZ$, $YXXZZYYZZ$, $XYXZZYYZZ$, $YYYZZXYZZ$(Case 1 and 2).
+	
+	$\K_{Z,1}(XXYZZYYZZ,\infty)\Rightarrow $$YXYZZYYZZ$(Case 2).
+	
+	$\K_{Z,2}(XXYZZYYZZ,\infty)\Rightarrow $$XYYZZYYZZ$(Case 1).
+	
+	$\K_{Z,7}(XXYZZYYZZ,\infty)\Rightarrow $$YYXZZXYZZ$(Case 1).
+	
+	
+	
+	$(1 7 6 4 5 3 2 8 9)\Rightarrow YXXZZXYZZ$, $(3 5 4 1 2 7 8 6 9)\Rightarrow ZZXYXZYYZ$, $(4 6 9 2 3 1 5 7 8)\Rightarrow ZYYXZXYYZ$ and $(5 8 7 1 2 4 3 6 9)\Rightarrow ZZXXYZXYZ$
+	
+	
+	$\K_{Z,2}(YYZXZYYZZ,\infty,1, 4, 6, 7)\Rightarrow $$YXZXZYYZZ$, $XXZXZYYZZ$, $YXZYZYYZZ$, $YXZXZXYZZ$, $XYZYZXYZZ$(Case 1 and 2).
+	
+	$\K_{Z,1}(YYZXZYYZZ,\infty)\Rightarrow $$XYZXZYYZZ$(Case 1).
+	
+	$\K_{Z,4}(YYZXZYYZZ,7)\Rightarrow $$XXZXZXYZZ$(Case 2).
+	
+	
+	
+	$(3 9 4 2 5 1 6 7 8)\Rightarrow ZXZYYZYYZ$, $(4 9 1 2 5 3 7 6 8)\Rightarrow YXZZYYZYZ$, $(5 8 1 6 2 4 3 7 9)\Rightarrow ZZYYYXZYZ$, $(6 9 1 8 2 3 7 4 5)\Rightarrow XXZXXZZYZ$ and $(7 9 1 8 2 4 5 3 6)\Rightarrow XXXZZXZYZ$
+	
+	
+	$\K_{Z,2}(YYZXZXYZZ,\infty,1, 4, 6, 7)\Rightarrow $$YXZXZXYZZ$, $XXZXZXYZZ$, $YXZYZXYZZ$, $YXZXZYYZZ$, $XYZYZYYZZ$(Case 1 and 2).
+	
+	$\K_{Z,1}(YYZXZXYZZ,\infty)\Rightarrow $$XYZXZXYZZ$(Case 1).
+	
+	$\K_{Z,4}(YYZXZXYZZ,7)\Rightarrow $$XXZXZYYZZ$(Case 2).
+	
+	
+	
+	$(5 8 1 6 2 4 3 7 9)\Rightarrow ZZYXYXZYZ$
+	
+	
+	$\K_{Z,4}(XYYYXZZYZ,3, 5, 8)\Rightarrow $$XYXXXZZYZ$, $XYYXYZZYZ$, $YXXYYZZYZ$(Case 2).
+	
+	$\K_{Z,5}(XYYYXZZYZ,3, 8)\Rightarrow $$XYXYYZZYZ$, $YXXXXZZYZ$(Case 2).
+	
+	$\K_{Z,3}(XYYYXZZYZ,8)\Rightarrow $$YXYXYZZYZ$(Case 2).
+	
+	
+	
+	$(5 8 2 6 1 3 4 7 9)\Rightarrow XYZZXYYYZ$
+	
+	
+	$\K_{Z,5}(ZYYYYXZYZ,3, 4, 6, 8)\Rightarrow $$ZYXYXXZYZ$, $ZYYXXXZYZ$, $ZYYYXYZYZ$, $ZXXXYYZYZ$(Case 1 and 2).
+	
+	$\K_{Z,8}(ZYYYYXZYZ,3, 4, 6)\Rightarrow $$ZXYXXYZYZ$, $ZXXYXYZYZ$, $ZXXXXXZYZ$(Case 1).
+	
+	
+	
+	$(3 6 7 8 1 4 5 2 9)\Rightarrow YYZXZYYYZ$
+	
+	
+	
+	
+	\bigskip
+	\case{4}{$B$ is one of $ZX\wild YZXZYZ$, $ZXZYZX\wild YZ$, $XYYYZXZYZ$, $XXYZZXZYZ$, $XZXYXZYYZ$, $XZXYYZXYZ$, $XZXYYXZYZ$, $XZXYZXYYZ$, $XXZYYXZYZ$, $XXZYYXYZZ$, $XXYZYXYZZ$, $XXYXZXZYZ$, $XXYZYYZYZ$, $XXZXYZXYZ$, $XXZXZXYYZ$, $XZYYZXZYZ$, $XXZYZXZYZ$, $XXZYZXYZZ$, $XZZZYZXYZ$, $XZZZZXYYZ$, $XZZZYXZYZ$, $XXZYYZZZZ$, $XXYZYZZZZ$, $YYZYZYYYZ$, $YYZXYZXYZ$, $YYXZYXZYZ$, $YXYZZXZYZ$, $YXXZYXYZZ$, $YYZXYXZYZ$, $YYZXZXYYZ$, $YZYXYXYZZ$, $YZYXZXZYZ$, $YYZYZXYZZ$, $YYZYZZYZZ$, $YYZYYXYZZ$, $YZYXYYZYZ$, $YZYXZYYYZ$, $YZZZYXYZZ$, $YZYXZZYZZ$, $YZYXYZZZZ$, $YZZZZXYZZ$, $YXXZZZYZZ$, $ZYYYYYZYZ$, $ZYZXXYYYZ$, $ZYZXZXYYZ$, $ZYYXZXZYZ$, $ZYZXZYYYZ$, $ZYYYZXZYZ$, $ZXZYXZXYZ$, $ZXZYYZXYZ$, $ZXXYYXYZZ$, $ZZXYYXZYZ$, $ZXZYYXZYZ$, $ZYZXXYYZZ$, $ZYZXYXYZZ$, $ZXXYYYZYZ$, $ZYYXYXZYZ$, $ZXZYYYXYZ$, $ZZYXYYZYZ$, $ZZYZYYZYZ$, $ZZYZYXYZZ$, $ZYYYYXYZZ$, $ZYZXZZYZZ$, $ZZYZZXZYZ$, $ZZYXYZZZZ$, $ZZYXZXZYZ$, $ZZXZZXYYZ$, $ZZXZXZYYZ$, $ZYZXZXYZZ$, $ZXXYZZYZZ$ or $ZXXYYZZZZ$.}
+	
+	\bigskip
+	
+	$\K_{Z,2}(XXYZYZZZZ,3, 5)\Rightarrow $$XYXZYZZZZ$, $YXXZYZZZZ$(Case 2 and 3).
+	
+	$\K_{Z,3}(XXYZYZZZZ,5)\Rightarrow $$YYYZYZZZZ$(Case 2).
+	
+	
+	
+	$(1 2 4 3 5 6 7 8 9)\Rightarrow XXZYYZZZZ$, $(1 6 5 2 8 3 4 7 9)\Rightarrow XZZZYXZYZ$, $(1 6 7 2 8 3 4 5 9)\Rightarrow XZZZZXYYZ$, $(1 7 2 4 3 5 6 8 9)\Rightarrow YXXZZZYZZ$, $(1 7 5 2 8 3 4 6 9)\Rightarrow XZZZYZXYZ$, $(2 3 4 1 5 6 7 8 9)\Rightarrow ZXXYYZZZZ$, $(2 3 4 1 7 5 6 8 9)\Rightarrow ZXXYZZYZZ$, $(2 6 4 1 8 3 5 7 9)\Rightarrow ZXZYZXZYZ$, $(2 7 4 1 6 3 5 8 9)\Rightarrow ZYZXZXYZZ$, $(3 5 7 1 8 2 4 6 9)\Rightarrow ZZXZXZYYZ$, $(3 6 7 1 8 2 4 5 9)\Rightarrow ZZXZZXYYZ$ and $(3 8 4 1 6 2 5 7 9)\Rightarrow ZZYXZXZYZ$
+	
+	
+	$\K_{Z,3}(YZYXYZZZZ,4, 5)\Rightarrow $$YZXYYZZZZ$, $XZYYYZZZZ$(Case 2 and 3).
+	
+	$\K_{Z,4}(YZYXYZZZZ,5)\Rightarrow $$XZXXYZZZZ$(Case 2).
+	
+	
+	
+	$(1 2 3 4 7 5 6 8 9)\Rightarrow YZYXZZYZZ$, $(1 2 5 6 7 3 4 8 9)\Rightarrow YZZZYXYZZ$, $(1 2 8 6 9 3 4 5 7)\Rightarrow ZYYYYXYZZ$, $(2 1 5 4 9 3 6 7 8)\Rightarrow YZYXZYYYZ$, $(2 1 7 4 9 3 5 6 8)\Rightarrow YZYXYYZYZ$, $(3 1 5 6 7 2 4 8 9)\Rightarrow ZZYZYXYZZ$ and $(3 1 8 6 9 2 4 5 7)\Rightarrow YYZYYXYZZ$
+	
+	
+	$\K_{Z,2}(YYZYZZYZZ,4, 7)\Rightarrow $$YXZXZZYZZ$, $XYZXZZYZZ$(Case 1).
+	
+	$\K_{Z,4}(YYZYZZYZZ,7)\Rightarrow $$XXZYZZYZZ$(Case 3).
+	
+	
+	
+	$(3 5 1 6 2 4 8 7 9)\Rightarrow ZZYZYYZYZ$
+	
+	
+	$\K_{Z,3}(YXYZZXZYZ,\infty,6, 8)\Rightarrow $$YXXZZXZYZ$, $YXXZZYZYZ$, $XYYZZYZYZ$(Case 1 and 3).
+	
+	$\K_{Z,6}(YXYZZXZYZ,\infty,8)\Rightarrow $$YXYZZYZYZ$, $XYXZZXZYZ$(Case 1 and 3).
+	
+	$\K_{Z,2}(YXYZZXZYZ,\infty)\Rightarrow $$YYYZZXZYZ$(Case 2).
+	
+	$\K_{Z,8}(YXYZZXZYZ,\infty)\Rightarrow $$XYXZZYZYZ$(Case 1).
+	
+	
+	
+	$(1 3 2 4 5 8 7 6 9)\Rightarrow XXYZZXZYZ$, $(3 8 2 1 5 4 7 6 9)\Rightarrow ZXXYZXZYZ$, $(5 2 4 1 3 7 6 8 9)\Rightarrow ZXZYYZXYZ$, $(5 4 2 1 3 8 6 7 9)\Rightarrow ZXZYXZXYZ$, $(7 2 4 1 3 6 5 8 9)\Rightarrow ZXZYZXYYZ$, $(9 3 4 1 2 6 5 7 8)\Rightarrow YYXZYXZYZ$ and $(9 7 3 1 2 4 5 6 8)\Rightarrow YYZXYZXYZ$
+	
+	
+	$\K_{Z,4}(ZXYYZXZYZ,\infty,6, 8)\Rightarrow $$ZXYXZXZYZ$, $ZXYXZYZYZ$, $ZYXYZYZYZ$(Case 1 and 2).
+	
+	$\K_{Z,6}(ZXYYZXZYZ,\infty,8)\Rightarrow $$ZXYYZYZYZ$, $ZYXXZXZYZ$(Case 1 and 3).
+	
+	$\K_{Z,8}(ZXYYZXZYZ,\infty)\Rightarrow $$ZYXXZYZYZ$(Case 1).
+	
+	
+	
+	$(1 4 8 2 5 6 7 3 9)\Rightarrow ZYYXZXZYZ$, $(1 6 2 7 3 4 5 8 9)\Rightarrow ZYZXZXYYZ$, $(1 8 7 2 3 4 5 6 9)\Rightarrow ZXZYZXXYZ$, $(2 1 5 7 3 6 4 9 8)\Rightarrow XYYYZXZYZ$ and $(2 5 1 3 6 4 7 9 8)\Rightarrow ZYZXXYYYZ$
+	
+	
+	$\K_{Z,\infty}(ZZYXYZZZZ,3, 4, 5)\Rightarrow $$ZZXXYZZZZ$, $ZZYYYZZZZ$, $ZZXYYZZZZ$( Case 2 and 3).
+	
+	
+	
+	$(1 2 3 6 8 4 5 7 9)\Rightarrow ZZYZZXZYZ$, $(1 3 2 4 7 5 6 8 9)\Rightarrow ZYZXZZYZZ$ and $(2 3 1 6 7 4 5 8 9)\Rightarrow YZZZZXYZZ$
+	
+	
+	$\K_{Z,\infty}(YYZYZXYZZ,1, 2, 4, 6, 7)\Rightarrow $$XYZYZXYZZ$, $YXZYZXYZZ$, $YYZXZXYZZ$, $YYZYZYYZZ$, $XXZXZYYZZ$( Case 1, 2 and 3).
+	
+	
+	
+	$(3 5 1 6 2 4 8 7 9)\Rightarrow ZZYXYYZYZ$
+	
+	
+	$\K_{Z,\infty}(XXZYZXYZZ,1, 2, 4, 6, 7)\Rightarrow $$YXZYZXYZZ$, $XYZYZXYZZ$, $XXZXZXYZZ$, $XXZYZYYZZ$, $YYZXZYYZZ$( Case 1, 2 and 3).
+	
+	
+	
+	$(1 2 3 4 5 6 8 7 9)\Rightarrow XXZYZXZYZ$, $(1 3 2 4 5 8 6 7 9)\Rightarrow YZYXZXZYZ$, $(1 3 4 2 5 9 7 6 8)\Rightarrow ZXZYYYXYZ$, $(1 7 2 4 3 9 6 5 8)\Rightarrow ZYYXYXZYZ$, $(1 7 4 2 5 9 3 6 8)\Rightarrow ZXXYYYZYZ$, $(2 5 1 4 3 7 6 8 9)\Rightarrow ZYZXYXYZZ$, $(2 6 1 4 3 7 5 8 9)\Rightarrow ZYZXXYYZZ$, $(2 8 1 4 3 9 6 5 7)\Rightarrow YZYXYXYZZ$, $(3 4 2 1 5 8 6 7 9)\Rightarrow XZYYZXZYZ$, $(3 5 1 4 2 9 6 7 8)\Rightarrow YYZXZXYYZ$, $(3 5 1 7 2 9 8 4 6)\Rightarrow XXZXZXYYZ$, $(3 6 1 5 2 9 8 4 7)\Rightarrow XXZXYZXYZ$, $(3 7 1 4 2 9 6 5 8)\Rightarrow YYZXYXZYZ$, $(4 5 1 2 3 8 6 7 9)\Rightarrow ZXZYYXZYZ$, $(4 5 1 3 2 8 6 7 9)\Rightarrow ZZXYYXZYZ$, $(4 7 3 1 5 9 2 6 8)\Rightarrow XXYZYYZYZ$ and $(5 7 1 3 2 9 8 4 6)\Rightarrow XXYXZXZYZ$
+	
+	
+	$\K_{X,7}(XXYZYXYZZ,4, 5, 8, 9)\Rightarrow $$YYXXXYZZZ$, $YYXZZYZZZ$, $XXYZYXZYZ$, $XXZYZXYYZ$(Case 1 and 3).
+	
+	$\K_{X,8}(XXYZYXYZZ,4, 5, 9)\Rightarrow $$XXYYYXYYZ$, $XXYZZXYYZ$, $YYZXZYZZZ$(Case 1 and 2).
+	
+	
+	
+	$(1 2 3 4 8 6 9 5 7)\Rightarrow XXZYYXYZZ$, $(1 2 5 3 8 6 4 9 7)\Rightarrow XXZYYXZYZ$, $(1 3 2 4 5 6 9 8 7)\Rightarrow XZXYZXYYZ$, $(1 3 2 4 7 6 9 8 5)\Rightarrow XZXYYXZYZ$, $(1 3 2 5 6 7 9 4 8)\Rightarrow XZXYYZXYZ$, $(1 3 2 7 6 5 9 4 8)\Rightarrow XZXYXZYYZ$, $(1 5 2 4 3 7 6 8 9)\Rightarrow YXXZYXYZZ$ and $(1 8 2 4 3 9 6 5 7)\Rightarrow ZXXYYXYZZ$
+	
+	
+	$\K_{Y,6}(ZYYYZXZYZ,\infty,7, 9)\Rightarrow $$ZYYYZZZYZ$, $ZYYYZZXYZ$, $XYYYXXXYZ$(Case 1).
+	
+	$\K_{Y,7}(ZYYYZXZYZ,\infty,9)\Rightarrow $$ZYYYZXXYZ$, $XYYYXZZYZ$(Case 1 and 3).
+	
+	$\K_{Y,5}(ZYYYZXZYZ,\infty)\Rightarrow $$ZYYYXXZYZ$(Case 1).
+	
+	$\K_{Y,9}(ZYYYZXZYZ,\infty)\Rightarrow $$XYYYXZXYZ$(Case 1).
+	
+	
+	
+	$(5 2 6 7 1 4 3 8 9)\Rightarrow ZYZXZYYYZ$
+	
+	
+	$\K_{Y,\infty}(ZYYYYYZYZ,1, 7, 9)\Rightarrow $$XYYYYYZYZ$, $ZYYYYYXYZ$, $XYYYYYXYZ$( Case 1 and 3).
+	
+	
+	
+	$(3 1 2 4 6 7 5 8 9)\Rightarrow YYZYZYYYZ$
+	
+	
+	
+\end{proof}
+
+
+
+\end{document}

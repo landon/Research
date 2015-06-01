@@ -3,6 +3,7 @@
 \usepackage{hyperref}
 \usepackage{verbatim}
 \usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{graphicx}
 
 \pagestyle{plain}
 
@@ -97,6 +98,15 @@
 \newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
 \newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
 
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%
+%  If the proof ends with a displayed equation, use \aftermath just
+%  before \end{proof} to put the halmos in the ``right'' place.  This
+%  may not work near page boundaries. 
+%
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+
 \begin{document}
 \title{Edge-coloring via fixable subgraphs}
 \author{Dan and landon}
@@ -110,11 +120,12 @@ An edge-coloring $\pi$ of $G$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy 
 Our goal is to convert a partial $k$-edge-coloring of a multigraph $M$ into a (total) $k$-edge-coloring of $M$.  For a partial $k$-edge-coloring $\pi$ of $M$, let $M_\pi$ be the subgraph of $M$ induced on the uncolored edges and let $L_\pi$ be the list assignment on the vertices of $M_\pi$ given by 
 $L_\pi(v) = \irange{k} - \setbs{\tau}{\pi(vx) = \tau \text{ for some  } vx \in E(M)}$. 
 
-Kempe chains give a powerful technique for converting a partial $k$-edge-coloring into a total $k$-edge-coloring.  The idea is to repeatedly exchange colors on two-colored paths until $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(xy) \in L_\zeta(x) \cap L_\zeta(y)$ for all $xy \in E(M_\pi)$.  In this sense the original list assignment $L_\pi$ on $M_\pi$ is \emph{fixable}. In the next section, we give an abstract definition of this notion that frees us from the embedding in the ambient graph $M$.
+Kempe chains give a powerful technique for converting a partial $k$-edge-coloring into a total $k$-edge-coloring.  The idea is to repeatedly exchange colors on two-colored paths until $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(xy) \in L_\zeta(x) \cap L_\zeta(y)$ for all $xy \in E(M_\pi)$.  In this sense the original list assignment $L_\pi$ on $M_\pi$ is \emph{fixable}. In the next section, we give an abstract definition of this notion that frees us from the embedding in the ambient graph $M$.  As we will see, computers enjoy this new freedom.
 
 Let $G$ be a multigraph, $L$ a list assignment on $V(G)$ and $P$ an arbitrary $L$-pot.  Throughout this section, $G$, $L$ and $P$ will refer to these objects.
 
 \subsection{Fixable graphs}
+
 For different colors $a,b \in P$, let $S_{L,a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{L,a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
 
 \begin{defn}
@@ -137,7 +148,7 @@ Choose a partial $k$-edge-coloring $\pi$ of $M$ such that $M_\pi$ is $(L_\pi, \i
 So, we may assume that $h_{M_\pi}\parens{L_\pi, \irange{k}} > 0$.  Let $a,b \in \irange{k}$ be a choice in (2) that leads to a tree of height $h_{M_\pi}\parens{L_\pi, \irange{k}}$.  Let $H$ be the subgraph of $M$ induced on all edges $e$ with $\pi(e) \in \set{a,b}$.  Let $S$ be the vertices in $M_\pi$ with degree exactly one in $H$.  Consider the component $C_x$ in $H$ for each $x \in S$.  We have $\card{V(C_x) \cap S} \in \set{1,2}$ and hence the components of $H$ give a partition $X_1, \ldots, X_t$ of $S$ into sets of size at most two.  Moreover, exchanging colors $a$ and $b$ on $C_x$ has the effect of swapping $a$ and $b$ in $L_\pi(v)$ for each $v \in V(C_x) \cap S$.  Hence we can achieve the needing swapping of colors in the lists in (2) by exchanging colors on the components of $H$.  By (2) there is $J \subseteq \irange{t}$ so that $M_\pi$ is $(L', \irange{k})$-fixable where $L'$ is formed from $L_\pi$ by swapping $a$ and $b$ in $L_\pi(v)$ for every $v \in \bigcup_{i \in J} X_i$.  Choose such a $J$ that leads to a tree of height $h_{M_\pi}\parens{L_\pi, \irange{k}}$.  Let $\pi'$ be the partial $k$-edge-coloring of $M$ created from $\pi$ by performing the color exchanges to create $L'$ from $L_\pi$.  Then $M_{\pi'}$ is $(L_{\pi'}, \irange{k})$-fixable and $h_{M_{\pi'}}\parens{L_{\pi'}, \irange{k}} < h_{M_\pi}\parens{L_\pi, \irange{k}}$, contradicting the minimality of $h_{M_\pi}\parens{L_\pi, \irange{k}}$.
 \end{proof}
 
-The given definition of $L$-fixable was originally motivated as a generalization of the Fixer-Breaker game in \cite{HallGame} from complete graphs to arbitrary graphs.  
+The definition of $L$-fixable was originally motivated as a generalization of the Fixer-Breaker game in \cite{HallGame} from complete graphs to arbitrary graphs.  
 The direct generalization of that game gives us less power because it does not take the fact that two-colored paths cannot cross into account.  Interpreted in the Fixer-Breaker game, the choice of partition
 in (2) is forcing Breaker to choose two-colored paths in a way that is consistent with being embedded in \emph{some} graph.  For stars the two games have identical winning conditions because the obvious necessary condition is sufficient, but in general the extra power does make more graphs fixable.  However, it is more natural to phrase some proofs in terms of the weaker game, so we define that here.
 
@@ -156,6 +167,35 @@ If $G$ is weakly $(L, P)$-fixable, then $G$ is $(L, P)$-fixable.
 Clearly if (1) holds we are done.  So, assume we have different $a,b \in P$ and $v \in S_{L,a,b}$ as in (2). Given a partition $X_1, \ldots, X_t$ of $S_{L,a,b}$ into sets of size at most two, let $i$ be the index with $v \in X_i$.  Then $J = \set{i}$ is the desired subset of $\irange{t}$.
 \end{proof}
 
+\subsection{Some examples}
+We'd like a way to talk about subgraphs being reducible for $k$-edge-coloring.  Lemma \ref{FixableCompletesColoring} gives us this with respect to a fixed partial $k$-edge-coloring $\pi$, but we want a condition independent of the particular coloring.  
+Note that we have a lower bound on the sizes of the lists in $L_\pi$; specifically, if $\pi$ is a partial $k$-edge-coloring of a multigraph $M$, then $|L_{\pi}(v)| \ge k + d_{M_\pi}(v) - d_M(v)$ for $v \in M_{\pi}$. Using this lower bound, we get our desired condition as follows.
+
+\begin{defn}
+If $G$ is a graph and $\func{f}{V(G)}{\IN}$, then $G$ is $(f,k)$-fixable if $G$ is $(L, \irange{k})$-fixable for every $L$ with $|L(v)| \ge k + d_{G}(v) - f(v)$ for all $v \in V(G)$.
+\end{defn}
+
+By Lemma \ref{FixableCompletesColoring}, if $G$ is $(f,k)$-fixable, then $G$ cannot be a subgraph of a $(k+1)$-edge-critical graph $M$ where $d_M(v) \le f(v)$ for all $v \in V(G)$.  
+So, now we can talk about a graph $G$ with vertices labeled by $f$ being $k$-fixable or not.  The computer is extremely good at finding $k$-fixable graphs.  Combined with discharging arguments, this gives a powerful method for proving (modulo trusting the computer) edge-coloring results for small $\Delta$.  We'll see some examples of such proofs later, for now Figure \ref{fig:small3} shows some $3$-fixable graphs.  A gallery of hundreds more fixable graphs is available at \url{https://dl.dropboxusercontent.com/u/8609833/Web/GraphData/Fixable/index.html}.
+
+
+	\begin{figure}[htb]
+		\includegraphics[scale=0.35]{Delta3TriangleFree/1[2,2].pdf}
+		\includegraphics[scale=0.35]{Delta3TriangleFree/1[3,1].pdf}
+		\includegraphics[scale=0.35]{Delta3TriangleFree/011[2,2,3].pdf}
+		\includegraphics[scale=0.35]{Delta3TriangleFree/0011011010[3,3,2,2,3].pdf}
+		\includegraphics[scale=0.35]{Delta3TriangleFree/000110011010010[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/001010011011000[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/001010011011000[3,3,3,2,2,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110011001000[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110111011000[3,3,3,2,3,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110111111000[3,3,3,3,3,3].pdf}
+     	\includegraphics[scale=0.35]{Delta3TriangleFree/0000110000101000110010001000[3,3,3,2,2,2,3,3].pdf}
+		\caption{Some small $3$-fixable graphs.}
+		\label{fig:small3}
+		\end{figure}
+
+The penultimate graph in Figure \ref{fig:small3} is an example of the more general fact that a $k$-regular graph with $f(v) = k$ for all $v$ is $k$-fixable just is case it is $k$-edge-colorable.  That the third graph in Figure \ref{fig:small3} is reducible follows from Vizing's Adjacency Lemma.
 \subsection{A necessary condition}
 Since the edges incident to a given vertex must all get different colors, we have the following.
 
@@ -186,47 +226,28 @@ Suppose to the contrary that $G$ is $(L, P)$-fixable and there is $H \subseteq G
 Pick different $a,b \in P$.  Let $S = S_{L,a,b} \cap V(H)$ and let $S_a$ be the $v \in S$ with $a \in L(v)$.  Put $S_b = S\setminus S_a$.  Swapping $a$ and $b$ will only effect the terms $\floor{\frac{\card{S_a}}{2}}$ and $\floor{\frac{\card{S_b}}{2}}$ in $\psi_L(H)$.  So, if $\psi_L(H)$ is increased by the swapping, it must be that both $|S_a|$ and $|S_b|$ are odd and after swapping they are both even.  Say $S_a = \set{a_1, \ldots,a_p}$ and $S_b = \set{b_1, \ldots,b_q}$.  By symmetry, we may assume $p \le q$.  For $i \in \irange{p}$, let $X_i = \set{a_i, b_i}$.  Since both $p$ and $q$ are odd, $q-p$ is even, so we get a partition by, for each $j \in \irange{\frac{q-p}{2}}$, letting $X_{p + j} = \set{b_{p + 2j - 1}, b_{p + 2j}}$.  For any $i \in \irange{p}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_i$ maintains $|S_a|$ and $|S_b|$.  For any $j \in \irange{\frac{q-p}{2}}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_{p+j}$ maintains the parity of $|S_a|$ and $|S_b|$.  So no choice of $J$ can increase $\psi_L(H)$ and hence $(H,L')$ is never abundant.
 \end{proof}
 
+In particular, we have learned the following.
+
+\begin{cor}
+	If $G$ is $(f,k)$-fixable, then $(G,L)$ is superabundant for every $L$ with $L(v) \subseteq \irange{k}$ and $|L(v)| \ge k + d_{G}(v) - f(v)$ for all $v \in V(G)$.
+\end{cor}
+
 Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger condition that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
 For a list assignment $L$ on $H$, put $\eta_L(H) = \sum_{\alpha \in \pot(L)} \nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
 
 The following generalization of Hall's theorem was proved by Marcotte and Seymour \cite{marcotte1990extending} and independently by Cropper, Gy{\'a}rf{\'a}s and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we mean a tree that possibly has edges of multiplicity greater than one.
 
-\begin{lem}\label{MultiTreeHall}
+\begin{lem}[Marcotte and Seymour]\label{MultiTreeHall}
 Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an $L$-edge-coloring.
 \end{lem}
 
-\subsection{Basic properties}
-For $i \in \irange{2}$, let $G_i$ be a multigraph, $L_i$ a list assignment on $V(G_i)$ and $P_i$ an $L_i$-pot.  Let $L_1 \cup L_2$ be the list assignment $L'$ on $G_1 \cup G_2$ given by $L'(v) = L_1(v) \cup L_2(v)$ for all $v \in V(G_1) \cap V(G_2)$ and $L'(v) = L_i(v)$ for all $v \in V(G_i) \setminus V(G_{3-i})$ and $i \in \irange{2}$.
-
-\begin{lem}
-Suppose $G_1 \subseteq G_2$ and $G_2$ is $(L_2, P_2)$-fixable.  If $L_2(v) \subseteq L_1(v)$ for all $v \in V(G_1)$ and $P_2 \subseteq P_1$, then $G_1$ is $(L_1, P_1)$-fixable.
-\end{lem}
-
-\begin{lem}
-Suppose $G_i$ is $(L_i, P_i)$-fixable for $i \in \irange{2}$.  If $P_1 \cap P_2 = \emptyset$, then $G_1 \cup G_2$ is $(L_1 \cup L_2, P_1 \cup P_2)$-fixable.
-\end{lem}
-\begin{lem}
-Suppose $G_1$ is $(L_1, P_1)$-fixable.  If $G_2$ has an $L_2$-edge-coloring $\pi$ such that $L_1(v) \cap \setbs{\pi(vx)}{vx \in E(G_2)} = \emptyset$ for all $v \in V(G_1)$, then $G_1 \cup G_2$ is $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable.
-\end{lem}
-\begin{proof}
-Suppose the lemma is false and choose a counterexample minimizing $\size{G_2}$ and subject to that minimizing $h_{G_1}(L_1, P_1)$.  Suppose $\size{G_2} > 1$. Pick $xy \in E(G_2)$.  Let $G_2' = G_2 - xy$ and define $L_2'$ by $L_2'(v) = L_2(v)$ for $v \not \in \set{x,y}$ and $L_2'(v) = L_2(v) \setminus \set{\pi(xy)}$ for $v \in \set{x,y}$.  Applying minimality of $\size{G_2}$ we conclude that $G_1 \cup G_2'$ is $(L_1 \cup L_2', P_1 \cup \pot(L_2'))$-fixable.  Now let $G_2'' = G_2[x,y]$ and $L_2''(x) = L_2''(y) = \set{\pi(xy)}$.  Since $\size{G_2} > 1$, we can apply minimality of $\size{G_2}$ again to conclude that $G_1 \cup G_2' \cup G_2''$ is $(L_1 \cup L_2' \cup L_2'', P_1 \cup \pot(L_2' \cup L_2''))$-fixable, but $G_1 \cup G_2' \cup G_2'' = G_1 \cup G_2$ and $L_1 \cup L_2' \cup L_2'' = L_1 \cup L_2$, so this is a contradiction.
-
-Hence, we must have $\size{G_2} = 1$. Let $xy$ be $G_2$'s only edge. If $h_{G_1}(L_1, P_1) = 0$, then $G_1$ has an $L_1$-edge-coloring and hence $G_1 \cup G_2$ has an $(L_1 \cup L_2)$-edge-coloring, so we must have $h_{G_1}(L_1, P_1) > 0$.  By the definition of $(L_1, P_1)$-fixable, we have $a,b \in P_1$ such that for every partition $X_1, \ldots, X_t$ of $S_{L_1,a,b}$ into sets of size at most two, 
-there is $J \subseteq \irange{t}$ so that $h_{G_1}(L', P_1) < h_{G_1}(L_1, P_1)$ where $L'$ is formed from $L_1$ by swapping $a$ and $b$ in $L_1(v)$ for every $v \in \bigcup_{i \in J} X_i$.
-
-We will prove that $G_1 \cup G_2$ is weakly $(L_1 \cup L_2, P_1 \cup \pot(L_2))$-fixable, then the lemma will follow by Lemma \ref{weaklyfixable}.  
-
-\noindent\claim{1}{$\pi(xy) \in \set{a,b}$, by symmetry we may assume $b = \pi(xy)$.}
-
-Suppose not. Pick $v \in S_{L_1,a,b}$ arbitrarily.
-
-\end{proof}
+In \cite{HallGame}, the second author proved that superabundance is also a sufficient condition for fixability when we restrict our graphs to be multistars.  This immediately implies the fan equation.  The proof uses Hall's theorem to reduce to a smaller star and one might hope we could do the same for arbitrary trees with Lemma \ref{MultiTreeHall} in place of Hall's theorem (thus giving a short proof that Tashkinov trees are elementary), but we haven't yet been able to make this work.
 
 \subsection{Fixability of stars}
-When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem.  In particular, Theorem \ref{FixabilityOfStars} holds for multistars as well; the proof for multistars is nearly identical, but notationally cumbersome.
+When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem, we reproduce the proof for the special case of edge-coloring.
 
 \begin{thm}\label{FixabilityOfStars}
-If $G$ is a star, then $G$ is $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+If $G$ is a multistar, then $G$ is $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{thm}
 \begin{proof}
 \end{proof}
@@ -241,7 +262,7 @@ superabundance easily follows from these orderings.
 We say that a list assignment $L$ on $G$ is a \emph{Kierstead-Tashkinov-Vizing} assignment (henceforth \emph{KTV-assignment}) if for some $xy \in E(G)$, there is a total ordering `$<$' of $V(G)$ such that
 
 \begin{enumerate}
-\item there is and edge-coloring $\pi$ of $G-xy$ such that $\pi(uv) \in L(u) \cap L(v)$ for each $uv \in E(G - xy)$; 
+\item there is an edge-coloring $\pi$ of $G-xy$ such that $\pi(uv) \in L(u) \cap L(v)$ for each $uv \in E(G - xy)$; 
 \item $x < z$ for all $z \in V(G - x)$; 
 \item $G\brackets{w \mid w \le z}$ is connected for all $z \in V(G)$; 
 \item for each $wz \in E(G - xy)$, there is $u < \max\set{w, z}$ such that $\pi(wz) \in L(u) - \setbs{\pi(e)}{e \in E(u)}$;
@@ -273,27 +294,176 @@ again we gain 1 over the naive lower bound on $\psi_L(H)$, due to the color
 in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 \end{proof}
 
+\section{Applications of small k-fixable graphs}
+\subsection{Impoved lower bound on the average degree of 3-critical graphs}
+\subsection{Impoved lower bound on the average degree of 4-critical graphs}
+\subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
+\section{Superabundance sufficiency and adjacency lemmas}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=0.5]{Superabundance/all/1[1,1].pdf}
+		\includegraphics[scale=0.5]{Superabundance/all/011[1,1,2].pdf}
+		\includegraphics[scale=0.5]{Superabundance/all/111[2,2,2].pdf}
+		\caption{The fixable graphs on 3 vertices.}
+		\label{fig:fixable3}
+	\end{figure}
+	
+	\begin{defn}
+		If $G$ is a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \ge d_G(v)$ for all $v \in V(G)$, then $G$ is $f$-fixable if $G$ is $(L, P)$-fixable for every $L$ with $|L(v)| \ge f(v)$ for all $v \in V(G)$ and every $L$-pot $P$ such that $(G,L)$ is superabundant.
+	\end{defn}
+	
+	Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$ for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we just write $d$ as in Figure \ref{fig:fixable3}.  If $G$ is a subgraph of a $(k+1)$-edge-critical multigraph $M$, then removing one edge $e$ of $G$ from $M$ we get a $k$-edge-coloring $\phi$ of $M-e$.  Uncolor the rest of the edges of of $G$ to get a coloring $\pi$ of $M-E(G)$.  Then every proper subgraph of $G$ is abundant with respect to $L_\pi$ and $\psi_L(G) \ge \size{G} - 1$. Therefore, $(G, L_\pi)$ is superabundant if there are $v, w \in V(G)$ and $\tau \in L_\pi(v) \cap L_\pi(w)$ such that $\phi$ does not color any edge incident to $v$ or $w$ with $\tau$.  In other words, $V(G)$ is not elementary with respect to $\phi$.  So, we have the following.
+	
+	\begin{lem}\label{FixableNotElementary}
+		 Let $G$ be a subgraph of a $(k+1)$-edge-critical multigraph $M$.  If $G$ is $f$-fixable where $f(v) = d_G(v) + k - d_M(v)$, then $V(G)$ is elementary with respect every $k$-edge-coloring of $M-e$ for any $e \in E(G)$.
+	\end{lem}
+	
+		\begin{figure}[htb]
+					\centering
+			\includegraphics[scale=0.5]{Superabundance/all/001011[1,1,1,3].pdf}
+			\includegraphics[scale=0.5]{Superabundance/all/011010[2,1,1,3].pdf}
+			\includegraphics[scale=0.5]{Superabundance/all/011011[2,1,2,3].pdf}
+			\includegraphics[scale=0.5]{Superabundance/all/011110[2,2,2,2].pdf}
+			\includegraphics[scale=0.5]{Superabundance/all/011111[2,2,3,3].pdf}
+			\includegraphics[scale=0.5]{Superabundance/all/111111[3,3,3,3].pdf}
+			\caption{The fixable graphs on 4 vertices.}
+			\label{fig:fixable4}
+		\end{figure}
+
+		
+		\begin{figure}[htb]
+					\centering
+\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0011001010[2,1,1,1,4].pdf}
+\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0011001010[3,1,1,1,3].pdf}
+\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0101011000[2,3,1,1,3].pdf}
+\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0101011000[3,3,1,1,2].pdf}
+			\caption{The fixable trees with maximum degree at most 3 on 5 vertices.}
+			\label{fig:fixable5tree}
+		\end{figure}
+		
+				\begin{figure}[htb]
+					\centering
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000100010001011[1,1,1,1,3,4].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[2,1,1,1,3,4].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,2,4].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,3,3].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[2,3,1,1,1,4].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[3,3,1,1,1,3].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[2,3,1,1,3,3].pdf}
+					\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[3,2,1,1,3,3].pdf}
+					\caption{The fixable trees with maximum degree at most 3 on 6 vertices.}
+					\label{fig:fixable6tree}
+				\end{figure}
+
+Looking at the trees in Figures \ref{fig:fixable4}, \ref{fig:fixable5tree} and \ref{fig:fixable6tree} we might conjecture that a tree is $f$-fixable as long as there is at most one internal vertex labeled ``d''.  This conjecture continues to hold for many more examples.
+
+\begin{conjecture}\label{OneHighConjecture}
+	A tree $T$ is $f$-fixable if $f(v) = d_T(v)$ for at most one non-leaf $v$ of $T$.
+\end{conjecture}
+
+Note that by Lemma \ref{KTVImpliesSuperabundant}, this would imply that Tashkinov trees are elementary under the same degree constraints.  Can this be proved in the simpler case of Kierstead paths?  For paths of length 4, this was done by Kostochka and Stiebitz, in the next section we present a generalization of this result to stars with one edge subdivided.   One nice feature of the superabundance formulation is that since there is no need for an ordering like with Tashkinov trees, we can easily formulate results about graphs with cycles.  The most general thing we might think is true is the following.
+
+\begin{conjecture}[false]\label{MoonshineConjecture}
+	A multigraph $G$ is $f$-fixable if $f(v) > d_G(v)$ for all $v \in V(T)$.
+\end{conjecture}
+
+This is very strong and implies Goldberg's conjecture.  Unfortunately, it is false, we can make a counterexample on a $5$-cycle. [SHOW HOW.  No change like $f(v) > d_G(v) + 100$ will help.] 
+	
 \subsection{Stars with one edge subdivided}
-\begin{thm}
-Suppose $G$ is a star with one edge subdivided and root $r$. If $(G, L)$ is superabundant, $|L(v)| \ge d_G(v)$ for all $v \in V(G)$ and $|L(r)| > d_G(r)$, then $G$ is $L$-fixable.
+The following generalizes the ``Short Kierstead Paths'' of Kostochka and Stiebitz.  Parts (a) and (b) are a special case of Conjecture \ref{OneHighConjecture}. At present, we feel the proof we have is too involved and ugly to present, but it will be instructive to see how we can extract a fan-equation-like formula from Theorem \ref{StarWithOneEdgeSubdivided}. 
+
+\begin{thm}\label{StarWithOneEdgeSubdivided}
+	Let $G$ be a star with one edge subdivided where $r$ is the center of the star, $t$ the vertex at distance two from $r$ and $s$ the intervening vertex.  
+	Then $G$ is $L$-fixable when $L$ is superabundant, $|L(v)| \ge d_G(v)$ for all $v \in V(G)$ and at least one of the following holds:
+	\begin{enumerate}
+		\item[(a)] $|L(r)| > d_G(r)$; or
+		\item[(b)] $|L(s)| > d_G(s)$; or
+		\item[(c)] $\psi_L(G) > \size{G}$.
+	\end{enumerate}
 \end{thm}
+
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G \subseteq Q$.  For a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$, put $L_\pi(v) = \irange{\Delta(Q)} - \pi\parens{E_Q(v) - E(G)}$ for all $v \in V(G)$.  We say that $G$ is a \emph{$\Psi$-subgraph} of $Q$ if there is a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such that each $H \subsetneq G$ is abundant. Put $E_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}} \text{ is even}}}$ and $O_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}} \text{ is odd}}}$.  Plainly, $\pot(L) = E_{L}(G) + O_{L}(G)$.
+
+\begin{lem}\label{LowPsiGivesManyOddColors}
+	Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$. If $G
+	\subseteq Q$ and $\pi$ is a $\Delta(Q)$-edge-coloring of $Q - E(G)$ such that
+	$\psi_L(G) \le \size{G}$, then $\card{O_{L_\pi}(G)} \ge \sum_{v \in V(G)}
+	\Delta(Q) - d_Q(v)$.  Furthermore, if $\psi_L(G) < \size{G}$, then
+	$\card{O_{L_\pi}(G)} > \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.
+\end{lem}
 \begin{proof}
-
+	The proof is a straightforward counting argument.  For fixed degrees and list
+	sizes, as $\card{O_L(G)}$ gets larger, $\psi_L(G)$ gets smaller (half as
+	quickly).  The details forthwith.  Put $L = L_\pi$.
+	
+	Since $\size{G} \ge \psi_L(G)$, we have 
+	
+	\begin{align}
+	\label{edge-crit1}
+	\size{G} \ge 
+	\sum_{\alpha \in \pot(L)} \floor{\frac{\card{G_{L, \alpha}}}{2}}  =
+	\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} -  \sum_{\alpha \in
+		O_L(H)} \frac12 
+	.\end{align}
+	
+	\noindent 
+	Also,
+	
+	\begin{align}
+	\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} 
+	&= \sum_{v \in V(G)} \frac{\Delta(Q) - (d_Q(v)-d_G(v))}{2} \notag\\
+	&= \sum_{v \in V(G)} \frac{d_G(v)}{2} + \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}\notag\\
+	&= \size{G} +  \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}.
+	\label{edge-crit2}
+	\end{align}
+	
+	\noindent Now we solve for $\size{G}-
+	\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2}$ in 
+	\eqref{edge-crit1} and \eqref{edge-crit2}, set the expressions equal, and then
+	simplify.  The result is \eqref{edge-crit3}.
+	
+	\begin{align}
+	\card{O_L(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v).
+	\label{edge-crit3}
+	\end{align}
+	Finally, if the inequality in \eqref{edge-crit1} is strict, then the inequality
+	in \eqref{edge-crit3} is also strict.
 \end{proof}
-\section{Applications}
 
-\section{Conjectures}
-\begin{conjecture}
-Any multigraph $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
-\end{conjecture}
-
-\begin{conjecture}
-Any tree $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
-\end{conjecture}
-
-\begin{conjecture}
-Any path $G$ is $L$-fixable if $(G, L)$ is superabundant and $|L(v)| > d_G(v)$ for all $v \in V(G)$.
-\end{conjecture}
+\begin{lem}\label{AdjacencyPrecursor}
+	Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$.  Suppose $H$ is a $\Psi$-subgraph of $Q$ where $H$ is a star with one edge subdivided.  Let $r$ be the center of the star, $t$ the vertex at distance two from $r$ and $s$ the intervening vertex. Then there is $X \subseteq N(r)$ with $V(H - r - t) \subseteq X$ such that 
+	\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 0.\]  
+	
+	\noindent Moreover, if $\set{r,s,t}$ does not induce a triangle in $Q$, then 
+	\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 1.\]
+	Furthermore, if $d_Q(r)<\Delta(Q)$ or $d_Q(s)<\Delta(Q)$, then we can improve both lower bounds by 1.
+\end{lem}
+\begin{proof}
+	Let $G$ be a maximal $\Psi$-subgraph of $Q$ containing $H$ such that $G$ is a star with one edge subdivided.  Let $\pi$ be a coloring of $Q - E(G)$ showing that $G$ is a $\Psi$-subgraph and put $L = L_\pi$.  
+	
+	We first show that $\card{E_{L}(G)} \ge d_Q(r) - d_G(r) - 1$ if $rst$ induces a triangle; otherwise, $\card{E_{L}(G)} \ge d_Q(r) - d_G(r)$.
+	Suppose $rst$ does not induce a triangle; for arbitrary $x \in N_Q(r) - V(G)$,
+	let $\alpha=\pi(rx)$.  If $\alpha \in O_{L}(G)$, then adding $x$ to $G$ gives a
+	larger $\Psi$-subgraph of the required form; this contradicts the maximality of
+	$G$.  Hence $\alpha \in E_{L}(G)$.  Therefore, $\card{E_{L}(G)} \ge d_Q(r) -
+	d_G(r)$ as desired.  If $rst$ induces a triangle, then we lose one off this
+	bound from the $rt$ edge.
+	
+	By Theorem \ref{StarWithOneEdgeSubdivided}(c), we have $\psi_L(G) \le
+	\size{G}$.  By Lemma \ref{LowPsiGivesManyOddColors}, we have
+	$\card{O_{L}(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.  Suppose $rst$ does not induce a triangle. Then
+	
+	\begin{align*}
+	\Delta(Q) &\ge \pot(L)\\
+	&= \card{E_{L}(G)} + \card{O_{L}(G)}\\
+	&\ge d_Q(r) - d_G(r) + \sum_{v \in V(G)} \Delta(Q) - d_Q(v) \numberthis
+	\label{strict-ineq}\\
+	&= \Delta(Q) - d_G(r) + \sum_{v \in V(G - r)} \Delta(Q) - d_Q(v)\\
+	&= \Delta(Q) + 1 \sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v).
+	\end{align*}
+	
+	Therefore, $\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v) \le -1$.  Negating gives the desired inequality.  If $rst$ induces a triangle, we lose one off the bound.  Theorem \ref{StarWithOneEdgeSubdivided}(a,b) gives the final statement.
+\end{proof}
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}

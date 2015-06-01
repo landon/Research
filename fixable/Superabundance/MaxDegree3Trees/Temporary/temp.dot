@@ -1,0 +1,18 @@
+graph G {
+overlap = false;
+splines=true;
+sep=0.3;
+node[fontsize=20, style=bold, color=black; shape=circle, penwidth=1];
+edge[style=bold, color=black, penwidth=2];
+0 [label = "d + 1", style = filled, fillcolor = "brown"];
+1 [label = "d + 1", style = filled, fillcolor = "brown"];
+2 [label = "d", style = filled, fillcolor = "cadetblue"];
+3 [label = "d", style = filled, fillcolor = "cadetblue"];
+4 [label = "d + 1", style = filled, fillcolor = "brown"];
+5 [label = "d", style = filled, fillcolor = "cadetblue"];
+0 -- 3
+0 -- 5
+1 -- 4
+1 -- 5
+2 -- 4
+}

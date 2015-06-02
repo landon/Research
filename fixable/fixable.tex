@@ -92,6 +92,7 @@
 \def\C{\fancy{C}}
 \def\Q{\fancy{Q}}
 \def\Z{\fancy{Z}}
+\def\H{\fancy{H}}
 
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -298,13 +299,47 @@ in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 \subsection{Impoved lower bound on the average degree of 3-critical graphs}
 \subsection{Impoved lower bound on the average degree of 4-critical graphs}
 \subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
+Let $\H_4$ denote the class of connected graphs with maximum degree 4, minimum
+degree 3, each vertex adjacent to at least two 4-vertices, and each 4-vertex
+adjacent to exactly two 4-vertices.
+\input{pics}
+
+\begin{lem}
+	If $G$ is a graph in $\H_4$ and $G$ contains none of the four configurations in Figure~\ref{fig:hiltonzhao}
+	(not necessarily induced), then $G$ is $K_5-e$.
+\end{lem}
+\begin{proof}
+	Let $G$ be a graph in $\H_4$.  Note that every 4-vertex in $G$ has exactly two
+	3-neighbors and two 4-neighbors.
+	Let $u$ denote a 4-vertex and let $v_1,\ldots,v_4$ denote its neighbors, where
+	$d(v_1)=d(v_2)=3$ and $d(v_3)=d(v_4)=4$.
+	When vertices $x$ and $y$ are adjacent, we write $x\adj y$.
+	We assume that $G$ contains none of the configurations in Figure~\ref{fig:hiltonzhao} and show that
+	$G$ must be $K_5-e$.  
+	
+	First suppose that $u$ has a 3-neighbor and a 4-neighbor that are adjacent.  By
+	symmetry, suppose that $v_2$ is adjacent to $v_3$.  Since Figure~\ref{fig:hiltonzhao}(a) is forbidden,
+	we have $v_3\adj v_1$. 
+	Now consider $v_4$.  If $v_4$ has a 3-neighbor distinct from $v_1$ and $v_2$,
+	then we have a copy of Figure~\ref{fig:hiltonzhao}(d).  Hence $v_4\adj v_1$ and $v_4\adj v_2$.
+	If $v_3\adj v_4$, then $G$ is $K_5-e$.  Suppose not, and let $x$ be a 4-neighbor
+	of $v_4$.  Since $G$ has no copy of Figure~\ref{fig:hiltonzhao}(d), $x$ must be adjacent to $v_1$ and
+	$v_2$.  This is a contradiction, since now $v_1$ and $v_2$ are 3-vertices, but
+	each have at least four neighbors.  Hence, we conclude that each of $v_1$ and
+	$v_2$ is non-adjacent to each of $v_3$ and $v_4$.
+	
+	Now consider the 3-neighbors of $v_3$ and $v_4$.  
+	If they have zero 3-neighbors in common, then we have a copy of Figure~\ref{fig:hiltonzhao}(b).  
+	If they have one 3-neighbor in common, then we have a copy of Figure~\ref{fig:hiltonzhao}(c).
+	Otherwise they have two 3-neighbors in common, so we have a copy of Figure~\ref{fig:hiltonzhao}(d).  
+\end{proof}
 \section{Superabundance sufficiency and adjacency lemmas}
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=0.5]{Superabundance/all/1[1,1].pdf}
 		\includegraphics[scale=0.5]{Superabundance/all/011[1,1,2].pdf}
 		\includegraphics[scale=0.5]{Superabundance/all/111[2,2,2].pdf}
-		\caption{The fixable graphs on 3 vertices.}
+		\caption{The fixable graphs on at most 3 vertices.}
 		\label{fig:fixable3}
 	\end{figure}
 	
@@ -312,11 +347,7 @@ in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 		If $G$ is a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \ge d_G(v)$ for all $v \in V(G)$, then $G$ is $f$-fixable if $G$ is $(L, P)$-fixable for every $L$ with $|L(v)| \ge f(v)$ for all $v \in V(G)$ and every $L$-pot $P$ such that $(G,L)$ is superabundant.
 	\end{defn}
 	
-	Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$ for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we just write $d$ as in Figure \ref{fig:fixable3}.  If $G$ is a subgraph of a $(k+1)$-edge-critical multigraph $M$, then removing one edge $e$ of $G$ from $M$ we get a $k$-edge-coloring $\phi$ of $M-e$.  Uncolor the rest of the edges of of $G$ to get a coloring $\pi$ of $M-E(G)$.  Then every proper subgraph of $G$ is abundant with respect to $L_\pi$ and $\psi_L(G) \ge \size{G} - 1$. Therefore, $(G, L_\pi)$ is superabundant if there are $v, w \in V(G)$ and $\tau \in L_\pi(v) \cap L_\pi(w)$ such that $\phi$ does not color any edge incident to $v$ or $w$ with $\tau$.  In other words, $V(G)$ is not elementary with respect to $\phi$.  So, we have the following.
-	
-	\begin{lem}\label{FixableNotElementary}
-		 Let $G$ be a subgraph of a $(k+1)$-edge-critical multigraph $M$.  If $G$ is $f$-fixable where $f(v) = d_G(v) + k - d_M(v)$, then $V(G)$ is elementary with respect every $k$-edge-coloring of $M-e$ for any $e \in E(G)$.
-	\end{lem}
+	Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$ for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we just write $d$ as in Figure \ref{fig:fixable3}.  
 	
 		\begin{figure}[htb]
 					\centering

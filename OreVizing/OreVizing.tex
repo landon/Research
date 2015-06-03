@@ -566,15 +566,15 @@ Suppose $G$ has a nonempty induced subgraph $H$ which is $f_H$-AT where $f_H(v) 
 Now applying Lemma \ref{EdgeBoundEuler} proves the theorem.
 \end{proof}
 \section{Good orientations from big cuts}\label{OrientationsSection}
-Here we strengthen the lemmas on list colorings and orientations of Kostochka and Yancey \cite{kostochkayancey2012ore}.  The proofs are identical except we replace their specific method of getting an orientation by the following general lemma.  This lemma can be derived from Hall's theorem via a similar vertex splitting method to that used by Kostochka and Yancey. It also follows by taking an arbitrary orientation and repeatedly reversing paths if doing so gets a gain (really, this is just the proof of the max-flow min-cut theorem).  We give the proof for completeness.  For $H \unlhd G$ put $\size{H}^+ \DefinedAs \size{H} + \size{H, G-H}$.
+Here we strengthen the lemmas on list colorings and orientations of Kostochka and Yancey \cite{kostochkayancey2012ore}.  The proofs are identical except we replace their specific method of getting an orientation by the following general lemma.  This lemma can be derived from Hall's theorem via a similar vertex splitting method to that used by Kostochka and Yancey. It also follows by taking an arbitrary orientation and repeatedly reversing paths if doing so gets a gain (really, this is just the proof of the max-flow min-cut theorem).  We give the proof for completeness. 
 
 \begin{lem}\label{InOrientations}
 Let $G$ be a graph, $S \subseteq V(G)$ and $\func{g}{S}{\IN}$.  Then $G$ has an orientation such that $d^-(v) \geq g(v)$ for all $v \in S$ iff for every $H \unlhd G[S]$ we have
 
-\[\size{H}^+ \geq \sum_{v \in V(H)} g(v).\]
+\[\size{H} + \size{H, G - H} \geq \sum_{v \in V(H)} g(v).\]
 \end{lem}
 \begin{proof}
-First, suppose $G$ has such an orientation and let $H \unlhd G[S]$.  Then $\size{H}^+ = \sum_{v \in V(H)} d_H^-(v) + \size{H, G-H} \geq \sum_{v \in V(H)} d_G^-(v) \geq \sum_{v \in V(H)} g(v)$.
+First, suppose $G$ has such an orientation and let $H \unlhd G[S]$.  Then $\size{H} + \size{H, G - H} = \sum_{v \in V(H)} d_H^-(v) + \size{H, G-H} \ge \sum_{v \in V(H)} d_G^-(v) \ge \sum_{v \in V(H)} g(v)$.
 
 For the other direction, pick an orientation of $G$ minimizing
 
@@ -584,9 +584,9 @@ For the other direction, pick an orientation of $G$ minimizing
 
 \[X \DefinedAs \setb{v}{V(G)}{\text{there exists an $xv$-directed-path}}.\]
 
-\noindent For any $v \in X$ we must have $v \in S$ and $d^-(v) \leq g(v)$ for otherwise reversing all the edges on an $xv$-path violates minimality of $\Theta$.  By definition, all edges between $X$ and $G-X$ are directed into $X$ and hence with $H \DefinedAs G[X]$ we have
+\noindent For any $v \in X$ we must have $v \in S$ and $d^-(v) \le g(v)$ for otherwise reversing all the edges on an $xv$-path violates minimality of $\Theta$.  By definition, all edges between $X$ and $G-X$ are directed into $X$ and hence with $H \DefinedAs G[X]$ we have
 
-\[\size{H}^+ = \sum_{v \in V(H)} d^-(v) = d^-(x) + \sum_{v \in V(H) - x} d^-(v) < \sum_{v \in V(H)} g(v).\]
+\[\size{H} + \size{H, G-H} = \sum_{v \in V(H)} d^-(v) = d^-(x) + \sum_{v \in V(H) - x} d^-(v) < \sum_{v \in V(H)} g(v).\]
 
 \noindent This contradicts our supposition and thus completes the proof.
 \end{proof}
@@ -603,28 +603,34 @@ All bipartite graphs are kernel-perfect, the following lemma from \cite{kostochk
 Let $B$ be an independent set in a graph $G$ and put $A \DefinedAs V(G) - B$.  Any digraph created from $G$ by replacing each edge in $G[A]$ by a pair of opposite arcs and orienting the edges between $A$ and $B$ arbitrarily is kernel-perfect.
 \end{lem}
 
-Now we have everything needed to prove the strengthing.  For disjoint subsets $A$ and $B$ of $V(G)$, we write $G(A, B)$ for the bipartite subgraph $G[A \cup B] - E(G[A]) - E(G[B])$.  
+Now we have everything needed to prove the strengthing. For independent $A \subseteq V(G)$, we write $G_A$ for the bipartite subgraph $G - E(G-A)$ of $G$, so just the edges between $A$ and $G-A$ remain.
 
 \begin{lem}\label{MicStrength}
-Let $G$ be a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \leq d_G(v) + 1$ for all $v \in V(G)$.  If there is independent $A \subseteq V(G)$ such that for each $Q \unlhd G(A, V(G-A))$ we have
-
-\[\size{Q}^+ \geq  \sum_{v \in V(Q)} d_G(v) + 1 - f(v).\]
-
-\noindent then $G$ is online $f$-choosable.
+	Let $G$ be a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \le d_G(v) + 1$ for all $v \in V(G)$.  If there is independent $A \subseteq V(G)$ such that for each induced subgraph $Q$ of $G_A$, we have
+	
+	\[\size{Q} + \size{Q, G_A - Q}  \ge  \sum_{v \in V(Q)} d_G(v) + 1 - f(v).\]
+	
+	\noindent then $G$ is online $f$-choosable.
 \end{lem}
 \begin{proof}
-Applying Lemma \ref{InOrientations} on $G(A, V(G-A))$ with $S = V(G)$ and $g(v) \DefinedAs d_G(v) + 1 - f(v)$ for all $v \in V(G)$ gives an orientation of $G$ where $d^-(v) \geq d_G(v) + 1 - f(v)$ for each $v \in V(G)$ and thus $f(v) \geq d^+(v) + 1$.  Using this orientation in Lemma \ref{KernelPerfect} for the edges between $A$ and $V(G-A)$ then gives the desired kernel-perfect orientation of $G$ showing that $G$ is online $f$-choosable.
+	Applying Lemma \ref{InOrientations} on $G_A$ with $g(v) \DefinedAs d_G(v) + 1 - f(v)$ for all $v \in V(G_A)$ gives an orientation of $G_A$ where $d^-(v) \ge d_G(v) + 1 - f(v)$ for each $v \in V(G_A)$.  Make an orientation $D$ of $G$ by using this orientation of $G_A$ for the edges between $A$ and $V(G-A)$ and replacing each edge in $G-A$ by a pair of opposite arcs.  For $v \in V(D)$ we have $d^+(v) \le d_{G-A}(v) + d_{G_A}(v) - (d_G(v) + 1 - f(v)) = f(v) - 1$ and hence $f(v) \ge d^+(v) + 1$.  By Lemma \ref{KernelPerfect}, $D$ is kernel-perfect, so the Kernel Lemma shows that $G$ is online $f$-choosable.
 \end{proof}
 
 \begin{lem}\label{SecondStrengtheningMic}
-Let $G$ be a nonempty graph and $\func{f}{V(G)}{\IN}$ with $f(v) \leq d_G(v) + 1$ for all $v \in V(G)$. If there is independent $A \subseteq V(G)$ such that
-
-\[\size{A, G-A} \ge  \sum_{v \in V(G)} d_G(v) + 1 - f(v),\]
-
-\noindent then $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.
+	Let $G$ be a nonempty graph and $\func{f}{V(G)}{\IN}$ with $f(v) \le d_G(v) + 1$ for all $v \in V(G)$. If there is independent $A \subseteq V(G)$ such that
+	
+	\[\size{A, G-A} \ge  \sum_{v \in V(G)} d_G(v) + 1 - f(v),\]
+	
+	\noindent then $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.
 \end{lem}
 \begin{proof}
-Let $A \subseteq V(G)$ be an independent set with $\size{A, G-A} \geq \sum_{v \in V(G)} \parens{d_G(v) + 1 - f(v)}$ and put $B \DefinedAs V(G-A)$. Choose nonempty $H \unlhd G$ with $\size{A \cap V(H), B \cap V(H))} \geq  \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)}$ minimizing $\card{H}$. Suppose $H$ is not online $f_H$-choosable. Then, by Lemma \ref{MicStrength}, we have $Q \unlhd G(A \cap V(H), B \cap V(H))$ with $\size{Q}^+ < \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)}$.  Now $Q \neq H$ by our assumption on $H$, hence $Z \DefinedAs H-Q$ is a nonempty induced subgraph of $G$ with $\size{A \cap V(Z), B \cap V(Z)} = \size{A \cap V(H), B \cap V(H)} - \size{Q}^+ > \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)} - \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)} = \sum_{v \in V(Z)} \parens{d_Z(v) + 1 - f_Z(v)}$ contradicting the minimality of $\card{H}$.
+	Let $A \subseteq V(G)$ be an independent set with 
+	\[\size{A, G-A} \ge \sum_{v \in V(G)} \parens{d_G(v) + 1 - f(v)}.\] Choose a nonempty induced subgraph $H$ of $G$ with $\size{H_A} \ge \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)}$ minimizing $\card{H}$ (we can make this choice since $G$ is a such a subgraph). Suppose $H$ is not online $f_H$-choosable. Then, by Lemma \ref{MicStrength}, we have an induced subgraph $Q$ of $H_A$ with $\size{Q} + \size{Q, H_A - Q} < \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)}$.  Now $Q \ne H$ by our assumption on $\size{H_A}$, hence $Z \DefinedAs H-Q$ is a nonempty induced subgraph of $G$ with 
+	\begin{align*}
+	\size{Z_A} &= \size{H_A} - \size{Q} - \size{Q, H_A - Q} \\ 
+	&> \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)} - \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)} \\
+	&= \sum_{v \in V(Z)} \parens{d_Z(v) + 1 - f_Z(v)},
+	\end{align*} contradicting the minimality of $\card{H}$.
 \end{proof}
 
 As a special case we get the following lower bound on the number of edges.  Recall that $\mic(G)$ is the maximum of $\sum_{v \in I} d_G(v)$ over all independent sets $I$ of $G$.
@@ -674,7 +680,7 @@ If $G$ is a triangle-free graph, then $\mic(G) \ge \frac14 \sum_{v\in V(G)} \lg(
 Let $W$ be a random independent set in $G$ chosen uniformly from all independent sets in $G$.  For each $v \in V(G)$ put $X_v \DefinedAs d(v)\card{\set{v} \cap W} + \card{N(v) \cap W}$.
 We claim that $E(X_v) \ge \frac12 \lg(d(v))$.  This implies the lemma since by linearity of expectation $2\mic(G) \ge E\parens{\sum_{v \in V(G)} X_v} \ge \frac12 \sum_{v\in V(G)} \lg(d(v))$.
 
-To prove the claim, let $H$ be the subgraph of $G$ induced on $V(G) - \parens{N(v) \cup \set{v}}$, fix and independent set $S$ in $H$ and let $X$ be the set of all nonneighbors of $S$ in $N(v)$.  Put $x \DefinedAs |X|$.  It will suffice to bound the conditional expectation for each possible $S$ as follows:
+To prove the claim, let $H$ be the subgraph of $G$ induced on $V(G) - \parens{N(v) \cup \set{v}}$, fix an independent set $S$ in $H$ and let $X$ be the set of all nonneighbors of $S$ in $N(v)$.  Put $x \DefinedAs |X|$.  It will suffice to bound the conditional expectation for each possible $S$ as follows:
 
 \[E\parens{X_v \mid W \cap V(H) = S} \ge \frac{\lg(d(v))}{2}.\]
 

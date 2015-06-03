@@ -1,0 +1,285 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{mathscinet}
+\usepackage{tikz,tkz-graph,tkz-berge}
+\usetikzlibrary{positioning}
+\usepackage{verbatim, xcolor}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\newcommand{\boundellipse}[3]% center, xdim, ydim
+{(#1) ellipse (#2 and #3)
+}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{Theorem}{Theorem}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{Nullstellensatz}{Combinatorial Nullstellensatz}
+\newtheorem*{TransversalLemma}{Transversal Lemma}
+\newtheorem*{BrooksTheorem}{Brooks' Theorem}
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{MagicLemma}{Magic Lemma}
+\newtheorem*{BrooksTheoremOnline}{Brooks' Theorem for Choosability}
+\newtheorem*{BrooksTheoremAlpha}{Brooks' Theorem for Independence Number}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\newcommand{\erdos}{Erd\H{o}s}
+\newcommand{\CondOne}{\hyperref[cond1]{Condition (1)}}
+\newcommand{\CondTwo}{\hyperref[cond2]{Condition (2)}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\L{\fancy{L}}
+\def\H{\fancy{H}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
+Kernel magic}
+\date{}
+\begin{document}
+\maketitle
+
+Alexandr Kostochka and Matthew Yancey~\cite{kostochkayancey2012ore} gave a simple, yet
+powerful, application of the Kernel Lemma to a list coloring problem.  
+In a small section of a much longer manuscript with Hal Kierstead \cite{orevizing}, we took these ideas to their logical conclusion.  
+The consequence is a sort of magical way to draw conclusions about list coloring (and online list coloring) just from the existence of large independent sets (more precisely, independent sets incident to many edges).
+We give two applications. First, we derive Brooks' theorem for online list-coloring from the existence of a large independent set.  Second, we prove an upper bound for online list-coloring triangle-free graphs by probabilistically finding an independent set
+incident to many edges.
+
+\section{Kernel Magic}
+The goal of this section is to prove the following lemma from \cite{orevizing}
+
+\begin{MagicLemma}
+	Let $G$ be a nonempty graph and $\func{f}{V(G)}{\IN}$ with $f(v) \le d_G(v) + 1$ for all $v \in V(G)$. If there is independent $A \subseteq V(G)$ such that
+	
+	\[\size{A, G-A} \ge  \sum_{v \in V(G)} d_G(v) + 1 - f(v),\]
+	
+	\noindent then $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.
+\end{MagicLemma}
+
+A \emph{kernel} in a digraph $D$ is an independent set $I \subseteq V(D)$ such
+that each vertex in $V(D) - I$ has an edge into $I$.  A digraph in which every
+induced subdigraph has a kernel is \emph{kernel-perfect}.
+
+\begin{KernelLemma}
+	Let $G$ be a graph and $\func{f}{V(G)}{\IN}$. If $G$ has a kernel-perfect orientation such that $f(v) \geq d^+(v) + 1$ for each $v \in V(G)$, then $G$ is online $f$-choosable.
+\end{KernelLemma}
+\begin{proof}
+	Let $D$ be a kernel-perfect orientation of $G$.  
+	When someone hands us the set of vertices $S$ with color $1$, we pick a kernel $K$ in $D[S]$ and color the vertices in $K$ with color $1$.  
+	But then every vertex in $S$ either got colored or had its out-degree decreased, so we win by induction on $|G|$.
+\end{proof}
+
+\begin{lem}[Kostochka and Yancey \cite{kostochkayancey2012ore}]\label{KernelPerfect}
+	Let $A$ be an independent set in a graph $G$ and let $B \DefinedAs V(G - A)$. 
+	Any digraph $D$ created from $G$ by replacing each edge in $G[B]$ by a pair of
+	opposite arcs and orienting the edges between $A$ and $B$ arbitrarily is
+	kernel-perfect.
+\end{lem}
+\begin{proof}
+	Let $G$ be a minimum counterexample, and let $D$ be a digraph created from $G$
+	that is not kernel-perfect.  To get a contradiction it suffices to construct a
+	kernel in $D$, since each subdigraph has a kernel by minimality.  Either $A$ is
+	a kernel or there is some $v \in B$ which has no outneighbors in $A$.  In the
+	latter case, each neighbor of $v$ in $G$ has an inedge to $v$, so a kernel in
+	$D - v - N(v)$ together with $v$ is a kernel in $D$.
+\end{proof}
+
+The following lemma is folklore and can be derived from Hall's theorem by vertex splitting. It also follows by taking an arbitrary orientation and repeatedly reversing paths if doing so gets a gain (like the proof of max-flow min-cut), see \cite{orevizing} for further details.
+
+\begin{lem}\label{InOrientations}
+	Let $G$ be a graph and $\func{g}{V(G)}{\IN}$.  Then $G$ has an orientation such that $d^-(v) \ge g(v)$ for all $v \in V(G)$ iff for every induced subgraph $H$ of $G$, we have
+	
+	\[\size{H} + \size{H,G-H} \ge \sum_{v \in V(H)} g(v).\]
+\end{lem}
+
+For independent $A \subseteq V(G)$, we write $G_A$ for the bipartite subgraph $G - E(G-A)$ of $G$, so just the edges between $A$ and $G-A$ remain.
+
+\begin{lem}\label{MicStrength}
+	Let $G$ be a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \le d_G(v) + 1$ for all $v \in V(G)$.  If there is independent $A \subseteq V(G)$ such that for each induced subgraph $Q$ of $G_A$, we have
+	
+	\[\size{Q} + \size{Q, G_A - Q}  \ge  \sum_{v \in V(Q)} d_G(v) + 1 - f(v).\]
+	
+	\noindent then $G$ is online $f$-choosable.
+\end{lem}
+\begin{proof}
+	Applying Lemma \ref{InOrientations} on $G_A$ with $g(v) \DefinedAs d_G(v) + 1 - f(v)$ for all $v \in V(G_A)$ gives an orientation of $G_A$ where $d^-(v) \ge d_G(v) + 1 - f(v)$ for each $v \in V(G_A)$.  Make an orientation $D$ of $G$ by using this orientation of $G_A$ for the edges between $A$ and $V(G-A)$ and replacing each edge in $G-A$ by a pair of opposite arcs.  For $v \in V(D)$ we have $d^+(v) \le d_{G-A}(v) + d_{G_A}(v) - (d_G(v) + 1 - f(v)) = f(v) - 1$ and hence $f(v) \ge d^+(v) + 1$.  By Lemma \ref{KernelPerfect}, $D$ is kernel-perfect, so the Kernel Lemma shows that $G$ is online $f$-choosable.
+\end{proof}
+
+\begin{proof}[Proof of Magic Lemma]
+	Let $A \subseteq V(G)$ be an independent set with 
+	\[\size{A, G-A} \ge \sum_{v \in V(G)} \parens{d_G(v) + 1 - f(v)}.\] Choose a nonempty induced subgraph $H$ of $G$ with $\size{H_A} \ge \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)}$ minimizing $\card{H}$ (we can make this choice since $G$ is a such a subgraph). Suppose $H$ is not online $f_H$-choosable. Then, by Lemma \ref{MicStrength}, we have an induced subgraph $Q$ of $H_A$ with $\size{Q} + \size{Q, H_A - Q} < \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)}$.  Now $Q \ne H$ by our assumption on $\size{H_A}$, hence $Z \DefinedAs H-Q$ is a nonempty induced subgraph of $G$ with 
+	\begin{align*}
+	\size{Z_A} &= \size{H_A} - \size{Q} - \size{Q, H_A - Q} \\ 
+	&> \sum_{v \in V(H)} \parens{d_H(v) + 1 - f_H(v)} - \sum_{v \in V(Q)} \parens{d_H(v) + 1 - f_H(v)} \\
+	&= \sum_{v \in V(Z)} \parens{d_Z(v) + 1 - f_Z(v)},
+	\end{align*} contradicting the minimality of $\card{H}$.
+\end{proof}
+
+\section{Brooks' Theorem}
+We derive Brooks' theorem for online list-coloring from the existence of a large independent set.  We did this with Dan Cranston in \cite{brooksbeyond} as well, but there we proved a special case of Magic Lemma just for this reduction.
+
+\begin{BrooksTheoremAlpha}
+	If $G$ is a graph with $\Delta(G) \ge 3$ and $K_{\Delta(G) + 1} \not \subseteq G$, then $\alpha(G) \ge
+	\frac{|G|}{\Delta(G)}$.
+\end{BrooksTheoremAlpha}
+
+It seems that the easiest way to prove Brooks' Theorem for Independence Number is to just prove Brooks' theorem for ordinary coloring.  
+So, pick your favorite proof of Brooks' theorem for this purpose.  At present, the following \cite{rabern2014yet} is my favorite, but any proof will do.
+
+\begin{BrooksTheorem}
+	Every graph $G$ with $\chi(G) = \Delta(G) + 1 \geq 4$ contains
+	$K_{\Delta(G) + 1}$.
+\end{BrooksTheorem}
+\begin{proof}
+	Suppose the theorem is false and choose a counterexample $G$ minimizing
+	$\card{G}$.  Put $\Delta \DefinedAs \Delta(G)$. Using minimality of $\card{G}$,
+	we see that $\chi(G - v) \le \Delta$ for all $v \in
+	V(G)$. In particular, $G$ is $\Delta$-regular.
+	
+	Let $M$ be a maximal independent set in $G$.  Since $\Delta(G-M) < \Delta$ and $\chi(G-M) \ge \Delta$, minimality of $|G|$ shows that $G-M$ has an induced subgraph $T$ where $T = K_\Delta$ or $T$ is an odd cycle if $\Delta=3$.   Suppose $G$ contains $K_{\Delta + 1}$ less an edge, say $K_{\Delta + 1} - xy = D \subseteq G$. Then we may $\Delta$-color $G-D$ and extend the coloring to $D$ by first coloring $x$ and $y$ the same and then finishing greedily on the rest.
+	
+	Since $K_{\Delta + 1} \not \subseteq G$ we have $\card{N(T)} \geq 2$. So, we may take different $x, y \in N(T)$ and put $H \DefinedAs G - T$ if $x$ is adjacent to $y$ and $H \DefinedAs (G-T) + xy$ otherwise.  Then, $H$ doesn't contain $K_{\Delta + 1}$ as $G$ doesn't contain $K_{\Delta + 1}$ less an edge. By minimality of $\card{G}$, $H$ is $\Delta$-colorable. That is, we have a $\Delta$-coloring of $G - T$ where $x$ and $y$ receive different colors.  We can easily extend this partial coloring to all of $G$ since each vertex of $T$ has a set of $\Delta - 1$ available
+	colors and some pair of vertices in $T$ get different sets.  
+\end{proof}
+
+We can now prove Brooks' theorem for online list-coloring by combining Brooks' Theorem for Independence Number together with Magic Lemma.  We only write the proof for list-coloring, the proof for online is the same except we need to say a little about patching colorings of two subgraphs together; specifically, we need the Cut Lemma from Schauz \cite{schauz2009mr}.
+
+\begin{BrooksTheoremOnline}
+	Every graph $G$ with $\ch(G) = \Delta(G) + 1 \geq 4$ contains $K_{\Delta(G) + 1}$.
+\end{BrooksTheoremOnline}
+\begin{proof}
+	Suppose not and let $G$ be a minimum counterexample.  Then $\ch(G - v) \le \Delta(G)$ for all $v \in V(G)$. In particular, $G$ is $\Delta(G)$-regular.  Let $f(v) = d_G(v)$ for $v \in V(G)$. By Brooks' Theorem for Independence Number, $G$ has an independent set $A$ with $|A| \ge \frac{|G|}{\Delta(G)}$.  But then $\size{A, G-A} = |A|\Delta(G) \ge |G| = \sum_{v \in V(Q)} d_G(v) + 1 - f(v)$.  By Magic Lemma, $G$ has a nonempty induced subgraph $H$ that is $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v) = d_H(v)$ for $v \in V(H)$. For any list assignment $L$ on $G$ with $L(v) = \Delta(G)$ for all $v \in V(G)$, we $L$-color $G-H$ using minimality of $G$.  Each $v \in V(H)$ loses at most $d_G(v) - d_H(v)$ colors on neighbors in $G-H$ and hence has a list of at least $d_H(v)$ colors remaining.  But $H$ is $f_H$-choosable, so we can complete the $\Delta(G)$-coloring to $H$, a contradiction.
+\end{proof}
+
+\section{Online choosability of triangle-free graphs}
+Let $\mic(G)$ be the maximum of $\sum_{v \in I} d_G(v)$ over all independent sets $I$ of $G$. We can get a reasonably good lower bound on $\mic(G)$ for triangle-free graphs using a simple probabilistic technique of Shearer and its modification by Alon (see \cite{alon2004probabilistic}). We write $\lg(x)$ for the base $2$ logarithm of $x$.  
+\begin{lem}\label{triangle-free-mic}
+If $G$ is a triangle-free graph, then $\mic(G) \ge \frac14 \sum_{v\in V(G)} \lg(d(v))$.
+\end{lem}
+\begin{proof}
+Let $W$ be a random independent set in $G$ chosen uniformly from all independent sets in $G$.  For each $v \in V(G)$ put $X_v \DefinedAs d(v)\card{\set{v} \cap W} + \card{N(v) \cap W}$.
+We claim that $E(X_v) \ge \frac12 \lg(d(v))$.  This implies the lemma since by linearity of expectation $2\mic(G) \ge E\parens{\sum_{v \in V(G)} X_v} \ge \frac12 \sum_{v\in V(G)} \lg(d(v))$.
+
+To prove the claim, let $H$ be the subgraph of $G$ induced on $V(G) - \parens{N(v) \cup \set{v}}$, fix an independent set $S$ in $H$ and let $X$ be the set of all nonneighbors of $S$ in $N(v)$.  Put $x \DefinedAs |X|$.  It will suffice to bound the conditional expectation for each possible $S$ as follows:
+
+\[E\parens{X_v \mid W \cap V(H) = S} \ge \frac{\lg(d(v))}{2}.\]
+
+For each $S$, there are exactly $2^x + 1$ possibilities for $W$ and we see that the conditional expectation is exactly $\frac{d(v) + x2^{x-1}}{2^x + 1}$.  Suppose this is less than $\frac{\lg(d(v))}{2}$ for some $x$.
+Then $2^x\parens{\frac{\lg(d(v))}{2} - \frac{x}{2}} > d(v) - \frac{\lg(d(v))}{2}$. Put $t \DefinedAs \lg(d(v)) - x$.  We have $\frac{td(v)}{2^{t+1}} = \frac{d(v)}{2^t}\parens{\frac{\lg(d(v))}{2} - \frac{\lg(d(v)) - t}{2}} > d(v) - \frac{\lg(d(v))}{2} > \frac{d(v)}{2}$ and hence $\frac{t}{2^t} > 1$, a contradiction.
+\end{proof}
+
+\begin{thm}\label{triangle-free-chooooser}
+	Let $G$ be a triangle-free graph and define $\func{f}{V(G)}{\IN}$ by $f(v) \DefinedAs d_G(v) + 1 - \floor{\frac14 \lg(d_G(v))}$.  Then $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.
+\end{thm}
+\begin{proof}
+	Immediate upon applying Magic Lemma to $G$ since 
+	\[\sum_{v \in V(G)} d_G(v) + 1 - f(v) = \sum_{v \in V(G)} \floor{\frac14 \lg(d_G(v))} \le \mic(G).\]
+\end{proof}
+
+\begin{cor}\label{tricolor}
+	If $G$ is a triangle-free graph with $\Delta(G) \le t$ for some $t \in \IN$, then $G$ is online $\parens{t + 1 - \floor{\frac14 \lg(t)}}$-choosable.
+\end{cor}
+\begin{proof}
+	Suppose not and choose a counterexample $G$ and $t \in \IN$ so as to minimize $\card{G}$.  Put $f(v) \DefinedAs d_G(v) + 1 - \floor{\frac14 \lg(d_G(v))}$.  By Theorem \ref{triangle-free-chooooser}, $G$ has a nonempty induced subgraph $H$ that is online $f_H$-choosable where $f_H(v) \DefinedAs f(v) + d_H(v) - d_G(v)$ for $v \in V(H)$.  Since $t + 1 - \floor{\frac14 \lg(t)} \ge d_G(v) + 1 - \floor{\frac14 \lg(d_G(v))}$ for all $v \in V(G)$, we have that $H$ is $g(v)$-choosable where $g(v) \DefinedAs t + 1 - \floor{\frac14 \lg(t)} + d_H(v) - d_G(v)$.  Now applying minimality of $\card{G}$ and the Cut Lemma from Schauz \cite{schauz2009mr} gives a contradiction.
+\end{proof}
+
+The best known bounds for the chromatic number of triangle-free graphs are Kostochka's upper bound of $\frac23 \Delta + 2$ in \cite{KostochkaTriangleFree} (see \cite{rabern2010destroying} for a proof in English) for small $\Delta$ and Johansson's upper bound of $\frac{9\Delta}{\ln(\Delta)}$ for large $\Delta$.  Johansson's proof also works for list coloring, but not for online list coloring.  To the best of our knowledge Corollary \ref{tricolor} is the best known upper bound for online list colorings of triangle-free graphs.  Additionally, Corollary \ref{tricolor} improves on Johansson's bound for list coloring for $\Delta \le 8000$.  The bound can surely be improved by a more complicated computation of $\mic(G)$, but not beyond around $\Delta + 1 - \floor{2\ln(\Delta)}$ via this method as can be seen by examples of triangle-free graphs with independence number near $\frac{2\ln(\Delta)}{\Delta}n$.
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 

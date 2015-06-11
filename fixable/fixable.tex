@@ -248,9 +248,21 @@ In \cite{HallGame}, the second author proved that superabundance is also a suffi
 When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem, we reproduce the proof for the special case of edge-coloring.
 
 \begin{thm}\label{FixabilityOfStars}
-If $G$ is a multistar, then $G$ is $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+If $G$ is a multistar, then $G$ is weakly $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{thm}
 \begin{proof}
+	Our strategy is simply to increase $\eta_L(G)$ if we can; if we cannot, then Hall's theorem allows us to reduce to a smaller graph.  An easy way to describe this strategy is via a double induction as follows. Suppose the theorem is false and choose a counterexample $(G, L)$ minimizing $\size{G}$ and subject to that maximizing $\eta_L(G)$.  
+	
+	Let $z$ be the center of the multistar $G$. Create a bipartite graph $B$ with parts $U = \setb{zw}{E(G)}{L(z) \cap L(w) \ne \emptyset}$ and $Y \DefinedAs \setb{\alpha}{\pot(L)}{\nu(G_\alpha) = 1}$, where $zw \in U$ is adjacent to
+	$\alpha \in Y$ if and only if $\alpha \in L(z) \cap L(w)$. Informally, $Y$ is
+	the set of colors $\alpha$ that can be used on at least one edge, and $U$ is
+	the set of edges $e$ with at least one color available on $e$, and a
+	color $\alpha$ is adjacent to an edge $e$ if $\alpha$ can be used on $e$.
+	
+	First, suppose $|Y| < \size{G}$.  Since $|L(z)| \ge d_G(z) = \size{G}$ , we have $\tau \in L(z)$ with $\nu(G_{L, \tau}) = 0$.  Suppose there is $\beta \in Y$ such that $\card{N_B(\beta)} \ge 3$.  Pick $zw \in N_B(\beta)$.  
+	Since $G$ is not $L$-fixable, there is $X \subseteq S_{L, \tau, \beta}$ with $|X| \le 2$ and $w \in X$ such that $G$ not $L'$-fixable where $L'$ is formed from $L$ by swapping $\tau$ and $\beta$ in $L(v)$ for every $v \in X$.  Since $\card{N_B(\beta)} \ge 3$, we have $\nu(G_{L', \beta}) = 1$ and $\nu(G_{L', \tau}) = 1$ and thus $\eta_{L'}(G) > \eta_L(G)$.  Since $(G,L')$ is still superabundant, this violates maximality of $\eta_L(G)$.  Hence, we must have $\card{N_B(\beta)} \le 2$ for each $\beta \in Y$.  So, each color in $Y$ contributes at most one to $\psi_L(G)$.  Since $|Y| < \size{G} \le \psi_L(G)$, there must be $\gamma \not \in Y$ such that $|G_\gamma - z| \ge 2$.  Since $G$ is not $L$-fixable, there is $X \subseteq S_{L, \tau, \gamma}$ with $|X| \le 2$ and $z \in X$ such that $G$ is not $L'$-fixable where $L'$ is formed from $L$ by swapping $\tau$ and $\gamma$ in $L(v)$ for every $v \in X$.  Since $\nu(G_{L, \tau}) = 0$ and $\nu(G_{L, \gamma}) = 0$ and $\nu(G_{L, \gamma}) = 1$, we have $\eta_{L'}(G) > \eta_L(G)$. Since $(G,L')$ is still superabundant, this violates maximality of $\eta_L(G)$.
+	
+	Hence we must have $|Y| \ge \size{G}$.  In particular, $\card{N_B(Y)} \le |Y|$ so we may choose $\emptyset \ne C \subseteq Y$ minimal such that $\card{N_B(C)} \le |C|$. We claim that $\card{N_B(C)} = |C|$ and there is a perfect matching $M$ of $C$ into $N_B(C)$.  Since $\card{N_B(C)} \ge 1$, this is true if $|C| = 1$.  Otherwise, for any $\tau \in C$, minimality of $C$ shows that $\card{N_B(C \setminus \set{\tau})} > |C| - 1$. Hence $\card{N_B(C)} = |C|$ and Hall's theorem gives the desired perfect matching of $C$ into $N_B(C)$.  For each $\set{zw, \alpha} \in M$, use color $\alpha$ on edge $zw$.  Form $G'$ from $G$ by removing all the colored edges and then discarding any isolated vertices. For $v \in V(G')$, let $L'(v) = L(v) \setminus C$.  Since $G$ is not $L$-fixable and $C$ and $\pot(L')$ are disjoint it must be that $G'$ is not $L'$-fixable.  Since each vertex lost exactly one color from its list for each incident edge we have $|L'(v)| \ge d_{G'}(v)$ for all $v \in V(G')$.  Also, for each $H \subseteq G'$, we have $\psi_{L'}(H) = \psi_{L}(H) - (\size{G[V(H)]} - \size{H}) \ge \size{G[V(H)]} - (\size{G[V(H)]} - \size{H}) = \size{H}$ since $H$ is abundant.  But $\size{G'} < \size{G}$, so by minimality of $\size{G}$, $G'$ is $L'$-fixable, a contradiction.
 \end{proof}
 
 \subsection{Kierstead-Tashkinov-Vizing assignments}

@@ -110,10 +110,61 @@
 
 \begin{document}
 \title{Edge-coloring via fixable subgraphs}
-\author{Dan and landon}
+\author{Daniel W. Cranston\thanks{Department of Mathematics and Applied
+Mathematics, Viriginia Commonwealth University, Richmond, VA;
+\texttt{dcranston@vcu.edu}; 
+Research of the first author is partially supported by NSA Grant
+98230-15-1-0013.}
+\and
+Landon Rabern\thanks{LBD Data Solutions, Lancaster, PA;
+\texttt{landon.rabern@gmail.com}}
+}
 \maketitle
 
+\begin{abstract}
+We give a general framework for showing that graphs are reducible for edge-coloring.  A particular form of reducibility, called \emph{fixability}, can be considered without reference to a containing graph.  This has two key benefits: (i) we can now formulate necessary conditions for fixability, and (ii) the problem of fixability is easy for a computer to solve. The necessary condition of \emph{superabundance} is sufficient for multistars and we conjecture that it is for trees as well (this would generalize the technique of Tashkinov trees). The computer has generated thousands of reducible configurations, but we have short proofs for only a small fraction of these.  The computer is able to generate \LaTeX\ code for its proofs, but they are not very enlightening and can run thousands of pages long.  We give examples of how to use some of these reducible configurations to prove conjectures on edge-coloring for small maximum degree.  Our hope is that bringing more minds into contact with these ideas will spur development of methods for humans to understand what the computer already knows.
+\end{abstract}
+
 \section{Introduction}
+Suppose we want to $k$-color a graph $G$. If we already have a $k$-coloring of
+an induced subgraph $H$ of $G$, we might try to extend this coloring to all of
+$G$.  We can view this task as the problem of trying to list color $G-H$, where
+each vertex $v$ in $G-H$ gets a list of colors formed from $\set{1, \ldots, k}$
+by removing all of the colors used on $N(v)$ in $H$.  
+Such list coloring problems have proved interesting in their own right, outside the
+context of completing partial colorings.
+In many situations we cannot complete just any $k$-coloring of $H$ to all of
+$G$.  Instead, we may need to modify the $k$-coloring of $H$ to get a coloring
+we can extend.  Given rules for how we are allowed to modify the $k$-coloring
+of $H$, we can recast the task of modifying the $k$-coloring and then
+completing it to $G$ as the problem of trying to list color $G-H$ where each
+vertex gets a list as before, but now we are allowed to modify these lists in a
+prescribed manner.  Studying such list coloring/modifying problems in their own
+right has also proved useful.  
+
+As an example of this paradigm,
+the second author proved \cite{HallGame} 
+a common generalization of Hall's marriage theorem and Vizing's theorem on
+edge-coloring.  The present paper will generalize a
+special case of this result and put it into a broader context.  An interesting
+caveat arises when investigating this list coloring/modifying paradigm. 
+Since we often want to prove coloring results for all graphs having
+certain properties and not just some fixed graph, we only have partial control
+over the outcome of a recoloring of $H$. For example, if we swap colors red and
+green in a component $C$ of the red-green subgraph (that is, we perform a Kempe
+change), we may succeed in making some desired vertex red,
+but if $C$ is somewhat arbitrary, we cannot precisely control what happens
+to the colors of the other vertices.  In the list modifying/coloring paradigm,
+we model this lack of control as a two-player game---we move by doing the part
+of the recoloring we desire and then the other player gets a turn to muck things up. 
+In the original context where we want to color $G$, the opponent is the graph
+$G$; more precisely, the embedding of $G-H$ in $G$ is one way to describe a
+strategy for the second player. The general paradigm that we described above is for vertex coloring.  In the
+rest of the paper, we consider only the special case that is edge-coloring (or,
+equivalently, vertex coloring line graphs).  
+
+Using this two-player game idea, we give a general framework for showing that graphs are reducible for edge-coloring.  A particular form of reducibility, called \emph{fixability}, can be considered without reference to a containing graph.  This has two key benefits: (i) we can now formulate necessary conditions for fixability and (ii) the problem of fixability is easy for a computer to solve. The necessary condition of \emph{superabundance} is sufficient for multistars and we conjecture that it is for trees as well (this would generalize the technique of Tashkinov trees). The computer has generated thousands of reducible configurations, but we have short proofs for only a small fraction of these.  The computer is able to generate \LaTeX\ code for its proofs, but they are not very enlightening and can run thousands of pages long.  We give examples of how to use some of these reducible configurations to prove conjectures on edge-coloring for small maximum degree.  Our hope is that bringing more minds into contact with these ideas will spur development of methods for humans to understand what the computer already knows.
+
 All multigraphs are loopless.  Let $G$ be a multigraph and $L$ a list assignment on $V(G)$ and $\pot(L) = \bigcup_{v\in V(G)} L(v)$. An \emph{$L$-pot} is a set $X$ containing $\pot(L)$. 
 An edge-coloring $\pi$ of $G$ such that $\pi(x) \in L(x) \cap L(y)$ for all $xy \in E(G)$ is called an \emph{$L$-edge-coloring}.
 
@@ -126,8 +177,7 @@ Kempe chains give a powerful technique for converting a partial $k$-edge-colorin
 Let $G$ be a multigraph, $L$ a list assignment on $V(G)$ and $P$ an arbitrary $L$-pot.  Throughout this section, $G$, $L$ and $P$ will refer to these objects.
 
 \subsection{Fixable graphs}
-
-For different colors $a,b \in P$, let $S_{L,a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{L,a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
+Thinking in terms of a two-player game is a good aid to intuition and we encourage the reader to continue doing so. However, a simple recursive definition is equivalent and has far less baggage. For different colors $a,b \in P$, let $S_{L,a,b}$ be all the vertices of $G$ that have exactly one of $a$ or $b$ in their list; more precisely, $S_{L,a,b} = \setb{v}{V(G)}{\card{\set{a,b} \cap L(v)} = 1}$.  
 
 \begin{defn}
 $G$ is \emph{$(L, P)$-fixable} if either
@@ -311,12 +361,20 @@ in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 \subsection{Impoved lower bound on the average degree of 3-critical graphs}
 \subsection{Impoved lower bound on the average degree of 4-critical graphs}
 \subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
-Let $\H_4$ denote the class of connected graphs with maximum degree 4, minimum
+For a graph $G$, let $G_\Delta$ be the subgraph of $G$ induced on vertices of degree $\Delta(G)$.  Vizing's Adjacency Lemma implies that $\delta(G_\Delta) \ge 2$ in a critical graph $G$.  A natural question is whether or not this is the best we can do.  For example, is it possible that $\Delta(G_\Delta) = 2$ in a critical graph $G$?  It turns out that it is and a conjecture of Hilton and Zhao says when exactly this can happen.  A graph $G$ is \emph{overfull} if $||G|| > \floor{\frac{|G|}{2}}\Delta(G)$.  Let $P^*$ be the Peterson graph with one vertex removed (ADD PICTURE).
+
+\begin{conjecture}[Hilton and Zhao]
+A connected graph $G$ with $\Delta(G_\Delta) \le 2$ is class 2 if and only if $G$ is $P^*$ or $G$ is overfull.
+\end{conjecture}
+
+David and Gianfranco Cariolaro proved this conjecture for the $\Delta=3$ case \cite{cariolaro2003colouring}.  Here we prove the $\Delta=4$ case, but do not include the very long computer generated proofs of the reducibility of the graphs in Figure~\ref{fig:hiltonzhao}.  Not all of the graphs in Figure~\ref{fig:hiltonzhao} are $4$-fixable; to prove reducibility of a graph $H$, we restrict the allowed list assignments on vertices to those from which all but one edge of $H$ can be colored.  Such a list assignment is called a \emph{nearly-colorable}.  Checking only the nearly-colorable assignments clearly suffices for reducibility.
+
+\input{pics}
+Since we do not include the reducibility proofs, we separate the proof into two parts.  The first does not use the computer at all.
+Let $\H_4$ be the class of connected graphs with maximum degree 4, minimum
 degree 3, each vertex adjacent to at least two 4-vertices, and each 4-vertex
 adjacent to exactly two 4-vertices.
-\input{pics}
-
-\begin{lem}
+\begin{lem}\label{HiltonZhaoLemma}
 	If $G$ is a graph in $\H_4$ and $G$ contains none of the four configurations in Figure~\ref{fig:hiltonzhao}
 	(not necessarily induced), then $G$ is $K_5-e$.
 \end{lem}
@@ -345,6 +403,16 @@ adjacent to exactly two 4-vertices.
 	If they have one 3-neighbor in common, then we have a copy of Figure~\ref{fig:hiltonzhao}(c).
 	Otherwise they have two 3-neighbors in common, so we have a copy of Figure~\ref{fig:hiltonzhao}(d).  
 \end{proof}
+
+Since $K_5 - e$ is overfull, the following implies Hilton and Zhao's conjecture for $\Delta=4$.
+\begin{thm}
+A connected graph $G$ with $\Delta(G) = 4$ and $\Delta(G_\Delta) \le 2$ is class 2 if and only if $G$ is $K_5-e$.
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  If $\chi'(G-xy) = 5$ for some $xy \in E(G)$, then by minimality of $\size{G}$ some component of $G-xy$ is $K_5-e$.  But this is impossible since then one of $x$ or $y$ has at least three $4$-neighbors.  Hence $G$ is critical. By computer, the graphs in Figure~\ref{fig:hiltonzhao} are reducible and thus $G$ satisfies the hypotheses of Lemma \ref{HiltonZhaoLemma}.  Therefore, $G$ is $K_5-e$, a contradiction.
+\end{proof}
+
+
 \section{Superabundance sufficiency and adjacency lemmas}
 	\begin{figure}[htb]
 		\centering

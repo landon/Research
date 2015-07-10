@@ -46,12 +46,13 @@
 \newtheorem{observation}{Observation}
 \newtheorem*{mainconj}{Main Conjecture}
 \newtheorem*{mainthm}{Main Theorem}
+\newtheorem*{problem}{Problem}
+\newtheorem{clm}{Claim}
 
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
-\newtheorem*{problem}{Problem}
 \newtheorem{example}{Example}
 \newtheorem*{question}{Question}
 
@@ -108,6 +109,11 @@
 %  may not work near page boundaries. 
 %
 \def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+
+\def\fr{\frac}
+\def\adj{\leftrightarrow}
+\def\ch{\textrm{ch}}
+
 
 \begin{document}
 \title{Edge-coloring via fixable subgraphs}
@@ -287,10 +293,11 @@ account for the fact that two-colored paths cannot cross (in particular, they ca
 Fixer-Breaker game, the choice of partition in (2) is forcing Breaker to choose
 two-colored paths in a way that is consistent with being embedded in
 \emph{some} graph.  For stars the two games have identical winning conditions
-because the obvious necessary condition is sufficient, but in general the extra
-power does make more graphs fixable.  It is more natural to phrase
+because the obvious necessary condition is sufficient.  It is more natural to phrase
 some proofs in terms of the following weakening of fixable.  
-Basically, we only allow flipping one Kempe chain at a time.
+Basically, we only allow flipping one Kempe chain at a time.  
+This weakening is still logically stronger than the direct generalization 
+of the Fixer-Breaker game since it takes into account the fact that two-colored paths cannot start at the same vertex.
 
 \begin{defn}
 $G$ is \emph{weakly $(L, P)$-fixable} if either
@@ -312,6 +319,12 @@ vertex $v \in S_{L,a,b}$ as in (2). Given a partition $X_1, \ldots, X_t$ of
 $S_{L,a,b}$ into sets of size at most two, let $i$ be the index with $v \in
 X_i$.  Then $J = \set{i}$ is the desired subset of $\irange{t}$.
 \end{proof}
+
+We have yet to find an example where weakly fixable is actually weaker.
+
+\begin{conjecture}
+	$G$ is $(L, P)$-fixable if and only if $G$ is weakly $(L, P)$-fixable.
+\end{conjecture}
 
 \subsection{Some examples}
 A graph $G$ is \emph{$\Delta$-edge-critical}, or simply \emph{edge-critical},
@@ -442,7 +455,7 @@ Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \
 In \cite{HallGame}, the second author proved that superabundance is also a
 sufficient condition for fixability when we restrict our graphs to be
 multistars.  This immediately implies the fan equation (a definition is
-available in \cite[p. 19ff]{stiebitz2012book}).  The proof uses Hall's theorem
+available in \cite[p. 19ff]{stiebitz2012graph}).  The proof uses Hall's theorem
 to reduce to a smaller star and one might hope we could do the same for
 arbitrary trees with Lemma \ref{MultiTreeHall} in place of Hall's theorem (thus
 giving a short proof that Tashkinov trees are elementary), but we haven't yet
@@ -528,13 +541,15 @@ But $\size{G'} < \size{G}$, so by minimality of $\size{G}$, $G'$ is
 $L'$-fixable, a contradiction.
 \end{proof}
 
+As shown in \cite{HallGame}, the \emph{fan equation} is a direct consequence of Theorem \ref{FixabilityOfStars}.  This, in turn, implies most classical edge-coloring results including Vizing's Adjacency Lemma.
+
 \subsection{Kierstead-Tashkinov-Vizing assignments}
 Many edge-coloring results have been proved using a specific kind of
 superabundant pair $(G, L)$ where superabundance can be proved via a special
 ordering. That is, the orderings given by the definition of Vizing fans,
 Kierstead paths, and Tashkinov trees (these structures are all standard tools in
 edge-coloring; defenitions and more background are available
-in~\cite{stiebitz2012book}).
+in~\cite{stiebitz2012graph}).
 %ADD REFERENCES; maybe \emph{Graph Edge
 %Coloring} or McDonald's Thesis).  
 In this section, we show how superabundance follows easily from these orderings.
@@ -581,14 +596,14 @@ $\psi_L(H)$, due to the color in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 
 \section{Applications of small k-fixable graphs}
 \subsection{Impoved lower bound on the average degree of 3-critical graphs}
-Let $P^*$ denote the Petersen graph with a vertex deleted.
+Let $P^*$ denote the Petersen graph with a vertex deleted (see Figure \ref{fig:petey}).
 Jakobsen~\cite{Jakobsen73,Jakobsen74} noted that $P^*$ is 3-critical and has
 average degree $2.\overline{6}$.  He showed that every 3-critical graph has average
 degree at least $2.\overline{6}$, and he asked whether equality holds only for $P^*$.
 In~\cite{3criticalCR}, we answered his question affirmatively.  More precisely,
 we showed that every 3-critical graph other than $P^*$ has average degree at
 least $2+\frac{26}{37}=2.\overline{702}$.  The proof crucially depends on the
-fact that the configuration in Figure~\ref{fig:reducible-trees}(a) is reducible.
+fact that the configurations in Figure~\ref{tree1-pic} are reducible.
 As we noted in~\cite{3criticalCR}, by using the computer to prove reducibility
 of additional configurations, we can strengthen this result.  Specifically,
 every 3-critical graph has average degree at least $2+\frac{22}{31} \approx
@@ -596,11 +611,1450 @@ every 3-critical graph has average degree at least $2+\frac{22}{31} \approx
 join of two copies of $P^*$.  (For comparison, there exists an infinite family of
 3-critical graphs with average degree less than $2.75$.)  This strengthening
 relies primarily on the fact that the configuration in
-Figure~\ref{fig:reducible-trees}(b) is reducible, even if one or more pairs of
+Figure~\ref{fig:bigtree} is reducible, even if one or more pairs of
 its 2-vertices are identified.  However, the simplest proof we have of this fact
-is computer-generated and fills about 100 pages. (ADD PICTURE).
+is computer-generated and fills about 100 pages.
 
+\begin{figure}[htb]
+	\begin{center}
+		\begin{tikzpicture}[scale = 6]
+		\tikzstyle{VertexStyle} = []
+		\tikzstyle{EdgeStyle} = []
+		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep =
+		1.2pt, draw, fill]
+		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.80, L = \tiny {}]{v0}
+		\Vertex[style = unlabeledStyle, x = 0.35, y = 0.75, L = \tiny {}]{v1}
+		\Vertex[style = unlabeledStyle, x = 0.30, y = 0.65, L = \tiny {}]{v2}
+		\Vertex[style = unlabeledStyle, x = 0.35, y = 0.55, L = \tiny {}]{v3}
+		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.50, L = \tiny {}]{v4}
+		\Vertex[style = unlabeledStyle, x = 0.55, y = 0.55, L = \tiny {}]{v5}
+		\Vertex[style = unlabeledStyle, x = 0.60, y = 0.65, L = \tiny {}]{v6}
+		\Vertex[style = unlabeledStyle, x = 0.55, y = 0.75, L = \tiny {}]{v7}
+		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.95, L = \tiny {}]{v8}
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+		%\Edge[bend left, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v2)
+		%\Edge[bend right, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v6)
+		\path [line width=1pt]
+		(v2) edge [bend left=35] (v8)
+		(v8) edge [bend left=35] (v6);
+		\end{tikzpicture}
+	\end{center}
+	\caption{The Peterson graph with one vertex removed.}
+	\label{fig:petey}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+		\begin{tikzpicture}[scale = 10]
+		\tikzstyle{VertexStyle} = []
+		\tikzstyle{EdgeStyle} = []
+		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+		\Vertex[style = labeledStyle, x = 0.45, y = 0.75, L = \small {$2$}]{v0}
+		\Vertex[style = labeledStyle, x = 0.45, y = 0.65, L = \small {$3$}]{v1}
+		\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$3$}]{v2}
+		\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$2$}]{v3}
+		\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$2$}]{v4}
+		\Vertex[style = labeledStyle, x = 0.65, y = 0.65, L = \small {$3$}]{v5}
+		\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$3$}]{v6}
+		\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$2$}]{v7}
+		\Edge[](v6)(v7)
+		\Edge[](v6)(v5)
+		\Edge[](v5)(v4)
+		\Edge[](v5)(v2)
+		\Edge[](v2)(v3)
+		\Edge[](v2)(v1)
+		\Edge[](v1)(v0)
+		\end{tikzpicture}
+		~~~
+		%\includegraphics[scale=.6]{tree1.png}
+		%\includegraphics[scale=.48]{umbrella.png}
+		\begin{tikzpicture}[scale = 10]
+		\tikzstyle{VertexStyle} = []
+		\tikzstyle{EdgeStyle} = []
+		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$2$}]{v0}
+		\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
+		\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v4}
+		\Edge[](v3)(v2)
+		\Edge[](v3)(v0)
+		\Edge[](v1)(v0)
+		\Edge[](v1)(v2)
+		\Edge[](v2)(v4)
+		\end{tikzpicture}
+		~~~
+		\begin{tikzpicture}[scale = 10]
+		\tikzstyle{VertexStyle} = []
+		\tikzstyle{EdgeStyle} = []
+		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$3$}]{v0}
+		\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
+		\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
+		\Vertex[style = labeledStyle, x = 0.70, y = 0.60, L = \small {$2$}]{v4}
+		\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v5}
+		\Vertex[style = labeledStyle, x = 0.50, y = 0.60, L = \small {$2$}]{v6}
+		\Edge[](v3)(v4)
+		\Edge[](v3)(v2)
+		\Edge[](v3)(v0)
+		\Edge[](v1)(v6)
+		\Edge[](v1)(v0)
+		\Edge[](v1)(v2)
+		\Edge[](v2)(v5)
+		\end{tikzpicture}
+	\end{center}
+	\caption{Three subgraphs forbidden from a 3-critical graph $G$. (The number at each
+		vertex specifies its degree in $G$.)}
+	\label{tree1-pic}
+	\label{umbrella-pic}
+	\label{jellyfish-pic}
+\end{figure}
+\begin{figure}[htb]
+	\begin{center}
+
+						\begin{tikzpicture}[scale = 10]
+						\tikzstyle{VertexStyle} = []
+						\tikzstyle{EdgeStyle} = []
+						\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+						\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+						\Vertex[style = labeledStyle, x = 0.699999988079071, y = 0.699999988079071, L = \tiny {$3$}]{v0}
+						\Vertex[style = labeledStyle, x = 0.800000011920929, y = 0.699999988079071, L = \tiny {$3$}]{v1}
+						\Vertex[style = labeledStyle, x = 0.899999976158142, y = 0.699999988079071, L = \tiny {$3$}]{v2}
+						\Vertex[style = labeledStyle, x = 0.800000011920929, y = 0.599999994039536, L = \tiny {$2$}]{v3}
+						\Vertex[style = labeledStyle, x = 0.699999988079071, y = 0.599999994039536, L = \tiny {$2$}]{v4}
+						\Vertex[style = labeledStyle, x = 0.899999976158142, y = 0.599999994039536, L = \tiny {$2$}]{v5}
+						\Vertex[style = labeledStyle, x = 0.300000011920929, y = 0.699999988079071, L = \tiny {$3$}]{v6}
+						\Vertex[style = labeledStyle, x = 0.400000005960464, y = 0.699999988079071, L = \tiny {$3$}]{v7}
+						\Vertex[style = labeledStyle, x = 0.5, y = 0.699999988079071, L = \tiny {$3$}]{v8}
+						\Vertex[style = labeledStyle, x = 0.300000011920929, y = 0.599999994039536, L = \tiny {$2$}]{v9}
+						\Vertex[style = labeledStyle, x = 0.5, y = 0.599999994039536, L = \tiny {$2$}]{v10}
+						\Vertex[style = labeledStyle, x = 0.400000005960464, y = 0.599999994039536, L = \tiny {$2$}]{v11}
+						\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.799999997019768, L = \tiny {$3$}]{v12}
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v10)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v0)
+						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v8)
+						\end{tikzpicture}
+				\caption{The big tree.}
+				\label{fig:bigtree}
+			\end{center}
+						\end{figure}
+\clearpage
 \subsection{Impoved lower bound on the average degree of 4-critical graphs}
+Here we prove the $\Delta=4$ case of Woodall's conjecture \cite{woodall2008average} on the average degree of a critical graph (modulo computer proofs of reducibility).
+
+\begin{thm}
+	If $G$ is an edge-critical graph with maximum degree $4$, then $G$ has average degree at least $3.6$.
+	This is best possible, as shown by $K_5-e$.
+\end{thm}
+\begin{proof}
+	We use discharging with initial charge $\ch(v)=d(v)$ and the following rules.
+	\begin{enumerate}
+		\item[(R1)] Each 2-vertex takes $.8$ from each 4-neighbor.
+		\item[(R2)] Each 3-vertex with three 4-neighbors takes $.2$ from each 4-neighbor.
+		Each 3-vertex with two 4-neighbors takes $.3$ from each 4-neighbor.
+		\item[(R3)] Each 4-vertex with charge in excess of $3.6$ after (R2) splits this
+		excess evenly among its 4-neighbors with charge less than $3.6$.
+	\end{enumerate}
+	
+	Now we show that every vertex $v$ finishes with $\ch^*(v)\ge 3.6$.
+	
+	By VAL, each neigbhor of a 2-vertex $v$ is a 4-neighbor.  Thus,
+	$\ch^*(v)=2+2(.8)=3.6$.
+	
+	By VAL, each 3-vertex $v$ has at least two 4-neighbors, so $\ch^*(v)=3+3(.2)$ or
+	$\ch^*(v)=3+2(.3)$.  In either case, $\ch^*(v)=3.6$.
+	
+	Now we consider a 4-vertex $v$.  Note that (R3) will never drop the charge of a
+	4-vertex below $3.6$; thus, in showing that $\ch^*(v)\ge 3.6$, we need not
+	consider (R3).
+	
+	\begin{clm}
+		Let $v$ be a 4-vertex with no 2-neighbor. 
+		If $v$ is not on a triangle with degrees 3,3,4, then $v$ finishes (R2) with
+		charge at least 3.6; otherwise $v$ finishes (R2) with charge 3.4.
+		\label{clm1}
+	\end{clm}
+	If $v$ has at most one 3-neighbor, then $v$ finishes (R2) with charge at least 3.7.
+	By VAL, $v$ has at most two 3-neighbors, so assume exactly two.  If each
+	receives charge $.2$ from $v$, then $v$ finishes (R3) with charge 3.6, as
+	desired.  Otherwise, some 3-neighbor of $v$ has its own 3-neighbor.  Now $G$ has
+	a path with degrees 3,4,3,3, which is (C\ref{fig:C2}), and hence reducible.  
+	Here we use that $v$ does not lie on a triangle with degrees 3,3,4.
+	
+	\begin{clm}
+		Let $v$ be a 4-vertex.  If $v$ has only 4-neighbors, then $v$ splits its excess
+		charge of .4 at most 2 ways in (R3) \emph{unless} every $3^-$-vertex within
+		distance two of $v$ is a 2-vertex; in that case $v$ may split its excess at most
+		3 ways in (R3).
+		\label{clm2}
+	\end{clm}
+	From the previous claim, we see that a 4-vertex needs charge after (R2) only if
+	it has a 2-neighbor or if it lies on a triangle with degrees 3,3,4.  To prove the
+	claim, we consider a 4-vertex $v$ with 4-neighbors $v_1,\ldots, v_4$ such that
+	at least three $v_i$ either have 2-neighbors or lie on triangles with degrees 3,3,4. 
+	
+	First suppose that at least two $v_i$ lie on triangles with degrees 3,3,4.
+	If two of these triangles are vertex disjoint, then we have (C\ref{fig:C5});
+	otherwise, we have (C\ref{fig:C6}).  So we conclude that at most one $v_i$ lies
+	on a triangle with degrees 3,3,4.  Assume that we have exactly one.
+	Now we have either (C\ref{fig:C7}) or (C\ref{fig:C8}).  Thus, we conclude that
+	no $v_i$ lies on a triangle with degree 3,3,4.  If each $v_i$ has a
+	2-neighbor, then we have (C\ref{fig:C9}), (C\ref{fig:C10}), or (C\ref{fig:C11}).
+	Thus, the claim is true.
+	
+	\begin{clm}
+		Every vertex other than a 4-vertex with a 2-neighbor finishes (R3) with at least 3.6.
+		\label{clm3}
+	\end{clm}
+	By Claim~\ref{clm1}, we need only consider a 4-vertex $v$ on a triangle with
+	degrees 3,3,4; call its 3-neighbors $u_1$ and $u_2$.
+	Since $v$ finishes (R2) with charge $3.4$, we must show that in
+	(R3) $v$ receives charge at least $.2$.  By Claim~\ref{clm2}, this is true if
+	$v$ has any 4-neighbor with no 3-neighbors (note that its 4-neighbors cannot
+	have 2-neighbors, since that yields (C\ref{fig:C12})).  Thus, we assume that each
+	4-neighbor of $v$, call them $u_3$ and $u_4$, has a 3-neighbor.  If $u_3$ or
+	$u_4$ has a 3-neighbor other than $u_1$ or $u_2$, then the configuration is
+	(C\ref{fig:C3}), which is reducible.  Thus, we may assume that $u_3$ is adjacent
+	to $u_1$ and $u_4$ is adjacent to $u_2$.  Hence, each of $u_3$ and $u_4$
+	finishes (R2) with charge $.1$.  It suffices to show that
+	all of this charge goes to $v$ in (R3).  Thus, we need only show that no other
+	neighbor of $u_3$ or $u_4$ needs charge after (R2).  If it does, then we have
+	the reducible configuration (C\ref{fig:C4}), where possibly the rightmost 3 is a
+	2.  Thus, $v$ finishes with charge $4-2(.3)+2(.1)=3.6$, as desired.
+	
+	\begin{clm}
+		Every 4-vertex on a triangle with degrees 2,4,4 finishes (R3) with at least 3.6.
+		\label{clm4}
+	\end{clm}
+	Let $v$ be a 4-vertex on a triangle with degrees 2,4,4, and let $v_1$ and $v_2$
+	be its 2-neighbor and 4-neighbor on the triangle.  Let $v_3$ and $v_4$ be its
+	other neighbors.  By VAL, $d(v_3)=d(v_4)=4$.  We will show that each of $v_3$
+	and $v_4$ has only 4-neighbors and that each gives at least .2 to $v$ in (R3).
+	If $v_3$ or $v_4$ has a $3^-$-neighbor, then we have (C\ref{fig:C13}) or
+	(C\ref{fig:C1}), which are
+	reducible; thus, each of $v_3$ and $v_4$ has only 4-neighbors.  By
+	Claim~\ref{clm2}, vertex $v_3$ splits its charge of .4 at most two ways (thus,
+	giving $v$ at least $.2$) unless it gives charge to exactly three of its
+	neighbors, each of which has a 2-neighbor.  If this is the case, then we have
+	(C\ref{fig:C14}), (C\ref{fig:C15}), or (C\ref{fig:C16}), each of which is
+	reducible.  Thus, $v_3$ splits its charge at most two ways, and so gives $v$
+	charge at least $.2$.  By the same argument, $v_4$ gives $v$ charge at least
+	$.2$.  Thus, $v$ finishes (R3) with charge at least $4-.8+2(.2)=3.6$.
+	\bigskip
+	
+	Now all that remains to consider is a 4-vertex $v$ with a 2-neighbor and three
+	4-neighbors $v_1$, $v_2$, $v_3$.  Further, we may assume that $v$ does not lie
+	on a triangle with degrees 2,4,4.  Also, we may assume that each $v_i$ has no
+	2-neighbor; since $v$ lies on no 2,4,4 triangle, this would yield a copy of
+	(C\ref{fig:C1}), which is reducible.
+	
+	\begin{clm}
+		If any $v_i$ has two or more 3-neighbors, then $v$ finishes with at least $3.6$.
+		\label{clm5}
+	\end{clm}
+	
+	Suppose that $v_1$ has two 3-neighbors (by VAL it can have no more).  First, we
+	note that neither $v_2$ nor $v_3$ has a 3-neighbor.  If it's distinct from those
+	of $v_1$, then we have (C\ref{fig:C23}); otherwise, we have (C\ref{fig:C24}).
+	%
+	Thus, each of $v_2$ and $v_3$ finishes (R2) with excess charge $.4$.  So, it
+	suffices to show that each of $v_2$ and $v_3$ splits its excess charge at most
+	two ways.  By Claim~\ref{clm2}, this is true unless $v_2$ (say) splits its
+	charge among three 4-neighbors, each of which has a 2-neighbor. If $v_2$ does
+	so, then we have (C\ref{fig:C25}), (C\ref{fig:C26}), or (C\ref{fig:C27}), each
+	of which is reducible.  Thus, $v$ finishes (R3) with charge at least
+	$4-.8+2(.2)=3.6$.
+	
+	\begin{clm}
+		If any $v_i$ has a 3-neighbor, which itself has a 3-neighbor, then $v$ finishes
+		with at least $3.6$.
+		\label{clm6}
+	\end{clm}
+	Assume that $v_1$ has a 3-neighbor, which itself has a 3-neighbor.
+	First, we note that neither $v_2$ nor $v_3$ has a 3-neighbor.
+	If so, then we have one of (C\ref{fig:C34}), (C\ref{fig:C35}), or
+	(C\ref{fig:C36}).
+	Thus, each of $v_2$ and $v_3$ finishes (R2) with excess charge $.4$.  So, it
+	suffices to show that each of $v_2$ and $v_3$ splits its excess charge at most
+	two ways.  By Claim~\ref{clm2}, this is true unless $v_2$ (say) splits its
+	charge among three 4-neighbors, each of which has a 2-neighbor. 
+	%
+	If $v_2$ does so, then we have 
+	(C\ref{fig:C37}), (C\ref{fig:C38}), or (C\ref{fig:C39}), each
+	of which is reducible.  
+	Thus, $v$ finishes (R3) with charge at least $4-.8+2(.2)=3.6$.
+	
+	\begin{clm}
+		If no $v_i$ has a 3-neighbor, then $v$ finishes with at least $3.6$.
+		\label{clm7}
+	\end{clm}
+	Since each $v_i$ has only 4-neighbors, it finishes (R2) with excess charge $.4$.
+	By Claim~\ref{clm2}, it splits this charge at most 3 ways.  Thus, $v$ finishes
+	with charge at least $4-.8+3(.4/3)=3.6$.
+	
+	\begin{clm}
+		If at least two vertices $v_i$ have 3-neighbors, then $v$ finishes with at least
+		$3.6$.
+	\end{clm}
+	Assume that $v_1$ and $v_2$ each have 3-neighbors.  By Claim~\ref{clm5}, each
+	has exactly one 3-neighbor.  By Claim~\ref{clm6}, the 3-neighbors of $v_1$ and
+	$v_2$ do not themselves have 3-neighbors.  Thus, each of $v_1$ and $v_2$
+	finishes (R2) with charge exactly $3.8$.  Hence, in (R3), each splits its
+	excess charge of $.2$ among its 4-neighbors that need charge.  We show that in
+	(R3) all of this charge goes to $v$.  Suppose, to the contrary, that $v_1$
+	sends some of its charge elsewhere; this could be to (i) a $4$-vertex with a
+	2-neighbor or (ii) a 4-vertex on a triangle with degrees 3,3,4.  In (i), we
+	have one of (C\ref{fig:C17})--(C\ref{fig:C20}).  In (ii), we have one of
+	(C\ref{fig:C21}) and (C\ref{fig:C22}).  All such configurations are reducible,
+	which proves the claim.
+	
+	\begin{clm}
+		If exactly one vertex $v_i$ has a 3-neighbor, then $v$ finishes with at least
+		$3.6$.
+	\end{clm}
+	Assume that $v_1$ has exactly one 3-neighbor (and $v_2$ and $v_3$ have no
+	3-neighbors), so $v_2$ and $v_3$ each finish (R2) with excess charge $.4$.
+	It suffices to show that either $v_2$ and $v_3$ each give $v$ at least half of
+	their charge in (R3) or else at least one of them gives $v$ all its charge in
+	(R3); assume not.  By symmetry, we assume that $v_2$ splits its charge at least
+	three ways in (R3) and $v_3$ splits its charge at least two ways.  If $v_3$
+	gives charge to a 4-vertex with a 2-neighbor (in addition to $v$), then we have
+	one of (C\ref{fig:C28})--(C\ref{fig:C32}).  So assume that $v_3$ gives charge to
+	a 4-vertex on a triangle with degrees 3,3,4.  By Claim~\ref{clm6}, neither of
+	these 3-vertices on the triangle is the 3-neighbor of $v_1$.  If we do not have
+	(C\ref{fig:C29}) or (C\ref{fig:C30}), then we must have (C\ref{fig:C33}), which
+	is reducible.  This proves the claim.
+\end{proof}
+
+%\setcounter{figure}{-1}
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.80, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.90, y = 0.80, L = \small {$2$}]{v3}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\end{tikzpicture}
+	\caption{(C1)
+		18 total boards: In increasing depths (14, 1, 1, 1, 1).\label{fig:C1}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.80, L = \small {$3$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.80, L = \small {$3$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.90, y = 0.80, L = \small {$3$}]{v3}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\end{tikzpicture}
+	\caption{(C2)
+		26 total boards: In increasing depths (22, 1, 1, 1, 1).\label{fig:C2}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.45, L = \small {$3$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.45, L = \small {$3$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.95, y = 0.60, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.05, y = 0.45, L = \small {$3$}]{v4}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\end{tikzpicture}
+	\caption{ (C3) 84 total boards: In increasing depths (52, 20, 6, 4, 2).\label{fig:C3}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.65, L = \small {$3$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.65, L = \small {$3$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.80, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.95, y = 0.80, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 1.05, y = 0.65, L = \small {$3$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\end{tikzpicture}
+	\caption{ (C4) 32 total boards: In increasing depths (22, 5, 2, 2, 1).\label{fig:C4}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.65, L = \small {$3$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.65, L = \small {$3$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.90, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.90, y = 0.80, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.65, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 1, y = 0.65, L = \small {$3$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\end{tikzpicture}
+	\caption{ (C5) 652 total boards: In increasing depths (578, 36, 32, 6).\label{fig:C5}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.55, L = \small {$3$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.55, L = \small {$2$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\end{tikzpicture}
+	\caption{ (C6)
+		72 total boards: In increasing depths (49, 20, 3).  \label{fig:C6}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$3$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.60, L = \small {$3$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\end{tikzpicture}
+	\caption{(C7) 3936 total boards: In increasing depths 
+		(2492, 750, 310, 266, 96, 14, 8).  \label{fig:C7}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$3$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.90, y = 0.70, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.90, y = 0.60, L = \small {$2$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\end{tikzpicture}
+	\caption{ (C8) 391 total boards:
+		In increasing depths (205, 163, 23).  \label{fig:C8}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.60, L = \small {$2$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.70, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$2$}]{v8}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\end{tikzpicture}
+	\caption{ (C9)
+		6546 total boards: In increasing depths (5277, 279, 282, 285, 186, 135, 81, 21).
+		\label{fig:C9}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.60, L = \small {$2$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.70, L = \small {$4$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+	\end{tikzpicture}
+	\caption{ (C10)
+		526 total boards: In increasing depths (429, 51, 28, 16, 2).
+		\label{fig:C10}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$2$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.70, L = \small {$4$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\end{tikzpicture}
+	\caption{ (C11)
+		41 total boards: In increasing depths (36, 5).
+		\label{fig:C11}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.70, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$3$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$3$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.60, L = \small {$2$}]{v4}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\end{tikzpicture}
+	\caption{ (C12)
+		55 total boards: In increasing depths (49, 4, 2).
+		\label{fig:C12}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.70, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$2$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.60, L = \small {$3$}]{v4}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\end{tikzpicture}
+	\caption{ (C13)
+		22 total boards: In increasing depths (18, 1, 1, 1, 1).
+		\label{fig:C13}}
+\end{figure}
+\clearpage
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.60, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.50, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.50, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\end{tikzpicture}
+	\caption{(C14)
+		1480 total boards: In increasing depths
+		(868, 178, 140, 160, 92, 14, 18, 10).
+		\label{fig:C14}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.45, y = 0.60, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.60, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.50, L = \small {$2$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.60, L = \small {$4$}]{v6}
+	
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\end{tikzpicture}
+	\caption{(C15) 114 total boards: In increasing depths (74, 28, 12).\label{fig:C15}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.70, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.70, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.80, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.60, L = \small {$2$}]{v5}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\end{tikzpicture}
+	\caption{(C16) 62 total boards: In increasing depths (44, 15, 3).
+		\label{fig:C16}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.90, L = \small {$2$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$3$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.90, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\end{tikzpicture}
+	\caption{(C17)
+		7124 total boards
+		In increasing depths (3648, 1081, 551, 579, 606, 448, 196, 15).\label{fig:C17}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.90, L = \small {$2$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v5}
+	%\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$3$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.90, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\end{tikzpicture}
+	\caption{(C18)
+		1094 total boards 
+		In increasing depths (570, 248, 131, 96, 43, 6).\label{fig:C18}}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.90, L = \small {$2$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.90, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$3$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\end{tikzpicture}
+	\caption{(C19) 534 total boards
+		In increasing depths (297, 162, 19, 15, 17, 9, 2, 2, 2, 2, 2, 2, 3).\label{fig:C19}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.799999997019768, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.899999998509884, L = \small {$2$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.799999997019768, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.899999998509884, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.699999988079071, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.699999988079071, L = \small {$3$}]{v5}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\end{tikzpicture}
+	\caption{(C20) 85 total boards
+		In increasing depths: (47, 27, 4, 4, 3).\label{fig:C20}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.80, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.90, L = \small {$2$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.80, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$4$}]{v3}
+	%\Vertex[style = labeledStyle, x = 0.40, y = 0.70, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.85, L = \small {$3$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.75, L = \small {$3$}]{v7}
+	%\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$3$}]{v8}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	%\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	%\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v4)
+	\end{tikzpicture}
+	\caption{(C21)
+		1406 total boards:
+		In increasing depths (790, 374, 188, 50, 4).\label{fig:C21}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.85, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.95, L = \small {$3$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.75, L = \small {$3$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.95, L = \small {$2$}]{v5}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\end{tikzpicture}
+	\caption{(C22) 
+		72 total boards: In increasing depths (57, 14, 1).\label{fig:C22}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.849999994039536, L = \small {$2$}]{v0}
+\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.75, L = \small {$4$}]{v1}
+\Vertex[style = labeledStyle, x = 0.5, y = 0.75, L = \small {$4$}]{v2}
+\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.650000005960464, L = \small {$4$}]{v3}
+\Vertex[style = labeledStyle, x = 0.649999976158142, y = 0.550000011920929, L = \small {$3$}]{v4}
+\Vertex[style = labeledStyle, x = 0.550000011920929, y = 0.550000011920929, L = \small {$3$}]{v5}
+\Vertex[style = labeledStyle, x = 0.400000005960464, y = 0.75, L = \small {$3$}]{v6}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v2)
+\end{tikzpicture}
+	\caption{(C23)
+		2230 total boards
+		In increasing depths (1158, 426, 267, 225, 100, 48, 6).\label{fig:C23}}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.849999994039536, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.5, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.650000005960464, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.649999976158142, y = 0.550000011920929, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.550000011920929, y = 0.550000011920929, L = \small {$3$}]{v5}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\end{tikzpicture}
+	\caption{(C24) 335 total boards
+		In increasing depths (182, 96, 44, 10, 2, 1).\label{fig:C24}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v2}
+	%\Vertex[style = labeledStyle, x = 0.85, y = 0.75, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v9}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$2$}]{v10}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v7)
+	%\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v9)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\end{tikzpicture}
+	\caption{(C25) 108416 total boards:
+		In increasing depths (58218, 17840, 12265, 10729, 5935, 2981, 422, 26).\label{fig:C25}}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v2}
+	%\Vertex[style = labeledStyle, x = 0.85, y = 0.75, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v9}
+	%\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$2$}]{v10}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v7)
+	%\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v9)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\end{tikzpicture}
+	\caption{(C26) 8022 total boards: 
+		In increasing depths (4703, 1877, 1022, 420).\label{fig:C26}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v2}
+	%\Vertex[style = labeledStyle, x = 0.85, y = 0.75, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v9}
+	%\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$2$}]{v10}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v7)
+	%\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v9)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\end{tikzpicture}
+	\caption{(C27) 8239 total boards:
+		In increasing depths (4666, 2373, 922, 270, 8).\label{fig:C27}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.75, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.65, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.75, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.85, L = \small {$2$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.65, L = \small {$2$}]{v9}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.75, L = \small {$4$}]{v10}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.85, L = \small {$2$}]{v11}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v2)
+	\end{tikzpicture}
+	\caption{(C28)
+		579808 total boards:
+		In increasing depths (292466, 64554, 28706, 24886, 24340, 23199, 23908, 26010,
+		25574, 23929, 15613, 5823, 792, 8).\label{fig:C28}}
+\end{figure}
+\clearpage
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.75, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.85, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\end{tikzpicture}
+	\caption{(C29) 1740 total boards:
+		In increasing depths (929, 301, 132, 152, 146, 58, 18, 4).\label{fig:C29}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.75, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.85, L = \small {$2$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\end{tikzpicture}
+	\caption{(C30) 1786 total boards: In increasing depths 
+		(925, 422, 107, 111, 99, 53, 24, 8, 6, 7, 7, 8, 9).\label{fig:C30}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.75, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.95, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.85, L = \small {$2$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.75, L = \small {$4$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.95, L = \small {$4$}]{v9}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v10}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\end{tikzpicture}
+	\caption{(C31) 
+		47540 total boards: In increasing depths 
+		(23949, 6503, 3553, 3446, 3507, 3148, 2287, 1007, 140).\label{fig:C31}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.85, L = \small {$2$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.75, L = \small {$4$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.75, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.65, L = \small {$4$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.60, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.75, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.50, y = 0.85, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.85, L = \small {$2$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.40, y = 0.65, L = \small {$2$}]{v9}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.85, L = \small {$4$}]{v10}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v0)
+	\end{tikzpicture}
+	\caption{(C32)
+		46132 total boards: In increasing depths
+		(23677, 8019, 3850, 3921, 3096, 2377, 998, 166, 28).\label{fig:C32}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.85, y = 0.75, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.95, y = 0.75, L = \small {$4$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.05, y = 0.80, L = \small {$3$}]{v9}
+	\Vertex[style = labeledStyle, x = 1.05, y = 0.70, L = \small {$3$}]{v10}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v10)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v8)
+	\end{tikzpicture}
+	
+	\caption{(C33)
+		134824 total boards: In increasing depths (66938, 19107, 11046, 9113, 8738,
+		8349, 7140, 3636, 737, 20).\label{fig:C33}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.649999976158142, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.849999994039536, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.650000005960464, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.699999988079071, y = 0.550000011920929, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.800000011920929, y = 0.550000011920929, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.550000011920929, y = 0.75, L = \small {$3$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\end{tikzpicture}
+	\caption{(C34)
+		3026 total boards:
+		%323 non-superabundant boards (none nearly colorable)
+		In increasing depth (1085, 380, 204, 147, 127, 143, 163, 145, 88, 90, 103, 28).
+		(This configuration is weird because there is no edge $e$ such that it works to
+		consider only near colorings for $G-e$; we need to go through a board that is a near coloring for a different missing edge.)
+		\label{fig:C34}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v5}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\end{tikzpicture}
+	\caption{(C35)
+		142 total boards: In increasing depth (86, 49, 7).\label{fig:C35}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v5}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\end{tikzpicture}
+	\caption{(C36)
+		328 total boards: In increasing depths (177, 50, 40, 41, 20).\label{fig:C36}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v8}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$2$}]{v9}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\end{tikzpicture}
+	\caption{(C37)
+		108416 total boards: In increasing depths (54806, 12342, 6708, 6450, 6737, 6436,
+		5975, 5109, 2990, 697, 114, 35, 17).\label{fig:C37}
+	}
+\end{figure}
+
+\begin{figure}
+	\centering
+	
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v8}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v8)
+	\end{tikzpicture}
+	
+	\caption{(C38)
+		8022 total boards: In increasing depths (4449, 1573, 796, 790, 388,
+		26).\label{fig:C38}
+	}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$4$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$4$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.85, L = \small {$2$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$4$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.70, y = 0.55, L = \small {$3$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.80, y = 0.55, L = \small {$3$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$4$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.65, y = 0.85, L = \small {$4$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.55, y = 0.85, L = \small {$2$}]{v8}
+	\Edge[label = \small {$e$}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v8)
+	\end{tikzpicture}
+	\caption{(C39) 8239 total boards: In increasing depths
+		(4424, 2063, 653, 628, 400, 69, 2).\label{fig:C39}
+	}
+\end{figure}
+\clearpage
 \subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
 For a graph $G$, let $G_\Delta$ be the subgraph of $G$ induced on vertices of
 degree $\Delta(G)$.  Vizing's Adjacency Lemma implies that $\delta(G_\Delta) \ge
@@ -609,7 +2063,7 @@ best possible.  For example, can we have $\Delta(G_\Delta) = 2$ in a
 critical graph $G$?  In fact, Hilton and Zhao have conjectured exactly when
 this can happen.  A graph $G$ is \emph{overfull} if $||G|| >
 \floor{\frac{|G|}{2}}\Delta(G)$.  Let $P^*$ be the Peterson graph with one
-vertex removed (ADD PICTURE).
+vertex removed (see Figure \ref{fig:petey}).
 
 \begin{conjecture}[Hilton and Zhao]
 A connected graph $G$ with $\Delta(G_\Delta) \le 2$ is class 2 if and only if
@@ -674,50 +2128,54 @@ show that $H\in \H_4$.
 A connected graph $G$ with $\Delta(G) = 4$ and $\Delta(G_\Delta) \le 2$ is
 class 2 if and only if $G$ is $K_5-e$.
 \end{thm}
-\begin{proof}
-Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  We will show
-that $G$ is edge-critical.  If not, then there exists an edge $xy$ such that
-$\chi'(G-xy)=5$, and further, there exists $H\subseteq G-xy$ such that $H$ is
-4-edge-critical.  Consider some vertex $v\in V(H)$ with an incident edge $e$ such
-that $e\in E(G)-E(H)$.  Vizing's Adjacency Lemma (VAL) implies that for every
-edge $wz\in E(H)$, vertex $w$ has at least $\max\{2,5-d(z)\}$ adjacent 4-vertices.
-If $d_H(v)=2$, then $v$ has two 4-neighbors; call one $z$. Since
-$\Delta(H_{\Delta})\le \Delta(G_{\Delta})=2$, edge $vz$ contradicts VAL.  Thus,
-$d_H(v)=3$.  Now $v$ has some 4-neighbor $z$ in $H$.  However, $z$ had only two
-4-neighbors in $G$, so has at most one 4-neighbor in $H$, which contradicts VAL.
-Thus, $\chi'(G-xy)\le 4$.  Since edge $xy$ was arbitrary, $G$ is 4-edge-critical.
+%\begin{proof}
+%Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  We will show
+%that $G$ is edge-critical.  If not, then there exists an edge $xy$ such that
+%$\chi'(G-xy)=5$, and further, there exists $H\subseteq G-xy$ such that $H$ is
+%4-edge-critical.  Consider some vertex $v\in V(H)$ with an incident edge $e$ such
+%that $e\in E(G)-E(H)$.  Vizing's Adjacency Lemma (VAL) implies that for every
+%edge $wz\in E(H)$, vertex $w$ has at least $\max\{2,5-d(z)\}$ adjacent 4-vertices.
+%If $d_H(v)=2$, then $v$ has two 4-neighbors; call one $z$. Since
+%$\Delta(H_{\Delta})\le \Delta(G_{\Delta})=2$, edge $vz$ contradicts VAL.  Thus,
+%$d_H(v)=3$.  Now $v$ has some 4-neighbor $z$ in $H$.  However, $z$ had only two
+%4-neighbors in $G$, so has at most one 4-neighbor in $H$, which contradicts VAL.
+%Thus, $\chi'(G-xy)\le 4$.  Since edge $xy$ was arbitrary, $G$ is 4-edge-critical.
+%
+%
+%Since $G$ is a counterexample, it is not $K_5-e$.  
+%Thus, Lemma \ref{HiltonZhaoLemma} implies that $G$ contains one of the 
+%configurations in Figure~\ref{fig:hiltonzhao}.  
+%%Since $G$ is 4-edge-critical,
+%By computer, each of these configurations %in Figure~\ref{fig:hiltonzhao} 
+%is reducible; thus, for each configuration there exists an edge $e$ such that
+%any 4-edge-coloring of $G-e$ can be extended (possibly after Kempe swaps) to
+%$G$.  Since $G$ is 4-edge-critical, we can indeed color $G-e$ for every edge $e$.
+%\end{proof}
+%
+%\bigskip
 
-%Choose an
-%arbitrary edge $xy\in E(G)$ and let $H=G-xy$.  We will show that $\chi'(H)\le
-%4$.  First, suppose that $\delta(H)\le 2$.  If the 2-vertex has a
-%$3^-$-neighbors, then $\chi'(H)\le 4$ by Vizing's Adjacency Lemma.  Otherwise,
-%the 2-vertex has a 4-neighbor, call it $v$.  Since $v$ has a 2-neighbor and at
-%most two 4-neighbors, again $\chi'(H)\le 4$ by Vizing's Adjacency Lemma.
-%First, we show that $H\in \H_4$.
-%If
-%$\chi'(G-xy) = 5$ for some $xy \in E(G)$, then by minimality of $\size{G}$ some
-%component of $G-xy$ is $K_5-e$.  But this is impossible since then one of $x$
-%or $y$ has at least three $4$-neighbors.  Hence $G$ is critical. 
-
-Since $G$ is a counterexample, it is not $K_5-e$.  
-Thus, Lemma \ref{HiltonZhaoLemma} implies that $G$ contains one of the 
-configurations in Figure~\ref{fig:hiltonzhao}.  
-%Since $G$ is 4-edge-critical,
-By computer, each of these configurations %in Figure~\ref{fig:hiltonzhao} 
-is reducible; thus, for each configuration there exists an edge $e$ such that
-any 4-edge-coloring of $G-e$ can be extended (possibly after Kempe swaps) to
-$G$.  Since $G$ is 4-edge-critical, we can indeed color $G-e$ for every edge $e$.
-\end{proof}
-
-\bigskip
-
-\begin{proof}[alternate proof]
-Suppose $G$ is class $2$.  Then $G$ has a $4$-critical subgraph $H$.   Since $H$ is $4$-critical, it is connected, has minimum degree $3$, and every vertex has at least two neighbors of degree $4$ by VAL.  Also, we have $\Delta(H_\Delta) \le \Delta(G_\Delta) \le 2$, so $H \in \H_4$.  By Lemma \ref{HiltonZhaoLemma} either $H$ is $K_5-e$ or $H$ contains one of the 
-configurations in Figure~\ref{fig:hiltonzhao}.  By computer, each of these configurations is reducible and hence cannot be a subgraph of the $4$-critical graph $H$.  Thus $H$ is $K_5-e$.  Let $x_1,x_2$ be the degree $3$ vertices in $H$.  Then $x_i$ has three degree $4$ neighbors in $H$ and hence $d_G(x_i) \le 3$ since $\Delta(G_\Delta) \le 2$.  That is, $x_i$ has no neighbors outside $H$.  Since $G$ is connected we must have $G = H = K_5 - e$. 
+\begin{proof} %[alternate proof]
+Let $G$ be as stated in the theorem.
+If $G$ is class $2$, then $G$ has a $4$-critical subgraph $H$.   Since
+$H$ is $4$-critical, it is connected, 
+and every vertex has at least two neighbors of degree $4$, by VAL.  
+Further, since $\Delta(H_\Delta) \le \Delta(G_\Delta) \le 2$, VAL implies
+that $H$ has minimum degree $3$. 
+Thus, $H \in \H_4$.  By Lemma \ref{HiltonZhaoLemma}, 
+either $H$ is $K_5-e$ or $H$ contains one of
+the configurations in Figure~\ref{fig:hiltonzhao}.  By computer, each of these
+configurations is reducible and hence cannot be a subgraph of the $4$-critical
+graph $H$.  Thus $H$ is $K_5-e$.  Let $x_1,x_2$ be the degree $3$ vertices in
+$H$.  Then $x_i$ has three degree $4$ neighbors in $H$ and hence $d_G(x_i) \le
+3$ since $\Delta(G_\Delta) \le 2$.  That is, $x_i$ has no neighbors outside
+$H$.  Since $G$ is connected we must have $G = H = K_5 - e$. 
 \end{proof}
 
 
 \section{Superabundance sufficiency and adjacency lemmas}
+In the previous sections, we studied $k$-fixable graphs which are reducible configurations for graphs with fixed maximum degree.  Here we study a more general notion that behaves similarly to Vizing Fans, Kierstead Paths and Tashkinov Trees.  
+Specifically, we consider graphs that are fixable for all superabundant list assignments.  
+
 %\begin{comment}
 	\begin{figure}[htb]
 		\centering
@@ -731,12 +2189,16 @@ configurations in Figure~\ref{fig:hiltonzhao}.  By computer, each of these confi
 	
 	\begin{defn}
 		If $G$ is a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \ge d_G(v)$ for all $v \in V(G)$, then $G$ is $f$-fixable if $G$ is $(L, P)$-fixable for every $L$ with $|L(v)| \ge f(v)$ for all $v \in V(G)$ and every $L$-pot $P$ such that $(G,L)$ is superabundant.
+If a graph $G$ is $f$-fixable when $f(v)=d_G(v)$ for each $v$, then $G$ is
+\emph{degree-fixable}.
 	\end{defn}
 	
-	For example, Lemma \ref{FixabilityOfStars} shows that multistars are $d_G$-fixable.  We have also found that the $4$-cycle is $d_G$-fixable.
+	For example, Lemma \ref{FixabilityOfStars} shows that multistars are
+degree-fixable.  We have also found that the $4$-cycle is degree-fixable.
 	
 	\begin{problem}
-	Classify the degree-fixable multigraphs.  Really we are most interested in the containment minimal such multigraphs.
+	Classify the degree-fixable multigraphs (specifically, those that are
+containment minimal).
 	\end{problem} 
 	
 	Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$ for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we just write $d$ as in Figure \ref{fig:fixable3}.  
@@ -798,20 +2260,30 @@ superabundance formulation is that since there is no need for an ordering like
 with Tashkinov trees, we can easily formulate results about graphs with cycles.
  The most general thing we might think is true is the following.
 
-\begin{conjecture}[false]\label{MoonshineConjecture}
-	A multigraph $G$ is $f$-fixable if $f(v) > d_G(v)$ for all $v \in V(T)$.
+\input{goldberg}
+\begin{conjecture}[false]
+	A multigraph $G$ is $f$-fixable if $f(v) > d_G(v)$ for all $v \in V(G)$.
+	\label{MoonshineConjecture}
 \end{conjecture}
 
 This is very strong and implies Goldberg's conjecture.  Unfortunately, it is false. 
-We can make a counterexample on a $5$-cycle. [SHOW HOW.  No change like $f(v) >
-d_G(v) + 100$ will help.] 
+We can make counterexamples on a $5$-cycle as in Figure \ref{fig:goldbergce}.
+
+\begin{problem}
+	Show that $C_5$ is not $f$-fixable for any $f$.
+\end{problem}
+
+We have more questions than answers around these conjectures.  For instance, what if we only look at nearly-colorable superabundant list assignments in Conjecture \ref{MoonshineConjecture}?  The resulting conjecture is also stronger than Goldberg's conjecture and at present, we have no counterexamples.
 	
 \subsection{Stars with one edge subdivided}
 The following conjecture would generalize the ``Short Kierstead Paths'' of Kostochka
-and Stiebitz~\cite{ShortPaths-KS}.  Parts (a) and (b) are special cases of
-Conjecture \ref{OneHighConjecture}.  We have a rough draft of a proof for part (a) and we suspect parts (b) and (c) will be similar, 
-but we are still hoping there is a clean proof, like the proof for stars.
-Using this we show how to obtain Conjecture \ref{StarWithOneEdgeSubdivided} a formula similar to the fan equation.
+and Stiebitz (see \cite{stiebitz2012graph}).  Parts (a) and (b) are special cases of
+Conjecture \ref{OneHighConjecture}.  We have a rough draft of a proof for part
+(a) and we suspect parts (b) and (c) will be similar, 
+but our draft is long and detailed, and we are still hoping to find a clean
+proof, like that for stars.
+Using this we show how to obtain Conjecture \ref{StarWithOneEdgeSubdivided} a
+formula similar to the fan equation.
 
 \begin{conjecture}\label{StarWithOneEdgeSubdivided}
 Let $G$ be a star with one edge subdivided, where $r$ is the center of the
@@ -825,7 +2297,7 @@ $v \in V(G)$, then $G$ is $L$-fixable if at least one of the following holds:
 \end{enumerate}
 \end{conjecture}
 
-Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G
+For a graph $H$ and $v \in V(H)$, let $E_H(v)$ be the edges incident to $v$ in $H$. Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G
 \subseteq Q$.  For a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$, let
 $L_\pi(v) = \irange{\Delta(Q)} - \pi\parens{E_Q(v) - E(G)}$ for all $v \in
 V(G)$.  Graph $G$ is a \emph{$\Psi$-subgraph} of $Q$ if there is a
@@ -932,21 +2404,21 @@ gives the desired inequality.  If $rst$ induces a triangle, we lose one off the
 bound.  Conjecture \ref{StarWithOneEdgeSubdivided}(a,b) gives the final statement.
 \end{proof}
 
-Minor stuff to do
-\begin{enumerate}
-\item Define $E(v)$
-\item Change color of red vertices in pics, so text is legible
-\item By maximality, doesn't $G$ in Lemma 4.5 include \emph{every} edge incident
-to $r$, except for $rt$ if $rst$ induces a triangle?
-\item Section 4 needs clear organization.  The point of this section is not
-obvious.
-\end{enumerate}
+%Minor stuff to do
+%\begin{enumerate}
+%\item Define $E(v)$ %done
+%\item Change color of red vertices in pics, so text is legible. % not easy
+%\item By maximality, doesn't $G$ in Lemma 4.5 include \emph{every} edge incident
+%to $r$, except for $rt$ if $rst$ induces a triangle? % i think so, but the argument goes through the same, right?  i think the uniformity is good.
+%\item Section 4 needs clear organization.  The point of this section is not
+%obvious. % i added some introduction to the section to give context.
+%\end{enumerate}
 
-Major stuff to do
-\begin{enumerate}
-\item Prove parts (b) and (c) of Theorem 4.3
-\end{enumerate}
-
+%Major stuff to do
+%\begin{enumerate}
+%\item Prove parts (b) and (c) of Theorem 4.3 % turned into conjectures
+%\end{enumerate}
+%
 \section{The gap between fixability and reducibility}
 By abstracting away the containing graph, we may have lost some power in proving reducibility results. Surely we have when we only care about a certain class of graphs. For example, with planar graphs, not all Kempe path pairings are possible (if we add an edge for each pair, the resulting graph has to be planar).  But, possibly there are graphs that are reducible for all containing graphs but are not fixable.  We could strengthen ``fixable'' in various ways, but we have not yet found any need to do so.  There is one strengthening we should mention because it makes fixable more induction friendly.  
 

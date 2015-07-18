@@ -44,10 +44,12 @@
 \newreptheorem{cor}{Corollary}
 \newtheorem{prob}[thm]{Problem}
 \newtheorem{observation}{Observation}
+\newtheorem{obs}[observation]{Observation}
 \newtheorem*{mainconj}{Main Conjecture}
 \newtheorem*{mainthm}{Main Theorem}
-\newtheorem*{problem}{Problem}
+\newtheorem{problem}{Problem}
 \newtheorem{clm}{Claim}
+\newtheorem*{VAL}{Vizing's Adjacency Lemma (VAL)}
 
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
@@ -129,64 +131,82 @@ Landon Rabern\thanks{LBD Data Solutions, Lancaster, PA;
 \maketitle
 
 \begin{abstract}
-We give a general framework for showing that graphs are reducible for
+Many graph coloring proofs proceed by showing that a minimal counterexample to
+the theorem being proved cannot contain certain configurations, and then
+showing that each graph under consideration contains at least one such
+configuration; these configurations are called \emph{reducible} for that theorem.
+(A \emph{configuration} is a subgraph $H$, along with specified degrees
+$d_G(v)$ in the original graph $G$ for each vertex of $H$.)
+
+We give a general framework for showing that configurations are reducible for
 edge-coloring.  A particular form of reducibility, called \emph{fixability},
 can be considered without reference to a containing graph.  This has two key
 benefits: (i) we can now formulate necessary conditions for fixability, and
 (ii) the problem of fixability is easy for a computer to solve. The necessary
 condition of \emph{superabundance} is sufficient for multistars and we
 conjecture that it is sufficient for trees as well (this would generalize the
-technique of Tashkinov trees). Via computer, we can generate thousands of reducible
+powerful technique of Tashkinov trees). 
+
+Via computer, we can generate thousands of reducible
 configurations, but we have short proofs for only a small fraction of these. 
-The computer is able to write \LaTeX\ code for its proofs, but they are only
+The computer can write \LaTeX\ code for its proofs, but they are only
 marginally enlightening and can run thousands of pages long.  We give examples
 of how to use some of these reducible configurations to prove conjectures on
-edge-coloring for small maximum degree.  Our aim in writing this paper
+edge-coloring for small maximum degree.  Our aims in writing this paper
 %is that bringing more minds into contact with these ideas will 
-is to spur development of methods for humans to
-understand what the computer already knows.
+are 
+(i) to provide a common context for a variety of reducible configurations for
+edge-coloring and 
+(ii) to spur development of methods for humans to understand what the computer
+already knows.
 \end{abstract}
 
 \section{Introduction}
 Suppose we want to $k$-color a graph $G$. If we already have a $k$-coloring of
 an induced subgraph $H$ of $G$, we might try to extend this coloring to all of
-$G$.  We can view this task as the problem of list coloring $G-H$, where
-each vertex $v$ in $G-H$ gets a list of colors formed from $\set{1, \ldots, k}$
-by removing all colors used on $N(v)$ in $H$.  
-Such list coloring problems have proved interesting in their own right, outside the
-context of completing partial colorings.
-In many situations we cannot complete just any $k$-coloring of $H$ to all of
+$G$.  We can view this task as coloring $G-H$ from lists (this is called
+\emph{list-coloring}), where each vertex $v$ in $G-H$ gets a list of colors
+formed from $\set{1, \ldots, k}$ by removing all colors used on its
+neighborhood in $H$.  
+%Such list coloring problems have proved interesting in their own right, outside the
+%context of completing partial colorings.
+Often we cannot complete just any $k$-coloring of $H$ to all of
 $G$.  Instead, we may need to modify the $k$-coloring of $H$ to get a coloring
 we can extend.  Given rules for how we may modify the $k$-coloring
-of $H$, we can recast the task of modifying the $k$-coloring and then
-extending it to $G$ as the problem of list coloring $G-H$, where each
-vertex gets a list as before, but now we may modify these lists in a
-prescribed manner.  Studying such list coloring/modifying problems in their own
-right has also proved useful.  
+of $H$, we can view our original problem
+%recast the task of modifying the $k$-coloring and then extending it to $G$ 
+as the problem of list coloring $G-H$, where each
+vertex gets a list as before, but now we can modify these lists in certain ways.
+%prescribed manner.  
+%Studying such list coloring/modifying problems in their own
+%right has also proved useful.  
 
-As an example of this paradigm, the second author proved \cite{HallGame} 
+As an example of this approach, the second author proved \cite{HallGame} 
 a common generalization of Hall's marriage theorem and Vizing's theorem on
 edge-coloring.  The present paper generalizes a special case of this result and
-puts it into a broader context.  An interesting
-caveat arises when investigating this list coloring/modifying paradigm. 
+puts it into a broader context.  
+%An interesting caveat arises when investigating this list coloring/modifying
+%paradigm. 
 Since we often want to prove coloring results for all graphs having
-certain properties and not just some fixed graph, we only have partial control
+certain properties, and not just some fixed graph, we only have partial control
 over the outcome of a recoloring of $H$. For example, if we swap colors red and
 green in a component $C$ of the red-green subgraph (that is, we perform a Kempe
 change), we may succeed in making some desired vertex red,
 but if $C$ is somewhat arbitrary, we cannot precisely control what happens
-to the colors of the other vertices.  In the list modifying/coloring paradigm,
-we model this lack of control as a two-player game---we move by doing the part
-of the recoloring we desire and then the other player gets a turn to muck things up. 
-In the original context where we want to color $G$, the opponent is the graph
+to the colors of its other vertices.  %In the list modifying/coloring paradigm,
+We model this lack of control as a two-player game---we move by %doing the part
+recoloring a vertex as we desire and then the other player gets a turn to muck things up. 
+In the original context, where we want to color $G$, our opponent is the graph
 $G$; more precisely, the embedding of $G-H$ in $G$ is one way to describe a
-strategy for the second player. The general paradigm that we described above is for vertex coloring.  In the
-rest of the paper, we consider only the special case that is edge-coloring (or,
-equivalently, vertex coloring line graphs).  
+strategy for the second player. The general paradigm that we described above is
+for vertex coloring.  In the rest of the paper, we consider only the special
+case that is edge-coloring (or, equivalently, vertex coloring line graphs).  
 
-All multigraphs are loopless.  Let $G$ be a multigraph, $L$ a list
+All of our multigraphs are loopless.  Let $G$ be a multigraph, $L$ a list
 assignment on $V(G)$, and $\pot(L) = \bigcup_{v\in V(G)} L(v)$. An
-\emph{$L$-pot} is a set $X$ containing $\pot(L)$.  An \emph{$L$-edge-coloring}
+\emph{$L$-pot} is a set $X$ containing $\pot(L)$.  
+We typically let $P$ denote an arbitrary $L$-pot.  
+An \emph{$L$-edge-coloring}
 is an edge-coloring $\pi$ of $G$ such that $\pi(xy) \in L(x) \cap L(y)$ for all
 $xy \in E(G)$;  %An $L$-edge-coloring is \emph{proper} if 
 furthermore, we require $\pi(xy)\ne \pi(xz)$ for each vertex $x$ and distinct
@@ -204,16 +224,19 @@ $L_\pi$ be the list assignment on the vertices of $M_\pi$ given by
 $L_\pi(v) = \irange{k} - \setbs{\tau}{\pi(vx) = \tau \text{ for some edge  } vx \in E(M)}$. 
 
 Kempe chains give a powerful technique for converting a partial
-$k$-edge-coloring into a $k$-edge-coloring of the whole graph.  The idea is to repeatedly
-exchange colors on two-colored paths until $M_\pi$ has an edge-coloring $\zeta$
-such that $\zeta(xy) \in L_\zeta(x) \cap L_\zeta(y)$ for all $xy \in E(M_\pi)$.
- In this sense the original list assignment $L_\pi$ on $M_\pi$ is
-\emph{fixable}. In the next section, we give an abstract definition of this
-notion that frees us from the embedding in the ambient graph $M$.  As we will
-see, computers enjoy this new freedom.
+$k$-edge-coloring into a $k$-edge-coloring of the whole graph.  The idea is to
+repeatedly exchange colors on two-colored paths until the uncolored subgraph
+$M_\pi$ has an edge-coloring $\zeta$ from its lists, that is, such that
+$\zeta(xy) \in L_\zeta(x) \cap
+L_\zeta(y)$ for all $xy \in E(M_\pi)$.  (One advantage of considerng the special
+case that is edge-coloring is that every Kempe chain is either a path or an even
+cycle.) In this sense the original list
+assignment $L_\pi$ on $M_\pi$ is \emph{fixable}. In the next section, we give
+an abstract definition of this notion that frees us from the embedding in the
+containing graph $M$.  As we will see, computers enjoy this new freedom.
 
-Throughout this section, we let $G$ be a multigraph, $L$ a list assignment on
-$V(G)$, and $P$ an arbitrary $L$-pot.  
+%Throughout this section, we let $G$ be a multigraph, $L$ a list assignment on
+%$V(G)$, and $P$ an arbitrary $L$-pot.  
 %Throughout this section, $G$, $L$, and $P$ will refer to these objects.
 
 \subsection{Fixable graphs}
@@ -256,25 +279,27 @@ Choose a partial $k$-edge-coloring $\pi$ of $M$ such that $M_\pi$ is $(L_\pi,
 \irange{k})$-fixable. % minimizing $h_{M_\pi}\parens{L_\pi, \irange{k}}$. 
 If $h_{M_\pi}\parens{L_\pi, \irange{k}} = 0$, then (1) must hold for $M_\pi$
 and $L_\pi$; that is, $M_\pi$ has an edge-coloring $\zeta$ such that $\zeta(x)
-\in L_\pi(x) \cap L_\pi(y)$ for all $xy \in E(M_\pi)$.  This means that
+\in L_\pi(x) \cap L_\pi(y)$ for all $xy \in E(M_\pi)$.  Now 
 $\pi \cup \zeta$ is the desired $k$-edge-coloring of $M$.  
 
-So we may assume that $h_{M_\pi}\parens{L_\pi, \irange{k}} > 0$.  Let $a,b \in
-\irange{k}$ be a choice in (2) that leads to a tree of height
+So we may assume that $h_{M_\pi}\parens{L_\pi, \irange{k}} > 0$.  Choose colors
+$a,b \in \irange{k}$ to satisfy (2) and give a tree of height
 $h_{M_\pi}\parens{L_\pi, \irange{k}}$.  Let $H$ be the subgraph of $M$ induced
-on all edges $e$ with $\pi(e) \in \set{a,b}$.  Let $S$ be the vertices in
-$M_\pi$ with degree exactly one in $H$.  Consider the component $C_x$ in $H$
-for each $x \in S$.  We have $\card{V(C_x) \cap S} \in \set{1,2}$ and hence the
-components of $H$ give a partition $X_1, \ldots, X_t$ of $S$ into sets of size
-at most two.  Moreover, exchanging colors $a$ and $b$ on $C_x$ has the effect
-of swapping $a$ and $b$ in $L_\pi(v)$ for each $v \in V(C_x) \cap S$.  Hence we
-can achieve the needed swapping of colors in the lists in (2) by exchanging
+on all edges colored $a$ or $b$,
+%$e$ with $\pi(e) \in \set{a,b}$, 
+and let $S$ be the vertices in $M_\pi$ with degree exactly one in $H$.  
+For each $x \in S$, let $C_x$ be the component of $H$ containing $x$.
+Since $\card{V(C_x) \cap S} \in \set{1,2}$, the components of $H$ give a
+partition $X_1, \ldots, X_t$ of $S$ into sets of size
+at most two.  Further, exchanging colors $a$ and $b$ on $C_x$ has the effect
+of swapping $a$ and $b$ in $L_\pi(v)$ for each $v \in V(C_x) \cap S$.  So we
+achieve the needed swapping of colors in the lists in (2) by exchanging
 colors on the components of $H$.  
 
 By (2) there is $J \subseteq \irange{t}$ so
 that $M_\pi$ is $(L', \irange{k})$-fixable, where $L'$ is formed from $L_\pi$ by
 swapping $a$ and $b$ in $L_\pi(v)$ for every $v \in \bigcup_{i \in J} X_i$. 
-Furthermore, there is a $J$ such that $(L',[k])$ has height less than that of
+In fact, there is a $J$ such that $(L',[k])$ has height less than that of
 $(L,[k])$.
 %Choose such a $J$ that leads to a tree of height $h_{M_\pi}\parens{L_\pi,
 %\irange{k}}$.  
@@ -286,93 +311,122 @@ $\pi$ by performing the color exchanges to create $L'$ from $L_\pi$.
 By the induction hypothesis, $M$ is $k$-edge-colorable.
 \end{proof}
 
-The definition of $L$-fixable was originally motivated by generalizing 
-the Fixer-Breaker game in \cite{HallGame} from complete graphs to arbitrary graphs.  
-The direct generalization of that game gives us less power because it does not
-account for the fact that two-colored paths cannot cross (in particular, they cannot start at the same vertex).  Interpreted in the
-Fixer-Breaker game, the choice of partition in (2) is forcing Breaker to choose
-two-colored paths in a way that is consistent with being embedded in
-\emph{some} graph.  For stars the two games have identical winning conditions
-because the obvious necessary condition is sufficient.  It is more natural to phrase
-some proofs in terms of the following weakening of fixable.  
-Basically, we only allow flipping one Kempe chain at a time.  
-This weakening is still logically stronger than the direct generalization 
-of the Fixer-Breaker game since it takes into account the fact that two-colored paths cannot start at the same vertex.
+%The definition of $L$-fixable was originally motivated by generalizing the 
+%Fixer-Breaker 
+%game in \cite{HallGame} from complete graphs to arbitrary graphs.  
+%The direct generalization of that game gives us less power because it does not
+%account for the fact that 
+%Here we have more power because two-colored paths cannot cross (in particular,
+%they cannot start at the same vertex).  
+%Interpreted in the
+%Fixer-Breaker game, the choice of partition in (2) is forcing Breaker to choose
+%two-colored paths in a way that is consistent with being embedded in
+%\emph{some} graph.  For stars the two games have identical winning conditions
+%because the obvious necessary condition is sufficient.  
+%It is more natural to phrase
+%some proofs in terms of the following weakening of fixable.  
+%Basically, we only allow flipping one Kempe chain at a time.  
+%This weakening is still logically stronger than the direct generalization 
+%of the Fixer-Breaker game since it takes into account the fact that
+%two-colored paths cannot start at the same vertex.
 
-\begin{defn}
-$G$ is \emph{weakly $(L, P)$-fixable} if either
-\begin{enumerate}
-\item[(1)] $G$ has an $L$-edge-coloring; or
-\item[(2)] there are different colors $a,b \in P$ and some vertex $v \in S_{L,a,b}$ such
-that for every $X \subseteq S_{L,a,b}$ with $|X| \le 2$ and $v \in X$, it holds
-that $G$ is $(L', P)$-fixable where $L'$ is formed from $L$ by swapping $a$ and
-$b$ in $L(v)$ for every $v \in X$.
-\end{enumerate}
-\end{defn}
+%\begin{defn}
+%$G$ is \emph{weakly $(L, P)$-fixable} if either
+%\begin{enumerate}
+%\item[(1)] $G$ has an $L$-edge-coloring; or
+%\item[(2)] there are different colors $a,b \in P$ and some vertex $v \in S_{L,a,b}$ such
+%that for every $X \subseteq S_{L,a,b}$ with $|X| \le 2$ and $v \in X$, it holds
+%that $G$ is $(L', P)$-fixable where $L'$ is formed from $L$ by swapping $a$ and
+%$b$ in $L(v)$ for every $v \in X$.
+%\end{enumerate}
+%\end{defn}
 
-\begin{lem}\label{weaklyfixable}
-If $G$ is weakly $(L, P)$-fixable, then $G$ is $(L, P)$-fixable.
-\end{lem}
-\begin{proof}
-Clearly if (1) holds we are done.  So assume we have different colors $a,b \in P$ and
-vertex $v \in S_{L,a,b}$ as in (2). Given a partition $X_1, \ldots, X_t$ of
-$S_{L,a,b}$ into sets of size at most two, let $i$ be the index with $v \in
-X_i$.  Then $J = \set{i}$ is the desired subset of $\irange{t}$.
-\end{proof}
-
-We have yet to find an example where weakly fixable is actually weaker.
-
-\begin{conjecture}
-	$G$ is $(L, P)$-fixable if and only if $G$ is weakly $(L, P)$-fixable.
-\end{conjecture}
+%\begin{lem}\label{weaklyfixable}
+%If $G$ is weakly $(L, P)$-fixable, then $G$ is $(L, P)$-fixable.
+%\end{lem}
+%\begin{proof}
+%Clearly if (1) holds we are done.  So assume we have different colors $a,b \in P$ and
+%vertex $v \in S_{L,a,b}$ as in (2). Given a partition $X_1, \ldots, X_t$ of
+%$S_{L,a,b}$ into sets of size at most two, let $i$ be the index with $v \in
+%X_i$.  Then $J = \set{i}$ is the desired subset of $\irange{t}$.
+%\end{proof}
+%
+%We have yet to find an example where weakly fixable is actually weaker.
+%
+%\begin{conjecture}
+%	$G$ is $(L, P)$-fixable if and only if $G$ is weakly $(L, P)$-fixable.
+%\end{conjecture}
 
 \subsection{Some examples}
 A graph $G$ is \emph{$\Delta$-edge-critical}, or simply \emph{edge-critical},
-if $\chi'(G)>\Delta$, but $\chi'(G-e)\le\Delta$ for every edge $e$.  A
-configuration $H$ is \emph{reducible} if there exists an edge $e\in E(H)$ such
+if $\chi'(G)>\Delta$, but $\chi'(G-e)\le\Delta$ for every edge $e$.  
+A \emph{configuration} is a subgraph $H$, along with specified degrees $d_G(v)$
+in the original graph for each vertex of $H$. A configuration $H$ is
+\emph{reducible} if there exists an edge $e\in E(H)$ such
 that whenever $H$ appears as a subgraph (not necessarily induced) of a graph
-$G$, given any $\Delta$-edge-coloring of $G-e$, there exists a
-$\Delta$-edge-coloring of $G$.
-We'd like a way to talk about subgraphs being reducible for $k$-edge-coloring. 
+$G$, if $G-e$ has a $\Delta$-edge-coloring, then so does $G$.
+%given any $\Delta$-edge-coloring of $G-e$, there exists a
+%$\Delta$-edge-coloring of $G$.
+A central tool for proving reducibility for edge-coloring is Vizing's Adjacency
+Lemma.  For example, it yields a short proof of Vizing's Theorem that
+$\chi'(G)\le \Delta+1$ for every simple graph $G$.
+
+\begin{VAL}
+Let $G$ be a $\Delta$-critical graph.  If $xy\in E(G)$, then $x$ is adjacent to
+at least $\max\{2,\Delta-d(y)+1\}$ vertices of degree $\Delta$.
+\end{VAL}
+
+We can view VAL as giving conditions for the degrees of a vertex and its
+neighbors that yield a reducible configuration.  Our goal now is to prove
+similar statements for larger configurations; we'd like a way to talk about
+configurations being reducible for $k$-edge-coloring. 
 Lemma \ref{FixableCompletesColoring} gives us this with respect to a fixed
 partial $k$-edge-coloring $\pi$, but we want a condition independent of the
 particular coloring.  Note that we have a lower bound on the sizes of the lists
 in $L_\pi$; specifically, if $\pi$ is a partial $k$-edge-coloring of a
 multigraph $M$, then $|L_{\pi}(v)| \ge k + d_{M_\pi}(v) - d_M(v)$ for every $v
-\in M_{\pi}$. Using this lower bound, we get our desired condition as follows.
+\in M_{\pi}$. 
+%Using this lower bound, we get our desired condition as follows.
+This observation motivates the following defintion.
 
 \begin{defn}
-If $G$ is a graph and $\func{f}{V(G)}{\IN}$, then $G$ is $(f,k)$-fixable if $G$
-is $(L, \irange{k})$-fixable for every $L$ with $|L(v)| \ge k + d_{G}(v) -
-f(v)$ for all $v \in V(G)$.
+If $G$ is a graph and $\func{f}{V(G)}{\IN}$, then $G$ is \emph{$(f,k)$-fixable} 
+if $G$ is $(L, \irange{k})$-fixable for every $L$ with $|L(v)| \ge k + d_{G}(v)
+- f(v)$ for all $v \in V(G)$.
 \end{defn}
 
-By Lemma \ref{FixableCompletesColoring}, if $G$ is $(f,k)$-fixable, then $G$
-cannot be a subgraph of a $(k+1)$-edge-critical graph $M$ where $d_M(v) \le
-f(v)$ for all $v \in V(G)$.  
+This definition enables us to state our desired condition on reducible configurations for
+$k$-edge-coloring, which follows directly from Lemma \ref{FixableCompletesColoring}. 
+\begin{obs}
+If $G$ is $(f,k)$-fixable, then $G$ cannot be a subgraph of a
+$(k+1)$-edge-critical graph $M$ where $d_M(v) \le f(v)$ for all $v \in V(G)$.  
+\end{obs}
 Now we can talk about a graph $G$ with vertices labeled by $f$ being
-$k$-fixable or not.  The computer is extremely good at finding $k$-fixable
-graphs.  Combined with discharging arguments, this gives a powerful method for
-proving (modulo trusting the computer) edge-coloring results for small
-$\Delta$.  We'll see some examples of such proofs later, for now Figure
-\ref{fig:small3} shows some $3$-fixable graphs.  A gallery of hundreds more
-fixable graphs is available at
+$k$-fixable.  The computer is extremely good at finding $k$-fixable
+graphs.  Combined with discharging arguments\footnote{The discharging method is
+a counting technique commonly used in coloring proofs to show that the graph
+under consideration must contain a reducible configuration. For an introduction
+to this method,
+see~\cite{discharging13}.}, this gives a powerful method for proving (modulo
+trusting the computer) edge-coloring results for small $\Delta$.  We'll see
+some examples of such proofs later; for now Figure \ref{fig:small3} shows some
+$3$-fixable graphs.  A gallery of hundreds more fixable graphs is available at
 \url{https://dl.dropboxusercontent.com/u/8609833/Web/GraphData/Fixable/index.html}.
 
 
 %\begin{comment}
 	\begin{figure}[htb]
-		\includegraphics[scale=0.35]{Delta3TriangleFree/1[2,2].pdf}
-		\includegraphics[scale=0.35]{Delta3TriangleFree/1[3,1].pdf}
-		\includegraphics[scale=0.35]{Delta3TriangleFree/011[2,2,3].pdf}
-		\includegraphics[scale=0.35]{Delta3TriangleFree/0011011010[3,3,2,2,3].pdf}
-		\includegraphics[scale=0.35]{Delta3TriangleFree/000110011010010[3,3,2,2,3,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/001010011011000[3,3,2,2,3,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/001010011011000[3,3,3,2,2,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110011001000[3,3,2,2,3,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110111011000[3,3,3,2,3,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/001110111111000[3,3,3,3,3,3].pdf}
-     	\includegraphics[scale=0.35]{Delta3TriangleFree/0000110000101000110010001000[3,3,3,2,2,2,3,3].pdf}
+		\includegraphics[scale=0.25]{Delta3TriangleFree/1[2,2].pdf}
+		\includegraphics[scale=0.25]{Delta3TriangleFree/1[3,1].pdf}
+		\includegraphics[scale=0.25]{Delta3TriangleFree/011[2,2,3].pdf}
+		\includegraphics[scale=0.25]{Delta3TriangleFree/0011011010[3,3,2,2,3].pdf}
+		\includegraphics[scale=0.25]{Delta3TriangleFree/000110011010010[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/001010011011000[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/001010011011000[3,3,3,2,2,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/001110011001000[3,3,2,2,3,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/001110111011000[3,3,3,2,3,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/001110111111000[3,3,3,3,3,3].pdf}
+     	\includegraphics[scale=0.25]{Delta3TriangleFree/0000110000101000110010001000[3,3,3,2,2,2,3,3].pdf}
 		\caption{Some small $3$-fixable graphs.}
 		\label{fig:small3}
 		\end{figure}
@@ -383,65 +437,72 @@ general fact that a $k$-regular graph with $f(v) = k$ for all $v$ is $k$-fixable
 precisely when it is $k$-edge-colorable.  That the third graph in Figure
 \ref{fig:small3} is reducible follows from Vizing's Adjacency Lemma.
 \subsection{A necessary condition}
-Since the edges incident to a given vertex must all get different colors, we have the following.
-
-\begin{lem}\label{DegreeNecessaryCondition}
-If $G$ is $(L, P)$-fixable, then $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
-\end{lem}
-
-By considering the maximum size of matchings in each color, we get a more interesting necessary condition.
-For $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
+Since the edges incident to a vertex $v$ must all get different colors, 
+%we have the following.
+%
+%\begin{lem}\label{DegreeNecessaryCondition}
+if $G$ is $(L, P)$-fixable, then $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+%\end{lem}
+%
+By considering the maximum size of matchings in each color, we get a more
+interesting necessary condition.
+For each $C \subseteq \pot(L)$ and $H \subseteq G$, let $H_{L, C}$ be the
 subgraph of $H$ induced by the vertices $v$ with $L(v) \cap C \ne \emptyset$. 
-When $L$ is clear from context, we may write $H_C$ for $H_{L,C}$. If $C =
-\set{\alpha}$, we may write $H_\alpha$ for $H_C$.  For $H \subseteq G$, put
+When $L$ is clear from context, we write $H_C$ for $H_{L,C}$. If $C =
+\set{\alpha}$, we write $H_\alpha$ for $H_C$.  For $H \subseteq G$, let
 
 \[\psi_L(H) = \sum_{\alpha \in \pot(L)} \floor{\frac{\card{H_{L, \alpha}}}{2}}.\]
-
 Each term in the sum gives an upper bound on the size of a matching in color
 $\alpha$. So $\psi_L(H)$ is an upper bound on the number of edges in a
-partial $L$-edge-coloring of $H$.  We say that $(H, L)$ is \emph{abundant} if
-$\psi_L(H) \ge \size{H}$ and that $(G,L)$ is \emph{superabundant} if for every
+partial $L$-edge-coloring of $H$.  The pair $(H, L)$ is \emph{abundant} if
+$\psi_L(H) \ge \size{H}$ and $(G,L)$ is \emph{superabundant} if for every
 $H \subseteq G$, the pair $(H, L)$ is abundant.  
 
-\begin{lem}\label{SuperabundanceIsNecessary}
+\begin{lem}
+\label{SuperabundanceIsNecessary} 
 If $G$ is $(L, P)$-fixable, then $(G, L)$ is superabundant.
 \end{lem}
 \begin{proof}
-Suppose to the contrary that $G$ is $(L, P)$-fixable and there is $H \subseteq
+Suppose instead that $G$ is $(L, P)$-fixable and there is $H \subseteq
 G$ such that $(H, L)$ is not abundant. We show that for all distinct $a,b \in
 P$ there is a partition $X_1, \ldots, X_t$ of $S_{a,b}$ into sets of size at
 most two, such that for all $J \subseteq \irange{t}$, the pair $(H,L')$ is not
-abundant where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for
-every $v \in \bigcup_{i \in J} X_i$.  Since $G$ can never be edge-colored from
-a list assignment that is not superabundant, this contradicts the
-$(L,P)$-fixability of $G$.
+abundant, where $L'$ is formed from $L$ by swapping $a$ and $b$ in $L(v)$ for
+every $v \in \bigcup_{i \in J} X_i$.  Since $G$ can only be edge-colored from
+a superabundant list assignment, this contradicts that $G$ is $(L,P)$-fixable.
 
-Pick distinct colors $a,b \in P$.  Let $S = S_{L,a,b} \cap V(H)$ and let $S_a$ be the
-$v \in S$ with $a \in L(v)$.  Put $S_b = S\setminus S_a$.  Swapping $a$ and $b$
-will only effect the terms $\floor{\frac{\card{S_a}}{2}}$ and
-$\floor{\frac{\card{S_b}}{2}}$ in $\psi_L(H)$.  So, if $\psi_L(H)$ is increased
-by the swapping, it must be that both $|S_a|$ and $|S_b|$ are odd and after
+Pick distinct colors $a,b \in P$.  Let $S = S_{L,a,b} \cap V(H)$, let $S_a$ be the
+$v \in S$ with $a \in L(v)$, and let $S_b = S\setminus S_a$.  
+In the sum for $\psi_L(H)$, swapping $a$ and $b$ only effects the terms
+$\floor{\frac{\card{S_a}}{2}}$ and $\floor{\frac{\card{S_b}}{2}}$.
+So, if $\psi_L(H)$ is increased
+by the swapping, it must be that both $|S_a|$ and $|S_b|$ are odd, and after
 swapping they are both even.  Say $S_a = \set{a_1, \ldots,a_p}$ and $S_b =
-\set{b_1, \ldots,b_q}$.  By symmetry, we may assume $p \le q$.  For $i \in
-\irange{p}$, let $X_i = \set{a_i, b_i}$.  Since both $p$ and $q$ are odd, $q-p$
+\set{b_1, \ldots,b_q}$.  By symmetry, we assume $p \le q$.  For each $i \in
+\irange{p}$, let $X_i = \set{a_i, b_i}$.  Since $p$ and $q$ are both odd, $q-p$
 is even, so we get a partition by, for each $j \in \irange{\frac{q-p}{2}}$,
 letting $X_{p + j} = \set{b_{p + 2j - 1}, b_{p + 2j}}$.  For any $i \in
 \irange{p}$, swapping $a$ and $b$ in $L(v)$ for every $v \in X_i$ maintains
 $|S_a|$ and $|S_b|$.  For any $j \in \irange{\frac{q-p}{2}}$, swapping $a$ and
 $b$ in $L(v)$ for every $v \in X_{p+j}$ maintains the parity of $|S_a|$ and
-$|S_b|$.  So no choice of $J$ can increase $\psi_L(H)$ and hence $(H,L')$ is
+$|S_b|$.  So no choice of $J$ can increase $\psi_L(H)$. Thus, $(H,L')$ is
 never abundant.
 \end{proof}
 
-In particular, we have learned the following.
+In particular, we conclude the following.
 
 \begin{cor}
-	If $G$ is $(f,k)$-fixable, then $(G,L)$ is superabundant for every $L$ with $L(v) \subseteq \irange{k}$ and $|L(v)| \ge k + d_{G}(v) - f(v)$ for all $v \in V(G)$.
+If $G$ is $(f,k)$-fixable, then $(G,L)$ is superabundant for every $L$ with
+$L(v) \subseteq \irange{k}$ and $|L(v)| \ge k + d_{G}(v) - f(v)$ for all $v \in V(G)$.
 \end{cor}
 
-Intuitively, superabundance requires the potential for a large enough matching in each color. If instead we require the existence of a large enough matching in each color, we get a stronger condition that has been studied before. For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching of $H$. 
-For a list assignment $L$ on $H$, let $\eta_L(H) = \sum_{\alpha \in \pot(L)}
-\nu(H_\alpha)$.  Note that we always have $\psi_L(H) \ge \eta_L(H)$.
+Intuitively, superabundance requires the potential for a large enough matching
+in each color. If instead we require the existence of a large enough matching
+in each color, then we get a stronger condition that has been studied before.
+For a multigraph $H$, let $\nu(H)$ be the number of edges in a maximum matching
+of $H$.  For a list assignment $L$ on $H$, let 
+$$\eta_L(H) = \sum_{\alpha \in \pot(L)} \nu(H_\alpha).$$  
+Note that always $\psi_L(H) \ge \eta_L(H)$.
 
 The following generalization of Hall's theorem was proved by Marcotte and
 Seymour \cite{marcotte1990extending} and independently by Cropper,
@@ -449,65 +510,84 @@ Gy{\'a}rf{\'a}s, and Lehel \cite{cropper2003edge}.  By a \emph{multitree} we
 mean a tree that possibly has edges of multiplicity greater than one.
 
 \begin{lem}[Marcotte and Seymour]\label{MultiTreeHall}
-Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge \size{H}$ for all $H \subseteq T$, then $T$ has an $L$-edge-coloring.
+Let $T$ be a multitree and $L$ a list assignment on $V(T)$.  If $\eta_L(H) \ge
+\size{H}$ for all $H \subseteq T$, then $T$ has an $L$-edge-coloring.
 \end{lem}
 
-In \cite{HallGame}, the second author proved that superabundance is also a
-sufficient condition for fixability when we restrict our graphs to be
-multistars.  This immediately implies the fan equation (a definition is
-available in \cite[p. 19ff]{stiebitz2012graph}).  The proof uses Hall's theorem
-to reduce to a smaller star and one might hope we could do the same for
-arbitrary trees with Lemma \ref{MultiTreeHall} in place of Hall's theorem (thus
-giving a short proof that Tashkinov trees are elementary), but we haven't yet
-been able to make this work.
+In \cite{HallGame}, the second author proved that superabundance itself is also a
+sufficient condition for fixability, when we restrict our graphs to be
+multistars.  This result immediately implies the \emph{fan equation}, which is
+an extension of Vizing's Adjacency Lemma to multigraphs and a standard tool in
+proving reducibility for edge-coloring (see \cite[p.~19ff]{stiebitz2012graph}).
+ The proof for multistars uses Hall's
+theorem to reduce to a smaller star and one might hope that we could do the
+same for arbitrary trees, with Lemma \ref{MultiTreeHall} in place of Hall's
+theorem (thus giving a short proof that Tashkinov trees are elementary), but we
+haven't yet made this work.
 
 \subsection{Fixability of stars}
-When $G$ is a star, the conjunction of our two necessary conditions is sufficient. This generalizes Vizing fans \cite{Vizing76}; in the next section we will define ``Kierstead-Tashkinov-Vizing assignments'' and show that they are always superabundant.  In \cite{HallGame}, the second author proved a common generalization of Theorem \ref{FixabilityOfStars} and Hall's theorem; we reproduce the proof for the special case of edge-coloring.
+When $G$ is a star, superabundance implies fixability (provided that $|L(v)|\ge
+d_G(v)$ for each vertex $v$), and this result generalizes Vizing fans
+\cite{Vizing76}.  In \cite{HallGame}, the second author proved a
+common generalization of %Theorem \ref{FixabilityOfStars} 
+this and of Hall's theorem; below we reproduce the proof for the special case
+of edge-coloring.  In the next section we define ``Kierstead-Tashkinov-Vizing
+assignments'' and show that they are always superabundant.  
 
 \begin{thm}\label{FixabilityOfStars}
-If $G$ is a multistar, then $G$ is weakly $L$-fixable if and only if $(G, L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
+If $G$ is a multistar, then $G$ is $L$-fixable if and only if $(G, L)$ is
+superabundant and $|L(v)| \ge d_G(v)$ for all $v \in V(G)$.
 \end{thm}
 \begin{proof}
-	Our strategy is simply to increase $\eta_L(G)$ if we can; if we cannot, then Hall's theorem allows us to reduce to a smaller graph.  An easy way to describe this strategy is via a double induction as follows. Suppose the theorem is false and choose a counterexample $(G, L)$ minimizing $\size{G}$ and subject to that maximizing $\eta_L(G)$.  
+Our strategy is simply to increase $\eta_L(G)$ if we can; if we cannot, then
+Hall's theorem allows us to reduce to a smaller graph.  We can view
+this strategy as the following double induction. Suppose the theorem is
+false and choose a counterexample $(G, L)$ minimizing $\size{G}$ and, subject to
+that, maximizing $\eta_L(G)$.  
 	
 Let $z$ be the center of the multistar $G$. Create a bipartite graph $B$ with
-parts $U$ and $Y$, where $U = \setb{zw}{E(G)}{L(z) \cap L(w) \ne \emptyset}$
-and $Y \DefinedAs \setb{\alpha}{\pot(L)}{\nu(G_\alpha) = 1}$, and $zw \in U$ is adjacent
-to $\alpha \in Y$ if and only if $\alpha \in L(z) \cap L(w)$. Informally, $Y$
-is the set of colors $\alpha$ that can be used on at least one edge, and $U$ is
+parts $C$ and $D$, where $C$
+is the set of colors $\alpha$ that can be used on at least one edge, and $D$ is
 the set of edges $e$ with at least one color available on $e$, and a color
 $\alpha$ is adjacent to an edge $e$ if $\alpha$ can be used on $e$.
+%$U = \setb{zw}{E(G)}{L(z) \cap L(w) \ne \emptyset}$ and $Y \DefinedAs
+%\setb{\alpha}{\pot(L)}{\nu(G_\alpha) = 1}$, and $zw \in U$ is adjacent
+%to $\alpha \in Y$ if and only if $\alpha \in L(z) \cap L(w)$. Informally, 
+Note that $|C|=\eta_L(G)$.
 	
-First, suppose $|Y| < \size{G}$.  Since $|L(z)| \ge d_G(z) = \size{G}$, we
-have a color $\tau \in L(z)$ that cannot be used on any edge.  Suppose there is
-a color $\beta \in Y$ that can be used on at least three edges.  
-Let $zw$ be some edge where $\beta$ can be used.
+First, suppose $|C| < \size{G}$.  Since $|L(z)| \ge d_G(z) = \size{G}$, 
+some color $\tau \in L(z)$ cannot be used on any edge.  Suppose some
+color $\beta \in C$ can be used on at least three edges.  
+Let $zw$ be some edge that can use $\beta$.
 Since $G$ is not $L$-fixable, there is $X \subseteq S_{L, \tau, \beta}$ with
-$|X| \le 2$ and $w \in X$ such that $G$ is not $L'$-fixable, where $L'$ is formed
+$w \in X$ and $|X| \le 2$ such that $G$ is not $L'$-fixable, where $L'$ is formed
 from $L$ by swapping $\tau$ and $\beta$ in $L(v)$ for every $v \in X$.  Since
-$\beta$ can be used on at least three edges (for $L$), it can be used on at
+$\beta$ can be used on at least three edges for $L$, it can be used on at
 least one edge for $L'$.  Further, $\tau$ can also be used on at least one edge
 for $L'$.  Thus $\eta_{L'}(G) > \eta_L(G)$.  Since $(G,L')$ is still
 superabundant, this violates maximality of $\eta_L(G)$.  Hence, 
-each color $\beta \in Y$ can be used on at most two edges.  So, each color in $Y$
-contributes at most one to $\psi_L(G)$.  Since $|Y| < \size{G} \le \psi_L(G)$,
-there must be a color $\gamma \not \in Y$ such that $|G_\gamma - z| \ge 2$.  Since $G$
-is not $L$-fixable, there is $X \subseteq S_{L, \tau, \gamma}$ with $|X| \le 2$
-and $z \in X$ such that $G$ is not $L'$-fixable where $L'$ is formed from $L$
+each color $\beta \in C$ can be used on at most two edges.  So, each color in $C$
+contributes at most one to $\psi_L(G)$.  
+
+Since $|C| < \size{G} \le \psi_L(G)$,
+some color $\gamma$ contributes at least 1 to $\psi_L(G)$, but is not in $C$.
+More precisely, some $\gamma \not \in C$ satisfies $|G_\gamma - z| \ge 2$.  Since $G$
+is not $L$-fixable, there is $X \subseteq S_{L, \tau, \gamma}$ with $z \in X$ and 
+$|X| \le 2$ such that $G$ is not $L'$-fixable where $L'$ is formed from $L$
 by swapping $\tau$ and $\gamma$ in $L(v)$ for every $v \in X$.  Since
 $\nu(G_{L, \tau}) = 0$ and $\nu(G_{L, \gamma}) = 0$ and $\nu(G_{L', \gamma}) =
 1$, we have $\eta_{L'}(G) > \eta_L(G)$. Since $(G,L')$ is still superabundant,
 this violates maximality of $\eta_L(G)$.  
 
-Hence we must have $|Y| \ge \size{G}$.  In particular, $\card{N_B(Y)} \le |Y|$
-so we may choose a set of colors $C \subseteq Y$ such that $C$ is a minimal
-nonempty set satisfying $\card{N_B(C)} \le \card{C}$. 
-If $|C|\ge |N_B(C)|+1$, then, for any $\tau\in C$, we have
-$\card{C-\tau}=\card{C}-1\ge\card{N_B(C)}\ge\card{N_B(C-\tau)}$, which
-contradicts the minimality of $C$.  Thus, $\card{C}=\card{N_B(C)}$.
-Furthermore, by minimality of $C$, every nonempty $D\subset C$ satisfies
-$\card{N_B(D)}>\card{D}$, so Hall's Theorem yields a perfect matching $M$ between $C$
-and $N_B(C)$.
+Hence, we must have $|C| \ge \size{G}$.  In particular, $\card{N_B(C)} \le |C|$
+so we may choose a set of colors $C' \subseteq C$ such that $C'$ is a minimal
+nonempty set satisfying $\card{N_B(C')} \le \card{C'}$. 
+If $|C'|\ge |N_B(C')|+1$, then, for any $\rho\in C'$, we have
+$\card{C'-\rho}=\card{C'}-1\ge\card{N_B(C')}\ge\card{N_B(C'-\rho)}$, which
+contradicts the minimality of $C'$.  Thus, $\card{C'}=\card{N_B(C')}$.
+Furthermore, by minimality of $C'$, every nonempty $C''\subsetneq C'$ satisfies
+$\card{N_B(C'')}>\card{C''}$, so Hall's Theorem yields a perfect matching $M$
+between $C'$ and $N_B(C')$.
 %We claim that $\card{N_B(C)} =
 %|C|$ and there is a perfect matching
 %$M$ of $C$ into $N_B(C)$.  Since $\card{N_B(C)} \ge 1$, this is true if $|C| =
@@ -519,19 +599,19 @@ For each color/edge pair
 $\set{\alpha, zw} \in M$, use color $\alpha$ on edge $zw$.  Form $G'$ from $G$
 by removing all the colored edges and then discarding any isolated vertices.
 %For each $v \in V(G')$, let $L'(v) = L(v) \setminus C$.  
-Note that $z$ lost exactly $\card{C}$ colors from its list and also
-$d_{G'}(z)=d_G(z)-\card{C}$, so $\card{L'(z)}=\card{L(z)}-\card{C}\ge
-d_G(z)-\card{C}=d_{G'}(z)$.  Each other vertex $w\in V(G')$ satisifes
+Note that $z$ lost exactly $\card{C'}$ colors from its list and also
+$d_{G'}(z)=d_G(z)-\card{C'}$, so $\card{L'(z)}=\card{L(z)}-\card{C'}\ge
+d_G(z)-\card{C'}=d_{G'}(z)$.  Each other vertex $w\in V(G')$ satisifes
 $d_{G'}(w)=d_G(w)$ and $\card{L'(w)}=\card{L(w)}$, so $\card{L'(w)}\ge
 d_{G'}(w)$.
-Since $G$ is not $L$-fixable and $C$ and $\pot(L')$ are disjoint it must be
+Since $G$ is not $L$-fixable and $C'$ and $\pot(L')$ are disjoint it must be
 that $G'$ is not $L'$-fixable.  
 %Since each vertex lost exactly one color from its list for each
 %incident edge we have $|L'(v)| \ge d_{G'}(v)$ for all $v \in V(G')$.  
 For each $H \subseteq G'$, we have $\psi_{L'}(H) = \psi_{L}(H)$.
-For each color $\alpha\in Y$, if $\alpha\in C$, then
-$\floor{\card{H_{L,\alpha}}/2}=0$, since $E(H)\cap N_B(C)=\emptyset$.
-Similarly, if $\alpha\notin Y$, then each $v\in V(G')$ satisfies $\alpha\in
+For each color $\alpha\in C$, if $\alpha\in C'$, then
+$\floor{\card{H_{L,\alpha}}/2}=0$, since $E(H)\cap N_B(C')=\emptyset$.
+Similarly, if $\alpha\notin C'$, then each $v\in V(G')$ satisfies $\alpha\in
 L'(v)$ if and only if $\alpha\in L(v)$.
 % - (\size{G[V(H)]} -
 %\size{H}) \ge \size{G[V(H)]} - (\size{G[V(H)]} - \size{H}) = \size{H}$ since
@@ -541,7 +621,10 @@ But $\size{G'} < \size{G}$, so by minimality of $\size{G}$, $G'$ is
 $L'$-fixable, a contradiction.
 \end{proof}
 
-As shown in \cite{HallGame}, the \emph{fan equation} is a direct consequence of Theorem \ref{FixabilityOfStars}.  This, in turn, implies most classical edge-coloring results including Vizing's Adjacency Lemma.
+As shown in \cite{HallGame}, 
+a direct consequence of Theorem \ref{FixabilityOfStars} is the {fan equation}. 
+This, in turn, implies most classical edge-coloring results including Vizing's
+Adjacency Lemma.
 
 \subsection{Kierstead-Tashkinov-Vizing assignments}
 Many edge-coloring results have been proved using a specific kind of
@@ -553,8 +636,11 @@ in~\cite{stiebitz2012graph}).
 %ADD REFERENCES; maybe \emph{Graph Edge
 %Coloring} or McDonald's Thesis).  
 In this section, we show how superabundance follows easily from these orderings.
+For each vertex $v$, we write $E(v)$ for the set of edges incident to $v$.
 
-A list assignment $L$ on $G$ is a \emph{Kierstead-Tashkinov-Vizing} assignment (henceforth \emph{KTV-assignment}) if for some $xy \in E(G)$, there is a total ordering `$<$' of $V(G)$ such that
+A list assignment $L$ on $G$ is a \emph{Kierstead-Tashkinov-Vizing} assignment
+(henceforth \emph{KTV-assignment}) if for some edge $xy \in E(G)$, there is a
+total ordering `$<$' of $V(G)$ such that
 
 \begin{enumerate}
 \item there is an edge-coloring $\pi$ of $G-xy$ such that $\pi(uv) \in L(u)
@@ -586,206 +672,750 @@ Now choose a vertex $z \in V(G) - V(H)$ that is smallest under $<$.
 Let $H' = G\brackets{w \mid w \le z}$.  By the minimality of $z$, we have $H' -
 z \subseteq H$. By property (2), $\card{H'} \ge 2$.  By property (3), $H'$ is
 connected and thus there is $w \in V(H' - z)$ adjacent to $z$. So, we have $w <
-z$ and $wz\in E(G)-E(H)$.  Now $\pi(wz)\in L(w)$,  
+z$ and $wz\in E(G)-E(H)$.  %Now $\pi(wz)\in L(w)$,  
 %By the definition of a KTV-assignment, 
-so property (4) implies that there exists a vertex $u$ with $u <
+Property (4) implies that there exists a vertex $u$ with $u <
 \max\set{w, z} = z$ and $\pi(wz) \in L(u)-\{\pi(e)|e\in E(u)\}$.  Since $u \in
 V(H' - z) \subseteq V(H)$, we again gain 1 over the naive lower bound on
 $\psi_L(H)$, due to the color in $L(u)\cap L(w)$.  So $\psi_L(H)\ge \size{H}$.
 \end{proof}
 
+\subsection{The gap between fixability and reducibility}
+By abstracting away the containing graph, we may have lost some power in proving
+reducibility results. Surely we have when we only care about a certain class of
+graphs. For example, with planar graphs, not all Kempe path pairings are
+possible (if we add an edge for each pair, the resulting graph must be
+planar).  But, possibly there are graphs that are reducible for all containing
+graphs but are not fixable.  We could strengthen ``fixable'' in various ways,
+but we have not found the need to do so.  One particular strengthening 
+deserves mention, since it makes fixability more induction friendly.  
+
+\begin{defn}
+$G$ is \emph{$(L, P)$-subfixable} if either
+\begin{enumerate}
+\item[(1)] $G$ is $(L, P)$-fixable; or
+\item[(2)] there is $xy \in E(G)$ and $\tau \in L(x) \cap L(y)$ such that
+$G-xy$ is $L'$-subfixable, where $L'$ is formed from $L$ by removing $\tau$ from
+$L(x)$ and $L(y)$.
+\end{enumerate}
+\end{defn}
+
+Superabundance is a necessary condition for subfixability because coloring an
+edge cannot make a non-abundant subgraph abundant.  The conjectures in the rest
+of this paper may be easier to prove with subfixable in place of fixable.  That would
+really be just as good since it would give the exact same results for edge coloring.
+
 \section{Applications of small k-fixable graphs}
-\subsection{Impoved lower bound on the average degree of 3-critical graphs}
+In this section, we use $k$-fixable graphs to prove a few conjectures about
+3-critical and 4-critical graphs.
+A \emph{$k$-vertex} is a vertex of degree $k$, and a \emph{$k$-neighbor} of a
+vertex $v$ is a $k$-vertex adjacent to $v$.
+
+\subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
+For a graph $G$, let $G_\Delta$ be the subgraph of $G$ induced by vertices of
+degree $\Delta(G)$.  Vizing's Adjacency Lemma implies that $\delta(G_\Delta) \ge
+2$ in a critical graph $G$.  A natural question is whether or not this is 
+best possible.  For example, can we have $\Delta(G_\Delta) = 2$ in a
+critical graph $G$?  In fact, Hilton and Zhao have conjectured exactly when
+this can happen.  
+Recall that a graph $G$ is \emph{class 1} if $\chi'(G)=\Delta$ and \emph{class
+2} otherwise.
+A graph $G$ is \emph{overfull} if $||G|| >
+\floor{\frac{|G|}{2}}\Delta(G)$.  (The significance of overfull graphs is that
+they must be class 2, simply because they have more edges than can be colored by
+$\Delta(G)$ matchings, each of size $\floor{\frac{|G|}2}$.)
+Let $P^*$ denote the Peterson graph with one
+vertex deleted (see Figure \ref{fig:petey}).
+
+\begin{conjecture}[Hilton and Zhao]
+A connected graph $G$ with $\Delta(G_\Delta) \le 2$ is class 2 if and only if
+$G$ is $P^*$ or $G$ is overfull.
+\end{conjecture}
+
+\input{pics}
+David and Gianfranco Cariolaro~\cite{cariolaro2003colouring} proved this
+conjecture when $\Delta=3$.  Here we prove it when $\Delta=4$, but we
+omit the very long computer-generated proofs of the reducibility of the
+graphs in Figure~\ref{fig:hiltonzhao}.  
+%Not all of the graphs in
+%Figure~\ref{fig:hiltonzhao} are $4$-fixable; to prove reducibility of a graph
+%$H$, we restrict the allowed list assignments on vertices to those from which
+%all but one specified edge $e$ of $H$ can be colored.  Such a list assignment
+%is called \emph{nearly-colorable}.  Checking only the nearly-colorable
+%assignments clearly suffices for reducibility.
+%
+Since we do not include the reducibility proofs, we separate the proof into two
+parts.  The first does not use the computer at all.
+Let $\H_4$ be the class of connected graphs with maximum degree 4, minimum
+degree 3, each vertex adjacent to at least two 4-vertices, and each 4-vertex
+adjacent to exactly two 4-vertices.
+\begin{lem}\label{HiltonZhaoLemma}
+If $G$ is a graph in $\H_4$ and $G$ contains none of the three configurations in
+Figure~\ref{fig:hiltonzhao} (not necessarily induced), then $G$ is $K_5-e$.
+\end{lem}
+\begin{proof}
+Let $G$ be a graph in $\H_4$.  Note that every 4-vertex in $G$ has exactly two
+3-neighbors and two 4-neighbors.  Let $u$ denote a 4-vertex and let
+$v_1,\ldots,v_4$ denote its neighbors, where $d(v_1)=d(v_2)=3$ and $d(v_3)=d(v_4)=4$.
+When vertices $x$ and $y$ are adjacent, we write $x\adj y$.  We assume that $G$
+contains none of the configurations in Figure~\ref{fig:hiltonzhao} and show that
+$G$ must be $K_5-e$.  
+	
+First suppose that $u$ has a 3-neighbor and a 4-neighbor that are adjacent.  By
+symmetry, assume that $v_2\adj v_3$.  Since
+Figure~\ref{fig:hiltonzhao}(a) is forbidden, we have $v_3\adj v_1$. 
+Now consider $v_4$.  If $v_4$ has a 3-neighbor distinct from $v_1$ and $v_2$,
+then we have a copy of Figure~\ref{fig:hiltonzhao}(c).  Hence $v_4\adj v_1$ and
+$v_4\adj v_2$.  If $v_3\adj v_4$, then $G$ is $K_5-e$.  Suppose not, and let
+$x$ be a 4-neighbor of $v_4$.  Since $G$ has no copy of
+Figure~\ref{fig:hiltonzhao}(c), $x$ must be adjacent to $v_1$ and $v_2$.  This
+is a contradiction, since $v_1$ and $v_2$ are 3-vertices, but now each has at
+least four neighbors.  Hence, we conclude that each of $v_1$ and $v_2$ is
+non-adjacent to each of $v_3$ and $v_4$.
+	
+Now consider the 3-neighbors of $v_3$ and $v_4$.  If $v_3$ and $v_4$ have zero 
+or one 3-neighbors
+in common, then we have a copy of Figure~\ref{fig:hiltonzhao}(b).  
+%If they have one 3-neighbor in common, then we have a copy of
+%Figure~\ref{fig:hiltonzhao}(c).  
+Otherwise they have two 3-neighbors in common,
+so we have a copy of Figure~\ref{fig:hiltonzhao}(c).  
+\end{proof}
+
+Since $K_5 - e$ is overfull, the next theorem implies Hilton and Zhao's conjecture
+for $\Delta=4$.  
+%Given a class 2 graph $G\in \H_4$, we would like to consider a
+%4-edge-critical subgraph $H$, apply the previous lemma to find in $H$ some copy of a
+%configuration in Figure~\ref{fig:hiltonzhao}, and reach a contradiction, since
+%each of these configurations is reducible.  This is the main idea in the next
+%proof.  However, in order to apply Lemma~\ref{HiltonZhaoLemma}, we must first
+%show that $H\in \H_4$.
+
+\begin{thm}
+A connected graph $G$ with $\Delta(G) = 4$ and $\Delta(G_\Delta) \le 2$ is
+class 2 if and only if $G$ is $K_5-e$.
+\end{thm}
+%\begin{proof}
+%Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  We will show
+%that $G$ is edge-critical.  If not, then there exists an edge $xy$ such that
+%$\chi'(G-xy)=5$, and further, there exists $H\subseteq G-xy$ such that $H$ is
+%4-edge-critical.  Consider some vertex $v\in V(H)$ with an incident edge $e$ such
+%that $e\in E(G)-E(H)$.  Vizing's Adjacency Lemma (VAL) implies that for every
+%edge $wz\in E(H)$, vertex $w$ has at least $\max\{2,5-d(z)\}$ adjacent 4-vertices.
+%If $d_H(v)=2$, then $v$ has two 4-neighbors; call one $z$. Since
+%$\Delta(H_{\Delta})\le \Delta(G_{\Delta})=2$, edge $vz$ contradicts VAL.  Thus,
+%$d_H(v)=3$.  Now $v$ has some 4-neighbor $z$ in $H$.  However, $z$ had only two
+%4-neighbors in $G$, so has at most one 4-neighbor in $H$, which contradicts VAL.
+%Thus, $\chi'(G-xy)\le 4$.  Since edge $xy$ was arbitrary, $G$ is 4-edge-critical.
+%
+%
+%Since $G$ is a counterexample, it is not $K_5-e$.  
+%Thus, Lemma \ref{HiltonZhaoLemma} implies that $G$ contains one of the 
+%configurations in Figure~\ref{fig:hiltonzhao}.  
+%%Since $G$ is 4-edge-critical,
+%By computer, each of these configurations %in Figure~\ref{fig:hiltonzhao} 
+%is reducible; thus, for each configuration there exists an edge $e$ such that
+%any 4-edge-coloring of $G-e$ can be extended (possibly after Kempe swaps) to
+%$G$.  Since $G$ is 4-edge-critical, we can indeed color $G-e$ for every edge $e$.
+%\end{proof}
+%
+%\bigskip
+
+\begin{proof} %[alternate proof]
+Let $G$ be as stated in the theorem.
+If $G$ is class $2$, then $G$ has a $4$-critical subgraph $H$.   Since
+$H$ is $4$-critical, it is connected, 
+and every vertex has at least two neighbors of degree $4$, by VAL.  
+Further, since $\Delta(H_\Delta) \le \Delta(G_\Delta) \le 2$, VAL implies
+that $H$ has minimum degree $3$. 
+Thus, $H \in \H_4$.  By Lemma \ref{HiltonZhaoLemma}, 
+either $H$ is $K_5-e$ or $H$ contains one of
+the configurations in Figure~\ref{fig:hiltonzhao}.  By computer, each of these
+configurations is reducible and hence cannot be a subgraph of the $4$-critical
+graph $H$.  Thus $H$ is $K_5-e$.  Let $x_1,x_2$ be the degree $3$ vertices in
+$H$.  Each $x_i$ has three degree $4$ neighbors in $H$ and hence $d_G(x_i) \le
+3$ since $\Delta(G_\Delta) \le 2$.  That is, $x_i$ has no neighbors outside
+$H$.  Since $G$ is connected, we must have $G = H = K_5 - e$. 
+\end{proof}
+
+\subsection{Impoved lower bounds on the average degree of 3-critical graphs and
+4-critical graphs}
 Let $P^*$ denote the Petersen graph with a vertex deleted (see Figure \ref{fig:petey}).
 Jakobsen~\cite{Jakobsen73,Jakobsen74} noted that $P^*$ is 3-critical and has
 average degree $2.\overline{6}$.  He showed that every 3-critical graph has average
-degree at least $2.\overline{6}$, and he asked whether equality holds only for $P^*$.
+degree at least $2.\overline{6}$, and asked whether equality holds only for $P^*$.
 In~\cite{3criticalCR}, we answered his question affirmatively.  More precisely,
 we showed that every 3-critical graph other than $P^*$ has average degree at
 least $2+\frac{26}{37}=2.\overline{702}$.  The proof crucially depends on the
-fact that the configurations in Figure~\ref{tree1-pic} are reducible.
+fact that the three leftmost configurations in Figure~\ref{tree1-pic} are
+reducible for 3-edge-coloring.
 As we noted in~\cite{3criticalCR}, by using the computer to prove reducibility
-of additional configurations, we can strengthen this result.  Specifically,
+of additional configurations, we can slightly strengthen this result.  Specifically,
 every 3-critical graph has average degree at least $2+\frac{22}{31} \approx
 2.7097$ unless it is $P^*$ or one other exceptional graph, the Haj\'{o}s
 join of two copies of $P^*$.  (For comparison, there exists an infinite family of
 3-critical graphs with average degree less than $2.75$.)  This strengthening
-relies primarily on the fact that the configuration in
+relies primarily on the fact that the rightmost configuration in
 Figure~\ref{fig:bigtree} is reducible, even if one or more pairs of
 its 2-vertices are identified.  However, the simplest proof we have of this fact
 is computer-generated and fills about 100 pages.
 
-\begin{figure}[htb]
-	\begin{center}
-		\begin{tikzpicture}[scale = 6]
-		\tikzstyle{VertexStyle} = []
-		\tikzstyle{EdgeStyle} = []
-		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep =
-		1.2pt, draw, fill]
-		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.80, L = \tiny {}]{v0}
-		\Vertex[style = unlabeledStyle, x = 0.35, y = 0.75, L = \tiny {}]{v1}
-		\Vertex[style = unlabeledStyle, x = 0.30, y = 0.65, L = \tiny {}]{v2}
-		\Vertex[style = unlabeledStyle, x = 0.35, y = 0.55, L = \tiny {}]{v3}
-		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.50, L = \tiny {}]{v4}
-		\Vertex[style = unlabeledStyle, x = 0.55, y = 0.55, L = \tiny {}]{v5}
-		\Vertex[style = unlabeledStyle, x = 0.60, y = 0.65, L = \tiny {}]{v6}
-		\Vertex[style = unlabeledStyle, x = 0.55, y = 0.75, L = \tiny {}]{v7}
-		\Vertex[style = unlabeledStyle, x = 0.45, y = 0.95, L = \tiny {}]{v8}
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
-		\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
-		%\Edge[bend left, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v2)
-		%\Edge[bend right, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v6)
-		\path [line width=1pt]
-		(v2) edge [bend left=35] (v8)
-		(v8) edge [bend left=35] (v6);
-		\end{tikzpicture}
-	\end{center}
-	\caption{The Peterson graph with one vertex removed.}
-	\label{fig:petey}
+\begin{figure}[!htb]
+\begin{center}
+\begin{tikzpicture}[scale = 8]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = unlabeledStyle, x = 0.45, y = 0.80, L = \tiny {}]{v0}
+\Vertex[style = unlabeledStyle, x = 0.35, y = 0.75, L = \tiny {}]{v1}
+\Vertex[style = unlabeledStyle, x = 0.30, y = 0.65, L = \tiny {}]{v2}
+\Vertex[style = unlabeledStyle, x = 0.35, y = 0.55, L = \tiny {}]{v3}
+\Vertex[style = unlabeledStyle, x = 0.45, y = 0.50, L = \tiny {}]{v4}
+\Vertex[style = unlabeledStyle, x = 0.55, y = 0.55, L = \tiny {}]{v5}
+\Vertex[style = unlabeledStyle, x = 0.60, y = 0.65, L = \tiny {}]{v6}
+\Vertex[style = unlabeledStyle, x = 0.55, y = 0.75, L = \tiny {}]{v7}
+\Vertex[style = unlabeledStyle, x = 0.45, y = 0.95, L = \tiny {}]{v8}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+%\Edge[bend left, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v2)
+%\Edge[bend right, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v6)
+\path [line width=1pt]
+(v2) edge [bend left=35] (v8)
+(v8) edge [bend left=35] (v6);
+\end{tikzpicture}
+\end{center}
+\caption{The Peterson graph with one vertex removed.}
+\label{fig:petey}
+\end{figure}
+\bigskip
+
+\begin{figure}[!htb]
+\begin{center}
+\begin{tikzpicture}[scale = 9]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.45, y = 0.75, L = \small {$2$}]{v0}
+\Vertex[style = labeledStyle, x = 0.45, y = 0.65, L = \small {$3$}]{v1}
+\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$3$}]{v2}
+\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$2$}]{v3}
+\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$2$}]{v4}
+\Vertex[style = labeledStyle, x = 0.65, y = 0.65, L = \small {$3$}]{v5}
+\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$3$}]{v6}
+\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$2$}]{v7}
+\Edge[](v6)(v7)
+\Edge[](v6)(v5)
+\Edge[](v5)(v4)
+\Edge[](v5)(v2)
+\Edge[](v2)(v3)
+\Edge[](v2)(v1)
+\Edge[](v1)(v0)
+\end{tikzpicture}
+~~~
+%\includegraphics[scale=.6]{tree1.png}
+%\includegraphics[scale=.48]{umbrella.png}
+\begin{tikzpicture}[scale = 9]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$2$}]{v0}
+\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
+\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
+\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
+\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v4}
+\Edge[](v3)(v2)
+\Edge[](v3)(v0)
+\Edge[](v1)(v0)
+\Edge[](v1)(v2)
+\Edge[](v2)(v4)
+\end{tikzpicture}
+~~~
+\begin{tikzpicture}[scale = 9]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$3$}]{v0}
+\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
+\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
+\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
+\Vertex[style = labeledStyle, x = 0.70, y = 0.60, L = \small {$2$}]{v4}
+\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v5}
+\Vertex[style = labeledStyle, x = 0.50, y = 0.60, L = \small {$2$}]{v6}
+\Edge[](v3)(v4)
+\Edge[](v3)(v2)
+\Edge[](v3)(v0)
+\Edge[](v1)(v6)
+\Edge[](v1)(v0)
+\Edge[](v1)(v2)
+\Edge[](v2)(v5)
+\end{tikzpicture}
+%\end{center}
+%\caption{Three subgraphs forbidden from a 3-critical graph $G$. (The number at each
+%vertex specifies its degree in $G$.)}
+%\end{figure}
+~~~
+%\begin{figure}[!htb]
+%\begin{center}
+\begin{tikzpicture}[scale = 9]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v0}
+\Vertex[style = labeledStyle, x = 0.80, y = 0.70, L = \small {$3$}]{v1}
+\Vertex[style = labeledStyle, x = 0.90, y = 0.70, L = \small {$3$}]{v2}
+\Vertex[style = labeledStyle, x = 0.80, y = 0.60, L = \small {$2$}]{v3}
+\Vertex[style = labeledStyle, x = 0.70, y = 0.60, L = \small {$2$}]{v4}
+\Vertex[style = labeledStyle, x = 0.90, y = 0.60, L = \small {$2$}]{v5}
+\Vertex[style = labeledStyle, x = 0.30, y = 0.70, L = \small {$3$}]{v6}
+\Vertex[style = labeledStyle, x = 0.40, y = 0.70, L = \small {$3$}]{v7}
+\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v8}
+\Vertex[style = labeledStyle, x = 0.30, y = 0.60, L = \small {$2$}]{v9}
+\Vertex[style = labeledStyle, x = 0.50, y = 0.60, L = \small {$2$}]{v10}
+\Vertex[style = labeledStyle, x = 0.40, y = 0.60, L = \small {$2$}]{v11}
+\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$3$}]{v12}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v10)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v8)
+\end{tikzpicture}
+\caption{Four subgraphs forbidden from a 3-critical graph $G$. (The number at each
+vertex specifies its degree in $G$.)}
+%\caption{The big tree.}
+\label{tree1-pic}
+\label{umbrella-pic}
+\label{jellyfish-pic}
+\label{fig:bigtree}
+\end{center}
+\end{figure}
+%\clearpage
+
+Woodall conjectured \cite{woodall2008average} that the average degree of every
+4-critical graph is at least 3.6, which is best possible due to $K_5-e$.
+We have proved this conjecture (modulo computer proofs of reducibility).
+However, the proof requires 39 reducible configurations, so we defer it to an
+appendix; even there, we omit the computer-aided reducibility proofs.
+Here, we give a brief outline to illustrate the technique.
+
+Our proof uses the discharging method.  Assume that $G$ is a 4-critical graph.
+Each vertex begins with an initial charge, which is its degree.  We redistribute
+the charge (without changing its sum), with the goal that every vertex finishes
+with charge at least 3.6.  If this is true, then $G$ has the desired average
+degree.  To redistribute charge, we successively apply the following 3 rules.
+
+\begin{enumerate}
+\item[(R1)] Each 2-vertex takes $.8$ from each 4-neighbor.
+\item[(R2)] Each 3-vertex with three 4-neighbors takes $.2$ from each 4-neighbor.
+Each 3-vertex with two 4-neighbors takes $.3$ from each 4-neighbor.
+\item[(R3)] Each 4-vertex with charge in excess of $3.6$ after (R2) splits this
+		excess evenly among its 4-neighbors with charge less than $3.6$.
+\end{enumerate}
+	
+%	Now we show that every vertex $v$ finishes with $\ch^*(v)\ge 3.6$.
+	
+By Vizing's Adjacency Lemma (VAL), each neighbor of a 2-vertex $v$ is a
+4-neighbor.  Thus, $v$ finishes with charge at least $2+2(.8)=3.6$.
+Again by VAL, each 3-vertex $v$ has at least two 4-neighbors. So $v$ finishes
+with charge at least $3+3(.2)$ or $3+2(.3)$, both of which are at least 3.6.
+
+It is also easy to check that each 4-vertex $v$ finishes with charge at least 3.2;
+by VAL, $v$ has at least two 4-neighbors, and if it has a 2-neighbor, then it has
+three 4-neighbors.  So the remainder of the proof consists in showing that all
+4-vertices that finish (R2) with charge less than 3.6 receive enough charge by
+(R3).  The intuition is simple: if $v$ has few low degree neighbors and
+neighbors of neighbors, then $v$ gets enough charge; otherwise, $v$ is contained
+in some reducible configuration, which contradicts our choice of $G$ as
+4-critical.
+	
+
+\section{Superabundance sufficiency and adjacency lemmas}
+In the previous sections, we studied $k$-fixable graphs, which are reducible
+configurations for graphs with fixed maximum degree.  Here we study a more
+general notion that behaves similarly to Vizing Fans, Kierstead Paths, and
+Tashkinov Trees.  Specifically, we consider graphs that are fixable for all
+superabundant list assignments.  
+
+\subsection{Superabundant fixability in general}
+%	\begin{figure}[htb]
+%		\centering
+%		\caption{The fixable graphs on at most 3 vertices.}
+%	\end{figure}
+	
+\begin{defn}
+If $G$ is a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \ge d_G(v)$ for all $v
+\in V(G)$, then $G$ is $f$-fixable if $G$ is $(L, P)$-fixable for every $L$
+with $|L(v)| \ge f(v)$ for all $v \in V(G)$ and every $L$-pot $P$ such that
+$(G,L)$ is superabundant.  If a graph $G$ is $f$-fixable when $f(v)=d_G(v)$ for
+each $v$, then $G$ is \emph{degree-fixable}.
+\end{defn}
+	
+For example, Lemma \ref{FixabilityOfStars} shows that multistars are
+degree-fixable.  We have also found that the $4$-cycle is degree-fixable.
+	
+\begin{problem}
+Classify the degree-fixable multigraphs (specifically, containment minimal
+ones).
+\end{problem} 
+	
+Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$
+for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we
+just write $d$, as in Figure \ref{fig:fixable3}.
+%
+Looking at the trees in Figures \ref{fig:fixable4}, \ref{fig:fixable5tree}, and
+\ref{fig:fixable6tree} we might conjecture that a tree is $f$-fixable whenever
+at most one internal vertex is labeled ``$d$''.  This conjecture
+continues to hold for many more examples.
+	
+%\begin{comment}
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.25]{Superabundance/all/001011[1,1,1,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/011010[2,1,1,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/011011[2,1,2,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/011110[2,2,2,2].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/1[1,1].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/011[1,1,2].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/111[2,2,2].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/011111[2,2,3,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/all/111111[3,3,3,3].pdf}
+\caption{The fixable graphs on at most 4 vertices.}
+\label{fig:fixable3}
+\label{fig:fixable4}
 \end{figure}
 
-\begin{figure}[htb]
-	\begin{center}
-		\begin{tikzpicture}[scale = 10]
-		\tikzstyle{VertexStyle} = []
-		\tikzstyle{EdgeStyle} = []
-		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-		\Vertex[style = labeledStyle, x = 0.45, y = 0.75, L = \small {$2$}]{v0}
-		\Vertex[style = labeledStyle, x = 0.45, y = 0.65, L = \small {$3$}]{v1}
-		\Vertex[style = labeledStyle, x = 0.55, y = 0.65, L = \small {$3$}]{v2}
-		\Vertex[style = labeledStyle, x = 0.55, y = 0.75, L = \small {$2$}]{v3}
-		\Vertex[style = labeledStyle, x = 0.65, y = 0.75, L = \small {$2$}]{v4}
-		\Vertex[style = labeledStyle, x = 0.65, y = 0.65, L = \small {$3$}]{v5}
-		\Vertex[style = labeledStyle, x = 0.75, y = 0.65, L = \small {$3$}]{v6}
-		\Vertex[style = labeledStyle, x = 0.75, y = 0.75, L = \small {$2$}]{v7}
-		\Edge[](v6)(v7)
-		\Edge[](v6)(v5)
-		\Edge[](v5)(v4)
-		\Edge[](v5)(v2)
-		\Edge[](v2)(v3)
-		\Edge[](v2)(v1)
-		\Edge[](v1)(v0)
-		\end{tikzpicture}
-		~~~
-		%\includegraphics[scale=.6]{tree1.png}
-		%\includegraphics[scale=.48]{umbrella.png}
-		\begin{tikzpicture}[scale = 10]
-		\tikzstyle{VertexStyle} = []
-		\tikzstyle{EdgeStyle} = []
-		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$2$}]{v0}
-		\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
-		\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v4}
-		\Edge[](v3)(v2)
-		\Edge[](v3)(v0)
-		\Edge[](v1)(v0)
-		\Edge[](v1)(v2)
-		\Edge[](v2)(v4)
-		\end{tikzpicture}
-		~~~
-		\begin{tikzpicture}[scale = 10]
-		\tikzstyle{VertexStyle} = []
-		\tikzstyle{EdgeStyle} = []
-		\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-		\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.80, L = \small {$3$}]{v0}
-		\Vertex[style = labeledStyle, x = 0.50, y = 0.70, L = \small {$3$}]{v1}
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.70, L = \small {$3$}]{v2}
-		\Vertex[style = labeledStyle, x = 0.70, y = 0.70, L = \small {$3$}]{v3}
-		\Vertex[style = labeledStyle, x = 0.70, y = 0.60, L = \small {$2$}]{v4}
-		\Vertex[style = labeledStyle, x = 0.60, y = 0.60, L = \small {$2$}]{v5}
-		\Vertex[style = labeledStyle, x = 0.50, y = 0.60, L = \small {$2$}]{v6}
-		\Edge[](v3)(v4)
-		\Edge[](v3)(v2)
-		\Edge[](v3)(v0)
-		\Edge[](v1)(v6)
-		\Edge[](v1)(v0)
-		\Edge[](v1)(v2)
-		\Edge[](v2)(v5)
-		\end{tikzpicture}
-	\end{center}
-	\caption{Three subgraphs forbidden from a 3-critical graph $G$. (The number at each
-		vertex specifies its degree in $G$.)}
-	\label{tree1-pic}
-	\label{umbrella-pic}
-	\label{jellyfish-pic}
+		
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/0011001010[2,1,1,1,4].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/0011001010[3,1,1,1,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/0101011000[2,3,1,1,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/0101011000[3,3,1,1,2].pdf}
+\caption{The fixable trees with maximum degree at most 3 on 5 vertices.}
+\label{fig:fixable5tree}
 \end{figure}
-\begin{figure}[htb]
-	\begin{center}
+		
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000100010001011[1,1,1,1,3,4].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[2,1,1,1,3,4].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,2,4].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,3,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[2,3,1,1,1,4].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[3,3,1,1,1,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[2,3,1,1,3,3].pdf}
+\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[3,2,1,1,3,3].pdf}
+\caption{The fixable trees with maximum degree at most 3 on 6 vertices.}
+\label{fig:fixable6tree}
+\end{figure}
+%\end{comment}
 
-						\begin{tikzpicture}[scale = 10]
-						\tikzstyle{VertexStyle} = []
-						\tikzstyle{EdgeStyle} = []
-						\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-						\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-						\Vertex[style = labeledStyle, x = 0.699999988079071, y = 0.699999988079071, L = \tiny {$3$}]{v0}
-						\Vertex[style = labeledStyle, x = 0.800000011920929, y = 0.699999988079071, L = \tiny {$3$}]{v1}
-						\Vertex[style = labeledStyle, x = 0.899999976158142, y = 0.699999988079071, L = \tiny {$3$}]{v2}
-						\Vertex[style = labeledStyle, x = 0.800000011920929, y = 0.599999994039536, L = \tiny {$2$}]{v3}
-						\Vertex[style = labeledStyle, x = 0.699999988079071, y = 0.599999994039536, L = \tiny {$2$}]{v4}
-						\Vertex[style = labeledStyle, x = 0.899999976158142, y = 0.599999994039536, L = \tiny {$2$}]{v5}
-						\Vertex[style = labeledStyle, x = 0.300000011920929, y = 0.699999988079071, L = \tiny {$3$}]{v6}
-						\Vertex[style = labeledStyle, x = 0.400000005960464, y = 0.699999988079071, L = \tiny {$3$}]{v7}
-						\Vertex[style = labeledStyle, x = 0.5, y = 0.699999988079071, L = \tiny {$3$}]{v8}
-						\Vertex[style = labeledStyle, x = 0.300000011920929, y = 0.599999994039536, L = \tiny {$2$}]{v9}
-						\Vertex[style = labeledStyle, x = 0.5, y = 0.599999994039536, L = \tiny {$2$}]{v10}
-						\Vertex[style = labeledStyle, x = 0.400000005960464, y = 0.599999994039536, L = \tiny {$2$}]{v11}
-						\Vertex[style = labeledStyle, x = 0.600000023841858, y = 0.799999997019768, L = \tiny {$3$}]{v12}
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v1)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v0)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v7)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v10)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v0)
-						\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v8)
-						\end{tikzpicture}
-				\caption{The big tree.}
-				\label{fig:bigtree}
-			\end{center}
-						\end{figure}
-\clearpage
-\subsection{Impoved lower bound on the average degree of 4-critical graphs}
-Here we prove the $\Delta=4$ case of Woodall's conjecture \cite{woodall2008average} on the average degree of a critical graph (modulo computer proofs of reducibility).
+\begin{conjecture}
+\label{OneHighConjecture}
+A tree $T$ is $f$-fixable if $f(v) = d_T(v)$ for at most one non-leaf $v$ of $T$.
+\end{conjecture}
+Note that by Lemma \ref{KTVImpliesSuperabundant}, this would imply under the
+same degree constraints that Tashkinov trees are elementary (that is, each color
+is absent from at most one vertex of a Tashkinov tree).  Can this be
+proved in the simpler case when the tree is a path?  For paths of length 4, this was
+done by Kostochka and Stiebitz; in the next section we conjecture a generalization
+of their result to stars with one edge subdivided.   One nice feature of the
+superabundance formulation is that since there is no need for an ordering as 
+with Tashkinov trees, we can easily formulate results about graphs with cycles.
+The following is the most general thing we might think is true.
+
+\input{goldberg}
+\begin{conjecture}[false]
+	A multigraph $G$ is $f$-fixable if $f(v) > d_G(v)$ for all $v \in V(G)$.
+	\label{MoonshineConjecture}
+\end{conjecture}
+
+This conjecture is very strong and implies Goldberg's conjecture 
+(see \cite[p.~155ff]{stiebitz2012graph}), which is one of the major open
+problems in edge-coloring.
+Unfortunately, Conjecture~\ref{MoonshineConjecture} is false.  We can make
+counterexamples on a $5$-cycle as in Figure \ref{fig:goldbergce}.  We don't yet
+have an intuitive explanation for why these are counterexamples, but in each
+case the computer has found a strategy preventing the 5-cycle from being colored.
+
+One interesting consequence of these counterexamples 
+%, specifically Figure~\ref{fig:goldbergce}(b), 
+is that $C_5$ is not $f$-fixable for \emph{any}
+function $f$.  (This contrasts with the case of $(f,k)$-fixable, since now
+increasing $f$ need not increase $\psi(L)$.)
+Let $L$ denote the lists in Figure~\ref{fig:goldbergce}(b).
+Given a function $f$, begin with $L$ and add as many ``singletons'' (colors that appear in
+only one list) as needed to the lists so that each list is large enough; call
+these lists $L'$.  Since $L$ is superabundant, clearly so is $L'$.
+Now we play an ``extra'' game against the computer using $L$ and we use the
+computer's stratey in this extra game to inform our strategy for $L'$ in the
+real game.  If the colors chosen to swap in the real game are both in $L$, then
+we play with the computer's strategy for the extra game.  Any color $c\in
+L'\setminus L$ at a vertex $v$ in the extra game is a singleton.  Since only
+three colors of $L$ are non-singletons, and $|L(v)|=4$, each vertex in the
+extra game will always have a singleton in its list.  Thus, we treat $c$ like
+some other singleton $c'$ at $v$ in the extra game, and use the computer's strategy
+from the extra game if $c'$ had been chosen instead.
+%\begin{problem}
+%Show that $C_5$ is not $f$-fixable for any $f$.
+%\end{problem}
+
+We have more questions than answers about Conjectures~\ref{OneHighConjecture}
+and~\ref{MoonshineConjecture}.  For instance,
+what if in Conjecture~\ref{MoonshineConjecture} we only look at
+superabundant list assignments arising from an edge coloring of $G-e$, for some
+edge $e$?  The resulting conjecture is also stronger than Goldberg's
+conjecture, and at present we have no counterexamples.
+	
+\subsection{Stars with one edge subdivided}
+The following conjecture would generalize the ``Short Kierstead Paths'' of Kostochka
+and Stiebitz (see \cite[p.~46ff]{stiebitz2012graph}).  Parts (a) and (b) are
+special cases of Conjecture \ref{OneHighConjecture}.  We have a rough draft of
+a proof for part (a) and we suspect parts (b) and (c) will be similar, 
+but our draft is long and detailed, and we are still hoping to find a clean
+proof, like that for stars.
+Recall that the fan equation implies the reducibility for $k$-edge-coloring of
+stars with certain specified degrees of the leaves.  In this section we show
+that the truth of Conjecture \ref{StarWithOneEdgeSubdivided} would imply a
+similar equation for stars with one edge subdivided.
+
+\begin{conjecture}
+\label{StarWithOneEdgeSubdivided}
+Let $G$ be a star with one edge subdivided, where $r$ is the center of the
+star, $t$ the vertex at distance two from $r$, and $s$ the intervening vertex.  
+If $L$ is superabundant and $|L(v)| \ge d_G(v)$ for all 
+$v \in V(G)$, then $G$ is $L$-fixable if at least one of the following holds:
+\begin{enumerate}
+\item[(a)] $|L(r)| > d_G(r)$; or
+\item[(b)] $|L(s)| > d_G(s)$; or
+\item[(c)] $\psi_L(G) > \size{G}$.
+\end{enumerate}
+\end{conjecture}
+
+For a graph $H$ and $v \in V(H)$, let $E_H(v)$ be the set of edges incident to
+$v$ in $H$. Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$
+and $G \subseteq Q$.  For a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$, let
+$L_\pi(v) = \irange{\Delta(Q)} - \pi\parens{E_Q(v) - E(G)}$ for all $v \in
+V(G)$.  Graph $G$ is a \emph{$\Psi$-subgraph} of $Q$ if there is a
+$\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such that each $H \subsetneq G$
+is abundant. Let $E_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}}
+\text{ is even}}}$ and $O_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L,
+\alpha}} \text{ is odd}}}$.  Note that $\pot(L) = E_{L}(G) + O_{L}(G)$.
+
+\begin{lem}\label{LowPsiGivesManyOddColors}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$. If $G
+\subseteq Q$ and $\pi$ is a $\Delta(Q)$-edge-coloring of $Q - E(G)$ such that
+$\size{G}\ge \psi_L(G) $, then $\card{O_{L_\pi}(G)} \ge \sum_{v \in V(G)}
+\Delta(Q) - d_Q(v)$.  Furthermore, if $\size{G} > \psi_L(G)$, then
+$\card{O_{L_\pi}(G)} > \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.
+\end{lem}
+\begin{proof}
+The proof is a straightforward counting argument.  For fixed degrees and list
+sizes, as $\card{O_L(G)}$ gets larger, $\psi_L(G)$ gets smaller (half as
+quickly).  The details forthwith.  Let $L = L_\pi$.
+
+Since $\size{G} \ge \psi_L(G)$, we have 
+
+\begin{align}
+\label{edge-crit1}
+\size{G} \ge 
+\sum_{\alpha \in \pot(L)} \floor{\frac{\card{G_{L, \alpha}}}{2}}  =
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} -  \sum_{\alpha \in
+	O_L(H)} \frac12 
+.\end{align}
+	
+\noindent 
+Also,
+
+\begin{align}
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} 
+&= \sum_{v \in V(G)} \frac{\Delta(Q) - (d_Q(v)-d_G(v))}{2} \notag\\
+&= \sum_{v \in V(G)} \frac{d_G(v)}{2} + \sum_{v \in V(G)} \frac{\Delta(Q) -
+d_Q(v)}{2}\notag\\
+&= \size{G} +  \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}.
+\label{edge-crit2}
+\end{align}
+	
+\noindent Now we solve for $\size{G}-
+\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2}$ in 
+\eqref{edge-crit1} and \eqref{edge-crit2}, set the expressions equal, and then
+simplify.  The result is \eqref{edge-crit3}.
+	
+\begin{align}
+\card{O_L(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v).
+\label{edge-crit3}
+\end{align}
+Finally, if the inequality in \eqref{edge-crit1} is strict, then the inequality
+in \eqref{edge-crit3} is also strict.
+\end{proof}
+
+Again, let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G
+\subseteq Q$.  If there is a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such
+that each $H \subsetneq G$ is abundant, then $G$ is a \emph{$\Psi$-subgraph} of
+$Q$.  The point of this definition is that if $G$ is a $\Psi$-subgraph (and
+Conjecture~\ref{StarWithOneEdgeSubdivided}(c) holds), then $\size{G}\ge
+\psi(G)$, so we can apply Lemma~\ref{LowPsiGivesManyOddColors}.
+
+\begin{conjecture}\label{AdjacencyPrecursor}
+Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$.  
+Let $H$ be a star with one edge subdivided; let $r$ be the center of the star,
+$t$ the vertex at distance two from $r$, and $s$ the intervening vertex. 
+If $H$ is a $\Psi$-subgraph of $Q$, 
+then there exists $X \subseteq N(r)$ with $V(H - r - t)
+\subseteq X$ such that \[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q))
+\ge 0.\]  
+	
+\noindent Moreover, if $\set{r,s,t}$ does not induce a triangle in $Q$, then 
+\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 1.\]
+Furthermore, if $d_Q(r)<\Delta(Q)$ or $d_Q(s)<\Delta(Q)$, then both lower
+bounds improve by 1.
+\end{conjecture}
+\begin{proof}[Proof (assuming Conjecture~\ref{StarWithOneEdgeSubdivided}).]
+Let $G$ be a maximal $\Psi$-subgraph of $Q$ containing $H$ such that $G$
+is a star with one edge subdivided.  Let $\pi$ be a coloring of $Q - E(G)$
+showing that $G$ is a $\Psi$-subgraph and let $L = L_\pi$.  
+	
+We first show that $\card{E_{L}(G)} \ge d_Q(r) - d_G(r) - 1$ if $rst$ induces a
+triangle; otherwise, $\card{E_{L}(G)} \ge d_Q(r) - d_G(r)$.
+Suppose $rst$ does not induce a triangle; for an arbitrary $x \in N_Q(r) - V(G)$,
+let $\alpha=\pi(rx)$.  Now consider adding $x$ to $G$.  
+By assumption, every $J\subsetneq G$ is abundant.  Further, if $J\subsetneq G$
+is abundant, then $J+x$ is also abundant.  Thus, we only need to show that $G$
+is abundant.  If $\alpha \in O_{L}(G)$, then adding $x$ to $G$ makes $G$
+abundant, since now $r$ also has $\alpha$ in its list.  This gives a larger
+$\Psi$-subgraph of the required form, which contradicts the maximality of
+$G$.  Hence $\alpha \in E_{L}(G)$.  Therefore, $\card{E_{L}(G)} \ge d_Q(r) -
+d_G(r)$ as desired.  If $rst$ induces a triangle, then we lose one off this
+bound from the edge $rt$.
+	
+By Conjecture \ref{StarWithOneEdgeSubdivided}(c), we have $\psi_L(G) \le
+\size{G}$.  Hence, by Lemma \ref{LowPsiGivesManyOddColors}, we have
+$\card{O_{L}(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.  If $rst$ does
+not induce a triangle, then
+	
+\begin{align*}
+\Delta(Q) &\ge \pot(L)\\
+&= \card{E_{L}(G)} + \card{O_{L}(G)}\\
+&\ge d_Q(r) - d_G(r) + \sum_{v \in V(G)} \Delta(Q) - d_Q(v) \numberthis
+\label{strict-ineq}\\
+&= \Delta(Q) - d_G(r) + \sum_{v \in V(G - r)} \Delta(Q) - d_Q(v)\\
+&= \Delta(Q) + 1 +\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v).
+\end{align*}
+	
+Therefore, $\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v) \le -1$.  Negating
+gives the desired inequality.  If $rst$ induces a triangle, then we lose one
+off the bound.  Conjecture \ref{StarWithOneEdgeSubdivided}(a,b) gives the final
+statement.
+\end{proof}
+
+\section{Conclusion}
+Most work on proving sufficient conditions for $k$-edge-colorability relies on
+proving that various configurations are reducible.  Although these reducibility
+proofs have common themes, they often feel ad hoc and are tailored to the
+specific theorem being proved.  We have introduced the notion of fixability,
+which provides a unifying framework for many of these results.  It also
+naturally leads to a number of conjectures which, if true, will likely increase 
+greatly what we can prove about $k$-edge-coloring.  The computer has provided
+significant experimental evidence for these conjectures (proving many specific
+cases), but offers little guidance toward proving them completely.
+
+To conclude, we mention two consequences if
+Conjectures~\ref{StarWithOneEdgeSubdivided} and~\ref{OneHighConjecture}
+are true.
+Vizing~\cite{vizing68unsolved} conjectured that every $\Delta$-critical graph
+has average degree
+greater than $\Delta-1$.  For large $\Delta$, the best bound is roughly average
+degree greater than $\frac23\Delta$, due to Woodall~\cite{woodall2007average}. 
+His proof relies on a new class of reducible configurations, which would be
+implied if both $P_5$ is fixable (a very special case of
+Conjecture~\ref{OneHighConjecture}) and
+Conjecture~\ref{StarWithOneEdgeSubdivided} is true.  Another old conjecture of
+Vizing~\cite{vizing65chromatic}is that every $n$-vertex graph has independence
+number at most $\frac12n$.  The best upper bound known is $\frac35n$,
+also due to Woodall~\cite{woodall2011independence}.  The proof is relatively
+short, but relies on the same reducible configurations just mentioned.  Thus, proving
+Conjecture~\ref{AdjacencyPrecursor} and
+Conjecture~\ref{StarWithOneEdgeSubdivided} (even just for $P_5$) would put the
+best bounds for these two old problems into a much broader context.
+
+
+%Minor stuff to do
+%\begin{enumerate}
+%\item Define $E(v)$ %done
+%\item Change color of red vertices in pics, so text is legible. % not easy
+%\item By maximality, doesn't $G$ in Lemma 4.5 include \emph{every} edge incident
+%to $r$, except for $rt$ if $rst$ induces a triangle? % i think so, but the argument goes through the same, right?  i think the uniformity is good.
+%\item Section 4 needs clear organization.  The point of this section is not
+%obvious. % i added some introduction to the section to give context.
+%\end{enumerate}
+
+%Major stuff to do
+%\begin{enumerate}
+%\item Prove parts (b) and (c) of Theorem 4.3 % turned into conjectures
+%\end{enumerate}
+%
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+
+%\begin{comment}
+\section*{Appendix: Impoved lower bound on the average degree of 4-critical graphs}
+Here we prove the $\Delta=4$ case of Woodall's conjecture
+\cite{woodall2008average} on the average degree of a critical graph (modulo
+computer proofs of reducibility).  We show all of the reducible configurations
+in Figures~\ref{fig:C1}--\ref{fig:C39}.  A \emph{board} is a list assignment for
+the vertices of the configuration.  A board is \emph{colorable} if the
+configuration can be colored immediately from that board.  The computer shows
+that a configuration is reducible by considering all possible boards and
+verifying for each that some sequence of Kempe swaps leads to a colorable board.
+%Occasionally, it is useful to simultaneously perform multiple Kempe swaps for
+%the same color pair; we consider this
+The \emph{depth} of a board is the minimum number of Kempe swaps with which it
+can always reach a colorable board (each colorable board has depth 0).
+For each configuration we list the total number of boards, and also a vector,
+indexed from 0, where the $i$th coordinate is the number of boards of depth $i$.
 
 \begin{thm}
-	If $G$ is an edge-critical graph with maximum degree $4$, then $G$ has average degree at least $3.6$.
-	This is best possible, as shown by $K_5-e$.
+If $G$ is an edge-critical graph with maximum degree $4$, then $G$ has average
+degree at least $3.6$.  This is best possible, as shown by $K_5-e$.
 \end{thm}
 \begin{proof}
-	We use discharging with initial charge $\ch(v)=d(v)$ and the following rules.
-	\begin{enumerate}
-		\item[(R1)] Each 2-vertex takes $.8$ from each 4-neighbor.
-		\item[(R2)] Each 3-vertex with three 4-neighbors takes $.2$ from each 4-neighbor.
-		Each 3-vertex with two 4-neighbors takes $.3$ from each 4-neighbor.
-		\item[(R3)] Each 4-vertex with charge in excess of $3.6$ after (R2) splits this
-		excess evenly among its 4-neighbors with charge less than $3.6$.
-	\end{enumerate}
+We use discharging with initial charge $\ch(v)=d(v)$ and the following rules.
+\begin{enumerate}
+\item[(R1)] Each 2-vertex takes $.8$ from each 4-neighbor.
+\item[(R2)] Each 3-vertex with three 4-neighbors takes $.2$ from each 4-neighbor.
+Each 3-vertex with two 4-neighbors takes $.3$ from each 4-neighbor.
+\item[(R3)] Each 4-vertex with charge in excess of $3.6$ after (R2) splits this
+excess evenly among its 4-neighbors with charge less than $3.6$.
+\end{enumerate}
 	
-	Now we show that every vertex $v$ finishes with $\ch^*(v)\ge 3.6$.
-	
-	By VAL, each neigbhor of a 2-vertex $v$ is a 4-neighbor.  Thus,
-	$\ch^*(v)=2+2(.8)=3.6$.
-	
-	By VAL, each 3-vertex $v$ has at least two 4-neighbors, so $\ch^*(v)=3+3(.2)$ or
-	$\ch^*(v)=3+2(.3)$.  In either case, $\ch^*(v)=3.6$.
+We write $\ch^*(v)$ for the final charge of vertex $v$.
+We must show that every vertex $v$ finishes with $\ch^*(v)\ge 3.6$.
+
+By VAL, each neigbhor of a 2-vertex $v$ is a 4-neighbor.  Thus,
+$\ch^*(v)=2+2(.8)=3.6$.
+
+By VAL, each 3-vertex $v$ has at least two 4-neighbors, so $\ch^*(v)=3+3(.2)$ or
+$\ch^*(v)=3+2(.3)$.  In either case, $\ch^*(v)=3.6$.
 	
 	Now we consider a 4-vertex $v$.  Note that (R3) will never drop the charge of a
 	4-vertex below $3.6$; thus, in showing that $\ch^*(v)\ge 3.6$, we need not
@@ -1904,8 +2534,9 @@ Here we prove the $\Delta=4$ case of Woodall's conjecture \cite{woodall2008avera
 		3026 total boards:
 		%323 non-superabundant boards (none nearly colorable)
 		In increasing depth (1085, 380, 204, 147, 127, 143, 163, 145, 88, 90, 103, 28).
-		(This configuration is weird because there is no edge $e$ such that it works to
-		consider only near colorings for $G-e$; we need to go through a board that is a near coloring for a different missing edge.)
+		(This configuration is unusual because there is no edge $e$ such that it
+works to consider only near colorings for $G-e$; we need to go through a board
+that is a near coloring for a different missing edge.)
 		\label{fig:C34}}
 \end{figure}
 
@@ -2055,383 +2686,6 @@ Here we prove the $\Delta=4$ case of Woodall's conjecture \cite{woodall2008avera
 	}
 \end{figure}
 \clearpage
-\subsection{The conjecture of Hilton and Zhao for $\Delta=4$}
-For a graph $G$, let $G_\Delta$ be the subgraph of $G$ induced on vertices of
-degree $\Delta(G)$.  Vizing's Adjacency Lemma implies that $\delta(G_\Delta) \ge
-2$ in a critical graph $G$.  A natural question is whether or not this is 
-best possible.  For example, can we have $\Delta(G_\Delta) = 2$ in a
-critical graph $G$?  In fact, Hilton and Zhao have conjectured exactly when
-this can happen.  A graph $G$ is \emph{overfull} if $||G|| >
-\floor{\frac{|G|}{2}}\Delta(G)$.  Let $P^*$ be the Peterson graph with one
-vertex removed (see Figure \ref{fig:petey}).
-
-\begin{conjecture}[Hilton and Zhao]
-A connected graph $G$ with $\Delta(G_\Delta) \le 2$ is class 2 if and only if
-$G$ is $P^*$ or $G$ is overfull.
-\end{conjecture}
-
-David and Gianfranco Cariolaro~\cite{cariolaro2003colouring} proved this
-conjecture when $\Delta=3$.  Here we prove it when $\Delta=4$, but we
-omit the very long computer-generated proofs of the reducibility of the
-graphs in Figure~\ref{fig:hiltonzhao}.  Not all of the graphs in
-Figure~\ref{fig:hiltonzhao} are $4$-fixable; to prove reducibility of a graph
-$H$, we restrict the allowed list assignments on vertices to those from which
-all but one specified edge $e$ of $H$ can be colored.  Such a list assignment
-is called \emph{nearly-colorable}.  Checking only the nearly-colorable
-assignments clearly suffices for reducibility.
-
-\input{pics}
-Since we do not include the reducibility proofs, we separate the proof into two parts.  The first does not use the computer at all.
-Let $\H_4$ be the class of connected graphs with maximum degree 4, minimum
-degree 3, each vertex adjacent to at least two 4-vertices, and each 4-vertex
-adjacent to exactly two 4-vertices.
-\begin{lem}\label{HiltonZhaoLemma}
-If $G$ is a graph in $\H_4$ and $G$ contains none of the four configurations in
-Figure~\ref{fig:hiltonzhao} (not necessarily induced), then $G$ is $K_5-e$.
-\end{lem}
-\begin{proof}
-Let $G$ be a graph in $\H_4$.  Note that every 4-vertex in $G$ has exactly two
-3-neighbors and two 4-neighbors.  Let $u$ denote a 4-vertex and let
-$v_1,\ldots,v_4$ denote its neighbors, where $d(v_1)=d(v_2)=3$ and $d(v_3)=d(v_4)=4$.
-When vertices $x$ and $y$ are adjacent, we write $x\adj y$.  We assume that $G$
-contains none of the configurations in Figure~\ref{fig:hiltonzhao} and show that
-$G$ must be $K_5-e$.  
-	
-First suppose that $u$ has a 3-neighbor and a 4-neighbor that are adjacent.  By
-symmetry, assume that $v_2\adj v_3$.  Since
-Figure~\ref{fig:hiltonzhao}(a) is forbidden, we have $v_3\adj v_1$. 
-Now consider $v_4$.  If $v_4$ has a 3-neighbor distinct from $v_1$ and $v_2$,
-then we have a copy of Figure~\ref{fig:hiltonzhao}(d).  Hence $v_4\adj v_1$ and
-$v_4\adj v_2$.  If $v_3\adj v_4$, then $G$ is $K_5-e$.  Suppose not, and let
-$x$ be a 4-neighbor of $v_4$.  Since $G$ has no copy of
-Figure~\ref{fig:hiltonzhao}(d), $x$ must be adjacent to $v_1$ and $v_2$.  This
-is a contradiction, since $v_1$ and $v_2$ are 3-vertices, but now each has at
-least four neighbors.  Hence, we conclude that each of $v_1$ and $v_2$ is
-non-adjacent to each of $v_3$ and $v_4$.
-	
-Now consider the 3-neighbors of $v_3$ and $v_4$.  If they have zero 3-neighbors
-in common, then we have a copy of Figure~\ref{fig:hiltonzhao}(b).  If they have
-one 3-neighbor in common, then we have a copy of
-Figure~\ref{fig:hiltonzhao}(c).  Otherwise they have two 3-neighbors in common,
-so we have a copy of Figure~\ref{fig:hiltonzhao}(d).  
-\end{proof}
-
-Since $K_5 - e$ is overfull, the next theorem implies Hilton and Zhao's conjecture
-for $\Delta=4$.  Given a class 2 graph $G\in \H_4$, we would like to consider a
-4-edge-critical subgraph $H$, apply the previous lemma to find in $H$ some copy of a
-configuration in Figure~\ref{fig:hiltonzhao}, and reach a contradiction, since
-each of these configurations is reducible.  This is the main idea in the next
-proof.  However, in order to apply Lemma~\ref{HiltonZhaoLemma}, we must first
-show that $H\in \H_4$.
-
-\begin{thm}
-A connected graph $G$ with $\Delta(G) = 4$ and $\Delta(G_\Delta) \le 2$ is
-class 2 if and only if $G$ is $K_5-e$.
-\end{thm}
-%\begin{proof}
-%Suppose not and choose a counterexample $G$ minimizing $\size{G}$.  We will show
-%that $G$ is edge-critical.  If not, then there exists an edge $xy$ such that
-%$\chi'(G-xy)=5$, and further, there exists $H\subseteq G-xy$ such that $H$ is
-%4-edge-critical.  Consider some vertex $v\in V(H)$ with an incident edge $e$ such
-%that $e\in E(G)-E(H)$.  Vizing's Adjacency Lemma (VAL) implies that for every
-%edge $wz\in E(H)$, vertex $w$ has at least $\max\{2,5-d(z)\}$ adjacent 4-vertices.
-%If $d_H(v)=2$, then $v$ has two 4-neighbors; call one $z$. Since
-%$\Delta(H_{\Delta})\le \Delta(G_{\Delta})=2$, edge $vz$ contradicts VAL.  Thus,
-%$d_H(v)=3$.  Now $v$ has some 4-neighbor $z$ in $H$.  However, $z$ had only two
-%4-neighbors in $G$, so has at most one 4-neighbor in $H$, which contradicts VAL.
-%Thus, $\chi'(G-xy)\le 4$.  Since edge $xy$ was arbitrary, $G$ is 4-edge-critical.
-%
-%
-%Since $G$ is a counterexample, it is not $K_5-e$.  
-%Thus, Lemma \ref{HiltonZhaoLemma} implies that $G$ contains one of the 
-%configurations in Figure~\ref{fig:hiltonzhao}.  
-%%Since $G$ is 4-edge-critical,
-%By computer, each of these configurations %in Figure~\ref{fig:hiltonzhao} 
-%is reducible; thus, for each configuration there exists an edge $e$ such that
-%any 4-edge-coloring of $G-e$ can be extended (possibly after Kempe swaps) to
-%$G$.  Since $G$ is 4-edge-critical, we can indeed color $G-e$ for every edge $e$.
-%\end{proof}
-%
-%\bigskip
-
-\begin{proof} %[alternate proof]
-Let $G$ be as stated in the theorem.
-If $G$ is class $2$, then $G$ has a $4$-critical subgraph $H$.   Since
-$H$ is $4$-critical, it is connected, 
-and every vertex has at least two neighbors of degree $4$, by VAL.  
-Further, since $\Delta(H_\Delta) \le \Delta(G_\Delta) \le 2$, VAL implies
-that $H$ has minimum degree $3$. 
-Thus, $H \in \H_4$.  By Lemma \ref{HiltonZhaoLemma}, 
-either $H$ is $K_5-e$ or $H$ contains one of
-the configurations in Figure~\ref{fig:hiltonzhao}.  By computer, each of these
-configurations is reducible and hence cannot be a subgraph of the $4$-critical
-graph $H$.  Thus $H$ is $K_5-e$.  Let $x_1,x_2$ be the degree $3$ vertices in
-$H$.  Then $x_i$ has three degree $4$ neighbors in $H$ and hence $d_G(x_i) \le
-3$ since $\Delta(G_\Delta) \le 2$.  That is, $x_i$ has no neighbors outside
-$H$.  Since $G$ is connected we must have $G = H = K_5 - e$. 
-\end{proof}
-
-
-\section{Superabundance sufficiency and adjacency lemmas}
-In the previous sections, we studied $k$-fixable graphs which are reducible configurations for graphs with fixed maximum degree.  Here we study a more general notion that behaves similarly to Vizing Fans, Kierstead Paths and Tashkinov Trees.  
-Specifically, we consider graphs that are fixable for all superabundant list assignments.  
-
-%\begin{comment}
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[scale=0.5]{Superabundance/all/1[1,1].pdf}
-		\includegraphics[scale=0.5]{Superabundance/all/011[1,1,2].pdf}
-		\includegraphics[scale=0.5]{Superabundance/all/111[2,2,2].pdf}
-		\caption{The fixable graphs on at most 3 vertices.}
-		\label{fig:fixable3}
-	\end{figure}
-%\end{comment}
-	
-	\begin{defn}
-		If $G$ is a graph and $\func{f}{V(G)}{\IN}$ with $f(v) \ge d_G(v)$ for all $v \in V(G)$, then $G$ is $f$-fixable if $G$ is $(L, P)$-fixable for every $L$ with $|L(v)| \ge f(v)$ for all $v \in V(G)$ and every $L$-pot $P$ such that $(G,L)$ is superabundant.
-If a graph $G$ is $f$-fixable when $f(v)=d_G(v)$ for each $v$, then $G$ is
-\emph{degree-fixable}.
-	\end{defn}
-	
-	For example, Lemma \ref{FixabilityOfStars} shows that multistars are
-degree-fixable.  We have also found that the $4$-cycle is degree-fixable.
-	
-	\begin{problem}
-	Classify the degree-fixable multigraphs (specifically, those that are
-containment minimal).
-	\end{problem} 
-	
-	Since $f(v) \ge d_G(v)$, it is convenient to express the values of $f$ as $d+k$ for a non-negative integer $k$; this means $f(v) = d_G(v) + k$.  When $k=0$, we just write $d$ as in Figure \ref{fig:fixable3}.  
-	
-%\begin{comment}
-		\begin{figure}[htb]
-					\centering
-			\includegraphics[scale=0.5]{Superabundance/all/001011[1,1,1,3].pdf}
-			\includegraphics[scale=0.5]{Superabundance/all/011010[2,1,1,3].pdf}
-			\includegraphics[scale=0.5]{Superabundance/all/011011[2,1,2,3].pdf}
-			\includegraphics[scale=0.5]{Superabundance/all/011110[2,2,2,2].pdf}
-			\includegraphics[scale=0.5]{Superabundance/all/011111[2,2,3,3].pdf}
-			\includegraphics[scale=0.5]{Superabundance/all/111111[3,3,3,3].pdf}
-			\caption{The fixable graphs on 4 vertices.}
-			\label{fig:fixable4}
-		\end{figure}
-
-		
-		\begin{figure}[htb]
-					\centering
-\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0011001010[2,1,1,1,4].pdf}
-\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0011001010[3,1,1,1,3].pdf}
-\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0101011000[2,3,1,1,3].pdf}
-\includegraphics[scale=0.4]{Superabundance/MaxDegree3Trees/0101011000[3,3,1,1,2].pdf}
-			\caption{The fixable trees with maximum degree at most 3 on 5 vertices.}
-			\label{fig:fixable5tree}
-		\end{figure}
-		
-\begin{figure}[htb]
-\centering
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000100010001011[1,1,1,1,3,4].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[2,1,1,1,3,4].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,2,4].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/000110010001010[3,1,1,1,3,3].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[2,3,1,1,1,4].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011001000[3,3,1,1,1,3].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[2,3,1,1,3,3].pdf}
-\includegraphics[scale=0.25]{Superabundance/MaxDegree3Trees/001010011010000[3,2,1,1,3,3].pdf}
-\caption{The fixable trees with maximum degree at most 3 on 6 vertices.}
-\label{fig:fixable6tree}
-\end{figure}
 %\end{comment}
 
-Looking at the trees in Figures \ref{fig:fixable4}, \ref{fig:fixable5tree}, and
-\ref{fig:fixable6tree} we might conjecture that a tree is $f$-fixable as long
-as there is at most one internal vertex labeled ``d''.  This conjecture
-continues to hold for many more examples.
-
-\begin{conjecture}\label{OneHighConjecture}
-A tree $T$ is $f$-fixable if $f(v) = d_T(v)$ for at most one non-leaf $v$ of $T$.
-\end{conjecture}
-
-Note that by Lemma \ref{KTVImpliesSuperabundant}, this would imply that
-Tashkinov trees are elementary under the same degree constraints.  Can this be
-proved in the simpler case of Kierstead paths?  For paths of length 4, this was
-done by Kostochka and Stiebitz, in the next section we present a generalization
-of this result to stars with one edge subdivided.   One nice feature of the
-superabundance formulation is that since there is no need for an ordering like
-with Tashkinov trees, we can easily formulate results about graphs with cycles.
- The most general thing we might think is true is the following.
-
-\input{goldberg}
-\begin{conjecture}[false]
-	A multigraph $G$ is $f$-fixable if $f(v) > d_G(v)$ for all $v \in V(G)$.
-	\label{MoonshineConjecture}
-\end{conjecture}
-
-This is very strong and implies Goldberg's conjecture.  Unfortunately, it is false. 
-We can make counterexamples on a $5$-cycle as in Figure \ref{fig:goldbergce}.
-
-\begin{problem}
-	Show that $C_5$ is not $f$-fixable for any $f$.
-\end{problem}
-
-We have more questions than answers around these conjectures.  For instance, what if we only look at nearly-colorable superabundant list assignments in Conjecture \ref{MoonshineConjecture}?  The resulting conjecture is also stronger than Goldberg's conjecture and at present, we have no counterexamples.
-	
-\subsection{Stars with one edge subdivided}
-The following conjecture would generalize the ``Short Kierstead Paths'' of Kostochka
-and Stiebitz (see \cite{stiebitz2012graph}).  Parts (a) and (b) are special cases of
-Conjecture \ref{OneHighConjecture}.  We have a rough draft of a proof for part
-(a) and we suspect parts (b) and (c) will be similar, 
-but our draft is long and detailed, and we are still hoping to find a clean
-proof, like that for stars.
-Using this we show how to obtain Conjecture \ref{StarWithOneEdgeSubdivided} a
-formula similar to the fan equation.
-
-\begin{conjecture}\label{StarWithOneEdgeSubdivided}
-Let $G$ be a star with one edge subdivided, where $r$ is the center of the
-star, $t$ the vertex at distance two from $r$, and $s$ the intervening vertex.  
-If $L$ is superabundant and $|L(v)| \ge d_G(v)$ for all 
-$v \in V(G)$, then $G$ is $L$-fixable if at least one of the following holds:
-\begin{enumerate}
-\item[(a)] $|L(r)| > d_G(r)$; or
-\item[(b)] $|L(s)| > d_G(s)$; or
-\item[(c)] $\psi_L(G) > \size{G}$.
-\end{enumerate}
-\end{conjecture}
-
-For a graph $H$ and $v \in V(H)$, let $E_H(v)$ be the edges incident to $v$ in $H$. Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G
-\subseteq Q$.  For a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$, let
-$L_\pi(v) = \irange{\Delta(Q)} - \pi\parens{E_Q(v) - E(G)}$ for all $v \in
-V(G)$.  Graph $G$ is a \emph{$\Psi$-subgraph} of $Q$ if there is a
-$\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such that each $H \subsetneq G$
-is abundant. Let $E_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L, \alpha}}
-\text{ is even}}}$ and $O_{L}(H) = \card{\setb{\alpha}{\pot(L)}{\card{H_{L,
-\alpha}} \text{ is odd}}}$.  Note that $\pot(L) = E_{L}(G) + O_{L}(G)$.
-
-\begin{lem}\label{LowPsiGivesManyOddColors}
-Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$. If $G
-\subseteq Q$ and $\pi$ is a $\Delta(Q)$-edge-coloring of $Q - E(G)$ such that
-$\size{G}\ge \psi_L(G) $, then $\card{O_{L_\pi}(G)} \ge \sum_{v \in V(G)}
-\Delta(Q) - d_Q(v)$.  Furthermore, if $\size{G} > \psi_L(G)$, then
-$\card{O_{L_\pi}(G)} > \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.
-\end{lem}
-\begin{proof}
-The proof is a straightforward counting argument.  For fixed degrees and list
-sizes, as $\card{O_L(G)}$ gets larger, $\psi_L(G)$ gets smaller (half as
-quickly).  The details forthwith.  Let $L = L_\pi$.
-
-Since $\size{G} \ge \psi_L(G)$, we have 
-
-\begin{align}
-\label{edge-crit1}
-\size{G} \ge 
-\sum_{\alpha \in \pot(L)} \floor{\frac{\card{G_{L, \alpha}}}{2}}  =
-\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} -  \sum_{\alpha \in
-	O_L(H)} \frac12 
-.\end{align}
-	
-\noindent 
-Also,
-
-\begin{align}
-\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2} 
-&= \sum_{v \in V(G)} \frac{\Delta(Q) - (d_Q(v)-d_G(v))}{2} \notag\\
-&= \sum_{v \in V(G)} \frac{d_G(v)}{2} + \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}\notag\\
-&= \size{G} +  \sum_{v \in V(G)} \frac{\Delta(Q) - d_Q(v)}{2}.
-\label{edge-crit2}
-\end{align}
-	
-\noindent Now we solve for $\size{G}-
-\sum_{\alpha \in \pot(L)} \frac{\card{G_{L, \alpha}}}{2}$ in 
-\eqref{edge-crit1} and \eqref{edge-crit2}, set the expressions equal, and then
-simplify.  The result is \eqref{edge-crit3}.
-	
-\begin{align}
-\card{O_L(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v).
-\label{edge-crit3}
-\end{align}
-Finally, if the inequality in \eqref{edge-crit1} is strict, then the inequality
-in \eqref{edge-crit3} is also strict.
-\end{proof}
-
-Again, let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$ and $G
-\subseteq Q$.  If there is a $\Delta(Q)$-edge-coloring $\pi$ of $Q - E(G)$ such
-that each $H \subsetneq G$ is abundant, then $G$ is a \emph{$\Psi$-subgraph} of
-$Q$.
-
-\begin{conjecture}\label{AdjacencyPrecursor}
-Let $Q$ be an edge-critical graph with $\chi'(Q) = \Delta(Q) + 1$.  
-Let $H$ be a star with one edge subdivided; let $r$ be the center of the star,
-$t$ the vertex at distance two from $r$, and $s$ the intervening vertex. 
-If $H$ is a $\Psi$-subgraph of $Q$, 
-then there exists $X \subseteq N(r)$ with $V(H - r - t)
-\subseteq X$ such that \[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q))
-\ge 0.\]  
-	
-\noindent Moreover, if $\set{r,s,t}$ does not induce a triangle in $Q$, then 
-\[\sum_{v \in X \cup \set{t}} (d_Q(v) + 1 - \Delta(Q)) \ge 1.\]
-Furthermore, if $d_Q(r)<\Delta(Q)$ or $d_Q(s)<\Delta(Q)$, then both lower
-bounds improve by 1.
-\end{conjecture}
-\begin{proof}
-Let $G$ be a maximal $\Psi$-subgraph of $Q$ containing $H$ such that $G$
-is a star with one edge subdivided.  Let $\pi$ be a coloring of $Q - E(G)$
-showing that $G$ is a $\Psi$-subgraph and let $L = L_\pi$.  
-	
-We first show that $\card{E_{L}(G)} \ge d_Q(r) - d_G(r) - 1$ if $rst$ induces a
-triangle; otherwise, $\card{E_{L}(G)} \ge d_Q(r) - d_G(r)$.
-Suppose $rst$ does not induce a triangle; for an arbitrary $x \in N_Q(r) - V(G)$,
-let $\alpha=\pi(rx)$.  If $\alpha \in O_{L}(G)$, then adding $x$ to $G$ gives a
-larger $\Psi$-subgraph of the required form; this contradicts the maximality of
-$G$.  Hence $\alpha \in E_{L}(G)$.  Therefore, $\card{E_{L}(G)} \ge d_Q(r) -
-d_G(r)$ as desired.  If $rst$ induces a triangle, then we lose one off this
-bound from the edge $rt$.
-	
-By Conjecture \ref{StarWithOneEdgeSubdivided}(c), we have $\psi_L(G) \le
-\size{G}$.  By Lemma \ref{LowPsiGivesManyOddColors}, we have
-$\card{O_{L}(G)} \ge \sum_{v \in V(G)} \Delta(Q) - d_Q(v)$.  If $rst$ does
-not induce a triangle, then
-	
-\begin{align*}
-\Delta(Q) &\ge \pot(L)\\
-&= \card{E_{L}(G)} + \card{O_{L}(G)}\\
-&\ge d_Q(r) - d_G(r) + \sum_{v \in V(G)} \Delta(Q) - d_Q(v) \numberthis
-\label{strict-ineq}\\
-&= \Delta(Q) - d_G(r) + \sum_{v \in V(G - r)} \Delta(Q) - d_Q(v)\\
-&= \Delta(Q) + 1 +\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v).
-\end{align*}
-	
-Therefore, $\sum_{v \in V(G - r)} \Delta(Q) - 1 - d_Q(v) \le -1$.  Negating
-gives the desired inequality.  If $rst$ induces a triangle, we lose one off the
-bound.  Conjecture \ref{StarWithOneEdgeSubdivided}(a,b) gives the final statement.
-\end{proof}
-
-%Minor stuff to do
-%\begin{enumerate}
-%\item Define $E(v)$ %done
-%\item Change color of red vertices in pics, so text is legible. % not easy
-%\item By maximality, doesn't $G$ in Lemma 4.5 include \emph{every} edge incident
-%to $r$, except for $rt$ if $rst$ induces a triangle? % i think so, but the argument goes through the same, right?  i think the uniformity is good.
-%\item Section 4 needs clear organization.  The point of this section is not
-%obvious. % i added some introduction to the section to give context.
-%\end{enumerate}
-
-%Major stuff to do
-%\begin{enumerate}
-%\item Prove parts (b) and (c) of Theorem 4.3 % turned into conjectures
-%\end{enumerate}
-%
-\section{The gap between fixability and reducibility}
-By abstracting away the containing graph, we may have lost some power in proving reducibility results. Surely we have when we only care about a certain class of graphs. For example, with planar graphs, not all Kempe path pairings are possible (if we add an edge for each pair, the resulting graph has to be planar).  But, possibly there are graphs that are reducible for all containing graphs but are not fixable.  We could strengthen ``fixable'' in various ways, but we have not yet found any need to do so.  There is one strengthening we should mention because it makes fixable more induction friendly.  
-
-\begin{defn}
-$G$ is \emph{$(L, P)$-subfixable} if either
-\begin{enumerate}
-\item[(1)] $G$ is $(L, P)$-fixable; or
-\item[(2)] there is $xy \in E(G)$ and $\tau \in L(x) \cap L(y)$ such that $G-xy$ is $L'$-subfixable where $L'$ is formed from $L$ by removing $\tau$ from $L(x)$ and $L(y)$.
-\end{enumerate}
-\end{defn}
-
-Superabundance is a necessary condition for subfixability because coloring an edge cannot make a non-abundant subgraph abundant.  The conjectures in this paper may be easier to prove with subfixable in place of fixable.  That would really be just as good since it would give the exact same results for edge coloring.
-
-\bibliographystyle{amsplain}
-\bibliography{GraphColoring}
 \end{document}

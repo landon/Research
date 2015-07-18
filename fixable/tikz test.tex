@@ -98,23 +98,532 @@
 \newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
 
 \begin{document}
+	
+	\tikzstyle{clock_edge}=[draw, red!65, thick]
+	\tikzstyle{cclock_edge}=[draw, blue!65, thick]
+	
+		\tikzstyle{clock_edge_v}=[draw, red!65, thick]
+		\tikzstyle{cclock_edge_v}=[draw, blue!65, thick]
+		
+			\tikzstyle{clock_edge_a}=[draw, red!65, thick]
+			\tikzstyle{cclock_edge_a}=[draw, red!65, thick]
+			
+				\tikzstyle{clock_edge_b}=[draw, green!65, thick]
+				\tikzstyle{cclock_edge_b}=[draw, green!65, thick]
+		
+						\tikzstyle{clock_edge_c}=[draw, yellow!65, thick]
+						\tikzstyle{cclock_edge_c}=[draw, yellow!65, thick]
+						
+	
+	\tikzstyle{clock_edgetween}=[draw, red!65, dotted]
+    \tikzstyle{cclock_edgetween}=[draw, blue!65, dotted]
+    
+    	\tikzstyle{clock_edgetween_v}=[draw, red!65, dotted]
+    	\tikzstyle{cclock_edgetween_v}=[draw, blue!65, dotted]
+    	
+    		\tikzstyle{clock_edgetween_a}=[draw, red!65, dotted]
+    		\tikzstyle{cclock_edgetween_a}=[draw, red!65, dotted]
+    		
+    			\tikzstyle{clock_edgetween_b}=[draw, green!65, dotted]
+    			\tikzstyle{cclock_edgetween_b}=[draw, green!65, dotted]
+    			
+    				\tikzstyle{clock_edgetween_c}=[draw, yellow!65, dotted]
+    				\tikzstyle{cclock_edgetween_c}=[draw, yellow!65, dotted]
+	
+	\tikzstyle{clock_vertex}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = red!65, draw]
+	\tikzstyle{cclock_vertex}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = blue!65, draw]
+	
+		\tikzstyle{clock_vertex_v}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = red!65, draw]
+		\tikzstyle{cclock_vertex_v}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = blue!65, draw]
+		
+				\tikzstyle{clock_vertex_a}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = red!65, draw]
+				\tikzstyle{cclock_vertex_a}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = red!65, draw]
+				
+					\tikzstyle{clock_vertex_b}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = green!65, draw]
+					\tikzstyle{cclock_vertex_b}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = green!65, draw]
+					
+						\tikzstyle{clock_vertex_c}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = yellow!65, draw]
+						\tikzstyle{cclock_vertex_c}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, fill = yellow!65, draw]
+	
+	\tikzstyle{core_style}=[draw, black!40]
+	
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill, black!40]
+	\tikzstyle{8befc631-0aab-4358-a08c-b58663cc4ac3}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_v]
+	\tikzstyle{2a4831a2-eec0-4624-a83c-8a99dfa21dd8}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_a]
+	\tikzstyle{62afb570-b4e8-455d-b85b-60ebbd079cb3}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_b]
+	\tikzstyle{175e6da0-d2d4-41c5-98f2-166fe5da0b76}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,clock_vertex_c]
+	\tikzstyle{373b8a00-5cb0-4225-a20c-a85c3177c83e}=[cclock_edge_v]
+	\tikzstyle{c8a562ad-9ee5-4f43-b3c2-87da5ef87d79}=[cclock_edgetween_v]
+	\tikzstyle{36945d15-6c2a-430b-8b7a-f6b0510e90de}=[cclock_edge_a]
+	\tikzstyle{82f2b939-4d0e-4213-a327-eaad095fa25e}=[cclock_edgetween_a]
+	\tikzstyle{192891d1-01b6-4825-92a7-f5b69df6f331}=[cclock_edge_b]
+	\tikzstyle{ae478555-8bf6-4c87-a096-6e24e541da27}=[cclock_edgetween_b]
+	\tikzstyle{07423854-1fd2-44ff-9326-b03f470e9473}=[clock_edge_c]
+	\tikzstyle{a901ce31-1873-456c-a1b6-d4972a6f1f45}=[clock_edgetween_c]
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.95, L = \tiny {}]{v0}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.7075, L = \tiny {}]{v1}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.7075, L = \tiny {}]{v2}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.7075, L = \tiny {}]{v3}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.7075, L = \tiny {}]{v4}
+	\Vertex[style = unlabeledStyle, x = 0.71, y = 0.465, L = \tiny {}]{v5}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.465, L = \tiny {}]{v6}
+	\Vertex[style = unlabeledStyle, x = 1.27, y = 0.465, L = \tiny {}]{v7}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.2225, L = \tiny {}]{v8}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.2225, L = \tiny {}]{v9}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.2225, L = \tiny {}]{v10}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.2225, L = \tiny {}]{v11}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = -0.0199, L = \tiny {}]{v12}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 0.7219, y = 0.8692, L = \tiny {}]{v13}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 0.7393, y = 0.5897, L = \tiny {}]{v14}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 0.9726, y = 0.7445, L = \tiny {}]{v15}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 1.474, y = 0.4951, L = \tiny {}]{v16}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 1.2233, y = 0.6198, L = \tiny {}]{v17}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 1.2407, y = 0.3403, L = \tiny {}]{v18}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 0.774, y = 0.0308000000000001, L = \tiny {}]{v19}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 0.7567, y = 0.3102, L = \tiny {}]{v20}
+	\Vertex[style = 8befc631-0aab-4358-a08c-b58663cc4ac3, x = 1.0074, y = 0.1855, L = \tiny {}]{v21}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 1.1940469186102, y = 0.273252931341789, L = \tiny {}]{v22}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 1.17666666666667, y = 0.552724176450081, L = \tiny {}]{v23}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 1.42738025194353, y = 0.428028754891707, L = \tiny {}]{v24}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 0.721961439859445, y = 0.384183333333333, L = \tiny {}]{v25}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 0.739341691802975, y = 0.104712088225041, L = \tiny {}]{v26}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 0.972675025136308, y = 0.259487911774959, L = \tiny {}]{v27}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 1.0540469186102, y = 0.737580401991545, L = \tiny {}]{v28}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 0.803333333333333, y = 0.862275823549919, L = \tiny {}]{v29}
+	\Vertex[style = 2a4831a2-eec0-4624-a83c-8a99dfa21dd8, x = 0.820713585276864, y = 0.582804578441626, L = \tiny {}]{v30}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 1.25809383722039, y = 0.545833333333333, L = \tiny {}]{v31}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 1.00738025194353, y = 0.670528754891707, L = \tiny {}]{v32}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 1.24071358527686, y = 0.825304578441626, L = \tiny {}]{v33}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 0.925953081389803, y = 0.192419598008455, L = \tiny {}]{v34}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 1.15928641472314, y = 0.347195421558374, L = \tiny {}]{v35}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 1.17666666666667, y = 0.0677241764500813, L = \tiny {}]{v36}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 0.785953081389803, y = 0.656747068658211, L = \tiny {}]{v37}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 0.552619748056469, y = 0.501971245108293, L = \tiny {}]{v38}
+	\Vertex[style = 62afb570-b4e8-455d-b85b-60ebbd079cb3, x = 0.803333333333333, y = 0.377275823549919, L = \tiny {}]{v39}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 1.4740469186102, y = 0.434919598008455, L = \tiny {}]{v40}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 1.24071358527686, y = 0.589695421558374, L = \tiny {}]{v41}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 1.22333333333333, y = 0.310224176450081, L = \tiny {}]{v42}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 0.721961439859445, y = 0.0609166666666666, L = \tiny {}]{v43}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 0.739286414723136, y = 0.340304578441626, L = \tiny {}]{v44}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 0.972619748056469, y = 0.185528754891707, L = \tiny {}]{v45}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 0.774046918610197, y = 0.899247068658211, L = \tiny {}]{v46}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 1.00738025194353, y = 0.744471245108293, L = \tiny {}]{v47}
+	\Vertex[style = 175e6da0-d2d4-41c5-98f2-166fe5da0b76, x = 0.756666666666667, y = 0.619775823549919, L = \tiny {}]{v48}
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v14)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v15)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v17)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v18)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v20)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v21)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v10)
+	\Edge[style = c8a562ad-9ee5-4f43-b3c2-87da5ef87d79, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v0)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v14)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v15)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v15)
+	\Edge[style = c8a562ad-9ee5-4f43-b3c2-87da5ef87d79, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v11)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v17)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v18)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v18)
+	\Edge[style = c8a562ad-9ee5-4f43-b3c2-87da5ef87d79, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v8)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v20)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v21)
+	\Edge[style = 373b8a00-5cb0-4225-a20c-a85c3177c83e, label = \tiny {}, labelstyle={auto=right, fill=none}](v20)(v21)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v23)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v24)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v23)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v24)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v23)(v24)
+	\Edge[style = 82f2b939-4d0e-4213-a327-eaad095fa25e, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v6)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v26)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v27)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v26)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v27)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v26)(v27)
+	\Edge[style = 82f2b939-4d0e-4213-a327-eaad095fa25e, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v6)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v29)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v30)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v29)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v30)
+	\Edge[style = 36945d15-6c2a-430b-8b7a-f6b0510e90de, label = \tiny {}, labelstyle={auto=right, fill=none}](v29)(v30)
+	\Edge[style = 82f2b939-4d0e-4213-a327-eaad095fa25e, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v6)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v32)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v33)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v31)(v32)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v31)(v33)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v32)(v33)
+	\Edge[style = ae478555-8bf6-4c87-a096-6e24e541da27, label = \tiny {}, labelstyle={auto=right, fill=none}](v31)(v6)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v35)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v36)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v34)(v35)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v34)(v36)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v35)(v36)
+	\Edge[style = ae478555-8bf6-4c87-a096-6e24e541da27, label = \tiny {}, labelstyle={auto=right, fill=none}](v34)(v6)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v38)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v39)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v37)(v38)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v37)(v39)
+	\Edge[style = 192891d1-01b6-4825-92a7-f5b69df6f331, label = \tiny {}, labelstyle={auto=right, fill=none}](v38)(v39)
+	\Edge[style = ae478555-8bf6-4c87-a096-6e24e541da27, label = \tiny {}, labelstyle={auto=right, fill=none}](v37)(v6)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v41)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v42)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v40)(v41)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v40)(v42)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v41)(v42)
+	\Edge[style = a901ce31-1873-456c-a1b6-d4972a6f1f45, label = \tiny {}, labelstyle={auto=right, fill=none}](v40)(v4)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v44)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v45)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v43)(v44)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v43)(v45)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v44)(v45)
+	\Edge[style = a901ce31-1873-456c-a1b6-d4972a6f1f45, label = \tiny {}, labelstyle={auto=right, fill=none}](v43)(v12)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v47)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v48)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v46)(v47)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v46)(v48)
+	\Edge[style = 07423854-1fd2-44ff-9326-b03f470e9473, label = \tiny {}, labelstyle={auto=right, fill=none}](v47)(v48)
+	\Edge[style = a901ce31-1873-456c-a1b6-d4972a6f1f45, label = \tiny {}, labelstyle={auto=right, fill=none}](v46)(v1)
+	\end{tikzpicture}
+	
+	
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill, black!40]
+	\tikzstyle{191cf305-6e73-49b9-8941-a8177d57ee09}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_v]
+	\tikzstyle{9b6aa7ed-166b-4d5f-94c8-9e058b008509}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_a]
+	\tikzstyle{d9f1addf-503b-4855-aa98-0767eaba87a2}=[cclock_edge_v]
+	\tikzstyle{8f3f9720-649e-4bf5-bb2c-b2807793334d}=[cclock_edgetween_v]
+	\tikzstyle{d708f31b-115b-44ec-a3f7-fabe5fd08cbd}=[cclock_edge_a]
+	\tikzstyle{3af2fc51-b323-4b8e-8710-45bbb0780166}=[cclock_edgetween_a]
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.95, L = \tiny {}]{v0}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.7075, L = \tiny {}]{v1}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.7075, L = \tiny {}]{v2}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.7075, L = \tiny {}]{v3}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.7075, L = \tiny {}]{v4}
+	\Vertex[style = unlabeledStyle, x = 0.71, y = 0.465, L = \tiny {}]{v5}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.465, L = \tiny {}]{v6}
+	\Vertex[style = unlabeledStyle, x = 1.27, y = 0.465, L = \tiny {}]{v7}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.2225, L = \tiny {}]{v8}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.2225, L = \tiny {}]{v9}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.2225, L = \tiny {}]{v10}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.2225, L = \tiny {}]{v11}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = -0.0199, L = \tiny {}]{v12}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 0.7219, y = 0.8692, L = \tiny {}]{v13}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 0.7393, y = 0.5897, L = \tiny {}]{v14}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 0.9726, y = 0.7445, L = \tiny {}]{v15}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 1.474, y = 0.4951, L = \tiny {}]{v16}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 1.2233, y = 0.6198, L = \tiny {}]{v17}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 1.2407, y = 0.3403, L = \tiny {}]{v18}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 0.774, y = 0.0308000000000001, L = \tiny {}]{v19}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 0.7567, y = 0.3102, L = \tiny {}]{v20}
+	\Vertex[style = 191cf305-6e73-49b9-8941-a8177d57ee09, x = 1.0074, y = 0.1855, L = \tiny {}]{v21}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 1.1940469186102, y = 0.273252931341789, L = \tiny {}]{v22}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 1.17666666666667, y = 0.552724176450081, L = \tiny {}]{v23}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 1.42738025194353, y = 0.428028754891707, L = \tiny {}]{v24}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 0.721961439859445, y = 0.384183333333333, L = \tiny {}]{v25}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 0.739341691802975, y = 0.104712088225041, L = \tiny {}]{v26}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 0.972675025136308, y = 0.259487911774959, L = \tiny {}]{v27}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 1.0540469186102, y = 0.737580401991545, L = \tiny {}]{v28}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 0.803333333333333, y = 0.862275823549919, L = \tiny {}]{v29}
+	\Vertex[style = 9b6aa7ed-166b-4d5f-94c8-9e058b008509, x = 0.820713585276864, y = 0.582804578441626, L = \tiny {}]{v30}
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v14)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v15)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v17)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v18)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v20)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v21)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v10)
+	\Edge[style = 8f3f9720-649e-4bf5-bb2c-b2807793334d, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v0)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v14)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v15)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v15)
+	\Edge[style = 8f3f9720-649e-4bf5-bb2c-b2807793334d, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v11)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v17)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v18)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v18)
+	\Edge[style = 8f3f9720-649e-4bf5-bb2c-b2807793334d, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v8)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v20)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v21)
+	\Edge[style = d9f1addf-503b-4855-aa98-0767eaba87a2, label = \tiny {}, labelstyle={auto=right, fill=none}](v20)(v21)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v23)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v24)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v23)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v24)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v23)(v24)
+	\Edge[style = 3af2fc51-b323-4b8e-8710-45bbb0780166, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v6)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v26)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v27)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v26)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v27)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v26)(v27)
+	\Edge[style = 3af2fc51-b323-4b8e-8710-45bbb0780166, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v6)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v29)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v30)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v29)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v30)
+	\Edge[style = d708f31b-115b-44ec-a3f7-fabe5fd08cbd, label = \tiny {}, labelstyle={auto=right, fill=none}](v29)(v30)
+	\Edge[style = 3af2fc51-b323-4b8e-8710-45bbb0780166, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v6)
+	\end{tikzpicture}
+	
+	
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill, black!40]
+	\tikzstyle{2a498578-2cbc-4398-b19d-96d5891aef89}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_v]
+	\tikzstyle{3f9acaa1-76fc-4fb4-95ff-f0061f328b80}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex_a]
+	\tikzstyle{a7afeb40-818e-424b-b669-8ac563f74381}=[cclock_edge_v]
+	\tikzstyle{7424ad69-6486-4be1-a027-eabd1e63c170}=[cclock_edgetween_v]
+	\tikzstyle{b144e9d5-ff87-4687-92f1-173436c89627}=[cclock_edge_a]
+	\tikzstyle{3fc2a092-e442-449a-921c-968c74c57d1b}=[cclock_edgetween_a]
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.95, L = \tiny {}]{v0}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.7075, L = \tiny {}]{v1}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.7075, L = \tiny {}]{v2}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.7075, L = \tiny {}]{v3}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.7075, L = \tiny {}]{v4}
+	\Vertex[style = unlabeledStyle, x = 0.71, y = 0.465, L = \tiny {}]{v5}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = 0.465, L = \tiny {}]{v6}
+	\Vertex[style = unlabeledStyle, x = 1.27, y = 0.465, L = \tiny {}]{v7}
+	\Vertex[style = unlabeledStyle, x = 0.57, y = 0.2225, L = \tiny {}]{v8}
+	\Vertex[style = unlabeledStyle, x = 0.85, y = 0.2225, L = \tiny {}]{v9}
+	\Vertex[style = unlabeledStyle, x = 1.13, y = 0.2225, L = \tiny {}]{v10}
+	\Vertex[style = unlabeledStyle, x = 1.41, y = 0.2225, L = \tiny {}]{v11}
+	\Vertex[style = unlabeledStyle, x = 0.99, y = -0.0199, L = \tiny {}]{v12}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 0.7219, y = 0.8692, L = \tiny {}]{v13}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 0.7393, y = 0.5897, L = \tiny {}]{v14}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 0.9726, y = 0.7445, L = \tiny {}]{v15}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 1.474, y = 0.4951, L = \tiny {}]{v16}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 1.2233, y = 0.6198, L = \tiny {}]{v17}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 1.2407, y = 0.3403, L = \tiny {}]{v18}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 0.774, y = 0.0308000000000001, L = \tiny {}]{v19}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 0.7567, y = 0.3102, L = \tiny {}]{v20}
+	\Vertex[style = 2a498578-2cbc-4398-b19d-96d5891aef89, x = 1.0074, y = 0.1855, L = \tiny {}]{v21}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 0.925953081389803, y = 0.192419598008455, L = \tiny {}]{v22}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 1.15928641472314, y = 0.347195421558374, L = \tiny {}]{v23}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 1.17666666666667, y = 0.0677241764500813, L = \tiny {}]{v24}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 1.25809383722039, y = 0.545833333333333, L = \tiny {}]{v25}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 1.00738025194353, y = 0.670528754891707, L = \tiny {}]{v26}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 1.24071358527686, y = 0.825304578441626, L = \tiny {}]{v27}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 0.785953081389803, y = 0.656747068658211, L = \tiny {}]{v28}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 0.552619748056469, y = 0.501971245108293, L = \tiny {}]{v29}
+	\Vertex[style = 3f9acaa1-76fc-4fb4-95ff-f0061f328b80, x = 0.803333333333333, y = 0.377275823549919, L = \tiny {}]{v30}
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v14)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v15)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v17)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v18)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v20)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v21)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v5)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v6)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v9)
+	\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v10)
+	\Edge[style = 7424ad69-6486-4be1-a027-eabd1e63c170, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v0)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v14)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v15)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v15)
+	\Edge[style = 7424ad69-6486-4be1-a027-eabd1e63c170, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v11)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v17)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v18)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v18)
+	\Edge[style = 7424ad69-6486-4be1-a027-eabd1e63c170, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v8)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v20)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v21)
+	\Edge[style = a7afeb40-818e-424b-b669-8ac563f74381, label = \tiny {}, labelstyle={auto=right, fill=none}](v20)(v21)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v23)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v24)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v23)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v24)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v23)(v24)
+	\Edge[style = 3fc2a092-e442-449a-921c-968c74c57d1b, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v6)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v26)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v27)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v26)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v27)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v26)(v27)
+	\Edge[style = 3fc2a092-e442-449a-921c-968c74c57d1b, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v6)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v29)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v30)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v29)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v30)
+	\Edge[style = b144e9d5-ff87-4687-92f1-173436c89627, label = \tiny {}, labelstyle={auto=right, fill=none}](v29)(v30)
+	\Edge[style = 3fc2a092-e442-449a-921c-968c74c57d1b, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v6)
+	\end{tikzpicture}
+	
+	
 \begin{tikzpicture}[scale = 10]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
-\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = unlabeledStyle, x = 0.550000011920929, y = 0.799999997019768, L = \tiny {}]{v0}
-\Vertex[style = unlabeledStyle, x = 0.699999988079071, y = 0.599999994039536, L = \tiny {}]{v1}
-\Vertex[style = unlabeledStyle, x = 1.04999995231628, y = 0.699999988079071, L = \tiny {}]{v2}
-\Vertex[style = unlabeledStyle, x = 1.70000004768372, y = 0.449999988079071, L = \tiny {}]{v3}
-\Vertex[style = unlabeledStyle, x = 0.649999976158142, y = 0.300000011920929, L = \tiny {}]{v4}
-\Edge[label = \tiny {$yy$}, labelstyle={auto=right, fill=none}](v2)(v1)
-\Edge[label = \tiny {$hello$}, labelstyle={auto=right, fill=none}](v3)(v1)
-\Edge[label = \tiny {$hello$}, labelstyle={auto=right, fill=none}](v4)(v1)
-\Edge[label = \tiny {$x$}, labelstyle={auto=right, fill=none}](v2)(v0)
-\Edge[label = \tiny {$x$}, labelstyle={auto=right, fill=none}](v3)(v0)
-\Edge[label = \tiny {$x$}, labelstyle={auto=right, fill=none}](v4)(v0)
-\Edge[label = \tiny {$x$}, labelstyle={auto=right, fill=none}](v1)(v0)
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, black!40]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill, black!40]
+\tikzstyle{a5b50fbe-ab4d-4314-aff1-2dee61011ff7}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,cclock_vertex]
+\tikzstyle{829c0412-f525-4b22-861d-fdccda5b778c}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw,clock_vertex]
+\tikzstyle{a08dd904-db39-4cda-8bc1-7385926e9fb8}=[cclock_edge]
+\tikzstyle{c875331e-9238-4dc8-a00b-87ded8708357}=[clock_edge]
+\tikzstyle{2e0201b7-3183-4f0b-aa48-c5f5ec51dae8}=[cclock_edgetween]
+\tikzstyle{1df21319-3818-4319-b6d2-91f42be244dc}=[clock_edgetween]
+\Vertex[style = unlabeledStyle, x = 0.99, y = 0.95, L = \tiny {}]{v0}
+\Vertex[style = unlabeledStyle, x = 0.57, y = 0.7075, L = \tiny {}]{v1}
+\Vertex[style = unlabeledStyle, x = 0.85, y = 0.7075, L = \tiny {}]{v2}
+\Vertex[style = unlabeledStyle, x = 1.13, y = 0.7075, L = \tiny {}]{v3}
+\Vertex[style = unlabeledStyle, x = 1.41, y = 0.7075, L = \tiny {}]{v4}
+\Vertex[style = unlabeledStyle, x = 0.71, y = 0.465, L = \tiny {}]{v5}
+\Vertex[style = unlabeledStyle, x = 0.99, y = 0.465, L = \tiny {}]{v6}
+\Vertex[style = unlabeledStyle, x = 1.27, y = 0.465, L = \tiny {}]{v7}
+\Vertex[style = unlabeledStyle, x = 0.57, y = 0.2225, L = \tiny {}]{v8}
+\Vertex[style = unlabeledStyle, x = 0.85, y = 0.2225, L = \tiny {}]{v9}
+\Vertex[style = unlabeledStyle, x = 1.13, y = 0.2225, L = \tiny {}]{v10}
+\Vertex[style = unlabeledStyle, x = 1.41, y = 0.2225, L = \tiny {}]{v11}
+\Vertex[style = unlabeledStyle, x = 0.99, y = -0.0199, L = \tiny {}]{v12}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 0.7219, y = 0.8692, L = \tiny {}]{v13}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 0.7393, y = 0.5897, L = \tiny {}]{v14}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 0.9726, y = 0.7445, L = \tiny {}]{v15}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 1.474, y = 0.4349, L = \tiny {}]{v16}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 1.2407, y = 0.5897, L = \tiny {}]{v17}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 1.2233, y = 0.3102, L = \tiny {}]{v18}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 1.474, y = 0.4951, L = \tiny {}]{v19}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 1.2233, y = 0.6198, L = \tiny {}]{v20}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 1.2407, y = 0.3403, L = \tiny {}]{v21}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 0.722, y = 0.0609, L = \tiny {}]{v22}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 0.7393, y = 0.3403, L = \tiny {}]{v23}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 0.9726, y = 0.1855, L = \tiny {}]{v24}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 0.774, y = 0.0308000000000001, L = \tiny {}]{v25}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 0.7567, y = 0.3102, L = \tiny {}]{v26}
+\Vertex[style = a5b50fbe-ab4d-4314-aff1-2dee61011ff7, x = 1.0074, y = 0.1855, L = \tiny {}]{v27}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 0.774, y = 0.8992, L = \tiny {}]{v28}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 1.0074, y = 0.7445, L = \tiny {}]{v29}
+\Vertex[style = 829c0412-f525-4b22-861d-fdccda5b778c, x = 0.7567, y = 0.6198, L = \tiny {}]{v30}
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v1)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v2)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v3)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v14)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v15)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v17)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v18)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v20)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v21)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v23)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v24)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v26)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v27)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v29)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v30)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v3)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v5)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v5)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v6)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v6)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v7)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v9)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v7)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v9)
+\Edge[style = core_style, label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v10)
+\Edge[style = 2e0201b7-3183-4f0b-aa48-c5f5ec51dae8, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v0)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v14)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v15)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v15)
+\Edge[style = 1df21319-3818-4319-b6d2-91f42be244dc, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v4)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v17)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v18)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v18)
+\Edge[style = 2e0201b7-3183-4f0b-aa48-c5f5ec51dae8, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v11)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v20)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v21)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v20)(v21)
+\Edge[style = 1df21319-3818-4319-b6d2-91f42be244dc, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v12)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v23)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v22)(v24)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v23)(v24)
+\Edge[style = 2e0201b7-3183-4f0b-aa48-c5f5ec51dae8, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v8)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v26)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v25)(v27)
+\Edge[style = a08dd904-db39-4cda-8bc1-7385926e9fb8, label = \tiny {}, labelstyle={auto=right, fill=none}](v26)(v27)
+\Edge[style = 1df21319-3818-4319-b6d2-91f42be244dc, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v1)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v29)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v28)(v30)
+\Edge[style = c875331e-9238-4dc8-a00b-87ded8708357, label = \tiny {}, labelstyle={auto=right, fill=none}](v29)(v30)
 \end{tikzpicture}
 
 \end{document}

@@ -2689,4 +2689,21 @@ that is a near coloring for a different missing edge.)
 \clearpage
 %\end{comment}
 
+\section{Algorithm Overview}
+Here we describe the basic outline of our algorithm to test if a given graph $G$ is $k$-fixable.  To test if $G$ is $(L,P)$-fixable for one $L$, we need to generate the two-player game tree.  
+Doing this for every $L$ would be a lot of work.  With memoization, we can cut this down and get a reasonably efficient algorithm, but we can do much better by changing to a bottom-up strategy; that is, we do dynamic programming as follows. 
+
+\begin{enumerate}
+	\item Generate the set $\mathcal{L}$ of all possible lists assignments $L$ on $G$ with $\pot{(L) \subseteq \irange{k}}$.
+	\item Create a set $\mathcal{W}$ of \emph{won} assignments, consisting of all $L \in \mathcal{L}$ such that $G$ is $L$-colorable.
+	\item Put $\mathcal{L} \DefinedAs \mathcal{L} \setminus \mathcal{W}$.
+	\item For each $L \in \mathcal{L}$, check if there are different colors $a,b \in \irange{k}$ such that for every partition
+	$X_1, \ldots, X_t$ of $S_{L,a,b}$ into sets of size at most two, there exists $J
+	\subseteq \irange{t}$ so that $L' \in \mathcal{W}$, where $L'$ is formed
+	from $L$ by swapping $a$ and $b$ in $L(v)$ for every $v \in \bigcup_{i \in J} X_i$.  If so, add $L$ to $\mathcal{W}$.
+	\item If step $(4)$ modified $\mathcal{W}$, goto step (3).
+	\item $G$ is $k$-fixable if and only if $\mathcal{L} = \emptyset$.
+\end{enumerate}
+
+In step (1), we do not really want to generate \emph{all} list assignments, just list assignments up to color permutation.  To do this generation, we put an ordering on the set of list assignments and run an algorithm that outputs only the minimal representative of each color-permutation class.  All the code lives in the GitHub repository of WebGraphs at \url{https://github.com/landon/WebGraphs}.   Since a lot of this code is optimized for speed and not readability, a reference version is currently being built at \url{https://github.com/landon/Playground/tree/master/Fixability}.
 \end{document}

@@ -1,0 +1,243 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[margin=1cm]{caption}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{graphicx}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{observation}{Observation}
+\newtheorem{obs}[observation]{Observation}
+\newtheorem*{mainconj}{Main Conjecture}
+\newtheorem*{mainthm}{Main Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem{clm}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\pot}{\operatorname{pot}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+\def\H{\fancy{H}}
+
+% any changes to \claim should be mirrored in \claimnonum and \subclaim
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%
+%  If the proof ends with a displayed equation, use \aftermath just
+%  before \end{proof} to put the halmos in the ``right'' place.  This
+%  may not work near page boundaries. 
+%
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+
+\def\fr{\frac}
+\def\adj{\leftrightarrow}
+\def\ch{\textrm{ch}}
+
+\renewcommand{\restriction}{\mathord{\upharpoonright}}
+\begin{document}
+\title{mixed choosables notes}
+\author{}
+\maketitle
+
+\section{Introduction}
+
+We study graphs $G$ that are $f$-choosable where $f(v) = d_G(v)$ for most vertices $v$.  It is convenient to be able to discuss graphs that are choosable with a fixed number of vertices with $f(v) < d_G(v)$.  The following definition achieves this.
+\begin{defn}
+	For $\func{M}{\IN_{>0}}{\IN}$, we say that a graph $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT) if $G$ is $(d_G - h)$-choosable (resp. $(d_G - h)$-paintable, $(d_G - h)$-AT) for some $\func{h}{V(G)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$.
+\end{defn}
+
+For example, when $M$ is the constant zero function, the $M$-choosable graphs are exactly the degree-choosable graphs.  In fact, the $M$-choosable graphs inherit many of the nice properties of degree-choosable graphs. For instance, the non-$M$-choosable graphs are closed under taking induced subgraphs and the $M$-choosable graphs are closed under the operation of subdividing an edge twice.  In the next two lemmas, we formalize these properties.
+
+\begin{lem}\label{InducedSubgraph}
+	$G$ is $M$-choosable (resp. $M$-paintable, $M$-AT) if and only if $G$ has an induced subgraph $H$ that is $M$-choosable (resp. $M$-paintable, $M$-AT).
+\end{lem}
+\begin{proof}
+	The forward direction is trivial.  For the reverse, we have $\func{h}{V(H)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$ such that $H$ is $(d_H - h)$-choosable (resp. $(d_H - h)$-paintable, $(d_H - h)$-AT).  Extend $h$ to $\func{h'}{V(G)}{\IN}$ by letting $h'(v) = 0$ for all $v \in V(G) \setminus V(H)$.  By ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$, we quickly conclude that $G$ is $(d_G - h')$-choosable (resp. $(d_G - h')$-paintable, $(d_G - h')$-AT).  Hence $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT).
+\end{proof}
+
+\begin{lem}\label{SubdivideTwice}
+	If $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT), and $G'$ is formed from $G$ by subdividing an edge twice, then $G'$ is $M$-choosable (resp. $M$-paintable, $M$-AT).
+\end{lem}
+\begin{proof}
+	For $M$-AT, this is immediate since there is a parity preserving bijection between the spanning Eulerian subgraphs of $G$ and $G'$. 
+	
+	TODO: write proof for choosable, paintable.
+\end{proof}
+
+\begin{lem}\label{CutvertexPatch}
+	If $\set{A_1, A_2}$ is a separation of $G$ such that $G[A_i]$ is a connected $M_i$-choosable (resp. $M_i$-paintable, $M_i$-AT) graph for $i \in \irange{2}$ and $A_1 \cap A_2 = \set{x}$, then $G$ is $M'$-choosable (resp. $M'$-paintable, $M'$-AT) where $M'(v) = M_i(v)$ for $v \in V(M_i-x)$ and $M'(x) = M_1(x) + M_2(x) + 1$.
+\end{lem}
+\begin{proof}
+	First, we prove the lemma for $M$-AT.  For $i \in \irange{2}$, choose an orientation $D_i$ of $A_i$ showing that $A_i$ is $M_i$-AT.  Together these give the desired orientation $D$ of $G$ since no cycle has vertices in both $A_1-x$ and $A_2-x$ and thus \begin{align*}
+		EE(D) - EO(D) &= EE(D_1)EE(D_2) + EO(D_1)EO(D_2) - (EE(D_1)EO(D_2) + EO(D_1)EE(D_2)) \\
+		&= (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2)) \\
+		&\ne 0.
+	\end{align*}
+	
+	TODO: write proof for choosable, paintable.
+\end{proof}
+
+\section{General Lemma}
+This is a key lemma from \cite{OreVizing}, it generalizes a lemma from \cite{kostochkastiebitzedgesincriticalgraph} from list coloring to Alon-Tarsi orientations.  
+This is what i talked about in Baltimore.  The basic idea is that in some cases we can pair off odd/even spanning Eulerian subgraphs via a parity reversing bijection.
+
+\begin{lem}\label{GeneralEulerLemma}
+	Let $G$ be a multigraph without loops and $\func{f}{V(G)}{\IN}$. If there are $F \subseteq G$ and
+	$Y \subseteq V(G)$ such that:
+	\begin{enumerate}
+		\item any multiple edges in $G$ are contained in $G[Y]$; and
+		\item $f(v) \ge d_G(v)$ for all $v \in V(G) \setminus Y$; and
+		\item $f(v) \ge d_{G[Y]}(v) + d_F(v) + 1$ for all $v \in Y$; and
+		\item For each component $T$ of $G-Y$ there are different $x_1, x_2 \in V(T)$ where $N_T[x_1] = N_T[x_2]$ and $T - \set{x_1, x_2}$ is connected such that either:
+		\begin{enumerate}
+			\item there are $x_1y_1, x_2y_2 \in E(F)$ where $y_1 \ne y_2$ and $N(x_i) \cap Y = \set{y_i}$ for $i \in \irange{2}$; or
+			\item $\card{N(x_2) \cap Y} = 0$ and there is $x_1y_1 \in E(F)$ where $N(x_1) \cap Y = \set{y_1}$,
+		\end{enumerate}
+	\end{enumerate}
+	
+	\noindent then $G$ is $f$-AT.
+\end{lem}
+\begin{proof}
+	Suppose not and pick a counterexample $\parens{G, f, F, Y}$ minimizing $\card{G-Y}$. %HK Changed sentence to fix the typesetting
+	If $\card{G-Y} = 0$, then $Y = V(G)$ and thus $f(v) \ge d_G(v) + 1$ for all $v \in V(G)$ by (3).  Pick an acyclic orientation $D$ of $G$.  Then $EE(D) = 1$, $EO(D) = 0$ and $d_D^+(v) \le d_G(v) \le f(v) - 1$ for all $v \in V(D)$. Hence $G$ is $f$-AT.  So, we must have $\card{G-Y} > 0$.  
+	
+	Pick a component $T$ of $G - Y$ and pick $x_1, x_2 \in V(T)$ as guaranteed by (4). First, suppose (4a) holds.   Put $G' \DefinedAs (G - T) + y_1y_2$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y$ and let $f'$ be $f$ restricted to $V(G')$.  Then $G'$ has an orientation $D'$ where $f'(v) \ge d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \ne EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  By symmetry we may assume that the new edge $y_1y_2$ is directed toward $y_2$.  Now we use the orientation of $D'$ to construct the desired orientation of $D$. First, we use the orientation on $D' - y_1y_2$ on $G-T$. Now, order the vertices of $T$ as $x_1, x_2, z_1, z_2, \ldots$ so that every vertex has at least one neighbor to the right.  Orient the edges of $T$ left-to-right in this ordering.  Finally, we use $y_1x_1$ and $x_2y_2$ and orient all other edges between $T$ and $G-T$ away from $T$.  Plainly, $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Since $y_1x_1$ is the only edge of $D$ going into $T$, any Eulerian subgraph of $D$ that contains a vertex of $T$ must contain $y_1x_1$.  So, any Eulerian subgraph of $D$ either contains (i) neither $y_1x_1$ nor $x_2y_2$, (ii) both $y_1x_1$ and $x_2y_2$, or (iii) $y_1x_1$ but not $x_2y_2$.  We first handle (i) and (ii) together.  Consider the function $h$ that maps an Eulerian subgraph $Q$ of $D'$ to an Eulerian subgraph $h(Q)$ of $D$ as follows.  If $Q$ does not contain $y_1y_2$, let $h(Q) = \iota(Q)$ where $\iota(Q)$ is the natural embedding of $D' - y_1y_2$ in $D$.  Otherwise, let $h(Q) = \iota(Q - y_1y_2) + \set{y_1x_1, x_1x_2, x_2y_2}$.  Then $h$ is a parity-preserving injection with image precisely the union of those Eulerian subgraphs of $D$ in (i) and (ii).  Hence if we can show that exactly half of the Eulerian subgraphs of $D$ in (iii) are even, we will conclude $EE(D) \ne EO(D)$, a contradiction.  To do so, consider an Eulerian subgraph $A$ of $D$ containing $y_1x_1$ and not $x_2y_2$. Since $x_1$ must have in-degree $1$ in $A$, it must also have out-degree $1$ in $A$.  We show that $A$ has a mate $A'$ of opposite parity.  Suppose $x_2 \not \in A$ and $x_1z_1 \in A$; then we make $A'$ by removing $x_1z_1$ from $A$ and adding $x_1x_2z_1$.  If $x_2 \in A$ and $x_1x_2z_1 \in A$, we make $A'$ by removing $x_1x_2z_1$ and adding $x_1z_1$. Hence exactly half of the Eulerian subgraphs of $D$ in (iii) are even and we conclude $EE(D) \ne EO(D)$, a contradiction.
+	
+	Now suppose (4b) holds.  Put $G' \DefinedAs G - T$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y$ and define $f'$ by $f'(v) = f(v)$ for all $v \in V(G'-y_1)$ and $f'(y_1) = f(y_1) - 1$.  Then $G'$ has an orientation $D'$ where $f'(v) \ge d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \ne EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  We orient $G - T$ according to $D$, orient $T$ as in the previous case, again use $y_1x_1$ and orient all other edges between $T$ and $G-T$ away from $T$.  Since we decreased $f'(y_1)$ by $1$, the extra out edge of $y_1$ is accounted for and we have $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Again any additional Eulerian subgraph must contain $y_1x_1$ and since $x_2$ has no neighbor in $G-T$ we can use $x_2$ as before to build a mate of opposite parity for any additional Eulerian subgraph.  Hence $EE(D) \ne EO(D)$ giving our final contradiction.
+\end{proof}
+
+\section{When M is zero, except M(1) = 1}
+Through this section, let $G$ be a connected graph, $x \in V(G)$ and $\func{f}{V(G)}{\IN}$ where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G-x)$. First, some basic properties.
+
+\begin{lem}\label{BasicPropertiesM11}
+	The following facts hold.
+	\begin{enumerate}
+		\item If $G$ is $f$-AT, then $d_G(x) \ge 2$; and
+		\item If $d_G(x) \ge 2$ and $G-x$ has a degree-AT component, then $G$ is $f$-AT; and
+		\item If $G$ is $f$-AT and $d_G(x) = 2$, then $G-x$ has a degree-AT component.
+	\end{enumerate}
+\end{lem} 
+\begin{proof}
+	(1) is immediate since $x$ must have in-degree at least two.  We get (2) by orienting all edges incident to $x$ into $x$.  For (3), both edges incident to $x$ must be oriented into $x$ to get in-degree two, so the spanning Eulerian subgraphs counts in $G$ and $G-x$ are the same.
+\end{proof}
+
+Because of Lemma \ref{BasicPropertiesM11}, we will henceforth assume that $d_G(x) \ge 3$ and $G-x$ has no degree-AT components.
+
+\begin{lem}\label{DegreeChoosableLobesGood}
+	If $G-x$ has at least two components $A_1$ and $A_2$ such that $G[V(A_i) \cup \set{x}]$ is degree-AT for all $i \in \irange{2}$, then $G$ is $f$-AT.
+\end{lem}
+\begin{proof}
+	Immediate by Lemma \ref{CutvertexPatch} and Lemma \ref{InducedSubgraph}.
+\end{proof}
+
+\begin{lem}\label{NonDegreeChoosableLobeWorthless}
+	If $G$ is $f$-AT and $G-x$ has a component $A$ such that $G[V(A) \cup \set{x}]$ is not degree-AT, then $G - V(A)$ is also $f$-AT.
+\end{lem}
+\begin{proof}
+	 Suppose $G-x$ has a component $A$ such that $G[V(A) \cup \set{x}]$ is not degree-AT but $G - V(A)$ is not $f$-AT. Let $D$ be an orientation of $G$ showing that $G$ is $f$-AT. Let $D_1 = D[V(A) \cup \set{x}]$ and $D_2 = D[V(G)\setminus V(A)]$.  Then, as in Lemma \ref{CutvertexPatch}, we have $EE(D) - EO(D) = (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2))$ and hence both $EE(D_1) - EO(D_1) \ne 0$ and $EE(D_2) - EO(D_2) \ne 0$.  Since $G - A$ is not $f$-AT, it must be that $x$ has in-degree at most $1$ in $D_2$.  But then $x$ has in-degree at least $1$ in $D_1$ (since it has in-degree at least $2$ in $D$).  But $D$ shows that $G$ is $f$-AT, so every vertex in $A$ has in-degree at least $1$ in $D_1$ as well.  Since $EE(D_1) - EO(D_1) \ne 0$, this shows that $G[V(A) \cup \set{x}]$ is degree-AT, a contradiction.
+\end{proof}
+
+Because of Lemma \ref{BasicPropertiesM11}, Lemma \ref{DegreeChoosableLobesGood} and Lemma \ref{NonDegreeChoosableLobeWorthless}, we will henceforth assume that $G-x$ is connected and not degree-AT; that is, $G-x$ is a Gallai tree.  Now we show that we can assume $G$ is $2$-connected; in particular, $x$ is adjacent to a noncutvertex in every endblock of $G-x$.
+
+\begin{lem}\label{GIs2Connected}
+	If $G$ is $f$-AT and $G$ is not $2$-connected, then some proper subgraph of $G$ is $f$-AT.
+\end{lem}
+\begin{proof}
+	Suppose $G$ is $f$-AT and there is a cutvertex $v \in V(G-x)$.  Then $G-v$ has a component $A$ such that $x$ is not adjacent to any vertex in $A$.  Suppose $G-A$ is not $f$-AT. Let $D$ be an orientation of $G$ showing that $G$ is $f$-AT. Let $D_1 = D[V(A) \cup \set{v}]$ and $D_2 = D[V(G)\setminus V(A)]$.  Then, as in Lemma \ref{CutvertexPatch}, we have $EE(D) - EO(D) = (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2))$ and hence both $EE(D_1) - EO(D_1) \ne 0$ and $EE(D_2) - EO(D_2) \ne 0$.  Since $G - A$ is not $f$-AT, it must be that $v$ has in-degree $0$ in $D_2$.  But then $x$ has in-degree at least $1$ in $D_1$ (since it has in-degree at least $1$ in $D$).  But $D$ shows that $G$ is $f$-AT, so every vertex in $A$ has in-degree at least $1$ in $D_1$ as well.  Since $EE(D_1) - EO(D_1) \ne 0$, this shows that $G[V(A) \cup \set{v}]$ is degree-AT, a contradiction (since $G[V(A) \cup \set{v}]$ is a Gallai tree).
+\end{proof}
+
+There should be a more general lemma we can prove that implies Lemma \ref{NonDegreeChoosableLobeWorthless} and Lemma \ref{GIs2Connected} since the proofs are nearly identical.
+
+\begin{lem}
+	If $G-x$ has a complete block $B$ with noncutvertices $w$ and $z$ such that $x \adj w$ and $x \nonadj z$, then $G$ is $f$-AT.
+\end{lem}
+\begin{proof}
+	Immediate from Lemma \ref{GeneralEulerLemma} where $Y = \set{x}$, $F$ is just the edge $xw$ and we use part 4b.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+
+\end{document}

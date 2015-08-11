@@ -96,6 +96,7 @@
 \def\Q{\fancy{Q}}
 \def\Z{\fancy{Z}}
 \def\H{\fancy{H}}
+\def\L{\fancy{L}}
 
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -117,46 +118,68 @@
 
 \renewcommand{\restriction}{\mathord{\upharpoonright}}
 \begin{document}
-\title{mixed choosables notes}
+\title{mixed Alon-Tarsi notes}
 \author{}
 \maketitle
 
 \section{Introduction}
 
-We study graphs $G$ that are $f$-choosable where $f(v) = d_G(v)$ for most vertices $v$.  It is convenient to be able to discuss graphs that are choosable with a fixed number of vertices with $f(v) < d_G(v)$.  The following definition achieves this.
+We study graphs $G$ that are $f$-AT where $f(v) = d_G(v)$ for most vertices $v$.  It is convenient to be able to discuss graphs that are AT with a fixed number of vertices with $f(v) < d_G(v)$.  The following definition achieves this.
 \begin{defn}
-	For $\func{M}{\IN_{>0}}{\IN}$, we say that a graph $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT) if $G$ is $(d_G - h)$-choosable (resp. $(d_G - h)$-paintable, $(d_G - h)$-AT) for some $\func{h}{V(G)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$.
+	For $\func{M}{\IN_{>0}}{\IN}$, we say that a graph $G$ is $M$-AT if $G$ is $(d_G - h)$-AT for some $\func{h}{V(G)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$.
 \end{defn}
 
-For example, when $M$ is the constant zero function, the $M$-choosable graphs are exactly the degree-choosable graphs.  In fact, the $M$-choosable graphs inherit many of the nice properties of degree-choosable graphs. For instance, the non-$M$-choosable graphs are closed under taking induced subgraphs and the $M$-choosable graphs are closed under the operation of subdividing an edge twice.  In the next two lemmas, we formalize these properties.
+For example, when $M$ is the constant zero function, the $M$-AT graphs are exactly the degree-AT graphs.  In fact, the $M$-AT graphs inherit many of the nice properties of degree-AT graphs. For instance, the non-$M$-AT graphs are closed under taking induced subgraphs and the $M$-AT graphs are closed under the operation of subdividing an edge twice.  In the next two lemmas, we formalize these properties.
 
 \begin{lem}\label{InducedSubgraph}
-	$G$ is $M$-choosable (resp. $M$-paintable, $M$-AT) if and only if $G$ has an induced subgraph $H$ that is $M$-choosable (resp. $M$-paintable, $M$-AT).
+	$G$ is $M$-AT if and only if $G$ has an induced subgraph $H$ that is $M$-AT.
 \end{lem}
 \begin{proof}
-	The forward direction is trivial.  For the reverse, we have $\func{h}{V(H)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$ such that $H$ is $(d_H - h)$-choosable (resp. $(d_H - h)$-paintable, $(d_H - h)$-AT).  Extend $h$ to $\func{h'}{V(G)}{\IN}$ by letting $h'(v) = 0$ for all $v \in V(G) \setminus V(H)$.  By ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$, we quickly conclude that $G$ is $(d_G - h')$-choosable (resp. $(d_G - h')$-paintable, $(d_G - h')$-AT).  Hence $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT).
+	The forward direction is trivial.  For the reverse, we have $\func{h}{V(H)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$ such that $H$ is $(d_H - h)$-choosable (resp. $(d_H - h)$-paintable, $(d_H - h)$-AT).  Extend $h$ to $\func{h'}{V(G)}{\IN}$ by letting $h'(v) = 0$ for all $v \in V(G) \setminus V(H)$.  By ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$ and directing all edges away from $H$ in this order, we conclude that $G$ is $(d_G - h')$-AT.  Hence $G$ is $M$-AT.
 \end{proof}
 
 \begin{lem}\label{SubdivideTwice}
-	If $G$ is $M$-choosable (resp. $M$-paintable, $M$-AT), and $G'$ is formed from $G$ by subdividing an edge twice, then $G'$ is $M$-choosable (resp. $M$-paintable, $M$-AT).
+	For any $G'$ formed from $G$ by subdividing an edge twice, $G$ is $M$-AT if and only if $G'$ is $M$-AT.
 \end{lem}
 \begin{proof}
-	For $M$-AT, this is immediate since there is a parity preserving bijection between the spanning Eulerian subgraphs of $G$ and $G'$. 
-	
-	TODO: write proof for choosable, paintable.
+	This is immediate since there is a parity preserving bijection between the spanning Eulerian subgraphs of $G$ and $G'$. 
 \end{proof}
 
 \begin{lem}\label{CutvertexPatch}
-	If $\set{A_1, A_2}$ is a separation of $G$ such that $G[A_i]$ is a connected $M_i$-choosable (resp. $M_i$-paintable, $M_i$-AT) graph for $i \in \irange{2}$ and $A_1 \cap A_2 = \set{x}$, then $G$ is $M'$-choosable (resp. $M'$-paintable, $M'$-AT) where $M'(v) = M_i(v)$ for $v \in V(M_i-x)$ and $M'(x) = M_1(x) + M_2(x) + 1$.
+	Let $\set{A_1, A_2}$ be a separation of $G$ such that $A_1 \cap A_2 = \set{x}$.  If $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$, then $G$ is $f$-AT where $f(v) = f_i(v)$ for $v \in V(M_i-x)$ and $f(x) = f_1(x) + f_2(x) - 1$.  Going the other direction, if $G$ is $f$-AT, then $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$ where $f_i(v) = f(v)$ for $v \in V(M_i-x)$ and $f_1(x) + f_2(x) \le f(x) + 1$.
 \end{lem}
 \begin{proof}
-	First, we prove the lemma for $M$-AT.  For $i \in \irange{2}$, choose an orientation $D_i$ of $A_i$ showing that $A_i$ is $M_i$-AT.  Together these give the desired orientation $D$ of $G$ since no cycle has vertices in both $A_1-x$ and $A_2-x$ and thus \begin{align*}
+	For $i \in \irange{2}$, choose an orientation $D_i$ of $A_i$ showing that $A_i$ is $f_i$-AT.  Together these give an orientation $D$ of $G$ and since no cycle has vertices in both $A_1-x$ and $A_2-x$, we have
+	\begin{align*}
 		EE(D) - EO(D) &= EE(D_1)EE(D_2) + EO(D_1)EO(D_2) - (EE(D_1)EO(D_2) + EO(D_1)EE(D_2)) \\
 		&= (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2)) \\
 		&\ne 0.
 	\end{align*}
+	Hence $G$ is $f$-AT.
 	
-	TODO: write proof for choosable, paintable.
+	Now, suppose $G$ is $f$-AT and choose an orientation $D$ of $G$ showing this.  Put $D_i = D[A_i]$ for $i \in \irange{2}$.  Then, as above, we have $0 \ne EE(D) - EO(D) = (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2))$ and hence $EE(D_1) - EO(D_1) \ne 0$ and $EE(D_2) - EO(D_2) \ne 0$.  Since the in-degree of $x$ in $D$ is the sum of the in-degree of $x$ in $D_1$ and the in-degree of $x$ in $D_2$, the lemma follows.
+\end{proof}
+
+
+We need to define a few terms.  For $\func{M}{\IN_{>0}}{\IN}$ and graph $G$, a \emph{$G$-realization of $M$} is a function $\func{h}{V(G)}{\IN}$ where $\card{h^{-1}(n)} = M(n)$ for all $n \in \IN_{>0}$.  We say that a $G$-realization $h$ of $M$ is \emph{admissible} if $G$ is $(d_G - h)$-AT.   A $G$-realization $h$ of $M$ is \emph{minimal} if $h$ is admissible and no proper induced subgraph $H$ of $G$ is $(d_H - h\restriction_{V(H)})$-AT.  If $h$ is a $G$-realization of $M$, put $\L_h(G) = G\brackets{h^{-1}(0)}$ and $\H_h(G) = G - V(\L_h(G))$.
+
+\begin{defn}
+	For $\func{M}{\IN_{>0}}{\IN}$, a graph $G$ is \emph{minimal $M$-AT} if
+	\begin{itemize}
+		\item $G$ admits a minimal $G$-realization of $M$; and
+		\item $G$ cannot be formed from an $M$-AT graph by subdividing an edge twice.
+	\end{itemize}
+\end{defn}
+
+\begin{lem}\label{NoLowCutvertices}
+	For $\func{M}{\IN_{>0}}{\IN}$, let $G$ be minimal $M$-AT. If $h$ is a minimal $G$-realization of $M$, then
+	\begin{enumerate}
+		\item $\L_h(G)$ is a Gallai forest; and
+		\item no vertex in $\L_h(G)$ is a cutvertex in $G$.
+	\end{enumerate}
+\end{lem}
+\begin{proof}
+	(1) follows immediately from minimality of $h$.  For (2), suppose there is $x \in V(\L_h(G))$ that is a cutvertex in $G$.  Let $\set{A_1, A_2}$ be a separation of $G$ such that $A_1 \cap A_2 = \set{x}$.  By Lemma \ref{CutvertexPatch}, we know that $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$ where $f_i(v) = d_G(v) - h(v)$ for $v \in V(M_i-x)$ and $f_1(x) + f_2(x) \le d_G(x) - h(x) + 1$.  Since $h(x) = 0$, this last inequality is $f_1(x) + f_2(x) \le d_G(x) + 1$ and therefore $f_i(x) \le d_{G[A_i]}(x)$ for at least one $i \in \irange{2}$.  But then $G[A_i]$ is $(d_{G[A_i]} - h\restriction_{A_i})$-AT contradicting minimality of $h$.
 \end{proof}
 
 \section{General Lemma}

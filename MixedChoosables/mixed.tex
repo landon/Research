@@ -171,6 +171,8 @@ We need to define a few terms.  For $\func{M}{\IN_{>0}}{\IN}$ and graph $G$, a \
 	\end{itemize}
 \end{defn}
 
+For example, when $M$ is the constant zero function, there are only two minimal $M$-AT graphs: $C_4$ and $K_4^-$.
+
 \begin{lem}\label{NoLowCutvertices}
 	For $\func{M}{\IN_{>0}}{\IN}$, let $G$ be minimal $M$-AT. If $h$ is a minimal $G$-realization of $M$, then
 	\begin{enumerate}
@@ -181,6 +183,8 @@ We need to define a few terms.  For $\func{M}{\IN_{>0}}{\IN}$ and graph $G$, a \
 \begin{proof}
 	(1) follows immediately from minimality of $h$.  For (2), suppose there is $x \in V(\L_h(G))$ that is a cutvertex in $G$.  Let $\set{A_1, A_2}$ be a separation of $G$ such that $A_1 \cap A_2 = \set{x}$.  By Lemma \ref{CutvertexPatch}, we know that $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$ where $f_i(v) = d_G(v) - h(v)$ for $v \in V(M_i-x)$ and $f_1(x) + f_2(x) \le d_G(x) - h(x) + 1$.  Since $h(x) = 0$, this last inequality is $f_1(x) + f_2(x) \le d_G(x) + 1$ and therefore $f_i(x) \le d_{G[A_i]}(x)$ for at least one $i \in \irange{2}$.  But then $G[A_i]$ is $(d_{G[A_i]} - h\restriction_{A_i})$-AT contradicting minimality of $h$.
 \end{proof}
+
+Since our goal is to classify the basic building blocks of $M$-AT graphs, we'd like to exclude cutvertices in $\H_h(G)$ as well, but unfortunately these can appear in minimal $M$-AT graphs.  Fortunately, Lemma \ref{CutvertexPatch} tells us exactly how this can happen, so we can understand the structure of minimal $AT$-graphs by only considering those without cutvertices in $\H_h(G)$. By Lemma \ref{NoLowCutvertices}, this means we can restrict our attention to $2$-connected minimal $M$-AT graphs.
 
 \section{General Lemma}
 This is a key lemma from \cite{OreVizing}, it generalizes a lemma from \cite{kostochkastiebitzedgesincriticalgraph} from list coloring to Alon-Tarsi orientations.  

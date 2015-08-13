@@ -48,6 +48,8 @@
 \newtheorem*{Lemma}{Lemma}
 \newtheorem*{Nullstellensatz}{Combinatorial Nullstellensatz}
 \newtheorem*{CoefficientFormula}{Coefficient Formula}
+\newtheorem*{EulerianOrientationsLemma}{Eulerian Reduction}
+
 
 
 \theoremstyle{definition}
@@ -147,8 +149,6 @@ We first give Micha{\l}ek's proof of the Combinatorial Nullstellensatz and use t
 Suppose the result is false and choose $f \in \mathbb{F}[x_1, \ldots, x_n]$ for which it fails minimizing $\deg(f)$. Then $\deg(f) \ge 2$ and we have $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$ and $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} \ge k_i + 1$ such that $f(a_1, \ldots, a_n) = 0$ for all $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$.  By symmetry, we may assume that $k_1 > 0$.  Fix $a \in A_1$ and divide $f$ by $x_1 - a$ to get $f = (x_1 - a)Q + R$ where the degree of $x_1$ in $R$ is zero.  Then the coefficient of $x_1^{k_1-1}x_2^{k_2} \cdots x_n^{k_n}$ in $Q$ must be non-zero and $\deg(Q) < \deg(f)$.  So, by minimality of $\deg(f)$ there is $(a_1, \ldots, a_n) \in (A_1 \setminus \set{a}) \times \cdots \times A_n$ such that $Q(a_1,\ldots, a_n) \ne 0$.  Since $0 = f(a_1,\ldots, a_n) = (a_1 - a)Q(a_1,\ldots, a_n) + R(a_1,\ldots, a_n)$ we must have $R(a_1,\ldots, a_n) \ne 0$.  But $x_1$ has degree zero in $R$, so $R(a,\ldots, a_n) = R(a_1,\ldots, a_n) \ne 0$.  Finally, this means that $f(a,\ldots, a_n) = (a-a)Q(a,\ldots, a_n) + R(a,\ldots, a_n) \ne 0$, a contradiction.
 \end{proof}
 
-
-
 \begin{proof}[Proof of Coefficient Formula]
 Let $f \in \mathbb{F}[x_1, \ldots, x_n]$ and $k_1, \ldots, k_n \in \IN$ with $\sum_{i \in \irange{n}} k_i = \deg(f)$. Also, let $A_1, \ldots, A_n \subseteq \mathbb{F}$ with $\card{A_i} = k_i + 1$.  For each $(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n$, let $\chi_{(a_1, \ldots, a_n)}$ be the characteristic function of the set $\set{(a_1, \ldots, a_n)}$; that is $\func{\chi_{(a_1, \ldots, a_n)}}{A_1 \times \cdots \times A_n}{\mathbb{F}}$ with $\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = 1$ when $(x_1, \ldots, x_n) = (a_1, \ldots, a_n)$ and $\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = 0$ otherwise.  Consider the function
 \[F = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} f(a_1, \ldots, a_n)\chi_{(a_1, \ldots, a_n)}.\]
@@ -156,9 +156,36 @@ Then $F$ agrees with $f$ on all of $A_1 \times \cdots \times A_n$ and hence $f -
 \[N(a_1, \ldots, a_n) \DefinedAs \prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (a_i - b).\]
 \noindent Then it is readily verified that
 \[\chi_{(a_1, \ldots, a_n)}(x_1, \ldots, x_n) = \frac{\prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (x_i - b)}{N(a_1, \ldots, a_n)}.\]
-\noindent Using this to define $F$ we get $\deg(F) = \deg(f)$.  Since $f - F$ is zero on $A_1 \times \cdots \times A_n$, applying the Combinatorial Nullstellensatz to $f - F$ with $k_1, \ldots, k_n$ and sets $A_1, \ldots, A_n$ gives $(f-F)_{k_1, \ldots, k_n} = 0$ and hence 
+\noindent Using this to define $F$ we get 
+\[F(x_1, \ldots, x_n) = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} f(a_1, \ldots, a_n)\frac{\prod_{i \in \irange{n}} \prod_{b \in A_i \setminus \set{a_i}} (x_i - b)}{N(a_1, \ldots, a_n)}.\]
+Now  $\deg(F) = \sum_{i \in \irange{n}} (|A_i| - 1) = \sum_{i \in \irange{n}} k_i = \deg(f)$.  Since $f - F$ is zero on $A_1 \times \cdots \times A_n$, applying the Combinatorial Nullstellensatz to $f - F$ with $k_1, \ldots, k_n$ and sets $A_1, \ldots, A_n$ gives $(f-F)_{k_1, \ldots, k_n} = 0$ and hence 
 \[f_{k_1, \ldots, k_n} = F_{k_1, \ldots, k_n} = \sum_{(a_1, \ldots, a_n) \in A_1 \times \cdots \times A_n} \frac{f(a_1, \ldots, a_n)}{N(a_1, \ldots, a_n)}.\]
 \end{proof}
+
+\section{Applications to graph coloring}
+Let $G$ be a loopless multigraph with vertex set $V \DefinedAs \set{x_1, \ldots, x_n}$ and edge multiset $E$.  The \emph{graph polynomial} of $G$ is
+\[p_G(x_1,\ldots,x_n) \DefinedAs \prod_{\substack{\set{x_i,x_j} \in E\\i < j}} (x_i - x_j).\]
+To each orientation $\vec{G}$ of $G$, there is a corresponding monomial $m_{\vec{G}}(x_1,\ldots, x_n)$ given by choosing either $x_i$ or $-x_j$ from each factor $(x_i - x_j)$ according to $\vec{G}$. Precisely, given an orientation $\vec{G}$ of $G$ with edge multiset $\vec{E}$, put
+\[m_{\vec{G}}(x_1,\ldots, x_n) \DefinedAs \parens{\prod_{\substack{(x_i,x_j) \in \vec{E}\\i < j}} x_i}\parens{\prod_{\substack{(x_j,x_i) \in \vec{E}\\i < j}} -x_j}.\]
+Then $p_G(x_1,\ldots,x_n) = \sum_{\vec{G}} m_{\vec{G}}(x_1,\ldots, x_n)$, where the sum is over all orientations $\vec{G}$ of $G$.  
+
+Each $m_{\vec{G}}(x_1,\ldots, x_n)$ has coefficient either $1$ or $-1$.   We are interested in collecting up all monomials of the form $x_1^{k_1}\cdots x_n^{k_n}$.  Let $DE_{k_1,\ldots, k_n}(G)$ be the orientations of $G$ where $m_{\vec{G}}(x_1,\ldots, x_n) = x_1^{k_1}\cdots x_n^{k_n}$ and $DO_{k_1,\ldots, k_n}(G)$ the orientations of $G$ where $m_{\vec{G}}(x_1,\ldots, x_n) = -x_1^{k_1}\cdots x_n^{k_n}$.  Write $p_{k_1, \ldots, k_n}(G)$ for the coefficient of $x_1^{k_1}\cdots x_n^{k_n}$ in $p_G(x_1,\ldots,x_n)$.  Then we have
+\[p_{k_1, \ldots, k_n}(G) = |DE_{k_1,\ldots, k_n}(G)| - |DO_{k_1,\ldots, k_n}(G)|.\]
+This gives a combinatorial interpretation of the coefficients of $p_G$, but unfortunately it quantifies over all orientations of $G$.  For applying the Combinatorial Nullstellensatz, it is useful to have a single orientation of $G$ as a certificate that $p_{k_1, \ldots, k_n}(G) \ne 0$.  This can be achieved in terms of Eulerian subgraphs.  A digraph is Eulerian if the in-degree and out-degree are equal at every vertex.  Let $EE(\vec{G})$ be the spanning Eulerian subgraphs of $\vec{G}$ with an even number of edges and let $EO(\vec{G})$ be the spanning Eulerian subgraphs of $\vec{G}$ with an odd number of edges.  
+
+\begin{EulerianOrientationsLemma}
+If $\vec{G}$ is an orientation of $G$, then we have
+\[\card{|EE(\vec{G})| - |EO(\vec{G})|} = \card{|DE_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)|- |DO_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)|}.\]
+\end{EulerianOrientationsLemma}
+\begin{proof}
+	For $D \in DE_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G) \cup DO_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)$, let $\vec{G} \oplus D$ be the spanning subgraph of $\vec{G}$ with edge set 
+	\[\setb{(x_i,x_j)}{E(\vec{G})}{(x_j,x_i) \in E(D)}.\]
+	Then $\vec{G} \oplus D$ is Eulerian since all vertices have the same out-degree in $\vec{G}$ and $D$.  If $\vec{G}$ is even, this gives bijections between $DE_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)$ and $EE(\vec{G})$ as well as between $DO_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)$ and $EO(\vec{G})$.  When $\vec{G}$ is odd, the bijections are between $DE_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)$ and $EO(\vec{G})$ as well as between $DO_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)$ and $EE(\vec{G})$.  In either case, we have
+\[\card{|EE(\vec{G})| - |EO(\vec{G})|} = \card{|DE_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)|- |DO_{d_{\vec{G}}^+(x_1), \ldots, d_{\vec{G}}^+(x_n)}(G)|}.\]
+\end{proof} 
+Therefore, if $\vec{G}$ is an orientation of $G$ with $d_{\vec{G}}^+(x_i) = k_i$ for all $i \in \irange{n}$, then
+\[|p_{k_1, \ldots, k_n}(G)| = \card{|EE(\vec{G})| - |EO(\vec{G})|}.\]
+
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}
 \end{document}

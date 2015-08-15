@@ -127,18 +127,36 @@
 We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,h)$ where $G$ is a graph and $\func{h}{V(G)}{\IN}$.  We say that \emph{$(G, h)$ is AT} if $G$ is $(d_G - h)$-AT.
 
 \section{Subgraphs, subdivisions and cuts}
+\begin{defn}
+	A graph $G$ is \emph{$h$-minimal} if $G$ is connected and $\parens{H, h\restriction_{V(H)}}$ is not AT for every proper induced subgraph $H$ of $G$ where $h(v) = 0$ for all $v \in V(G) \setminus V(H)$.	
+\end{defn}
+
 \begin{lem}\label{InducedSubgraph}
-	If $G$ is connected and $(G,h)$ is not AT, then $\parens{H, h\restriction_{V(H)}}$ is not AT for every induced subgraph $H$ of $G$ where $h(v) = 0$ for all $v \in V(G) \setminus V(H)$.
+	If $G$ is connected and $(G,h)$ is not AT, then $G$ is $h$-minimal.
 \end{lem}
 \begin{proof}
-	If there were such an $H$ such that $\parens{H, h\restriction_{V(H)}}$ is AT, then by ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$ and directing all edges away from $H$ in this order we conclude that $(G,h)$ is AT.
+	If there were a proper induced subgraph $H$ such that $\parens{H, h\restriction_{V(H)}}$ is AT, then by ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$ and directing all edges away from $H$ in this order we conclude that $(G,h)$ is AT.
 \end{proof}
 
 \begin{lem}\label{SubdivideTwice}
-	For any $(G',h')$ formed from $(G,h)$ by subdividing an edge of $G$ twice and letting $h'$ give zero on the new vertices, $(G,h)$ is AT if and only if $(G', h')$ is AT.
+	If $(G',h')$ is formed from $(G,h)$ by subdividing an edge $e$ of $G$ twice and having $h'$ give zero on the two new vertices, then
+	\begin{enumerate}
+		\item if $(G,h)$ is AT, then $(G', h')$ is AT; and
+		\item if $(G', h')$ is AT, then either $(G,h)$ is AT or $(G-e,h)$ is AT.
+	\end{enumerate}	
 \end{lem}
 \begin{proof}
-	This is immediate since there is a parity preserving bijection between the spanning Eulerian subgraphs of $G$ and $G'$. 
+	Suppose $e = xy$ and call the new vertices $x'$ and $y'$ so that $G'$ contains the induced path $xx'y'y$.	For (1), let $D$ be an orientation of $G$ showing that $(G,h)$ is AT. By symmetry we may assume $xy \in E(D)$. Make an orientation $D'$ of $G'$ from $D$ by replacing $xy$ with the directed path $xx'y'y$.  There is a natural parity preserving bijection between the spanning Eulerian subgraphs of $D$ and $D'$, so we conclude that $(G', h')$ is AT.
+	
+	For (2), let $D'$ be an orientation of $G'$ showing that $(G',h')$ is AT.  Suppose $G'$ contains the directed path $xx'y'y$ or the directed path $yy'x'x$.  By symmetry, we can assume it is $xx'y'y$.  Then make an orientation $D$ of $G$ by replacing $xx'y'y$ with the directed edge $xy$.  As above, we have a parity preserving bijection between the spanning Eulerian subgraphs of $D$ and $D'$, so we conclude that $(G, h)$ is AT.  Otherwise, no spanning Eulerian subgraph of $D'$ contains a cycle passing through $x'$ and $y'$.  So, the spanning Eulerian subgraph counts of $D'$ are the same as those of $D' - x' - y'$.  But this gives an orientation of $G-e$ showing that $(G-e, h)$ is AT.
+\end{proof}
+
+\begin{cor}\label{ReduceP4Cor}
+	Let $G$ be an $h$-minimal graph.  If $(G,h)$ is AT and $G$ has an induced path $x_1x_2x_3x_4$ such that $d_G(x_2) = d_G(x_3) = 2$ and $h(x_2) = h(x_3) = 0$, then 
+	\[\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}} \text{ is AT.}\]
+\end{cor}
+\begin{proof}
+	Suppose $(G,h)$ is AT and $G$ has such an induced path $x_1x_2x_3x_4$.  Applying Lemma \ref{SubdivideTwice} part (2) shows that either $\parens{G - x_2 - x_3, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT or $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.  But $G - x_2 - x_3$ is a proper induced subgraph of $G$, so the former cannot happen since $G$ is $h$-minimal and $h(x_2) = h(x_3) = 0$.  Hence $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.
 \end{proof}
 
 \begin{lem}\label{CutvertexPatch}

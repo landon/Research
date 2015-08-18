@@ -97,6 +97,7 @@
 \def\Z{\fancy{Z}}
 \def\H{\fancy{H}}
 \def\L{\fancy{L}}
+\def\B{\fancy{B}}
 
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -233,6 +234,37 @@ A graph $G$ is called \emph{degree-AT} if $(G,h)$ is $AT$ where $h$ is the const
 	Hence, we must have $d_G(v) = 2$.  Suppose $G-v$ has at least $2$ endblocks.  Then, it has exactly $2$ and $v$ is adjacent to one noncutvertex in each.  Neither of the endblocks can be odd cycles of length at least $5$ since then we could get a smaller counterexample by Lemma \ref{SubdivideTwice}.  Since $v$ is adjacent to every noncutvertex in every complete endblock of $G-v$, both endblocks must be $K_2$.  But then either $G=C_4$ (which is trivially degree-AT) or we can get a smaller counterexample by Lemma \ref{SubdivideTwice}.  So, $G-v$ must be $2$-connected. Since $G-v$ is a Gallai tree, it is either complete or an odd cycle.  If $G-v$ is not complete, we can get a smaller counterexample by Lemma \ref{SubdivideTwice}.  So, $G-v$ is complete and $v$ is adjacent to every noncutvertex of $G-v$; that is, $G$ is complete, a contradiction.
 \end{proof}
 
+\section{When h is 1 for at most one vertex}
+Here we classify the graphs $G$ such that $(G,h)$ is AT where $\sum_{v \in V(G)} h(v) \le 1$. 
+
+\begin{lem}\label{DegreeTwoVertex}
+	Let $G$ be a connected graph and $x \in V(G)$ with $d_G(x) = 2$.  If $h(x) = 1$ and $h(v) = 0$ for all $v \in V(G-x)$, then $(G,h)$ is AT if and only if $G-x$ is degree-AT.
+\end{lem}
+\begin{proof}
+	Let $D$ be an orientation of $G$ showing that $(G,h)$ is AT.  Then $d_{D}^-(x) = 2$ and hence no spanning Eulerian subgraph contains a cycle passing through $x$.  Therefore, the Eulerian subgraph counts in $G-x$ are different and $G-x$ is degree-AT.
+	The other direction is immediate from Lemma \ref{InducedSubgraph}.
+\end{proof}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.35]{pictures/011010111010010[0,1,0,0,0,0].pdf}
+	\includegraphics[scale=0.35]{pictures/001101001100011010010[0,0,0,0,0,1,0].pdf}
+	\includegraphics[scale=0.35]{pictures/010110010110101011010[0,0,0,0,0,0,1].pdf}
+	\caption{The seed blocks.}
+	\label{fig:seeds}
+\end{figure}
+
+Lemma \ref{SubdivideTwice} part (2) suggests a way to construct $G$ such that $(G,h)$ is not AT from smaller graphs.  Specifically, we have the following.
+\begin{cor}\label{SubdivideConstructor}
+	If $e$ is an edge in $G$ such that $(G,h)$ is not AT and $(G-e, h)$ is not AT, then $(G',h')$ is not AT where $(G',h')$ is formed from $(G,h)$ by subdividing $e$ twice and having $h'$ give zero on the two new vertices.
+\end{cor}
+
+Let $\B$ be the smallest collection of pairs $(G,h)$ containing the pairs in Figure \ref{fig:seeds} that is closed under the operation in Corollary \ref{SubdivideConstructor}.
+
+\begin{conjecture}\label{ClassificationDegreeThreePlus}
+	Let $G$ be a connected graph and $x \in V(G)$ a noncutvertex with $d_G(x) \ge 3$.  If $h(x) = 1$ and $h(v) = 0$ for all $v \in V(G-x)$, then $(G,h)$ is not AT if and only if
+	$x$ is in a block $B$ such that $(B, h') \in \B$ with $h'(x) = 1$ and every other block of $G$ is complete or an odd cycle.
+\end{conjecture}
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring1}

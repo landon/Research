@@ -125,15 +125,17 @@
 
 \section{Introduction}
 
-We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,h)$ where $G$ is a graph and $\func{h}{V(G)}{\IN}$.  We say that \emph{$(G, h)$ is AT} if $G$ is $(d_G - h)$-AT.
+We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,h)$ where $G$ is a graph and $\func{h}{V(G)}{\IN}$.  We say that \emph{$(G, h)$ is AT} if $G$ is $(d_G - h)$-AT.  When $H$ is an induced subgraph of $G$, we simplify notation by referring to the pair $(H, h)$ where we really mean $\parens{H, h\restriction_{V(H)}}$.
 
 \section{Subgraphs, subdivisions and cuts}
 \begin{defn}
-	A graph $G$ is \emph{$h$-minimal} if $G$ is connected and $\parens{H, h\restriction_{V(H)}}$ is not AT for every proper induced subgraph $H$ of $G$ where $h(v) = 0$ for all $v \in V(G) \setminus V(H)$.	
+	A graph $G$ is \emph{$h$-minimal} if $G$ is connected and $\parens{H, h}$ is not AT for every proper induced subgraph $H$ of $G$.
+	A graph $G$ is \emph{$h$-greedy-minimal} if $G$ is connected and $\parens{H, h}$ is not AT for every proper induced subgraph $H$ of $G$ where $h(v) = 0$ for all $v \in V(G) \setminus V(H)$.	
+	Note that if $G$ is $h$-minimal then it is also $h$-greedy-minimal.
 \end{defn}
 
 \begin{lem}\label{InducedSubgraph}
-	If $G$ is connected and $(G,h)$ is not AT, then $G$ is $h$-minimal.
+	If $G$ is connected and $(G,h)$ is not AT, then $G$ is $h$-greedy-minimal.
 \end{lem}
 \begin{proof}
 	If there were a proper induced subgraph $H$ such that $\parens{H, h\restriction_{V(H)}}$ is AT, then by ordering the vertices of each component of $G - V(H)$ by increasing distance to $H$ and directing all edges away from $H$ in this order we conclude that $(G,h)$ is AT.
@@ -152,14 +154,6 @@ We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,
 	For (2), let $D'$ be an orientation of $G'$ showing that $(G',h')$ is AT.  Suppose $G'$ contains the directed path $xx'y'y$ or the directed path $yy'x'x$.  By symmetry, we can assume it is $xx'y'y$.  Then make an orientation $D$ of $G$ by replacing $xx'y'y$ with the directed edge $xy$.  As above, we have a parity preserving bijection between the spanning Eulerian subgraphs of $D$ and $D'$, so we conclude that $(G, h)$ is AT.  Otherwise, no spanning Eulerian subgraph of $D'$ contains a cycle passing through $x'$ and $y'$.  So, the spanning Eulerian subgraph counts of $D'$ are the same as those of $D' - x' - y'$.  But this gives an orientation of $G-e$ showing that $(G-e, h)$ is AT.
 \end{proof}
 
-\begin{cor}\label{ReduceP4Cor}
-	Let $G$ be an $h$-minimal graph.  If $(G,h)$ is AT and $G$ has an induced path $x_1x_2x_3x_4$ such that $d_G(x_2) = d_G(x_3) = 2$ and $h(x_2) = h(x_3) = 0$, then 
-	\[\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}} \text{ is AT.}\]
-\end{cor}
-\begin{proof}
-	Suppose $(G,h)$ is AT and $G$ has such an induced path $x_1x_2x_3x_4$.  Applying Lemma \ref{SubdivideTwice} part (2) shows that either $\parens{G - x_2 - x_3, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT or $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.  But $G - x_2 - x_3$ is a proper induced subgraph of $G$, so the former cannot happen since $G$ is $h$-minimal and $h(x_2) = h(x_3) = 0$.  Hence $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.
-\end{proof}
-
 \begin{lem}\label{CutvertexPatch}
 	Let $\set{A_1, A_2}$ be a separation of $G$ such that $A_1 \cap A_2 = \set{x}$.  If $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$, then $G$ is $f$-AT where $f(v) = f_i(v)$ for $v \in V(A_i-x)$ and $f(x) = f_1(x) + f_2(x) - 1$.  Going the other direction, if $G$ is $f$-AT, then $G[A_i]$ is $f_i$-AT for $i \in \irange{2}$ where $f_i(v) = f(v)$ for $v \in V(A_i-x)$ and $f_1(x) + f_2(x) \le f(x) + 1$.
 \end{lem}
@@ -173,6 +167,15 @@ We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,
 	Hence $G$ is $f$-AT.
 	
 	Now, suppose $G$ is $f$-AT and choose an orientation $D$ of $G$ showing this.  Put $D_i = D[A_i]$ for $i \in \irange{2}$.  Then, as above, we have $0 \ne EE(D) - EO(D) = (EE(D_1) - EO(D_1))(EE(D_2) - EO(D_2))$ and hence $EE(D_1) - EO(D_1) \ne 0$ and $EE(D_2) - EO(D_2) \ne 0$.  Since the in-degree of $x$ in $D$ is the sum of the in-degree of $x$ in $D_1$ and the in-degree of $x$ in $D_2$, the lemma follows.
+\end{proof}
+
+
+\begin{cor}\label{ReduceP4Cor}
+	Let $G$ be an $h$-greedy-minimal graph.  If $(G,h)$ is AT and $G$ has an induced path $x_1x_2x_3x_4$ such that $d_G(x_2) = d_G(x_3) = 2$ and $h(x_2) = h(x_3) = 0$, then 
+	\[\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}} \text{ is AT.}\]
+\end{cor}
+\begin{proof}
+	Suppose $(G,h)$ is AT and $G$ has such an induced path $x_1x_2x_3x_4$.  Applying Lemma \ref{SubdivideTwice} part (2) shows that either $\parens{G - x_2 - x_3, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT or $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.  But $G - x_2 - x_3$ is a proper induced subgraph of $G$, so the former cannot happen since $G$ is $h$-greedy-minimal and $h(x_2) = h(x_3) = 0$.  Hence $\parens{(G - x_2 - x_3) + x_1x_4, h\restriction_{V(G) \setminus \set{x_2, x_3}}}$ is AT.
 \end{proof}
 
 \section{Extension lemma}
@@ -226,7 +229,7 @@ A graph $G$ is called \emph{degree-AT} if $(G,h)$ is $AT$ where $h$ is the const
 	has only one block, that is, $G$ is $2$-connected.  Further, $G-v$ is a Gallai
 	tree for all $v \in V(G)$.
 	
-	Let $v$ be a vertex of minimum degree in $G$.  Since $G$ is $2$-connected, $d_G(v) \ge 2$. By Lemma \ref{CutvertexPatch}, $v$ is adjacent to a noncutvertex in every endblock of $G-v$.
+	Let $v$ be a vertex of minimum degree in $G$.  Since $G$ is $2$-connected, $d_G(v) \ge 2$ and $v$ is adjacent to a noncutvertex in every endblock of $G-v$.
 	If $G-v$ has a complete block $B$ with noncutvertices $x_1,x_2$ where $v \adj x_1$ and $v \nonadj x_2$, then we can apply Lemma \ref{GeneralEulerLemma} with $Y = \set{v}$ and $F = vx_1$ to conclude that $G$ is degree-AT, a contradiction.  So, $v$ must be adjacent to every noncutvertex in every complete endblock of $G-v$.
 	
 	Suppose $d_G(v) \ge 3$.  Then no endblock of $G-v$ can be an odd cycle of length at least $5$ (there would be vertices of degree $3$ but we'd have $d_G(v) \ge 4$).  Let $B$ be a smallest complete endblock of $G-v$.  Then for a noncutvertex $x \in V(B)$, we have $d_G(x) = |B|$ and hence $d_G(v) \le |B|$.  If $G-v$ has at least two endblocks, then $2(|B|-1) \le |B|$ and hence $d_G(v) \le |B| = 2$, a contradiction.  Hence $G-v = B$ and $v$ is joined to $B$, so $G$ is complete, a contradiction.
@@ -235,19 +238,31 @@ A graph $G$ is called \emph{degree-AT} if $(G,h)$ is $AT$ where $h$ is the const
 \end{proof}
 
 \section{When h is 1 for at most one vertex}
-Here we classify the graphs $G$ such that $(G,h)$ is AT where $\sum_{v \in V(G)} h(v) \le 1$. 
+For a graph $G$ and $x \in V(G)$ let $\func{h_x}{V(G)}{\IN}$ be defined by $h_x(x) = 1$ and $h_x(v) = 0$ for all $v \in V(G-x)$. We classify the connected $h_x$-minimal graphs $G$ such that $(G,h_x)$ is AT for some $x \in V(G)$. 
 
-\begin{lem}\label{DegreeTwoVertex}
-	Let $G$ be a connected graph and $x \in V(G)$ with $d_G(x) = 2$.  If $h(x) = 1$ and $h(v) = 0$ for all $v \in V(G-x)$, then $(G,h)$ is AT if and only if $G-x$ is degree-AT.
+To start we will reduce to the case when $G$ is $2$-connected.
+\begin{lem}\label{TwoConnectedReduction}
+	Let $G$ be $h_x$-minimal for $x \in V(G)$ and let $\B$ be the set of blocks of $G$ containing $x$.  Then $(G,h_x)$ is AT if and only if
+	\begin{enumerate}
+		\item $\B$ contains at least two degree-AT graphs; or
+		\item $G$ is $2$-connected and $(G, h_x)$ is AT.
+	\end{enumerate}
 \end{lem}
 \begin{proof}
-	Let $D$ be an orientation of $G$ showing that $(G,h)$ is AT.  Then $d_{D}^-(x) = 2$ and hence no spanning Eulerian subgraph contains a cycle passing through $x$.  Therefore, the Eulerian subgraph counts in $G-x$ are different and $G-x$ is degree-AT.
+	Since $G$ is $h_x$-minimal, no block outside of $\B$ is degree-AT.  The lemma follows since if $G$ is not $2$-connected, then $(G,h_x)$ is AT if and only if (1) holds by Lemma \ref{CutvertexPatch}.
+\end{proof}
+
+\begin{lem}\label{DegreeTwoVertex}
+	If $G$ is a connected graph and $x \in V(G)$ with $d_G(x) = 2$, then $(G,h_x)$ is AT if and only if $G-x$ is degree-AT.
+\end{lem}
+\begin{proof}
+	Let $D$ be an orientation of $G$ showing that $(G,h_x)$ is AT.  Then $d_{D}^-(x) = 2$ and hence no spanning Eulerian subgraph contains a cycle passing through $x$.  Therefore, the Eulerian subgraph counts in $G-x$ are different and $G-x$ is degree-AT.
 	The other direction is immediate from Lemma \ref{InducedSubgraph}.
 \end{proof}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.35]{pictures/011010111010010[0,1,0,0,0,0].pdf}
+	\includegraphics[scale=0.35]{pictures/111111[1,0,0,0].pdf}
 	\includegraphics[scale=0.35]{pictures/001101001100011010010[0,0,0,0,0,1,0].pdf}
 	\includegraphics[scale=0.35]{pictures/010110010110101011010[0,0,0,0,0,0,1].pdf}
 	\caption{The seed blocks.}
@@ -259,12 +274,164 @@ Lemma \ref{SubdivideTwice} part (2) suggests a way to construct $G$ such that $(
 	If $e$ is an edge in $G$ such that $(G,h)$ is not AT and $(G-e, h)$ is not AT, then $(G',h')$ is not AT where $(G',h')$ is formed from $(G,h)$ by subdividing $e$ twice and having $h'$ give zero on the two new vertices.
 \end{cor}
 
-Let $\B$ be the smallest collection of pairs $(G,h)$ containing the pairs in Figure \ref{fig:seeds} that is closed under the operation in Corollary \ref{SubdivideConstructor}.
+Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Figure \ref{fig:seeds} that is closed under the operation in Corollary \ref{SubdivideConstructor}.
 
-\begin{conjecture}\label{ClassificationDegreeThreePlus}
-	Let $G$ be a connected graph and $x \in V(G)$ a noncutvertex with $d_G(x) \ge 3$.  If $h(x) = 1$ and $h(v) = 0$ for all $v \in V(G-x)$, then $(G,h)$ is not AT if and only if
-	$x$ is in a block $B$ such that $(B, h') \in \B$ with $h'(x) = 1$ and every other block of $G$ is complete or an odd cycle.
-\end{conjecture}
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 5]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.300, y = 0.250, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.500, L = \tiny {$1$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.250, L = \tiny {$0$}]{v3}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\end{tikzpicture}\hspace{.3in}
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.750, y = 0.500, L = \tiny {$1$}]{v0}
+\Vertex[style = labeledStyle, x = 0.900, y = 0.250, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.050, y = 0.250, L = \tiny {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \tiny {$0$}]{v4}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\end{tikzpicture}\hspace{.3in}
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.450, y = 0.700, L = \tiny {$1$}]{v0}
+\Vertex[style = labeledStyle, x = 0.300, y = 0.400, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.600, y = 0.400, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.150, y = 0.400, L = \tiny {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.400, L = \tiny {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 0.450, y = 0.400, L = \tiny {$0$}]{v5}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+\end{tikzpicture}\hspace{.3in}
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.500, y = 0.300, L = \tiny {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.500, y = 0.600, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$1$}]{v3}
+\Vertex[style = labeledStyle, x = 0.500, y = 0.450, L = \tiny {$0$}]{v4}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\end{tikzpicture}
+
+\caption{These are AT.}
+\label{fig:chair}
+\end{figure}
+
+\begin{figure}
+	\centering
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.550, y = 0.700, L = \tiny {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.550, y = 0.450, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.800, y = 0.700, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \tiny {$1$}]{v3}
+\Vertex[style = labeledStyle, x = 0.800, y = 0.450, L = \tiny {$0$}]{v4}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\end{tikzpicture}
+
+	\caption{This is AT.}
+	\label{fig:K5minus}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.650, L = \tiny {$1$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v4}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\end{tikzpicture}
+	\caption{This is AT.}
+	\label{fig:SubdividedK4}
+\end{figure}
+
+\begin{lem}\label{NoClawBusiness}
+	Let $G$ be $h_x$-minimal for $x \in V(G)$ with $d_G(x) \ge 3$.  If $(G,h_x)$ is not AT, then every induced subdivision of $K_{1,3}$ in $G$ contains at most two vertices in $N(x)$.  In particular, every induced path in $G$ contains at most two vertices in $N(x)$.
+\end{lem}
+\begin{proof}
+	This is immediate from Lemma \ref{SubdivideTwice} and the graphs in Figure \ref{fig:chair}.
+\end{proof}
+
+\begin{lem}
+	Let $G$ be $h_x$-minimal for $x \in V(G)$.  If $G$ is $2$-connected, then $(G,h_x)$ is AT if and only if 
+	\begin{enumerate}
+		\item $d_G(x) \ge 3$; and
+		\item $G$ is not complete and not an odd cycle; and
+		\item $(G,h_x) \not \in \D$.
+	\end{enumerate}
+\end{lem}
+\begin{proof}
+	Suppose the lemma is false and choose a counterexample $G$ minimizing $\card{G}$.  If $d_G(x) \le 2$, then $(G,h_x)$ is not AT by Lemma \ref{DegreeTwoVertex} since $G$ is $h_x$-minimal.  So, we must have $d_G(x) \ge 3$.  Since $(G,h_x)$ is not AT if $(G,h_x) \in \D$ by construction, it must be that $(G,h_x) \not \in \D$ and $(G,h_x)$ is not AT.  Since $G$ is $h_x$-minimal and $2$-connected, $G-x$ is a Gallai tree.  
+	
+	 Since $G$ is $2$-connected, $x$ is adjacent to a noncutvertex in every endblock of $G-x$.  If $G-x$ has a complete block $B$ with noncutvertices $v_1,v_2$ where $x \adj v_1$ and $x \nonadj v_2$, then we can apply Lemma \ref{GeneralEulerLemma} with $Y = \set{x}$ and $F = xv_1$ to conclude that $(G,h_x)$ is AT, a contradiction.  So, $x$ must be adjacent to every noncutvertex in every complete endblock of $G-x$.
+	 
+	 If $G-x$ contains an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$, then we get a smaller counterexample by applying Lemma \ref{SubdivideTwice} part (1).  So, $G-x$ has no such induced path.  
+	 
+	 Suppose $G$ has an endblock $B$ that is an odd cycle of length $\ell \ge 5$. Then $x$ is adjacent to at least $\floor{\frac{\ell}{2}} \ge 2$ noncutvertices in $B$.  If $G-x$ had another endblock $B'$, then we can pick two neighbors of $x$ in $B$ and one neighbor of $x$ in $B'$ all on an induced path in $G-x$, violating Lemma \ref{NoClawBusiness}.  But if $G-x = B$, we can again violate Lemma \ref{NoClawBusiness}.  Hence every endblock of $G-x$ is complete.  
+	 
+	 Since $G-x$ is not complete (otherwise $G$ would be complete), this also implies that $G-x$ has at least two blocks.
+
+	 Suppose $G-x$ has a complete endblock $B = K_t$ for $t \ge 4$.  Let $v \in V(B)$ be a noncutvertex in $G-x$.  Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  First, suppose $d_{G-v}(x) \le 2$.  Then $d_G(v) = 3$ and hence $G-x$ has only one endblock, impossible.  If $G-v$ is complete, then so is $G$.  Also, $G-v$ cannot be a noncomplete odd cycle since it contains $K_3$.  Hence, we must have $(G-v,h_x) \in \D$.  Since all of $v$'s neighbors in $G-x$ have degree at least $3$ in $G-v$, removing $v$ cannot create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Hence $G-v$ must be one of the three graphs in Figure \ref{fig:seeds}.  The leftmost graph is complete and every endblock of the middle graph is $K_2$, so $G-v$ must be the rightmost graph in Figure \ref{fig:seeds}.  But then $G$ has the graph in Figure \ref{fig:K5minus} as an induced subgraph, impossible.  Hence, every complete endblock of $G-x$ has at most three vertices.
+	 
+	 At this point, we know that every endblock of $G-x$ is $K_2$ or $K_3$ and $x$ is adjacent to all noncutvertices in each endblock.  Suppose $G-x$ has two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, we violate Lemma \ref{NoClawBusiness} unless $x$'s only neighbors in $G-x$ are the noncutvertices in $B_1$ and $B_2$.
+\end{proof}
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring1}

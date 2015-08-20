@@ -402,6 +402,61 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\label{fig:SubdividedK4}
 \end{figure}
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.300, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.800, L = \tiny {$1$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.300, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.250, y = 0.300, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.550, L = \tiny {$0$}]{v5}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\end{tikzpicture}
+	\caption{This is AT.}
+	\label{fig:TriangleRuinsPath}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.200, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.550, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.200, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.400, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.400, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.300, y = 0.550, L = \tiny {$1$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.300, L = \tiny {$0$}]{v6}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
+	\end{tikzpicture}
+		\caption{This is AT.}
+		\label{fig:TwoEndblockExtra}
+\end{figure}
+
 \begin{lem}\label{NoClawBusiness}
 	Let $G$ be $h_x$-minimal for $x \in V(G)$ with $d_G(x) \ge 3$.  If $(G,h_x)$ is not AT, then every induced subdivision of $K_{1,3}$ in $G$ contains at most two vertices in $N(x)$.  In particular, every induced path in $G$ contains at most two vertices in $N(x)$.
 \end{lem}
@@ -430,7 +485,7 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 
 	 Suppose $G-x$ has a complete endblock $B = K_t$ for $t \ge 4$.  Let $v \in V(B)$ be a noncutvertex in $G-x$.  Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  First, suppose $d_{G-v}(x) \le 2$.  Then $d_G(v) = 3$ and hence $G-x$ has only one endblock, impossible.  If $G-v$ is complete, then so is $G$.  Also, $G-v$ cannot be a noncomplete odd cycle since it contains $K_3$.  Hence, we must have $(G-v,h_x) \in \D$.  Since all of $v$'s neighbors in $G-x$ have degree at least $3$ in $G-v$, removing $v$ cannot create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Hence $G-v$ must be one of the three graphs in Figure \ref{fig:seeds}.  The leftmost graph is complete and every endblock of the middle graph is $K_2$, so $G-v$ must be the rightmost graph in Figure \ref{fig:seeds}.  But then $G$ has the graph in Figure \ref{fig:K5minus} as an induced subgraph, impossible.  Hence, every complete endblock of $G-x$ has at most three vertices.
 	 
-	 At this point, we know that every endblock of $G-x$ is $K_2$ or $K_3$ and $x$ is adjacent to all noncutvertices in each endblock.  Suppose $G-x$ has two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, we violate Lemma \ref{NoClawBusiness} unless $x$'s only neighbors in $G-x$ are the noncutvertices in $B_1$ and $B_2$.
+	 At this point, we know that every endblock of $G-x$ is $K_2$ or $K_3$ and $x$ is adjacent to all noncutvertices in each endblock.  Suppose $G-x$ has two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, we violate Lemma \ref{NoClawBusiness} unless ...
 \end{proof}
 
 \bibliographystyle{amsplain}

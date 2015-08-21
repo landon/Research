@@ -586,9 +586,10 @@ For a connected graph $G$ and endblock $B$ of $G$, let $x_B$ be the cutvertex of
 
 \begin{lem}\label{InducedPathExists}
 	Let $G$ be a connected graph and $v \in V(G)$ a cutvertex of $G$.  If $G-v$ has $t$ components, then there are endblocks $B_1, \ldots, B_t$ and an induced subdivision of $K_{1,t}$ where the root is $v$ and the leaves are $x_{B_1}, \ldots, x_{B_t}$.
-	
-	For any endblock $B$ of $G$ there is another endblock $D$ and an induced path from $x_B$ to $x_D$ containing $v$.
 \end{lem}
+\begin{proof}
+	Pick endblocks $B_1, \ldots, B_t$, one in each component of $G-v$.  Now the desired induced subdivision of $K_{1,t}$ is the union of shortest paths from $x_{B_1}$ to $x_{B_i}$ for $2 \le i \le t$. 
+\end{proof}
 
 Lemma \ref{InducedPathExists} will be really useful in applying the following lemma.  Note that we can always extend the induced subdivision of $K_{1,3}$ or induced path we get one vertex into each endblock.
 
@@ -597,10 +598,6 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 \end{lem}
 \begin{proof}
 	This is immediate from Lemma \ref{SubdivideTwice} and the graphs in Figure \ref{fig:chair}.
-\end{proof}
-
-\begin{proof}
-	Pick endblocks $B_1, \ldots, B_t$, one in each component of $G-v$.  Now the desired induced subdivision of $K_{1,t}$ is the union of shortest paths from $x_{B_1}$ to $x_{B_i}$ for $2 \le i \le t$. 
 \end{proof}
 
 \begin{lem}
@@ -673,7 +670,11 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	 \subclaim{8f}{Claim 8 is true.}
 	 By the previous subclaims, $F$ must be the leftmost graph in Figure \ref{fig:seeds}. For this one, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
 	 
-	 \claim{9}{}
+	 \claim{9}{At most one endblock of $G-x$ is $K_3$.}
+	 Suppose $G-x$ has two $K_3$ endblocks $B_1$ and $B_2$.  Then $G[\set{x} \cup V(B_i)]$ is degree-AT for $i \in \irange{2}$.  If there is no edge between $B_1$ and $B_2$, then, by Lemma \ref{TwoConnectedReduction}, $G$ contains an induced subgraph $H$ such that $(H,h_x)$ is AT, a contradiction.  If there is an edge between $B_1$ and $B_2$, then by Claim 1, $G$ is the rightmost graph in Figure \ref{fig:seeds}, a contradiction.
+	 
+	 \claim{10}{Every endblock of $G-x$ is $K_2$.}
+	 Suppose $G-x$ has a $K_3$ endblock $B$.  Then the component of $G-N(x_B)$ containing $x$ is not degree-AT by Lemma \ref{TwoConnectedReduction} since $G$ is $h_x$-minimal.  Suppose the other block $D$ containing $x_B$ is not $K_2$. Then $G$ must have either an induced Figure \ref{fig:TwoEndblockExtra} or an induced Figure \ref{fig:TriangleRuinsPath} by Lemma \ref{SubdivideTwice} (both path length parities are covered).  So, $D$ is $K_2$.  Now...
 
 \end{proof}
 

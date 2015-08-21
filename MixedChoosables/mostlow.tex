@@ -380,7 +380,7 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}[scale = 10]
+	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
@@ -404,7 +404,7 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}[scale = 10]
+	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
@@ -430,7 +430,7 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}[scale = 10]
+	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
@@ -457,11 +457,145 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 		\label{fig:TwoEndblockExtra}
 \end{figure}
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 5]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.600, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 1.250, y = 0.200, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.200, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 1.050, y = 0.200, L = \tiny {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \tiny {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.200, L = \tiny {$0$}]{v7}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\end{tikzpicture}
+		\caption{This is AT.}
+		\label{fig:thebigone}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale = 5]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.900, y = 0.100, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v7}
+	\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \tiny {$0$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v9}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v8)
+	\end{tikzpicture}\hspace{.3in}
+	\begin{tikzpicture}[scale = 5]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v7}
+	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.050, y = 0.100, L = \tiny {$0$}]{v9}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\end{tikzpicture}\hspace{.3in}
+	\begin{tikzpicture}[scale = 5]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.200, y = 0.100, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.100, y = 0.250, L = \tiny {$0$}]{v9}
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v1)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v4)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\end{tikzpicture}
+			\caption{These are AT.}
+			\label{fig:thebiggerones}
+\end{figure}
+
 \begin{lem}\label{NoClawBusiness}
 	Let $G$ be $h_x$-minimal for $x \in V(G)$ with $d_G(x) \ge 3$.  If $(G,h_x)$ is not AT, then every induced subdivision of $K_{1,3}$ in $G$ contains at most two vertices in $N(x)$.  In particular, every induced path in $G$ contains at most two vertices in $N(x)$.
 \end{lem}
 \begin{proof}
 	This is immediate from Lemma \ref{SubdivideTwice} and the graphs in Figure \ref{fig:chair}.
+\end{proof}
+
+For a connected graph $G$ and endblock $B$ of $G$, let $z_B$ be the cutvertex of $G$ contained in $B$.
+
+\begin{lem}\label{InducedPathExists}
+	Let $G$ be a connected graph and $v \in V(G)$ a cutvertex of $G$.  For any endblock $B$ of $G$ there is another endblock $D$ and an induced path from $x_B$ to $x_D$ containing $v$.
+\end{lem}
+\begin{proof}
+	Let $B$ be an endblock of $G$.  Then we can pick to be any endblock that $v$ separates from $B$.  Now any shortest path from $x_B$ to $x_D$ is the desired induced path.
 \end{proof}
 
 \begin{lem}
@@ -481,11 +615,28 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	 
 	 Suppose $G$ has an endblock $B$ that is an odd cycle of length $\ell \ge 5$. Then $x$ is adjacent to at least $\floor{\frac{\ell}{2}} \ge 2$ noncutvertices in $B$.  If $G-x$ had another endblock $B'$, then we can pick two neighbors of $x$ in $B$ and one neighbor of $x$ in $B'$ all on an induced path in $G-x$, violating Lemma \ref{NoClawBusiness}.  But if $G-x = B$, we can again violate Lemma \ref{NoClawBusiness}.  Hence every endblock of $G-x$ is complete.  
 	 
-	 Since $G-x$ is not complete (otherwise $G$ would be complete), this also implies that $G-x$ has at least two blocks.
+	 Since $G-x$ is not complete (otherwise $G$ would be complete), this also implies that $G-x$ has at least two endblocks.  Suppose $x$ is adjacent to a cutvertex $v$ of $G-x$.  Using Lemma \ref{InducedPathExists}, we get an induced path from $x_B$ to $x_D$ containing $v$, where $B$ and $D$ are different endblocks.  But then adding one noncutvertex from each of $B$ and $D$ to this path, we have an induced path violating Lemma \ref{NoClawBusiness}.  Therefore, $x$ is not adjacent to any cutvertex of $G-x$.
 
 	 Suppose $G-x$ has a complete endblock $B = K_t$ for $t \ge 4$.  Let $v \in V(B)$ be a noncutvertex in $G-x$.  Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  First, suppose $d_{G-v}(x) \le 2$.  Then $d_G(v) = 3$ and hence $G-x$ has only one endblock, impossible.  If $G-v$ is complete, then so is $G$.  Also, $G-v$ cannot be a noncomplete odd cycle since it contains $K_3$.  Hence, we must have $(G-v,h_x) \in \D$.  Since all of $v$'s neighbors in $G-x$ have degree at least $3$ in $G-v$, removing $v$ cannot create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Hence $G-v$ must be one of the three graphs in Figure \ref{fig:seeds}.  The leftmost graph is complete and every endblock of the middle graph is $K_2$, so $G-v$ must be the rightmost graph in Figure \ref{fig:seeds}.  But then $G$ has the graph in Figure \ref{fig:K5minus} as an induced subgraph, impossible.  Hence, every complete endblock of $G-x$ has at most three vertices.
 	 
-	 At this point, we know that every endblock of $G-x$ is $K_2$ or $K_3$ and $x$ is adjacent to all noncutvertices in each endblock.  Suppose $G-x$ has two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, we violate Lemma \ref{NoClawBusiness} unless ...
+	 Suppose $G-x$ has a noncutvertex $v$ with $v \nonadj x$. Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  The first three clearly cannot occur, so we have $(G-v,h_x) \in \D$.  First, suppose that removing $v$ did not create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Then $G-v$ is one of the graphs in Figure \ref{fig:seeds}.  But $G-v$ cannot be the leftmost, middle, or rightmost graph in Figure \ref{fig:seeds} because then $G$ would contain the graph in Figure \ref{fig:K5minus}, Figure \ref{fig:thebigone}, and Figure \ref{fig:TriangleRuinsPath} as an induced subgraph, respectively.  
+	 	 
+	 So, removing $v$ created an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.   Let $B$ be the block containing $v$.  First, suppose $B$ is complete. Since $v$ is only adjacent to vertices in $B$, the only way for this to happen is if $B = K_3$.  So, $G-v$ is either one of the graphs in Figure \ref{fig:seeds} or the result of applying the operation in Corollary \ref{SubdivideConstructor} to a graph in Figure \ref{fig:seeds} one time.  The former case was handled above.  
+	 
+	 For the rightmost graph, removing any edge leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied. [ADD (easy) DETAILS]
+	 
+	 For the middle graph, removing any edge in the triangle leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ is one of the graphs in Figure \ref{fig:thebiggerones}, impossible.
+	 
+	 For leftmost graph, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
+	 
+	 So, $B$ cannot be complete.  Suppose instead that $B$ is an odd cycle of length at least $5$.  Let $N(v) = \set{w,z}$. By Lemma \ref{SubdivideTwice}, we see that $w$ and $z$ are either cutvertices of $G-x$ or adjacent to $x$.  Since removing $v$ created an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$, we must have $\set{w,z} \cap \set{v_2, v_3} \ne \emptyset$.  By symmetry, we may assume that $w = v_2$.
+	 
+	 Therefore, every noncutvertex of $G-x$ is adjacent to $x$.  So,  at this point, we know that
+	 \begin{itemize}
+	 	\item every endblock of $G-x$ is $K_2$ or $K_3$; and
+	 	\item $x$ is adjacent to all noncutvertices of $G-x$
+	 	\item $x$ is nonadjacent to all cutvertices in $G-x$.
+	 \end{itemize}
 \end{proof}
 
 \bibliographystyle{amsplain}

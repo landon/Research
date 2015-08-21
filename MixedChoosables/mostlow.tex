@@ -670,11 +670,16 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	 \subclaim{8f}{Claim 8 is true.}
 	 By the previous subclaims, $F$ must be the leftmost graph in Figure \ref{fig:seeds}. For this one, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
 	 
-	 \claim{9}{At most one endblock of $G-x$ is $K_3$.}
+	 \claim{9}{Every internal block of $G-x$ consists entirely of cutvertices.}
+	 Suppose otherwise that we have an internal block $B$ of $G-x$ containing a noncutvertex $v$.  By Claim 8, $x \adj v$.  Note that by Lemma \ref{SubdivideTwice} and Figure \ref{fig:SubdividedK4}, we get that Figure \ref{fig:TriangleRuinsPath} is AT with either or both of the bottom left and bottom right edge subdivided once.  But $G$ contains at least one of these with edges subdivided twice some number of times as an induced subgraph, a contradiction.
+	 
+	 \claim{10}{At most one endblock of $G-x$ is $K_3$.}
 	 Suppose $G-x$ has two $K_3$ endblocks $B_1$ and $B_2$.  Then $G[\set{x} \cup V(B_i)]$ is degree-AT for $i \in \irange{2}$.  If there is no edge between $B_1$ and $B_2$, then, by Lemma \ref{TwoConnectedReduction}, $G$ contains an induced subgraph $H$ such that $(H,h_x)$ is AT, a contradiction.  If there is an edge between $B_1$ and $B_2$, then by Claim 1, $G$ is the rightmost graph in Figure \ref{fig:seeds}, a contradiction.
 	 
-	 \claim{10}{Every endblock of $G-x$ is $K_2$.}
-	 Suppose $G-x$ has a $K_3$ endblock $B$.  Then the component of $G-N(x_B)$ containing $x$ is not degree-AT by Lemma \ref{TwoConnectedReduction} since $G$ is $h_x$-minimal.  Suppose the other block $D$ containing $x_B$ is not $K_2$. Then $G$ must have either an induced Figure \ref{fig:TwoEndblockExtra} or an induced Figure \ref{fig:TriangleRuinsPath} by Lemma \ref{SubdivideTwice} (both path length parities are covered).  So, $D$ is $K_2$.  Now...
+
+	 
+	 \claim{11}{Every endblock of $G-x$ is $K_2$.}
+	 Suppose $G-x$ has a $K_3$ endblock $B$.  Then the component of $G-N(x_B)$ containing $x$ is not degree-AT by Lemma \ref{TwoConnectedReduction} since $G$ is $h_x$-minimal.  Suppose the other block $D$ containing $x_B$ is not $K_2$. Then $G$ must have either an induced Figure \ref{fig:TwoEndblockExtra} or an induced Figure \ref{fig:SubdividedK4} by Lemma \ref{SubdivideTwice} (both path length parities are covered).  So, $D$ is $K_2$.  Now...
 
 \end{proof}
 

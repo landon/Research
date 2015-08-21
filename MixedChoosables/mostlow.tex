@@ -582,6 +582,16 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 			\label{fig:thebiggerones}
 \end{figure}
 
+For a connected graph $G$ and endblock $B$ of $G$, let $x_B$ be the cutvertex of $G$ contained in $B$.
+
+\begin{lem}\label{InducedPathExists}
+	Let $G$ be a connected graph and $v \in V(G)$ a cutvertex of $G$.  If $G-v$ has $t$ components, then there are endblocks $B_1, \ldots, B_t$ and an induced subdivision of $K_{1,t}$ where the root is $v$ and the leaves are $x_{B_1}, \ldots, x_{B_t}$.
+	
+	For any endblock $B$ of $G$ there is another endblock $D$ and an induced path from $x_B$ to $x_D$ containing $v$.
+\end{lem}
+
+Lemma \ref{InducedPathExists} will be really useful in applying the following lemma.  Note that we can always extend the induced subdivision of $K_{1,3}$ or induced path we get one vertex into each endblock.
+
 \begin{lem}\label{NoClawBusiness}
 	Let $G$ be $h_x$-minimal for $x \in V(G)$ with $d_G(x) \ge 3$.  If $(G,h_x)$ is not AT, then every induced subdivision of $K_{1,3}$ in $G$ contains at most two vertices in $N(x)$.  In particular, every induced path in $G$ contains at most two vertices in $N(x)$.
 \end{lem}
@@ -589,13 +599,8 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	This is immediate from Lemma \ref{SubdivideTwice} and the graphs in Figure \ref{fig:chair}.
 \end{proof}
 
-For a connected graph $G$ and endblock $B$ of $G$, let $z_B$ be the cutvertex of $G$ contained in $B$.
-
-\begin{lem}\label{InducedPathExists}
-	Let $G$ be a connected graph and $v \in V(G)$ a cutvertex of $G$.  For any endblock $B$ of $G$ there is another endblock $D$ and an induced path from $x_B$ to $x_D$ containing $v$.
-\end{lem}
 \begin{proof}
-	Let $B$ be an endblock of $G$.  Then we can pick to be any endblock that $v$ separates from $B$.  Now any shortest path from $x_B$ to $x_D$ is the desired induced path.
+	Pick endblocks $B_1, \ldots, B_t$, one in each component of $G-v$.  Now the desired induced subdivision of $K_{1,t}$ is the union of shortest paths from $x_{B_1}$ to $x_{B_i}$ for $2 \le i \le t$. 
 \end{proof}
 
 \begin{lem}
@@ -607,36 +612,69 @@ For a connected graph $G$ and endblock $B$ of $G$, let $z_B$ be the cutvertex of
 	\end{enumerate}
 \end{lem}
 \begin{proof}
-	Suppose the lemma is false and choose a counterexample $G$ minimizing $\card{G}$.  If $d_G(x) \le 2$, then $(G,h_x)$ is not AT by Lemma \ref{DegreeTwoVertex} since $G$ is $h_x$-minimal.  So, we must have $d_G(x) \ge 3$.  Since $(G,h_x)$ is not AT if $(G,h_x) \in \D$ by construction, it must be that $(G,h_x) \not \in \D$ and $(G,h_x)$ is not AT.  Since $G$ is $h_x$-minimal and $2$-connected, $G-x$ is a Gallai tree.  
+	Suppose the lemma is false and choose a counterexample $G$ minimizing $\card{G}$.  If $d_G(x) \le 2$, then $(G,h_x)$ is not AT by Lemma \ref{DegreeTwoVertex} since $G$ is $h_x$-minimal.  So, we must have $d_G(x) \ge 3$.  Since $(G,h_x)$ is not AT if $(G,h_x) \in \D$ by construction, it must be that $(G,h_x) \not \in \D$ and $(G,h_x)$ is not AT.   
 	
-	 Since $G$ is $2$-connected, $x$ is adjacent to a noncutvertex in every endblock of $G-x$.  If $G-x$ has a complete block $B$ with noncutvertices $v_1,v_2$ where $x \adj v_1$ and $x \nonadj v_2$, then we can apply Lemma \ref{GeneralEulerLemma} with $Y = \set{x}$ and $F = xv_1$ to conclude that $(G,h_x)$ is AT, a contradiction.  So, $x$ must be adjacent to every noncutvertex in every complete endblock of $G-x$.
+	\claim{0}{$G-x$ is a Gallai tree and $x$ is adjacent to a noncutvertex in every endblock of $G-x$.}
+	 This follows since $G$ is $h_x$-minimal and $2$-connected.
+	
+	 \claim{1}{$G-x-v$ has at most two components for any $v \in V(G-x)$.}
+      Suppose $G-x$ has a cutvertex $v$ such that $G-x-v$ has at least three components.  Then, by Lemma \ref{InducedPathExists}, $G-x$ contains an induced $K_{1,3}$ violating Lemma \ref{NoClawBusiness}.
+      
+     \claim{2}{$x$ is not adjacent to any cutvertex $v$ of $G-x$}
+      Using Lemma \ref{InducedPathExists}, we get an induced path from $x_B$ to $x_D$ containing $v$, where $B$ and $D$ are different endblocks violating Lemma \ref{NoClawBusiness}.
+      
+     \claim{3}{$G-x$ does not contain an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.}
+      If it did, then we could get a smaller counterexample by applying Lemma \ref{SubdivideTwice} part (1).
+      
+     \claim{4}{Every block of $G-x$ is complete.}
+      Suppose $G-x$ has a block $B$ that is an odd cycle $v_1v_2\cdots v_tv_1$ with $t \ge 5$.
+      
+      \subclaim{4a}{$B$ contains at most two cutvertices of $G-x$.}
+	  Otherwise there are $a,b,c \in \irange{t}$ such that $v_a, \ldots, v_b, \ldots v_c$ contains exactly three cutvertices $v_a, v_b$ and $v_c$.  Apply Lemma \ref{InducedPathExists} to the component of $G-\set{x,v_1, \ldots, v_{a-1}, v_{b+1}, \ldots, v_t}$ containing $v_a, v_b, v_c$ with $v = v_b$ to get an induced $K_{1,3}$ violating Lemma \ref{NoClawBusiness}. 
+	  
+	  \subclaim{4b}{$B$ contains at most one cutvertex of $G-x$}
+	  Otherwise, by Subclaim 4a, $B$ has exactly two cutvertices $v_a$ and $v_b$.  By Claim 3, $x$ is adjacent to a noncutvertex $v \in V(B)$.  Consider the induced path given by applying Lemma \ref{InducedPathExists} to $v_a$.  If this path does not contain $v$, then have it go the other way around $B$.  Now we have an induced path violating Lemma \ref{NoClawBusiness}. 
+	
+	  \subclaim{4c}{Claim 4 is true.}
+	  By Claim 3, $x$ must be adjacent to at least every other noncutvertex of $B$. So, if $G-x = B$, we immediately violate Lemma \ref{NoClawBusiness}.  If instead, $G-x$ has another endblock $B'$ then we can pick two neighbors of $x$ in $B$ and one neighbor of $x$ in $B'$ all on an induced path in $G-x$, violating Lemma \ref{NoClawBusiness}.
 	 
-	 If $G-x$ contains an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$, then we get a smaller counterexample by applying Lemma \ref{SubdivideTwice} part (1).  So, $G-x$ has no such induced path.  
-	 
-	 Suppose $G$ has an endblock $B$ that is an odd cycle of length $\ell \ge 5$. Then $x$ is adjacent to at least $\floor{\frac{\ell}{2}} \ge 2$ noncutvertices in $B$.  If $G-x$ had another endblock $B'$, then we can pick two neighbors of $x$ in $B$ and one neighbor of $x$ in $B'$ all on an induced path in $G-x$, violating Lemma \ref{NoClawBusiness}.  But if $G-x = B$, we can again violate Lemma \ref{NoClawBusiness}.  Hence every endblock of $G-x$ is complete.  
-	 
-	 Since $G-x$ is not complete (otherwise $G$ would be complete), this also implies that $G-x$ has at least two endblocks.  Suppose $x$ is adjacent to a cutvertex $v$ of $G-x$.  Using Lemma \ref{InducedPathExists}, we get an induced path from $x_B$ to $x_D$ containing $v$, where $B$ and $D$ are different endblocks.  But then adding one noncutvertex from each of $B$ and $D$ to this path, we have an induced path violating Lemma \ref{NoClawBusiness}.  Therefore, $x$ is not adjacent to any cutvertex of $G-x$.
-
-	 Suppose $G-x$ has a complete endblock $B = K_t$ for $t \ge 4$.  Let $v \in V(B)$ be a noncutvertex in $G-x$.  Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  First, suppose $d_{G-v}(x) \le 2$.  Then $d_G(v) = 3$ and hence $G-x$ has only one endblock, impossible.  If $G-v$ is complete, then so is $G$.  Also, $G-v$ cannot be a noncomplete odd cycle since it contains $K_3$.  Hence, we must have $(G-v,h_x) \in \D$.  Since all of $v$'s neighbors in $G-x$ have degree at least $3$ in $G-v$, removing $v$ cannot create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Hence $G-v$ must be one of the three graphs in Figure \ref{fig:seeds}.  The leftmost graph is complete and every endblock of the middle graph is $K_2$, so $G-v$ must be the rightmost graph in Figure \ref{fig:seeds}.  But then $G$ has the graph in Figure \ref{fig:K5minus} as an induced subgraph, impossible.  Hence, every complete endblock of $G-x$ has at most three vertices.
-	 
-	 Suppose $G-x$ has a noncutvertex $v$ with $v \nonadj x$. Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  The first three clearly cannot occur, so we have $(G-v,h_x) \in \D$.  First, suppose that removing $v$ did not create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Then $G-v$ is one of the graphs in Figure \ref{fig:seeds}.  But $G-v$ cannot be the leftmost, middle, or rightmost graph in Figure \ref{fig:seeds} because then $G$ would contain the graph in Figure \ref{fig:K5minus}, Figure \ref{fig:thebigone}, and Figure \ref{fig:TriangleRuinsPath} as an induced subgraph, respectively.  
+	 \claim{5}{If $x$ is adjacent to a noncutvertex in a block, then $x$ is adjacent to all noncutvertices in that block. In particular, $x$ is adjacent to every noncutvertex in every endblock of $G-x$.}
+	  Suppose $G-x$ has a block $B$ with noncutvertices $v_1,v_2$ where $x \adj v_1$ and $x \nonadj v_2$.  By Claim 4, $B$ is complete, so we can apply Lemma \ref{GeneralEulerLemma} with $Y = \set{x}$ and $F = xv_1$ to conclude that $(G,h_x)$ is AT, a contradiction.  
 	 	 
-	 So, removing $v$ created an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.   Let $B$ be the block containing $v$.  First, suppose $B$ is complete. Since $v$ is only adjacent to vertices in $B$, the only way for this to happen is if $B = K_3$.  So, $G-v$ is either one of the graphs in Figure \ref{fig:seeds} or the result of applying the operation in Corollary \ref{SubdivideConstructor} to a graph in Figure \ref{fig:seeds} one time.  The former case was handled above.  
+	 \claim{6}{$G-x$ has at least two endblocks.}
+   	  If not, then $G-x$ is complete by Claim 0 and Claim 4.  But then $G$ is complete by Claim 5, a contradiction.
 	 
-	 For the rightmost graph, removing any edge leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied. [ADD (easy) DETAILS]
+	 \claim{7}{The endblocks of $G-x$ are all $K_2$ or $K_3$.}
+
+	 By Claim 4, every endblock is complete.  Suppose $G-x$ has an endblock $B = K_t$ for $t \ge 4$.  Let $v \in V(B)$ be a noncutvertex in $G-x$.  Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  First, suppose $d_{G-v}(x) \le 2$.  Then $d_G(v) = 3$ and hence $G-x$ has only one endblock, violating Claim 6.  If $G-v$ is complete, then so is $G$.  Also, $G-v$ cannot be a noncomplete odd cycle since it contains $K_3$.  Hence, we must have $(G-v,h_x) \in \D$.  Since all of $v$'s neighbors in $G-x$ have degree at least $3$ in $G-v$, removing $v$ cannot create an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.  Hence $G-v$ must be one of the three graphs in Figure \ref{fig:seeds}.  The leftmost graph is complete and every endblock of the middle graph is $K_2$, so $G-v$ must be the rightmost graph in Figure \ref{fig:seeds}.  But then $G$ has the graph in Figure \ref{fig:K5minus} as an induced subgraph, impossible.  
 	 
-	 For the middle graph, removing any edge in the triangle leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ is one of the graphs in Figure \ref{fig:thebiggerones}, impossible.
+	 \claim{8}{Every noncutvertex of $G-x$ is adjacent to $x$.}
 	 
-	 For leftmost graph, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
+	 Suppose $G-x$ has a noncutvertex $v$ with $v \nonadj x$. Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  The first three clearly cannot occur, so we have $(G-v,h_x) \in \D$.  
 	 
-	 So, $B$ cannot be complete.  Suppose instead that $B$ is an odd cycle of length at least $5$.  Let $N(v) = \set{w,z}$. By Lemma \ref{SubdivideTwice}, we see that $w$ and $z$ are either cutvertices of $G-x$ or adjacent to $x$.  Since removing $v$ created an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$, we must have $\set{w,z} \cap \set{v_2, v_3} \ne \emptyset$.  By symmetry, we may assume that $w = v_2$.
+	 \subclaim{8a}{$G-v$ has an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.}
 	 
-	 Therefore, every noncutvertex of $G-x$ is adjacent to $x$.  So,  at this point, we know that
-	 \begin{itemize}
-	 	\item every endblock of $G-x$ is $K_2$ or $K_3$; and
-	 	\item $x$ is adjacent to all noncutvertices of $G-x$
-	 	\item $x$ is nonadjacent to all cutvertices in $G-x$.
-	 \end{itemize}
+	 Otherwise, $G-v$ is one of the graphs in Figure \ref{fig:seeds}.  But $G-v$ cannot be the leftmost, middle, or rightmost graph in Figure \ref{fig:seeds} because then $G$ would contain the graph in Figure \ref{fig:K5minus}, Figure \ref{fig:thebigone}, and Figure \ref{fig:TriangleRuinsPath} as an induced subgraph, respectively.  
+	 	 
+	 \subclaim{8b}{The block $B$ containing $v$ is $K_3$.}
+	 
+	 By Claim 4, $B$ is complete. Some neighbor $w$ of $v$ must have gone from degree 3 to degree 2. Since $v$ is only adjacent to vertices in $B$,	 
+	 the only way for this to happen is if $B = K_3$.  
+	 
+	 \subclaim{8c}{$G-v$ is the result of applying the operation in Corollary \ref{SubdivideConstructor} to a graph $F$ in Figure \ref{fig:seeds} one time.}
+	 None of the graphs in Figure \ref{fig:seeds} have an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.
+
+	 \subclaim{8d}{$F$ is not the rightmost graph in Figure \ref{fig:seeds}.}
+	 For this one,removing any edge leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied. [ADD (easy) DETAILS]
+	
+	 \subclaim{8e}{$F$ is not the middle graph in Figure \ref{fig:seeds}.}
+ 	  For this one, removing any edge in the triangle leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ is one of the graphs in Figure \ref{fig:thebiggerones}, impossible.
+	 
+	 \subclaim{8f}{Claim 8 is true.}
+	 By the previous subclaims, $F$ must be the leftmost graph in Figure \ref{fig:seeds}. For this one, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
+	 
+	 \claim{9}{}
+
 \end{proof}
 
 \bibliographystyle{amsplain}

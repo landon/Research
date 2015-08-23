@@ -459,31 +459,30 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}[scale = 10]
-	\tikzstyle{VertexStyle} = []
-	\tikzstyle{EdgeStyle} = []
-	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\tikzstyle{5ac28aeb-537c-40df-b3d9-d5f223cfe679}=[post]
-	\tikzstyle{c4e4beae-cfbe-44be-8fb1-f88ec7582dd9}=[pre]
-	\Vertex[style = labeledStyle, x = 1.100, y = 0.450, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 1.200, y = 0.650, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.950, y = 0.650, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.750, y = 0.650, L = \tiny {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \tiny {$1$}]{v6}
-	\Edge[style = 5ac28aeb-537c-40df-b3d9-d5f223cfe679, label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
-	\Edge[style = 5ac28aeb-537c-40df-b3d9-d5f223cfe679, label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
-	\Edge[style = 5ac28aeb-537c-40df-b3d9-d5f223cfe679, label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
-	\Edge[style = c4e4beae-cfbe-44be-8fb1-f88ec7582dd9, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
-	\Edge[style = 5ac28aeb-537c-40df-b3d9-d5f223cfe679, label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
-	\end{tikzpicture}
+\begin{tikzpicture}[scale = 5]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 1.100, y = 0.450, L = \tiny {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 1.200, y = 0.650, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.950, y = 0.650, L = \tiny {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.650, L = \tiny {$0$}]{v5}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \tiny {$1$}]{v6}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+\end{tikzpicture}
+
 		\caption{This is AT.}
 		\label{fig:ExtraTriangle}
 \end{figure}
@@ -629,6 +628,38 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 \end{lem}
 \begin{proof}
 	This is immediate from Lemma \ref{SubdivideTwice} and the graphs in Figure \ref{fig:chair}.
+\end{proof}
+
+\begin{defn}
+	For $a_1, a_2, a_3 \in \IN$, let $T_{a_1, a_2, a_3}$ be the graph consisting of
+	\begin{itemize}
+		\item a triangle $z_1z_2z_3$; and
+		\item disjoint paths $z_iP_iw_i$ where $P_i$ has length $a_i$ for $i \in \irange{3}$; and
+		\item a vertex $x$ adjacent to $w_1, w_2, w_3$.
+	\end{itemize}
+\end{defn}
+
+\begin{lem}\label{OneOrTwoEvenFromK3PathsIsAT}
+	$(T_{a_1, a_2, a_3}, h_x)$ is AT when $\card{\setb{i}{\irange{3}}{a_i \text{ is even }}} \in \set{1,2}$.
+\end{lem}
+\begin{proof}
+	This follows from Lemma \ref{SubdivideTwice} and the fact that Figure \ref{fig:SubdividedK4} and Figure \ref{fig:TriangleRuinsPath} are AT.
+\end{proof}
+
+\begin{lem}\label{OneOrTwoEvenFromK4PathsIsAT}
+	Let $H$ be formed from $T_{a_1, a_2, a_3}$ by adding a new vertex with neighborhood $\set{z_1, z_2, z_3}$.  Then
+	$(H, h_x)$ is AT when at least one of $a_1, a_2, a_3$ is odd.
+\end{lem}
+\begin{proof}
+	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT}, the fact that Figure \ref{fig:thebigone} is AT and Lemma \ref{InducedSubgraph}.
+\end{proof}
+
+\begin{lem}\label{OneOrTwoEvenFromK4PathsIsAT}
+	Let $H$ be formed from $T_{a_1, a_2, a_3}$ by adding a new vertex with neighborhood $\set{z_1, z_2, z_3}$.  Then
+	$(H, h_x)$ is AT when $\card{\setb{i}{\irange{3}}{a_i \text{ is even }}} \in \set{0,1,2}$.
+\end{lem}
+\begin{proof}
+	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT}, the fact that Figure \ref{fig:thebigone} is AT and Lemma \ref{InducedSubgraph}.
 \end{proof}
 
 \begin{lem}

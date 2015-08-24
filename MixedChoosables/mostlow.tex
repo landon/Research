@@ -435,13 +435,13 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.500, y = 0.200, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.550, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.200, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.500, y = 0.400, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.400, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.300, y = 0.550, L = \tiny {$1$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.650, y = 0.300, L = \tiny {$0$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \tiny {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.050, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \tiny {$1$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v6}
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
@@ -452,39 +452,36 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
-	\end{tikzpicture}
-		\caption{This is AT.}
-		\label{fig:TwoEndblockExtra}
-\end{figure}
-
-\begin{figure}
-	\centering
+	\end{tikzpicture}\hspace{.3in}
 \begin{tikzpicture}[scale = 5]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 1.100, y = 0.450, L = \tiny {$0$}]{v0}
-\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 1.200, y = 0.650, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$0$}]{v3}
-\Vertex[style = labeledStyle, x = 0.950, y = 0.650, L = \tiny {$0$}]{v4}
-\Vertex[style = labeledStyle, x = 0.750, y = 0.650, L = \tiny {$0$}]{v5}
-\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \tiny {$1$}]{v6}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
+\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \tiny {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.950, y = 0.450, L = \tiny {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.050, L = \tiny {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \tiny {$1$}]{v5}
+\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v6}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \tiny {$0$}]{v7}
+\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v8}
 \Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
 \end{tikzpicture}
-
-		\caption{This is AT.}
-		\label{fig:ExtraTriangle}
+		\caption{These are AT.}
+		\label{fig:WingedCows}
 \end{figure}
 
 \begin{figure}
@@ -527,28 +524,24 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
 	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v2}
 	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.900, y = 0.100, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v6}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v7}
-	\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \tiny {$0$}]{v8}
-	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v9}
+	\Vertex[style = labeledStyle, x = 1.000, y = 0.100, L = \tiny {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.800, L = \tiny {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \tiny {$0$}]{v7}
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v7)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v1)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
 	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v8)
+	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
 	\end{tikzpicture}\hspace{.3in}
 	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
@@ -648,18 +641,18 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 
 \begin{lem}\label{OneOrTwoEvenFromK4PathsIsAT}
 	Let $H$ be formed from $T_{a_1, a_2, a_3}$ by adding a new vertex with neighborhood $\set{z_1, z_2, z_3}$.  Then
-	$(H, h_x)$ is AT when at least one of $a_1, a_2, a_3$ is odd.
+	$(H, h_x)$ is AT.
 \end{lem}
 \begin{proof}
-	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT}, the fact that Figure \ref{fig:thebigone} is AT and Lemma \ref{InducedSubgraph}.
+	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT} and Lemma \ref{InducedSubgraph} using Lemma \ref{SubdivideTwice} and the fact that Figure \ref{fig:K5minus} is AT and Figure \ref{fig:thebigone} is AT.
 \end{proof}
 
-\begin{lem}\label{OneOrTwoEvenFromK4PathsIsAT}
-	Let $H$ be formed from $T_{a_1, a_2, a_3}$ by adding a new vertex with neighborhood $\set{z_1, z_2, z_3}$.  Then
-	$(H, h_x)$ is AT when $\card{\setb{i}{\irange{3}}{a_i \text{ is even }}} \in \set{0,1,2}$.
+\begin{lem}\label{OneOrTwoEvenFromK3PathsWithK3HangerIsAT}
+	Let $H$ be formed from $T_{a_1, a_2, a_3}$ by adding a new vertex adjacent to two consecutive vertices on $P_1$.  Then
+	$(H, h_x)$ is AT.
 \end{lem}
 \begin{proof}
-	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT}, the fact that Figure \ref{fig:thebigone} is AT and Lemma \ref{InducedSubgraph}.
+	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT} and Lemma \ref{InducedSubgraph}, using Lemma \ref{SubdivideTwice} and the fact that the graphs in Figure \ref{fig:WingedCows} are AT and the graphs in Figure \ref{fig:thebiggerones} are AT.
 \end{proof}
 
 \begin{lem}
@@ -729,7 +722,7 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
  	  For this one, removing any edge in the triangle leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ is one of the graphs in Figure \ref{fig:thebiggerones}, impossible.
 	 
 	 \subclaim{8f}{Claim 8 is true.}
-	 By the previous subclaims, $F$ must be the leftmost graph in Figure \ref{fig:seeds}. For this one, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced Figure \ref{fig:SubdividedK4} or Figure \ref{fig:TwoEndblockExtra}, impossible.
+	 By the previous subclaims, $F$ must be the leftmost graph in Figure \ref{fig:seeds}. For this one, removing any of the edges not incident to the vertex labeled 1 leaves an AT graph, so Corollary \ref{SubdivideConstructor} cannot be applied to those edges.  But then $G$ contains an induced even subdivision of Figure \ref{fig:SubdividedK4} or the leftmost graph in Figure \ref{fig:WingedCows}, impossible.
 	 
 	 \claim{9}{Every internal block of $G-x$ consists entirely of cutvertices.}
 	 Suppose otherwise that we have an internal block $B$ of $G-x$ containing a noncutvertex $v$.  By Claim 8, $x \adj v$.  Note that by Lemma \ref{SubdivideTwice} and Figure \ref{fig:SubdividedK4}, we get that Figure \ref{fig:TriangleRuinsPath} is AT with either or both of the bottom left and bottom right edge subdivided once.  But $G$ contains at least one of these with edges subdivided twice some number of times as an induced subgraph, a contradiction.
@@ -738,7 +731,7 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	 By Claim 5, $x$ is adjacent to all these vertices.  By Claim 9 and Claim 2, $x$ is not adjacent to any other vertex.
 	 
 	 \claim{11}{$G-x$ has at least three endblocks.}
-	 If not, then by Claim 6, $G-x$ has exactly two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, Claim 7, Claim 9 and Claim 10 show that $G-x$ is a triangle $w_1w_2w_3$ with a path $w_1y_1y_2\ldots y_t$ emanating from $w_1$.  Since $(G,h_x)$ is not AT, Lemma \ref{SubdivideTwice} and Figure \ref{fig:SubdividedK4} show that $t$ must be even.  But then $(G, h_x) \in \D$ since $G-x$ is formed from the leftmost graph in Figure \ref{fig:seeds} by applying Corollary \ref{SubdivideConstructor} some number of times, a contradiction.
+	 If not, then by Claim 6, $G-x$ has exactly two endblocks $B_1$ and $B_2$.  Since $d_G(x) \ge 3$, Claim 7, Claim 9 and Claim 10 show that $G-x$ is a triangle $w_1w_2w_3$ with a path $w_1y_1y_2\ldots y_t$ emanating from $w_1$.  Since $(G,h_x)$ is not AT, Lemma \ref{SubdivideTwice} and Figure \ref{fig:SubdividedK4} show that $t$ must be even.  But then $(G, h_x) \in \D$ since $G$ is formed from the leftmost graph in Figure \ref{fig:seeds} by applying Corollary \ref{SubdivideConstructor} some number of times, a contradiction.
 
 	 \claim{12}{Every endblock of $G-x$ is $K_2$.}
 	 Suppose $G-x$ has a $K_3$ endblock $B$.  
@@ -750,14 +743,19 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	 If not, then by Claim 11, $G-N(x_B)$ contains an induced subgraph containing $x$ that is a cycle $y_1\ldots y_ty_1$ plus the edge $y_1y_3$ with $t \ge 4$.  If $t$ is even, then $G-N(x_B)$ contains an induced even cycle with at most one chord which is degree-AT, otherwise $G-N(x_B)$ contains the induced even cycle $y_1y_3\ldots y_ty_1$ which is also degree-AT; this contradicts Subclaim 12a.
 	 
 	 \subclaim{12c}{The other block $D$ containing $x_B$ is $K_2$.}
-	 If not, then $G$ must have either an induced even subdivision of Figure \ref{fig:TwoEndblockExtra} or an induced even subdivision of Figure \ref{fig:SubdividedK4} (both path length parities are covered).
+	 If not, then $G$ must have either an induced even subdivision of the leftmost graph in Figure \ref{fig:WingedCows} or an induced even subdivision of Figure \ref{fig:SubdividedK4} (both path length parities are covered).
 	 
 	 \subclaim{12d}{Claim 12 is true.}
-	 By Subclaim 12b and 12c, $G-x$ has exactly one $K_3$ internal component, call it $Q$, and the rest of the internal components are $K_2$.  Moreover, $Q$ intersects $D$ and in particular, a shortest path from $Q$ to $x$ passing through $B$ has length three. By Claim 1 and Claim 11, $G-x$ has exactly three endblocks $B_1 = B, B_2$ and $B_3$.  For $i \in \irange{3}$, let $\ell_i$ be the length of the shortest path from $Q$ to $x$ passing through $B_i$.  We know $\ell_1 = 3$.  If both $\ell_2$ and $\ell_3$ are  even, then $G$ would have an induced even subdivision of Figure \ref{fig:TriangleRuinsPath}, a contradiction.   So, at least one of $\ell_2, \ell_3$ are odd and hence $G$ contains an induced even subdivision of Figure \ref{fig:ExtraTriangle}, a contradiction. 
+	 By Subclaim 12b and 12c, $G-x$ has exactly one $K_3$ internal component, call it $Q$, and the rest of the internal components are $K_2$.  Moreover, $Q$ intersects $D$ and in particular, a shortest path from $Q$ to $x$ passing through $B$ has length three. By Claim 1 and Claim 11, $G-x$ has exactly three endblocks $B_1 = B, B_2$ and $B_3$.  For $i \in \irange{3}$, let $\ell_i$ be the length of the shortest path from $Q$ to $x$ passing through $B_i$.  We know $\ell_1 = 3$.  If both $\ell_2$ and $\ell_3$ are  even, then $G$ would have an induced even subdivision of Figure \ref{fig:TriangleRuinsPath}, a contradiction.   So, at least one of $\ell_2, \ell_3$ are odd and hence $G$ contains an induced even subdivision of Figure \ref{fig:SubdividedK4}, a contradiction. 
 	 
-	 \claim{13}{$G-x$ has at least four endblocks.}
-	  If not, then by Claim 11, $G-x$ has exactly three endblocks $B_1$, $B_2$ and $B_3$.  By Claim 1 and Claim 10, $G-x$ has exactly one $K_3$ internal block and the rest of the internal blocks must be $K_2$.
-
+	 \claim{13}{All internal blocks of $G-x$ are $K_2$ or $K_3$.}
+	  If not, then by Claim 4, $G-x$ has a $K_t$ block with $t \ge 4$.  But this is impossible by Lemma \ref{OneOrTwoEvenFromK4PathsIsAT} since $G$ is $h_x$-minimal.
+	 
+	 \claim{14}{$G-x$ has at least four endblocks.}
+	  If not, then by Claim 11, $G-x$ has exactly three endblocks $B_1$, $B_2$ and $B_3$, all of them $K_2$ by Claim 12.  By Claim 1, Claim 9 and Claim 13, $G = T_{a_1,a_2,a_3}$ for some $a_1,a_2,a_3 \in \IN$.  By Lemma \ref{OneOrTwoEvenFromK3PathsIsAT}, either all or none of $a_1,a_2,a_3$ are even.  If all, then $(G, h_x) \in \D$ since $G$ is formed from the leftmost graph in Figure \ref{fig:seeds} by applying Corollary \ref{SubdivideConstructor} some number of times, a contradiction.  If none, then $(G, h_x) \in \D$ since $G$ is formed from the middle graph in Figure \ref{fig:seeds} by applying Corollary \ref{SubdivideConstructor} some number of times, a contradiction.
+	  
+	 \claim{15}{The lemma is true.}
+	 If not, then by Claim 1, Claim 9, Claim 13 and Claim 14, $G$ contains an induced subgraph that violates $h_x$-minimality by Lemma \ref{OneOrTwoEvenFromK3PathsWithK3HangerIsAT}.
 \end{proof}
 
 \bibliographystyle{amsplain}

@@ -260,12 +260,72 @@ To start we will reduce to the case when $G$ is $2$-connected.
 	The other direction is immediate from Lemma \ref{InducedSubgraph}.
 \end{proof}
 
-\begin{figure}[!htb]
+\begin{figure}[htb]
 	\centering
-	\includegraphics[scale=0.35]{pictures/111111[1,0,0,0].pdf}
-	\includegraphics[scale=0.35]{pictures/001101001100011010010[0,0,0,0,0,1,0].pdf}
-	\includegraphics[scale=0.35]{pictures/010110010110101011010[0,0,0,0,0,0,1].pdf}
-	\caption{The seed blocks.}
+	\tikzstyle{_BoldEdgeStyle} = [line width=3]
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.850, L = \small {$1$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.900, y = 0.700, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.550, L = \small {$0$}]{v3}
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v0)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v2)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\end{tikzpicture}\hspace{.3in}
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.200, y = 0.300, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 1.400, y = 0.300, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 1.050, y = 0.300, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.550, y = 0.300, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.600, L = \small {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.750, L = \small {$1$}]{v6}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v1)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v4)(v2)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v5)(v0)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\end{tikzpicture}\hspace{.3in}
+	\begin{tikzpicture}[scale = 10]
+	\tikzstyle{VertexStyle} = []
+	\tikzstyle{EdgeStyle} = []
+	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+	\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.200, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.400, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 1.000, y = 0.400, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.350, y = 0.400, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 1.200, y = 0.400, L = \small {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 1.100, y = 0.600, L = \small {$1$}]{v6}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v1)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v1)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
+	\end{tikzpicture}
+	\caption{The seed blocks.  Each bold edge can be removed without making the figure AT.}
 	\label{fig:seeds}
 \end{figure}
 
@@ -274,7 +334,7 @@ Lemma \ref{SubdivideTwice} part (2) suggests a way to construct $G$ such that $(
 	If $e$ is an edge in $G$ such that $(G,h)$ is not AT and $(G-e, h)$ is not AT, then $(G',h')$ is not AT where $(G',h')$ is formed from $(G,h)$ by subdividing $e$ twice and having $h'$ give zero on the two new vertices.
 \end{cor}
 
-Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Figure \ref{fig:seeds} that is closed under the operation in Corollary \ref{SubdivideConstructor}.
+Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Figure \ref{fig:seeds} that is closed under the operation in Corollary \ref{SubdivideConstructor}.  Explicitly, $\D$ is all graphs that can be created from the graphs in Figure \ref{fig:seeds} by replacing each bold edge with an odd length path.  The rightmost graph in Figure \ref{fig:seeds}  (the Moser Spindle) has no bold edges.
 
 \begin{figure}
 	\centering
@@ -283,68 +343,68 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.300, y = 0.250, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.500, y = 0.500, L = \tiny {$1$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.500, y = 0.250, L = \tiny {$0$}]{v3}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
+	\Vertex[style = labeledStyle, x = 0.300, y = 0.250, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.500, L = \small {$1$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.500, y = 0.250, L = \small {$0$}]{v3}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
 	\end{tikzpicture}\hspace{.3in}
 \begin{tikzpicture}[scale = 5]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 0.750, y = 0.500, L = \tiny {$1$}]{v0}
-\Vertex[style = labeledStyle, x = 0.900, y = 0.250, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 1.050, y = 0.250, L = \tiny {$0$}]{v3}
-\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \tiny {$0$}]{v4}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Vertex[style = labeledStyle, x = 0.750, y = 0.500, L = \small {$1$}]{v0}
+\Vertex[style = labeledStyle, x = 0.900, y = 0.250, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.050, y = 0.250, L = \small {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \small {$0$}]{v4}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
 \end{tikzpicture}\hspace{.3in}
 \begin{tikzpicture}[scale = 5]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 0.450, y = 0.700, L = \tiny {$1$}]{v0}
-\Vertex[style = labeledStyle, x = 0.300, y = 0.400, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 0.600, y = 0.400, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 0.150, y = 0.400, L = \tiny {$0$}]{v3}
-\Vertex[style = labeledStyle, x = 0.750, y = 0.400, L = \tiny {$0$}]{v4}
-\Vertex[style = labeledStyle, x = 0.450, y = 0.400, L = \tiny {$0$}]{v5}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+\Vertex[style = labeledStyle, x = 0.450, y = 0.700, L = \small {$1$}]{v0}
+\Vertex[style = labeledStyle, x = 0.300, y = 0.400, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.600, y = 0.400, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.150, y = 0.400, L = \small {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.400, L = \small {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 0.450, y = 0.400, L = \small {$0$}]{v5}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v5)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
 \end{tikzpicture}\hspace{.3in}
 \begin{tikzpicture}[scale = 5]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 0.500, y = 0.300, L = \tiny {$0$}]{v0}
-\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 0.500, y = 0.600, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$1$}]{v3}
-\Vertex[style = labeledStyle, x = 0.500, y = 0.450, L = \tiny {$0$}]{v4}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Vertex[style = labeledStyle, x = 0.500, y = 0.300, L = \small {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.500, y = 0.600, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \small {$1$}]{v3}
+\Vertex[style = labeledStyle, x = 0.500, y = 0.450, L = \small {$0$}]{v4}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
 \end{tikzpicture}
 
 \caption{These are AT.}
@@ -358,20 +418,20 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 0.550, y = 0.700, L = \tiny {$0$}]{v0}
-\Vertex[style = labeledStyle, x = 0.550, y = 0.450, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 0.800, y = 0.700, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \tiny {$1$}]{v3}
-\Vertex[style = labeledStyle, x = 0.800, y = 0.450, L = \tiny {$0$}]{v4}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v1)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\Vertex[style = labeledStyle, x = 0.550, y = 0.700, L = \small {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.550, y = 0.450, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.800, y = 0.700, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \small {$1$}]{v3}
+\Vertex[style = labeledStyle, x = 0.800, y = 0.450, L = \small {$0$}]{v4}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v1)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v3)
 \end{tikzpicture}
 
 	\caption{This is AT.}
@@ -385,18 +445,18 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.650, L = \tiny {$1$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v4}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.650, L = \small {$1$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \small {$0$}]{v4}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
 	\end{tikzpicture}
 	\caption{This is AT.}
 	\label{fig:SubdividedK4}
@@ -409,20 +469,20 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.650, y = 0.300, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.800, L = \tiny {$1$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.300, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.250, y = 0.300, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.550, L = \tiny {$0$}]{v5}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v2)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.300, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.800, L = \small {$1$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.300, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.250, y = 0.300, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.550, L = \small {$0$}]{v5}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
 	\end{tikzpicture}
 	\caption{This is AT.}
 	\label{fig:TriangleRuinsPath}
@@ -435,50 +495,50 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.050, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \tiny {$1$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v6}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
+	\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.450, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.050, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \small {$1$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \small {$0$}]{v6}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v6)
 	\end{tikzpicture}\hspace{.3in}
 \begin{tikzpicture}[scale = 5]
 \tikzstyle{VertexStyle} = []
 \tikzstyle{EdgeStyle} = []
 \tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 \tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \tiny {$0$}]{v0}
-\Vertex[style = labeledStyle, x = 0.950, y = 0.450, L = \tiny {$0$}]{v1}
-\Vertex[style = labeledStyle, x = 0.850, y = 0.050, L = \tiny {$0$}]{v2}
-\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \tiny {$0$}]{v3}
-\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v4}
-\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \tiny {$1$}]{v5}
-\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v6}
-\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \tiny {$0$}]{v7}
-\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v8}
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v4)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v2)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v6)
-\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+\Vertex[style = labeledStyle, x = 0.250, y = 0.450, L = \small {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 0.950, y = 0.450, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.050, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.450, y = 0.450, L = \small {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \small {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 0.350, y = 0.650, L = \small {$1$}]{v5}
+\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \small {$0$}]{v6}
+\Vertex[style = labeledStyle, x = 0.750, y = 0.250, L = \small {$0$}]{v7}
+\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \small {$0$}]{v8}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v6)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v5)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v5)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v6)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v7)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v7)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v8)(v6)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v8)(v7)
 \end{tikzpicture}
 		\caption{These are AT.}
 		\label{fig:WingedCows}
@@ -491,26 +551,26 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.600, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 1.250, y = 0.200, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.200, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 1.050, y = 0.200, L = \tiny {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \tiny {$1$}]{v6}
-	\Vertex[style = labeledStyle, x = 0.650, y = 0.200, L = \tiny {$0$}]{v7}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.300, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.600, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 1.250, y = 0.200, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.200, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.450, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 1.050, y = 0.200, L = \small {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.850, L = \small {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.650, y = 0.200, L = \small {$0$}]{v7}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v7)
 	\end{tikzpicture}
 		\caption{This is AT.}
 		\label{fig:thebigone}
@@ -523,83 +583,83 @@ Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in Fig
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 1.000, y = 0.100, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \tiny {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.800, L = \tiny {$1$}]{v6}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \tiny {$0$}]{v7}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.350, y = 0.250, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.000, y = 0.100, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.550, y = 0.250, L = \small {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.800, L = \small {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.850, y = 0.250, L = \small {$0$}]{v7}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v7)
 	\end{tikzpicture}\hspace{.3in}
 	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v6}
-	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v7}
-	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \tiny {$0$}]{v8}
-	\Vertex[style = labeledStyle, x = 1.050, y = 0.100, L = \tiny {$0$}]{v9}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v1)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \small {$1$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \small {$0$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \small {$0$}]{v7}
+	\Vertex[style = labeledStyle, x = 1.150, y = 0.250, L = \small {$0$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.050, y = 0.100, L = \small {$0$}]{v9}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v7)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v8)(v1)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v9)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v9)(v8)
 	\end{tikzpicture}\hspace{.3in}
 	\begin{tikzpicture}[scale = 5]
 	\tikzstyle{VertexStyle} = []
 	\tikzstyle{EdgeStyle} = []
 	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
 	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \tiny {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \tiny {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \tiny {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \tiny {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 1.200, y = 0.100, L = \tiny {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \tiny {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \tiny {$1$}]{v6}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \tiny {$0$}]{v7}
-	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \tiny {$0$}]{v8}
-	\Vertex[style = labeledStyle, x = 1.100, y = 0.250, L = \tiny {$0$}]{v9}
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v0)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v5)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v6)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v1)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v4)
-	\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v8)
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.400, L = \small {$0$}]{v0}
+	\Vertex[style = labeledStyle, x = 1.300, y = 0.250, L = \small {$0$}]{v1}
+	\Vertex[style = labeledStyle, x = 0.450, y = 0.250, L = \small {$0$}]{v2}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.550, L = \small {$0$}]{v3}
+	\Vertex[style = labeledStyle, x = 1.200, y = 0.100, L = \small {$0$}]{v4}
+	\Vertex[style = labeledStyle, x = 0.600, y = 0.250, L = \small {$0$}]{v5}
+	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \small {$1$}]{v6}
+	\Vertex[style = labeledStyle, x = 0.800, y = 0.250, L = \small {$0$}]{v7}
+	\Vertex[style = labeledStyle, x = 0.950, y = 0.250, L = \small {$0$}]{v8}
+	\Vertex[style = labeledStyle, x = 1.100, y = 0.250, L = \small {$0$}]{v9}
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v5)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v6)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v8)(v7)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v9)(v1)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v9)(v4)
+	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v9)(v8)
 	\end{tikzpicture}
 			\caption{These are AT.}
 			\label{fig:thebiggerones}
@@ -655,11 +715,11 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	This follows from Lemma \ref{OneOrTwoEvenFromK3PathsIsAT} and Lemma \ref{InducedSubgraph}, using Lemma \ref{SubdivideTwice} and the fact that the graphs in Figure \ref{fig:WingedCows} are AT and the graphs in Figure \ref{fig:thebiggerones} are AT.
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{TwoConnectedClassification}
 	Let $G$ be $h_x$-minimal for $x \in V(G)$.  If $G$ is $2$-connected, then $(G,h_x)$ is AT if and only if 
 	\begin{enumerate}
 		\item $d_G(x) \ge 3$; and
-		\item $G$ is not complete and not an odd cycle; and
+		\item $G$ is not complete; and
 		\item $(G,h_x) \not \in \D$.
 	\end{enumerate}
 \end{lem}
@@ -701,7 +761,7 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 
 	 \claim{8}{Every noncutvertex of $G-x$ is adjacent to $x$.}
 	 
-	 Suppose $G-x$ has a noncutvertex $v$ with $v \nonadj x$. Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete or an odd cycle, or $(G-v,h_x) \in \D$.  The first three clearly cannot occur, so we have $(G-v,h_x) \in \D$.  
+	 Suppose $G-x$ has a noncutvertex $v$ with $v \nonadj x$. Then $G-v$ is $2$-connected and $h_x$-minimal, so by minimality of $\card{G}$, we conclude that $d_{G-v}(x) \le 2$, $G-v$ is complete, or $(G-v,h_x) \in \D$.  The first three clearly cannot occur, so we have $(G-v,h_x) \in \D$.  
 	 
 	 \subclaim{8a}{$G-v$ has an induced path $v_1v_2v_3v_4$ such that $d_G(v_2) = d_G(v_3) = 2$.}
 	 
@@ -757,6 +817,22 @@ Lemma \ref{InducedPathExists} will be really useful in applying the following le
 	 \claim{15}{The lemma is true.}
 	 If not, then by Claim 1, Claim 9, Claim 13 and Claim 14, $G$ contains an induced subgraph that violates $h_x$-minimality by Lemma \ref{OneOrTwoEvenFromK3PathsWithK3HangerIsAT}.
 \end{proof}
+
+Putting Lemma \ref{TwoConnectedReduction} and Lemma \ref{TwoConnectedClassification} together we get the following classification of $h_x$-minimal graphs.
+
+\begin{thm}
+	Let $G$ be $h_x$-minimal for $x \in V(G)$ and let $\B$ be the set of blocks of $G$ containing $x$.  Then $(G,h_x)$ is AT if and only if
+	\begin{enumerate}
+		\item $\B$ contains at least two degree-AT graphs; or
+		\item $G$ is 2-connected, $G$ is not complete, $(G,h_x) \not \in \D$ and $d_G(x) \ge 3$.
+	\end{enumerate}
+\end{thm}
+
+\section{Choosability and Paintability}
+The same classification holds.  Just need to show none of the bad ones are choosable.  Also, show that when we move up to two vertices $x,y$ with $h(x) = h(y) = 1$, AT, choosability and paintability all separate.
+
+\section{Applications}
+When this is in a critical graph, we get $h_x$-minimality for free.  If $x$ has $t \ge 5$ neighbors in one component of the low vertex subgraph, then those neighbors are all in one $K_t$ block.  If $t = 4$, then the neighbors are either a $K_4$ block or we create the Moser Spindle.
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring1}

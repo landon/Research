@@ -300,20 +300,19 @@ For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, crea
 	\end{proof}
 	
 	\begin{lem}\label{Odd_delta}
-		Suppose there is $\gamma \in F \setminus L(t)$ and $\delta \in L(t) \setminus L(s)$ such that $\card{G_{L, \delta} - t}$ is odd.  Then there is a list assignment $L'$ and colors $\delta', \gamma'$ such that
+		Suppose there is $\gamma \in F \setminus L(t)$ and $\delta \in L(t) \setminus L(s)$ such that $\card{G_{L, \delta} - t}$ is odd.  Then there is a list assignment $L'$ and a color $\delta'$ such that
 		\begin{itemize}
 			\item $(G, L')$ is superabundant; and
 			\item $\eta_{L'}(G - t) = \eta_L(G-t)$; and
-			\item $\delta' \in F_{L'}(G) \cap L'(t)$; and
-			\item $\gamma' \in F_{L'}(G) \setminus L(t)$.
+			\item $\delta' \in F_{L'}(G) \cap L'(t)$.
 		\end{itemize}
 	\end{lem}
 	\begin{proof}
 		If $\delta \in F$ then $L$ works for $L'$, so we may assume $\delta \not \in F$.  By Lemma \ref{SingleGammaMuchSwappage}, $\gamma$ and $\delta$ are swappable.
 		
-		First, suppose $\delta \in Y$. Then, by Lemma \ref{SwappersAreSparse} and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for exactly two $u,w \in N(r) - s$.   Let $X \in \X_{\delta,\gamma}$ with $t \in X$.  We have $L_X(r) = L(r)$ and thus if $|X| = 2$, then $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  So, $|X| = 1$ and $L_X$ differs from $L$ only on $t$ where $L_X$ has $\gamma$ instead of $\delta$. If $F \subseteq L_X(t)$, then we get a contradiction by the arguments in Lemma \ref{AllSwappableLowPsi} and Claim 1.  So, we may choose $\alpha \in F \setminus L_X(t)$. Now we can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$, which proves the claim in this case.
+		First, suppose $\delta \in Y$. Then, by Lemma \ref{SwappersAreSparse} and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for exactly two $u,w \in N(r) - s$.   Let $X \in \X_{\delta,\gamma}$ with $t \in X$.  We have $L_X(r) = L(r)$ and thus if $|X| = 2$, then $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  So, $|X| = 1$ and $L_X$ differs from $L$ only on $t$ where $L_X$ has $\gamma$ instead of $\delta$.  Hence we can use $L' = L_X$ and $\delta' = \gamma$.
 		
-		Otherwise, by Lemma \ref{SwappersAreSparse}, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Let $X \in \X_{\delta,\gamma}$ with $t \in X$. As before, we conclude $|X| = 1$ and again we can choose $\alpha \in F \setminus L_X(t)$ and use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$.
+		Otherwise, by Lemma \ref{SwappersAreSparse}, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Let $X \in \X_{\delta,\gamma}$ with $t \in X$. As before, we conclude $|X| = 1$ and again we can use $L' = L_X$ and $\delta' = \gamma$.
 	\end{proof}
 	
 		
@@ -388,7 +387,7 @@ For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, crea
 			
 			Suppose $\tau$ appears only on $L(s)$. Then $\set{s,t} \in \X_{\delta,\tau}$ and we get $\eta_{L_{\set{s,t}}}(G - t) > \eta_L(G - t)$, a contradiction.  So, $\tau \in L(r)$.  There is at most one $v \in N(r) - s$ with $\tau \in L(v)$ by Lemma \ref{SwappersAreSparse}.  Suppose there is such a $v$.  Then $\X_{\delta,\tau}$ is one of $\set{\set{v,t}, \set{s}}$, $\set{\set{v}, \set{s, t}}$ or $\set{\set{v,s}, \set{t}}$.  For the first two, using the singleton set for $X$ gives increases $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  For the third using $X = \set{t}$ gives $L_X(s) \cap L_X(t) = \set{\beta, \tau}$.  But now $\gamma$ is swappable with every color in $\pot(L) \setminus F$ which is impossible as in Claim 0.  
 			
-			Hence $\tau$ must appear only on $L(r)$ and $L(s)$.  That means that for any induced subgraph $H$ of $G$ containing $r,s,t$ we have $\psi_L(H) \ge 3 + \psi_L{H-s-t} \ge 3 + \size{H-s-t} = \size{H} + 1$.  But now $\delta$ is swappable with every color in $\pot(L) - F$ by Lemma \ref{SwappableCondition} since any subgraph $H$ with edges containing an even number of $\delta$'s must contain $r,s,t$, but then $\psi_L(H) > ||H||$.  Since $\delta \in F$, this contradicts Claim 0.
+			Hence $\tau$ must appear only on $L(r)$ and $L(s)$.  That means that for any induced subgraph $H$ of $G$ containing $r,s,t$ we have $\psi_L(H) \ge 3 + \psi_L(H-s-t) \ge 3 + \size{H-s-t} = \size{H} + 1$.  But now $\delta$ is swappable with every color in $\pot(L) - F$ by Lemma \ref{SwappableCondition} since any subgraph $H$ with edges containing an even number of $\delta$'s must contain $r,s,t$, but then $\psi_L(H) > ||H||$.  Since $\delta \in F$, this contradicts Claim 0.
 	\end{proof}
 	
 	

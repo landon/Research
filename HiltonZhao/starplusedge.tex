@@ -99,6 +99,8 @@
 \def\H{\fancy{H}}
 \def\T{\fancy{T}}
 \def\X{\fancy{X}}
+\def\P{\fancy{P}}
+\def\L{\fancy{L}}
 
 % any changes to \claim should be mirrored in \claimnonum and \subclaim
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -118,7 +120,7 @@
 \def\adj{\leftrightarrow}
 \def\ch{\textrm{ch}}
 
-
+\renewcommand{\restriction}{\mathord{\upharpoonright}}
 \begin{document}
 	
 \section{Definitions}
@@ -214,14 +216,15 @@ Suppose $(G,L)$ is superabundant.  We say that $a,b \in \pot(L)$ are \emph{swapp
 		\item $\card{H_{L, a}}$ is odd; or,
 		\item $\card{H_{L, b}}$ is odd.
 	\end{enumerate}
+	Moreover, if (2) or (3) holds for $G$, then $\psi_{L_X}(G) = \psi_L(G)$ for every $X \subseteq S_{L,a,b}$ with $\card{X} \le 2$.
 \end{lem}
-%
+
 \begin{proof}
 	Suppose not and choose $X \subseteq S_{L,a,b}$ with $\card{X} \le 2$ such that $(G,L_X)$ is not superabundant.  
-	Then we have $H \subseteq G$ such that$(H,L_X)$ is not abundant.  Note that $\card{H_{L,a}}$ and
+	Then we have $H \subseteq G$ such that $(H,L_X)$ is not abundant.	Note that $\card{H_{L,a}}$ and
 	$\card{H_{L_X,a}}$ differ by at most 2, so their contributions to
 	$\psi_L(H)$ and $\psi_{L_X}(H)$ differ by at most 1; the same is true for
-	$\card{H_{L,a}}$ and $\card{H_{L_X,b}}$.  
+	$\card{H_{L,b}}$ and $\card{H_{L_X,b}}$.  
 	If $\psi_L(H)>\size{H}$, then $\psi_{L_X}(H) \ge \psi_L(H)-1\ge \size{H}$, a contradiction.
 	So (2) or (3) holds.	The only way that we can have
 	$\psi_{L_X}(H)<\psi_L(H)$ is if $\floor{\frac{\card{H_{L_X, a}}}{2}} +
@@ -233,129 +236,206 @@ Suppose $(G,L)$ is superabundant.  We say that $a,b \in \pot(L)$ are \emph{swapp
 \end{proof}
 
 \section{Stars with one edge subdivided}
+	We say a graph $G$ is a $\operatorname{LongStar}_{r,s,t}$ if $G$ is a star with one edge subdivided, where $r$ is the center of the
+	star, $t$ the vertex at distance two from $r$, and $s$ the intervening vertex.  
+	
+	We want to prove the following conjecture.
+	
 \begin{conjecture}
 	\label{StarWithOneEdgeSubdivided}
-	Let $G$ be a star with one edge subdivided, where $r$ is the center of the
-	star, $t$ the vertex at distance two from $r$, and $s$ the intervening vertex.  
-	If $L$ is superabundant and $|L(v)| \ge d_G(v)$ for all 
-	$v \in V(G)$, then $G$ is $L$-fixable if at least one of the following holds:
+ 	 Suppose $G$ is a $\operatorname{LongStar}_{r,s,t}$. If $(G,L)$ is superabundant and $|L(v)| \ge d_G(v)$ for all 
+	 $v \in V(G)$, then $G$ is $L$-subfixable if at least one of the following holds:
 	\begin{enumerate}
 		\item[(a)] $|L(r)| > d_G(r)$; or
 		\item[(b)] $|L(s)| > d_G(s)$; or
-		\item[(c)] $\psi_L(G) > \size{G}$.
+		\item[(c)] $\psi_L(G) > \size{G}$ (how do we do induction here?)
 	\end{enumerate}
 \end{conjecture}
 
-\begin{proof} [Proof of Conjecture \ref{StarWithOneEdgeSubdivided}(a)]
-	Suppose not and choose a counterexample $G$ with list assignment $L$ so as to minimize $\card{G}$ and subject to that, to maximize $\eta_L(G-t)$.
-	
-	Create a bipartite graph $B$ with parts $X = \setb{uw}{E(G - t)}{L(u) \cap L(w) \ne \emptyset}$ and $Y = \setb{\alpha}{\pot(L)}{\nu((G - t)_\alpha) = 1}$, where $uw \in X$ is adjacent to $\alpha \in Y$ if and only if $\alpha \in L(u) \cap L(w)$.  Put $F = L(r) - \bigcup_{v \in N(r)} L(v)$.  Since $G$ is not $L$-fixable, for each pair of colors $a,b \in \pot(L)$ there is a 2-partition $\X_{a,b}$ of $S_{L,a,b}$ such that $G$ is not $L_J$-fixable for every $J \subseteq \X_{a,b}$.
-	
-	\claim{1}{For any $\beta \in Y$ that is swappable with some $\gamma \in F$, we have $\card{G_\beta - r - t} \le 2$.}
-	
-	Suppose $\card{G_\beta - r - t} \ge 3$.  Pick $v \in V(G_\beta - r - t)$.  Let $X \in \X_{\beta,\gamma}$ with $v \in X$.  Note that $L_X(r) = L(r)$ since $\gamma, \beta \in L(r)$.  Since $\card{X \cap V(G_\beta - r - t)} \le 2$,  we have $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
-	
-	\claim{2}{For any $\beta \not \in Y$ that is swappable with some $\gamma \in F$, we have $\card{G_\beta - r - t} \le 1$.}
-	
-	Suppose $\card{G_\beta - r - t} \ge 2$.  Let $X \in \X_{\beta,\gamma}$ with $r \in X$.  Since $\card{X \cap V(G_\beta - r - t)} \le 1$, we again contradict the maximality of $\eta_L(G - t)$.
+For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, create a bipartite graph $B_L(G)$ with parts $X_L(G) = \setb{uw}{E(G - t)}{L(u) \cap L(w) \ne \emptyset}$ and $Y_L(G) = \setb{\alpha}{\pot(L)}{\nu((G - t)_\alpha) = 1}$, where $uw \in X_L(G)$ is adjacent to $\alpha \in Y_L(G)$ if and only if $\alpha \in L(u) \cap L(w)$.  Put $F_L(G) = L(r) \setminus \bigcup_{v \in N(r)} L(v)$.
 
-	\claim{3}{If every $\beta \in \pot(L) - F$ is swappable with some $\gamma \in F$, then $\psi_L(G - t) \le |Y|$.}
 	
-	Suppose every $\beta \in \pot(L) - F$ is swappable with some $\gamma \in F$.  Then, by Claim 1, the colors in $Y$ each contribute at most one to $\psi_L(G - t)$.  By Claim 2, the colors not in $Y$ contribute nothing to $\psi_L(G - t)$.  Hence $\psi_L(G - t) \le \card{Y}$.
+	We prove part (a). 
+	
+	
+	For a $\operatorname{LongStar}_{r,s,t}$ graph $G$, let $\L(G)$ be all list assignments $L$ such that $(G,L)$ is superabundant and $|L(r)| > d_G(r)$ and $|L(v)| \ge d_G(v)$ for all $v \in V(G-r)$.  Suppose there is a $\operatorname{LongStar}_{r,s,t}$ graph $G$ and $L \in \L(G)$ such that $G$ is not $L$-subfixable.  Choose such a $G$ and $L$ to minimize $|G|$ and subject to that to maximize $\eta_L(G - t)$.  Since $G$ is not $L$-subfixable, for each pair of colors $a,b \in \pot(L)$ there is a 2-partition $\X_{a,b}$ of $S_{L,a,b}$ such that $G$ is not $L_J$-subfixable for every $J \subseteq \X_{a,b}$.  Let $F = F_L(G)$, $B = B_L(G)$ and $Y = Y_L(G)$.
+	
+	\begin{lem}\label{ColorsOnSTAreEven}
+		Every $\delta \in L(s) \cap L(t)$ appears an even number of times in $L$.
+	\end{lem}
+	\begin{proof}
+		If not, then we can color $st$ with $\delta$ and remove $\delta$ from $L(s)$ to get a list assignment $L'$ on $G-t$ such that $(G-t, L')$ is superabundant.  Now $G-t$ is a star and hence $L'$-fixable.
+	\end{proof}
 
-	\claim{4}{We have $\eta_L(G - t) \ge \size{G - t}$.}
-	
-	Suppose $\eta_L(G - t) < \size{G - t}$. Then we have $\card{F} \ge 2$. 
-	
-	\subclaim{4a}{There is $\beta \in \pot(L) - F$ that is not swappable with any $\gamma \in F$.}
+	\begin{lem}\label{SwappersAreSparse}
+		For any $\beta \in \pot(L) \setminus F$ that is swappable with some $\gamma \in F$, we have $\card{G_{L,\beta} - r - t} \le 2$.  Moreover, if $\beta \not \in Y$, then $\card{G_{L,\beta} - r - t} \le 1$.
+	\end{lem}
+	\begin{proof}
+		First, suppose $\beta \in Y$ is swappable with $\gamma \in F$ and $\card{G_{L,\beta} - r - t} \ge 3$.  Pick $v \in V(G_\beta - r - t)$.  Let $X \in \X_{\beta,\gamma}$ with $v \in X$.  Note that $L_X(r) = L(r)$ since $\gamma, \beta \in L(r)$.  Since $\card{X \cap V(G_\beta - r - t)} \le 2$,  we have $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
 		
-	Otherwise, by Claim 3 we would have $\psi_L(G - t) \le |Y| = \eta_L(G - t) < \size{G - t}$, contradicting superabundance of $(G,L)$.
+		Now, suppose $\beta \in \pot(L) \setminus \parens{Y \cup F}$ is swappable with $\gamma \in F$ and $\card{G_{L,\beta} - r - t} \ge 2$.  Let $X \in \X_{\beta,\gamma}$ with $r \in X$.  Since $\card{X \cap V(G_\beta - r - t)} \le 1$, we again contradict the maximality of $\eta_L(G - t)$.
+	\end{proof}
 	
-	\subclaim{4b}{There is $\gamma \in F - L(t)$. In particular, $V(G_\gamma) = \set{r}$.}
+	\begin{lem}\label{AllSwappableLowPsi}
+		If every $\beta \in \pot(L) \setminus F$ is swappable with some $\gamma \in F$, then $\eta_L(G-t) \ge \psi_L(G - t) \ge \size{G - t}$.
+	\end{lem}
+	\begin{proof}
+		Suppose every $\beta \in \pot(L) \setminus F$ is swappable with some $\gamma \in F$.  Then, by Lemma \ref{SwappersAreSparse}, the colors in $Y$ each contribute at most one to $\psi_L(G - t)$ and the colors not in $Y$ contribute nothing to $\psi_L(G - t)$.  Hence $\psi_L(G - t) \le \card{Y} = \eta_L(G-t)$.
+	\end{proof}
 	
-	Suppose $F \subseteq L(t)$.  Then $\card{L(r) \cap L(t)} \ge |F| \ge 2$.  Fix $\gamma \in F$. Let $H \subseteq G$.  If $\card{H_{L, \gamma}}$ is even, then $r, t \in V(H)$ and hence $\psi_L(H) \ge \size{H-t} + \card{L(r) \cap L(t)} \ge \size{H} + 1$.  Therefore $\gamma$ is swappable with $\beta$ by Lemma \ref{SwappableCondition}, contradicting Subclaim 4a.
 
-	\subclaim{4c}{$\gamma$ is swappable with every color in $\pot(L) - F - \beta$.  Moreover, $L(s) \cap L(t) = \set{\beta}$.}
 	
-	The only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, so if $\gamma$ is not swappable with some color $c \in \pot(L) - F$, then it must be $H = G[s, t]$ that fails all conditions of Lemma \ref{SwappableCondition}.  Hence we have $L(s) \cap L(t) = \set{c}$.  So, there is only one such $c$ and by Subclaim 4a, it is $\beta$.
+	\begin{lem}\label{FIntersectingLt}
+		If $\card{F \cap L(t)} \ge 2$, then every $\beta \in \pot(L) \setminus F$ is swappable with every $\gamma \in F \cap L(t)$.
+	\end{lem}
+	\begin{proof}
+		Suppose $\card{F \cap L(t)} \ge 2$.  Then $\card{L(r) \cap L(t)} \ge 2$.  Fix $\gamma \in F \cap L(t)$. Let $H \subseteq G$.  If $\card{H_{L, \gamma}}$ is even, then $r, t \in V(H)$ and hence $\psi_L(H) \ge \size{H-t} + 2 \ge \size{H} + 1$.  Therefore $\gamma$ is swappable with $\beta$ by Lemma \ref{SwappableCondition}.
+	\end{proof}
 	
-	\subclaim{4d}{If $\beta \in Y$, then $\card{G_\beta - r - t} = 3$.}
-
-	If $\beta \in Y$ and $\card{G_\beta - r - t} \le 2$, then the argument in Claim 3 and Subclaim 4a gives $\psi_L(G - t) < \size{G - t}$, a contradiction.
+	\begin{lem}\label{SingleGammaMuchSwappage}
+		If $\gamma \in F \setminus L(t)$ and $L(s) \cap L(t) \ne \set{\delta}$, then $\gamma$ and $\delta$ are swappable.
+	\end{lem}
+	\begin{proof}
+			The only subgraph $H$ with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, so if $\gamma$ is not swappable with $\delta$, then it must be $H = G[s, t]$ that fails all conditions of Lemma \ref{SwappableCondition}.  Hence we have $L(s) \cap L(t) = \set{\delta}$.
+	\end{proof}
+	
+	\begin{lem}\label{Odd_delta}
+		Suppose there is $\gamma \in F \setminus L(t)$ and $\delta \in L(t) \setminus L(s)$ such that $\card{G_{L, \delta} - t}$ is odd.  Then there is a list assignment $L'$ and colors $\delta', \gamma'$ such that
+		\begin{itemize}
+			\item $(G, L')$ is superabundant; and
+			\item $\eta_{L'}(G - t) = \eta_L(G-t)$; and
+			\item $\delta' \in F_{L'}(G) \cap L'(t)$; and
+			\item $\gamma' \in F_{L'}(G) \setminus L(t)$.
+		\end{itemize}
+	\end{lem}
+	\begin{proof}
+		If $\delta \in F$ then $L$ works for $L'$, so we may assume $\delta \not \in F$.  By Lemma \ref{SingleGammaMuchSwappage}, $\gamma$ and $\delta$ are swappable.
 		
-	So, suppose $\beta \in Y$ and $\card{G_\beta - r - t} \ge 4$.  Pick $v_1, v_2, v_3 \in V(G_\beta - r - t - s)$.  Then there is $i \in \irange{3}$ and $X \in \X_{\beta,\gamma}$ with $v_i \in X$ such that $X \cap \set{s,t} = \emptyset$. Note that $L_X(r) = L(r)$, $L_X(s) = L(s)$ and $L_X(t) = L(t)$.  Since the only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, the argument in Lemma \ref{SwappableCondition} shows that $(G,L_X)$ is superabundant.  Now $\set{\beta, \gamma} \subseteq L(v_1) \cup L(v_2) \cup L(v_3)$, so $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
-
-	\subclaim{4e}{If $\beta \not \in Y$, then $\card{G_\beta - r - t} = 2$.}
-	
-	If $\beta \not \in Y$ and $\card{G_\beta - r - t} \le 1$, then the argument in Claim 3 and Subclaim 4a gives $\psi_L(G - t) < \size{G - t}$, a contradiction.
+		First, suppose $\delta \in Y$. Then, by Lemma \ref{SwappersAreSparse} and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for exactly two $u,w \in N(r) - s$.   Let $X \in \X_{\delta,\gamma}$ with $t \in X$.  We have $L_X(r) = L(r)$ and thus if $|X| = 2$, then $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  So, $|X| = 1$ and $L_X$ differs from $L$ only on $t$ where $L_X$ has $\gamma$ instead of $\delta$. If $F \subseteq L_X(t)$, then we get a contradiction by the arguments in Lemma \ref{AllSwappableLowPsi} and Claim 1.  So, we may choose $\alpha \in F \setminus L_X(t)$. Now we can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$, which proves the claim in this case.
 		
-	So, suppose $\beta \not \in Y$ and $\card{G_\beta - r - t} \ge 3$. Pick $v_1, v_2 \in V(G_\beta - r - t - s)$ and let $v_3 = r$.  Then there is $i \in \irange{3}$ and $X \in \X_{\beta,\gamma}$ with $v_i \in X$ such that $X \cap \set{s,t} = \emptyset$.  Since the only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, the argument in Lemma \ref{SwappableCondition} shows that $(G,L_X)$ is superabundant.  Now $\set{\beta, \gamma} \cap L(r) \subseteq L(v_1) \cup L(v_2)$, so $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
+		Otherwise, by Lemma \ref{SwappersAreSparse}, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Let $X \in \X_{\delta,\gamma}$ with $t \in X$. As before, we conclude $|X| = 1$ and again we can choose $\alpha \in F \setminus L_X(t)$ and use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$.
+	\end{proof}
 	
-	\subclaim{4f}{There is $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  Moreover, $\delta$ and $\gamma$ are swappable.}
+		
+		\begin{lem}\label{SpannerSpecial}
+			Let $G$ be a bipartite graph with nonempty parts $P$ and $Q$.  If $|P| \le |Q|$ and $Q$ has no isolated vertices, then $G$ contains a nonempty matching $M$ whose vertex set is $S \cup N(S)$ for some $S \subseteq Q$.
+		\end{lem}
+		
+	\begin{lem}\label{TameEnoughColorsHits-t}
+		For every $C \subseteq Y$ with $\card{C} \ge \card{N_B(C)}$, we have $C \cap L(t) \ne \emptyset$
+	\end{lem}
+	\begin{proof}
+			Suppose not and let $C \subseteq Y$ with $\card{C} \ge \card{N_B(C)}$ and $C \cap L(t) = \emptyset$. Let $B'$ be the subgraph of $B$ induced on $C \cup N_B(C)$. Then we may apply Lemma \ref{SpannerSpecial} to get a nonempty matching $M$ of $B'$ whose vertex set is $S \cup N_B(S)$ for some $S \subseteq C$.  For each $\set{uw, \alpha} \in M$, color $uw$ with $\alpha$.   Let $G' = G - V(N_B(S) - r)$ and define $L'$ by $L'(v) = L(v) \setminus S$ for $v \in V(G')$.  Then $L'(v) = L(v)$ for $v \in V(G'-r)$. So, $(G', L')$ is superabundant and $|L'(r)| > d_{G'}(r)$.  Therefore, we can apply minimality of $|G|$ to $G'$ to conclude that $G'$ is $L'$-subfixable which implies that $G$ is $L$-subfixable, a contradiction.			
+	\end{proof}
 	
-	By Subclaim 4c and Claim 1, the colors in $Y - \beta$ contribute at most $|Y - \beta|$ to $\psi_L(G - t)$.  By Subclaim 4d and Subclaim 4e, the total contribution of $Y$ and $\beta$ to $\psi_L(G - t)$ is at most $\card{Y} + 1$.  Since nothing else contributes by Claim 2, we have $\psi_L(G - t) \le \eta_L(G - t) + 1 \le \size{G} - 1$.  Since $\psi_L(G) \ge \size{G}$, there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  The final statement follows by Subclaim 4c since $\delta \ne \beta$ because $\beta \in L(s)$.
-	
-	\subclaim{4g}{We may assume $\delta \in F \cap L(t)$.}
-	
-	Suppose  $\delta \not \in F \cap L(t)$.  First, suppose $\delta \in Y$. Then, by Claim 1 and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for exactly two $u,w \in N(r) - s$.   Let $X \in \X_{\delta,\gamma}$ with $t \in X$.  We have $L_X(r) = L(r)$ and thus if $|X| = 2$, then $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  So, $|X| = 1$ and $L_X$ differs from $L$ only on $t$ where $L_X$ has $\gamma$ instead of $\delta$. If $L_X(t) \subseteq F$, then we get a contradiction by the arguments in Subclaim 4a and 4b.  So, we may choose $\alpha \in F - L_X(t)$. Now we can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$, which proves the subclaim in this case.
-	
-	Otherwise, by Claim 2, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Let $X \in \X_{\delta,\gamma}$ with $t \in X$. As before, we conclude $|X| = 1$ and again we can choose $\alpha \in F - L_X(t)$ and use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$.
-	
-	\subclaim{4h}{Claim 4 is true.}
-	
-	We know that $\beta$ and $\delta$ are not swappable by Subclaim 4a.  Nevertheless, we are now going to swap $\beta$ and $\delta$, taking care to preserve superabundance.  Let $X \in \X_{\beta,\delta}$ with $s \in X$.   Suppose $(G, L_X)$ is not superabundant and choose an induced subgraph $H$ of $G$ such that $(H, L_X)$ is not abundant.  Then $\card{H_\delta}$ is even by Lemma \ref{SwappableCondition} and hence $r,s,t \in V(H)$.  Hmmm... i see ways to break superabundance, we need to do something else.
+	\begin{lem}\label{NoPositiveSurplus}
+		For every $C \subseteq Y$, we have $\card{C} \le \card{N_B(C)}$. In particular, $\eta_L(G-t) \le \size{G-t}$ and $F \ne \emptyset$.
+	\end{lem}
+	\begin{proof}
+			Suppose not and choose $C \subseteq Y$ such that $\card{C} > \card{N_B(C)}$ so as to minimize $\card{C}$.  For all $\tau \in C$, by minimality of $\card{C}$, we have $N_B(C - \tau) = N_B(C)$.  Since $\card{N_B(C')} \ge \card{C}$ for every $C' \subseteq C - \tau$, Hall's theorem gives a nonempty matching $M_\tau$ whose vertex set is $(C - \tau) \cup N_B(C-\tau) = (C - \tau) \cup N_B(C)$.  So, for every $\tau \in C$, we can color $N_B(C - \tau)$ using $C - \tau$ as in Lemma \ref{TameEnoughColorsHits-t}; the key point is that each of these colorings colors the same edge set.
+			
+			Put $R = C \cap L(t)$.  By Lemma \ref{TameEnoughColorsHits-t}, $R \ne \emptyset$.  For $\tau \in R$, we have $\card{C - \tau} \ge \card{N_B(C - \tau)}$, so Lemma \ref{TameEnoughColorsHits-t} gives $\card{R} \ge 2$. 
+			
+			First, suppose $rs \in N_B(C)$. Pick $\tau \in R \cap L(s)$ if possible; otherwise pick $\tau \in R$ arbitrarily. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r - t)$ and $L'(v) = L(v) \setminus (C - \tau)$ for $v \in V(G')$.  Then $L'(v) = L(v)$ for $v \in V(G' - r)$. Then $(G', L')$ is superabundant and $|L'(r)| > d_{G'}(r)$. If we can now color $st$ with a color different than $rs$ received, then by minimality of $|G|$ we conclude that $G'$ is $L'$-subfixable which implies that $G$ is $L$-subfixable, a contradiction. If we cannot color $st$, then $R \cap L(s) \ne \emptyset$ and hence $\tau \in L(s) \cap L(t)$ and $\tau$ is not used on $rs$, so we can color $st$ with $\tau$, a contradiction.  
+					
+			Hence, we may assume that $rs \not \in N_B(C)$. So, $R \cap L(s) = \emptyset$. Pick $\tau \in R$. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r)$ and $L'(v) = L(v) \setminus (C - \tau)$ for $v \in V(G')$.  We claim that $(G', L')$ is superabundant.  Suppose otherwise that we have $H \subseteq G'$ such that $(H, L')$ is not abundant. Since $\tau \not \in L(s)$, we must have $r, t \in V(H)$.  Now $V(H_\tau - t) = \set{r}$ since $N_B(\tau) \subseteq N_B(C)$.  So, when we add $t$ back in, $\tau$ contributes one to $\psi_{L'}(H)$.  But $(H - t, L')$ is abundant, so $(H, L')$ is abundant, a contradiction.  Since $(G', L')$ is superabundant and $\card{G'} < \card{G}$, by minimality we conclude that $G'$ is $L'$-subfixable which implies that $G$ is $L$-subfixable, a contradiction.
+	\end{proof}
 
-	
-	First, suppose $\beta \in Y$.  Then, by Subclaim 4d, we have $\card{G_\beta - r - t} = 3$.  No matter what Breaker does, $\eta_L(G-t)$ has increased.  Similarly, if $\beta \not \in Y$, Subclaim 3b gives $\card{G_\beta - r - t} \ge 2$ and $\eta_L(G-t)$ has increased no matter Breaker's response.
 
-	\claim{5}{If $\card{C} \ge \card{N_B(C)}$ for $C \subseteq Y$, then $C \cap L(t) \ne \emptyset$.}
+	\begin{lem}\label{EtaIsBig}
+		$\eta_L(G - t) \ge \size{G - t}$
+	\end{lem}
+	\begin{proof}
+		Suppose $\eta_L(G - t) < \size{G - t}$. Then we have $\card{F} \ge 2$. 
+		
+		\claim{0}{There is $\beta \in \pot(L) \setminus F$ that is not swappable with any $\gamma \in F$.}
+		
+		Since $\eta_L(G - t) < \size{G - t}$, this is immediate from Lemma \ref{AllSwappableLowPsi}.
+		
+		\claim{1}{There is $\gamma \in F \setminus L(t)$. In particular, $V(G_\gamma) = \set{r}$.}
+			
+			Immediate from Lemma \ref{FIntersectingLt}.
+		
+		\claim{2}{$\gamma$ is swappable with every color in $\pot(L) \setminus \parens{F \cup \set{\beta}}$.  Moreover, $L(s) \cap L(t) = \set{\beta}$.}
+		
+			The only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, so if $\gamma$ is not swappable with some color $c \in \pot(L) - F$, then it must be $H = G[s, t]$ that fails all conditions of Lemma \ref{SwappableCondition}.  Hence we have $L(s) \cap L(t) = \set{c}$.  So, there is only one such $c$ and by Claim 0, it is $\beta$.
+			
+		\claim{3}{If $\beta \in Y$, then $\card{G_\beta - r - t} = 3$.}
+		
+			If $\beta \in Y$ and $\card{G_\beta - r - t} \le 2$, then the argument in Lemma \ref{AllSwappableLowPsi} gives $\psi_L(G - t) < \size{G - t}$, a contradiction.
+			
+			So, suppose $\beta \in Y$ and $\card{G_\beta - r - t} \ge 4$.  Pick $v_1, v_2, v_3 \in V(G_\beta - r - t - s)$.  Then there is $i \in \irange{3}$ and $X \in \X_{\beta,\gamma}$ with $v_i \in X$ such that $X \cap \set{s,t} = \emptyset$. Note that $L_X(r) = L(r)$, $L_X(s) = L(s)$ and $L_X(t) = L(t)$.  Since the only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, the argument in Lemma \ref{SwappableCondition} shows that $(G,L_X)$ is superabundant.  Now $\set{\beta, \gamma} \subseteq L(v_1) \cup L(v_2) \cup L(v_3)$, so $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
+			
+		\claim{4}{If $\beta \not \in Y$, then $\card{G_\beta - r - t} = 2$.}
+		
+		If $\beta \not \in Y$ and $\card{G_\beta - r - t} \le 1$, then the argument in Lemma \ref{AllSwappableLowPsi} gives $\psi_L(G - t) < \size{G - t}$, a contradiction.
+		
+		So, suppose $\beta \not \in Y$ and $\card{G_\beta - r - t} \ge 3$. Pick $v_1, v_2 \in V(G_\beta - r - t - s)$ and let $v_3 = r$.  Then there is $i \in \irange{3}$ and $X \in \X_{\beta,\gamma}$ with $v_i \in X$ such that $X \cap \set{s,t} = \emptyset$.  Since the only subgraph with edges where $\card{H_{L, \gamma}}$ is even is $G[s, t]$, the argument in Lemma \ref{SwappableCondition} shows that $(G,L_X)$ is superabundant.  Now $\set{\beta, \gamma} \cap L(r) \subseteq L(v_1) \cup L(v_2)$, so $\eta_{L_X}(G - t) > \eta_L(G - t)$, which contradicts the maximality of $\eta_L(G - t)$.
+		
+		\claim{5}{There is $\delta \in L(t) \setminus L(s)$ such that $\card{G_\delta - t}$ is odd.  Moreover, $\delta$ and $\gamma$ are swappable.}
+		
+			By Lemma \ref{SwappersAreSparse} and Claim 2, the colors in $Y - \beta$ contribute at most $|Y - \beta|$ to $\psi_L(G - t)$.  By Claim 3 and Claim 4, the total contribution of $Y$ and $\beta$ to $\psi_L(G - t)$ is at most $\card{Y} + 1$.  Since nothing else contributes by  Lemma \ref{SwappersAreSparse}, we have $\psi_L(G - t) \le \eta_L(G - t) + 1 \le \size{G} - 1$.  Since $\psi_L(G) \ge \size{G}$, there must be $\delta \in L(t) \setminus L(s)$ such that $\card{G_\delta - t}$ is odd.  The final statement follows by Claim 2 since $\delta \ne \beta$ because $\beta \in L(s)$.
+			
+		\claim{6}{We may assume $\delta \in F \cap L(t)$.}
+		
+			Suppose  $\delta \not \in F \cap L(t)$.  First, suppose $\delta \in Y$. Then, by Lemma \ref{SwappersAreSparse} and since $\card{G_\delta - t}$ is odd, we have $\delta \in L(u) \cap L(w)$ for exactly two $u,w \in N(r) - s$.   Let $X \in \X_{\delta,\gamma}$ with $t \in X$.  We have $L_X(r) = L(r)$ and thus if $|X| = 2$, then $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  So, $|X| = 1$ and $L_X$ differs from $L$ only on $t$ where $L_X$ has $\gamma$ instead of $\delta$. If $F \subseteq L_X(t)$, then we get a contradiction by the arguments in Lemma \ref{AllSwappableLowPsi} and Claim 1.  So, we may choose $\alpha \in F \setminus L_X(t)$. Now we can use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$, which proves the claim in this case.
+			
+			Otherwise, by Lemma \ref{SwappersAreSparse}, we must have $\delta \in L(u)$ for exactly one $u$ in $N(r) - s$.  Let $X \in \X_{\delta,\gamma}$ with $t \in X$. As before, we conclude $|X| = 1$ and again we can choose $\alpha \in F \setminus L_X(t)$ and use $\alpha$ in place of $\gamma$ and $\gamma$ in place of $\delta$.
+			
+		\claim{7}{The lemma is true.}
+		
+			Pick $\tau \in L(s) - \beta$.   We claim that $\delta$ and $\tau$ are swappable.  We know $\tau \not \in L(t)$ since $L(s) \cap L(t) = \set{\beta}$.  Suppose $\tau \not \in L(r)$.  Then, by Lemma \ref{SwappersAreSparse}, $\tau$ appears only in $L(s)$ and we conclude that $\delta$ and $\tau$ are swappable.  So, instead suppose $\tau \in L(r)$.  Then there is at most one $v \in N(r) - s$ with $\tau \in L(v)$ by Lemma \ref{SwappersAreSparse}.  If $\delta$ and $\tau$ are not swappable, then some subgraph of $G[r,s,t]$ must fail all conditions in Lemma \ref{SwappableCondition} since $\tau$ appears an odd number of times in $G[v,r,s,t]$.  But this is impossible since $\psi_L(G[r,s,t]) \ge 3$.  Hence $\delta$ and $\tau$ are swappable.
+			
+			Suppose $\tau$ appears only on $L(s)$. Then $\set{s,t} \in \X_{\delta,\tau}$ and we get $\eta_{L_{\set{s,t}}}(G - t) > \eta_L(G - t)$, a contradiction.  So, $\tau \in L(r)$.  There is at most one $v \in N(r) - s$ with $\tau \in L(v)$ by Lemma \ref{SwappersAreSparse}.  Suppose there is such a $v$.  Then $\X_{\delta,\tau}$ is one of $\set{\set{v,t}, \set{s}}$, $\set{\set{v}, \set{s, t}}$ or $\set{\set{v,s}, \set{t}}$.  For the first two, using the singleton set for $X$ gives increases $\eta_{L_X}(G - t) > \eta_L(G - t)$, a contradiction.  For the third using $X = \set{t}$ gives $L_X(s) \cap L_X(t) = \set{\beta, \tau}$.  But now $\gamma$ is swappable with every color in $\pot(L) \setminus F$ which is impossible as in Claim 0.  
+			
+			Hence $\tau$ must appear only on $L(r)$ and $L(s)$.  That means that for any induced subgraph $H$ of $G$ containing $r,s,t$ we have $\psi_L(H) \ge 3 + \psi_L{H-s-t} \ge 3 + \size{H-s-t} = \size{H} + 1$.  But now $\delta$ is swappable with every color in $\pot(L) - F$ by Lemma \ref{SwappableCondition} since any subgraph $H$ with edges containing an even number of $\delta$'s must contain $r,s,t$, but then $\psi_L(H) > ||H||$.  Since $\delta \in F$, this contradicts Claim 0.
+	\end{proof}
 	
-	Suppose not. Let $B'$ be the subgraph of $B$ induced on $C \cup N_B(C)$. Then we may apply Lemma \ref{SpannerSpecial} to get a nonempty matching $M$ of $B'$ whose vertex set is $S \cup N_B(S)$ for some $S \subseteq C$.  For each $\set{uw, \alpha} \in M$, color $uw$ with $\alpha$.  Then since we used colors $S$, no edge in $X - N_B(S)$ has a color in $S$, so the graph $G' = G - V(N_B(S) - r)$ with lists $L'(v) = L(v) - S$ satisfies the hypotheses of the lemma.  Since $\card{G'} < \card{G}$, Fixer has a winning strategy on $G'$ with lists $L'$.  But this strategy wins on $G$ with $L$ as well since $N_B(S)$ is colored with $S$, a contradiction. 
 	
-	\noindent\textbf{Claim 5.  }\textit{We have $\card{C} \le \card{N_B(C)}$ for $C \subseteq Y$. In particular, $\eta_L(G-t) = \size{G-t}$ and $F \ne \emptyset$.}
-	
-	Suppose not and choose $C \subseteq Y$ such that $\card{C} > \card{N_B(C)}$ so as to minimize $\card{C}$.  For all $\tau \in C$, by minimality of $\card{C}$, we have $N_B(C - \tau) = N_B(C)$.  Since $\card{N_B(C')} \ge \card{C}$ for every $C' \subseteq C - \tau$, Hall's theorem gives a nonempty matching $M_\tau$ whose vertex set is $(C - \tau) \cup N_B(C-\tau) = (C - \tau) \cup N_B(C)$.  So, for every $\tau \in C$, we can color $N_B(C - \tau)$ using $C - \tau$ as in Claim 4; the key point is that each of these colorings colors the same edge set.
-	
-	Put $R = C \cap L(t)$.  By Claim 4, $R \ne \emptyset$.  For $\tau \in R$, we have $\card{C - \tau} \ge \card{N_B(C - \tau)}$, so Claim 4 gives $\card{R} \ge 2$. 
-	
-	First, suppose $rs \in N_B(C)$. Pick $\tau \in R \cap L(s)$ if possible; otherwise pick $\tau \in R$ arbitrarily. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r)$ and $L'(v) = L(v) - (C - \tau)$ for $v \in V(G')$.  We claim that $(G', L')$ is superabundant.  Suppose otherwise that we have $H \subseteq G'$ such that $(H, L')$ is not abundant.  Since $rs$ got colored, the only subgraph to worry about is $H = G[s,t]$.  If $\tau \in L(s)$, then $\tau \in L'(s) \cap L'(t)$, so we are good.  Otherwise, $R \cap L(s) = \emptyset$, so there must be some color $\delta \in L(s) \cap L(t) - C$; in particular, $\delta \in L'(s) \cap L'(t)$.  Since $(G', L')$ satisfies the hypotheses of the lemma and $\card{G'} < \card{G}$, Fixer has a winning strategy by minimality of $\card{G}$.  But this strategy wins on $G$ with $L$ as well since $N_B(C - \tau)$ is colored with $C - \tau$, a contradiction. 
-	
-	Hence, we may assume that $rs \not \in N_B(C)$. So, $R \cap L(s) = \emptyset$. Pick $\tau \in R$. For each $\set{uw, \alpha} \in M_\tau$, color $uw$ with $\alpha$.  Put $G' = G - V(N_B(C) - r)$ and $L'(v) = L(v) - (C - \tau)$ for $v \in V(G')$.  We claim that $(G', L')$ is superabundant.  Suppose otherwise that we have $H \subseteq G'$ such that $(H, L')$ is not abundant. Since $\tau \not \in L(s$, we must have $r, t \in V(H)$.  Now $V(H_\tau - t) = \set{r}$ since $N_B(\tau) \subseteq N_B(C)$.  So, when we add $t$ back in, $\tau$ contributes one to $\psi_{L'}(H)$.  But $(H - t, L')$ is abundant, so $(H, L')$ is abundant, a contradiction.  Since $(G', L')$ satisfies the hypotheses of the lemma and $\card{G'} < \card{G}$, Fixer has a winning strategy by minimality of $\card{G}$. But this strategy wins on $G$ with $L$ as well since $N_B(C - \tau)$ is colored with $C - \tau$, a contradiction. 
-	
-	\noindent\textbf{Claim 6.  }\textit{$G-t$ has an $L$-edge-coloring $\pi$.}
-	
-	By Claim 5 and Hall's theorem, $B$ has a perfect matching which gives an $L$-edge-coloring of $G-t$.
-	
-	\noindent\textbf{Claim 7.  }\textit{There is a color $\beta$ such that $L(s) \cap L(t) = \set{\beta}$.  Moreover, $\beta \in L(r)$.}
-	
-	Otherwise, we $L$-edge-color $G-t$ by Claim 6 and then use one of the two colors in $L(s) \cap L(t)$ to color $st$, a contradiction.
-	
-	\noindent\textbf{Claim 8.  }\textit{We have $F \cap L(t) = \emptyset$.}
-	
-	Suppose otherwise that there is $\gamma \in F \cap L(t)$.  Color the edges of $G - s - t$ via $\pi$ and let $L'$ be the resulting list assignment on $rst$.  Then $\beta \in L'(r) \cap L'(s) \cap L'(t)$ and $\gamma \in 'L(r) \cap L'(t)$.  Hence $(rst, L')$ is superabundant and hence Fixer has a winning strategy on $rst$ with $L'$ by Theorem \ref{HallGame}.  But then Lemma \ref{CanColorAndPlayOnRest} shows that Fixer has a winning strategy on $G$ with $L$, a contradiction.
-	
-	\noindent\textbf{Claim 9.  }\textit{We have $L(r) \cap L(s) = \set{\beta}$.}
-	
-	Suppose not and pick $\tau \in L(r) \cap L(s) - \beta$. Pick $\gamma \in F$. 
-	
-	Suppose $\tau$ appears in more than three lists.  Then Fixer swaps $\gamma$ for $\tau$ in $L(s)$.  If Breaker does nothing, then Fixer colors $G - s - t$ from $\pi$, colors $rs$ with $\gamma$ and $st$ with $\beta$ to win.  Hence Breaker must swap $\gamma$ for $\tau$ at some $v \in N(r) - s$.  But $\tau \in L(w)$ for some $w \in N(r) - s - v$, so $\eta_L(G-t)$ has increased, a contradiction. 
-	
-	Suppose $\beta$ appears in more than three lists. Then Fixer swaps $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ somewhere, then Fixer can finish the coloring.  Hence Breaker must swap $\beta$ for $\tau$ at some $v \in N(r) - s$.  But now applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
-	
-	Therefore, $\beta$ and $\tau$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 5, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 8.
-	
-	\noindent\textbf{Claim 10.  }\textit{Fixer wins.}
-	
-	Pick $\gamma \in F$.  Since $L(r) \cap L(s) = \set{\beta}$ by Claim 9, there must be $\alpha \in L(r) \cap L(t)$ since $rst$ is abundant and $L(s) \cap L(t) = \set{\beta}$ by Claim 7.
-	
-	Pick $\tau \in L(s) - \beta$.  Suppose $\tau$ appears in more than one list.  Then Fixer should swap $\gamma$ for $\tau$ in $L(s)$.  Then $\eta_L(G - t)$ has increased unless Breaker swaps $\tau$ for $\gamma$ in $L(r)$.  But since $\tau$ is in more than one list, it must be in $L(v)$ for some $v \in N(r) - s$ and $\eta_L(G - t)$ has increased as well, a contradiction.
-	
-	Suppose $\beta$ appears in more than three lists.  Then Fixer should swap $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ in any list other than $L(r)$, then Fixer can complete the coloring.  So Fixer must swap $\tau$ for $\beta$ in $L(r)$.  But $\beta \in L(v)$ for some $v \in N(r) - s$, so applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
-	
-	Suppose $\alpha$ appears in more than three lists.  Then Fixer should swap $\gamma$ for $\alpha$ in $L(t)$. Now Breaker must pass lest he increase $\eta_L(G - t)$.  But this is a position contradicting Claim 8.
-	
-	Therefore, $\beta$ and $\alpha$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 5, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 8.
-\end{proof}
+	\begin{lem}\label{CanColorG-t}
+		$G-t$ has an $L$-edge-coloring $\pi$.
+	\end{lem}
+	\begin{proof}
+		By Lemma \ref{NoPositiveSurplus}, Lemma \ref{EtaIsBig} and Hall's theorem, $B$ has a perfect matching which gives an $L$-edge-coloring of $G-t$.
+	\end{proof}
+
+	\begin{thm}
+		Conjecture \ref{StarWithOneEdgeSubdivided}(a) is true.
+	\end{thm}
+	\begin{proof}
+		\claim{1}{There is a color $\beta \in L(r)$ such that $L(s) \cap L(t) = \set{\beta}$.}
+		
+		Otherwise, we $L$-edge-color $G-t$ by using Lemma \ref{CanColorG-t} and then use one of the two colors in $L(s) \cap L(t)$ to color $st$, a contradiction.
+		
+		\claim{2}{We have $F \cap L(t) = \emptyset$.}
+		
+		Suppose otherwise that there is $\gamma \in F \cap L(t)$.  Color the edges of $G - s - t$ via $\pi$ in Lemma \ref{CanColorG-t} and let $L'$ be the resulting list assignment on $rst$.  Then $\beta \in L'(r) \cap L'(s) \cap L'(t)$ and $\gamma \in 'L(r) \cap L'(t)$.  Hence $(G[r,s,t], L')$ is superabundant and thus $G[r,s,t]$ is $L'$-subfixable.  But then $G$ is $L$-subfixable, a contradiction.
+		
+		\claim{3}{We have $L(r) \cap L(s) = \set{\beta}$.}
+		
+			Suppose not and pick $\tau \in L(r) \cap L(s) - \beta$. Pick $\gamma \in F$. 
+			
+			Suppose $\tau$ appears in at least four lists. Let $X \in \X_{\gamma, \tau}$ with $s \in X$.  If $|X| = 1$, then $G$ is colorable from $L_X$ by coloring $G - s - t$ from $\pi$, coloring $rs$ with $\gamma$ and $st$ with $\beta$.
+			Hence $X = \set{s,v}$ for some $v \in N(r) - s$.  But $\tau \in L(w)$ for some $w \in N(r) - s - v$, so $\eta_{L_X}(G-t) > \eta_L(G-t)$, a contradiction. 
+			
+			Suppose $\beta$ appears in at least four lists. Let $X \in \X_{\beta, \tau}$ with $t \in X$.  If $|X| = 1$ or...
+			
+			Then Fixer swaps $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ somewhere, then Fixer can finish the coloring.  Hence Breaker must swap $\beta$ for $\tau$ at some $v \in N(r) - s$.  But now applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
+			
+			Therefore, $\beta$ and $\tau$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 6, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 9.
+			
+		\claim{4}{The theorem is true.}
+		
+			Pick $\gamma \in F$.  Since $L(r) \cap L(s) = \set{\beta}$ by Claim 10, there must be $\alpha \in L(r) \cap L(t)$ since $(G[r,s,t],L)$ is abundant and $L(s) \cap L(t) = \set{\beta}$ by Claim 8.
+			
+			Pick $\tau \in L(s) - \beta$.  Suppose $\tau$ appears in more than one list.  Then Fixer should swap $\gamma$ for $\tau$ in $L(s)$.  Then $\eta_L(G - t)$ has increased unless Breaker swaps $\tau$ for $\gamma$ in $L(r)$.  But since $\tau$ is in more than one list, it must be in $L(v)$ for some $v \in N(r) - s$ and $\eta_L(G - t)$ has increased as well, a contradiction.
+			
+			Suppose $\beta$ appears in more than three lists.  Then Fixer should swap $\tau$ for $\beta$ in $L(t)$.  If Breaker does nothing or swaps $\tau$ for $\beta$ in any list other than $L(r)$, then Fixer can complete the coloring.  So Fixer must swap $\tau$ for $\beta$ in $L(r)$.  But $\beta \in L(v)$ for some $v \in N(r) - s$, so applying the previous paragraph with the roles of $\beta$ and $\tau$ reversed gives a contradiction.
+			
+			Suppose $\alpha$ appears in more than three lists.  Then Fixer should swap $\gamma$ for $\alpha$ in $L(t)$. Now Breaker must pass lest he increase $\eta_L(G - t)$.  But this is a position contradicting Claim 9.
+			
+			Therefore, $\beta$ and $\alpha$ each contribute only one to $\psi_L(G)$. Since $\eta_L(G-t) = \size{G-t}$ by Claim 6, applying Claim 1 and Claim 2 shows that there must be $\delta \in L(t) - L(s)$ such that $\card{G_\delta - t}$ is odd.  But now by the same argument as in Subclaim 3f, Fixer can achieve a position contradicting Claim 9.
+	\end{proof}
 
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}

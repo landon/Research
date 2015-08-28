@@ -268,6 +268,13 @@ For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, crea
 	
 	Since $G$ is not $L$-subfixable, for each pair of colors $a,b \in \pot(L)$ there is a 2-partition $\X_{a,b}$ of $S_{L,a,b}$ such that $G$ is not $L_J$-subfixable for every $J \subseteq \X_{a,b}$.  Let $F = F_L(G)$, $B = B_L(G)$ and $Y = Y_L(G)$.
 	
+	\begin{lem}
+		For every $v \in V(G)$ with $d_G(v) = 1$, we have $|L(v)| \ge 2$.
+	\end{lem}
+	\begin{proof}
+		Suppose we have $v \in V(G)$ with $d_G(v) = 1$ and $L(v) = \set{\alpha}$.  Let $N(v) = \set{w}$.  Then $\alpha \in L(w)$ since $(G[v,w], L)$ is abundant.  Let $G' = G-v$ and let $L'$ be the list assignment on $G'$ where $L'(w) = L(w) - \alpha$ and $L'(x) = L(x)$ for all $x \in V(G' - w)$.  If $(G', L')$ is superabundant, then $G'$ is $L'$-subfixable by minimality of $|G|$ and we get that $G$ is $L$-subfixable by coloring $vw$ with $\alpha$, a contradiction.  So there is an induced subgraph $H'$ of $G'$ with $w \in V(H')$ such that $(H', L')$ is not abundant.  Consider $H = G[V(H') \cup \set{v}]$.  We have $\psi_{L}(H) \le \psi_{L'}(H') + 1 < ||H'|| + 1 \le ||H||$, so $(H,L)$ is not abundant, a contradiction.
+	\end{proof}
+
 	\begin{lem}\label{SwappersAreSparse}
 		For any $\beta \in \pot(L) \setminus F$ that is swappable with some $\gamma \in F$, we have $\card{G_{L,\beta} - r - t} \le 2$.  Moreover, if $\beta \not \in Y$, then $\card{G_{L,\beta} - r - t} \le 1$.
 	\end{lem}
@@ -376,20 +383,27 @@ For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, crea
 	
 	
 	\begin{lem}\label{CanColorG-t}
-		$G-t$ has an $L$-edge-coloring $\pi$.
+		$G-t$ has an $L$-edge-coloring $\pi$.  Also, $\pi(rs) \in L(t)$.
 	\end{lem}
 	\begin{proof}
-		By Lemma \ref{NoPositiveSurplus}, Lemma \ref{EtaIsBig} and Hall's theorem, $B$ has a perfect matching which gives an $L$-edge-coloring of $G-t$.
+		By Lemma \ref{NoPositiveSurplus}, Lemma \ref{EtaIsBig} and Hall's theorem, $B$ has a perfect matching which gives an $L$-edge-coloring of $G-t$.  If $\pi(rs) \not \in L(t)$, then there is another color $\tau \in L(s) \cap L(t)$, so we can complete $\pi$ to $G$, a contradiction.
 	\end{proof}
-
+	
+	\begin{lem}\label{SIsSmall}
+		We have $|L(s)| = 2$.
+	\end{lem}
+	\begin{proof}
+		Suppose $|L(s)| \ge 3$.  Color $G-st$ using $\pi$ from Lemma \ref{CanColorG-t}.  We claim we can order the vertices in $G-t-r$ such that we have a Tashkinov tree with edge $st$ uncolored.  Since both $|L(r)| \ge 3$ and $|L(s)| \ge 3$, this implies that $(G,L)$ is not superabundant, a contradiction.  Now we get the ordering. Start $t,s,r$ noting that $\pi(rs) \in L(t)$ by Lemma \ref{CanColorG-t}.  Now build a sequence $x_1, \ldots, x_m$ inductively by picking $x_i$ such that $\pi(rx_i)$ is missing on one of $t,s,r,x_1, \ldots, x_{i-1}$.  Suppose at some point we get stuck and cannot make such a choice for $x_i$.  Let $E$ be the remaining edges. Then the colors used by $\pi$ on the $E$ appear only on the endpoints of edges in $E$, so we can color $E$ by $\pi$ and remove all those colors from $L(r)$ to get a list assignment $L'$ on $G' = G[t,s,r, x_1, \ldots, x_{i-1}]$ such that $(G', L')$ is superabundant.  But then minimality of $|G|$ shows that $G'$ is $L'$-fixable and hence $G$ is $L$-fixable, a contradiction.  So, we don't get stuck and hence we have our desired Tashkinov tree.
+	\end{proof}
+	
 	\begin{thm}
-		Conjecture \ref{StarWithOneEdgeSubdivided}(a) is true.
+		Conjecture \ref{StarWithOneEdgeSubdivided}(a) is true (if we assume $|L(v)| \le 2$ for all leaves, can likely remove this restriction with better bipartite graph handling, this is only needed in Claims 4 and 5)
 	\end{thm}
 	\begin{proof}
 	
 		\claim{1}{There is a color $\beta \in L(r)$ such that $L(s) \cap L(t) = \set{\beta}$.  For every $L$-edge-coloring $\pi$ of $G-t$, we have $\pi(rs) = \beta$.}
 		
-		Otherwise, we $L$-edge-color $G-t$ by using Lemma \ref{CanColorG-t} and then use one of the two colors in $L(s) \cap L(t)$ to color $st$, a contradiction.  If the final statement did not hold, then we could complete $\pi$ to $G$.
+		Otherwise, we $L$-edge-color $G-t$ by using Lemma \ref{CanColorG-t} and then use one of the two colors in $L(s) \cap L(t)$ to color $st$, a contradiction. 
 		
 		\claim{2}{We have $F \cap L(t) = \emptyset$.  In particular, there is no $\delta \in L(t) \setminus L(s)$ such that $|G_\delta - t|$ is odd.}
 		
@@ -405,14 +419,14 @@ For a list assignment $L$ on a $\operatorname{LongStar}_{r,s,t}$ graph $G$, crea
 		
 		\claim{4}{We have $L(r) \cap L(s) = \set{\beta}$.}
 		
-			Suppose instead that $L(r) \cap L(s) - \beta = \set{\tau_1, \ldots, \tau_m}$.  Then by Lemma \ref{SwappersAreSparse} and Claim 1 each $\tau_i$ is in $L(v_i)$ for exactly one $v_i \in N(r) - s$.  Also by Claim 1, $\beta \not \in L(v_i)$ for any $\i \in \irange{m}$.  Since $(G[v_1, \ldots, v_m,r,s,t], L)$ is abundant, there must be $\alpha \in L(v_i) \cap L(r) \setminus \set{\tau_1, \ldots, \tau_m}$ for some $i \in \irange{m}$.
-			
-		
-			
+			Then in the bipartite graph $B$, the vertex $rs$ has degree at least two.  By Claim 1, Lemma \ref{SingleGammaMuchSwappage} and Lemma \ref{SwappersAreSparse}, every $\alpha \in Y - \beta$ has degree at most two in $B$.  Let $\pi$ be a $L$-edge-coloring of $G-st$ from Lemma \ref{CanColorG-t}.  Then $\pi$ specifies a perfect matching $M$ in $B$.  Consider a maximum length path $P$ in $B$ starting at $rs$ alternating between edges in $M$ and edges not in $M$.  
+			If $P$ ends in $Y$, then by swapping the $M$-edges for the non-$M$-edges and $rs$, we get a perfect matching $M'$ of $B$ that gives an $L$-edge-coloring $\pi'$ of $G-t$ with $\pi'(rs) \ne \beta$, contradicting Claim 1.  So, $P$ must end at some edge $rw$ of $G - t$.   So, $\beta \not \in L(v)$.  Let's say $v_1 = s$ and $v_m = w$ and $P$ is $rv_1,\tau_2, rv_2, \tau_3, \ldots, \tau_m, rv_m$.  Consider $G' = G[r,t,v_1, v_2, \ldots, v_m]$.  If $\beta \in L(v_i)$ for any $i > 1$ then we can again swap the $M$-edges and non-$M$-edges to win.   So, in $G'$ we have that $\beta$ only appears on $r$, $s$, and $t$.  Also, as noted above, every $\tau_i$ has degree at most two in $B$ and hence $\tau_i$ appears at most three times in $G'$.  Since every $\alpha \not \in Y$ appears at most once in $G'$ by Lemma \ref{SwappersAreSparse}, we conclude that $\psi_L(G') = m$.  But $||G'|| = m + 1$, so $(G', L)$ is not abundant, a contradiction.
+
 		\claim{5}{The theorem is true.}
 		
-			 Since $L(r) \cap L(s) = \set{\beta}$ by Claim 1, there must be $\alpha \in L(r) \cap L(t)$ since $(G[r,s,t],L)$ is abundant and $L(s) \cap L(t) = \set{\beta}$ by Claim 4.  Also, by Lemma \ref{SwappersAreSparse}, any $\tau \in L(s) - \beta$ appears in exactly one list.  By Claim 3, $|G_\alpha| = 3$.
+			 Since $L(r) \cap L(s) = \set{\beta}$ by Claim 1, there must be $\alpha \in L(r) \cap L(t)$ since $(G[r,s,t],L)$ is abundant and $L(s) \cap L(t) = \set{\beta}$ by Claim 4.  Also, by Lemma \ref{SwappersAreSparse}, any $\tau \in L(s) - \beta$ appears in exactly one list.  By Claim 3, $|G_\alpha| = 3$.  Let $v \in N(r) - s$ have $\alpha \in L(v)$.  Then to make $(G[v,r,s,t], L)$ abundant, there must be $\delta \in L(r) \cap L(v) - \alpha$ (another color in common between $L(r)$ and $L(t)$ cannot happen because we are assuming $|L(t)| = 2$).  Also, since $\delta \not \in L(t)$ (again using $|L(t)| = 2$), there must be $w \in N(r) \setminus \set{v,s}$ with $\delta \in L(w)$ for otherwise, we color $rv$ with $\delta$ and apply minimality of $|G|$ to win. If $L(r) \cap L(w) - \delta = \emptyset$, then $(G[w,v,r,s,t], L)$ is not abundant (again we are using $|L(v)| \le 2$ and $|L(t)| \le 2$).  So, there is $\rho_1 \in L(r) \cap L(w) - \delta$, it could be that $\rho_1 = \beta$.  If $\rho_1 \ne \beta$, we can repeat the argument with $\rho_1$ in place of $\delta$ to get $w_2 \in N(r) - \set{w, v,s}$ with $\rho_1 \in L(w_2)$.  Continuing this way, at some point we end with $w_m$ where $L(w_m) = \set{\rho_{m-1}, \beta}$.
 
+			Now swap $\tau$ and $\beta$ and then swap $\gamma$ and $\beta$ and then swap $\gamma$ and $\tau$.
 	\end{proof}
 
 \bibliographystyle{amsplain}

@@ -1,0 +1,352 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{color}
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{A slightly better lower bound on the number of edges in (online) list critical graphs}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. For a graph $G$, let $W^k(G)$ be the set of vertices of $G$ that are contained in some $K_{k-1}$ in $G$.  
+
+\begin{defn}
+	A graph $G$ is \emph{AT-reducible} to $H$ if $H$ is a nonempty induced subgraph of $G$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$.  
+	If $G$ is not AT-reducible to any nonempty induced subgraph, then it is \emph{AT-irreducible}.
+\end{defn}
+
+\section{Reducible Configurations}
+
+
+This first lemma tells us how a single high vertex can interact with the low vertex subgraph.  This is the version Hal and i used, it (and more) follows from the classification in ``mostlow''.
+
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \ge 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has $t$ components $H_1, H_2, \ldots, H_t$, and all are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \ge 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \ge t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+
+To deal with more than one high vertex we need the following auxiliary bipartite graph.  For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \ge 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ iff $N(y) \cap W^k(T) \ne \emptyset$.   The next lemma tells us that we have a reducible configuration if this bipartite graph has minimum degree at least three.  
+
+\begin{lem}
+	\label{MultipleHighConfigurationEuler} Let $k\ge7$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B\DefinedAs\B_{k}(V(G-Y),Y)$ we have $\delta(\B)\ge3$. 
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+We also have the following version with asymmetric degree condition on $\B$.  The point here is that this works for $k \ge 5$.  As we'll see in the next section, the consequence is that we trade a bit in our size bound for the proof to go through with $k \in \set{5,6}$.
+
+\begin{lem}
+	\label{MultipleHighConfigurationEulerLopsided} Let $k \ge 5$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $d_{\B}(y) \ge 4$ for all $y \in Y$ and $d_{\B}(T) \ge 2$ for all components $T$ of $G-Y$.
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+\section{Improved bounds on $\sigma$}
+Let $T \in \T_k$.  Then each block of $T$ is regular. Say $\type(B) = b$ if $B$ is $(b-1)$-regular.  Let $x \in V(T)$ and let $B_1, \ldots, B_{\ell}$ be the blocks of $T$ containing $x$ where $B_i$ is of type $b_i$.  Then we say that $\type_T(x) = (b_1,\ldots,b_{\ell})$.  For an endblock $B$ of $T$, let $x_B$ be the cutvertex of $T$ contained in $B$ and put $T_B \DefinedAs T - \parens{V(B) \setminus \set{x}}$.  For $b \ge 1$, put $t(b) \DefinedAs 2 - \frac{2}{b}$.   For $T \in \T_k$ and $x \in V(T)$ put
+\[\sigma_T(x) \DefinedAs k - 2 + \frac{2}{k-1} - d_T(x).\]
+For $T \in \T_k$ and $x \in V(T)$ with $\type_T(x) = (b_1,\ldots, b_{\ell})$, put
+\[\sigma_T'(x) \DefinedAs \sigma_T(x) - 2 + \sum_{i \in \irange{\ell}}t(b_i).\]
+Furthermore, put
+\[\sigma(T) \DefinedAs \sum_{x \in V(T)} \sigma_T(x),\]
+and
+\[\sigma'(T) \DefinedAs \sum_{x \in V(T)} \sigma_T'(x).\]
+
+\begin{lem}\label{EndBlockBusiness}
+	Let $T \in \T_k$ where $k \ge 4$.  Then,
+	\begin{itemize}
+		\item[(a)] If $B$ is a block of $T$, then $\sigma(B) = 2$ if $B = K_{k-1}$ and $\sigma(B) \ge k - 2 + \frac{2}{k-1}$ otherwise,
+		\item[(b)] If $B$ is an endblock of $T$, then $\sigma(T) = \sigma(T_B) + \sigma(B) - \parens{ k - 2 + \frac{2}{k-1}}$.
+	\end{itemize}
+\end{lem}
+\begin{proof}
+	Immediate from the definitions (see Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}).
+\end{proof}
+
+\begin{lem}\label{SigmaPrimeIsTwoLess}
+	If $T \in \T_k$ and $k \ge 4$, then  $\sigma(T) \ge \sigma'(T) + 2$.
+\end{lem}
+\begin{proof}
+	Suppose the lemma is false and let $T$ be a counterexample with the minimum number of blocks.  First, suppose $T$ has one block.  Then, $T$ is complete or an odd cycle.  If $T$ is complete, then $T = K_b$ with $b \in \irange{k-1}$ and hence $\sigma'(T) = \sigma(T) + (t(b) - 2)b = \sigma(T) - 2$.  If instead $T$ is an odd cycle, then $\sigma'(T) = \sigma(T) + (t(3) - 2)|T| = \sigma(T) - \frac23|T| \le \sigma(T) - 2$.  Hence $T$ must have at least two blocks.
+	
+	Let $B$ be an endblock of $T$.  Say $\type(B) = b$ and $\type_T(x_B) = (b_1, \ldots, b_\ell)$ where $b_\ell = b$.  Then $\type_{T_B}(x_B) = (b_1, \ldots, b_{\ell - 1})$.  Therefore, we have
+	\[\sigma_{T_B}'(x_B) = k - 2 + \frac{2}{k-1} - d_{T_B}(x_B) - 2 + \sum_{i \in \irange{\ell - 1}}t(b_i),\] and
+	\[\sigma_{B}'(x_B) = k - 2 + \frac{2}{k-1} - d_{B}(x_B) + t(b_\ell) - 2,\] and
+	\[\sigma_T'(x_B) = k - 2 + \frac{2}{k-1} - d_{T}(x_B) - 2 + \sum_{i \in \irange{\ell}}t(b_i).\]
+	Since $d_T(x_B) = d_{T_B}(x_B) + d_B(x_B)$, we have
+	\[\sigma'(T) = \sigma'(T_B) + \sigma'(B) + 2 - \parens{k - 2 + \frac{2}{k-1}}.\]
+	By our minimality condition on $T$, we have
+	\[\sigma(T_B) \ge \sigma'(T_B) + 2,\] and
+	\[\sigma(B) \ge \sigma'(B) + 2.\]
+	Putting this all together with Lemma \ref{EndBlockBusiness} gives the contradiction
+	\[\sigma'(T) \le \sigma(T_B) + \sigma'(B) - \parens{k - 2 + \frac{2}{k-1}} = \sigma(T) - 2.\]
+\end{proof}
+
+Let $T \in \T_k$ and $x \in V(T)$ with $\type_T(x) = (b_1, \ldots, b_\ell)$.  We always have $\sum_{i \in \irange{\ell}} b_i \le k + \ell - 1$. We say that $x$ is \emph{full} if $\sum_{i \in \irange{\ell}} b_i = k + \ell - 1$.  When positive integers $k,b_1, \ldots, b_\ell$ are such that $\sum_{i \in \irange{\ell}} b_i < k + \ell - 1$, put 
+\[\Gamma_{k,(b_1,\ldots,b_{\ell})} \DefinedAs 1 - \frac{3 - 2\ell - \frac{2}{k-1} + \sum_{i \in \irange{\ell}} \frac{2}{b_i}}{k + \ell - 1 - \sum_{i \in \irange{\ell}} b_i},\]
+when $\sum_{i \in \irange{\ell}} b_i = k + \ell - 1$, put
+\[\Gamma_{k,(b_1,\ldots,b_{\ell})} \DefinedAs \ell.\]
+
+\begin{lem}\label{PrimeGammaBound}
+	If $T \in \T_k$, then $\sigma_T'(x) \ge \Gamma_{k,\type_T(x)}\parens{k - 1 - d_T(x)}$ for all $x \in V(T)$.
+\end{lem}
+\begin{proof}
+	We have
+	\[\sigma_T'(x) = \sigma_T(x) - 2 + \sum_{i \in \irange{\ell}}t(b_i).\]
+	So, $\sigma_T'(x) \ge c\parens{k - 1 - d_T(x)}$ for some $c$ and $x \in V(T)$ with $\type(x) = (b_1, \ldots, b_\ell)$ if and only if
+	\[(1-c)\parens{k - 1 - \sum_{i\in\irange{\ell}} (b_i-1)} + \sum_{i \in \irange{\ell}} \parens{2 - \frac{2}{b_i}} \ge 3 - \frac{2}{k-1}.\]
+	A quick computation shows that $\Gamma_{k,(b_1,\ldots,b_{\ell})}$ is the largest such $c$ that works when $x$ is not full.  When $x$ is full, the first term is zero, so $c$ is irrelevant. We need
+	\[\sum_{i \in \irange{\ell}} \parens{2 - \frac{2}{b_i}} \ge 3 - \frac{2}{k-1}.\]
+	Since $x$ is full, we have $\sum_{i \in \irange{\ell}} b_i = k + \ell - 1$. In particular, since $K_k \not \subseteq T$, we must have $\ell \ge 2$ and hence $b_i \ge 2$ for all $i \in \irange{\ell}$.  So, if $\ell \ge 3$, then we have
+	\[\sum_{i \in \irange{\ell}} \parens{2 - \frac{2}{b_i}} \ge \ell \ge 3 - \frac{2}{k-1}.\]
+	Hence we may assume $\ell = 2$.  So, $b_1 + b_2 = k + 1$.  Simplifying the inequality we need gives
+	\[\frac{k+1}{b_1(k + 1 - b_1)} = \frac{b_1 + b_2}{b_1b_2} \le \frac12 + \frac{1}{k-1}.\]
+	The worst case is when $b_1 = 2$, in which case we have
+	\[\frac{k+1}{b_1(k + 1 - b_1)} = \frac12 + \frac{1}{k-1}.\] 
+\end{proof}
+
+\noindent Note that $\Gamma_{k,\type_T(x)}\parens{k - 1 - d_T(x)} = 0$ whenever $x \in W^k(T)$.  To make that explicit, put
+\[\sigma_T^*(x) \DefinedAs \begin{cases}
+\Gamma_{k,\type_T(x)}\parens{k - 1 - d_T(x)} & \text{ if } x \in V(T)\setminus W^k(T),\\
+0 & \text{ otherwise}.
+\end{cases}\]
+Furthermore, put
+\[\sigma^*(T) \DefinedAs \sum_{x \in V(T)} \sigma_T^*(x).\]
+With those definitions, the following is immediate from Lemma \ref{SigmaPrimeIsTwoLess} and Lemma \ref{PrimeGammaBound}.
+\begin{lem}\label{SigmaStarBound}
+	If $T \in \T_k$ and $k \ge 4$, then $\sigma(T) \ge \sigma^*(T) + 2$.
+\end{lem}
+
+So, now our task is to prove lower bounds on $\Gamma_{k,(b_1,\ldots,b_{\ell})}$.  
+
+\begin{lem}\label{GammaBound}
+	Let $k \ge 6$ and let $b_1, \ldots, b_\ell$ be positive integers.  We have
+	\[\Gamma_{k,(b_1,\ldots,b_{\ell})} \ge \begin{cases}
+	0 & \text{ if } \ell = 1 \text{ and } b_1 = k-1,\\
+	\frac12 - \frac{1}{(k-1)(k-2)} & \text{ if } \ell = 1 \text{ and } b_1 = k-2,\\
+	1 - \frac{3k-5}{(k-1)^2} & \text{ if } \ell = 1 \text{ and } b_1 = 1,\\
+	\frac23 - \frac{4}{3(k-1)(k-3)} & \text{ if } \ell = 1 \text{ and } 2 \le b_1 \le k-3,\\
+	1 - \frac{1}{k-1} & \text{ if } \ell = 2,\\
+	\ell - 2 + \frac{2}{k-1} & \text{ if } \ell \ge 3.
+	\end{cases}\]
+\end{lem}
+\begin{proof}
+	Just compute, for now i checked things with wolfram alpha.  The $\ell \ge 3$ case can be improved, but not sure we need it.
+\end{proof}
+
+\section{The lower bound}
+We need the following definitions:
+\begin{align*}
+\L_k(G) &\DefinedAs G\brackets{x \in V(G) \mid d_G(x) < k},\\
+\HH_k(G) &\DefinedAs G\brackets{x \in V(G) \mid d_G(x) \ge k},\\
+\sigma_k(G) &\DefinedAs \parens{k-2 + \frac{2}{k-1}}\card{\L_k(G)} - 2\size{\L_k(G)},\\
+\tau_{k,c}(G) &\DefinedAs 2\size{\HH_k(G)} + \parens{k-c - \frac{2}{k-1}}\sum_{y \in V(\HH_k(G))} \parens{d_G(y) - k},\\
+g_k(n, c) &\DefinedAs \parens{k-1 + \frac{k-3}{(k-c)(k-1) + k-3}}n.\\
+\end{align*}
+
+\subsection{We only really care about low degree vertices}
+
+\noindent As proved in \cite{kostochkastiebitzedgesincriticalgraph}, a computation gives the following.
+\begin{lem}\label{SigmaTauBoundEuler}
+Let $G$ be a graph with $\delta \DefinedAs \delta(G) \ge 3$ and $0 \leq c \leq \delta + 1 - \frac{2}{\delta}$.  If $\sigma_{\delta + 1}(G) + \tau_{\delta + 1, c}(G) \ge c\card{\HH_{\delta + 1}(G)}$, then $2\size{G} \ge g_{\delta + 1}(\card{G}, c)$.
+\end{lem}
+
+With a lower value of $c$, we can make it so we only have to care about vertices of degree $\delta$ and $\delta + 1$ as follows.
+
+\begin{lem}\label{SigmaTauBoundEulerRefined}
+Let $G$ be a graph with $\delta \DefinedAs \delta(G) \ge 3$ and $0 \le c \le \frac{\delta + 1}{2} + \frac{1}{\delta}$.  Put $H' \DefinedAs \setb{v}{V(G)}{d_G(v) = \delta + 1}$.  If $\sigma_{\delta + 1}(G) +  \sum_{y \in H'} d_{\HH_{\delta + 1}}(y) \ge c\card{H'}$, then $2\size{G} \ge g_{\delta + 1}(\card{G}, c)$.	
+\end{lem}
+\begin{proof}
+	Put $\HH \DefinedAs \HH_{\delta + 1}$ and $k \DefinedAs \delta + 1$.	For $y \in V(\HH)$, put 
+	\[\tau_{k,c}(y) \DefinedAs d_{\HH}(y) + \parens{k-c + \frac{2}{k-1}}(d_G(y) - k).\]  We have 
+	\begin{align*}
+	\tau_{k,c}(G) &= \sum_{y \in V(\HH)} \tau_{k,c}(y)\\
+	&\ge \sum_{y \in H'} d_{\HH}(y) + \sum_{y \in V(\HH) \setminus H'} \parens{d_{\HH}(y) + k-c + \frac{2}{k-1}}\\
+	&\ge \sum_{y \in H'} d_{\HH}(y) + \parens{k-c + \frac{2}{k-1}}\card{\HH - H'}\\
+	&\ge \sum_{y \in H'} d_{\HH}(y) + c\card{\HH - H'},
+	\end{align*}
+	where the last inequality follows since $c \le \frac{k}{2} + \frac{1}{k-1}$. Now applying Lemma \ref{SigmaTauBoundEuler} proves the lemma.
+\end{proof}
+
+\subsection{Finishing the proof}
+
+\noindent We need the following degeneracy lemma.
+\begin{lem}\label{DegenerateEuler}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  If $\size{G} > \sum_{v \in V(G)} f(v)$, then $G$ has an induced subgraph $H$ such that $d_H(v) > f(v)$ for each $v \in V(H)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G} \ge 3$ and we have $x \in V(G)$ with $d_G(x) \leq f(x)$. But now $\size{G-x} > \sum_{v \in V(G-x)} f(v)$, contradicting minimality of $\card{G}$.
+\end{proof}
+
+\begin{thm}\label{EdgeBoundEuler}
+	If $G$ is an AT-irreducible graph with $\delta(G) \ge 4$ and $\omega(G) \le \delta(G)$, then $2\size{G} \ge g_{\delta(G)+1}(\card{G}, c)$ where $c \DefinedAs (\delta(G)-2)\alpha_{\delta(G) + 1}$ when $\delta(G) \ge 6$ and $c \DefinedAs (\delta(G)-3)\alpha_{\delta(G) + 1}$ when $\delta(G) \in \set{4,5}$.
+\end{thm}
+\begin{proof}
+Put $k \DefinedAs \delta(G) + 1$, $\L \DefinedAs \L_k(G)$ and $\HH \DefinedAs \HH_k(G)$.  Put $W \DefinedAs W^k(\L)$, $L' \DefinedAs V(\L) \setminus W$ and $H' \DefinedAs \setb{v}{V(\HH)}{d_G(v) = k}$.   By Lemma \ref{SigmaTauBoundEulerRefined}, it will be sufficient to prove that \[S \DefinedAs \sigma_k(G) + \sum_{y \in H'} d_{\HH}(y) \ge c\card{H'}.\]
+
+Let $\D$ be the components of $\L$ containing $K_{k-1}$ and $\CC$ the components of $\L$ not containing $K_{k-1}$.  Then $\D \cup \CC \subseteq \T_k$ for otherwise some $T \in \D \cup \CC$ is $d_0$-AT and hence $f_T$-AT and $G$ is AT-reducible.  By Lemma \ref{SigmaBoundEuler}, we have $\sigma_k(T) \ge 2 + q_k(T)$ for if $T \in \D$ and $\sigma_k(T) \ge 2 - \alpha_k + q_k(T)$ if $T \in \CC$.  Hence, we have $\sigma_k(G) = \sum_{T \in \D} \sigma_k(T) + \sum_{T \in \CC} \sigma_k(T) \ge 2\card{\D} + (2-\alpha_k)\card{\CC} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}$.  That is,
+\[\sigma_k(G) \ge 2\card{\D} + (2-\alpha_k)\card{\CC} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}.\]
+
+Now we define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
+\begin{enumerate}
+\item  $B = H'$ and $A$ is the disjoint union of the following sets
+$A_1, A_2$ and $A_3$,
+\item $A_1 = \D$ and each $T \in \D$ is adjacent to all $y \in H'$
+where $N(y) \cap W^k(T) \ne \emptyset$,
+\item For each $v \in L'$, let $A_2(v)$ be a set of $\card{N(v) \cap
+H'}$ vertices connected to $N(v) \cap H'$ by a matching in $F$.  Let
+$A_2$ be the disjoint union of the $A_2(v)$ for $v \in L'$,
+\item For each $y \in H'$, let $A_3(y)$ be a set of $d_{\HH}(y)$ vertices
+which are all joined to $y$ in $F$.  Let $A_3$ be the disjoint union
+of the $A_3(y)$ for $y \in H'$.
+\end{enumerate}
+
+\noindent \case{1}{$\delta \ge 6$.}
+\smallskip
+
+Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_2 \cup A_3$ and $f(v) = 2$ for all $v \in B \cup A_1$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  In particular, $V(Q) \subseteq B \cup A_1$ and $\delta(Q) \ge 3$.  Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. Now $H \DefinedAs G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEuler}, so $H$ has an induced subgraph $G'$ that is $f$-AT where $f(y) = d_{G'}(y) - 1$ for $y \in Y$ and $f(v) = d_{G'}(v)$ for $v \in X$.  Since $Y \subseteq H'$ and $X \subseteq \L$, we have $f(v) = \delta(G) + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  Hence, $G$ is AT-reducible to $G'$, a contradiction.
+
+Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{H'} + \card{\D}) + \card{A_2} + 
+\card{A_3}$. By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  Hence $\size{F} \ge (k-1)\card{H'}$.  This gives $(k-3)\card{H'} \leq 2\card{\D} + \card{A_2} + 
+\card{A_3}$.  By our above estimate we have $S \ge 2\card{\D} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \alpha_k\card{A_2} + \card{A_3} \ge \alpha_k(2\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \alpha_k(k-3)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
+\bigskip
+
+\noindent \case{2}{$\delta \in \set{4,5}$.}
+\smallskip
+
+Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_1 \cup A_2 \cup A_3$ and $f(v) = 3$ for all $v \in B$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  In particular, $V(Q) \subseteq B \cup A_1$ and $d_Q(v) \ge 4$ for $v \in B \cap V(Q)$ and $d_Q(v) \ge 2$ for $v \in A_1 \cap V(Q)$.  Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. Now $H \DefinedAs G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEulerLopsided}, so $H$ has an induced subgraph $G'$ that is $f$-AT where $f(y) = d_{G'}(y) - 1$ for $y \in Y$ and $f(v) = d_{G'}(v)$ for $v \in X$.  Since $Y \subseteq H'$ and $X \subseteq \L$, we have $f(v) = \delta(G) + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  Hence, $G$ is AT-reducible to $G'$, a contradiction.
+
+Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 3\card{H'} + \card{\D} + \card{A_2} + 
+\card{A_3}$. By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  Hence $\size{F} \ge (k-1)\card{H'}$.  This gives $(k-4)\card{H'} \leq \card{\D} + \card{A_2} + 
+\card{A_3}$.  By our above estimate we have $S \ge 2\card{\D} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \alpha_k\card{A_2} + \card{A_3} \ge \alpha_k(\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \alpha_k(k-4)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
+\end{proof}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+\end{document}
+
+ 

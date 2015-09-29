@@ -118,6 +118,7 @@
 \def\L{\fancy{L}}
 \def\H{\fancy{H}}
 \def\P{\fancy{P}}
+\def\F{\fancy{F}}
 
 \newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
@@ -129,11 +130,95 @@ Schauz's combinatorial interpretation of Alon and Tarsi's algebraic technique}
 \begin{document}
 \maketitle
 
-In \cite{Alon1992125}, Alon and Tarsi introduced a beautiful algebraic technique for proving the existence of list colorings.  In \cite{schauz2010flexible}, Uwe Schauz gave a new combinatorial proof that extended the technique to online list coloring.  Suppose we have graph $G$ and $\func{f}{V(G)}{\IN}$ for which we would like to show that $G$ is $f$-choosable.  We could show this easily by just being greedy if we could find an \emph{acyclic} orientation of $G$ such that $d^+(v) < f(v)$ for every $v \in V(G)$.  Being acyclic is a strong requirement, so it is natural to seek weaker conditions that allow us to conclude $f$-choosability.  That is, we want to find properties $\P$ such that if $G$ has a $\P$-orientation such that $d^+(v) < f(v)$ for every $v \in V(G)$, then $G$ is $f$-choosable.  A simple inductive argument shows that ``kernel-perfect'' is such a $\P$.
+In \cite{Alon1992125}, Noga Alon and Michael Tarsi introduced a beautiful algebraic technique for proving the existence of list colorings.  In \cite{schauz2010flexible}, Uwe Schauz gave a new combinatorial proof that extended the technique to online list coloring.  Suppose we have graph $G$ and $\func{f}{V(G)}{\IN}$ for which we would like to show that $G$ is $f$-choosable.  We could show this easily by just being greedy if we could find an \emph{acyclic} orientation of $G$ where $d^+(v) < f(v)$ for every $v \in V(G)$.  Being acyclic is a strong requirement, so it is natural to seek weaker conditions that allow us to conclude $f$-choosability.  That is, we want to find properties $\P$ such that if $G$ has a $\P$-orientation where $d^+(v) < f(v)$ for every $v \in V(G)$, then $G$ is $f$-choosable.  A simple inductive argument shows that ``kernel-perfect'' is such a $\P$.  Using long division of polynomials, Alon and Tarsi proved that ``differing number of even and odd spanning Eulerian subgraphs having'' is another such $\P$.  Schauz's combinatorial proof of this result is clever and a big step towards understanding what is really going on. But it is still somewhat mysterious why Eulerian subgraphs would matter.  Here we redo Schauz's proof attempting to isolate the specific attributes of the property ``differing number of even and odd spanning Eulerian subgraphs having'' that allow the proof to go through.
 
+\section{A general framework}
+It will be convenient to have notation to talk about sets of degree sequences. For a set $S$, let $\IN^S$ be all functions from $S$ to $\IN$.  Let $T \subseteq S$. For $g\in \IN^S$ and $h \in \IN^T$, define $g+h \in \IN^S$ by $(g+h)(x) = g(x) + h(x)$ for $x \in T$ and $(g+h)(x) = g(x)$ for $x \in S\setminus T$. Define $g-h \in \IN^S$ by $(g-h)(x) = \max\set{0, g(x) + h(x)}$ for $x \in T$ and $(g+h)(x) = g(x)$ for $x \in S\setminus T$.  For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$.  Let $1_T \in \IN^T$ be given by $1_T(x) = 1$ for $x \in T$.  When $T = \set{u}$, we write $1_u$ in place of $1_{\set{u}}$.
 
+We consider functions $\rho$ that take a graph $G$ and $\F \subseteq \IN^{V(G)}$ where $\rho(G,\F) \in \set{0,1}$.  Working in terms of a set of functions $\F$ instead of a single function is useful for induction. The end goal is to prove results for a single function; that is, results of the form:
+\[\text{if } h \in \IN^{V(G)} \text{ with } \rho(G, \set{h}) = 1\text{, then } G \text{ is } (h + 1_{V(G)})\text{-choosable}.\]
 
+\begin{defn}\label{tame}
+	We say that $\rho$ is \emph{tame} if for any $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $\rho(G, h + \IN^S) = 1$, we have
+\begin{enumerate}
+	\item[(a)] if $h$ is not zero on all of $S$, then there is $u \in S$ with $h(u) > 0$ such that $\rho(G, (h - 1_u) + \IN^S) = 1$ or $\rho(G, (h - 1_u) + \IN^{S \setminus u}) = 1$; and
+	\item[(b)] if $S$ is independent and $xy \in E(S, V(G)\setminus S)$, then $\rho(G-xy, (h - 1_x) + \IN^S) = 1$ or $\rho(G-xy, (h - 1_y) + \IN^S) = 1$; and
+	\item[(c)] if $xy \in E(G[S])$, then $h(x) + h(y) > 0$.
+	\item[(d)] if $x \in S$ is isolated, then $\rho(G - x, \restr{h}{V(G-x)} + \IN^{S\setminus x}) = 1$.
+\end{enumerate}
+\end{defn}
 
+\begin{lem}\label{GetSuperStable}
+	Suppose $\rho$ is tame. If $G$ is a graph, $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $\rho(G, h + \IN^S) = 1$, then there is $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	\begin{itemize}
+		\item $g$ is zero on all of $T$; and
+		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and
+		\item $\rho(G, g + \IN^T) = 1$.
+	\end{itemize}
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample minimizing $\sum_{v \in V(G)} h(v)$.  If $h$ is zero on all of $S$, then we get a contradiction using $T = S$ and $g=h$.  So, $\sum_{v \in V(G)} h(v) > 0$. Since $\rho$ is tame (part (a)) there is $u \in S$ with $h(u) > 0$ such that $\rho(G, (h - 1_u) + \IN^S) = 1$ or $\rho(G, (h - 1_u) + \IN^{S \setminus u}) = 1$.  In either case, minimality of  $\sum_{v \in V(G)} h(v)$ gives $T \subseteq S$ and $g \in \IN^{V(G)}$ such that:
+		\begin{itemize}
+			\item $g$ is zero on all of $T$; and
+			\item $g(v) < (h - 1_u)(v)$ for all $v \in S\setminus (T \cup \set{u})$; and
+			\item $\rho(G, g + \IN^T) = 1$.
+		\end{itemize}
+		Since $(h - 1_u)(u) < h(u)$, the second item implies $g(v) < h(v)$ for all $v \in S\setminus T$, so $g$ and $T$ work for $h$, a contradiction.
+\end{proof}
+
+\begin{lem}\label{CutOff}
+	Suppose $\rho$ is tame. Let $G$ be a graph, $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $\rho(G, h + \IN^S) = 1$.  If $S$ is independent, then there is $g \in \IN^{V(G) \setminus S}$ such that
+	\begin{itemize}
+		\item $g(v) \le h(v)$ for all $v \in V(G) \setminus S$; and
+		\item $\rho(G - S, \set{g}) = 1$.
+	\end{itemize}
+\end{lem}
+\begin{proof}
+	Put $F = E(S, V(G) \setminus S)$. Apply tame part (b) repeatedly to the edges in $F$ to get $g \in \IN^{V(G)}$ such that
+	\begin{itemize}
+		\item $g(v) \le h(v)$ for all $v \in S$; and
+		\item $\rho(G - F, g + \IN^S) = 1$.
+	\end{itemize}
+	Since $S$ is independent, all vertices in $S$ are isolated in $G-F$.  So, applying tame part (d) repeatedly we conclude $\rho(G - S, \set{g}) = 1$.
+\end{proof}
+
+\begin{thm}\label{TameRhoWins}
+	If $\rho$ is tame, $G$ is a graph and $h \in \IN^{V(G)}$ with $\rho(G, \set{h}) = 1$, then $G$ is $(h + 1_{V(G)})$-choosable.
+\end{thm}
+\begin{proof}
+	Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Let $L$ be a $(h + 1_{V(G)})$-assignment on $G$ for which $G$ is not $L$-colorable.  Let $c$ be a coloring appearing in $L$ and let $S = \setb{v}{V(G)}{c \in L(v)}$.  Apply Lemma \ref{GetSuperStable} to get $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	\begin{itemize}
+		\item $g$ is zero on all of $T$; and
+		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and
+		\item $\rho(G, g + \IN^T) = 1$.
+	\end{itemize}
+	Then, by tame part (c), $T$ is independent.  Apply Lemma \ref{CutOff} with $S = T$ and $h = g$ to get $f \in \IN^{V(G) \setminus T}$ such that
+		\begin{itemize}
+			\item $f(v) \le g(v)$ for all $v \in V(G) \setminus T$; and
+			\item $\rho(G - T, \set{f}) = 1$.
+		\end{itemize}
+	Taking stock of what we know, we have
+		\begin{itemize}
+			\item $f(v) < h(v)$ for all $v \in S \setminus T$; and
+			\item $f(v) \le h(v)$ for all $v \in V(G) \setminus S$; and
+			\item $\rho(G - T, \set{f}) = 1$.
+		\end{itemize}
+		
+	Now apply minimality of $|G|$ to $G-T$ with $h = f$ shows that $G-T$ is $(f + 1_{V(G-T)})$-choosable and hence $G-T$ is $L'$-colorable where $L'(v) = L(v) \setminus c$ for all $v \in V(G-T)$.  But then coloring $T$ with $c$ gives an $L$-coloring of $G$, a contradiction.
+\end{proof}
+
+Note that the proof of Theorem \ref{TameRhoWins} can be easily adapted to online list coloring.
+
+\section{Eulerian subgraphs}
+Now we can finish Schauz's combinatorial proof by just showing that a certain $\rho$ is tame.  For all graphs $G$ under consideration, we fix an ordering of $V(G)$ and say an orientation of $G$ is even (resp. odd) if the number of edges pointing to the right is even (resp. odd).  Let $\rho(G, \F) = 1$ if and only if the number of even orientations of $G$ with out-degree sequence in $\F$ differs from the number of odd orientations of $G$ with out-degree sequence in $\F$.  We claim that $\rho$ is tame.  
+
+Part (d) is immediate.  If (c) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
+
+For (a), suppose $h$ is not zero on all of $S$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
+\[(h - 1_u) + \IN^S = (h + \IN^S) \cup ((h - 1_u) + \IN^{S \setminus u}).\]
+Note also that $h + \IN^S$ and $(h - 1_u) + \IN^{S \setminus u}$ are disjoint.  Since $\rho(G, h + \IN^S) = 1$, the number of even/odd orientations of $G$ with degree sequence in $h + \IN^S$ differ.  Because of our observed equality, this is impossible if $\rho(G, (h - 1_u) + \IN^S) = 0$ and $\rho(G, (h - 1_u) + \IN^{S \setminus u}) = 0$. 
+
+Finally, we prove (b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $\rho(G-xy, (h - 1_x) + \IN^S) = 0$ and $\rho(G-xy, (h - 1_y) + \IN^S) = 0$, then $\rho(G, h + \IN^S) = 0$.  This proves (b) and finishes the proof that $\rho$ is tame.
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}
 \end{document}

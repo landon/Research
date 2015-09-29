@@ -141,7 +141,7 @@ We consider functions $\rho$ that take a graph $G$ and $\F \subseteq \IN^{V(G)}$
 \begin{defn}\label{tame}
 	We say that $\rho$ is \emph{tame} if for any $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $\rho(G, h + \IN^S) = 1$, we have
 \begin{enumerate}
-	\item[(a)] if $h$ is not zero on all of $S$, then there is $u \in S$ with $h(u) > 0$ such that $\rho(G, (h - 1_u) + \IN^S) = 1$ or $\rho(G, (h - 1_u) + \IN^{S \setminus u}) = 1$; and
+	\item[(a)] if $h$ is not zero on all of $S$, then there is $x \in S$ with $h(x) > 0$ such that $\rho(G, (h - 1_x) + \IN^S) = 1$ or $\rho(G, (h - 1_x) + \IN^{S \setminus x}) = 1$; and
 	\item[(b)] if $S$ is independent and $xy \in E(S, V(G)\setminus S)$, then $\rho(G-xy, (h - 1_x) + \IN^S) = 1$ or $\rho(G-xy, (h - 1_y) + \IN^S) = 1$; and
 	\item[(c)] if $xy \in E(G[S])$, then $h(x) + h(y) > 0$; and
 	\item[(d)] if $x \in S$ is isolated in $G$, then $\rho(G - x, \restr{h}{V(G-x)} + \IN^{S\setminus x}) = 1$.
@@ -157,13 +157,13 @@ We consider functions $\rho$ that take a graph $G$ and $\F \subseteq \IN^{V(G)}$
 	\end{itemize}
 \end{lem}
 \begin{proof}
-	Suppose not and choose a counterexample minimizing $\sum_{v \in V(G)} h(v)$.  If $h$ is zero on all of $S$, then we get a contradiction using $T = S$ and $g=h$.  So, $\sum_{v \in V(G)} h(v) > 0$. Since $\rho$ is tame (part (a)) there is $u \in S$ with $h(u) > 0$ such that $\rho(G, (h - 1_u) + \IN^S) = 1$ or $\rho(G, (h - 1_u) + \IN^{S \setminus u}) = 1$.  In either case, minimality of  $\sum_{v \in V(G)} h(v)$ gives $T \subseteq S$ and $g \in \IN^{V(G)}$ such that:
+	Suppose not and choose a counterexample minimizing $\sum_{v \in V(G)} h(v)$.  If $h$ is zero on all of $S$, then we get a contradiction using $T = S$ and $g=h$.  So, $\sum_{v \in V(G)} h(v) > 0$. Since $\rho$ is tame (part (a)) there is $x \in S$ with $h(x) > 0$ such that $\rho(G, (h - 1_x) + \IN^S) = 1$ or $\rho(G, (h - 1_x) + \IN^{S \setminus x}) = 1$.  In either case, minimality of  $\sum_{v \in V(G)} h(v)$ gives $T \subseteq S$ and $g \in \IN^{V(G)}$ such that:
 		\begin{itemize}
 			\item $g$ is zero on all of $T$; and
-			\item $g(v) < (h - 1_u)(v)$ for all $v \in S\setminus (T \cup \set{u})$; and
+			\item $g(v) < (h - 1_x)(v)$ for all $v \in S\setminus (T \cup \set{x})$; and
 			\item $\rho(G, g + \IN^T) = 1$.
 		\end{itemize}
-		Since $(h - 1_u)(u) < h(u)$, the second item implies $g(v) < h(v)$ for all $v \in S\setminus T$, so $g$ and $T$ work for $h$, a contradiction.
+		Since $(h - 1_x)(x) < h(x)$, the second item implies $g(v) < h(v)$ for all $v \in S\setminus T$, so $g$ and $T$ work for $h$, a contradiction.
 \end{proof}
 
 \begin{lem}\label{CutOff}

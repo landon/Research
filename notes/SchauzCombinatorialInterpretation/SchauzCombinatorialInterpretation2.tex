@@ -143,8 +143,8 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 \begin{enumerate}
 	\item[(a)] if $h(S) > 0$, then there is $x \in S$ with $h(x) > 0$ such that $\rho(G, h - 1_x, S) = 1$ or $\rho(G, h - 1_x, S \setminus x) = 1$; and
 	\item[(b)] if $h(S) = 0$ and $xy \in E(S, V(G)\setminus S)$, then $\rho(G-xy, h - 1_x, S) = 1$ or $\rho(G-xy, h - 1_y, S) = 1$; and
-	\item[(c)] if $h(S) = 0$, then $S$ is independent; and
-	\item[(d)] if $x \in S$ is isolated in $G$, then $\rho(G - x, \restr{h}{V(G-x)}, S\setminus x) = 1$.
+	\item[(c)] if $h(S) = 0$, then $S$ is independent in $G$; and
+	\item[(d)] if $x \in S$ with $g(x) = 0$ is isolated in $G$, then $\rho(G - x, \restr{h}{V(G-x)}, S\setminus x) = 1$.
 \end{enumerate}
 \end{defn}
 
@@ -174,12 +174,12 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 	\end{itemize}
 \end{lem}
 \begin{proof}
-	Put $F = E(S, V(G) \setminus S)$. Since $h(S) = 0$, tame part (c) implies that $S$ is independent. Apply tame part (b) repeatedly to the edges in $F$ to get $g \in \IN^{V(G)}$ such that
+	Put $F = E(S, V(G) \setminus S)$. Since $h(S) = 0$, tame part (c) implies that $S$ is independent in $G$. Apply tame part (b) repeatedly to the edges in $F$ to get $g \in \IN^{V(G)}$ such that
 	\begin{itemize}
-		\item $g(v) \le h(v)$ for all $v \in S$; and
+		\item $g(v) \le h(v)$ for all $v \in V(G)$; and
 		\item $\rho(G - F, g, S) = 1$.
 	\end{itemize}
-	 Since $S$ is independent, all vertices in $S$ are isolated in $G-F$.  So, applying tame part (d) repeatedly we conclude $\rho(G - S, \restr{g}{V(G) \setminus S}, \emptyset) = 1$.
+	 Since $S$ is independent in $G$, all vertices in $S$ are isolated in $G-F$. We have $g(S) \le h(S) = 0$, so $g(S) = 0$. Applying tame part (d) repeatedly we conclude $\rho(G - S, \restr{g}{V(G) \setminus S}, \emptyset) = 1$.
 \end{proof}
 
 \begin{thm}\label{TameRhoWins}

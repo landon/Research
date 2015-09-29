@@ -179,7 +179,7 @@ We consider functions $\rho$ that take a graph $G$ and $\F \subseteq \IN^{V(G)}$
 		\item $g(v) \le h(v)$ for all $v \in S$; and
 		\item $\rho(G - F, g + \IN^S) = 1$.
 	\end{itemize}
-	Since $S$ is independent, all vertices in $S$ are isolated in $G-F$.  So, applying tame part (d) repeatedly we conclude $\rho(G - S, \set{g}) = 1$.
+	Since $S$ is independent, all vertices in $S$ are isolated in $G-F$.  So, applying tame part (d) repeatedly we conclude $\rho(G - S, \set{\restr{g}{V(G) \setminus S}}) = 1$.
 \end{proof}
 
 \begin{thm}\label{TameRhoWins}

@@ -139,13 +139,18 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 \[\text{if } h \in \IN^{V(G)} \text{ with } \rho(G, h, \emptyset) = 1\text{, then } G \text{ is } (h + 1_{V(G)})\text{-choosable}.\]
 \newpage
 \begin{defn}\label{tame}
-	We say that $\rho$ is \emph{tame} if for any $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $\rho(G, h, S) = 1$, we have
+	We say that $\rho$ is \emph{tame} if for all $h \in \IN^{V(G)}$ we have
+	\begin{enumerate}
+	 \item if $\rho(G,h,\emptyset)=1$, then $\rho(G,h,S)=1$ for all $S \subseteq V(G)$; and
+
+	\item for any $S \subseteq V(G)$ with $\rho(G, h, S) = 1$, we have
 \begin{enumerate}
-	\item[(a)] if $h(S) > 0$, then there is $x \in S$ with $h(x) > 0$ such that $\rho(G, h - 1_x, S) = 1$ or $\rho(G, h - 1_x, S \setminus x) = 1$; and
-	\item[(b)] if $h(S) = 0$ and $xy \in E(S, V(G)\setminus S)$, then $\rho(G-xy, h - 1_x, S) = 1$ or $\rho(G-xy, h - 1_y, S) = 1$; and
-	\item[(c)] if $h(S) = 0$, then $S$ is independent in $G$; and
-	\item[(d)] if $x \in S$ with $h(x) = 0$ is isolated in $G$, then $\rho(G - x, \restr{h}{V(G-x)}, S\setminus x) = 1$.
+	\item[(2a)] if $h(S) > 0$, then there is $x \in S$ with $h(x) > 0$ such that $\rho(G, h - 1_x, S) = 1$ or $\rho(G, h - 1_x, S \setminus x) = 1$; and
+	\item[(2b)] if $h(S) = 0$ and $xy \in E(S, V(G)\setminus S)$, then $\rho(G-xy, h - 1_x, S) = 1$ or $\rho(G-xy, h - 1_y, S) = 1$; and
+	\item[(2c)] if $h(S) = 0$, then $S$ is independent in $G$; and
+	\item[(2d)] if $x \in S$ with $h(x) = 0$ is isolated in $G$, then $\rho(G - x, \restr{h}{V(G-x)}, S\setminus x) = 1$.
 \end{enumerate}
+	\end{enumerate}
 \end{defn}
 
 \begin{lem}\label{GetSuperStable}
@@ -157,7 +162,7 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 	\end{itemize}
 \end{lem}
 \begin{proof}
-	Suppose not and choose a counterexample minimizing $h(V(G))$.  If $h(S) = 0$, then we get a contradiction using $T = S$ and $g=h$.  So, $h(S) > 0$. Since $\rho$ is tame (part (a)) there is $x \in S$ with $h(x) > 0$ such that $\rho(G, h - 1_x, S) = 1$ or $\rho(G, h - 1_x, S \setminus x) = 1$.  In either case, minimality of $h(V(G))$ gives $T \subseteq S$ and $g \in \IN^{V(G)}$ such that:
+	Suppose not and choose a counterexample minimizing $h(V(G))$.  If $h(S) = 0$, then we get a contradiction using $T = S$ and $g=h$.  So, $h(S) > 0$. Since $\rho$ is tame part (2a) there is $x \in S$ with $h(x) > 0$ such that $\rho(G, h - 1_x, S) = 1$ or $\rho(G, h - 1_x, S \setminus x) = 1$.  In either case, minimality of $h(V(G))$ gives $T \subseteq S$ and $g \in \IN^{V(G)}$ such that:
 		\begin{itemize}
 			\item $g(T) = 0$; and
 			\item $g(v) < (h - 1_x)(v)$ for all $v \in S\setminus (T \cup \set{x})$; and
@@ -174,25 +179,25 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 	\end{itemize}
 \end{lem}
 \begin{proof}
-	Put $F = E(S, V(G) \setminus S)$. Since $h(S) = 0$, tame part (c) implies that $S$ is independent in $G$. Apply tame part (b) repeatedly to the edges in $F$ to get $g \in \IN^{V(G)}$ such that
+	Put $F = E(S, V(G) \setminus S)$. Since $h(S) = 0$, tame part (2c) implies that $S$ is independent in $G$. Apply tame part (2b) repeatedly to the edges in $F$ to get $g \in \IN^{V(G)}$ such that
 	\begin{itemize}
 		\item $g(v) \le h(v)$ for all $v \in V(G)$; and
 		\item $\rho(G - F, g, S) = 1$.
 	\end{itemize}
-	 Since $S$ is independent in $G$, all vertices in $S$ are isolated in $G-F$. We have $g(S) \le h(S) = 0$, so $g(S) = 0$. Applying tame part (d) repeatedly we conclude $\rho(G - S, \restr{g}{V(G) \setminus S}, \emptyset) = 1$.
+	 Since $S$ is independent in $G$, all vertices in $S$ are isolated in $G-F$. We have $g(S) \le h(S) = 0$, so $g(S) = 0$. Applying tame part (2d) repeatedly we conclude $\rho(G - S, \restr{g}{V(G) \setminus S}, \emptyset) = 1$.
 \end{proof}
 
 \begin{thm}\label{TameRhoWins}
 	If $\rho$ is tame, $G$ is a graph and $h \in \IN^{V(G)}$ with $\rho(G, h, \emptyset) = 1$, then $G$ is $(h + 1_{V(G)})$-choosable.
 \end{thm}
 \begin{proof}
-	Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Let $L$ be a $(h + 1_{V(G)})$-assignment on $G$ for which $G$ is not $L$-colorable.  Let $c$ be a color appearing in $L$ and let $S = \setb{v}{V(G)}{c \in L(v)}$.  Apply Lemma \ref{GetSuperStable} to get $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Let $L$ be a $(h + 1_{V(G)})$-assignment on $G$ for which $G$ is not $L$-colorable.  Let $c$ be a color appearing in $L$ and let $S = \setb{v}{V(G)}{c \in L(v)}$.  By tame part (1), we have $\rho(G, h, S) = 1$. Apply Lemma \ref{GetSuperStable} to get $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
 	\begin{itemize}
 		\item $g(T) = 0$; and
 		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and
 		\item $\rho(G, g, T) = 1$.
 	\end{itemize}
-	Then, by tame part (c), $T$ is independent.  Apply Lemma \ref{CutOff} with $S = T$ and $h = g$ to get $f \in \IN^{V(G) \setminus T}$ such that
+	Then, by tame part (2c), $T$ is independent.  Apply Lemma \ref{CutOff} with $S = T$ and $h = g$ to get $f \in \IN^{V(G) \setminus T}$ such that
 		\begin{itemize}
 			\item $f(v) \le g(v)$ for all $v \in V(G) \setminus T$; and
 			\item $\rho(G - T, f, \emptyset) = 1$.
@@ -212,13 +217,15 @@ Note that the proof of Theorem \ref{TameRhoWins} can be easily adapted to online
 \section{Eulerian subgraphs}
 Now we can finish Schauz's combinatorial proof by just showing that a certain $\rho$ is tame.  For all graphs $G$ under consideration, we fix an ordering of $V(G)$ and say an orientation of $G$ is even (resp. odd) if the number of edges pointing to the right is even (resp. odd).  For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$. Let $\rho(G, h, S) = 1$ if and only if the number of even orientations of $G$ with out-degree sequence in $h + \IN^S$ differs from the number of odd orientations of $G$ with out-degree sequence in $h + \IN^S$.  We claim that $\rho$ is tame.  
 
-Part (d) is immediate.  If (c) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
+Part (1) is immediate since if $G$ has an orientation with out-degree sequence $h$, then the only out-degree sequence of an orientation of $G$ in $h + \IN^S$ is $h$ for all $S \subseteq V(G)$.
 
-For (a), suppose $h$ is not zero on all of $S$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
+Part (2d) is immediate.  If (2c) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
+
+For (2a), suppose $h$ is not zero on all of $S$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
 \[(h - 1_u) + \IN^S = (h + \IN^S) \cup ((h - 1_u) + \IN^{S \setminus u}).\]
 Note also that $h + \IN^S$ and $(h - 1_u) + \IN^{S \setminus u}$ are disjoint.  Since $\rho(G, h, S) = 1$, the number of even/odd orientations of $G$ with degree sequence in $h + \IN^S$ differ.  Because of our observed equality, this is impossible if $\rho(G, h - 1_u, S) = 0$ and $\rho(G, h - 1_u, S \setminus u) = 0$. 
 
-Finally, we prove (b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $\rho(G-xy, h - 1_x, S) = 0$ and $\rho(G-xy, h - 1_y, S) = 0$, then $\rho(G, h, S) = 0$.  This proves (b) and finishes the proof that $\rho$ is tame.
+Finally, we prove (2b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $\rho(G-xy, h - 1_x, S) = 0$ and $\rho(G-xy, h - 1_y, S) = 0$, then $\rho(G, h, S) = 0$.  This proves (2b) and finishes the proof that $\rho$ is tame.
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}
 \end{document}

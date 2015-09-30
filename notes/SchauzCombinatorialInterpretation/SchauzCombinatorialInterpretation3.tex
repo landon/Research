@@ -144,7 +144,7 @@ For a set $S$, let $2^S$ be the power set of $S$. We consider functions $\rho$ t
 	\begin{enumerate}
 	 \item if $\emptyset \in \rho(G,h)$, then $\rho(G,h) = 2^{V(G)}$; and
 
-	\item for any $S \subseteq V(G)$ with $S \in \rho(G, h)$, we have
+	\item for any $S \in \rho(G, h)$, we have
 \begin{enumerate}
 	\item[(2a)] if $h(S) > 0$, then there is $x \in S$ with $h(x) > 0$ such that $S \in \rho(G, h - 1_x)$ or $S \setminus x \in \rho(G, h - 1_x)$; and
 	\item[(2b)] if $h(S) = 0$ and $xy \in E(S, V(G)\setminus S)$, then $S \in \rho(G-xy, h - 1_x)$ or $S \in \rho(G-xy, h - 1_y)$; and
@@ -155,7 +155,7 @@ For a set $S$, let $2^S$ be the power set of $S$. We consider functions $\rho$ t
 \end{defn}
 
 \begin{lem}\label{GetSuperStable}
-	Suppose $\rho$ is tame. If $G$ is a graph, $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $S \in \rho(G, h)$, then there is $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	Suppose $\rho$ is tame. If $G$ is a graph, $h \in \IN^{V(G)}$ and $S \in \rho(G, h)$, then there is $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
 	\begin{itemize}
 		\item $g(T) = 0$; and
 		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and
@@ -173,7 +173,7 @@ For a set $S$, let $2^S$ be the power set of $S$. We consider functions $\rho$ t
 \end{proof}
 
 \begin{lem}\label{CutOff}
-	Suppose $\rho$ is tame. Let $G$ be a graph, $S \subseteq V(G)$ and $h \in \IN^{V(G)}$ with $S \in \rho(G, h)$.  If $h(S) = 0$, then there is $g \in \IN^{V(G) \setminus S}$ such that
+	Suppose $\rho$ is tame. Let $G$ be a graph, $h \in \IN^{V(G)}$ and $S \in \rho(G, h)$.  If $h(S) = 0$, then there is $g \in \IN^{V(G) \setminus S}$ such that
 	\begin{itemize}
 		\item $g(v) \le h(v)$ for all $v \in V(G) \setminus S$; and
 		\item $\rho(G - S, g) = 2^{V(G-S)}$.

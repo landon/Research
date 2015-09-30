@@ -136,7 +136,7 @@ In \cite{Alon1992125}, Noga Alon and Michael Tarsi introduced a beautiful algebr
 \section{A general framework}
 It will be convenient to have notation to talk about sets of degree sequences. For a set $S$, let $\IN^S$ be all functions from $S$ to $\IN$.  Let $T \subseteq S$. For $g\in \IN^S$ and $h \in \IN^T$, define $g+h \in \IN^S$ by $(g+h)(x) = g(x) + h(x)$ for $x \in T$ and $(g+h)(x) = g(x)$ for $x \in S\setminus T$. Define $g-h \in \IN^S$ by $(g-h)(x) = \max\set{0, g(x) - h(x)}$ for $x \in T$ and $(g-h)(x) = g(x)$ for $x \in S\setminus T$.  Let $1_T \in \IN^T$ be given by $1_T(x) = 1$ for $x \in T$.  When $T = \set{u}$, we write $1_u$ in place of $1_{\set{u}}$.  For $h \in \IN^S$ and $T \subseteq S$, put $h(T) = \sum_{v \in T} h(v)$.
 
-For a set $S$, let $2^S$ be the power set of $S$. We consider functions $\rho$ that take a graph $G$ and $h \in \IN^{V(G)}$, where $\rho(G,h) \in 2^{V(G)}$.  The end goal is to prove results of the form:
+For a set $S$, let $2^S$ be the power set of $S$. We consider functions $\rho$ that take a graph $G$ and $h \in \IN^{V(G)}$, where $\rho(G,h) \subseteq 2^{V(G)}$.  The end goal is to prove results of the form:
 \[\text{if } h \in \IN^{V(G)} \text{ with } \rho(G, h) = 2^{V(G)}\text{, then } G \text{ is } (h + 1_{V(G)})\text{-choosable}.\]
 \newpage
 \begin{defn}\label{tame}

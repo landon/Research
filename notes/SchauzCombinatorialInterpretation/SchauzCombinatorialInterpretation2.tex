@@ -186,7 +186,7 @@ We consider functions $\rho$ with $\rho(G,h,S) \in \set{0,1}$ where $G$ is a gra
 	If $\rho$ is tame, $G$ is a graph and $h \in \IN^{V(G)}$ with $\rho(G, h, \emptyset) = 1$, then $G$ is $(h + 1_{V(G)})$-choosable.
 \end{thm}
 \begin{proof}
-	Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Let $L$ be a $(h + 1_{V(G)})$-assignment on $G$ for which $G$ is not $L$-colorable.  Let $c$ be a coloring appearing in $L$ and let $S = \setb{v}{V(G)}{c \in L(v)}$.  Apply Lemma \ref{GetSuperStable} to get $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	Suppose not and choose a counterexample $G$ minimizing $\card{G}$.  Let $L$ be a $(h + 1_{V(G)})$-assignment on $G$ for which $G$ is not $L$-colorable.  Let $c$ be a color appearing in $L$ and let $S = \setb{v}{V(G)}{c \in L(v)}$.  Apply Lemma \ref{GetSuperStable} to get $\emptyset \ne T \subseteq S$ and $g \in \IN^{V(G)}$ such that
 	\begin{itemize}
 		\item $g(T) = 0$; and
 		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and

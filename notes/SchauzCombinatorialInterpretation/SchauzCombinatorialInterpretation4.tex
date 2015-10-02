@@ -233,7 +233,7 @@ For a graph $G$ and $h \in \IN^{V(G)}$, let $\rho(G,h)$ be all $S \subseteq V(G)
 To prove (2), suppose $h(S) = 0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Then $T=S$ and hence $S$ is independent, proving (2a).  If $xy \in E(G)$, then $G-xy$ is easier to paint than $G$, so we must have $S \in \rho(G-xy, h)$, this proves (2b).  Now (2c) is immediate since $G-S$ is $\parens{\restr{h}{V(G-S)} + 1_{V(G-S)}}$-paintable.  So, $\rho$ is tame and combined with Theorem \ref{TameRhoWins} we have proved the following.
 
 \begin{thm}
-	If $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if there exists a tame $\rho$ with $\rho(G, h) = 2^{V(G)}$.
+	There exists a tame $\rho$ such that if $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if $\rho(G, h) = 2^{V(G)}$.
 \end{thm}
 
 \bibliographystyle{amsplain}

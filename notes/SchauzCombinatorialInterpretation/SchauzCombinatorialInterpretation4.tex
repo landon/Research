@@ -226,6 +226,16 @@ Note also that $h + \IN^S$ and $(h - 1_u) + \IN^{S \setminus u}$ are disjoint.  
 Tame part (2c) is immediate.  If tame part (2a) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
 
 Finally, we prove (2b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $S \not \in \rho(G-xy, h - 1_x)$ and $S \not \in \rho(G-xy, h - 1_y)$, then $S \not \in \rho(G, h)$.  Note that, since $h(S)=0$, if $x \in S$, then $h - 1_x = h$.  This proves (2b) and finishes the proof that $\rho$ is tame.
+
+\section{Paintability is tameness}
+For a graph $G$ and $h \in \IN^{V(G)}$, let $\rho(G,h)$ be all $S \subseteq V(G)$ for which there is independent $T \subseteq S$ such that $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  We claim that $\rho$ is tame.  Suppose $S \in \rho(G,h)$. For (1), suppose $h(S)>0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Note that $T$ must contain every $x \in S$ with $h(x)=0$.  If $T=S$, then for any $x \in S$ with $h(x)>0$ we have $S \in \rho(G, h - 1_x)$.  If $T \ne S$, then for any $x \in S \setminus T$ we have $h(x) > 0$ and $S\setminus x \in \rho(G, h - 1_x)$ since $T \subseteq S\setminus x$.
+
+To prove (2), suppose $h(S) = 0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Then $T=S$ and hence $S$ is independent, proving (2a).  If $xy \in E(G)$, then $G-xy$ is easier to paint than $G$, so we must have $S \in \rho(G-xy, h)$, this proves (2b).  Now (2c) is immediate since $G-S$ is $\parens{\restr{h}{V(G-S)} + 1_{V(G-S)}}$-paintable.  So, $\rho$ is tame and combined with Theorem \ref{TameRhoWins} we have proved the following.
+
+\begin{thm}
+	If $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if there exists a tame $\rho$ with $\rho(G, h) = 2^{V(G)}$.
+\end{thm}
+
 \bibliographystyle{amsplain}
 \bibliography{GraphColoring}
 \end{document}

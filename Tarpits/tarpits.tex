@@ -1,0 +1,170 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[margin=1cm]{caption}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{graphicx}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{observation}{Observation}
+\newtheorem{obs}[observation]{Observation}
+\newtheorem*{mainconj}{Main Conjecture}
+\newtheorem*{mainthm}{Main Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem{clm}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{Player1Move}{Player 1 Move}
+\newtheorem*{Player2Move}{Player 2 Move}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\pot}{\operatorname{pot}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+\def\H{\fancy{H}}
+\def\L{\fancy{L}}
+\def\B{\fancy{B}}
+\def\W{\fancy{W}}
+\def\I{\fancy{I}}
+\def\P{\fancy{P}}
+\def\T{\fancy{T}}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+
+\def\fr{\frac}
+\def\adj{\leftrightarrow}
+\def\ch{\textrm{ch}}
+
+\renewcommand{\restriction}{\mathord{\upharpoonright}}
+\begin{document}
+\title{tarpit notes}
+\author{}
+\maketitle
+\section{The game}
+Let $\Q_n$ be the words of length $n$ in the alphabet $\set{A, B, C}$.  For $w \in Q_n$, let $w_i$ be the $i$-th letter of $w$; that is, $w = w_1w_2\cdots w_n$. For $w \in \Q_n$ and $x \in \set{A,B,C}$, let $\I_x(w) = \setbs{i}{w_i=x}$.  A \emph{2-partition} of a set $S$ is a partition of $S$ into sets of size two and at most one set of size one.
+
+A game is specified by a tuple $(\W, n)$ where $\W \subseteq \Q_n$ is the set of \emph{won} positions.  The \emph{$(\W, n)$-game} is played as follows.  At the start of the game, Player 1 picks an initial $w \in \Q_n$.  After that, the players alternate turns (with Player 1 going first) until $w \in \W$ at the start of Player 1's turn.  Player 2 wins if the game ends and Player 1 wins otherwise.
+
+\begin{Player1Move}
+	For each $x \in \set{A, B, C}$, choose a 2-partition $\P_x$ of $\I_x(w)$.
+\end{Player1Move}
+
+\begin{Player2Move}
+	Pick $x \in \set{A, B, C}$ as well as $p \in \P_x$ and for each $i \in p$, change $w_i$ to the letter in $\set{A, B, C} \setminus \set{x, w_i}$.
+\end{Player2Move}
+
+\begin{question}
+	For what pairs $(\W,n)$ does Player 2 have a winning strategy?
+\end{question}
+
+\section{Tarpits}
+We say that $T \subseteq \Q_n$ is a \emph{tarpit} if for each $w \in T$, Player 1 can move such that all of Player 2's possible modifications of $w$ still lie in $T$.  Tarpits are great for Player 1, if $T$ is a tarpit in $\Q_n$ disjoint from $\W$, then Player 1 can just pick the initial $w$ to be in $T$ to guarantee a win.  In fact, if we know the minimal tarpits in $\Q_n$ then we know exactly which pairs $(\W,n)$ Player 2 wins on.  For $n \in \IN$, let $\T_n$ be the set of minimal tarpits in $\Q_n$.
+
+\begin{lem}\label{TarpitEquiv}
+	Player 2 wins the $(\W,n)$-game if and only if $\W \cap T \ne \emptyset$ for every $T \in \T_n$.
+\end{lem}
+\begin{proof}
+	If there is $T \in \T_n$ for which $\W \cap T = \emptyset$, then Player 1 wins by definition.  For the other direction, suppose $\W \cap T \ne \emptyset$ for every $T \in \T_n$.  Then Player 2 should play by the strategy: choose $x \in \set{A, B, C}$ and $p \in \P_x$ such that, after modification, $w$ is the word seen least recently (with words that have never been seen being top choice, breaking ties arbitrarily).  Suppose there is a game where Player 2 plays by this strategy, but Player 1 wins.  Say the sequence of words Player 1 encounters at the start of his turns is $w^1, w^2, w^3, \ldots$.   Since $|Q_n|$ is finite, there is $k$ such that each word appearing in $w^k, w^{k+1}, w^{k+2}, \ldots$ appears infinitely many times.
+	Let $S = \set{w^k, w^{k+1}, w^{k+2},\ldots}$.   Going out far enough in the sequence, the words in $S$ have been seen more recently than any other word in $Q_n$.  So, by Player 2's strategy, he would escape $S$ if he could.  Since each word in $S$ is encountered infinitely many times, Player 2 has the opportunity to escape $S$ from any word in $S$.  That means that $S$ must be a tarpit.  But, $S \cap \W = \emptyset$ since Player 2 does not win and hence $S$ contains a minimal tarpit disjoint from $\W$, contradicting our assumption.
+\end{proof}
+
+The strategy for Player 2 in the proof of Lemma \ref{TarpitEquiv} has the interesting property that it is a winning strategy whenever a winning strategy exists.
+
+\section{Transversal hypergraphs}
+A \emph{transversal} of $\T_n$ is a subset $S$ of $\Q_n$ such that $S \cap T \ne \emptyset$ for all $T \in \T_n$.  Let $\H_n$ be the hypergraph with vertex set $\Q_n$ and edge set the minimal transversals of $\T_n$.  As an immediate consequence of Lemma \ref{TarpitEquiv}, we have the following.
+
+\begin{lem}\label{HypergraphEquiv}
+		Player 2 wins the $(\W,n)$-game if and only if $\W$ contains an edge of $\H_n$.
+\end{lem}
+
+\begin{conjecture}
+	If $n \in \IN$, then $\H_n$ is $k$-uniform for some $k$.
+\end{conjecture}
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+
+\end{document}
+
+

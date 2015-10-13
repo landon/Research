@@ -179,32 +179,16 @@ We consider graphs with vertices labeled by natural numbers; that is, pairs $(G,
 \end{proof}
 
 \section{Extension lemma}
-This is a key lemma from \cite{OreVizing}, it generalizes a lemma from \cite{kostochkastiebitzedgesincriticalgraph} from list coloring to Alon-Tarsi orientations.  
-This is what i talked about in Baltimore.  The basic idea is that in some cases we can pair off odd/even spanning Eulerian subgraphs via a parity reversing bijection.
+We need the following very special case of a key lemma in \cite{OreVizing}.
 
 \begin{lem}\label{GeneralEulerLemma}
-	Let $G$ be a multigraph without loops and $\func{f}{V(G)}{\IN}$. If there are $F \subseteq G$ and
-	$Y \subseteq V(G)$ such that:
-	\begin{enumerate}
-		\item any multiple edges in $G$ are contained in $G[Y]$; and
-		\item $f(v) \ge d_G(v)$ for all $v \in V(G) \setminus Y$; and
-		\item $f(v) \ge d_{G[Y]}(v) + d_F(v) + 1$ for all $v \in Y$; and
-		\item For each component $T$ of $G-Y$ there are different $x_1, x_2 \in V(T)$ where $N_T[x_1] = N_T[x_2]$ and $T - \set{x_1, x_2}$ is connected such that either:
-		\begin{enumerate}
-			\item there are $x_1y_1, x_2y_2 \in E(F)$ where $y_1 \ne y_2$ and $N(x_i) \cap Y = \set{y_i}$ for $i \in \irange{2}$; or
-			\item $\card{N(x_2) \cap Y} = 0$ and there is $x_1y_1 \in E(F)$ where $N(x_1) \cap Y = \set{y_1}$,
-		\end{enumerate}
-	\end{enumerate}
-	
-	\noindent then $G$ is $f$-AT.
+	Let $G$ be a graph and $x \in V(G)$ such that $H \DefinedAs G-x$ is connected.  If there are $z_1, z_2 \in V(H)$ with $N_H[z_1] = N_H[z_2]$ such that $x \adj z_1$ and $x \nonadj z_2$, 
+	then $G$ is $f$-AT where $f(x) = 2$ and $f(v) = d_G(v)$ for all $v \in V(H)$.
 \end{lem}
 \begin{proof}
-	Suppose not and pick a counterexample $\parens{G, f, F, Y}$ minimizing $\card{G-Y}$. %HK Changed sentence to fix the typesetting
-	If $\card{G-Y} = 0$, then $Y = V(G)$ and thus $f(v) \ge d_G(v) + 1$ for all $v \in V(G)$ by (3).  Pick an acyclic orientation $D$ of $G$.  Then $EE(D) = 1$, $EO(D) = 0$ and $d_D^+(v) \le d_G(v) \le f(v) - 1$ for all $v \in V(D)$. Hence $G$ is $f$-AT.  So, we must have $\card{G-Y} > 0$.  
-	
-	Pick a component $T$ of $G - Y$ and pick $x_1, x_2 \in V(T)$ as guaranteed by (4). First, suppose (4a) holds.   Put $G' \DefinedAs (G - T) + y_1y_2$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y$ and let $f'$ be $f$ restricted to $V(G')$.  Then $G'$ has an orientation $D'$ where $f'(v) \ge d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \ne EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  By symmetry we may assume that the new edge $y_1y_2$ is directed toward $y_2$.  Now we use the orientation of $D'$ to construct the desired orientation of $D$. First, we use the orientation on $D' - y_1y_2$ on $G-T$. Now, order the vertices of $T$ as $x_1, x_2, z_1, z_2, \ldots$ so that every vertex has at least one neighbor to the right.  Orient the edges of $T$ left-to-right in this ordering.  Finally, we use $y_1x_1$ and $x_2y_2$ and orient all other edges between $T$ and $G-T$ away from $T$.  Plainly, $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Since $y_1x_1$ is the only edge of $D$ going into $T$, any Eulerian subgraph of $D$ that contains a vertex of $T$ must contain $y_1x_1$.  So, any Eulerian subgraph of $D$ either contains (i) neither $y_1x_1$ nor $x_2y_2$, (ii) both $y_1x_1$ and $x_2y_2$, or (iii) $y_1x_1$ but not $x_2y_2$.  We first handle (i) and (ii) together.  Consider the function $h$ that maps an Eulerian subgraph $Q$ of $D'$ to an Eulerian subgraph $h(Q)$ of $D$ as follows.  If $Q$ does not contain $y_1y_2$, let $h(Q) = \iota(Q)$ where $\iota(Q)$ is the natural embedding of $D' - y_1y_2$ in $D$.  Otherwise, let $h(Q) = \iota(Q - y_1y_2) + \set{y_1x_1, x_1x_2, x_2y_2}$.  Then $h$ is a parity-preserving injection with image precisely the union of those Eulerian subgraphs of $D$ in (i) and (ii).  Hence if we can show that exactly half of the Eulerian subgraphs of $D$ in (iii) are even, we will conclude $EE(D) \ne EO(D)$, a contradiction.  To do so, consider an Eulerian subgraph $A$ of $D$ containing $y_1x_1$ and not $x_2y_2$. Since $x_1$ must have in-degree $1$ in $A$, it must also have out-degree $1$ in $A$.  We show that $A$ has a mate $A'$ of opposite parity.  Suppose $x_2 \not \in A$ and $x_1z_1 \in A$; then we make $A'$ by removing $x_1z_1$ from $A$ and adding $x_1x_2z_1$.  If $x_2 \in A$ and $x_1x_2z_1 \in A$, we make $A'$ by removing $x_1x_2z_1$ and adding $x_1z_1$. Hence exactly half of the Eulerian subgraphs of $D$ in (iii) are even and we conclude $EE(D) \ne EO(D)$, a contradiction.
-	
-	Now suppose (4b) holds.  Put $G' \DefinedAs G - T$, $F' \DefinedAs F - T$, $Y' \DefinedAs Y$ and define $f'$ by $f'(v) = f(v)$ for all $v \in V(G'-y_1)$ and $f'(y_1) = f(y_1) - 1$.  Then $G'$ has an orientation $D'$ where $f'(v) \ge d_{D'}^+(v) + 1$ for all $v \in V(D')$ and $EE(D') \ne EO(D')$, for otherwise $\parens{G', f', F', Y'}$ would contradict minimality.  We orient $G - T$ according to $D$, orient $T$ as in the previous case, again use $y_1x_1$ and orient all other edges between $T$ and $G-T$ away from $T$.  Since we decreased $f'(y_1)$ by $1$, the extra out edge of $y_1$ is accounted for and we have $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Again any additional Eulerian subgraph must contain $y_1x_1$ and since $x_2$ has no neighbor in $G-T$ we can use $x_2$ as before to build a mate of opposite parity for any additional Eulerian subgraph.  Hence $EE(D) \ne EO(D)$ giving our final contradiction.
+	Order the vertices of $H$ with $z_1$ first and $z_2$ second so that every vertex has at least one neighbor to the right. Orient the edges of $H$ left-to-right in this ordering.  
+	Orient $xz_1$ into $z_1$ and orient all other edges incident to $x$ into $x$.  Let $D$ be the resulting orientation.  Plainly, $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  So, we just need to check that
+	$EE(D) \ne EO(D)$.  Since $xz_1$ is the only edge of $D$ leaving $x$, any spanning Eulerian subgraph of $D$ that has edges must contain $xz_1$.   Consider an Eulerian subgraph $A$ of $D$ containing $xz_1$. Since $z_1$ must have in-degree $1$ in $A$, it must also have out-degree $1$ in $A$.  We show that $A$ has a mate $A'$ of opposite parity.  Suppose $z_2 \not \in A$ and $z_1w \in A$ for some $w \in N_H[z_1]$; then we make $A'$ by removing $z_1w$ from $A$ and adding $z_1z_2w$.  If $z_2 \in A$ and $z_1z_2w \in A$, we make $A'$ by removing $z_1z_2w$ and adding $z_1w$. Hence exactly half of the Eulerian subgraphs of $D$ that contain edges are even.  Since the edgeless spanning subgraph of $D$ is an even Eulerian subgraph, we conclude $EE(D) = EO(D) + 1$.  Hence $G$ is $f$-AT.
 \end{proof}
 
 \section{Degree-AT graphs}

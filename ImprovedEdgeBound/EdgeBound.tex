@@ -258,6 +258,21 @@ So, now our task is to prove lower bounds on $\Gamma_{k,(b_1,\ldots,b_{\ell})}$.
 	Just compute, for now i checked things with wolfram alpha.  The $\ell \ge 3$ case can be improved, but not sure we need it.
 \end{proof}
 
+
+The bound in Lemma \ref{PrimeGammaBound} gives $\sigma_T'(x) \ge 0$ when $x$ is a full vertex.  We can often do better.
+
+\begin{lem}\label{BetterFull}
+	Let $T \in \T_k$ for $k \ge 5$.  If $x \in V(T)$ is a full vertex of type $(b_1, \ldots, b_\ell)$, then
+	\[\sigma'_T(x) \ge \begin{cases}
+	0 & \text{ if } \ell = 2, b_1 = 2 \text{ and } b_2 = k-1,\\
+	\frac{2}{k-1} + \frac13 - \frac{2}{k-2} & \text{ if } \ell = 2 \text{ and } b_1, b_2 \le k-2,\\
+	\frac{2}{k-1} + \frac13 & \text{ if } \ell \ge 3,\\
+	\end{cases}\]
+\end{lem}
+\begin{proof}
+	We have $\sigma'_T(x) = 2\ell - 3 + \frac{2}{k-1} - \sum_{i \in \irange{\ell}} \frac{2}{b_i}$.
+\end{proof}
+
 \section{The lower bound}
 We need the following definitions:
 \begin{align*}

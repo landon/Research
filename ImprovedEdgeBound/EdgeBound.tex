@@ -113,6 +113,39 @@
 \maketitle
 
 \section{Introduction}
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+			\hline
+			&\multicolumn{4}{ |c| }{$k$-Critical $G$}&\multicolumn{2}{|c|}{$k$-ListCritical G}\\
+			\hline
+			& Gallai \cite{gallai1963kritische}
+			& Kriv \cite{krivelevich1997minimal}
+			& KS \cite{kostochkastiebitzedgesincriticalgraph}
+			& KY \cite{kostochkayancey2012ore}
+			& KS \cite{kostochkastiebitzedgesincriticalgraph} 
+			& KR \cite{OreVizing}
+			& Here\\
+			$k$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$\\
+			\hline 
+			4 & 3.0769 &3.1429&---&3.3333& --- & --- \\
+			5 & 4.0909 &4.1429&---&4.5000& --- & 4.0984 & \bf{4.1}\\
+			6 & 5.0909 &5.1304&5.0976&5.6000& --- & 5.1053 & \bf{5.1082}\\
+			7 & 6.0870 &6.1176&6.0990&6.6667& --- & 6.1149 & \bf{6.1204}\\
+			8 & 7.0820 &7.1064&7.0980&7.7143& --- & 7.1128 & \bf{7.1181}\\
+			9 & 8.0769 &8.0968&8.0959&8.7500& 8.0838 & 8.1094 & \bf{8.1143}\\
+			10 & 9.0722 &9.0886&9.0932&9.7778& 9.0793 & 9.1055 & \bf{9.1100}\\
+			15 & 14.0541 &14.0618&14.0785&14.8571& 14.0610 & 14.0864 & \bf{14.0892}\\
+			20 & 19.0428 &19.0474&19.0666&19.8947& 19.0490 & 19.0719 & \bf{19.0738}\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{History of lower bounds on the average degree $d(G)$ of $k$-critical and $k$-list-critical graphs $G$.}
+	\label{tab:1}
+\end{table}
+
+
 Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. For a graph $G$, let $W^k(G)$ be the set of vertices of $G$ that are contained in some $K_{k-1}$ in $G$.  
 
 \begin{defn}
@@ -229,18 +262,6 @@ when $\sum_{i \in \irange{\ell}} b_i = k + \ell - 1$, put
 	\[\frac{k+1}{b_1(k + 1 - b_1)} = \frac12 + \frac{1}{k-1}.\] 
 \end{proof}
 
-\noindent Note that $\Gamma_{k,\type_T(x)}\parens{k - 1 - d_T(x)} = 0$ whenever $x \in W^k(T)$.  To make that explicit, put
-\[\sigma_T^*(x) \DefinedAs \begin{cases}
-\Gamma_{k,\type_T(x)}\parens{k - 1 - d_T(x)} & \text{ if } x \in V(T)\setminus W^k(T),\\
-0 & \text{ otherwise}.
-\end{cases}\]
-Furthermore, put
-\[\sigma^*(T) \DefinedAs \sum_{x \in V(T)} \sigma_T^*(x).\]
-With those definitions, the following is immediate from Lemma \ref{SigmaPrimeIsTwoLess} and Lemma \ref{PrimeGammaBound}.
-\begin{lem}\label{SigmaStarBound}
-	If $T \in \T_k$ and $k \ge 4$, then $\sigma(T) \ge \sigma^*(T) + 2$.
-\end{lem}
-
 So, now our task is to prove lower bounds on $\Gamma_{k,(b_1,\ldots,b_{\ell})}$.  
 
 \begin{lem}\label{GammaBound}
@@ -255,9 +276,8 @@ So, now our task is to prove lower bounds on $\Gamma_{k,(b_1,\ldots,b_{\ell})}$.
 	\end{cases}\]
 \end{lem}
 \begin{proof}
-	Just compute, for now i checked things with wolfram alpha.  The $\ell \ge 3$ case can be improved, but not sure we need it.
+	Just compute. The $\ell \ge 3$ case can be improved, but not sure we need it.
 \end{proof}
-
 
 The bound in Lemma \ref{PrimeGammaBound} gives $\sigma_T'(x) \ge 0$ when $x$ is a full vertex.  We can often do better.
 
@@ -265,13 +285,27 @@ The bound in Lemma \ref{PrimeGammaBound} gives $\sigma_T'(x) \ge 0$ when $x$ is 
 	Let $T \in \T_k$ for $k \ge 5$.  If $x \in V(T)$ is a full vertex of type $(b_1, \ldots, b_\ell)$, then
 	\[\sigma'_T(x) \ge \begin{cases}
 	0 & \text{ if } \ell = 2, b_1 = 2 \text{ and } b_2 = k-1,\\
-	\frac{2}{k-1} + \frac13 - \frac{2}{k-2} & \text{ if } \ell = 2 \text{ and } b_1, b_2 \le k-2,\\
-	\frac{2}{k-1} + \frac13 & \text{ if } \ell \ge 3,\\
+	\frac13 - \frac{2}{(k-1)(k-2)} & \text{ if } \ell = 2 \text{ and } b_1, b_2 \le k-2,\\
+	\frac13 + \frac{2}{k-1} & \text{ if } \ell \ge 3,\\
 	\end{cases}\]
 \end{lem}
 \begin{proof}
-	We have $\sigma'_T(x) = 2\ell - 3 + \frac{2}{k-1} - \sum_{i \in \irange{\ell}} \frac{2}{b_i}$.
+	We have $\sigma'_T(x) = 2\ell - 3 + \frac{2}{k-1} - \sum_{i \in \irange{\ell}} \frac{2}{b_i}$.  Now, just compute.
 \end{proof}
+
+In the proof of the bound in \cite{OreVizing}, we handled $K_{k-1}$'s separately and for the other components we used a bound of $\frac12 - \frac{1}{(k-1)(k-2)}$ as a lower bound on $\Gamma_{k,(b_1,\ldots,b_{\ell})}$ (which can be seen from Lemma \ref{GammaBound}).  As the bound in Lemma \ref{GammaBound} shows, if we want to improve on this we need to handle the $\ell = 1$ and $b_1=k-2$ case where we get $\frac12 - \frac{1}{(k-1)(k-2)}$ exactly.  When $T=K_{k-2}$ is a component, for $x \in V(T)$ we have
+\begin{align*}
+\sigma'_T(x) &= k-2 + \frac{2}{k-1} - (k-3) + \parens{-2 + 2 - \frac{2}{k-2}}\\
+&=1 + \frac{2}{k-1} - \frac{2}{k-2}\\
+&=\parens{\frac12 - \frac{1}{(k-1)(k-2)}}(k-1-d_T(x)).
+\end{align*}
+So, to improve on $\frac12 - \frac{1}{(k-1)(k-2)}$, we need to do get some extra weight from somewhere.  We know $\sigma(T) \ge \sigma'(T) + 2$ by Lemma \ref{SigmaPrimeIsTwoLess}.  It turns out that in the proof below, that $+2$ is wasted on all components except those containing a $K_{k-1}$.  Since components in general could be arbitrary size, distributing this extra $+2$ to the vertices of the component will not give us a useful improvement.  But in the case that $T=K_{k-2}$, this gets us an extra $\frac{2}{k-2}$ weight for each vertex in $T$, which allows us to improve $\frac12 - \frac{1}{(k-1)(k-2)}$ to $\frac12 + \frac{1}{k-2} - \frac{1}{(k-1)(k-2)} = \frac12 + \frac{1}{k-1}$ in this case.  It remains to find extra weight for $K_{k-2}$ blocks that are not components.  Suppose $B=K_{k_2}$ is a block in a component $T$ and let $x_B$ be the cutvertex of $T$ contained in $B$.  We are going to get our extra weight from $x_B$.  First, if $x_B$ is not full, then $\type(x_B) = (2, k-2)$ and Lemma \ref{GammaBound} gives $\Gamma_{k,(b_1,b_2} \ge 1 - \frac{1}{k-1}$.  So, $x_B$ contributes $\parens{1 - \frac{1}{k-1}}(k-1 - d_T(x_B)) = \parens{1 - \frac{1}{k-1}}$ which is an extra $1 - \frac{1}{k-1} - \parens{\frac12 - \frac{1}{(k-1)(k-2)}} = \frac12 - \frac{k-3}{(k-1)(k-2)}$.  Distributing this evenly amongst the vertices of the $K_{k-2}$ gets each vertex an extra $\frac{1}{2(k-2)} - \frac{k-3}{(k-1)(k-2)(k-2)}$.  Suppose instead that $x_B$ is full.  Then Lemma \ref{BetterFull} shows that that there is unused weight $\frac13 - \frac{2}{(k-1)(k-2)}$.  Distributing this weight to the at most $k-3$ non-full vertices in $T$ gets each vertex an extra $\frac{1}{3(k-3)} - \frac{2}{(k-1)(k-2)(k-3)}$.  This latter gain is the smaller of the two, adding this to  $\frac12 - \frac{1}{(k-1)(k-2)}$ gives $\frac12 + \frac{k-5}{3(k-2)(k-3)}$.  All of the bounds in Lemma \ref{GammaBound} are at most this for $k \ge 5$, except $\frac12 - \frac{1}{(k-1)(k-2)}$ (which we have already fixed) and $1 - \frac{3k-5}{(k-1)^2}$ which occurs for components with a single vertex.  We can easily fix these using the same trick of using the extra $+2$ like we did for $K_{k-2}$ components.  In the notation of the next section, this proves the following.
+
+\begin{lem}\label{ImprovedSigmaBound}
+	$\sigma_k(G) \ge 2|\D| + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\sum_{v \in L'} (k-1-d_{\L}(v))$.
+\end{lem}
+
+Below we put this in to get an improved bound in Theorem \ref{EdgeBoundEuler}.
 
 \section{The lower bound}
 We need the following definitions:
@@ -318,13 +352,13 @@ Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G
 \end{proof}
 
 \begin{thm}\label{EdgeBoundEuler}
-	If $G$ is an AT-irreducible graph with $\delta(G) \ge 4$ and $\omega(G) \le \delta(G)$, then $2\size{G} \ge g_{\delta(G)+1}(\card{G}, c)$ where $c \DefinedAs (\delta(G)-2)\alpha_{\delta(G) + 1}$ when $\delta(G) \ge 6$ and $c \DefinedAs (\delta(G)-3)\alpha_{\delta(G) + 1}$ when $\delta(G) \in \set{4,5}$.
+	If $G$ is an AT-irreducible graph with $\delta(G) \ge 4$ and $\omega(G) \le \delta(G)$, then $2\size{G} \ge g_{\delta(G)+1}(\card{G}, c)$ where $c \DefinedAs (\delta(G)-2)\parens{\frac12 + \frac{\delta(G)-4}{3(\delta(G)-1)(\delta(G)-2)}}$ when $\delta(G) \ge 6$ and $c \DefinedAs (\delta(G)-3)\parens{\frac12 + \frac{\delta(G)-4}{3(\delta(G)-1)(\delta(G)-2)}}$ when $\delta(G) \in \set{4,5}$.
 \end{thm}
 \begin{proof}
 Put $k \DefinedAs \delta(G) + 1$, $\L \DefinedAs \L_k(G)$ and $\HH \DefinedAs \HH_k(G)$.  Put $W \DefinedAs W^k(\L)$, $L' \DefinedAs V(\L) \setminus W$ and $H' \DefinedAs \setb{v}{V(\HH)}{d_G(v) = k}$.   By Lemma \ref{SigmaTauBoundEulerRefined}, it will be sufficient to prove that \[S \DefinedAs \sigma_k(G) + \sum_{y \in H'} d_{\HH}(y) \ge c\card{H'}.\]
 
-Let $\D$ be the components of $\L$ containing $K_{k-1}$ and $\CC$ the components of $\L$ not containing $K_{k-1}$.  Then $\D \cup \CC \subseteq \T_k$ for otherwise some $T \in \D \cup \CC$ is $d_0$-AT and hence $f_T$-AT and $G$ is AT-reducible.  By Lemma \ref{SigmaBoundEuler}, we have $\sigma_k(T) \ge 2 + q_k(T)$ for if $T \in \D$ and $\sigma_k(T) \ge 2 - \alpha_k + q_k(T)$ if $T \in \CC$.  Hence, we have $\sigma_k(G) = \sum_{T \in \D} \sigma_k(T) + \sum_{T \in \CC} \sigma_k(T) \ge 2\card{\D} + (2-\alpha_k)\card{\CC} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}$.  That is,
-\[\sigma_k(G) \ge 2\card{\D} + (2-\alpha_k)\card{\CC} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}.\]
+Let $\D$ be the components of $\L$ containing $K_{k-1}$. By Lemma \ref{ImprovedSigmaBound}, we have
+\[\sigma_k(G) \ge 2|\D| + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\sum_{v \in L'} (k-1-d_{\L}(v)).\]
 
 Now we define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
 \begin{enumerate}
@@ -347,7 +381,7 @@ Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_2 \cup A_3$ and $f(v
 
 Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{H'} + \card{\D}) + \card{A_2} + 
 \card{A_3}$. By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  Hence $\size{F} \ge (k-1)\card{H'}$.  This gives $(k-3)\card{H'} \leq 2\card{\D} + \card{A_2} + 
-\card{A_3}$.  By our above estimate we have $S \ge 2\card{\D} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \alpha_k\card{A_2} + \card{A_3} \ge \alpha_k(2\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \alpha_k(k-3)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
+\card{A_3}$.  By our above estimate we have $S \ge  2|\D| + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\sum_{v \in L'} (k-1-d_{\L}(v)) + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\card{A_2} + \card{A_3} \ge \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}(2\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}(k-3)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
 \bigskip
 
 \noindent \case{2}{$\delta \in \set{4,5}$.}
@@ -357,7 +391,7 @@ Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_1 \cup A_2 \cup A_3$
 
 Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 3\card{H'} + \card{\D} + \card{A_2} + 
 \card{A_3}$. By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  Hence $\size{F} \ge (k-1)\card{H'}$.  This gives $(k-4)\card{H'} \leq \card{\D} + \card{A_2} + 
-\card{A_3}$.  By our above estimate we have $S \ge 2\card{\D} + \alpha_k\sum_{v \in L'} \parens{k-1 - d_{\L}(v)}  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \alpha_k\card{A_2} + \card{A_3} \ge \alpha_k(\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \alpha_k(k-4)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
+\card{A_3}$.  By our above estimate we have $S \ge 2|\D| + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\sum_{v \in L'} (k-1-d_{\L}(v))  + \sum_{y \in H'} d_{\HH}(y) = 2\card{\D} + \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}\card{A_2} + \card{A_3} \ge \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}(\card{\D} + \card{A_2} + \card{A_3})$.  Hence $S \ge \parens{\frac12 + \frac{k-5}{3(k-2)(k-3)}}(k-4)\card{H'}$.  Thus our desired bound holds by Lemma \ref{SigmaTauBoundEulerRefined}.
 \end{proof}
 
 \bibliographystyle{amsplain}

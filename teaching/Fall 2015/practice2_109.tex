@@ -1,0 +1,86 @@
+% These lines can probably stay unchanged, although you can remove the last
+% two packages if you're not making pictures with tikz.
+\documentclass[11pt]{exam}
+\RequirePackage{amssymb, amsfonts, amsmath, latexsym, verbatim, xspace, setspace}
+\RequirePackage{tikz, pgflibraryplotmarks}
+
+% By default LaTeX uses large margins.  This doesn't work well on exams; problems
+% end up in the "middle" of the page, reducing the amount of space for students
+% to work on them.
+\usepackage[margin=1in]{geometry}
+
+
+% Here's where you edit the Class, Exam, Date, etc.
+\newcommand{\class}{Math 109}
+
+% For an exam, single spacing is most appropriate
+\singlespacing
+% \onehalfspacing
+% \doublespacing
+
+% For an exam, we generally want to turn off paragraph indentation
+\parindent 0ex
+
+\newcommand*{\TrueFalse}[1]{%
+\ifprintanswers
+    \ifthenelse{\equal{#1}{T}}{%
+        \textbf{TRUE}\hspace*{14pt}False
+    }{
+        True\hspace*{14pt}\textbf{FALSE}
+    }
+\else
+    {True}\hspace*{20pt}False
+\fi
+} 
+%% The following code is based on an answer by Gonzalo Medina
+%% http://tex.stackexchange.com/a/13106/39194
+\newlength\TFlengthA
+\newlength\TFlengthB
+\settowidth\TFlengthA{\hspace*{1.16in}}
+\newcommand\TFQuestion[2]{%
+    \setlength\TFlengthB{\linewidth}
+    \addtolength\TFlengthB{-\TFlengthA}
+    \parbox[t]{\TFlengthA}{\TrueFalse{#1}}\parbox[t]{\TFlengthB}{#2}}
+
+\begin{document} 
+
+% These commands set up the running header on the top of the exam pages
+\pagestyle{head}
+
+\begin{flushright}
+\begin{tabular}{p{2.8in} r l}
+\textbf{\class} & \textbf{Practice \#2} & \makebox[2in]{}\\
+\end{tabular}\\
+\end{flushright}
+\rule[1ex]{\textwidth}{.1pt}
+
+\begin{questions}
+\question Differentiate each of the following functions with respect to $x$.
+\begin{parts}
+\part $f(x) = (x + \pi)^3$.
+\part $g(x) = e^{\left(x^2 + \ln(x)\right)}$.
+\part $r(x) = \ln(\arctan(x^2))$.
+\part $f(x) = 2^x\ln(x)$.
+\part $f(x) = x^{\sin(x)}$.
+\end{parts}
+\bigskip\bigskip\bigskip\bigskip\bigskip
+	\question Find the equation of the line tangent to the ellipse $2x^2 + 3y^2 = 11$ at the point $(2,1)$.
+	\bigskip\bigskip\bigskip\bigskip
+	\question If $\sin(y) = \cos(x)$, what is $\frac{dy}{dx}$?
+		\bigskip\bigskip\bigskip\bigskip
+
+\question Circle True or False for each question.  
+\begin{parts}
+	\part\TFQuestion{T}{$V = 2^{\log_2(V)}$ for every positive integer $V$.}
+\part\TFQuestion{T}{$\arctan(1) = \frac{\pi}{4}$.}
+\part\TFQuestion{T}{$\frac{d}{dx}(\sqrt{x + y}) = \frac{d}{dx}(\sqrt{x}) + \frac{d}{dx}(\sqrt{y})$ for every positive integer $y$.}
+\part\TFQuestion{T}{$f(x) = \pi x^{3} - 2^{\pi}x^{6}$ is not differentiable at $x = \pi - 2^{\pi}$.}
+\part\TFQuestion{T}{If $n$ is divisible by $4$, then the $n$-th derivative of $\sin(x)$ with respect to $x$ is $\cos(x)$.}
+\part\TFQuestion{T}{$\pi = \frac{7^7}{4^9}$.}
+\part\TFQuestion{T}{$\sqrt{x + y} = \sqrt{x} + \sqrt{y}$ for all non-negative real numbers $x$ and $y$ with $x + y = 0$.}
+\part\TFQuestion{T}{$\frac{d}{dy}(y^y) = yy^{y-1}$.}
+\part\TFQuestion{T}{The correct answer to this question is neither `True' nor `False'.}
+\end{parts}
+
+\end{questions}
+\end{document}

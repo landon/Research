@@ -1,0 +1,141 @@
+\documentclass[10pt]{article}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{epigraph}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{xspace}
+\usepackage{termcal}
+\usepackage{color}
+\usepackage{fmtcount}
+
+\makeatletter
+\DeclareRobustCommand{\maybefakesc}[1]{%
+  \ifnum\pdfstrcmp{\f@series}{\bfdefault}=\z@
+    {\fontsize{\dimexpr0.8\dimexpr\f@size pt\relax}{0}\selectfont\uppercase{#1}}%
+  \else
+    \textsc{#1}%
+  \fi
+}
+\newcommand\AM{\,\maybefakesc{am}\xspace}
+\newcommand\PM{\,\maybefakesc{pm}\xspace}
+\makeatother
+
+
+\newcommand{\MWFClass}{%
+\calday[Monday]{\classday}
+\skipday % Tuesday (no class)
+\calday[Wednesday]{\classday}
+\skipday % Thursday (no class)
+\calday[Friday]{\classday}
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\MTRClass}{%
+	\calday[Monday]{\classday}
+	\calday[Tuesday]{\classday}
+	\skipday
+	\calday[Thursday]{\classday}
+	\skipday
+	\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\Holiday}[2]{%
+\options{#1}{\noclassday}
+\caltext{#1}{#2}
+}
+
+
+\pagestyle{plain}
+\title{Math 109: Calculus 1\\ \bigskip\small{Fall 2015}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{tabular}{r l}
+\textbf{instructor:}& landon rabern\\
+\textbf{email:}& \href{mailto:lrabern@fandm.edu}{\nolinkurl{lrabern@fandm.edu}}\\
+\textbf{class webpage:}& \href{http://bit.ly/109Fall2015}{\nolinkurl{bit.ly/109Fall2015}}\\
+\textbf{office hours:}& TBA in STA 231\\
+\textbf{textbook:}&\textit{Calculus, Concepts and Contexts 4E}, by James Stewart\\
+\end{tabular}
+
+\section*{Webwork} 
+You will continue to be assigned Webwork problems. This will still count for 15\% of your grade.
+\section*{Test 1 replacement}
+On Friday, October \ordinalnum{30} we will have a quiz on the material from Chapter 2 to replace the first exam. This will count for 10\% of your grade; however, to account for the work you already put in on the first exam, you will receive 9\% of the 10\% automatically.  Said differently, the worst score you can get for the first exam is a 90\%; the remaining 10\% will be decided by this quiz.
+
+\section*{Worksheet replacement}
+Worksheets will be replaced by Friday quizzes. For your past effort on the worksheets, you will automatically receive 5\%.  The quizzes will count for the remaining 10\%.
+
+\section*{Exams}
+There will be in-class exams on Friday, October \ordinalnum{13} and Wednesday, December \ordinalnum{2}.  In addition, there will be a final exam during finals week (at the same time and place as currently scheduled).
+Since you can use your textbook as well as any other written material, no memorization is required; however, these exams occur in a finite time period, so rapid recall of facts will serve you well. 
+
+\section*{Computing devices}
+You may use a calculator on exams and quizzes, but it is unlikely that it will help you. No devices that are capable of wireless communication.
+
+\section*{Graded work breakdown (you have already earned points in \textcolor{blue}{blue})}
+\begin{tabular}{r | r | l}
+what & \% & when \\
+\hline
+past attendance/worksheets & \textcolor{blue}{\textbf{5}} & \\
+webwork & 15 & weekly \\
+quizzes & 10 & weekly on Fridays\\
+chapter 2 quiz & 1 + \textcolor{blue}{\textbf{9}} & Friday, October \ordinalnum{30}\\
+in-class exam \#2 & 15 & Friday, October \ordinalnum{13} \\
+in-class exam \#3 & 15 & Wednesday, December \ordinalnum{2} \\
+final exam & 30 & TBA, in finals week \\
+\end{tabular}
+
+\section*{Help}
+If you need help or just want to know more about something, please come to my scheduled office hours or set up another time to meet. 
+In addition to my office hours, there are several undergraduate mathematics teaching assistants who hold regular hours (schedule on the webpage).
+
+\section*{Tentative Schedule}
+\begin{center}
+\begin{calendar}{10/26/2015}{8}
+\setlength{\calboxdepth}{.3in}
+\MWFClass
+
+\caltextnext{3.3 and Appendix C, derivatives of trig functions}
+\caltextnext{\textcolor{blue}{\textbf{chapter 2 quiz}}}
+\caltextnext{3.4 chain rule}
+\caltextnext{3.5 implicit differentiation}
+\caltextnext{1.6, 3.6 derivatives of inverse trig functions}
+\caltextnext{3.7 derivatives of logarithms}
+\caltextnext{\textcolor{blue}{exam \#2 review}}
+\caltextnext{\textcolor{blue}{\textbf{in-class exam \#2}}}
+\caltextnext{4.2, 4.3 max and min values}
+\caltextnext{4.2, 4.3 max and min values}
+\caltextnext{4.6 optimization}
+\caltextnext{4.8 antiderivatives}
+\caltextnext{\textcolor{blue}{exam \#3 review}}
+\caltextnext{\textcolor{blue}{\textbf{in-class exam \#3}}}
+\caltextnext{5.1 areas and distances}
+\caltextnext{5.2 definite integrals}
+\caltextnext{5.3 evaluating definite integrals}
+\caltextnext{\textcolor{blue}{final exam review}}
+\caltextnext{\textcolor{blue}{final exam review}}
+
+\Holiday{11/25/2015}{Thanksgiving}
+\Holiday{11/26/2015}{Thanksgiving}
+\Holiday{11/27/2015}{Thanksgiving}
+\Holiday{11/28/2015}{Thanksgiving}
+\Holiday{11/29/2015}{Thanksgiving}
+
+\Holiday{12/12/2015}{Reading Day}
+\Holiday{12/13/2015}{Reading Day}
+\Holiday{12/14/2015}{Reading Day}
+\Holiday{12/15/2015}{Reading Day}
+
+\Holiday{12/16/2015}{Exam Week}
+\Holiday{12/17/2015}{Exam Week}
+\Holiday{12/18/2015}{Exam Week}
+\Holiday{12/19/2015}{Exam Week}
+\Holiday{12/20/2015}{Exam Week}
+
+\end{calendar}
+\end{center}
+\end{document}

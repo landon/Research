@@ -667,10 +667,10 @@ directed cycle containing edges of $P'$ is $P'P$.  Since the Eulerian subgraph
 counts are equal for $G$, they differ by 1 for $G'$. 
 \end{proof}
 
-\begin{lem}\label{MoserLem}
-If there exists $H\subsetneq G$ such that $d_H(x)=4$ and $H$ is the Moser
-spindle, shown in Figure~1c, then $(G,h_x)$ is AT.
-\end{lem}
+%\begin{lem}\label{MoserLem}
+%If there exists a proper induced subgraph $H$ of $G$ such that $d_H(x)=4$ and $H$ is the Moser
+%spindle, shown in Figure~1c, then $(G,h_x)$ is AT.
+%\end{lem}
 \input{pics}
 
 %\newpage
@@ -682,140 +682,6 @@ Let $G$ be 2-connected, and choose $x\in V(G)$ with $d(x)\ge 3$.
 Now $(G,h_x)$ is AT if and only if $G$ is not complete and $(G,h_x) \not \in \D$.
 \end{lem}
 \begin{proof}
-First suppose that $(G,h_x)\in \D$.  Add details.
-
-Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
-$(G,h_x)\notin \D$.
-Since $G-x$ is connected, let $H'$ be a smallest connected
-subgraph of $G-x$ containing three neighbors of $x$; call these neighbors
-$w$, $y$, and $z$.  
-Consider a spanning tree $T$ of $H'$.  Since $H'$ is minimum, each leaf of $T$
-is among $\{w, y, z\}$.  If $T$ is a path, then $H'$ is also a path. 
-Otherwise, $T$ is a subdivision of $K_{1,3}$.  Let $s$ be the vertex with
-$d_T(s)=3$.  If $E(G)-E(T)$ has any edge with
-both ends outside of $N(s)$, then we can delete some vertex in $N(s)$ and remain
-connected, contradicting the minimality of $H'$.  Similarly, if $N(s)$ contains
-at least two edges, then $H'-s$ still connects, $w$, $y$, and $z$.  Now let $H$
-be the subgraph of $G$ induced by $V(H')\cup\{x\}$.  Note that $H$ is either
-a $\theta$-graph (if $H'$ is a tree) or a $T$-graph (if $H'$ has one extra edge in
-$N(s)$).  
-
-If $H$ is a $\theta$-graph, then $(G,h_x)$ is AT, by
-Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.
-So assume $H$ is a $T$-graph.  Let $z_1$, $z_2$, $z_3$ be the vertices
-of degree 3 (other than $x$), and let $P_1$, $P_2$, and $P_3$ denote the paths
-from $x$ to $z_1$, $z_2$, and $z_3$; when we write $V(P_i)$, we exclude $x$ and
-$z_i$, so possibly $V(P_i)$ is empty for one or more $i\in\{1,2,3\}$.
-If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
-we are done by Lemma~\ref{TgraphReducible}; so assume not.  
-
-Now $(H,h_x)\in \D$, so we can assume there exists $u\in V(G-H)$. 
-Since $G$ is 2-connected, consider how $u$ can attach to $H$.  In particular,
-$u$ must have have at least two disjoint paths (possibly single edges), $P_4$ and $P_5$,
-to $H$.  Choose $u$ to minimize the sum of the lengths of $P_4$ and $P_5$. 
-%among such $u$, choose one with the fewest neighbors in $H$.  
-We consider the following cases.
-%First, suppose that $u\nonadj x$ and neither path ends at $x$.  
-%Suppose further that $P_4$ and $P_5$ end on the
-%same path $P_i$ (for some $i\in \{1,2,3\}$).  By minimality of $H'$, $u$ has at
-%most three edges to $P_i$.  More precisely, all neighbors of $u$ on $P_i$ are within
-%distance at most two of each other.  If $u$ has at most two neighbors on $P_i$,
-%then we are done by Claim~1.  Otherwise, $u$ has exactly three neighbors on
-%$P_i$.  Together, these four vertices induce $K_4-e$, which is degree-AT.
-%Now we are done by Lemma~\ref{InducedSubgraph}.  So suppose instead that $P_4$
-%and $P_5$ end on different paths, say on $P_2$ and $P_3$.
-%Now $G-x$ again contains a theta graph ($z_2$ and $z_3$ are the two vertices of
-%degree 3); thus, we are done by Lemma~\ref{InducedSubgraph}.
-%
-%Now we assume instead that for every $u\in V(G-H)$, either $u\adj x$ or else at
-%most one path from $u$ to $H$ ends somewhere other than $x$.  Choose $u$ to
-%minimize the sum of the lengths of $P_4$ and $P_5$.  We can assume that $u$ has
-%at least three neighbors in $H$, since otherwise, we are done by Claim~1.  In
-%particular, $u\adj x$.
-
-%\item 
-First suppose $|N_H(u)|\le 2$.
-Consider the subgraph induced by $H$, $u$, and the vertices of $P_4$ and $P_5$.
-First suppose that $P_4$ and $P_5$ both end at vertices in $\{x,z_1,z_2,z_3\}$.
-If one of these endpoints is $x$, then we have a $\theta$-graph $J$ with
-$d_J(x)=3$, so we are done by Lemma~\ref{ThetaReducible} and
-Lemma~\ref{InducedSubgraph}.  If neither path ends at $x$, then we have a
-$\theta$-
-subgraph $J$ with $x\notin J$, so we are again done by the same two lemmas.
-Otherwise, at least one of $P_4$ and $P_5$ ends at a vertex of degree 2 in $H$.
-Now we are done by Lemma~\ref{AddPathReducible}.
-
-%\item 
-%\begin{enumerate}
-Instead assume $|N_H(u)|\ge 3$.  First suppose that $u\nonadj x$.
-Suppose further that $\{z_1,z_2,z_3\}\subseteq N_H(u)$.  If $u$ has only these three
-neighbors, then we are done by Figure~3 or Figure~7 (and the stretching lemma).
-So suppose $u$ has another neighbor, $w$. Choose such a $w$ as close as possible
-to $z_1, z_2, z_3$; by symmetry, say that $w$ is on $P_1$.
-Now $H-x$ has a $\theta$-graph induced by $u, w, z_1, z_2$, and the portion of
-$P_1$ from $w$ to $z_1$.  Thus, we conclude that  $\{z_1,z_2,z_3\}\not\subseteq N_H(u)$.
-If $u$ has exactly two neighbors in $\{z_1,z_2,z_3\}$, then $u, z_1, z_2, z_3$
-induces $K_4-e$, which is a $\theta$-graph;  so assume not.
-Suppose $u$ has neighbors in
-$V(P_i)\cup \{z_i\}$ for at least two $i\in\{1,2,3\}$, say $i=1$ and $i=2$; by
-symmetry, we can assume that $u\nonadj z_3$. 
-Consider the graph induced by $u, z_1, z_2, z_3$, and the paths from the
-neighbor of $u$ on $P_1$ nearest to $z_1$ and the neighbor of $u$ on $P_2$
-nearest to $z_2$.  This subgraph is a $\theta$-graph.  Thus, there must exist some
-$i$ such that $N_H(u)\subseteq z_i\cup V(P_i)$.  Since $d_H(u)\ge 3$, $H-x$
-contains a $\theta$-graph, so we are done.  
-
-Instead, assume that $u\adj x$.
-First suppose that $u$ has a neighbor in $V(P_1)\cup \{z_1\}$
-and $u$ also has a neighbor in $V(P_2)$.  Let $w_1$ be the neighbor of $u$
-nearest to $x$ along $P_1$ and let $w_2$ be the neighbor of $u$ nearest to $x$
-along $P_2$.  Consider the subgraph $J$ induced by $x$, $u$, $w_1$, $w_2$, and the
-paths along $P_1$ and $P_2$ from $x$ to $w_1$ and $w_2$.  Since $J$ is a
-$\theta$-
-graph with $d_J(x)=3$, we are done.  So $u$ must not have neighbors in these two
-sets.  Thus, by symmetry, we can assume either (i) $N(u)\subseteq
-V(P_1)\cup\{z_1\}$ or (ii) $N(u)\subseteq \{x,z_1,z_2,z_3\}$.
-
-Suppose we are in case (i).
-Since $d_H(u)\ge 3$ (and by the minimality of $H'$, and thus $H$), 
-vertex $u$ is adjacent to precisely $x$ and the first two vertices along $P_1$
-(one of which is possibly $z_1$).  
-If $P_1$ or $P_2$ has vertices, then let $J$ be the subgraph induced by $u$ and
-$V(H)\setminus V(P_3)$.  Note that $J-z_3$ is a $\theta$-graph, so $J$ is reducible
-by Lemma~\ref{AddPathReducible}.  Thus, we assume that $V(P_2)=V(P_3)=\emptyset$.
-This implies that $u$ is not adjacent to $z_1$,
-since all $V(P_i)$ have the same parity, by Lemma~\ref{TgraphReducible}.  
-So $|V(P_1)|$ is even.  If $|V(P_1)|\ge 4$, then consider the subgraph $J$ induced
-by $\{u\}\cup N_H(u)\cup (V(H)\setminus V(P_1))$.  Note that $J$ has two blocks
-and $x$ is its cutvertex.  Since neither block is a clique or an odd cycle,
-$(J,h_x)$ is AT by Lemma~\ref{CutvertexPatch}.  Thus, we conclude that
-$|V(P_1)|=2$, so $H$ is the Moser Spindle, shown in Figure~1c.  Since
-$(H,h_x)\in\D$, we can assume that $H\subsetneq G$.  However, now we are done by
-Lemma~\ref{MoserLem}.
-
-Suppose instead that we are in case (ii).  First, suppose there exists $z_i$
-such that $u\nonadj z_i$.  Now $u,z_1,z_2,z_3$ induce a $\theta$-graph in $H-x$, so
-we are done by Lemmas~\ref{ThetaReducible} and \ref{InducedSubgraph}.  Thus, we
-assume that $N_H(u)=\{x,z_1,z_2,z_3\}$.  Let $J$ be a maximum clique containing
-$x$.  We can assume that $G$ is not complete, so there exists some vertex $w$
-outside of $J$.  Since $G$ is 2-connected, $w$ has two vertex disjoint paths to
-$J$, not both ending at the same vertex; let $J'$ denote the subgraph induced
-by $x$, $J$, and the vertices of these two paths.  If neither path ends at $x$,
-then $J'-x$ is 2-connected and not a clique or an odd cycle.  Now
-Lemmas~\ref{DegreeATClassification} and \ref{InducedSubgraph} imply that $(G,h_x)$
-is AT.
-
-Suppose instead that one path from $w$ to $J$ ends at $x$; by symmetry, assume
-the other ends at $z_1$.  Since $w\notin V(J)$, vertex $w$ has some non-neighbor
-in $J$; by symmetry, say it is $z_2$.  Now let $J''$ be the subgraph induced by
-$x, z_1, z_2, w$, and the paths from $w$ to $x$ and $z_1$.  Note that $J''$ is a
-$\theta$-graph with $d_{J''}(x)=3$, so Lemmas~\ref{ThetaReducible} and
-\ref{InducedSubgraph} imply that $(G,h_x)$ is AT.
-\end{proof}
-
-
-
-\begin{proof}[Proof 2]
 	First suppose that $(G,h_x)\in \D$.  Add details.
 	
 	Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
@@ -843,19 +709,157 @@ $\theta$-graph with $d_{J''}(x)=3$, so Lemmas~\ref{ThetaReducible} and
 	If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
 	we are done by Lemma~\ref{TgraphReducible}; so assume not.  
 	
-	Now $(H,h_x)\in \D$, so we can assume there exists $V(G-H) \ne \emptyset$.  
+	Now $(H,h_x)\in \D$, so we can assume that $V(G-H) \ne \emptyset$.  
 	For $u \in V(G-H)$, let $H_u$ be a minimal $2$-connected induced subgraph of $G$ that contains $V(H) \cup \set{u}$.  
 	Since $G-x$ is a Gallai tree, so is $H_u-x$; in particular, the block $B_u$ of $H_u-x$ containing $u$ is complete or an odd cycle.  
-	Therefore, we either have (i) $V(B_u) \cap V(H) = \set{z_1, z_2,z_3}$ or (ii) $V(B_u) \cap V(H) \subseteq P_i \cup \set{z_i}$ for some $i \in \irange{3}$.
+	Therefore, we either have (i) $V(B_u) \cap V(H) = \set{z_1, z_2,z_3}$ or (ii)  $V(B_u) \cap V(H) \subseteq P_i \cup \set{z_i}$ for some $i \in \irange{3}$.
 	
-	If (i) happens, then $N_G(u) \cap V(H_u - x) = \set{z_1,z_2,Z_3}$, so either $x \nonadj u$ and $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Lemma~\ref{T+graphReducible}, 
-	or $x \adj u$ and $(G,h_x)$ contains a $\theta$ graph with one end $x$ and the other end $u$.  
+	Suppose (i) happens. Then $N_G(u) \cap V(H_u - x) = \set{z_1,z_2,z_3}$. If $x \nonadj u$, then $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Lemma~\ref{T+graphReducible}.
+	If $x \adj u$, then $x \adj z_i$ for all $i \in \irange{3}$ since otherwise $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Lemma~\ref{T+graphReducible}.  So, $H=K_4$ and $H_u$ is $K_5$.  
+	This implies that (ii) cannot happen for any vertex in $V(G-H)$. So (i) happens for every vertex in $V(G-H)$; in particular, $V(G-H)$ is joined to $\set{x,z_1,z_2,z_3}$.  Since $G$ is not complete, it must contain an induced Figure \ref{fig:K5minus} and hence $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph}.
+		
+	So, we may assume that (ii) happens for every vertex in $V(G-H)$. Pick $u \in V(G - H)$. By symmetry, we may assume that $V(B_u) \cap V(H) \subseteq P_1$.
+	Say $P_1 = v_1v_2\cdots v_{\ell}$ where $v_1 = z_1$ and $v_{\ell}$ is adjacent to $x$.	First, assume $B_u$ is an odd cycle of length at least $5$.  If there is $u' \in V(B_u)\setminus V(H)$ with $u' \adj x$, then $G$ contains a $\theta$-graph and  $(G,h_x)$ is AT, by	Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.  So, we may assume that $u' \nonadj x$ for all $u' \in V(B_u)\setminus V(H)$.  If $B_u$ contains at least two edges of $H$, then we can replace $P_1$ with a path of the opposite parity (by going around the cycle) and we are done by Lemma~\ref{TgraphReducible}.  But, if $B_u$ contains only one edge of $H$, then $H$ is a stretching of Figure~\ref{fig:WingedCows} or Figure~\ref{fig:thebiggerones}.
 	
-	So, it must be that (ii) happens and, by symmetry, we may assume that $V(B_u) \cap V(H) \subseteq P_1$.
-	Say $P_1 = v_1v_2\cdots v_{\ell}$ where $v_1 = z_1$ and $v_{\ell}$ is adjacent to $x$.	First, suppose $B_u$ is complete. Then $V(B_u) \cap V(H) = \set{v_{j}, v_{j+1}$ for some $j \in \irange{\ell}$.  
-	In particular, $B_u$ is a triangle.
- 	
+	So, we may assume that $B_u$ is complete. Then $V(B_u) \cap V(H) = \set{v_{j}, v_{j+1}}$ for some $j \in \irange{\ell}$.  
+	In particular, $B_u$ is a triangle.  If $j \ne \ell - 1$, then $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Figure~\ref{fig:thebiggerones}. 	By Lemma \ref{GeneralEulerLemma}, $(G,h_x)$ is AT unless $x \adj u$.  
+	So, $H_u$ is a $T$-graph with a vertex $u$ added that is adjacent to $x$ and a $K_2$ endblock $D_u$ of $H-x$.  If $u_1, u_2$ are different vertices in $V(G-H)$ such that $D_{u_1} = D_{u_2}$, then $G$ contains an induced Figure \ref{fig:K5minus} and hence $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph}. Say $H-x$ has $t \le 3$ endblocks that are $K_2$. Then we must have $|V(G - H)| \le t$.   If $t = 0$, then $G = H$ is the Moser spindle.  If $t=1$, then $G = H_u$ is the Moser spindle for the one $u \in V(G-H)$.  So, we may assume that $t \in \set{2,3}$.    But now $G$ contains an induced stretching of a graph in Figure~\ref{fig:WingedCows}.
+	
+%	Suppose $u_1, u_2$ are different vertices in $V(G-H)$.  Say $V(D_{u_i}) = \set{x_i, y_i}$ for $i \in \irange{2}$ where $x_i \adj x$.  If $y_1 \nonadj y_2$, then $G$ has an induced subgraph containing consisting of two diamonds sharing $x$.  But then  %$(G,h_x)$ is AT by Lemma~\ref{CutvertexPatch} and Lemma~\ref{InducedSubgraph}.  So, $y_1\adj y_2$.  But now $G$ contains an induced Figure~\ref{fig:WingedCows}(a).  Hence, we must have $|V(G - H)| = 1$. 
 \end{proof}
+
+%\begin{proof}
+%First suppose that $(G,h_x)\in \D$.  Add details.
+%
+%Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
+%$(G,h_x)\notin \D$.
+%Since $G-x$ is connected, let $H'$ be a smallest connected
+%subgraph of $G-x$ containing three neighbors of $x$; call these neighbors
+%$w$, $y$, and $z$.  
+%Consider a spanning tree $T$ of $H'$.  Since $H'$ is minimum, each leaf of $T$
+%is among $\{w, y, z\}$.  If $T$ is a path, then $H'$ is also a path. 
+%Otherwise, $T$ is a subdivision of $K_{1,3}$.  Let $s$ be the vertex with
+%$d_T(s)=3$.  If $E(G)-E(T)$ has any edge with
+%both ends outside of $N(s)$, then we can delete some vertex in $N(s)$ and remain
+%connected, contradicting the minimality of $H'$.  Similarly, if $N(s)$ contains
+%at least two edges, then $H'-s$ still connects, $w$, $y$, and $z$.  Now let $H$
+%be the subgraph of $G$ induced by $V(H')\cup\{x\}$.  Note that $H$ is either
+%a $\theta$-graph (if $H'$ is a tree) or a $T$-graph (if $H'$ has one extra edge in
+%$N(s)$).  
+%
+%If $H$ is a $\theta$-graph, then $(G,h_x)$ is AT, by
+%Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.
+%So assume $H$ is a $T$-graph.  Let $z_1$, $z_2$, $z_3$ be the vertices
+%of degree 3 (other than $x$), and let $P_1$, $P_2$, and $P_3$ denote the paths
+%from $x$ to $z_1$, $z_2$, and $z_3$; when we write $V(P_i)$, we exclude $x$ and
+%$z_i$, so possibly $V(P_i)$ is empty for one or more $i\in\{1,2,3\}$.
+%If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
+%we are done by Lemma~\ref{TgraphReducible}; so assume not.  
+%
+%Now $(H,h_x)\in \D$, so we can assume there exists $u\in V(G-H)$. 
+%Since $G$ is 2-connected, consider how $u$ can attach to $H$.  In particular,
+%$u$ must have have at least two disjoint paths (possibly single edges), $P_4$ and $P_5$,
+%to $H$.  Choose $u$ to minimize the sum of the lengths of $P_4$ and $P_5$. 
+%%among such $u$, choose one with the fewest neighbors in $H$.  
+%We consider the following cases.
+%%First, suppose that $u\nonadj x$ and neither path ends at $x$.  
+%%Suppose further that $P_4$ and $P_5$ end on the
+%%same path $P_i$ (for some $i\in \{1,2,3\}$).  By minimality of $H'$, $u$ has at
+%%most three edges to $P_i$.  More precisely, all neighbors of $u$ on $P_i$ are within
+%%distance at most two of each other.  If $u$ has at most two neighbors on $P_i$,
+%%then we are done by Claim~1.  Otherwise, $u$ has exactly three neighbors on
+%%$P_i$.  Together, these four vertices induce $K_4-e$, which is degree-AT.
+%%Now we are done by Lemma~\ref{InducedSubgraph}.  So suppose instead that $P_4$
+%%and $P_5$ end on different paths, say on $P_2$ and $P_3$.
+%%Now $G-x$ again contains a theta graph ($z_2$ and $z_3$ are the two vertices of
+%%degree 3); thus, we are done by Lemma~\ref{InducedSubgraph}.
+%%
+%%Now we assume instead that for every $u\in V(G-H)$, either $u\adj x$ or else at
+%%most one path from $u$ to $H$ ends somewhere other than $x$.  Choose $u$ to
+%%minimize the sum of the lengths of $P_4$ and $P_5$.  We can assume that $u$ has
+%%at least three neighbors in $H$, since otherwise, we are done by Claim~1.  In
+%%particular, $u\adj x$.
+%
+%%\item 
+%First suppose $|N_H(u)|\le 2$.
+%Consider the subgraph induced by $H$, $u$, and the vertices of $P_4$ and $P_5$.
+%First suppose that $P_4$ and $P_5$ both end at vertices in $\{x,z_1,z_2,z_3\}$.
+%If one of these endpoints is $x$, then we have a $\theta$-graph $J$ with
+%$d_J(x)=3$, so we are done by Lemma~\ref{ThetaReducible} and
+%Lemma~\ref{InducedSubgraph}.  If neither path ends at $x$, then we have a
+%$\theta$-
+%subgraph $J$ with $x\notin J$, so we are again done by the same two lemmas.
+%Otherwise, at least one of $P_4$ and $P_5$ ends at a vertex of degree 2 in $H$.
+%Now we are done by Lemma~\ref{AddPathReducible}.
+%
+%%\item 
+%%\begin{enumerate}
+%Instead assume $|N_H(u)|\ge 3$.  First suppose that $u\nonadj x$.
+%Suppose further that $\{z_1,z_2,z_3\}\subseteq N_H(u)$.  If $u$ has only these three
+%neighbors, then we are done by Figure~3 or Figure~7 (and the stretching lemma).
+%So suppose $u$ has another neighbor, $w$. Choose such a $w$ as close as possible
+%to $z_1, z_2, z_3$; by symmetry, say that $w$ is on $P_1$.
+%Now $H-x$ has a $\theta$-graph induced by $u, w, z_1, z_2$, and the portion of
+%$P_1$ from $w$ to $z_1$.  Thus, we conclude that  $\{z_1,z_2,z_3\}\not\subseteq N_H(u)$.
+%If $u$ has exactly two neighbors in $\{z_1,z_2,z_3\}$, then $u, z_1, z_2, z_3$
+%induces $K_4-e$, which is a $\theta$-graph;  so assume not.
+%Suppose $u$ has neighbors in
+%$V(P_i)\cup \{z_i\}$ for at least two $i\in\{1,2,3\}$, say $i=1$ and $i=2$; by
+%symmetry, we can assume that $u\nonadj z_3$. 
+%Consider the graph induced by $u, z_1, z_2, z_3$, and the paths from the
+%neighbor of $u$ on $P_1$ nearest to $z_1$ and the neighbor of $u$ on $P_2$
+%nearest to $z_2$.  This subgraph is a $\theta$-graph.  Thus, there must exist some
+%$i$ such that $N_H(u)\subseteq z_i\cup V(P_i)$.  Since $d_H(u)\ge 3$, $H-x$
+%contains a $\theta$-graph, so we are done.  
+%
+%Instead, assume that $u\adj x$.
+%First suppose that $u$ has a neighbor in $V(P_1)\cup \{z_1\}$
+%and $u$ also has a neighbor in $V(P_2)$.  Let $w_1$ be the neighbor of $u$
+%nearest to $x$ along $P_1$ and let $w_2$ be the neighbor of $u$ nearest to $x$
+%along $P_2$.  Consider the subgraph $J$ induced by $x$, $u$, $w_1$, $w_2$, and the
+%paths along $P_1$ and $P_2$ from $x$ to $w_1$ and $w_2$.  Since $J$ is a
+%$\theta$-
+%graph with $d_J(x)=3$, we are done.  So $u$ must not have neighbors in these two
+%sets.  Thus, by symmetry, we can assume either (i) $N(u)\subseteq
+%V(P_1)\cup\{z_1\}$ or (ii) $N(u)\subseteq \{x,z_1,z_2,z_3\}$.
+%
+%Suppose we are in case (i).
+%Since $d_H(u)\ge 3$ (and by the minimality of $H'$, and thus $H$), 
+%vertex $u$ is adjacent to precisely $x$ and the first two vertices along $P_1$
+%(one of which is possibly $z_1$).  
+%If $P_1$ or $P_2$ has vertices, then let $J$ be the subgraph induced by $u$ and
+%$V(H)\setminus V(P_3)$.  Note that $J-z_3$ is a $\theta$-graph, so $J$ is reducible
+%by Lemma~\ref{AddPathReducible}.  Thus, we assume that $V(P_2)=V(P_3)=\emptyset$.
+%This implies that $u$ is not adjacent to $z_1$,
+%since all $V(P_i)$ have the same parity, by Lemma~\ref{TgraphReducible}.  
+%So $|V(P_1)|$ is even.  If $|V(P_1)|\ge 4$, then consider the subgraph $J$ induced
+%by $\{u\}\cup N_H(u)\cup (V(H)\setminus V(P_1))$.  Note that $J$ has two blocks
+%and $x$ is its cutvertex.  Since neither block is a clique or an odd cycle,
+%$(J,h_x)$ is AT by Lemma~\ref{CutvertexPatch}.  Thus, we conclude that
+%$|V(P_1)|=2$, so $H$ is the Moser Spindle, shown in Figure~1c.  Since
+%$(H,h_x)\in\D$, we can assume that $H\subsetneq G$.  However, now we are done by
+%Lemma~\ref{MoserLem}.
+%
+%Suppose instead that we are in case (ii).  First, suppose there exists $z_i$
+%such that $u\nonadj z_i$.  Now $u,z_1,z_2,z_3$ induce a $\theta$-graph in $H-x$, so
+%we are done by Lemmas~\ref{ThetaReducible} and \ref{InducedSubgraph}.  Thus, we
+%assume that $N_H(u)=\{x,z_1,z_2,z_3\}$.  Let $J$ be a maximum clique containing
+%$x$.  We can assume that $G$ is not complete, so there exists some vertex $w$
+%outside of $J$.  Since $G$ is 2-connected, $w$ has two vertex disjoint paths to
+%$J$, not both ending at the same vertex; let $J'$ denote the subgraph induced
+%by $x$, $J$, and the vertices of these two paths.  If neither path ends at $x$,
+%then $J'-x$ is 2-connected and not a clique or an odd cycle.  Now
+%Lemmas~\ref{DegreeATClassification} and \ref{InducedSubgraph} imply that $(G,h_x)$
+%is AT.
+%
+%Suppose instead that one path from $w$ to $J$ ends at $x$; by symmetry, assume
+%the other ends at $z_1$.  Since $w\notin V(J)$, vertex $w$ has some non-neighbor
+%in $J$; by symmetry, say it is $z_2$.  Now let $J''$ be the subgraph induced by
+%$x, z_1, z_2, w$, and the paths from $w$ to $x$ and $z_1$.  Note that $J''$ is a
+%$\theta$-graph with $d_{J''}(x)=3$, so Lemmas~\ref{ThetaReducible} and
+%\ref{InducedSubgraph} imply that $(G,h_x)$ is AT.
+%\end{proof}
+
 
 \begin{thm}
 If $G$ is connected and $x \in V(G)$, then $(G, h_x)$ is not AT if and only if

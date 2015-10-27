@@ -1,3 +1,17 @@
+@preamble{
+   "\def\soft#1{\leavevmode\setbox0=\hbox{h}\dimen7=\ht0\advance
+    \dimen7 by-1ex\relax\if t#1\relax\rlap{\raise.6\dimen7
+    \hbox{\kern.3ex\char'47}}#1\relax\else\if T#1\relax
+    \rlap{\raise.5\dimen7\hbox{\kern1.3ex\char'47}}#1\relax
+    \else\if d#1\relax\rlap{\raise.5\dimen7\hbox{\kern.9ex
+    \char'47}}#1\relax\else\if D#1\relax\rlap{\raise.5\dimen7
+    \hbox{\kern1.4ex\char'47}}#1\relax\else\if l#1\relax
+    \rlap{\raise.5\dimen7\hbox{\kern.4ex\char'47}}#1\relax
+    \else\if L#1\relax\rlap{\raise.5\dimen7\hbox{\kern.7ex
+    \char'47}}#1\relax\else\message{accent \string\soft
+    \space #1 not defined!}#1\relax\fi\fi\fi\fi\fi\fi} "
+}
+
 @conference{brooks1941colouring,
   title={{On colouring the nodes of a network}},
   author={Brooks, R.L.},
@@ -166,7 +180,7 @@
   year={2004},
   publisher={Springer}
 }
-@article{BrooksExtended,
+@article{KSW,
   title={{The colour theorems of Brooks and Gallai extended}},
   author={Kostochka, A.V. and Stiebitz, M. and Wirth, B.},
   journal={Discrete Mathematics},
@@ -176,7 +190,7 @@
   year={1996},
   publisher={Elsevier}
 }
-@article{Hladky,
+@article{HKS,
     AUTHOR = {Hladk{\'y}, Jan and Kr{\'a}l, Daniel and Schauz, Uwe},
      TITLE = {Brooks' theorem via the {A}lon-{T}arsi theorem},
    JOURNAL = {Discrete Math.},
@@ -192,7 +206,8 @@
 MRREVIEWER = {Anna Fiedorowicz},
        DOI = {10.1016/j.disc.2010.07.019},
        URL = {http://dx.doi.org.ezproxy1.lib.asu.edu/10.1016/j.disc.2010.07.019},
-}@conference{erdos1979choosability,
+}
+@conference{ERT,
   title={{Choosability in graphs}},
   author={Erd\H{o}s, P. and Rubin, A.L. and Taylor, H.},
   booktitle={Proc. West Coast Conf. on Combinatorics, Graph Theory and Computing, Congressus Numerantium},
@@ -217,7 +232,7 @@ volume={8},
 number={1--2},
 pages={7-29}
 }
-@ARTICLE{Alon1992125,
+@ARTICLE{AlonT,
 author={Alon, N. and Tarsi, M.},
 title={Colorings and orientations of graphs},
 journal={Combinatorica},
@@ -757,10 +772,10 @@ MRREVIEWER = {Lei Sun},
 }
 
 @article{OreVizing,
-	title={Improved lower bounds on the number of edges in list critical and online list critical graphs},
-	author={Kierstead, Hal and Rabern, Landon},
-	journal={arXiv preprint arXiv:1406.7355},
-	year={2014}
+  title={Improved lower bounds on the number of edges in list critical and online list critical graphs},
+  author={Kierstead, Hal and Rabern, Landon},
+  journal={arXiv preprint, \url{http://arxiv.org/abs/1406.7355}},
+  year={2014}
 }
 @article{kierstead2009ore,
   title={{Ore-type versions of Brooks' theorem}},
@@ -791,4 +806,63 @@ MRREVIEWER = {Lei Sun},
   pages={1273--1281},
   year={2012},
   publisher={Elsevier}
+}
+
+@article {BohmeMS,
+    AUTHOR = {B{\"o}hme, T. and Mohar, B. and Stiebitz, M.},
+     TITLE = {Dirac's map-color theorem for choosability},
+   JOURNAL = {J. Graph Theory},
+  FJOURNAL = {Journal of Graph Theory},
+    VOLUME = {32},
+      YEAR = {1999},
+    NUMBER = {4},
+     PAGES = {327--339},
+}
+
+@article {KralS,
+    AUTHOR = {Kr{\'a}{\soft{l}}, Daniel and {\u{S}}krekovski, Riste},
+     TITLE = {The last excluded case of {D}irac's map-color theorem for
+              choosability},
+   JOURNAL = {J. Graph Theory},
+  FJOURNAL = {Journal of Graph Theory},
+    VOLUME = {51},
+      YEAR = {2006},
+    NUMBER = {4},
+     PAGES = {319--354},
+}
+
+@article {KostochkaS,
+    AUTHOR = {Kostochka, Alexandr V. and Stiebitz, Michael},
+     TITLE = {A list version of {D}irac's theorem on the number of edges in
+              colour-critical graphs},
+   JOURNAL = {J. Graph Theory},
+  FJOURNAL = {Journal of Graph Theory},
+    VOLUME = {39},
+      YEAR = {2002},
+    NUMBER = {3},
+     PAGES = {165--177},
+}
+
+@article {CranstonPTV,
+    AUTHOR = {Cranston, Daniel W. and Pruchnewski, Anja and Tuza, Zsolt and
+              Voigt, Margit},
+     TITLE = {List colorings of {$K_5$}-minor-free graphs with special
+              list assignments},
+   JOURNAL = {J. Graph Theory},
+  FJOURNAL = {Journal of Graph Theory},
+    VOLUME = {71},
+      YEAR = {2012},
+    NUMBER = {1},
+     PAGES = {18--30},
+}
+
+@article {Thomassen-surface,
+    AUTHOR = {Thomassen, Carsten},
+     TITLE = {Color-critical graphs on a fixed surface},
+   JOURNAL = {J. Combin. Theory Ser. B},
+  FJOURNAL = {Journal of Combinatorial Theory. Series B},
+    VOLUME = {70},
+      YEAR = {1997},
+    NUMBER = {1},
+     PAGES = {67--100},
 }

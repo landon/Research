@@ -48,6 +48,7 @@
 \newtheorem*{mainconj}{Main Conjecture}
 \newtheorem*{mainthm}{Main Theorem}
 \newtheorem*{thmA}{Theorem A}
+\newtheorem*{thmB}{Theorem B}
 \newtheorem*{stretching}{Stretching Lemma}
 \newtheorem{problem}{Problem}
 \newtheorem{clm}{Claim}
@@ -119,6 +120,7 @@
 \def\nonadj{\not\!\leftrightarrow}
 \def\ch{\textrm{ch}}
 \renewcommand{\restriction}{\mathord{\upharpoonright}}
+\renewcommand{\vec}{\overrightarrow}
 
 \begin{document}
 \title{Beyond Degree Choosability}
@@ -168,9 +170,11 @@ Vizing~\cite{vizing1976} and, independently, \erdos, Rubin, and
 Taylor~\cite{ERT} extended Brooks'
 theorem to list coloring. They proved an analogue of Brooks' theorem
 when each vertex $v$ has $\Delta$ allowable colors (possibly
-different colors for different vertices).  In fact, they proved the following
-strengthening, where a \emph{Gallai tree} is a connected graph in which each
-block is a clique or an odd cycle.  
+different colors for different vertices).  
+\erdos, Rubin, and Taylor~\cite{ERT} and Borodin~\cite{borodin1977criterion} 
+strengthened this Brooks' analogue to the following result, where a
+\emph{Gallai tree} is a connected graph in which each block is a clique or an
+odd cycle.  
 
 \begin{thmA}
 If $G$ is connected and not a Gallai tree, then for any list assignment $L$
@@ -192,10 +196,17 @@ subgraphs.  An orientation is \emph{Alon--Tarsi} (or AT) if EE and
 EO differ.  A graph $G$ is $f$-AT if it has an Alon--Tarsi
 orientation $D$ such that $d^+(v)\le f(v)-1$ for each vertex $v$.  In
 particular, $G$ is \emph{degree-AT} if it is $f$-AT, where $f(v)=d(v)$ for all
-$v$.  Alon and Tarsi~\cite{AlonT} used algebraic methods to show that if $G$ is
-$f$-AT, for any $f$, then $G$ also has a proper coloring $\varphi$ from any
-list assignment $L$ such that $|L(v)|=f(v)$ for all $v\in V(G)$; such a graph
-$G$ is \emph{$f$-choosable}.
+$v$.  
+Similarly, a graph $G$ is \emph{$f$-choosable} if $G$ has a proper coloring
+$\varphi$ from any list assignment $L$ such that $|L(v)|=f(v)$ for all $v\in
+V(G)$.
+Alon and Tarsi~\cite{AlonT} used algebraic methods to prove the following
+theorem for choosability.  Later, Schauz strengthened the result to
+paintability, which we discuss briefly in Section~\ref{sec:extensions}.
+\begin{thmB}
+For a graph $G$ and $\func{f}{V(G)}{\IN}$,
+if $G$ is $f$-AT, then $G$ is also \emph{$f$-choosable}.
+\end{thmB}
 
 In this paper we characterize those graphs $G$ with a specified vertex $x$
 that are not $f$-AT, where $f(x)=d(x)-1$ and $f(v)=d(v)$ for all other $v\in
@@ -219,21 +230,20 @@ labeling as $h_x$.  We say that \emph{$(G, h)$ is AT} if $G$ is $(d_G - h)$-AT.
 the pair $(H, h)$ when we really mean $\parens{H, h\restriction_{V(H)}}$.
 
 Given a pair $(G,h)$ and a specified edge $e\in E(G)$, when we \emph{stretch
-$e$}, we form $(G',h')$ from $(G,h)$ by subdividing $e$ twice and
-setting $h'(v_i)=0$ for each of the two new vertices, $v_1$ and $v_2$ (and
-$h'(v)=h(v)$ for all other vertices $v$).  
-In Section~\ref{prelims}, we prove
-a \hyperref[SubdivideTwice]{Stretching Lemma}, which shows that if $(G,h)$ is not AT and $e\in E(G)$, then
-stretching $e$ often yields another pair $(G',h')$ that is also not AT. 
-Thus, stretching plays a key role in our main result.
+$e$}, we form $(G',h')$ from $(G,h)$ by subdividing $e$ twice and setting
+$h'(v_i)=0$ for each of the two new vertices, $v_1$ and $v_2$ (and $h'(v)=h(v)$
+for all other vertices $v$).  In Section~\ref{prelims}, we prove a
+\hyperref[SubdivideTwice]{Stretching Lemma}, which shows that if $(G,h)$ is not
+AT and $e\in E(G)$, then stretching $e$ often yields another pair $(G',h')$
+that is also not AT.  Thus, stretching plays a key role in our main result.
 
-It is easy to check that the three pairs $(G,h)$ shown in Figure~1 are not AT.
-Let $\D$ be the collection of all pairs formed from the graphs in Figure~1 by
-stretching each bold edge 0 or more times.  The
-\hyperref[SubdivideTwice]{Stretching Lemma} implies that
-each pair in $\D$ is not AT.  Our main result is that these are the only
-pairs $(G,h_x)$, where $G$ is 2-connected and neither a clique nor an
-odd cycle, such that the $(G,h_x)$ is not AT (for some vertex $x\in V(G)$).  
+It is easy to check that the three pairs $(G,h)$ shown in Figure~1 are not AT
+(and we do this below, in Proposition~\ref{prop:easyD}).  Let $\D$ be the
+collection of all pairs formed from the graphs in Figure~1 by stretching each
+bold edge 0 or more times.  The \hyperref[SubdivideTwice]{Stretching Lemma}
+implies that each pair in $\D$ is not AT.  Our main result is that these are
+the only pairs $(G,h_x)$, where $G$ is 2-connected and neither a clique nor
+an odd cycle, such that the $(G,h_x)$ is not AT (for some vertex $x\in V(G)$).  
 
 \begin{mainthm}
 Let $G$ be 2-connected and let $x \in V(G)$.
@@ -254,81 +264,105 @@ Likewise, we think our main results in this paper may be helpful in proving
 other results for Alon--Tarsi orientations, such as giving better lower bounds
 on the number of edges in AT-critical graphs.
 
+To conclude this section, we show that each pair in $\D$ is not AT.
+\begin{prop}
+If $(G,h_x)\in \D$, then $(G,h_x)$ is not AT.
+\label{prop:easyD}
+\end{prop}
+\begin{proof}
+For each pair $(G,h_x)\in \D$, we construct a list assignment $L$ such that
+$|L(x)|=d(x)-1$ and $|L(v)|=d(v)$ for all other $v\in V(G)$, but $G$ has no
+proper coloring from $L$.  Now $(G,h_x)$ is not AT, by the contrapositive of
+Theorem~B.
+
+Let $(G,h_x)$ be some stretching of the leftmost pair in Figure~1. Assign the
+list $\{1,2,3\}$ to each of the vertices on the unbolded triangle and assign the
+list $\{1,2\}$ to each other vertex.  If $G$ has some coloring from these lists,
+then vertex $x$, labeled 1 in the figure, must get color 1 or 2; by symmetry,
+assume it is 1.  Along each of these paths, colors must alternate $2, 1,
+\ldots$.  Each of the paths from $x$ to the triangle has odd length; thus,
+color 1 is forbidden from appearing on the triangle.  So $G$ has no coloring
+from $L$.  Now let $(G,h_x)$ be some stretching of the center pair in Figure~1.
+The proof is identical to the first case, except that each path has odd length,
+so if $x$ is color 1, then color 2 is forbidden on the triangle.
+
+Finally, consider the rightmost pair in Figure~1.  Here $d(x)=4$ and $d(v)=3$
+for all other $v\in V(G)$.  Thus, it suffices to show that $G$ is not
+3-colorable.  Assume that $G$ has a 3-coloring and, by symmetry, assume that $x$
+is colored 1.  Now colors 2 and 3 must each appear on two neighbors of $x$.
+Thus, the two remaining vertices must be colored 1.  Since they are adjacent,
+this is a contradiction, which proves that $G$ is not 3-colorable.
+\end{proof}
 %\begin{comment}
 \begin{figure}[htb]
-	\centering
-	\tikzstyle{_BoldEdgeStyle} = [line width=3]
-	\begin{tikzpicture}[scale = 10]
-	\tikzstyle{VertexStyle} = []
-	\tikzstyle{EdgeStyle} = []
-	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.850, L = \small {$1$}]{v0}
-	\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \small {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.900, y = 0.700, L = \small {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 0.800, y = 0.550, L = \small {$0$}]{v3}
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v0)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v2)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
-	\end{tikzpicture}\hspace{.3in}
-	\begin{tikzpicture}[scale = 10]
-	\tikzstyle{VertexStyle} = []
-	\tikzstyle{EdgeStyle} = []
-	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \small {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.200, y = 0.300, L = \small {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 1.400, y = 0.300, L = \small {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 1.050, y = 0.300, L = \small {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 1.550, y = 0.300, L = \small {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.600, L = \small {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 1.300, y = 0.750, L = \small {$1$}]{v6}
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v1)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v4)(v2)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v5)(v0)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
-	\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
-	\end{tikzpicture}\hspace{.3in}
-	\begin{tikzpicture}[scale = 10]
-	\tikzstyle{VertexStyle} = []
-	\tikzstyle{EdgeStyle} = []
-	\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
-	\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
-	\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \small {$0$}]{v0}
-	\Vertex[style = labeledStyle, x = 1.200, y = 0.250, L = \small {$0$}]{v1}
-	\Vertex[style = labeledStyle, x = 0.850, y = 0.400, L = \small {$0$}]{v2}
-	\Vertex[style = labeledStyle, x = 1.000, y = 0.400, L = \small {$0$}]{v3}
-	\Vertex[style = labeledStyle, x = 1.350, y = 0.400, L = \small {$0$}]{v4}
-	\Vertex[style = labeledStyle, x = 1.200, y = 0.400, L = \small {$0$}]{v5}
-	\Vertex[style = labeledStyle, x = 1.100, y = 0.600, L = \small {$1$}]{v6}
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v1)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v1)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v4)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v2)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
-	\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
-	\end{tikzpicture}
-	\caption{The seed blocks for $\D$.  Each bold edge can be removed without
+\centering
+\tikzstyle{_BoldEdgeStyle} = [line width=3]
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.800, y = 0.850, L = \small {$1$}]{v0}
+\Vertex[style = labeledStyle, x = 0.700, y = 0.700, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.900, y = 0.700, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 0.800, y = 0.550, L = \small {$0$}]{v3}
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v0)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v3)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\end{tikzpicture}\hspace{.3in}
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 1.300, y = 0.450, L = \small {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 1.200, y = 0.300, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 1.400, y = 0.300, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.050, y = 0.300, L = \small {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 1.550, y = 0.300, L = \small {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 1.300, y = 0.600, L = \small {$0$}]{v5}
+\Vertex[style = labeledStyle, x = 1.300, y = 0.750, L = \small {$1$}]{v6}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v3)(v1)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v4)(v2)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v5)(v0)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
+\Edge[style = _BoldEdgeStyle, label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
+\end{tikzpicture}\hspace{.3in}
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 1.000, y = 0.250, L = \small {$0$}]{v0}
+\Vertex[style = labeledStyle, x = 1.200, y = 0.250, L = \small {$0$}]{v1}
+\Vertex[style = labeledStyle, x = 0.850, y = 0.400, L = \small {$0$}]{v2}
+\Vertex[style = labeledStyle, x = 1.000, y = 0.400, L = \small {$0$}]{v3}
+\Vertex[style = labeledStyle, x = 1.350, y = 0.400, L = \small {$0$}]{v4}
+\Vertex[style = labeledStyle, x = 1.200, y = 0.400, L = \small {$0$}]{v5}
+\Vertex[style = labeledStyle, x = 1.100, y = 0.600, L = \small {$1$}]{v6}
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v0)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v2)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v4)(v1)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v1)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v5)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v2)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v3)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v4)
+\Edge[label = \small {}, labelstyle={auto=right, fill=none}](v6)(v5)
+\end{tikzpicture}
+\caption{The seed blocks for $\D$.  Each bold edge can be removed without
 making the figure AT.}
-	\label{fig:seeds}
+\label{fig:seeds}
 \end{figure}
-%\end{comment}
-
-%We conclude with a few definitions.  When vertices $x$ and $y$ are adjacent, we
-%write $x\adj y$; otherwise, $x\nonadj y$.
-%[Define paintability and AT.]
 
 \section{Subgraphs, subdivisions, and cuts}
 \label{prelims}
@@ -466,7 +500,7 @@ $D_2$, the lemma follows.
 %$v\in V(G)$.
 Recall that our Main Theorem relies on a characterization of degree-AT graphs. 
 As we mentioned in the introduction, a description of degree-choosable graphs
-was first given by Vizing~\cite{vizing1976} and \erdos, Rubin, and
+was first given by Borodin~\cite{borodin1977criterion} and \erdos, Rubin, and
 Taylor~\cite{ERT}.  Hladky, Kral, and Schauz~\cite{HKS} later extended the
 proof from~\cite{ERT} to Alon--Tarsi orientations.  This proof relies on
 Rubin's Block lemma, which states that every 2-connected graph $G$ contains an
@@ -521,7 +555,7 @@ A connected graph $G$ is degree-AT if it is not a Gallai tree.
 Suppose there exists a connected graph that is not a Gallai tree, but is also not
 degree-AT.  Let $G$ be such a graph with as few vertices as possible.
 Since $G$ is not degree-AT, no induced subgraph $H$ of $G$ is
-degree-AT by Lemma \ref{InducedSubgraph}. 
+degree-AT by the \hyperref[InducedSubgraph]{Subgraph Lemma}. 
 Hence, for any $v \in V(G)$ that is not a cutvertex, $G-v$ must be a Gallai
 tree by minimality of $|G|$.  
 	
@@ -578,7 +612,8 @@ At the end of the section, we extend this to all connected graphs.
 
 We will show that for most 2-connected graphs $G$ and vertices $x\in V(G)$, the
 pair $(G,h_x)$ is AT.  Specifically, this is true for all pairs except those in
-$\D$, defined in the introduction.  In view of Lemma~\ref{InducedSubgraph}, for
+$\D$, defined in the introduction.  In view of the
+\hyperref[InducedSubgraph]{Subgraph Lemma}, for
 a 2-connected graph $G$ and $x\in V(G)$, to show $(G,h_x)$ is AT it suffices to
 find some induced subgraph $H$, with $x\in V(H)$, such that $(H,h_x)$ is AT. 
 The subgraphs $H$ that we consider all have $d_H(x)\ge 3$.  This motivates the
@@ -592,16 +627,11 @@ is AT if and only if $G-x$ is degree-AT.
 Let $D$ be an orientation of $G$ showing that $(G,h_x)$ is AT.  Then
 $d_{D}^-(x) = 2$ and hence no spanning Eulerian subgraph contains a cycle
 passing through $x$.  Therefore, the Eulerian subgraph counts in $G-x$ are
-different and $G-x$ is degree-AT.  The other direction is immediate from Lemma
-\ref{InducedSubgraph}.
+different and $G-x$ is degree-AT.  The other direction is immediate from the
+\hyperref[InducedSubgraph]{Subgraph Lemma}
 \end{proof}
-%Let $\D$ be the smallest collection of pairs $(G,h)$ containing the pairs in
-%Figure \ref{fig:seeds} that is closed under stretching bold edges.  Explicitly,
-%$\D$ is all graphs that can be created from the graphs in Figure
-%\ref{fig:seeds} by replacing each bold edge with an odd length path.  The
-%rightmost graph in Figure \ref{fig:seeds}  (the Moser Spindle) has no bold edges.
 
-A \emph{$\theta$-graph}, $\Theta_{a,b,c}$, consists of two 3-vertices joined by
+A \emph{$\theta$-graph}, $\Theta_{a,b,c}$, consists of two vertices joined by
 three internally disjoint paths, with lengths $a$, $b$, and $c$.  We will see
 shortly that if $H$ is a $\theta$-graph with $d_H(x)=3$, then $(H,h_x)$ is AT.
 Thus, we can assume that $G$ has no induced $\theta$-graph $H$ with $d_H(x)=3$. 
@@ -611,44 +641,44 @@ viewed as $\theta$-graphs with at most three extra edges.  We show if $G$ is
 2-connected with $x\in V(G)$ and $d(x)\ge 3$, then either (i) $G\in \D$ or (ii)
 $G$ contains one of these forbidden ``nearly $\theta$-' graphs.
 
-\begin{lem}\label{ThetaReducible}
-If $H$ is a $\theta$-graph, $\Theta_{a,b,c}$, with $d_H(x)=3$, then $(H,h_x)$ is AT
-(regardless of $a$, $b$, and $c$).
+\begin{lem}
+\label{ThetaReducible}
+\label{TgraphReducible}
+\label{T+graphReducible}
+The pair $(G,h_x)$ is AT whenever (i) $G$ is a $\theta$-graph, (ii) $G$ is a
+$T$-graph and two paths $P_i$ have lengths of opposite parities, or (iii) $G$ is
+formed from a $T$-graph by adding an extra vertex with neighborhood
+$\{z_1,z_2,z_3\}$.
 \end{lem}
 \begin{proof}
-By the \hyperref[SubdivideTwice]{Stretching Lemma}, this follows directly from
-the fact that the four pairs
-shown in Figure~2 are AT.
+In each case, we give an AT orientation $D$ of $G$ such that $d_D^-(v)\ge
+h_x(v)+1$ for each $v\in V(G)$.
+
+Case (i).  Orient the edges of each path $P_i$ consistently, with $P_1$ and
+$P_2$ into $x$ and $P_3$ out of $x$; this orientation satisfies the degree
+requirements.  Further, it has exactly three spanning Eulerian subgraphs,
+including the empty subgraph.  Thus, $EE+EO$ is odd, so $EE\ne EO$.
+
+Case (ii).  Let $P_1$ and $P_2$ be two paths with opposite parities.  As before,
+orient the edges of each path consistently, with $P_1$ and $P_2$ into $x$ and
+$P_3$ out of $x$.  Orient the three additional edges as $\vec{z_1z_2},
+\vec{z_2z_3}$, and $\vec{z_3z_1}$.  The resulting digraph $D$ has four spanning
+Eulerian subgraphs, 3 of one parity and 1 of the other.  Note that the empty
+subgraph and the subgraph $\{\vec{z_1z_2}, \vec{z_2z_3}, \vec{z_3z_1}\}$ have
+opposite parities.  Further, the parities are the same for the two subgraphs
+consisting of the directed cycles $xP_3z_3z_1P_1$ and $xP_3z_3z_1z_2P_2$.  So,
+$EE\ne EO$.
+
+Case (iii).  The simplest instance of this case is when $G=K_5-e$.  Now
+$(G,h_x)$ is AT by Lemma~\ref{CutvertexPatch}.  In fact, that proof gives the
+stronger statement that there exists an orientation $D$ satisfying the degree
+requirements such that $EE(D)=EO(D)+1$.  In particular, $EE+EO$ is odd.
+To handle larger instances of this case, we repeatedly subdivide edges incident
+to $x$ and orient each of the resulting paths consistently, and in the direction
+of the corresponding edge in $D$.  The resulting orientation satisfies the
+degree requirements.  Further, the sum $EE+EO$ remains unchanged, and thus odd.
+ Hence, still $EE\ne EO$.
 \end{proof}
-
-The simplest of our nearly $\theta$-graphs are called $T$ graphs (they have a
-single extra edge).  For positive integers $a$, $b$, and $c$, let $T_{a, b, c}$
-be the graph consisting of
-(i) a triangle $z_1z_2z_3$ and 
-(ii) disjoint paths $z_iP_iw_i$ where $P_i$ has length $a_i$ for $i \in \{1,2,3\}$ and
-(iii) a vertex $x$ adjacent to $w_1, w_2, w_3$.
-
-\begin{lem}\label{TgraphReducible}
-$(T_{a, b, c}, h_x)$ is AT whenever exactly one or two of $a, b$, and
-$c$ is even.
-\end{lem}
-\begin{proof}
-By the \hyperref[SubdivideTwice]{Stretching Lemma}, this follows from the fact that Figure
-\ref{fig:SubdividedK4} and Figure \ref{fig:TriangleRuinsPath} are AT.
-\end{proof}
-
-The graph we consider next can be viewed as a $\theta$-graph, with the three extra
-edges among $z_1$, $z_2$, and $z_3$.
-\begin{lem}\label{T+graphReducible}
-Form $H$ from $T_{a, b, c}$ by adding a new vertex with
-neighborhood $\set{z_1, z_2, z_3}$.  Now $(H, h_x)$ is AT.
-\end{lem}
-\begin{proof}
-This follows from Lemma \ref{TgraphReducible} and Lemma
-\ref{InducedSubgraph} using Lemma \ref{SubdivideTwice} and the fact that Figure
-\ref{fig:K5minus} is AT and Figure \ref{fig:thebigone} is AT.
-\end{proof}
-
 
 \begin{lem}\label{AddPathReducible}
 Let $G$ be a $T$-graph. Let $P$ be a path of $G$ where all internal
@@ -667,198 +697,106 @@ directed cycle containing edges of $P'$ is $P'P$.  Since the Eulerian subgraph
 counts are equal for $G$, they differ by 1 for $G'$. 
 \end{proof}
 
-%\begin{lem}\label{MoserLem}
-%If there exists a proper induced subgraph $H$ of $G$ such that $d_H(x)=4$ and $H$ is the Moser
-%spindle, shown in Figure~1c, then $(G,h_x)$ is AT.
-%\end{lem}
 \input{pics}
-
-%\newpage
-%\clearpage
-%\pagebreak
 
 \begin{lem}\label{TwoConnectedClassification}
 Let $G$ be 2-connected, and choose $x\in V(G)$ with $d(x)\ge 3$. 
 Now $(G,h_x)$ is AT if and only if $G$ is not complete and $(G,h_x) \not \in \D$.
 \end{lem}
 \begin{proof}
-	First suppose that $(G,h_x)\in \D$.  Add details.
-	
-	Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
-	$(G,h_x)\notin \D$.
-	Since $G-x$ is connected, let $H'$ be a smallest connected
-	subgraph of $G-x$ containing three neighbors of $x$; call these neighbors
-	$w$, $y$, and $z$.  
-	Consider a spanning tree $T$ of $H'$.  Since $H'$ is minimum, each leaf of $T$
-	is among $\{w, y, z\}$.  If $T$ is a path, then $H'$ is also a path. 
-	Otherwise, $T$ is a subdivision of $K_{1,3}$.  Let $s$ be the vertex with
-	$d_T(s)=3$.  If $E(G)-E(T)$ has any edge with
-	both ends outside of $N(s)$, then we can delete some vertex in $N(s)$ and remain
-	connected, contradicting the minimality of $H'$.  Similarly, if $N(s)$ contains
-	at least two edges, then $H'-s$ still connects, $w$, $y$, and $z$.  Now let $H$
-	be the subgraph of $G$ induced by $V(H')\cup\{x\}$.  Note that $H$ is either
-	a $\theta$-graph (if $H'$ is a tree) or a $T$-graph (if $H'$ has one extra edge in
-	$N(s)$).  
-	
-	If $H$ is a $\theta$-graph, then $(G,h_x)$ is AT, by
-	Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.
-	So assume $H$ is a $T$-graph.  Let $z_1$, $z_2$, $z_3$ be the vertices
-	of degree 3 (other than $x$), and let $P_1$, $P_2$, and $P_3$ denote the paths
-	from $x$ to $z_1$, $z_2$, and $z_3$; when we write $V(P_i)$, we exclude $x$ and
-	$z_i$, so possibly $V(P_i)$ is empty for one or more $i\in\{1,2,3\}$.
-	If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
-	we are done by Lemma~\ref{TgraphReducible}; so assume not.  
-	
-	Now $(H,h_x)\in \D$, so we can assume that $V(G-H) \ne \emptyset$.  
-	For $u \in V(G-H)$, let $H_u$ be a minimal $2$-connected induced subgraph of $G$ that contains $V(H) \cup \set{u}$.  
-	Since $G-x$ is a Gallai tree, so is $H_u-x$; in particular, the block $B_u$ of $H_u-x$ containing $u$ is complete or an odd cycle.  
-	Therefore, we either have (i) $V(B_u) \cap V(H) = \set{z_1, z_2,z_3}$ or (ii)  $V(B_u) \cap V(H) \subseteq P_i \cup \set{z_i}$ for some $i \in \irange{3}$.
-	
-	Suppose (i) happens. Then $N_G(u) \cap V(H_u - x) = \set{z_1,z_2,z_3}$. If $x \nonadj u$, then $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Lemma~\ref{T+graphReducible}.
-	If $x \adj u$, then $x \adj z_i$ for all $i \in \irange{3}$ since otherwise $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Lemma~\ref{T+graphReducible}.  So, $H=K_4$ and $H_u$ is $K_5$.  
-	This implies that (ii) cannot happen for any vertex in $V(G-H)$. So (i) happens for every vertex in $V(G-H)$; in particular, $V(G-H)$ is joined to $\set{x,z_1,z_2,z_3}$.  Since $G$ is not complete, it must contain an induced Figure \ref{fig:K5minus} and hence $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph}.
-		
-	So, we may assume that (ii) happens for every vertex in $V(G-H)$. Pick $u \in V(G - H)$. By symmetry, we may assume that $V(B_u) \cap V(H) \subseteq P_1$.
-	Say $P_1 = v_1v_2\cdots v_{\ell}$ where $v_1 = z_1$ and $v_{\ell}$ is adjacent to $x$.	First, assume $B_u$ is an odd cycle of length at least $5$.  If there is $u' \in V(B_u)\setminus V(H)$ with $u' \adj x$, then $G$ contains a $\theta$-graph and  $(G,h_x)$ is AT, by	Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.  So, we may assume that $u' \nonadj x$ for all $u' \in V(B_u)\setminus V(H)$.  If $B_u$ contains at least two edges of $H$, then we can replace $P_1$ with a path of the opposite parity (by going around the cycle) and we are done by Lemma~\ref{TgraphReducible}.  But, if $B_u$ contains only one edge of $H$, then $H$ is a stretching of Figure~\ref{fig:WingedCows} or Figure~\ref{fig:thebiggerones}.
-	
-	So, we may assume that $B_u$ is complete. Then $V(B_u) \cap V(H) = \set{v_{j}, v_{j+1}}$ for some $j \in \irange{\ell}$.  
-	In particular, $B_u$ is a triangle.  If $j \ne \ell - 1$, then $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph} and Figure~\ref{fig:thebiggerones}. 	By Lemma \ref{GeneralEulerLemma}, $(G,h_x)$ is AT unless $x \adj u$.  
-	So, $H_u$ is a $T$-graph with a vertex $u$ added that is adjacent to $x$ and a $K_2$ endblock $D_u$ of $H-x$.  If $u_1, u_2$ are different vertices in $V(G-H)$ such that $D_{u_1} = D_{u_2}$, then $G$ contains an induced Figure \ref{fig:K5minus} and hence $(G,h_x)$ is AT by Lemma~\ref{InducedSubgraph}. Say $H-x$ has $t \le 3$ endblocks that are $K_2$. Then we must have $|V(G - H)| \le t$.   If $t = 0$, then $G = H$ is the Moser spindle.  If $t=1$, then $G = H_u$ is the Moser spindle for the one $u \in V(G-H)$.  So, we may assume that $t \in \set{2,3}$.    But now $G$ contains an induced stretching of a graph in Figure~\ref{fig:WingedCows}.
-	
-%	Suppose $u_1, u_2$ are different vertices in $V(G-H)$.  Say $V(D_{u_i}) = \set{x_i, y_i}$ for $i \in \irange{2}$ where $x_i \adj x$.  If $y_1 \nonadj y_2$, then $G$ has an induced subgraph containing consisting of two diamonds sharing $x$.  But then  %$(G,h_x)$ is AT by Lemma~\ref{CutvertexPatch} and Lemma~\ref{InducedSubgraph}.  So, $y_1\adj y_2$.  But now $G$ contains an induced Figure~\ref{fig:WingedCows}(a).  Hence, we must have $|V(G - H)| = 1$. 
-\end{proof}
+First suppose that $(G,h_x)\in \D$.  Add details.
 
-%\begin{proof}
-%First suppose that $(G,h_x)\in \D$.  Add details.
+Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
+$(G,h_x)\notin \D$.  Since $G-x$ is connected, let $H'$ be a smallest connected
+subgraph of $G-x$ containing three neighbors of $x$; call these neighbors $w$,
+$y$, and $z$.  Consider a spanning tree $T$ of $H'$.  Since $H'$ is minimum,
+each leaf of $T$ is among $\{w, y, z\}$.  If $T$ is a path, then $H'$ is also a
+path.  Otherwise, $T$ is a subdivision of $K_{1,3}$.  Let $s$ be the vertex with
+$d_T(s)=3$.  If $E(G)-E(T)$ has any edge with both ends outside of $N(s)$, then
+we can delete some vertex in $N(s)$ and remain connected, contradicting the
+minimality of $H'$.  Similarly, if $N(s)$ contains at least two edges, then
+$H'-s$ still connects, $w$, $y$, and $z$.  Now let $H$ be the subgraph of $G$
+induced by $V(H')\cup\{x\}$.  Note that $H$ is either a $\theta$-graph (if $H'$
+is a tree) or a $T$-graph (if $H'$ has one extra edge in $N(s)$).  
+
+If $H$ is a $\theta$-graph, then $(G,h_x)$ is AT, by
+Lemma~\ref{ThetaReducible} and 
+the \hyperref[InducedSubgraph]{Subgraph Lemma}.
+So assume $H$ is a $T$-graph.  Let $z_1$, $z_2$, $z_3$ be the vertices
+of degree 3 (other than $x$), and let $P_1$, $P_2$, and $P_3$ denote the paths
+from $x$ to $z_1$, $z_2$, and $z_3$; when we write $V(P_i)$, we exclude $x$ and
+$z_i$, so possibly $V(P_i)$ is empty for one or more $i\in\{1,2,3\}$.
+If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
+we are done by Lemma~\ref{TgraphReducible}; so assume not.  
+	
+Now $(H,h_x)\in \D$, so we can assume that $V(G-H) \ne \emptyset$.  Choose $u
+\in V(G-H)$, and let $H_u$ be a minimal $2$-connected induced subgraph of $G$
+that contains $V(H) \cup \set{u}$.  By the \hyperref[InducedSubgraph]{Subgraph
+Lemma} and Lemma~\ref{DegreeATClassification}, $G-x$ is a Gallai tree. 
+Thus, so is $H_u-x$; in particular, the block $B_u$ of $H_u-x$ containing $u$
+is complete or an odd cycle.  Therefore, we either have (i) $V(B_u) \cap V(H) =
+\set{z_1, z_2,z_3}$ or (ii)  $V(B_u) \cap V(H) \subseteq P_i \cup \set{z_i}$
+for some $i \in \{1,2,3\}$.
+	
+Suppose (i) happens. Now $N_G(u) \cap V(H_u - x) = \set{z_1,z_2,z_3}$. If $x
+\nonadj u$, then $(G,h_x)$ is AT by the \hyperref[InducedSubgraph]{Subgraph
+Lemma} and Lemma~\ref{T+graphReducible}.  If $x \adj u$, then $x$ must have odd
+length paths to each $z_i$, by Lemma~\ref{TgraphReducible}, with $u$ in the role
+of some $z_i$.  Further, $x \adj z_i$ for all $i \in \{1,2,3\}$, since
+otherwise $(G,h_x)$ is AT by the
+\hyperref[InducedSubgraph]{Subgraph Lemma}, Lemma~\ref{T+graphReducible}, and
+the \hyperref[SubdivideTwice]{Stretching Lemma}.  So, $H=K_4$ and $H_u$ is
+$K_5$.  This implies that (ii) cannot happen for any vertex in $V(G-H)$ (if
+$V(B_u)\cap V(H)=\{z_i\}$ for some $i$, then $(G,h_x)$ is AT by
+Lemma~\ref{ThetaReducible} 
+and the \hyperref[IndudcedSubgraph]{Subgraph Lemma}).
+So (i) happens for every vertex in $V(G-H)$; in particular, $V(G-H)$ is joined
+to $\set{x,z_1,z_2,z_3}$.  Since $G$ is not complete, it must contain an induced
+copy of Figure~\ref{fig:K5minus}; hence, $(G,h_x)$ is AT by the
+\hyperref[InducedSubgraph]{Subgraph Lemma}.
+		
+Assume instead that (ii) happens for every vertex in $V(G-H)$. Pick $u \in V(G
+- H)$. By symmetry, assume that $V(B_u) \cap V(H) \subseteq P_1$.  Let $z_1P_1
+= v_1v_2\cdots v_{\ell}$, where $v_{\ell}\adj x$.  First, assume that $B_u$ is
+an odd cycle of length at least $5$.  If there is $u' \in V(B_u)\setminus V(H)$
+with $u' \adj x$, then $G$ contains a $\theta$-graph and  $(G,h_x)$ is AT, by
+Lemma~\ref{ThetaReducible} and \hyperref[InducedSubgraph]{Subgraph Lemma}.  So,
+we may assume that $u' \nonadj x$ for all $u' \in V(B_u)\setminus V(H)$.  Now
+we are done by Lemma~\ref{AddPathReducible} and the
+\hyperref[InducedSubgraph]{Subgraph Lemma}.
+
+So, we may assume that $B_u$ is complete. If $V(B_u) \cap V(H)=\set{v_\ell}$,
+then $G$ has an induced $\theta$-graph $J$, where $d_J(x)=d_J(v_\ell)=3$, so we are
+done by Lemma~\ref{ThetaReducible} and the \hyperref[IndudcedSubgraph]{Subgraph
+Lemma}.  Thus, we must have $V(B_u) \cap V(H) = \set{v_{j},
+v_{j+1}}$ for some $j \in \irange{\ell}$.  In particular, $B_u$ is a triangle. 
+If $j \ne \ell - 1$, then $u\nonadj x$, by the minimality of $H$;
+so $(G,h_x)$ is AT by the
+\hyperref[InducedSubgraph]{Subgraph Lemma} and Lemma~\ref{AddPathReducible}.
+%Figure~\ref{fig:WingedCows} or Figure~\ref{fig:thebiggerones}.  
+Thus, we conclude that $u\adj x$, so $j=\ell-1$.  
+%By Lemma \ref{GeneralEulerLemma}, $(G,h_x)$ is AT unless $x \adj u$. 
+Hence, $H_u$ is formed from $T$-graph by adding a vertex $u$ added that is
+adjacent to $x$ and to the vertices of a $K_2$ endblock $D_u$ of $H-x$. 
 %
-%Now let $G$ be 2-connected, choose $x\in V(G)$ with $d(x)\ge 3$, and suppose that
-%$(G,h_x)\notin \D$.
-%Since $G-x$ is connected, let $H'$ be a smallest connected
-%subgraph of $G-x$ containing three neighbors of $x$; call these neighbors
-%$w$, $y$, and $z$.  
-%Consider a spanning tree $T$ of $H'$.  Since $H'$ is minimum, each leaf of $T$
-%is among $\{w, y, z\}$.  If $T$ is a path, then $H'$ is also a path. 
-%Otherwise, $T$ is a subdivision of $K_{1,3}$.  Let $s$ be the vertex with
-%$d_T(s)=3$.  If $E(G)-E(T)$ has any edge with
-%both ends outside of $N(s)$, then we can delete some vertex in $N(s)$ and remain
-%connected, contradicting the minimality of $H'$.  Similarly, if $N(s)$ contains
-%at least two edges, then $H'-s$ still connects, $w$, $y$, and $z$.  Now let $H$
-%be the subgraph of $G$ induced by $V(H')\cup\{x\}$.  Note that $H$ is either
-%a $\theta$-graph (if $H'$ is a tree) or a $T$-graph (if $H'$ has one extra edge in
-%$N(s)$).  
-%
-%If $H$ is a $\theta$-graph, then $(G,h_x)$ is AT, by
-%Lemma~\ref{ThetaReducible} and Lemma~\ref{InducedSubgraph}.
-%So assume $H$ is a $T$-graph.  Let $z_1$, $z_2$, $z_3$ be the vertices
-%of degree 3 (other than $x$), and let $P_1$, $P_2$, and $P_3$ denote the paths
-%from $x$ to $z_1$, $z_2$, and $z_3$; when we write $V(P_i)$, we exclude $x$ and
-%$z_i$, so possibly $V(P_i)$ is empty for one or more $i\in\{1,2,3\}$.
-%If any two of $P_1$, $P_2$, and $P_3$ have lengths with opposite parities, then
-%we are done by Lemma~\ref{TgraphReducible}; so assume not.  
-%
-%Now $(H,h_x)\in \D$, so we can assume there exists $u\in V(G-H)$. 
-%Since $G$ is 2-connected, consider how $u$ can attach to $H$.  In particular,
-%$u$ must have have at least two disjoint paths (possibly single edges), $P_4$ and $P_5$,
-%to $H$.  Choose $u$ to minimize the sum of the lengths of $P_4$ and $P_5$. 
-%%among such $u$, choose one with the fewest neighbors in $H$.  
-%We consider the following cases.
-%%First, suppose that $u\nonadj x$ and neither path ends at $x$.  
-%%Suppose further that $P_4$ and $P_5$ end on the
-%%same path $P_i$ (for some $i\in \{1,2,3\}$).  By minimality of $H'$, $u$ has at
-%%most three edges to $P_i$.  More precisely, all neighbors of $u$ on $P_i$ are within
-%%distance at most two of each other.  If $u$ has at most two neighbors on $P_i$,
-%%then we are done by Claim~1.  Otherwise, $u$ has exactly three neighbors on
-%%$P_i$.  Together, these four vertices induce $K_4-e$, which is degree-AT.
-%%Now we are done by Lemma~\ref{InducedSubgraph}.  So suppose instead that $P_4$
-%%and $P_5$ end on different paths, say on $P_2$ and $P_3$.
-%%Now $G-x$ again contains a theta graph ($z_2$ and $z_3$ are the two vertices of
-%%degree 3); thus, we are done by Lemma~\ref{InducedSubgraph}.
-%%
-%%Now we assume instead that for every $u\in V(G-H)$, either $u\adj x$ or else at
-%%most one path from $u$ to $H$ ends somewhere other than $x$.  Choose $u$ to
-%%minimize the sum of the lengths of $P_4$ and $P_5$.  We can assume that $u$ has
-%%at least three neighbors in $H$, since otherwise, we are done by Claim~1.  In
-%%particular, $u\adj x$.
-%
-%%\item 
-%First suppose $|N_H(u)|\le 2$.
-%Consider the subgraph induced by $H$, $u$, and the vertices of $P_4$ and $P_5$.
-%First suppose that $P_4$ and $P_5$ both end at vertices in $\{x,z_1,z_2,z_3\}$.
-%If one of these endpoints is $x$, then we have a $\theta$-graph $J$ with
-%$d_J(x)=3$, so we are done by Lemma~\ref{ThetaReducible} and
-%Lemma~\ref{InducedSubgraph}.  If neither path ends at $x$, then we have a
-%$\theta$-
-%subgraph $J$ with $x\notin J$, so we are again done by the same two lemmas.
-%Otherwise, at least one of $P_4$ and $P_5$ ends at a vertex of degree 2 in $H$.
-%Now we are done by Lemma~\ref{AddPathReducible}.
-%
-%%\item 
-%%\begin{enumerate}
-%Instead assume $|N_H(u)|\ge 3$.  First suppose that $u\nonadj x$.
-%Suppose further that $\{z_1,z_2,z_3\}\subseteq N_H(u)$.  If $u$ has only these three
-%neighbors, then we are done by Figure~3 or Figure~7 (and the stretching lemma).
-%So suppose $u$ has another neighbor, $w$. Choose such a $w$ as close as possible
-%to $z_1, z_2, z_3$; by symmetry, say that $w$ is on $P_1$.
-%Now $H-x$ has a $\theta$-graph induced by $u, w, z_1, z_2$, and the portion of
-%$P_1$ from $w$ to $z_1$.  Thus, we conclude that  $\{z_1,z_2,z_3\}\not\subseteq N_H(u)$.
-%If $u$ has exactly two neighbors in $\{z_1,z_2,z_3\}$, then $u, z_1, z_2, z_3$
-%induces $K_4-e$, which is a $\theta$-graph;  so assume not.
-%Suppose $u$ has neighbors in
-%$V(P_i)\cup \{z_i\}$ for at least two $i\in\{1,2,3\}$, say $i=1$ and $i=2$; by
-%symmetry, we can assume that $u\nonadj z_3$. 
-%Consider the graph induced by $u, z_1, z_2, z_3$, and the paths from the
-%neighbor of $u$ on $P_1$ nearest to $z_1$ and the neighbor of $u$ on $P_2$
-%nearest to $z_2$.  This subgraph is a $\theta$-graph.  Thus, there must exist some
-%$i$ such that $N_H(u)\subseteq z_i\cup V(P_i)$.  Since $d_H(u)\ge 3$, $H-x$
-%contains a $\theta$-graph, so we are done.  
-%
-%Instead, assume that $u\adj x$.
-%First suppose that $u$ has a neighbor in $V(P_1)\cup \{z_1\}$
-%and $u$ also has a neighbor in $V(P_2)$.  Let $w_1$ be the neighbor of $u$
-%nearest to $x$ along $P_1$ and let $w_2$ be the neighbor of $u$ nearest to $x$
-%along $P_2$.  Consider the subgraph $J$ induced by $x$, $u$, $w_1$, $w_2$, and the
-%paths along $P_1$ and $P_2$ from $x$ to $w_1$ and $w_2$.  Since $J$ is a
-%$\theta$-
-%graph with $d_J(x)=3$, we are done.  So $u$ must not have neighbors in these two
-%sets.  Thus, by symmetry, we can assume either (i) $N(u)\subseteq
-%V(P_1)\cup\{z_1\}$ or (ii) $N(u)\subseteq \{x,z_1,z_2,z_3\}$.
-%
-%Suppose we are in case (i).
-%Since $d_H(u)\ge 3$ (and by the minimality of $H'$, and thus $H$), 
-%vertex $u$ is adjacent to precisely $x$ and the first two vertices along $P_1$
-%(one of which is possibly $z_1$).  
-%If $P_1$ or $P_2$ has vertices, then let $J$ be the subgraph induced by $u$ and
-%$V(H)\setminus V(P_3)$.  Note that $J-z_3$ is a $\theta$-graph, so $J$ is reducible
-%by Lemma~\ref{AddPathReducible}.  Thus, we assume that $V(P_2)=V(P_3)=\emptyset$.
-%This implies that $u$ is not adjacent to $z_1$,
-%since all $V(P_i)$ have the same parity, by Lemma~\ref{TgraphReducible}.  
-%So $|V(P_1)|$ is even.  If $|V(P_1)|\ge 4$, then consider the subgraph $J$ induced
-%by $\{u\}\cup N_H(u)\cup (V(H)\setminus V(P_1))$.  Note that $J$ has two blocks
-%and $x$ is its cutvertex.  Since neither block is a clique or an odd cycle,
-%$(J,h_x)$ is AT by Lemma~\ref{CutvertexPatch}.  Thus, we conclude that
-%$|V(P_1)|=2$, so $H$ is the Moser Spindle, shown in Figure~1c.  Since
-%$(H,h_x)\in\D$, we can assume that $H\subsetneq G$.  However, now we are done by
-%Lemma~\ref{MoserLem}.
-%
-%Suppose instead that we are in case (ii).  First, suppose there exists $z_i$
-%such that $u\nonadj z_i$.  Now $u,z_1,z_2,z_3$ induce a $\theta$-graph in $H-x$, so
-%we are done by Lemmas~\ref{ThetaReducible} and \ref{InducedSubgraph}.  Thus, we
-%assume that $N_H(u)=\{x,z_1,z_2,z_3\}$.  Let $J$ be a maximum clique containing
-%$x$.  We can assume that $G$ is not complete, so there exists some vertex $w$
-%outside of $J$.  Since $G$ is 2-connected, $w$ has two vertex disjoint paths to
-%$J$, not both ending at the same vertex; let $J'$ denote the subgraph induced
-%by $x$, $J$, and the vertices of these two paths.  If neither path ends at $x$,
-%then $J'-x$ is 2-connected and not a clique or an odd cycle.  Now
-%Lemmas~\ref{DegreeATClassification} and \ref{InducedSubgraph} imply that $(G,h_x)$
-%is AT.
-%
-%Suppose instead that one path from $w$ to $J$ ends at $x$; by symmetry, assume
-%the other ends at $z_1$.  Since $w\notin V(J)$, vertex $w$ has some non-neighbor
-%in $J$; by symmetry, say it is $z_2$.  Now let $J''$ be the subgraph induced by
-%$x, z_1, z_2, w$, and the paths from $w$ to $x$ and $z_1$.  Note that $J''$ is a
-%$\theta$-graph with $d_{J''}(x)=3$, so Lemmas~\ref{ThetaReducible} and
-%\ref{InducedSubgraph} imply that $(G,h_x)$ is AT.
-%\end{proof}
+Suppose there are distinct vertices $u_1, u_2\in V(G-H)$ such that $D_{u_1} =
+D_{u_2}$.  Now $G$ contains an induced copy of Figure \ref{fig:K5minus}(b), so 
+$(G,h_x)$ is AT by Lemma~\ref{T+graphReducible} and the
+\hyperref[InducedSubgraph]{Subgraph Lemma}.  Thus, each $K_2$ endblock has at
+most one such $u$.  
+
+Let $t$ be the number of $K_2$ endblocks in $H-x$.
+By construction, $t\le 3$; this implies that $|V(G - H)| \le t$.   
+If $t = 0$, then $G = H = K_4$, which contradicts that $G$ is not complete.  
+If $t=1$, then $G = H_u$ is the Moser spindle, for the unique $u \in V(G-H)$. 
+So, assume that $t \in \set{2,3}$.  
+Now %$G$ has an induced subgraph
+the subgraph induced by $\set{u}\cup V(H-P_1)$  
+%that 
+is reducible by Lemma~\ref{AddPathReducible}. %specifically, this is 
+So, again we are done by the
+\hyperref[InducedSubgraph]{Subgraph Lemma}.  
+\end{proof}
 
 
 \begin{thm}
@@ -919,6 +857,7 @@ is AT, a contradiction.
 %\end{proof}
 
 \section{Choosability and Paintability}
+\label{sec:extensions}
 As we mentioned in the introduction, Alon and Tarsi showed that if a graph $G$
 is $f$-AT, then $G$ is also $f$-choosable.  \emph{Online list coloring}, also
 called \emph{painting} is similar to list coloring, but now the list for each
@@ -930,10 +869,18 @@ of pairs $(G,h_x)$ that are not paintable and that are not choosable.  More
 precisely, a pair $(G,h_x)$ is \emph{choosable} if $G$ has a proper coloring
 from its lists $L$ whenever $L$ is such that $|L(x)|=d(x)-1$ and $|L(v)|=d(v)$
 for all other $v$; otherwise $(G,h_x)$ is \emph{not choosable}.  The definition
-of a pair being paintable is analogous.  We characterizes all pairs $(G,h_x)$,
+of a pair being paintable is analogous.  We characterize all pairs $(G,h_x)$,
 where $G$ is connected and $(G,h_x)$ is not choosable (resp. paintable).  We
 will see that, in fact, these characterizations (for both choosability and
 paintability) are identical to that for pairs that are not AT.  
+
+For completeness, we include the following definition of $f$-paintable.
+Schauz gave a more intuitive (yet equivalent) definition, in terms of a two
+player game.  We say that $G$ is \emph{$f$-paintable} if either (i) $G$ is
+empty or (ii) $f(v) \ge 1$ for all $v \in V(G)$ and for every $S \subseteq
+V(G)$ there is an independent set $I \subseteq S$ such that $G-I$ is
+$f'$-paintable where $f'(v) \DefinedAs f(v)$ for $v \in V(G) - S$ and $f'(v)
+\DefinedAs f(v) - 1$ for $v \in S - I$.
 
 Since all pairs $(G,h_x)$ that are AT are also both paintable and choosable, it
 suffices to show that every pair $(G,h_x)$ that is not AT is also not choosable
@@ -949,12 +896,12 @@ Also, show that when we move up to two vertices $x,y$ with $h(x) =
 h(y) = 1$, AT, choosability and paintability all
 separate.
 
-\section{Applications}
-When this is in a critical graph, we get $h_x$-minimality for free.  If $x$ has
-$t \ge 5$ neighbors in one component of the low vertex subgraph, then those
-neighbors are all in one $K_t$ block.  If $t = 4$, then the neighbors are
-either a $K_4$ block or we create the Moser
-Spindle.
+%\section{Applications}
+%When this is in a critical graph, we get $h_x$-minimality for free.  If $x$ has
+%$t \ge 5$ neighbors in one component of the low vertex subgraph, then those
+%neighbors are all in one $K_t$ block.  If $t = 4$, then the neighbors are
+%either a $K_4$ block or we create the Moser
+%Spindle.
 
 \bibliographystyle{abbrv}
 \bibliography{GraphColoring1}

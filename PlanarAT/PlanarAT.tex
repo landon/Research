@@ -141,7 +141,7 @@ Let $EL(X)$ be the set of spanning Eulerian subgraphs of $X$.  We partition $EL(
 \end{lem}
 
 Since Lemma \ref{EulerianDifferenceIsEvenOddDifference} was for any $X \in D_\alpha(G)$, we have the following.
-\begin{cor}
+\begin{cor}\label{AlphaOrientationsSameEulerian}
 	If $X, Y \in D_\alpha(G)$ then, up to sign, we have	
 	\[|EE(X)| - |EO(X)| = |EE(Y)| - |EO(Y)|.\]
 \end{cor}
@@ -197,11 +197,44 @@ $EE(X) \ne EO(X)$ for every $X \in D_\alpha(G)$.  It is useful to see how $\alph
 
 
 We will use the following to reverse an edge on a triangle cutset when the inductive hypothesis directs the triangle cyclically.
-\begin{lem}\label{EdgeRemoval}
+\begin{lem}\label{AtLeastTwoCycles}
 	Suppose $G$ is $\alpha$-AT and $X$ is an $\alpha$-orientation of $G$.  If $Z$ is an induced subgraph of $X$ such that $EE(Z) = EO(Z)$, then $X$ has an induced cycle $C \not \subseteq Z$ containing an edge of $Z$.
 \end{lem}
 \begin{proof}
 	Otherwise, every spanning Eulerian subgraph of $X$ is the edge-disjoint union of a spanning Eulerian subgraph of $Z$ and a spanning Eulerian subgraph of $X - E(Z)$.  But then $EE(Z) = EO(Z)$ implies $EE(X) = EO(X)$, a contradiction.
+\end{proof}
+
+\section{planar graphs}
+We are going to try to prove Thomassen's stronger result about choosability of near-triangulations for AT.  Precisely, our aim is the following.
+
+\begin{conjecture}
+  Let $G$ be a plane near-triangulation with outer face $C$.  Then for any $x_1x_2 \in E(C)$, there is an orientation $X$ of $G-x_1x_2$ such that
+  \begin{enumerate}
+  	\item $d_X^+(x_1) = d_X^+(x_2) = 0$, and
+  	\item $d_X^+(v) \le 2$ for all $v \in V(C)$, and
+  	\item $d_X^+(v) \le 4$ for all $v \in V(G) \setminus V(C)$, and
+  	\item $EE(X) \ne EO(X)$.
+  \end{enumerate}
+\end{conjecture}
+
+Suppose the conjecture is false and choose a counterexample $G$ minimizing $|G|$ and subject to that, minimizing $|C|$.
+
+\begin{lem}
+	$G$ has no clique cutset.
+\end{lem}
+\begin{proof}
+	Let $S \subseteq V(G)$ be a minimal cutset.  Then $|S| \le 4$.  If $|S| \le 2$, we are done immediately by applying minimality to the lobes and patching the orientations together.  The $|S| = 3$ case implies that $G$ contains no $K_4$.  So, all we need to do
+	is show there is no triangle cutset.  Say $S = \set{a,b,c}$.  We apply minimality to each $S$-lobe of $G$.  For the lobe containing the interior of $abc$ we use $abc$ as the outer face.  For the other lobe we use $C$.  Let $X$ be the resulting orientation of the outer lobe.  Suppose $X$ does not orient $abc$ cyclically.  Then, by symmetry, we may assume that $ab, ac, bc \in E(X)$.  For the inner lobe, apply minimality with $abc$ as the other face and using edge $bc$, let $Y$ be the resulting orientation of the inner lobe minus $bc$.  Then $ab,ac \in E(Y)$.  Adding $bc$ back in does not change the Eulerian subgraph counts since $c$ is a sink in $Y$.  But now $X$ and $Y$ give the same orientation to $abc$, so we can patch them together to get an orientation $Q$ of $G-x_1x_2$.  Since all edges in $Y$ incident to $a,b,c$ point into $a,b,c$, our patching did not create any new directed cycles.  So the spanning Eulerian subgraphs of $Q$ are all pairings of spanning Eulerian subgraphs in $X$ and in $Y$.  Since $EE(X) \ne EO(X)$ and $EE(Y) \ne EO(Y)$, we conclude $EE(Q) \ne EO(Q)$.  Also, our patching did not change the out-degree of any vertex, so the degree condition is still satisfied.
+	
+	If $X$ does orient $abc$ cyclically, then we won't be able to match up the two orientations.  But, we can change $X$ to another $\alpha$-orientation (where $\alpha$ is the out-degree sequence of $X$) that does not orient $abc$ cyclically.
+	Let $Z$ be the induced subgraph of $X$ on $\set{a,b,c}$.  Then $EE(Z) = EO(Z)$, so by Lemma \ref{AtLeastTwoCycles}, $X$ has an induced cycle $A \not \subseteq Z$ containing an edge of $Z$.  Then $A$ contains at most two edges of $Z$, so reversing all the edges on $A$ produces a new $\alpha$-orientation $X'$ where $abc$ is not oriented cyclically.  By Lemma \ref{AlphaOrientationsSameEulerian}, we have $0 \ne EE(X) - EO(X) = \pm\parens{EE(X') - EO(X')}$.  So we can use $X'$ in place of $X$ in the argument in the previous paragraph to conclude that $G-x_1x_2$ has the desired orientation, a contradiction.
+\end{proof}
+
+\begin{lem}
+	$|C| \ge 4$.
+\end{lem}
+\begin{proof}
+	The Thomassen-style argument goes through when $|C| = 3$.
 \end{proof}
 
 \bibliographystyle{amsplain}

@@ -1,0 +1,231 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{color}
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{Edge lower bounds via discharging notes}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+For a graph $G$, let $d(G)$ be the average degree of $G$. Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. 
+
+\section{Gallai's bound via discharging}
+
+\begin{thm}[Gallai]
+	For $k \ge 4$ and $G \ne K_k$ a $k$-AT-critical graph, we have
+	\[d(G) < k-1 + \frac{k-3}{k^2-3}.\]
+\end{thm}
+\begin{proof}
+	Start with initial charge function $\ch(v) = d_G(v)$.  Have each $k^+$-vertex give charge $\frac{k-1}{k^2-3}$ to each of its $(k-1)$-neighbors.  Then let the vertices in each component of the low vertex subgraph share their total charge equally.  Let $\ch^*(v)$ be the resulting charge function.  We finish the proof by showing that $\ch^*(v) \ge k-1 + \frac{k-3}{k^2-3}$ for all $v \in V(G)$.
+	
+	If $v$ is a $k^+$-vertex, then $ch^*(v) \ge d_G(v) - \frac{k-1}{k^2-3}d_G(v) = \parens{1- \frac{k-1}{k^2-3}}d_G(v) \ge \parens{1- \frac{k-1}{k^2-3}}k = k-1 + \frac{k-3}{k^2-3}$ as desired.
+
+	Let $T$ be a component of the low vertex subgraph.  Then the vertices in $T$ receive total charge
+	\[\frac{k-1}{k^2-3}\sum_{v \in V(T)} k-1 - d_G(v) = \frac{k-1}{k^2-3}\parens{(k-1)|T| - 2\size{T}}.\]
+	So, after distributing this charge out equally, each vertex in $T$ receives charge
+	\[\frac{1}{|T|}\frac{k-1}{k^2-3}((k-1)|T| - 2\size{T}) = \frac{k-1}{k^2-3}\parens{(k-1) - d(T)}.\]
+	By Lemma \ref{BasicGallaiTreeBound}, this is at least
+	\[\frac{k-1}{k^2-3}\parens{(k-1) - \parens{k-2 + \frac{2}{k-1}}} = \frac{k-1}{k^2-3}\parens{\frac{k-3}{k-1}} = \frac{k-3}{k^2-3}.\]
+	Hence each low vertex ends with charge at least $k-1 + \frac{k-3}{k^2-3}$ as desired.
+\end{proof}
+
+
+\begin{lem}[Gallai]\label{BasicGallaiTreeBound}
+	For $k \ge 4$ and $T \in \T_k$, we have $d(T) < k-2 + \frac{2}{k-1}$.
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  Then $T$ has at least two blocks.  Let $B$ be an endblock of $T$.  If $B$ is $K_t$ for $2 \le t \le k-2$, then remove the non-separating vertices of $B$ from $T$ to get $T'$.  By minimality of $|T|$, we have 
+	\[2\size{T} - t(t-1) = 2\size{T'} < \parens{k-2 + \frac{2}{k-1}}|T'| = \parens{k-2 + \frac{2}{k-1}}|T| - \parens{k-2 + \frac{2}{k-1}}(t-1).\]
+	Hence we have the contradiction
+	\[2\size{T} < \parens{k-2 + \frac{2}{k-1}}|T| + (t+2 -k - \frac{2}{k-1})(t-1) \le \parens{k-2 + \frac{2}{k-1}}|T|.\]
+	
+	The case when $B$ is an odd cycle is the same as the above, a longer cycle just makes things better.  Finally, if $B = K_{k-1}$, remove all vertices of $B$ from $T$ to get $T'$. By minimality of $|T|$, we have 
+	\begin{align*}
+	  2\size{T} - (k-1)(k-2) - 2 &= 2\size{T'}\\
+	  &< \parens{k-2 + \frac{2}{k-1}}|T'|\\
+	  &= \parens{k-2 + \frac{2}{k-1}}|T| - \parens{k-2 + \frac{2}{k-1}}(k-1).
+	\end{align*}
+
+	Hence $2\size{T} < \parens{k-2 + \frac{2}{k-1}}|T|$, a contradiction.
+\end{proof}
+
+\section{An initial improved bound}
+Lemma \ref{BasicGallaiTreeBound} is best possible as can be seen by the family of graphs with blocks on a path alternating $K_{k-1}$ and $K_2$.  But we have reducible configurations (see the last section for the precise statements) that place restrictions on $K_{k-1}$ blocks. To state these restrictions, we need the following auxiliary bipartite graph. 
+
+For a $k$-AT-critical graph $G$, let $\L(G)$ be the subgraph of $G$ induced on the $(k-1)$-vertices and $\HH(G)$ the subgraph of $G$ induced on the $k$-vertices.   For $T \in \T_k$, let $W^k(T)$ be the set of vertices of $T$ that are contained in some $K_{k-1}$ in $T$.  Let $\B_k(G)$ be the bipartite graph with one part $V(\HH(G))$ and the other part the components of $\L(G)$.  Put an edge between $y \in V(\HH(G))$ and a component $T$ of $\L(G)$ if and only if $N(y) \cap W^k(T) \ne \emptyset$.  Then Lemma \ref{MultipleHighConfigurationEuler} says that $\B_k(G)$ is $2$-degenerate.
+
+We can use this fact to refine our discharging argument.  Let $\epsilon$ and $\gamma$ be parameters that we will determine where $\epsilon \le \gamma < 2\epsilon$. Start with initial charge function $\ch(v) = d_G(v)$.  
+\begin{enumerate}
+	\item Each $k^+$-vertex gives charge $\epsilon$ to each of its $(k-1)$-neighbors not in a $K_{k-1}$,
+	\item Each $(k+1)^+$-vertex give charge $\gamma$ to each of its $(k-1)$-neighbors in a $K_{k-1}$,
+	\item Let $Q = \B_k(G)$.  Repeat the following steps until $Q$ is empty.
+	  \begin{enumerate}
+	  	\item Remove all components $T$ of $\L(G)$ in $Q$ that have degree at most two in $Q$.
+	  	\item Pick $v \in V(\HH(G)) \cap V(Q)$.  Send charge $\gamma$ from $v$ to each $x \in N_G(v) \cap W^k(T)$ for each component $T$ of $\L(G)$ where $vT \in E(Q)$.
+	  \end{enumerate}
+	\item The vertices in each component of the low vertex subgraph share their total charge equally.
+\end{enumerate}
+Let $\ch^*(v)$ be the resulting charge function.
+
+\section{Reducible Configurations}
+\begin{defn}
+	A graph $G$ is \emph{AT-reducible} to $H$ if $H$ is a nonempty induced subgraph of $G$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$.  
+	If $G$ is not AT-reducible to any nonempty induced subgraph, then it is \emph{AT-irreducible}.
+\end{defn}
+
+This first lemma tells us how a single high vertex can interact with the low vertex subgraph.  This is the version Hal and i used, it (and more) follows from the classification in ``mostlow''.
+
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \ge 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has $t$ components $H_1, H_2, \ldots, H_t$, and all are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \ge 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \ge t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+
+To deal with more than one high vertex we need the following auxiliary bipartite graph.  For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \ge 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ if and only if $N(y) \cap W^k(T) \ne \emptyset$.   The next lemma tells us that we have a reducible configuration if this bipartite graph has minimum degree at least three.  
+
+\begin{lem}
+	\label{MultipleHighConfigurationEuler} Let $k\ge7$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B\DefinedAs\B_{k}(V(G-Y),Y)$ we have $\delta(\B)\ge3$. 
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+We also have the following version with asymmetric degree condition on $\B$.  The point here is that this works for $k \ge 5$.  As we'll see in the next section, the consequence is that we trade a bit in our size bound for the proof to go through with $k \in \set{5,6}$.
+
+\begin{lem}
+	\label{MultipleHighConfigurationEulerLopsided} Let $k \ge 5$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $d_{\B}(y) \ge 4$ for all $y \in Y$ and $d_{\B}(T) \ge 2$ for all components $T$ of $G-Y$.
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+\end{document}
+
+ 

@@ -168,10 +168,27 @@ We can use this fact to refine our discharging argument.  Let $\epsilon$ and $\g
 	  \begin{enumerate}
 	  	\item Remove all components $T$ of $\L(G)$ in $Q$ that have degree at most two in $Q$.
 	  	\item Pick $v \in V(\HH(G)) \cap V(Q)$.  Send charge $\gamma$ from $v$ to each $x \in N_G(v) \cap W^k(T)$ for each component $T$ of $\L(G)$ where $vT \in E(Q)$.
+	  	\item Remove $v$ from $Q$.
 	  \end{enumerate}
-	\item The vertices in each component of the low vertex subgraph share their total charge equally.
+	\item Have the vertices in each component of $\L(G)$ share their total charge equally.
 \end{enumerate}
-Let $\ch^*(v)$ be the resulting charge function.
+Let $\ch^*(v)$ be the resulting charge function.  Here is some intuition for why this might be a useful refinement.  In (3b), $v$ sends charge to at most two different $T$ and so, by Lemma \ref{ConfigurationTypeOneEuler} (or our `beyond degree choosability' classification), $v$ loses charge at most $3\gamma$.  On the other hand, from (3a) each component $T$ of $\L(G)$ receives charge $\gamma$ for all but at most four non-separating vertices in a $K_{k-1}$ (the at most four again coming from Lemma \ref{ConfigurationTypeOneEuler} and the fact that we leave $T$ in $Q$ until it has degree at most two).  So, we can get each $T$ almost as much charge as we could hope for without losing too much from the $k$-vertices.  We don't have the same control over $(k+1)^+$-vertices, but it won't matter since they have extra charge to start with and sending $\gamma$ to every $(k-1)$-neighbor will leave enough charge (we'll use $\gamma < 2\epsilon$ here).
+
+To analyze this discharging procedure we need a bound like Lemma \ref{BasicGallaiTreeBound}, but taking into account the number of edges in $\B_k(G)$.  We can do this by taking into account the number of non-separating vertices in $K_{k-1}$'s in $T$.  To this end, for $T \in \T_k$, let $q(T)$ be the number of non-separating vertices in a $K_{k-1}$ in $T$.  We give a family of such bounds.
+
+\begin{lem}
+	Let $K \in \IN$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and		
+		\item $f(k) \ge t(t+2-k-p(k))$ for all $t \in \irange{k-2}$; and
+		\item $p(k) \ge h(k) + 5 - k$; and
+		\item $p(k) \ge \frac{4}{k-2}$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
+\end{lem}
 
 \section{Reducible Configurations}
 \begin{defn}

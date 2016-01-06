@@ -119,7 +119,7 @@ For a graph $G$, let $d(G)$ be the average degree of $G$. Let $\T_k$ be the Gall
 
 \begin{thm}[Gallai]
 	For $k \ge 4$ and $G \ne K_k$ a $k$-AT-critical graph, we have
-	\[d(G) < k-1 + \frac{k-3}{k^2-3}.\]
+	\[d(G) > k-1 + \frac{k-3}{k^2-3}.\]
 \end{thm}
 \begin{proof}
 	Start with initial charge function $\ch(v) = d_G(v)$.  Have each $k^+$-vertex give charge $\frac{k-1}{k^2-3}$ to each of its $(k-1)$-neighbors.  Then let the vertices in each component of the low vertex subgraph share their total charge equally.  Let $\ch^*(v)$ be the resulting charge function.  We finish the proof by showing that $\ch^*(v) \ge k-1 + \frac{k-3}{k^2-3}$ for all $v \in V(G)$.
@@ -174,7 +174,7 @@ We can use this fact to refine our discharging argument.  Let $\epsilon$ and $\g
 \end{enumerate}
 Let $\ch^*(v)$ be the resulting charge function.  Here is some intuition for why this might be a useful refinement.  In (3b), $v$ sends charge to at most two different $T$ and so, by Lemma \ref{ConfigurationTypeOneEuler} (or our `beyond degree choosability' classification), $v$ loses charge at most $3\gamma$.  On the other hand, from (3a) each component $T$ of $\L(G)$ receives charge $\gamma$ for all but at most four non-separating vertices in a $K_{k-1}$ (the at most four again coming from Lemma \ref{ConfigurationTypeOneEuler} and the fact that we leave $T$ in $Q$ until it has degree at most two).  So, we can get each $T$ almost as much charge as we could hope for without losing too much from the $k$-vertices.  We don't have the same control over $(k+1)^+$-vertices, but it won't matter since they have extra charge to start with and sending $\gamma$ to every $(k-1)$-neighbor will leave enough charge (we'll use $\gamma < 2\epsilon$ here).
 
-To analyze this discharging procedure we need a bound like Lemma \ref{BasicGallaiTreeBound}, but taking into account the number of edges in $\B_k(G)$.  We can do this by taking into account the number of non-separating vertices in $K_{k-1}$'s in $T$.  To this end, for $T \in \T_k$, let $q(T)$ be the number of non-separating vertices in a $K_{k-1}$ in $T$.  We give a family of such bounds.
+To analyze this discharging procedure we need a bound like Lemma \ref{BasicGallaiTreeBound}, but taking into account the number of edges in $\B_k(G)$.  We can do this by taking into account the number of non-separating vertices in $K_{k-1}$'s in $T$.  To this end, for $T \in \T_k$, let $q(T)$ be the number of non-separating vertices in a $K_{k-1}$ in $T$.  We give a family of such bounds.  Without more reducible configurations we can't hope to do better than average degree $k-3$ because of $K_{k-2}$ components, that is why the bound below has $(k-3 + p(k))|T|$, a slight worsening of average degree $k-3$.
 
 \begin{lem}\label{BoundFamily}
 	Let $K \in \IN$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$ be such that for all $k \ge K \ge 4$ we have
@@ -232,7 +232,73 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
  	contradicting (7).
 \end{proof}
 
+\begin{remark}
+	Some of the conditions can be weakened with more work.  For example, the Kostochka-Stiebitz bound Hal and i used satisfies a weaker version of (5) and in that other document it is weakened a bit more.  We still need to determine what the 
+	best possible conditions are.  i think having the whole family could be useful because we can tailor the bound we use for a component $T$ based on $q(T)$ (put less weight on $q(T)$ if it is big).
+\end{remark}
+
 Now some examples of using Lemma \ref{BoundFamily}.  What happens if we take $h(k) = 0$?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
+
+If instead we make $p(k)$ as small as Lemma \ref{BoundFamily} will let us, which is $p(k) = \frac{4}{k-2}$, we get that $f(k) = -4$ and $h(k) = \frac{k^2-5k+2}{(k-2)(k-3)}$ satisfy the conditions.  That is,
+
+\begin{cor}\label{SmallP}
+	For $k \ge 7$ and $T \in \T_k$, we have
+	\[2\size{T} \le (k-3 + \frac{4}{k-2})\card{T} -4 + \frac{k^2-5k+2}{(k-2)(k-3)}q(T).\]
+\end{cor}
+
+If we put the Kostochka-Stiebitz bound on $\sigma(T)$ into this form we get the following.
+
+\begin{lem}[Kostochka-Stiebitz]
+		For $k \ge 7$ and $T \in \T_k$, we have
+		\[2\size{T} \le (k-3 + \frac{4(k-1)}{k^2 - 3k + 4})\card{T} - \frac{4(k^2-3k+2)}{k^2-3k+4} + \frac{k^2 - 3k}{k^2-3k+4}q(T).\]
+\end{lem}
+
+Note that $\frac{4(k-1)}{k^2 - 3k + 4} < \frac{4}{k-2}$, so this does not satisfy condition (5) in Lemma \ref{BoundFamily}, it is more like $\frac{3.891}{k-2}$.
+
+\subsection{Analyzing the discharging}
+Our discharging procedure gives charge $\epsilon$ to a component $T$ for every incident edge not ending in a $K_{k-1}$.  The number of such edges is exactly
+\[A(T) \DefinedAs -q(T) + \sum_{v \in V(T)} k-1 - d_T(v) = (k-1)\card{T} - 2\size{T} - q(T).\]
+Suppose we have a bound of the form
+\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
+So, we get
+\[A(T) \ge (2-p(k))\card{T} - f(k) - (h(k) + 1)q(T).\]
+
+We will use $\gamma = (h(k) + 1)\epsilon$ in order to make the $q(T)$ term cancel.  That happens because $T$ receives charge on all but at most four of its non-separating vertices in a $K_{k-1}$; that is, in discharging steps 2 and 3, $T$ receives charge at least $\gamma\max\set{0, q(G) - 4}$.   Hence in total $T$ receives charge at least
+\[\epsilon A(T) + \gamma\max\set{0, q(G) - 4} = \epsilon\parens{2-p(k)}\card{T} - \epsilon \parens{f(k) + \min\set{4, q(G)}(h(k) + 1)}.\]
+
+For example, using the bound in Corollary \ref{SmallP}, we get that $T$ receives charge at least
+\[\epsilon\parens{2-\frac{4}{k-2}}\card{T} + \epsilon\max\set{0, 4 - q(G)} - \epsilon\min\set{4, q(G)}\frac{k^2-5k+2}{(k-2)(k-3)}.\]
+Since $q(T) = 0$ when $|T| < k - 1$, we conclude that the discharging procedure gives each low vertex charge at least
+\[\epsilon\parens{2-\frac{4}{k-2} - \frac{k^2-5k+2}{(k-1)(k-2)(k-3)}}.\]
+
+We want the $k$-vertices to end with enough charge, the worst case is when
+\[1 - (3\gamma + (k-3)\epsilon) = \epsilon\parens{2-\frac{4}{k-2} - \frac{k^2-5k+2}{(k-1)(k-2)(k-3)}},\]
+and thus
+\[\epsilon = \frac{1}{k-1 + \frac{6(k-1)(k-4)}{(k-2)(k-3)} -\frac{4}{k-2} - \frac{k^2-5k+2}{(k-1)(k-2)(k-3)} },\]
+which simplifies to
+\[\epsilon = \frac{(k-3)(k-2)(k-1)}{k^4-k^3-24 k^2+58 k-32}.\]
+For $\gamma$, we get
+\[\gamma = \frac{2 (k-4) (k-1)^2}{k^4-k^3-24 k^2+58 k-32}.\]
+
+It remains to check that the $(k+1)^+$-vertices don't give away too much charge.  Let $v$ be a $(k+1)^+$-vertex, then $v$ ends with charge at least
+\[d(v) - \gamma d(v) = (1-\gamma)d(v) \ge (1-\gamma)(k+1),\]
+you can show this is big enough for all $k$ (i checked with wolfram).  So, we get the following.
+
+\begin{thm}
+	For $k \ge 7$ and $G \ne K_k$ a $k$-AT-critical graph, we have
+	\[d(G) \ge k-1 + \frac{2 k^3-17 k^2+43 k-26}{k^4-k^3-24 k^2+58 k-32}.\]
+\end{thm}
+
+This is better than Gallai's bound and the bound Kostochka-Stiebitz proved, but not as good as the bound Hal and i proved.  It is closer to the bound with Hal than it is to the Kostochka-Stiebitz bound.  
+But there is room for improvement all over.  Here are some things i see right off:
+
+\begin{enumerate}
+	\item Use a better bound on average degree of Gallai trees than Corollary \ref{SmallP}, such as the Kostochka-Stiebitz bound or the better one in the other document.  i would like to find the best possible family in the form here.
+	\item Near the end of the proof where we used that $q(T) = 0$ when $|T| < k-1$, i think we lost a lot more than we really needed to.
+	\item In the discharging, the $k$-vertices lost $3\gamma$ even though they had degree two in $Q$ because of the possibility of two edges into one component.  Can we get this to $2\gamma$ somehow, like maybe we can order our picking so that no vertex is picked before the component where it has two edges has been removed.   
+	\item Related to the previous item, improved reducible configurations, a less restrictive condition in Lemma \ref{MultipleHighConfigurationEuler} taking into account the two edges to a component issue.
+	\item Do the averaging like in the Hal paper, or a hybrid.  How exactly is this averaging related to the discharging procedure?  Is the averaging there better than the discharging here?
+\end{enumerate}
 
 \section{Reducible Configurations}
 \begin{defn}

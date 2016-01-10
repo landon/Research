@@ -258,11 +258,11 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
 
 Now some examples of using Lemma \ref{BoundFamily}.  What happens if we take $h(k) = 0$?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
 
-Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamily} will let us. By (6), $h(k) \le (k-2)p(k) - 2$, plugging this in to (7) and solving we get $p(k) \ge \frac{3k-5}{(k-5)(k-1)}$.  Now $\frac{3k-5}{(k-5)(k-1)} \ge \frac{3}{k-2}$ for $k \ge 6$, so $p(k) = \frac{3k-5}{(k-5)(k-1)}$ satisfies (5).  With $h(k) = \frac{k(k-7)}{(k-5)(k-3)}$, (6) and (7) are also satisfied. Now with $f(k) = \frac{-2(2k^2-15k+15)}{(k-5)(k-3)}$, all the conditions of Lemma \ref{BoundFamily} are satisfied and hence we have the following.
+Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamily} will let us. By (6), $h(k) \le (k-2)p(k) - 2$, plugging this in to (7) and solving we get $p(k) \ge \frac{3k-5}{k^2 - 4k + 5}$.  Now $\frac{3k-5}{k^2 - 4k + 5} \ge \frac{3}{k-2}$ for $k \ge 7$, so $p(k) = \frac{3k-5}{k^2 - 4k + 5}$ satisfies (5).  With $h(k) = \frac{k(k-3)}{k^2 - 4k + 5}$, (6) and (7) are also satisfied. Now with $f(k) = -\frac{2(k-1)(2k-5)}{k^2 - 4k + 5}$, all the conditions of Lemma \ref{BoundFamily} are satisfied and hence we have the following.
 
 \begin{cor}\label{SmallP}
 	For $k \ge 7$ and $T \in \T_k$, we have
-	\[2\size{T} \le \parens{k-3 + \frac{3k-5}{(k-5)(k-1)}}\card{T} - \frac{2(2k^2-15k+15)}{(k-5)(k-3)} + \frac{k(k-7)}{(k-5)(k-3)}q(T).\]
+	\[2\size{T} \le \parens{k-3 + \frac{3k-5}{k^2 - 4k + 5}}\card{T} - \frac{2(k-1)(2k-5)}{k^2 - 4k + 5} + \frac{k(k-3)}{k^2 - 4k + 5}q(T).\]
 \end{cor}
 
 If we put the Kostochka-Stiebitz bound on $\sigma(T)$ into this form we get the following.
@@ -323,9 +323,9 @@ This is exactly equal to the bound in the paper with Hal!
 
 Now, let's try our bound in
 Lemma \ref{SmallP}, that is, $p(k) = \frac{3k-5}{(k-5)(k-1)}$, $f(k) = \frac{-2(2k^2-15k+15)}{(k-5)(k-3)}$ and $h(k) = \frac{k(k-7)}{(k-5)(k-3)}$.  The hypotheses of Theorem \ref{UberTheorem} are satisfied with $K=7$ and we get
- \[d(G) \ge k-1 + \frac{2(k-3)(k-4)}{k^3 - 23k + 30}.\]
+ \[d(G) \ge k-1 + \frac{(k-3)(2k-5)}{k^3 + k^2 - 15k + 15}.\]
  
-This is better than the bound with Hal for $k \ge 13$.  We can probably take a slightly larger value of $p(k)$ and smaller value of $h(k)$ to do better for the smaller $k$.
+This is better than the bound with Hal for $k \ge 7$.  
 
 
 

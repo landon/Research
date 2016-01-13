@@ -243,7 +243,7 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
 		 since $T$ is a counterexample and $q(T) = k-1 - t$, this gives (after some simplification)
 		 \[t + k - 1 > p(k)(k-1 + t(k-2)) + f(k) + h(k)(k-1-t),\]
 		 which gives
-		 \[p(k) < \frac{t+k-1 - f(k) - h(k)(k-1-t)}{k-1+t(k-2)} = \frac{t(h(k) + 1) + (k-1)(1-h(k)) - f(k)},\]
+		 \[p(k) < \frac{t+k-1 - f(k) - h(k)(k-1-t)}{k-1+t(k-2)} = \frac{t(h(k) + 1) + (k-1)(1-h(k)) - f(k)}{k-1+t(k-2)},\]
 		 applying (3), we get
 		 \[p(k) < \frac{t+k-1 - f(k) - h(k)(k-1-t)}{k-1+t(k-2)} = \frac{t(h(k) + 1) + (k-1)p(k)}{k-1+t(k-2)},\]
 		 so
@@ -272,23 +272,23 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
 		 Hence $V(C) \cup \bigcup_{i \in \irange{t}} V(B_i) \ne V(T)$.  Since $\delta(T) \ge 3$, $C$ must be adjacent to a non-endblock $D$.
 		 
 		 First, suppose $D$ is an odd cycle.  By extremality, every block $X$ adjacent to $D$ with $V(X) \cap V(D) = V(C) \cap V(D)$ is an odd cycle. Let $C_1 = C, C_2, \ldots, C_s$ be these blocks.  Each $C_i$ is adjacent to $|C_i| - 1$ endblocks just like $C$.   Let $C' = \sum_{i \in \irange{s}} \parens{\card{C_i} - 1}$. Remove all these blocks and their adjacent endblocks to form $T'$.  Then, by minimality of $\card{T}$ and since $q(T') = q(T)$, we have
-		 \[(k-2)(k-3)C' + C' + s + 2 > (k-3 + p(k))(C'(k-2) + 1),\]
+		 \[(k-2)(k-3)C' + 2(C' + s + 2) > (k-3 + p(k))(C'(k-2) + 1),\]
 		 which gives
-		 \[C' + s + 2 > k-3 + p(k)(C'(k-2) + 1),\]
+		 \[2(C' + s + 2) > k-3 + p(k)(C'(k-2) + 1),\]
 		 which is
-		 \[p(k) < \frac{C' + s + 5 - k}{C'(k-2) + 1} \le \frac{C' + s + 5 - k}{(C'+1)(k-2)} \le \frac{\frac43 C'}{(C'+1)(k-2)} < \frac{\frac43}{k-2},\]
-		 contradicting (5).		 
+		 \[p(k) < \frac{2C' + 2s + 7 - k}{C'(k-2) + 1} \le \frac{3C' + 7 - k}{C'(k-2) + 1} \le \frac{3}{k-2},\]
+		 contradicting (5 FAIL).		 
 		 
 		 So, $D$ is not an odd cycle.  Then $D$ is not adjacent to an endblock.  By extremality of $B$, all but at most one block adjacent to $D$ is adjacent to an endblock.  Let $C_1 = C, C_2, \ldots, C_s$ be the blocks adjacent to $D$ that are also adjacent to an endblock.  Then, since $C_i$ is also the penultimate vertex on a longest path in the block-tree, each $C_i$ is an odd cycle and all but one vertex of $C$ is in an endblock as above.  Let $C' = \sum_{i \in \irange{s}} \parens{\card{C_i} - 1}$. Note $1 \le s \le \frac{C'}{2}$.  Let $Q$ be the vertices of $T$ that are in a block adjacent to some $C_i$.
 		 
 		 Suppose $Q = V(T)$ and $D = K_r$ for $2 \le p \le k-2$. Then, since $T$ is a counterexample and $q(T) = 0$, we have
-		 \[(k-2)(k-3)C' + C' + s + (r)(r-1) > (k-3 + p(k))(C'(k-2) + r) + f(k),\]
+		 \[(k-2)(k-3)C' + 2(C' + s) + (r)(r-1) > (k-3 + p(k))(C'(k-2) + r) + f(k),\]
 		 which gives,
-		 \[C' + s + (r)(r - k + 2) > p(k)(C'(k-2) + r) + f(k),\]
+		 \[2(C' + s) + (r)(r - k + 2) > p(k)(C'(k-2) + r) + f(k),\]
 		 so,
-		 \[p(k) < \frac{C' + s + r(r - k + 2) - f(k)}{C'(k-2) + r},\]
+		 \[p(k) < \frac{2(C' + s) + r(r - k + 2) - f(k)}{C'(k-2) + r},\]
 		 which achieves its maximum when $r = k-2$, so we have
-		\[p(k) < \frac{C' + s - f(k)}{(C'+1)(k-2)} \le \frac{\frac{3C'}{2} - f(k)}{(C'+1)(k-2)} \le \frac{3-f(k)}{3(k-2)},\]
+		\[p(k) < \frac{2(C' + s) - f(k)}{(C'+1)(k-2)} \le \frac{3C' - f(k)}{(C'+1)(k-2)} \le \frac{3-f(k)}{3(k-2)},\]
 		contradicting (8).
 		 
 		 Otherwise, there is a block $F$ adjacent to $D$ but not adjacent to an endblock.  Let $y$ be the vertex that $D$ and $F$ share.  We apply minimality of $T$ to $T'= T - (Q \setminus \set{y})$.   Then, since $T$ is a counterexample and $q(T') = q(T)$, we have

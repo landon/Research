@@ -187,10 +187,9 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
     	\item $f(k) \ge (5-k-p(k))s$ for all $s \ge 5$; and
 		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
 		\item $p(k) \ge h(k) + 5 - k$; and
-		\item $p(k) \ge \frac{2}{k-2}$; and
-		\item $p(k) \ge \frac{1+h(k)}{k-2}$; and
-		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$; and
-		\item $p(k) \ge \frac{3 - f(k)}{3(k-2)}$; and
+		\item $p(k) \ge \frac{3}{k-2}$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$.
 	\end{enumerate}
 	Then for $k \ge K$ and $T \in \T_k$, we have
 	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
@@ -230,124 +229,107 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
 		 	\end{align*}
 		 	contradicting (7).
 		 	
-		 Finally, suppose every endblock of $T$ is $K_{k-2}$.  Then, for any endblock $B$, we have $d_T(x_B) = k - 1$ or $d_T(x_B) = k-2$.  In the former case, $q(T) = q(T^*)$ and in the latter case $q(T^*) \le q(T) + 1$.  
-		 
-		 Call an endblock \emph{extreme} if it is the end of a longest path in the block-tree of $T$.  First, suppose there is an extreme endblock $B$ with $d_T(x_B) = k-2$.  Then $B$ is adjacent to a $K_2$ block which is adjacent to a block $A$.
-		 If $A$ is not $K_{k-1}$, then $q(T) = q(T^*)$ and hence
-		 \[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 = (k-2)(k-3) - 2 + (k-2)p(k),\]
-		 contradicting (5).  Hence $A$ is $K_{k-1}$.  By the extremality of $B$, all but at most one $K_2$ block adjacent to $A$ is adjacent to a $K_{k-2}$ endblock.  Let $B_1 = B, B_2, \ldots, B_t$ be these $K_{k-2}$ endblocks.
-		 $\hat{T} = T \setminus \parens{A \cup \bigcup_{i \in \irange{t}} B_i}$.  If $|\hat{T}| = 0$, then
-		 \[2\size{T} = t + (k-1)(k-2) + t(k-2)(k-3),\]
-		 and
-		 \[\card{T} = k-1 + t(k-2),\]
-		 since $T$ is a counterexample and $q(T) = k-1 - t$, this gives (after some simplification)
-		 \[t + k - 1 > p(k)(k-1 + t(k-2)) + f(k) + h(k)(k-1-t),\]
-		 which gives
-		 \[p(k) < \frac{t+k-1 - f(k) - h(k)(k-1-t)}{k-1+t(k-2)} = \frac{t(h(k) + 1) + (k-1)(1-h(k)) - f(k)}{k-1+t(k-2)},\]
-		 applying (3), we get
-		 \[p(k) < \frac{t+k-1 - f(k) - h(k)(k-1-t)}{k-1+t(k-2)} = \frac{t(h(k) + 1) + (k-1)p(k)}{k-1+t(k-2)},\]
-		 so
-		 \[p(k) < \frac{t(h(k) + 1)}{t(k-2)} = \frac{1 + h(k)}{k-2},\]
+		 Finally, suppose $B$ is $K_{k-2}$.  Then $d_T(x_B) = k - 1$ or $d_T(x_B) = k-2$.  In the former case, $q(T) = q(T^*)$ and in the latter $q(T^*) \le q(T) + 1$.  If $d_T(x_B) = k - 2$, we have
+		 \[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 - h(k) = (k-2)(k-3) - 2 + (k-2)p(k) - h(k),\]
 		 contradicting (6).
-		 
-		  
-		  So, for every extreme block $B$ of $T$ we have $d_T(x_B) = k - 1$.  Pick an extreme block $B$ and let $C$ be the odd cycle adjacent to $B$.  We claim that all but at most one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two noncutvertices that are both not in endblocks, for then we could get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+
+		 Now we need to handle the remaining case when $B$ is $K_{k-2}$ and $d_T(x_B) = k - 1$.  All of the above cases were for when $B$ was any endblock of $T$, 
+		 so we may assume that every endblock of $T$ is a $K_{k-2}$ that shares a vertex with an odd cycle.  Choose an endblock $B$ that is the end of a longest path in the block-tree of $T$.  
+		 Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+		 get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
 		 \[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k) + h(k)q(T - v),\]
 		 Since $q(T-v) = q(T)$, the fact that $T$ is a counterexample implies
 		 \[4 > k-3 + p(k),\]
-		 a contradiction since $k \ge K \ge 7$ and $p(k) > 0$.  So, we have shown that all but one vertex of $C$ is in an endblock.  Let $B_1 = B, B_2, \ldots, B_t$ be the endblocks adjacent to $C$.  
-		 
-		 First, suppose $V(C) \cup \bigcup_{i \in \irange{t}} V(B_i) = V(T)$.  Then
-		 \[2\size{T} = t + t(k-2)(k-3)\]
-		 and
-		 \[\card{T} = t(k-2),\]
-		 so since $T$ is a counterexample and $q(T) = 0$, we have 
-		 \[t > p(k)t(k-2) + f(k),\]
+		 a contradiction since $k \ge K \ge 7$ and $p(k) > 0$.  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Then $q(\hat{T}) = q(T)$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+		\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k) + h(k)q(T).\]
+ 		Since $T$ is a counterexample, this gives
+	 	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
 		 which is
-		 \[p(k) < \frac{t - f(k)}{t(k-2)} = \frac{1}{k-2} - \frac{f(k)}{t(k-2)},\]
-		 which contradicts (5) when $f(k) \ge 0$.  When $f(k) < 0$, the worst case is when $t = 3$ and hence
-		 \[p(k) < \frac{3 - f(k)}{3(k-2)},\]
-		 which contradicts (8).
-		 
-		 Hence $V(C) \cup \bigcup_{i \in \irange{t}} V(B_i) \ne V(T)$.  Since $\delta(T) \ge 3$, $C$ must be adjacent to a non-endblock $D$.
-		 
-		 First, suppose $D$ is an odd cycle.  By extremality, every block $X$ adjacent to $D$ with $V(X) \cap V(D) = V(C) \cap V(D)$ is an odd cycle. Let $C_1 = C, C_2, \ldots, C_s$ be these blocks.  Each $C_i$ is adjacent to $|C_i| - 1$ endblocks just like $C$.   Let $C' = \sum_{i \in \irange{s}} \parens{\card{C_i} - 1}$. Remove all these blocks and their adjacent endblocks to form $T'$.  Then, by minimality of $\card{T}$ and since $q(T') = q(T)$, we have
-		 \[(k-2)(k-3)C' + 2(C' + s + 2) > (k-3 + p(k))(C'(k-2) + 1),\]
-		 which gives
-		 \[2(C' + s + 2) > k-3 + p(k)(C'(k-2) + 1),\]
-		 which is
-		 \[p(k) < \frac{2C' + 2s + 7 - k}{C'(k-2) + 1} \le \frac{3C' + 7 - k}{C'(k-2) + 1} \le \frac{3}{k-2},\]
-		 contradicting (5 FAIL).		 
-		 
-		 So, $D$ is not an odd cycle.  Then $D$ is not adjacent to an endblock.  By extremality of $B$, all but at most one block adjacent to $D$ is adjacent to an endblock.  Let $C_1 = C, C_2, \ldots, C_s$ be the blocks adjacent to $D$ that are also adjacent to an endblock.  Then, since $C_i$ is also the penultimate vertex on a longest path in the block-tree, each $C_i$ is an odd cycle and all but one vertex of $C$ is in an endblock as above.  Let $C' = \sum_{i \in \irange{s}} \parens{\card{C_i} - 1}$. Note $1 \le s \le \frac{C'}{2}$.  Let $Q$ be the vertices of $T$ that are in a block adjacent to some $C_i$.
-		 
-		 Suppose $Q = V(T)$ and $D = K_r$ for $2 \le p \le k-2$. Then, since $T$ is a counterexample and $q(T) = 0$, we have
-		 \[(k-2)(k-3)C' + 2(C' + s) + (r)(r-1) > (k-3 + p(k))(C'(k-2) + r) + f(k),\]
-		 which gives,
-		 \[2(C' + s) + (r)(r - k + 2) > p(k)(C'(k-2) + r) + f(k),\]
-		 so,
-		 \[p(k) < \frac{2(C' + s) + r(r - k + 2) - f(k)}{C'(k-2) + r},\]
-		 which achieves its maximum when $r = k-2$, so we have
-		\[p(k) < \frac{2(C' + s) - f(k)}{(C'+1)(k-2)} \le \frac{3C' - f(k)}{(C'+1)(k-2)} \le \frac{3-f(k)}{3(k-2)},\]
-		contradicting (8).
-		 
-		 Otherwise, there is a block $F$ adjacent to $D$ but not adjacent to an endblock.  Let $y$ be the vertex that $D$ and $F$ share.  We apply minimality of $T$ to $T'= T - (Q \setminus \set{y})$.   Then, since $T$ is a counterexample and $q(T') = q(T)$, we have
-		 \[\card{D}(\card{D}-1) + C' + s + C'(k-2)(k-3) > (k-3 + p(k))(\card{D} - 1 + C'(k-2)),\]
-		 simplifying, we get
-		 \[(\card{D} - (k-3))(\card{D}-1) + C' + s > p(k)(C'(k-2) + \card{D} - 1),\]
-		 which is
-		 \[p(k) < \frac{(\card{D} - (k-3))(\card{D}-1) + C' + s}{C'(k-2) + \card{D} - 1}.\]
-		 
-		 Suppose $|D| \le k-3$.  The worst case is when $|D| = k-3$, using $s \le \frac{C'}{2}$ we get
-		 \[p(k) < \frac{\frac32 C'}{C'(k-2) + k-4} = \frac{\frac32 C'}{\parens{C' + 1}\parens{k-4 + 2\frac{C'}{C'+1}}} \le \frac{3}{2(k-4 + \frac43)} \le \frac{2}{k-2},\]
-		 where in the penultimate inequality we used $C' \ge 2$.  This contradicts (5).
-		 
-		 Hence, we must have $D = K_{k-2}$.  Suppose $F = K_2$ and let $T^*= T - Q$.  Then $q(T^*) \le q(T) + 1$ and applying minimality of $|T|$, we get
-		 \[1 + (k-2)(k-3) + C' + s + C'(k-2)(k-3) > (k-3 + p(k))(\card{D} + C'(k-2)) - h(k) ,\]
-		 simplifying, we get
-		 \[1 + C' + s > p(k)(k-2 + C'(k-2)) - h(k) ,\]
-		 so,
-		 \[p(k) < \frac{1 + C' + s + h(k)}{(C' + 1)(k-2)} = \frac{1}{k-2} + \frac{s + h(k)}{(C' + 1)(k-2)} \le \frac{\frac{C'}{2} + h(k)}{(C' + 1)(k-2)}.\]
-		 
-		 Since $C' \ge 2$, this gives
-		 \[p(k) < \frac{1 + h(k)}{3(k-2)},\]
-		 which contradicts (6).  
-		 
-		 So, $F$ must be an odd cycle.  All but at most one block adjacent to $F$ is either an endblock, adjacent to an endblock or at distance two from an endblock.  Let $Q$ be such a block adjacent to $F$.  If $Q$ is an endblock, then $Q=K_{k-2}$.  If $Q$ is at distance two from an endblock, then the intervening block must be an odd cycle by extremality, but then by then $Q = K_{k-2}$ for otherwise we can run one of the above cases on that subtree instead. If $Q$ is adjacent to an endblock, then $Q$ cannot be $K_2$ since then we can remove $Q$ and its endblock without increasing $q(T)$.  So, in that case, $Q$ is an odd cycle. Let $V(D) \cap V(F) = \set{z}$ and let $w \in V(F) \setminus \set{z}$ be adjacent to $z$ and in a block $Q$ that is at distance at most two from an endblock.  So, $Q$ is either an endblock $K_{k-2}$, a $K_{k-2}$ of the form of $D$, or an odd cycle.  Let $S$ be the graph formed from $T$ by removing $D$ and $Q$ and their subtrees.   Let $C_1 = C, C_2, \ldots, C_s$ be the blocks adjacent to $D$ that are also adjacent to an endblock.  Let $C' = \sum_{i \in \irange{s}} \parens{\card{C_i} - 1}$. We have $q(S) = q(T)$. 
-		 
-		 First, suppose $Q = K_{k-2}$. Then, by minimality of $\card{T}$, we get
-		 \[(k-2)(k-3)C' + C' + s + 2(k-3)(k-2) + 1 > (k-3 + p(k))(C'+2)(k-2),\]
-		 hence
-		 \[C' + s + 1 > p(k)(C'+2)(k-2),\]
-		 which gives
-		 \[p(k) < \frac{C' + s + 1}{(C'+2)(k-2)} = \frac{1}{k-2} + \frac{s-1}{(C'+2)(k-2)} \le \frac{1}{k-2} + \frac{\frac{C'}{2} - 1}{(C'+2)(k-2)} < \frac{\frac32}{k-2},\]
-		 contradicting (5).
-		 
-		 Instead, suppose $Q$ is a $K_{k-2}$ of the form of $D$.  Let $H_1, H_2, \ldots, H_r$ be the blocks adjacent to $Q$ that are also adjacent to an endblock.  Let $H' = \sum_{i \in \irange{r}} \parens{\card{H_i} - 1}$.
-		 Then, by minimality of $\card{T}$, we get
-		 \[(k-2)(k-3)(C' + D') + C' + D' + s + r + 2(k-3)(k-2) + 1 > (k-3 + p(k))(C' + D'+2)(k-2),\]
-		 hence
-		 \[C' + D' + s + r + 1 > p(k)(C' + D'+2)(k-2),\]
-		 which is
-		 \[p(k) < \frac{C' + D' + s + r + 1}{(C' + D' + 2)(k-2)} = \frac{1}{k-2} - \frac{s+r-1}{(C' + D' + 2)(k-2)} < \frac{2}{k-2},\]
-		 contradicting (5).
-		 
-		 So, $Q$ is an odd cycle and all of the blocks adjacent to $Q$ (besides possibly $F$) are $K_{k-2}$ endblocks (this is because, by extremality, the only other thing they could be is an odd cycle, but then the same proof that showed $D$ is $K_{k-2}$ gives a contradiction).  Since $\delta(T) \ge 3$, all but at most one vertex in $Q$ is adjacent to an endblock.  Now we are in a case similar to when $D$ was an odd cycle before, just with length one less.  Remove $Q$ and its subtree to get $S'$.  Let $A_1, A_2, \ldots, A_u$ be the endblocks adjacent to $Q$ and put $A' = \sum_{i \in \irange{u}} \parens{|A_i| - 1}$. Then $q(S') = q(T)$ and hence by minimality we have,
-		 \[(k-2)(k-3)A' + A' + u + (k-2)(k-3) + 2 > (k-3 + p(k))((k-2)(A'+1)),\]
-		 so,
-		 \[A' + u + 2 > p(k)((k-2)(A'+1)),\]
-		 which is
-		 \[p(k) < \frac{A' + u + 2}{(k-2)(A'+1)} \le = \frac{1}{k-2} + \frac{u+1}{(k-2)(A'+1)} \le \frac{1}{k-2} + \frac{\frac{A'}{2}+1}{(k-2)(A'+1)} < \frac{2}{k-2},\]
-		 contradicting (5).
-		 
+		 \[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+		 giving
+		 \[3 > (k-2)p(k),\]
+		 which contradicts (5).
  \end{proof}
 
-Now some examples of using Lemma \ref{BoundFamily}.  What happens if we take $h(k) = 0$?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
+\begin{lem}\label{BoundFamilyWithKKMinusOne}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+		\item $p(k) \ge h(k) + 5 - k$; and
+		\item $p(k) \ge \frac{3}{k-2}$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  If $T$ has only one block, then $T=K_{k-1}$ and hence $(k-1)(k-2) > (k-3 + p(k))(k-1) + f(k) + h(k)(k-1)$ contradicting (1). 
+	
+	Hence $T$ has at least two blocks.  Suppose $T$ has an endblock $B$ that is an odd cycle or $K_t$ for $3 \le t \le k-3$. Let $x_B$ the cutvertex of $T$ contained in $B$. 
+	Let $T' = T - \parens{V(B) \setminus \set{x_B}}$. Then $K_{k-1} \subseteq T'$, so by minimality of $|T|$, we have
+	
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k) + h(k)q(T').\]
+	Hence
+	\[2\size{T} - 2\size{B} \le (k-3 + p(k))\parens{\card{T} - (\card{B} - 1)} + f(k) + h(k)q(T').\]
+	Since $T$ is a counterexample, this gives
+	\begin{equation}
+		2\size{B} > (k-3 + p(k))(\card{B} - 1) + h(k)\parens{q(T) - q(T')}.\tag{*}\label{eqn:*}
+	\end{equation}
+	
+	Then $q(T') = q(T)$, $2\size{B} \le \card{B}(\card{B}-1)$ and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  Since $p(k) \ge \frac{3}{k-2}$ by (3), this contradicts \ref{eqn:*}.
+	
+	If $B$ is $K_2$, then $q(T') \le q(T) + 1$ and \ref{eqn:*} gives $2 > k-3 + p(k) - h(k)$ contradicting (2).
+	
+	Hence every endblock of $B$ is $K_{k-2}$ or $K_{k-1}$. To handle these cases, we will need to remove $x_B$ from $T$ as well.  Let $\set{B_1, \ldots, B_r}$ be the endblocks $B_i$ of $T$ such that $K_{k-1} \subseteq T - V(B_i)$.
+	Then $r \ge 1$ since two $K_{k-1}$ blocks cannot share a vertex.  For $i \in \irange{r}$, let $T_i = T - V(B_i)$. 
+	
+	Then, by minimality of $|T|$, we have
+	\[2\size{T_i} \le (k-3 + p(k))\card{T_i} + f(k) + h(k)q(T_i).\]
+	Hence
+	\[2\size{T} - 2\size{B_i} - 2(d_T(x_{B_i}) - d_{B_i}(x_{B_i})) \le (k-3 + p(k))\parens{\card{T} - \card{B_i}} + f(k) + h(k)q(T_i).\]
+	
+	Since $T$ is a counterexample and $B_i$ is complete, this gives
+	\[2\size{B_i} > (k-3 + p(k))\card{B_i} -2(d_T(x_{B_i}) + 1 - \card{B_i}) + h(k)\parens{q(T) - q(T_i)},\]
+	which is
+	\begin{equation}
+		2\size{B_i} > (k-1 + p(k))\card{B_i} - 2d_T(x_{B_i}) - 2 + h(k)\parens{q(T) - q(T_i)}.\tag{**}\label{eqn:**}
+	\end{equation}
+	
+	If $B_i$ is $K_{k-1}$, we have $d_T(x_{B_i}) = k - 1$ and $q(T_i) \le q(T) - (k-2) + 1 = q(T) - (k-3)$.  From \ref{eqn:**}, we have
+	\begin{align*}
+		(k-1)(k-2) &> (k-1 + p(k))(k-1) - 2(k-1) - 2 + h(k)(k-3)\\
+		&= (k-1)(k-2) + p(k)(k-1) - (k+1) + h(k)(k-3),
+	\end{align*}
+	contradicting (5).
+	
+	Hence $B_i = K_{k-2}$ for all $i \in \irange{r}$. So $d_T(x_{B_i}) = k - 1$ or $d_T(x_{B_i}) = k-2$.  In the former case, $q(T) = q(T_i)$ and in the latter $q(T_i) \le q(T) + 1$.  If $d_T(x_{B_i}) = k - 2$, we have
+	\[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 - h(k) = (k-2)(k-3) - 2 + (k-2)p(k) - h(k),\]
+	contradicting (4).
+	
+	Hence $d_T(x_{B_i}) = k - 1$ for all $i \in \irange{r}$. If $B$ and $B'$ are blocks that are the ends of a longest path in the block-tree of $T$, then $\set{B,B'} \cap \set{B_1, \ldots, B_r} \ne \emptyset$.  By symmetry, we may assume that $B = B_1$.
+	Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+	get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+	\[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k) + h(k)q(T - v),\]
+	Since $q(T-v) = q(T)$, the fact that $T$ is a counterexample implies
+	\[4 > k-3 + p(k),\]
+	a contradiction since $k \ge K \ge 7$ and $p(k) > 0$ by (3).  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Then $K_{k-1} \subseteq \hat{T}$ and $q(\hat{T}) = q(T)$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+	\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k) + h(k)q(T).\]
+	Since $T$ is a counterexample, this gives
+	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
+	which is
+	\[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+	giving
+	\[3 > (k-2)p(k),\]
+	which contradicts (3).
+\end{proof}
 
-Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamily} will let us. By (6), $h(k) \le (k-2)p(k) - 2$, plugging this in to (7) and solving we get $p(k) \ge \frac{3k-5}{k^2 - 4k + 5}$.  Now $\frac{3k-5}{k^2 - 4k + 5} \ge \frac{3}{k-2}$ for $k \ge 7$, so $p(k) = \frac{3k-5}{k^2 - 4k + 5}$ satisfies (5).  With $h(k) = \frac{k(k-3)}{k^2 - 4k + 5}$, (6) and (7) are also satisfied. Now with $f(k) = -\frac{2(k-1)(2k-5)}{k^2 - 4k + 5}$, all the conditions of Lemma \ref{BoundFamily} are satisfied and hence we have the following.
+Now some examples of using Lemma \ref{BoundFamily} and Lemma \ref{BoundFamilyWithKKMinusOne}.  What happens if we take $h(k) = 0$ in Lemma \ref{BoundFamily}?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
+
+Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamilyWithKKMinusOne} will let us. By (4), $h(k) \le (k-2)p(k) - 2$, plugging this in to (5) and solving we get $p(k) \ge \frac{3k-5}{k^2 - 4k + 5}$.  Now $\frac{3k-5}{k^2 - 4k + 5} \ge \frac{3}{k-2}$ for $k \ge 7$, so $p(k) = \frac{3k-5}{k^2 - 4k + 5}$ satisfies (3).  With $h(k) = \frac{k(k-3)}{k^2 - 4k + 5}$, (4) and (5) are also satisfied. Now with $f(k) = -\frac{2(k-1)(2k-5)}{k^2 - 4k + 5}$, condition (1) is satisfied and hence by Lemma we have the following.
 
 \begin{cor}\label{SmallP}
-	For $k \ge 7$ and $T \in \T_k$, we have
+	For $k \ge 7$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
 	\[2\size{T} \le \parens{k-3 + \frac{3k-5}{k^2 - 4k + 5}}\card{T} - \frac{2(k-1)(2k-5)}{k^2 - 4k + 5} + \frac{k(k-3)}{k^2 - 4k + 5}q(T).\]
 \end{cor}
 
@@ -358,7 +340,7 @@ If we put the Kostochka-Stiebitz bound on $\sigma(T)$ into this form we get the 
 		\[2\size{T} \le \parens{k-3 + \frac{4(k-1)}{k^2 - 3k + 4}}\card{T} - \frac{4(k^2-3k+2)}{k^2-3k+4} + \frac{k^2 - 3k}{k^2-3k+4}q(T).\]
 \end{lem}
 
-Note that $\frac{3k-5}{(k-5)(k-1)} < \frac{4(k-1)}{k^2 - 3k + 4}$ for $k \ge 13$.
+Note that $\frac{3k-5}{(k-5)(k-1)} < \frac{4(k-1)}{k^2 - 3k + 4}$ for $k \ge 7$.
 
 \subsection{Analyzing the discharging}
 Our discharging procedure gives charge $\epsilon$ to a component $T$ for every incident edge not ending in a $K_{k-1}$.  The number of such edges is exactly

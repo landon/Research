@@ -324,6 +324,68 @@ To analyze this discharging procedure we need a bound like Lemma \ref{BasicGalla
 	which contradicts (3).
 \end{proof}
 
+\begin{lem}\label{BoundFamilyWithoutKKMinusOne}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $p(k) \ge \frac{-f(k)}{k-2}$; and
+		\item $p(k) \ge \frac{-f(k)}{5} + 5 - k$; and
+		\item $p(k) \ge \frac{3}{k-2}$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$ with $K_{k-1} \not \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k).\]
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  First, suppose $T$ is $K_t$ for $t \in \irange{k-2}$.  Then $t(t-1) > (k-3 + p(k))t + f(k)$ contradicting (1).  If $T$ is $C_{2r+1}$ for $r \ge 2$, then $2(2r+1) > (k-3 + p(k))(2r+1) + f(k)$ and hence $f(k) < (5-k-p(k))(2r+1)$ contradicting (2).
+	
+	Hence $T$ has at least two blocks.  Let $B$ be an endblock of $T$ and $x_B$ the cutvertex of $T$ contained in $B$. Let $T' = T - \parens{V(B) \setminus \set{x_B}}$. Then, by minimality of $|T|$, we have
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k).\]
+	Hence
+	\[2\size{T} - 2\size{B} \le (k-3 + p(k))\parens{\card{T} - (\card{B} - 1)} + f(k).\]
+	Since $T$ is a counterexample, this gives
+	\begin{equation}
+	2\size{B} > (k-3 + p(k))(\card{B} - 1).\tag{*}\label{eqn:*}
+	\end{equation}
+	
+	Suppose $B$ is $K_t$ for $3 \le t \le k-3$ or $B$ is an odd cycle. Then $2\size{B} \le \card{B}(\card{B}-1)$ and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  Since $p(k) \ge \frac{3}{k-2}$ by (3), this contradicts \ref{eqn:*}.
+	
+	If $B$ is $K_2$, then \ref{eqn:*} gives $2 > k-3 + p(k)$, a contradiction since $k \ge 5$ and $p(k) > 0$ by (3).
+	
+	To handle the case when $B$ is $K_{k-2}$ we need to remove $x_B$ from $T$ as well.  Let $T^* = T - V(B)$. Then, by minimality of $|T|$, we have
+	\[2\size{T^*} \le (k-3 + p(k))\card{T^*} + f(k).\]
+	Hence
+	\[2\size{T} - 2\size{B} - 2(d_T(x_B) - d_B(x_B)) \le (k-3 + p(k))\parens{\card{T} - \card{B}} + f(k).\]
+	
+	Since $T$ is a counterexample and $B$ is complete, this gives
+	\[2\size{B} > (k-3 + p(k))\card{B} -2(d_T(x_B) + 1 - \card{B}),\]
+	which is
+	\begin{equation}
+	2\size{B} > (k-1 + p(k))\card{B} - 2d_T(x_B) - 2.\tag{**}\label{eqn:**}
+	\end{equation}
+
+	Since $B=K_{k-2}$, we have either $d_T(x_B) = k - 1$ or $d_T(x_B) = k-2$. If $d_T(x_B) = k - 2$, we have
+	\[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 = (k-2)(k-3) - 2 + (k-2)p(k),\]
+	contradicting (3).
+	
+	Now we need to handle the remaining case when $B$ is $K_{k-2}$ and $d_T(x_B) = k - 1$.  All of the above cases were for when $B$ was any endblock of $T$, 
+	so we may assume that every endblock of $T$ is a $K_{k-2}$ that shares a vertex with an odd cycle.  Choose an endblock $B$ that is the end of a longest path in the block-tree of $T$.  
+	Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+	get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+	\[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k),\]
+	The fact that $T$ is a counterexample implies
+	\[4 > k-3 + p(k),\]
+	a contradiction since $k \ge K \ge 7$ and $p(k) > 0$.  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+	\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k).\]
+	Since $T$ is a counterexample, this gives
+	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
+	which is
+	\[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+	giving
+	\[3 > (k-2)p(k),\]
+	which contradicts (3).
+\end{proof}
+
+Lemma \ref{BoundFamilyWithoutKKMinusOne} works with $p(k) = \frac{3}{k-2}$ and $f(k) = -3$.  We probably get (2) for free, clean up later.  In the discharging it will be convenient to apply Lemma \ref{BoundFamilyWithoutKKMinusOne} with a larger $p(k)$ to match the one we get when we have $K_{k-1}$ blocks (we can even be wasteful with the charge and use $f(k) = 0$).
+
 Now some examples of using Lemma \ref{BoundFamily} and Lemma \ref{BoundFamilyWithKKMinusOne}.  What happens if we take $h(k) = 0$ in Lemma \ref{BoundFamily}?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
 
 Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamilyWithKKMinusOne} will let us. By (4), $h(k) \le (k-2)p(k) - 2$, plugging this in to (5) and solving we get $p(k) \ge \frac{3k-5}{k^2 - 4k + 5}$.  Now $\frac{3k-5}{k^2 - 4k + 5} \ge \frac{3}{k-2}$ for $k \ge 7$, so $p(k) = \frac{3k-5}{k^2 - 4k + 5}$ satisfies (3).  With $h(k) = \frac{k(k-3)}{k^2 - 4k + 5}$, (4) and (5) are also satisfied. Now with $f(k) = -\frac{2(k-1)(2k-5)}{k^2 - 4k + 5}$, condition (1) is satisfied and hence by Lemma we have the following.
@@ -345,9 +407,9 @@ Note that $\frac{3k-5}{(k-5)(k-1)} < \frac{4(k-1)}{k^2 - 3k + 4}$ for $k \ge 7$.
 \subsection{Analyzing the discharging}
 Our discharging procedure gives charge $\epsilon$ to a component $T$ for every incident edge not ending in a $K_{k-1}$.  The number of such edges is exactly
 \[A(T) \DefinedAs -q(T) + \sum_{v \in V(T)} k-1 - d_T(v) = (k-1)\card{T} - 2\size{T} - q(T).\]
-Suppose we have a bound of the form
+Suppose we have a bound when $K_{k-1} \subseteq T$ of the form
 \[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
-So, we get
+So, when $K_{k-1} \subseteq T$ we get
 \[A(T) \ge (2-p(k))\card{T} - f(k) - (h(k) + 1)q(T).\]
 
 We will use $\gamma = (h(k) + 1)\epsilon$ in order to make the $q(T)$ term cancel.  That happens because $T$ receives charge on all but at most two of its non-separating vertices in a $K_{k-1}$; that is, in discharging steps 2 and 3, $T$ receives charge at least $\gamma\max\set{0, q(G) - 2}$.   Hence in total $T$ receives charge at least
@@ -361,6 +423,12 @@ We want the $k$-vertices to end with enough charge, the worst case is when
 and thus
 \[\epsilon = \frac{1}{k+2 + 3h(k) - p(k)},\]
 \[\gamma = \frac{h(k)+1}{k+2 + 3h(k) - p(k)}.\]
+
+When $K_{k-1} \not \subseteq T$, we have $q(T) = 0$.  By Lemma \ref{BoundFamilyWithoutKKMinusOne} with $f(k) = 0$, we get 
+\[2\size{T} \le (k-3 + p(k))\card{T}\]
+and hence
+\[A(T) \ge (2-p(k))\card{T},\]
+which is sufficient charge.
 
 It remains to check that the $(k+1)^+$-vertices don't give away too much charge.  Let $v$ be a $(k+1)^+$-vertex, then $v$ ends with charge at least
 \[d(v) - \gamma d(v) = (1-\gamma)d(v) \ge (1-\gamma)(k+1) = (k+1)\frac{k+1 + 2h(k) - p(k)}{k+2 + 3h(k) - p(k)},\]

@@ -1,0 +1,508 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{color}
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{Edge lower bounds via discharging notes}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+For a graph $G$, let $d(G)$ be the average degree of $G$. Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. 
+
+\section{Gallai's bound via discharging}
+
+\begin{thm}[Gallai]
+	For $k \ge 4$ and $G \ne K_k$ a $k$-AT-critical graph, we have
+	\[d(G) > k-1 + \frac{k-3}{k^2-3}.\]
+\end{thm}
+\begin{proof}
+	Start with initial charge function $\ch(v) = d_G(v)$.  Have each $k^+$-vertex give charge $\frac{k-1}{k^2-3}$ to each of its $(k-1)$-neighbors.  Then let the vertices in each component of the low vertex subgraph share their total charge equally.  Let $\ch^*(v)$ be the resulting charge function.  We finish the proof by showing that $\ch^*(v) \ge k-1 + \frac{k-3}{k^2-3}$ for all $v \in V(G)$.
+	
+	If $v$ is a $k^+$-vertex, then $ch^*(v) \ge d_G(v) - \frac{k-1}{k^2-3}d_G(v) = \parens{1- \frac{k-1}{k^2-3}}d_G(v) \ge \parens{1- \frac{k-1}{k^2-3}}k = k-1 + \frac{k-3}{k^2-3}$ as desired.
+
+	Let $T$ be a component of the low vertex subgraph.  Then the vertices in $T$ receive total charge
+	\[\frac{k-1}{k^2-3}\sum_{v \in V(T)} k-1 - d_G(v) = \frac{k-1}{k^2-3}\parens{(k-1)|T| - 2\size{T}}.\]
+	So, after distributing this charge out equally, each vertex in $T$ receives charge
+	\[\frac{1}{|T|}\frac{k-1}{k^2-3}((k-1)|T| - 2\size{T}) = \frac{k-1}{k^2-3}\parens{(k-1) - d(T)}.\]
+	By Lemma \ref{BasicGallaiTreeBound}, this is at least
+	\[\frac{k-1}{k^2-3}\parens{(k-1) - \parens{k-2 + \frac{2}{k-1}}} = \frac{k-1}{k^2-3}\parens{\frac{k-3}{k-1}} = \frac{k-3}{k^2-3}.\]
+	Hence each low vertex ends with charge at least $k-1 + \frac{k-3}{k^2-3}$ as desired.
+\end{proof}
+
+
+\begin{lem}[Gallai]\label{BasicGallaiTreeBound}
+	For $k \ge 4$ and $T \in \T_k$, we have $d(T) < k-2 + \frac{2}{k-1}$.
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  Then $T$ has at least two blocks.  Let $B$ be an endblock of $T$.  If $B$ is $K_t$ for $2 \le t \le k-2$, then remove the non-separating vertices of $B$ from $T$ to get $T'$.  By minimality of $|T|$, we have 
+	\[2\size{T} - t(t-1) = 2\size{T'} < \parens{k-2 + \frac{2}{k-1}}|T'| = \parens{k-2 + \frac{2}{k-1}}|T| - \parens{k-2 + \frac{2}{k-1}}(t-1).\]
+	Hence we have the contradiction
+	\[2\size{T} < \parens{k-2 + \frac{2}{k-1}}|T| + (t+2 -k - \frac{2}{k-1})(t-1) \le \parens{k-2 + \frac{2}{k-1}}|T|.\]
+	
+	The case when $B$ is an odd cycle is the same as the above, a longer cycle just makes things better.  Finally, if $B = K_{k-1}$, remove all vertices of $B$ from $T$ to get $T'$. By minimality of $|T|$, we have 
+	\begin{align*}
+	  2\size{T} - (k-1)(k-2) - 2 &= 2\size{T'}\\
+	  &< \parens{k-2 + \frac{2}{k-1}}|T'|\\
+	  &= \parens{k-2 + \frac{2}{k-1}}|T| - \parens{k-2 + \frac{2}{k-1}}(k-1).
+	\end{align*}
+
+	Hence $2\size{T} < \parens{k-2 + \frac{2}{k-1}}|T|$, a contradiction.
+\end{proof}
+
+\section{An initial improved bound}
+Lemma \ref{BasicGallaiTreeBound} is best possible as can be seen by the family of graphs with blocks on a path alternating $K_{k-1}$ and $K_2$.  But we have reducible configurations (see the last section for the precise statements) that place restrictions on $K_{k-1}$ blocks. To state these restrictions, we need the following auxiliary bipartite graph. 
+
+For a $k$-AT-critical graph $G$, let $\L(G)$ be the subgraph of $G$ induced on the $(k-1)$-vertices and $\HH(G)$ the subgraph of $G$ induced on the $k$-vertices.   For $T \in \T_k$, let $W^k(T)$ be the set of vertices of $T$ that are contained in some $K_{k-1}$ in $T$.  Let $\B_k(G)$ be the bipartite graph with one part $V(\HH(G))$ and the other part the components of $\L(G)$.  Put an edge between $y \in V(\HH(G))$ and a component $T$ of $\L(G)$ if and only if $N(y) \cap W^k(T) \ne \emptyset$.  Then Lemma \ref{MultipleHighConfigurationEuler} says that $\B_k(G)$ is $2$-degenerate.
+
+We can use this fact to refine our discharging argument.  Let $\epsilon$ and $\gamma$ be parameters that we will determine where $\epsilon \le \gamma < 2\epsilon$. Start with initial charge function $\ch(v) = d_G(v)$.  
+\begin{enumerate}
+	\item Each $k^+$-vertex gives charge $\epsilon$ to each of its $(k-1)$-neighbors not in a $K_{k-1}$,
+	\item Each $(k+1)^+$-vertex give charge $\gamma$ to each of its $(k-1)$-neighbors in a $K_{k-1}$,
+	\item Let $Q = \B_k(G)$.  Repeat the following steps until $Q$ is empty.
+	  \begin{enumerate}
+	  	\item For each component $T$ of $\L(G)$ in $Q$ that has degree at most two in $Q$ do the following:
+	  	    \begin{enumerate}
+	  	    	\item For each $v \in V(\HH(G)) \cap V(Q)$ such that $\card{N_G(v) \cap W^k(T)} = 2$, pick one $x \in N_G(v) \cap W^k(T)$ and send charge $\gamma$ from $v$ to $x$,
+	  	    	\item Remove $T$ from $Q$.
+	  	    \end{enumerate}
+	  	\item Pick $v \in V(\HH(G)) \cap V(Q)$ with degree at most two in $Q$.  Send charge $\gamma$ from $v$ to each $x \in N_G(v) \cap W^k(T)$ for each component $T$ of $\L(G)$ where $vT \in E(Q)$.
+	  	\item Remove $v$ from $Q$.
+	  \end{enumerate}
+	\item Have the vertices in each component of $\L(G)$ share their total charge equally.
+\end{enumerate}
+Let $\ch^*(v)$ be the resulting charge function.  Here is some intuition for why this might be a useful refinement.  In (3b), $v$ sends charge to at most two different $T$ and so, by Lemma \ref{ConfigurationTypeOneEuler} (or our `beyond degree choosability' classification), $v$ loses charge at most $3\gamma$.  On the other hand, from (3a) each component $T$ of $\L(G)$ receives charge $\gamma$ for all but at most two non-separating vertices in a $K_{k-1}$ (the at most two is coming from Lemma \ref{ConfigurationTypeOneEuler} and the fact that we leave $T$ in $Q$ until it has degree at most two and when it does, we send up to two extra $\gamma$ to $T$ in (3ai) as needed). Note that (3ai) doesn't cause any $v \in V(\HH(G))$ to lose more than $3\gamma$, because it only gets enacted when the component $T$ is about to be removed, after that $v$ does not have two neighbors in another component. So, we can get each $T$ almost as much charge as we could hope for without losing too much from the $k$-vertices.  We don't have the same control over $(k+1)^+$-vertices, but it won't matter since they have extra charge to start with and sending $\gamma$ to every $(k-1)$-neighbor will leave enough charge (we'll use $\gamma < 2\epsilon$ here).
+
+To analyze this discharging procedure we need a bound like Lemma \ref{BasicGallaiTreeBound}, but taking into account the number of edges in $\B_k(G)$.  We can do this by taking into account the number of non-separating vertices in $K_{k-1}$'s in $T$.  To this end, for $T \in \T_k$, let $q(T)$ be the number of non-separating vertices in a $K_{k-1}$ in $T$.  We give a family of such bounds.  Without more reducible configurations we can't hope to do better than average degree $k-3$ because of $K_{k-2}$ components, that is why the bound below has $(k-3 + p(k))|T|$, a slight worsening of average degree $k-3$.
+
+\begin{lem}\label{BoundFamily}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $f(k) \ge t(t+2-k-p(k))$ for all $t \in \irange{k-2}$; and
+    	\item $f(k) \ge (5-k-p(k))s$ for all $s \ge 5$; and
+		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+		\item $p(k) \ge h(k) + 5 - k$; and
+		\item $p(k) \ge \frac{3}{k-2}$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  First, suppose $T$ is $K_t$ for $t \in \irange{k-2}$.  Then $t(t-1) > (k-3 + p(k))t + f(k)$ contradicting (1).  If $T$ is $C_{2r+1}$ for $r \ge 2$, then $2(2r+1) > (k-3 + p(k))(2r+1) + f(k)$ and hence $f(k) < (5-k-p(k))(2r+1)$ contradicting (2).  If $T$ is $K_{k-1}$, then $(k-1)(k-2) > (k-3 + p(k))(k-1) + f(k) + h(k)(k-1)$ contradicting (3).
+	
+	Hence $T$ has at least two blocks.  Let $B$ be an endblock of $T$ and $x_B$ the cutvertex of $T$ contained in $B$. Let $T' = T - \parens{V(B) \setminus \set{x_B}}$. Then, by minimality of $|T|$, we have
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k) + h(k)q(T').\]
+	Hence
+		\[2\size{T} - 2\size{B} \le (k-3 + p(k))\parens{\card{T} - (\card{B} - 1)} + f(k) + h(k)q(T').\]
+    Since $T$ is a counterexample, this gives
+    \begin{equation}
+	    2\size{B} > (k-3 + p(k))(\card{B} - 1) + h(k)\parens{q(T) - q(T')}.\tag{*}\label{eqn:*}
+    \end{equation}
+    
+    Suppose $B$ is $K_t$ for $3 \le t \le k-3$ or $B$ is an odd cycle. Then $q(T') = q(T)$, $2\size{B} \le \card{B}(\card{B}-1)$ and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  Since $p(k) \ge \frac{4}{k-2}$ by (5), this contradicts \ref{eqn:*}.
+    
+    If $B$ is $K_2$, then $q(T') \le q(T) + 1$ and \ref{eqn:*} gives $2 > k-3 + p(k) - h(k)$ contradicting (4).
+    
+	To handle the cases when $B$ is $K_{k-2}$ or $K_{k-1}$ we need to remove $x_B$ from $T$ as well.  Let $T^* = T - V(B)$. Then, by minimality of $|T|$, we have
+	\[2\size{T^*} \le (k-3 + p(k))\card{T^*} + f(k) + h(k)q(T^*).\]
+	Hence
+		\[2\size{T} - 2\size{B} - 2(d_T(x_B) - d_B(x_B)) \le (k-3 + p(k))\parens{\card{T} - \card{B}} + f(k) + h(k)q(T^*).\]
+		
+	Since $T$ is a counterexample and $B$ is complete, this gives
+	\[2\size{B} > (k-3 + p(k))\card{B} -2(d_T(x_B) + 1 - \card{B}) + h(k)\parens{q(T) - q(T^*)},\]
+	which is
+		 \begin{equation}
+		 2\size{B} > (k-1 + p(k))\card{B} - 2d_T(x_B) - 2 + h(k)\parens{q(T) - q(T^*)}.\tag{**}\label{eqn:**}
+		 \end{equation}
+		 
+		 	Suppose $B$ is $K_{k-1}$.  Then $d_T(x_B) = k - 1$ and $q(T^*) \le q(T) - (k-2) + 1 = q(T) - (k-3)$.  From \ref{eqn:**}, we have
+		 	\begin{align*}
+		 		(k-1)(k-2) &> (k-1 + p(k))(k-1) - 2(k-1) - 2 + h(k)(k-3)\\
+		 		&= (k-1)(k-2) + p(k)(k-1) - (k+1) + h(k)(k-3),
+		 	\end{align*}
+		 	contradicting (7).
+		 	
+		 Finally, suppose $B$ is $K_{k-2}$.  Then $d_T(x_B) = k - 1$ or $d_T(x_B) = k-2$.  In the former case, $q(T) = q(T^*)$ and in the latter $q(T^*) \le q(T) + 1$.  If $d_T(x_B) = k - 2$, we have
+		 \[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 - h(k) = (k-2)(k-3) - 2 + (k-2)p(k) - h(k),\]
+		 contradicting (6).
+
+		 Now we need to handle the remaining case when $B$ is $K_{k-2}$ and $d_T(x_B) = k - 1$.  All of the above cases were for when $B$ was any endblock of $T$, 
+		 so we may assume that every endblock of $T$ is a $K_{k-2}$ that shares a vertex with an odd cycle.  Choose an endblock $B$ that is the end of a longest path in the block-tree of $T$.  
+		 Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+		 get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+		 \[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k) + h(k)q(T - v),\]
+		 Since $q(T-v) = q(T)$, the fact that $T$ is a counterexample implies
+		 \[4 > k-3 + p(k),\]
+		 a contradiction since $k \ge K \ge 7$ and $p(k) > 0$.  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Then $q(\hat{T}) = q(T)$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+		\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k) + h(k)q(T).\]
+ 		Since $T$ is a counterexample, this gives
+	 	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
+		 which is
+		 \[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+		 giving
+		 \[3 > (k-2)p(k),\]
+		 which contradicts (5).
+ \end{proof}
+
+\begin{lem}\label{BoundFamilyWithKKMinusOne}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+		\item $p(k) \ge h(k) + 5 - k$; and
+		\item $p(k) \ge \frac{3}{k-2}$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) \ge k+1$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T).\]
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  If $T$ has only one block, then $T=K_{k-1}$ and hence $(k-1)(k-2) > (k-3 + p(k))(k-1) + f(k) + h(k)(k-1)$ contradicting (1). 
+	
+	Hence $T$ has at least two blocks.  Suppose $T$ has an endblock $B$ that is an odd cycle or $K_t$ for $3 \le t \le k-3$. Let $x_B$ the cutvertex of $T$ contained in $B$. 
+	Let $T' = T - \parens{V(B) \setminus \set{x_B}}$. Then $K_{k-1} \subseteq T'$, so by minimality of $|T|$, we have
+	
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k) + h(k)q(T').\]
+	Hence
+	\[2\size{T} - 2\size{B} \le (k-3 + p(k))\parens{\card{T} - (\card{B} - 1)} + f(k) + h(k)q(T').\]
+	Since $T$ is a counterexample, this gives
+	\begin{equation}
+		2\size{B} > (k-3 + p(k))(\card{B} - 1) + h(k)\parens{q(T) - q(T')}.\tag{*}\label{eqn:*}
+	\end{equation}
+	
+	Then $q(T') = q(T)$, $2\size{B} \le \card{B}(\card{B}-1)$ and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  Since $p(k) \ge \frac{3}{k-2}$ by (3), this contradicts \ref{eqn:*}.
+	
+	If $B$ is $K_2$, then $q(T') \le q(T) + 1$ and \ref{eqn:*} gives $2 > k-3 + p(k) - h(k)$ contradicting (2).
+	
+	Hence every endblock of $B$ is $K_{k-2}$ or $K_{k-1}$. To handle these cases, we will need to remove $x_B$ from $T$ as well.  Let $\set{B_1, \ldots, B_r}$ be the endblocks $B_i$ of $T$ such that $K_{k-1} \subseteq T - V(B_i)$.
+	Then $r \ge 1$ since two $K_{k-1}$ blocks cannot share a vertex.  For $i \in \irange{r}$, let $T_i = T - V(B_i)$. 
+	
+	Then, by minimality of $|T|$, we have
+	\[2\size{T_i} \le (k-3 + p(k))\card{T_i} + f(k) + h(k)q(T_i).\]
+	Hence
+	\[2\size{T} - 2\size{B_i} - 2(d_T(x_{B_i}) - d_{B_i}(x_{B_i})) \le (k-3 + p(k))\parens{\card{T} - \card{B_i}} + f(k) + h(k)q(T_i).\]
+	
+	Since $T$ is a counterexample and $B_i$ is complete, this gives
+	\[2\size{B_i} > (k-3 + p(k))\card{B_i} -2(d_T(x_{B_i}) + 1 - \card{B_i}) + h(k)\parens{q(T) - q(T_i)},\]
+	which is
+	\begin{equation}
+		2\size{B_i} > (k-1 + p(k))\card{B_i} - 2d_T(x_{B_i}) - 2 + h(k)\parens{q(T) - q(T_i)}.\tag{**}\label{eqn:**}
+	\end{equation}
+	
+	If $B_i$ is $K_{k-1}$, we have $d_T(x_{B_i}) = k - 1$ and $q(T_i) \le q(T) - (k-2) + 1 = q(T) - (k-3)$.  From \ref{eqn:**}, we have
+	\begin{align*}
+		(k-1)(k-2) &> (k-1 + p(k))(k-1) - 2(k-1) - 2 + h(k)(k-3)\\
+		&= (k-1)(k-2) + p(k)(k-1) - (k+1) + h(k)(k-3),
+	\end{align*}
+	contradicting (5).
+	
+	Hence $B_i = K_{k-2}$ for all $i \in \irange{r}$. So $d_T(x_{B_i}) = k - 1$ or $d_T(x_{B_i}) = k-2$.  In the former case, $q(T) = q(T_i)$ and in the latter $q(T_i) \le q(T) + 1$.  If $d_T(x_{B_i}) = k - 2$, we have
+	\[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 - h(k) = (k-2)(k-3) - 2 + (k-2)p(k) - h(k),\]
+	contradicting (4).
+	
+	Hence $d_T(x_{B_i}) = k - 1$ for all $i \in \irange{r}$. If $B$ and $B'$ are blocks that are the ends of a longest path in the block-tree of $T$, then $\set{B,B'} \cap \set{B_1, \ldots, B_r} \ne \emptyset$.  By symmetry, we may assume that $B = B_1$.
+	Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+	get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+	\[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k) + h(k)q(T - v),\]
+	Since $q(T-v) = q(T)$, the fact that $T$ is a counterexample implies
+	\[4 > k-3 + p(k),\]
+	a contradiction since $k \ge K \ge 7$ and $p(k) > 0$ by (3).  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Then $K_{k-1} \subseteq \hat{T}$ and $q(\hat{T}) = q(T)$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+	\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k) + h(k)q(T).\]
+	Since $T$ is a counterexample, this gives
+	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
+	which is
+	\[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+	giving
+	\[3 > (k-2)p(k),\]
+	which contradicts (3).
+\end{proof}
+
+\begin{lem}\label{BoundFamilyWithoutKKMinusOne}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$ be such that for all $k \ge K$ we have
+	\begin{enumerate}
+		\item $p(k) \ge \frac{-f(k)}{k-2}$; and
+		\item $p(k) \ge \frac{-f(k)}{5} + 5 - k$; and
+		\item $p(k) \ge \frac{3}{k-2}$.
+	\end{enumerate}
+	Then for $k \ge K$ and $T \in \T_k$ with $K_{k-1} \not \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k).\]
+\end{lem}
+\begin{proof}
+	Suppose not and choose a counterexample $T$ minimizing $|T|$.  First, suppose $T$ is $K_t$ for $t \in \irange{k-2}$.  Then $t(t-1) > (k-3 + p(k))t + f(k)$ contradicting (1).  If $T$ is $C_{2r+1}$ for $r \ge 2$, then $2(2r+1) > (k-3 + p(k))(2r+1) + f(k)$ and hence $f(k) < (5-k-p(k))(2r+1)$ contradicting (2).
+	
+	Hence $T$ has at least two blocks.  Let $B$ be an endblock of $T$ and $x_B$ the cutvertex of $T$ contained in $B$. Let $T' = T - \parens{V(B) \setminus \set{x_B}}$. Then, by minimality of $|T|$, we have
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k).\]
+	Hence
+	\[2\size{T} - 2\size{B} \le (k-3 + p(k))\parens{\card{T} - (\card{B} - 1)} + f(k).\]
+	Since $T$ is a counterexample, this gives
+	\begin{equation}
+	2\size{B} > (k-3 + p(k))(\card{B} - 1).\tag{*}\label{eqn:*}
+	\end{equation}
+	
+	Suppose $B$ is $K_t$ for $3 \le t \le k-3$ or $B$ is an odd cycle. Then $2\size{B} \le \card{B}(\card{B}-1)$ and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  Since $p(k) \ge \frac{3}{k-2}$ by (3), this contradicts \ref{eqn:*}.
+	
+	If $B$ is $K_2$, then \ref{eqn:*} gives $2 > k-3 + p(k)$, a contradiction since $k \ge 5$ and $p(k) > 0$ by (3).
+	
+	To handle the case when $B$ is $K_{k-2}$ we need to remove $x_B$ from $T$ as well.  Let $T^* = T - V(B)$. Then, by minimality of $|T|$, we have
+	\[2\size{T^*} \le (k-3 + p(k))\card{T^*} + f(k).\]
+	Hence
+	\[2\size{T} - 2\size{B} - 2(d_T(x_B) - d_B(x_B)) \le (k-3 + p(k))\parens{\card{T} - \card{B}} + f(k).\]
+	
+	Since $T$ is a counterexample and $B$ is complete, this gives
+	\[2\size{B} > (k-3 + p(k))\card{B} -2(d_T(x_B) + 1 - \card{B}),\]
+	which is
+	\begin{equation}
+	2\size{B} > (k-1 + p(k))\card{B} - 2d_T(x_B) - 2.\tag{**}\label{eqn:**}
+	\end{equation}
+
+	Since $B=K_{k-2}$, we have either $d_T(x_B) = k - 1$ or $d_T(x_B) = k-2$. If $d_T(x_B) = k - 2$, we have
+	\[(k-2)(k-3) > (k-1 + p(k))(k-2) - 2(k-2) - 2 = (k-2)(k-3) - 2 + (k-2)p(k),\]
+	contradicting (3).
+	
+	Now we need to handle the remaining case when $B$ is $K_{k-2}$ and $d_T(x_B) = k - 1$.  All of the above cases were for when $B$ was any endblock of $T$, 
+	so we may assume that every endblock of $T$ is a $K_{k-2}$ that shares a vertex with an odd cycle.  Choose an endblock $B$ that is the end of a longest path in the block-tree of $T$.  
+	Let $C$ be the odd cycle sharing a vertex $x_B$ with $B$.  We claim that all but one vertex of $C$ is in an endblock.  Since $B$ is the end of a longest path, $C$ cannot have two non-cut-vertices that are both not in endblocks, for then we could
+	get a longer path.  So, to prove our claim, it will suffice to show that every vertex of $C$ is a cut-vertex.  Suppose $v \in V(C)$ is not a cut-vertex.  Then $d_T(v) = 2$ and hence by minimality of $\card{T}$
+	\[2\size{T} - 4 \le (k-3 + p(k))\parens{\card{T} - 1} + f(k),\]
+	The fact that $T$ is a counterexample implies
+	\[4 > k-3 + p(k),\]
+	a contradiction since $k \ge K \ge 7$ and $p(k) > 0$.  So, we have shown that all but one vertex of $C$ is in an endblock.  Hence there are endblocks $A$ and $B$ such that $x_A, x_B \in V(C)$ and $x_A$ is adjacent to $x_B$.  let $\hat{T} = T - \parens{V(A) \cup V(B)}$.  Since the edge $x_Ax_B$ is shared, by minimality of $\card{T}$, we have
+	\[2\size{T} - 2\size{A} - 2\size{B} - 6 \le (k-3 + p(k))\parens{\card{T} - \card{A} - \card{B}} + f(k).\]
+	Since $T$ is a counterexample, this gives
+	\[2\size{A} + 2\size{B} + 6 > (k-3 + p(k))(\card{A} + \card{B}),\]
+	which is
+	\[2(k-2)(k-3) + 6 > 2(k-3 + p(k))(k-2),\]
+	giving
+	\[3 > (k-2)p(k),\]
+	which contradicts (3).
+\end{proof}
+
+Lemma \ref{BoundFamilyWithoutKKMinusOne} works with $p(k) = \frac{3}{k-2}$ and $f(k) = -3$.  We probably get (2) for free, clean up later.  In the discharging it will be convenient to apply Lemma \ref{BoundFamilyWithoutKKMinusOne} with a larger $p(k)$ to match the one we get when we have $K_{k-1}$ blocks (we can even be wasteful with the charge and use $f(k) = 0$).
+
+Now some examples of using Lemma \ref{BoundFamily} and Lemma \ref{BoundFamilyWithKKMinusOne}.  What happens if we take $h(k) = 0$ in Lemma \ref{BoundFamily}?  Then, by (7), we need $(k-1)p(k) \ge k + 1$ and hence $p(k) \ge 1 + \frac{2}{k-1}$.  Taking $p(k) = 1 + \frac{2}{k-1}$, (3) requires $f(k) \ge -2$.  Using $f(k) = -2$, all of the other conditions are satisfied and we conclude $2\size{T} \le \parens{k-2 + \frac{2}{k-1}}\card{T} - 2$ for every $T \in \T_k$ when $k \ge 4$.  This is a slight refinement of Gallai's Lemma \ref{BasicGallaiTreeBound}.
+
+Instead, let's make $p(k)$ as small as Lemma \ref{BoundFamilyWithKKMinusOne} will let us. By (4), $h(k) \le (k-2)p(k) - 2$, plugging this in to (5) and solving we get $p(k) \ge \frac{3k-5}{k^2 - 4k + 5}$.  Now $\frac{3k-5}{k^2 - 4k + 5} \ge \frac{3}{k-2}$ for $k \ge 7$, so $p(k) = \frac{3k-5}{k^2 - 4k + 5}$ satisfies (3).  With $h(k) = \frac{k(k-3)}{k^2 - 4k + 5}$, (4) and (5) are also satisfied. Now with $f(k) = -\frac{2(k-1)(2k-5)}{k^2 - 4k + 5}$, condition (1) is satisfied and hence by Lemma we have the following.
+
+\begin{cor}\label{SmallP}
+	For $k \ge 7$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le \parens{k-3 + \frac{3k-5}{k^2 - 4k + 5}}\card{T} - \frac{2(k-1)(2k-5)}{k^2 - 4k + 5} + \frac{k(k-3)}{k^2 - 4k + 5}q(T).\]
+\end{cor}
+
+If we put the Kostochka-Stiebitz bound on $\sigma(T)$ into this form we get the following.
+
+\begin{lem}[Kostochka-Stiebitz]
+		For $k \ge 7$ and $T \in \T_k$, we have
+		\[2\size{T} \le \parens{k-3 + \frac{4(k-1)}{k^2 - 3k + 4}}\card{T} - \frac{4(k^2-3k+2)}{k^2-3k+4} + \frac{k^2 - 3k}{k^2-3k+4}q(T).\]
+\end{lem}
+
+Note that $\frac{3k-5}{(k-5)(k-1)} < \frac{4(k-1)}{k^2 - 3k + 4}$ for $k \ge 7$.
+
+\subsection{Analyzing the discharging}
+Our discharging procedure gives charge $\epsilon$ to a component $T$ for every incident edge not ending in a $K_{k-1}$.  The number of such edges is exactly
+\[A(T) \DefinedAs -q(T) + \sum_{v \in V(T)} k-1 - d_T(v) = (k-1)\card{T} - 2\size{T} - q(T).\]
+Suppose we have a bound when $K_{k-1} \subseteq T$ of the form
+\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T) + a(k, |T|).\]
+So, when $K_{k-1} \subseteq T$ we get
+\[A(T) \ge (2-p(k))\card{T} - f(k) - (h(k) + 1)q(T) - a(k, |T|).\]
+
+We will use $\gamma = (h(k) + 1)\epsilon$ in order to make the $q(T)$ term cancel.  That happens because $T$ receives charge on all but at most two of its non-separating vertices in a $K_{k-1}$; that is, in discharging steps 2 and 3, $T$ receives charge at least $\gamma\max\set{0, q(G) - 2}$.   Hence in total $T$ receives charge at least
+\[\epsilon A(T) + \gamma(q(G) - 2) = \epsilon\parens{2-p(k)}\card{T} - \epsilon \parens{a(k, |T|) + f(k) + 2(h(k) + 1)}.\]
+
+Then each vertex of $T$ receives charge at least
+
+\[\epsilon\parens{2-p(k) - \frac{a(k, |T|) + f(k) + 2(h(k) + 1)}{|T|}} .\]
+
+Put 
+\[\zeta(p,f,h,a) \DefinedAs \min_{K_{k-1} \subseteq T \in \T_k} \parens{2-p(k) - \frac{a(k, |T|) + f(k) + 2(h(k) + 1)}{|T|}}.\]
+We want the $k$-vertices to end with enough charge, the worst case is when
+\[1 - (3\gamma + (k-3)\epsilon) = \epsilon\zeta(p,f,h,a),\]
+and thus
+\[\epsilon = \frac{1}{k+3h(k) + \zeta(p,f,h,a)},\]
+\[\gamma = \frac{h(k)+1}{k+3h(k) + \zeta(p,f,h,a)}.\]
+
+When $K_{k-1} \not \subseteq T$, we have $q(T) = 0$.  By Lemma \ref{BoundFamilyWithoutKKMinusOne} with $f(k) = 0$, we get 
+\[2\size{T} \le (k-3 + p(k))\card{T}\]
+and hence
+\[A(T) \ge (2-p(k))\card{T},\]
+which is sufficient charge when $\zeta(p,f,h,a) \le 2 - p(k)$.
+
+It remains to check that the $(k+1)^+$-vertices don't give away too much charge.  Let $v$ be a $(k+1)^+$-vertex, then $v$ ends with charge at least
+\[d(v) - \gamma d(v) = (1-\gamma)d(v) \ge (1-\gamma)(k+1) = (k+1) \frac{k - 1 + 2h(k) + \zeta(p,f,h,a)}{k+3h(k) + \zeta(p,f,h,a)},\]
+so we need
+\[(k+1) \frac{k - 1 + 2h(k) + \zeta(p,f,h,a)}{k+3h(k) + \zeta(p,f,h,a)} \ge k-1 + \frac{\zeta(p,f,h,a)}{k+3h(k) + \zeta(p,f,h,a)},\]
+simplifying, we get that we need
+\[\text{some gross thing that should be easy to satisfy}\tag{*}\label{eqn:da*}\]
+Let's just add this as another requirement, it will be easily satisfied by the functions we want to use.  We have proved the following.
+
+\begin{thm}\label{UberTheorem2}
+	Let $K \ge 7$ and $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$, $\func{a}{\IN \times \IN}{\IR}$ be functions satisfying \ref{eqn:da*}.
+    If for all $k \ge K$ and $T \in \T_k$ with $K_{k-1} \subseteq T$ we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T) + a(|T|, k),\]
+	then for $k \ge K$ and $G \ne K_k$ a $k$-AT-critical graph, we have
+	\[d(G) \ge k-1 + \frac{\zeta(p,f,h,a)}{k+3h(k) + \zeta(p,f,h,a)}.\]
+\end{thm}
+
+
+\section{Reducible Configurations}
+\begin{defn}
+	A graph $G$ is \emph{AT-reducible} to $H$ if $H$ is a nonempty induced subgraph of $G$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$.  
+	If $G$ is not AT-reducible to any nonempty induced subgraph, then it is \emph{AT-irreducible}.
+\end{defn}
+
+This first lemma tells us how a single high vertex can interact with the low vertex subgraph.  This is the version Hal and i used, it (and more) follows from the classification in ``mostlow''.
+
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \ge 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has $t$ components $H_1, H_2, \ldots, H_t$, and all are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \ge 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \ge t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+
+To deal with more than one high vertex we need the following auxiliary bipartite graph.  For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \ge 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ if and only if $N(y) \cap W^k(T) \ne \emptyset$.   The next lemma tells us that we have a reducible configuration if this bipartite graph has minimum degree at least three.  
+
+\begin{lem}
+	\label{MultipleHighConfigurationEuler} Let $k\ge7$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B\DefinedAs\B_{k}(V(G-Y),Y)$ we have $\delta(\B)\ge3$. 
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+We also have the following version with asymmetric degree condition on $\B$.  The point here is that this works for $k \ge 5$.  As we'll see in the next section, the consequence is that we trade a bit in our size bound for the proof to go through with $k \in \set{5,6}$.
+
+\begin{lem}
+	\label{MultipleHighConfigurationEulerLopsided} Let $k \ge 5$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $d_{\B}(y) \ge 4$ for all $y \in Y$ and $d_{\B}(T) \ge 2$ for all components $T$ of $G-Y$.
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+\end{document}
+
+ 

@@ -133,21 +133,19 @@ Table \ref{tab:1} gives the values of these bounds for small $k$.  In 2012, Kost
 \[\size{G} \ge \ceil{\frac{(k+1)(k-2)\card{G} - k(k-3)}{2(k-1)}}.\]
 Moreover, they show that their bound is tight for $k=4$ and $n \ge 6$ as well as for infinitely many values of $\card{G}$ for any $k \ge 5$.  This bound has many interesting coloring applications such as a very short proof of Gr\"otsch's theorem on the $3$-colorability of triangle-free planar graphs \cite{kostochka2012oregrotsch} and short proofs of the results on coloring with respect to Ore degree in \cite{kierstead2009ore, rabern2010a, krs_one}. 
 
-Given the applications to coloring theory, it makes sense to investigate the same problem for more general types of coloring.  In this article, we obtain improved lower bounds on the number of edges for both the list coloring and online list coloring problems.  To state our results we need some definitions.
+Given the applications to coloring theory, it makes sense to investigate the same problem for more general types of coloring.  Gallai's lower bound \cite{gallai1963kritische} holds for list coloring and online list coloring (see \cite{kostochkastiebitzedgesincriticalgraph, riasat2012critically}).  Krivelevich's proof \cite{krivelevich1997minimal} does not work for list coloring because it relies on Stiebitz's result \cite{stiebitz1982proof} that in a color-critical graph, the high vertex subgraph has at most as many components as the low vertex subgraph. For list coloring, Gallai's bound was first improved by Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}.  Recently, Kierstead and the second author \cite{OreVizing} further improved the lower bound and extended it to online list coloring as well as the Alon-Tarsi number.  Their proof combined a global averaging argument from Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} with improved reducibility lemmas.  Here we use these same reducibility lemmas, but replace the global averaging argument with a discharging argument.  The discharging argument is more intuitive and will be easier to modify in the future for use with new reducibility lemmas.  The improvement in our lower bound on the number of edges in a list critical graph comes from an improved upper bound on the average degree of Gallai trees.  To state our results we need some definitions.
 
 \emph{List coloring} was introduced by Vizing \cite{vizing1976} and independently Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  Let $G$ be a graph. A list assignment on $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.   A graph $G$ is \emph{$L$-critical} if $G$ is not $L$-colorable, but every proper subgraph $H$ of $G$ is $\restr{L}{V(H)}$-colorable. For $\func{f}{V(G)}{\IN}$, a list assignment $L$ is an \emph{$f$-assignment} if $\card{L(v)} = f(v)$ for each $v \in V(G)$.  If $f(v) = k$ for all $v \in V(G)$, then we also call an $f$-assignment a $k$-assignment.  We say that $G$ is \emph{$f$-choosable} if $G$ is $L$-colorable for every $f$-assignment $L$.  
-We say that $G$ is $k$-list-critical if $G$ is $L$-critical for some $k$-list assignment $L$. %HK
-The best, known-lower bound on the number of edges in a $k$-list-critical graph, was given by Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} in 2003. %HK edits
-It states that for $k \ge 9$ and every graph $G \ne K_k$ if $G$ is a $k$-list-critical graph, then $2\size{G} \ge g_k(\card{G}, \frac13 (k-4)\alpha_k)$.  We improve their bound to $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$ for $k\ge7$ (see Table \ref{tab:1}).
+We say that $G$ is $k$-list-critical if $G$ is $L$-critical for some $k$-list assignment $L$.
 
 \emph{Online list coloring} was independently introduced by Zhu \cite{zhu2009online} and Schauz \cite{schauz2009mr} (Schauz called it \emph{paintability}). Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{online $f$-choosable} if $f(v) \ge 1$ for all $v \in V(G)$ and for every $S \subseteq V(G)$ there is an independent set $I \subseteq S$ such that $G-I$ is online $f'$-choosable where $f'(v) \DefinedAs f(v)$ for $v \in V(G) - S$ and $f'(v) \DefinedAs f(v) - 1$ for $v \in S - I$.
 Observe that if a graph is online $f$-choosable then it is $f$-choosable. 
 When $f(v) \DefinedAs k-1$ for all $v \in V(G)$, we say that $G$ is \emph{online $k$-list-critical} if $G$ is not online $f$-choosable, 
-but every proper subgraph $H$ of $G$ is online $\restr{f}{V(H)}$-choosable.  In 2012, Riasat and Schauz \cite{riasat2012critically} showed that Gallai's bound  $2\size{G} \ge g_k(\card{G}, 0)$ holds for online $k$-list-critical graphs.  We improve this for $k \ge 7$ by proving the same bound as we have for list coloring: $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$.
+but every proper subgraph $H$ of $G$ is online $\restr{f}{V(H)}$-choosable.  
 
 Our main theorem shows that a graph either has many edges or an induced subgraph which has a certain kind of good orientation.  To describe these good orientations we need a few definitions. A subgraph $H$ of a directed multigraph $D$ is called \emph{Eulerian} if $d^-_H(v) = d^+_H(v)$ for every $v \in V(H)$.  We call $H$ \emph{even} if $\size{H}$ is even and \emph{odd} otherwise.  Let $EE(D)$ be the number of even, spanning, Eulerian subgraphs of $D$ and $EO(D)$ the number of odd, spanning, Eulerian subgraphs of $D$.  Note that the edgeless subgraph of $D$ is even and hence we always have $EE(D) > 0$.
 
-Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon-Tarsi} (for brevity, \emph{$f$-AT}) if $G$ has an orientation $D$ where $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$ and $EE(D) \ne EO(D)$. One simple way to achieve $EE(D) \ne EO(D)$ is to have $D$ be acyclic since then we have $EE(D) = 1$ and $EO(D) = 0$.  In this case, ordering the vertices so that all edges point the same direction and coloring greedily shows that $G$ is $f$-choosable. If we require $f$ to be constant, we get the familiar \emph{coloring number} $\col(G)$; that is, $\col(G)$ is the smallest $k$ for which $G$ has an acyclic orientation $D$ with $k \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Alon and Tarsi \cite{Alon1992125} generalized from the acyclic case to arbitrary $f$-AT orientations.
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon-Tarsi} (for brevity, \emph{$f$-AT}) if $G$ has an orientation $D$ where $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$ and $EE(D) \ne EO(D)$. One simple way to achieve $EE(D) \ne EO(D)$ is to have $D$ be acyclic since then we have $EE(D) = 1$ and $EO(D) = 0$.  In this case, ordering the vertices so that all edges point the same direction and coloring greedily shows that $G$ is $f$-choosable. Alon and Tarsi \cite{Alon1992125} generalized from the acyclic case to arbitrary $f$-AT orientations.
 
 \begin{lem}\label{AlonTarsi}
 	If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is $f$-choosable.
@@ -159,24 +157,6 @@ Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon
 	If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is online $f$-choosable.
 \end{lem}
 
-For a graph $G$, we define $\func{d_0}{V(G)}{\IN}$ by $d_0(v) \DefinedAs d_G(v)$.  The $d_0$-choosable graphs were first characterized by Borodin \cite{borodin1977criterion} and independently by Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  The connected graphs which are not $d_0$-choosable are precisely the Gallai trees (connected graphs in which every block is complete or an odd cycle). The generalization to a characterization of $d_0$-AT graphs was first given in \cite{Hladky} by Hladk{\`y}, Kr{\'a}l and Schauz. 
-
-We prove the following general theorem saying that either a graph has many edges or has an induced $f_H$-AT subgraph $H$ where $f_H$ basically gives the number of colors we would expect the vertices to have left in their lists after $\delta(G)$-coloring $G-H$.
-
-\begin{defn}
-	A graph $G$ is \emph{AT-reducible} to $H$ if $H$ is a nonempty induced subgraph of $G$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$.  
-	If $G$ is not AT-reducible to any nonempty induced subgraph, then it is \emph{AT-irreducible}.
-\end{defn}
-
-\begin{repthm}{EdgeBoundEuler}
-	If $G$ is an AT-irreducible graph with $\delta(G) \ge 4$ and $\omega(G) \le \delta(G)$, then $2\size{G} \ge g_{\delta(G)+1}(\card{G}, c)$ where $c \DefinedAs (\delta(G)-2)\alpha_{\delta(G) + 1}$ when $\delta(G) \ge 6$ and $c \DefinedAs (\delta(G)-3)\alpha_{\delta(G) + 1}$ when $\delta(G) \in \set{4,5}$.
-\end{repthm}
-
-The \emph{Alon-Tarsi number} of a graph $AT(G)$ is the least $k$ such that $G$ is $f$-AT where $f(v) \DefinedAs k$ for all $v \in V(G)$. We have $\chi(G) \leq \ch(G) \leq \ch_{OL}(G) \leq AT(G) \leq \col(G)$.  We say that $G$ is $k$-AT-critical if $\AT(G) \ge k$ and $AT(H) < k$ for all proper induced subgraphs $H$ of $G$.  From Theorem \ref{EdgeBoundEuler} we can conclude the following.
-
-\begin{repcor}{EdgeBoundAT}
-	For $k \ge 5$ and $G \ne K_k$ a $k$-AT-critical graph, we have $2\size{G} \ge g_k(\card{G}, c)$ where $c \DefinedAs (k-3)\alpha_k$ when $k \ge 7$ and $c \DefinedAs (k-4)\alpha_k$ when $k \in \set{5,6}$.
-\end{repcor}
 
 \begin{table}
 	\begin{center}

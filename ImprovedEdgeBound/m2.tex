@@ -1,0 +1,62 @@
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\tikzstyle{Qstyle}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw]
+\tikzstyle{NotQKkMinusOneStyle}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw]
+\tikzstyle{endblockStyle}=[shape = circle,minimum size = 6pt,inner sep = 1.2pt,draw]
+\Vertex[style = Qstyle, x = 0.450, y = 0.600, L = \tiny {}]{v0}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.550, y = 0.600, L = \tiny {}]{v1}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.450, y = 0.500, L = \tiny {}]{v2}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.550, y = 0.500, L = \tiny {}]{v3}
+\Vertex[style = endblockStyle, x = 0.350, y = 0.450, L = \tiny {}]{v4}
+\Vertex[style = endblockStyle, x = 0.300, y = 0.350, L = \tiny {}]{v5}
+\Vertex[style = endblockStyle, x = 0.250, y = 0.450, L = \tiny {}]{v6}
+\Vertex[style = endblockStyle, x = 0.600, y = 0.300, L = \tiny {}]{v7}
+\Vertex[style = endblockStyle, x = 0.500, y = 0.300, L = \tiny {}]{v8}
+\Vertex[style = endblockStyle, x = 0.550, y = 0.400, L = \tiny {}]{v9}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.750, y = 0.500, L = \tiny {}]{v10}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.850, y = 0.500, L = \tiny {}]{v11}
+\Vertex[style = NotQKkMinusOneStyle, x = 0.750, y = 0.600, L = \tiny {}]{v12}
+\Vertex[style = Qstyle, x = 0.850, y = 0.600, L = \tiny {}]{v13}
+\Vertex[style = endblockStyle, x = 1.050, y = 0.450, L = \tiny {}]{v14}
+\Vertex[style = endblockStyle, x = 1.000, y = 0.350, L = \tiny {}]{v15}
+\Vertex[style = endblockStyle, x = 0.950, y = 0.450, L = \tiny {}]{v16}
+\Vertex[style = endblockStyle, x = 0.800, y = 0.300, L = \tiny {}]{v17}
+\Vertex[style = endblockStyle, x = 0.700, y = 0.300, L = \tiny {}]{v18}
+\Vertex[style = endblockStyle, x = 0.750, y = 0.400, L = \tiny {}]{v19}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v3)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v5)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v8)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v7)(v9)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v9)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v9)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v10)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v12)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v11)(v13)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v1)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v10)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v10)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v13)(v12)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v15)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v16)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v15)(v16)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v11)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v18)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v17)(v19)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v18)(v19)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v19)(v10)
+\end{tikzpicture}
+\caption{The $m=2$ case of the construction.}
+\end{figure}

@@ -130,11 +130,87 @@ For a graph $G$ and disjoint $A, B \subseteq V(G)$, let $\size{A,B}$ be the numb
 \end{defn}
 
 \begin{thm}\label{ConsantListMicStrength} 
-	Every OC-irreducible graph $G$ satisfies
-	$$\mic(G)\leq2\size{G}-(\delta(G)-1)\card{G}-1.$$
+	Every $k$-list-critical graph $G$ satisfies
+	\[2\size{G} \ge (k-2)\card{G} + \mic(G) + 1.\]
 \end{thm}
 
-\section{initial improvement}
+\section{The Bound}
+\begin{thm}
+	For $k \ge 4$, every incomplete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{(k-1)^2}$.
+\end{thm}
+\begin{proof}
+	Let $G \ne K_k$ be a $k$-list-critical graph.  Let $\L \subseteq V(G)$ be the vertices with degree $k-1$ and let $\HH = V(G) \setminus \L$.  Put $\size{\L} \DefinedAs \size{G[\L]}$ and $\size{\HH} \DefinedAs \size{G[\HH]}$.  
+	Then
+	\begin{equation}
+		\size{\HH, \L} = (k-1)\card{\L} - 2\size{\L}.
+		\label{FirstHHL}
+	\end{equation}
+	By Lemma \ref{SimpleGallaiBetaBound},
+		\begin{equation}
+		2\size{\L} \le (k-2)|\L| + 2\beta(\L)
+		\label{BetaBound}
+		\end{equation}
+		Combining \ref{FirstHHL} and \ref{BetaBound} gives
+			\begin{equation}
+			\size{\HH, \L} \ge \card{\L} - 2\beta(\L).
+			\label{SecondHHL}
+			\end{equation}
+			Also,
+			\begin{align*}
+			\size{\HH, \L} &= -2\size{\HH} + \sum_{v \in \HH} d_G(v) \\
+			&= (k-1)\card{\HH} - 2\size{\HH} + \sum_{v \in \HH} \parens{d_G(v) - (k-1)} \\
+			&= (k-1)\card{\HH} - 2\size{\HH} + \sum_{v \in V(G)} \parens{d_G(v) - (k-1)}\\
+			&=(k-1)\card{\HH} - 2\size{\HH} + 2\size{G} - (k-1)\card{G},\\
+			\end{align*}
+			that is
+			\begin{equation}
+			\size{\HH, \L} = (k-1)\card{\HH} - 2\size{\HH} + 2\size{G} - (k-1)\card{G}.
+			\label{ThirdHHL}
+			\end{equation}
+			Combining \ref{SecondHHL} with \ref{ThirdHHL} gives
+			\begin{equation*}
+			  2\size{G} \ge (k-1)\card{G} + \card{\L} + 2\size{\HH} - (k-1)\card{\HH} - 2\beta(\L).
+			\end{equation*}
+			Since $\card{G} = \card{\L} + \card{\HH}$, this is
+			\begin{equation}
+			2\size{G} \ge (k-1)\card{G} + 2\size{\HH} - k\card{\HH} - 2\beta(\L).
+			\label{FirstTwoG}
+			\end{equation}
+			Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$. Then
+			\begin{equation*}
+				\mic(G) \ge M + (k-1)\beta(\L).
+			\end{equation*}
+			Applying Lemma \ref{ConsantListMicStrength} gives
+			\begin{equation}
+			2\size{G} \ge (k-2)\card{G} + M + (k-1)\beta(\L) + 1.
+			\label{SecondTwoG}
+			\end{equation}				
+			Adding twice \ref{FirstTwoG} to $k-1$ times \ref{SecondTwoG} gives
+			\begin{equation*}
+				(k+1)(2\size{G}) \ge ((k-1)^2 + 2(k-2))\card{G} + 2M + 2 + 2(k-1)\size{\HH} - k(k-1)\card{\HH}.
+			\end{equation*}
+			Hence
+			\begin{equation}
+			2\size{G} \ge \frac{k^2 - 3}{k+1}\card{G} + \frac{2(M + (k-1)\size{\HH} + 1) - k(k-1)\card{\HH}}{k+1}.
+			\label{BigOne}
+			\end{equation}
+			Let $\C$ be the components of $G[\HH]$.  Then $\alpha(C) \ge \frac{\card{C}}{\chi(C)}$ for all $C \in \C$.  Whence
+			\begin{equation}
+			  M + (k-1)\size{\HH} \ge \sum_{C \in \C} k\frac{\card{C}}{\chi(C)} + (k-1)\size{C}
+			  \label{Mbound}
+			\end{equation}
+			If $\L = \emptyset$, then $G$ has average degree at least $k \ge k-1 + \frac{k-3}{(k-1)^2}$.  So, assume $\L \ne \emptyset$.  Then $G[\HH]$ is $(k-1)$-colorable by $k$-list-criticality of $G$.  
+			In particular, $\chi(C) \le k-1$ for every $C \in \C$.  If $C \in \C$ is not a tree, then $\size{C} \ge \card{C}$ and hence $k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge k\card{C}$.  If $C$ is a tree, then $\chi(C) \le 2$ and hence 
+			$k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge k\frac{\card{C}}{2} + (k-1)(\card{C} - 1) \ge k\card{C}$ when $\card{C} \ge \frac{2(k-1)}{k-2}$.  But $k \ge 4$, so $\frac{2(k-1)}{k-2} \le 3$
+			
+\end{proof}
+
+\begin{lem}\label{SimpleGallaiBetaBound}
+	If $k \ge 4$ and $T \ne K_k$ is a Gallai tree with maximum degree at most $k-1$, then
+	\[2||T|| \le (k-2)|T| + 2\beta(T).\]
+\end{lem}
+
+\section{notes}
 Let $G$ be OC-irreducible.  Let $\L$ be the subgraph of $G$ induced on the vertices of degree $\delta \DefinedAs \delta(G)$. Let $\HH$ be $G - V(\L)$.  Let $\beta$ be the maximum size of an independent set $A \subseteq V(\L)$ such that each $v \in A$ has no neighbors in $V(\HH)$.  Let $\mic_G(\HH)$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ fo $G$ with $I \subseteq V(G) \setminus \L$.  Then
 
 \begin{observation}

@@ -25,7 +25,7 @@
 \makeatother
 
 \theoremstyle{plain}
-\newtheorem{thm}{Theorem}[section]
+\newtheorem{thm}{Theorem}
 \newreptheorem{thm}{Theorem}
 \newtheorem{prop}[thm]{Proposition}
 \newreptheorem{prop}{Proposition}
@@ -38,6 +38,7 @@
 \newtheorem{prob}[thm]{Problem}
 
 \newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{MainTheorem}{Main Theorem}
 \newtheorem*{BK}{Borodin-Kostochka Conjecture}
 \newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
 \newtheorem*{Reed}{Reed's Conjecture}
@@ -114,7 +115,7 @@
 \newcommand{\aside}[1]{\marginnote{\scriptsize{#1}}[0cm]}
 \newcommand{\aaside}[2]{\marginnote{\scriptsize{#1}}[#2]}
 
-\title{A better lower bound on average degree for 4-list-critical graphs}
+\title{A better lower bound on average degree of 4-list-critical graphs}
 
 \begin{document}
 \maketitle
@@ -124,7 +125,16 @@
 \end{abstract}
 
 \section{Introduction}
+A graph $G$ is \emph{$k$-list-critical} if $G$ is not $(k-1)$-choosable, but every
+proper subgraph of $G$ is $(k-1)$-choosable.  For further definitions and notation, see \cite{OreVizing, DischargingLowerBound}. 
+Table \ref{TheTable} shows some history of lower bounds on the average degree of $k$-list-critical graphs.
 
+\begin{MainTheorem}
+	For $k \ge 4$, every incomplete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{k^2-2k+2}$.
+\end{MainTheorem}
+
+Main Theorem gives a lower bound of $3 + \frac{1}{10}$ for $4$-list-critical graphs. This appears to be the first improvement over Gallai's bound of $3 + \frac{1}{13}$. 
+The same proof shows that Main Theorem holds for online $k$-list-critical graphs as well.  The proof does not work for k-Alon-Tarsi-critical graphs since we use the Kernel Lemma.
 
 \begin{table}
 	\begin{center}
@@ -155,12 +165,11 @@
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{History of lower bounds on the average degree $d(G)$ of
-		$k$-critical and $k$-list-critical graphs $G$.}
-	\label{tab:1}
+	\caption{History of lower bounds on the average degree $d(G)$ of $k$-critical and $k$-list-critical graphs $G$.}
+	\label{TheTable}
 \end{table}
 
-\section{The Bound}
+\section{The Proof}
 The connected graphs in which each block is a complete graph
 or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  The same is true for $k$-list-critical graphs (\cite{borodin1977criterion, erdos1979choosability}).  For a graph $T$ and $k \in \IN$, let $\beta_k(T)$ be the independence number of the subgraph of $T$ induced on the vertices of degree $k-1$.  When $k$ is defined in the context, put $\beta(T) 
 \DefinedAs \beta_k(T)$.  
@@ -198,9 +207,9 @@ or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritisch
 	\[2\size{G} \ge (k-2)\card{G} + \mic(G) + 1.\]
 \end{thm}
 
-\begin{thm}\label{MainTheorem}
+\begin{MainTheorem}
 	For $k \ge 4$, every incomplete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{k^2-2k+2}$.
-\end{thm}
+\end{MainTheorem}
 \begin{proof}
 	Let $G \ne K_k$ be a $k$-list-critical graph.  Let $\L \subseteq V(G)$ be the vertices with degree $k-1$ and let $\HH = V(G) \setminus \L$.  Put $\size{\L} \DefinedAs \size{G[\L]}$ and $\size{\HH} \DefinedAs \size{G[\HH]}$.  
 	Then

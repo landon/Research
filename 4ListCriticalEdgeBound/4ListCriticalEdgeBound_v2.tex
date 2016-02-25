@@ -115,7 +115,7 @@
 \newcommand{\aside}[1]{\marginnote{\scriptsize{#1}}[0cm]}
 \newcommand{\aaside}[2]{\marginnote{\scriptsize{#1}}[#2]}
 
-\title{A better lower test bound on average degree of 4-list-critical graphs}
+\title{A better lower bound on average degree of 4-list-critical graphs}
 \author{Landon Rabern}
 
 \begin{document}
@@ -154,11 +154,11 @@ The same proof shows that Main Theorem holds for online $k$-list-critical graphs
 			& Here \\
 			$k$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$\\
 			\hline 
-			4 & 3.0769 &3.1429&---&3.3333& --- & --- & --- & \bf{3.1}\\
+			4 & 3.0769 &3.1429&---&3.3333& --- & --- & --- & \bf{3.1000}\\
 			5 & 4.0909 &4.1429&---&4.5000& --- & 4.0984 & 4.1000 & \bf{4.1176}\\
 			6 & 5.0909 &5.1304&5.0976&5.6000& --- & 5.1053 & 5.1076 & \bf{5.1153}\\
 			7 & 6.0870 &6.1176&6.0990&6.6667& --- & 6.1149 & \bf{6.1192} & 6.1081\\
-			8 & 7.0820 &7.1064&7.0980&7.7143& --- & 7.1128 & \bf{7.1167} & 7.1\\
+			8 & 7.0820 &7.1064&7.0980&7.7143& --- & 7.1128 & \bf{7.1167} & 7.1000\\
 			9 & 8.0769 &8.0968&8.0959&8.7500& 8.0838 & 8.1094 & \bf{8.1130} & 8.0923\\
 			10 & 9.0722 &9.0886&9.0932&9.7778& 9.0793 & 9.1055 & \bf{9.1088} & 9.0853\\
 			15 & 14.0541 &14.0618&14.0785&14.8571& 14.0610 & 14.0864 & \bf{14.0884} & 14.0609\\
@@ -212,96 +212,74 @@ or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritisch
 	For $k \ge 4$, every incomplete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{k^2-2k+2}$.
 \end{MainTheorem}
 \begin{proof}
-	Let $G \ne K_k$ be a $k$-list-critical graph.  Let $\L \subseteq V(G)$ be the vertices with degree $k-1$ and let $\HH = V(G) \setminus \L$.  Put $\size{\L} \DefinedAs \size{G[\L]}$ and $\size{\HH} \DefinedAs \size{G[\HH]}$.  
-	Then
+Let $G \ne K_k$ be a $k$-list-critical graph.  Let $\L \subseteq V(G)$ be the vertices with degree $k-1$ and let $\HH = V(G) \setminus \L$.  Put $\size{\L} \DefinedAs \size{G[\L]}$ and $\size{\HH} \DefinedAs \size{G[\HH]}$.  
+By Lemma \ref{SimpleGallaiBetaBound},
+	\begin{equation*}
+	2\size{\L} \le (k-2)|\L| + 2\beta(\L)
+	\end{equation*}
+	Hence,
+	\begin{align*}
+	2\size{G} &= 2\size{\HH} + 2\size{\HH, \L} + 2\size{\L}\\
+	&= 2\size{\HH} + 2((k-1)\card{\L} - 2\size{\L}) + 2\size{\L}\\
+	&= 2\size{\HH} + 2(k-1)\card{\L} - 2\size{\L}\\
+	&\ge 2\size{\HH} + k\card{\L} - 2\beta(L),\\
+	\end{align*}
+	which is
 	\begin{equation}
-		\size{\HH, \L} = (k-1)\card{\L} - 2\size{\L}.
-		\label{FirstHHL}
+	\beta(L) \ge \size{H} + \frac{k}{2}\card{\L} - \size{G}.
+	\label{BetaBound}
 	\end{equation}
-	By Lemma \ref{SimpleGallaiBetaBound},
-		\begin{equation}
-		2\size{\L} \le (k-2)|\L| + 2\beta(\L)
-		\label{BetaBound}
-		\end{equation}
-		Combining (\ref{FirstHHL}) and (\ref{BetaBound}) gives
-			\begin{equation}
-			\size{\HH, \L} \ge \card{\L} - 2\beta(\L).
-			\label{SecondHHL}
-			\end{equation}
-			Also,
-			\begin{align*}
-			\size{\HH, \L} &= -2\size{\HH} + \sum_{v \in \HH} d_G(v) \\
-			&= (k-1)\card{\HH} - 2\size{\HH} + \sum_{v \in \HH} \parens{d_G(v) - (k-1)} \\
-			&= (k-1)\card{\HH} - 2\size{\HH} + \sum_{v \in V(G)} \parens{d_G(v) - (k-1)}\\
-			&=(k-1)\card{\HH} - 2\size{\HH} + 2\size{G} - (k-1)\card{G},\\
-			\end{align*}
-			that is
-			\begin{equation}
-			\size{\HH, \L} = (k-1)\card{\HH} - 2\size{\HH} + 2\size{G} - (k-1)\card{G}.
-			\label{ThirdHHL}
-			\end{equation}
-			Combining (\ref{SecondHHL}) with (\ref{ThirdHHL}) gives
-			\begin{equation*}
-			  2\size{G} \ge (k-1)\card{G} + \card{\L} + 2\size{\HH} - (k-1)\card{\HH} - 2\beta(\L).
-			\end{equation*}
-			Since $\card{G} = \card{\L} + \card{\HH}$, this is
-			\begin{equation}
-			2\size{G} \ge k\card{G} + 2\size{\HH} - k\card{\HH} - 2\beta(\L).
-			\label{FirstTwoG}
-			\end{equation}
-			Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$. Then
-			\begin{equation*}
-				\mic(G) \ge M + (k-1)\beta(\L).
-			\end{equation*}
-			Applying Lemma \ref{ConsantListMicStrength} gives
-			\begin{equation}
-			2\size{G} \ge (k-2)\card{G} + M + (k-1)\beta(\L) + 1.
-			\label{SecondTwoG}
-			\end{equation}				
-			Adding twice (\ref{SecondTwoG}) to $k-1$ times (\ref{FirstTwoG}) gives
-			\begin{equation*}
-				(k+1)(2\size{G}) \ge (k(k-1) + 2(k-2))\card{G} + 2M + 2 + 2(k-1)\size{\HH} - k(k-1)\card{\HH}.
-			\end{equation*}
-			Hence
-			\begin{equation}
-			2\size{G} \ge \frac{k^2 + k -4}{k+1}\card{G} + \frac{2(M + (k-1)\size{\HH} + 1) - k(k-1)\card{\HH}}{k+1}.
-			\label{ThirdTwoG}
-			\end{equation}
-			Let $\C$ be the components of $G[\HH]$.  Then $\alpha(C) \ge \frac{\card{C}}{\chi(C)}$ for all $C \in \C$.  Whence
-			\begin{equation}
-			  M + (k-1)\size{\HH} \ge \sum_{C \in \C} k\frac{\card{C}}{\chi(C)} + (k-1)\size{C}.
-			  \label{Mbound}
-			\end{equation}
-			
-			If $\L = \emptyset$, then $G$ has average degree at least $k \ge k-1 + \frac{k-3}{k^2-2k+2}$.  So, assume $\L \ne \emptyset$.  Then $G[\HH]$ is $(k-1)$-colorable by $k$-list-criticality of $G$. In particular, $\chi(C) \le k-1$ for every $C \in \C$.
-			We claim that for every $C \in \C$,
-			\begin{equation}
-			 k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge \parens{k - \frac12}\card{C}.
-			 \label{KFC}
-			\end{equation}
-			If $C \in \C$ is not a tree, then $\size{C} \ge \card{C}$ and hence $k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge (k - \frac12)\card{C}$.  If $C$ is a tree, then $\chi(C) \le 2$ and hence 
-			$k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge k\frac{\card{C}}{2} + (k-1)(\card{C} - 1) \ge (k-\frac12)\card{C}$ unless $\card{C} = 1$.  This proves (\ref{KFC}) since the bound is trivially satisfied when $\card{C} = 1$.
-			
-			Now combining (\ref{ThirdTwoG}), (\ref{Mbound}) and (\ref{KFC}) gives 
-			\begin{equation}
-			2\size{G} \ge \frac{k^2 + k -4}{k+1}\card{G} - \frac{(k^2 - 3k + 1)\card{\HH} - 2}{k+1}.
-			\label{FourthTwoG}
-			\end{equation}
-			Since,
-			\begin{equation*}
-			  \card{\HH} \le 2\size{G} - (k-1)\card{G},
-			\end{equation*}
-			after some algebra, (\ref{FourthTwoG}) implies
-			\begin{equation*}
-				2\size{G} \ge \parens{k-1 + \frac{k-3}{k^2 -2k + 2}}\card{G} + \frac{2}{k^2 -2k + 2}.
-			\end{equation*}
-			That proves the theorem.
+	Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$. Then
+	\begin{equation*}
+		\mic(G) \ge M + (k-1)\beta(\L).
+	\end{equation*}
+	Applying Lemma \ref{ConsantListMicStrength} and using (\ref{BetaBound}) gives
+	\begin{align*}
+	2\size{G} &\ge (k-2)\card{G} + M + (k-1)\beta(\L) + 1\\
+	&\ge (k-2)\card{G} + M + (k-1)\parens{\size{H} + \frac{k}{2}\card{\L} - \size{G}} + 1\\
+	&= (k-2)\card{G} + M + (k-1)\size{H} + \frac{k(k-1)}{2}\card{\L} - (k-1)\size{G} + 1.
+	\end{align*}		
+	Hence
+	\begin{equation}
+	(k+1)\size{G} \ge (k-2)\card{G} + M + (k-1)\size{H} + \frac{k(k-1)}{2}\card{\L} + 1
+	\label{KPOBound}
+	\end{equation}
+	Let $\C$ be the components of $G[\HH]$.  Then $\alpha(C) \ge \frac{\card{C}}{\chi(C)}$ for all $C \in \C$.  Whence
+	\begin{equation}
+	  M + (k-1)\size{\HH} \ge \sum_{C \in \C} k\frac{\card{C}}{\chi(C)} + (k-1)\size{C}.
+	  \label{Mbound}
+	\end{equation}
+	
+	If $\L = \emptyset$, then $G$ has average degree at least $k \ge k-1 + \frac{k-3}{k^2-2k+2}$.  So, assume $\L \ne \emptyset$.  Then $G[\HH]$ is $(k-1)$-colorable by $k$-list-criticality of $G$. In particular, $\chi(C) \le k-1$ for every $C \in \C$.
+	We claim that for every $C \in \C$,
+	\begin{equation}
+	 k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge \parens{k - \frac12}\card{C}.
+	 \label{KFC}
+	\end{equation}
+	If $C \in \C$ is not a tree, then $\size{C} \ge \card{C}$ and hence $k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge k\frac{\card{C}}{k-1} + (k-1)\size{C} \ge (k - \frac12)\card{C}$.  If $C$ is a tree, then $\chi(C) \le 2$ and hence 
+	$k\frac{\card{C}}{\chi(C)} + (k-1)\size{C} \ge k\frac{\card{C}}{2} + (k-1)(\card{C} - 1) \ge (k-\frac12)\card{C}$ unless $\card{C} = 1$.  This proves (\ref{KFC}) since the bound is trivially satisfied when $\card{C} = 1$.
+	
+	Now combining (\ref{KPOBound}), (\ref{Mbound}) and (\ref{KFC}) with the basic bound
+	\begin{equation*}
+	  \card{\L} \ge k\card{G} - 2\size{G},
+	\end{equation*}	
+	gives
+	\begin{align*}
+	(k+1)\size{G} &\ge (k-2)\card{G} + \parens{k - \frac12}\card{\HH} + \frac{k(k-1)}{2}\card{\L} + 1\\
+	&= \parens{2k-\frac52}\card{G} + \frac{k^2 - 3k + 1}{2}\card{\L} + 1\\
+	&\ge\parens{2k-\frac52}\card{G} + \frac{k^2 - 3k + 1}{2}\parens{k\card{G} - 2\size{G}} + 1.\\
+	\end{align*}
+	After some algebra, this becomes
+	\begin{equation*}
+		2\size{G} \ge \parens{k-1 + \frac{k-3}{k^2 -2k + 2}}\card{G} + \frac{2}{k^2 -2k + 2}.
+	\end{equation*}
+	That proves the theorem.
 \end{proof}
 
 
 
 \begin{problem}
-The right side of equation (9) in the above proof can be improved to $k\card{C}$ unless $C$ is a $K_2$ where both vertices have degree $k$ in $G$.  If these $K_2$'s could be handled, the average degree bound would improve to $k-1 + \frac{k-3}{(k-1)^2}$.  Handle the $K_2$'s.
+The right side of equation (\ref{KFC}) in the above proof can be improved to $k\card{C}$ unless $C$ is a $K_2$ where both vertices have degree $k$ in $G$.  If these $K_2$'s could be handled, the average degree bound would improve to $k-1 + \frac{k-3}{(k-1)^2}$.  Handle the $K_2$'s.
 \end{problem}
 
 \bibliographystyle{amsplain}

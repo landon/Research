@@ -222,11 +222,11 @@ By Lemma \ref{SimpleGallaiBetaBound},
 	2\size{G} &= 2\size{\HH} + 2\size{\HH, \L} + 2\size{\L}\\
 	&= 2\size{\HH} + 2((k-1)\card{\L} - 2\size{\L}) + 2\size{\L}\\
 	&= 2\size{\HH} + 2(k-1)\card{\L} - 2\size{\L}\\
-	&\ge 2\size{\HH} + k\card{\L} - 2\beta(L),\\
+	&\ge 2\size{\HH} + k\card{\L} - 2\beta(\L),\\
 	\end{align*}
 	which is
 	\begin{equation}
-	\beta(L) \ge \size{H} + \frac{k}{2}\card{\L} - \size{G}.
+	\beta(\L) \ge \size{\HH} + \frac{k}{2}\card{\L} - \size{G}.
 	\label{BetaBound}
 	\end{equation}
 	Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$. Then
@@ -236,12 +236,12 @@ By Lemma \ref{SimpleGallaiBetaBound},
 	Applying Lemma \ref{ConsantListMicStrength} and using (\ref{BetaBound}) gives
 	\begin{align*}
 	2\size{G} &\ge (k-2)\card{G} + M + (k-1)\beta(\L) + 1\\
-	&\ge (k-2)\card{G} + M + (k-1)\parens{\size{H} + \frac{k}{2}\card{\L} - \size{G}} + 1\\
-	&= (k-2)\card{G} + M + (k-1)\size{H} + \frac{k(k-1)}{2}\card{\L} - (k-1)\size{G} + 1.
+	&\ge (k-2)\card{G} + M + (k-1)\parens{\size{\HH} + \frac{k}{2}\card{\L} - \size{G}} + 1\\
+	&= (k-2)\card{G} + M + (k-1)\size{\HH} + \frac{k(k-1)}{2}\card{\L} - (k-1)\size{G} + 1.
 	\end{align*}		
 	Hence
 	\begin{equation}
-	(k+1)\size{G} \ge (k-2)\card{G} + M + (k-1)\size{H} + \frac{k(k-1)}{2}\card{\L} + 1
+	(k+1)\size{G} \ge (k-2)\card{G} + M + (k-1)\size{\HH} + \frac{k(k-1)}{2}\card{\L} + 1
 	\label{KPOBound}
 	\end{equation}
 	Let $\C$ be the components of $G[\HH]$.  Then $\alpha(C) \ge \frac{\card{C}}{\chi(C)}$ for all $C \in \C$.  Whence

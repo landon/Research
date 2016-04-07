@@ -1,0 +1,372 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{color}
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+
+\title{Notes on further improving the lower bound on average degree in list critical graphs}
+
+\begin{document}
+\maketitle
+
+\section{A lemma from the reducible configurations}
+
+Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. For a graph $G$, let $W^k(G)$ be the set of vertices of $G$ that are contained in some $K_{k-1}$ in $G$.  
+Let $q_k(G)$ be the number of non-cut vertices in $G$ that appear in copies of $K_{k-1}$.  When $k$ is defined in context, we just write $q(G)$.
+Let $\beta_k(G)$ be the independence number of the subgraph of $G$ induced on the vertices of degree $k-1$.  When $k$ is defined in context, we just write $\beta(G)$.
+
+\begin{lem}\label{DegenerateEuler}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  If $\size{G} > \sum_{v \in V(G)} f(v)$, then $G$ has an induced subgraph $H$ such that $d_H(v) > f(v)$ for each $v \in V(H)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G} \ge 3$ and we have $x \in V(G)$ with $d_G(x) \leq f(x)$. But now $\size{G-x} > \sum_{v \in V(G-x)} f(v)$, contradicting minimality of $\card{G}$.
+\end{proof}
+
+\begin{lem}\label{qLemma}
+	Let $G \ne K_k$ be a $k$-AT-critical graph where $k \ge 7$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH'$ the subgraph of $G$ induced on $k$-vertices, 
+	$\HH$ the subgraph of $G$ induced on $k^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  Then
+	\[q(\L) \le \size{\HH, \L} - (k-3)\card{\HH'} + 2\card{\D} + \sum_{v \in V(\HH')} d_{\HH}(v).\]
+	
+\end{lem}
+\begin{proof}
+Put $W \DefinedAs W^k(\L)$ and $L' = V(\L) \setminus W$. Define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
+\begin{enumerate}
+\item  $B = V(\HH')$ and $A$ is the disjoint union of the following sets
+$A_1, A_2$ and $A_3$,
+\item $A_1 = \D$ and each $T \in \D$ is adjacent to all $y \in B$
+where $N(y) \cap W^k(T) \ne \emptyset$,
+\item For each $v \in L'$, let $A_2(v)$ be a set of $\card{N(v) \cap
+B}$ vertices connected to $N(v) \cap B$ by a matching in $F$.  Let
+$A_2$ be the disjoint union of the $A_2(v)$ for $v \in L'$,
+\item For each $y \in B$, let $A_3(y)$ be a set of $d_{\HH}(y)$ vertices
+which are all joined to $y$ in $F$.  Let $A_3$ be the disjoint union
+of the $A_3(y)$ for $y \in B$.
+\end{enumerate}
+
+Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_2 \cup A_3$ and $f(v) = 2$ for all $v \in B \cup A_1$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  
+Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  
+In particular, $V(Q) \subseteq B \cup A_1$ and $\delta(Q) \ge 3$.  Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. 
+Now $Z \DefinedAs G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEuler}, so $Z$ has an induced subgraph $G'$ that is $f$-AT 
+where $f(y) = d_{G'}(y) - 1$ for $y \in Y$ and $f(v) = d_{G'}(v)$ for $v \in X$.  Since $Y \subseteq B$ and $X \subseteq V(\L)$, we have $f(v) = k-1 + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  
+Hence, $G$ is AT-reducible to $G'$, a contradiction.
+
+Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{B} + \card{\D}) + \card{A_2} + \card{A_3}$. 
+By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  
+Hence $\size{F} \ge (k-1)\card{B}$.  This gives $(k-3)\card{B} \leq 2\card{\D} + \card{A_2} + \card{A_3}$.  
+Since $B = V(\HH')$, $\card{A_2} = -q(\L) + \size{\HH, \L}$ and $\card{A_3} = \sum_{v \in V(\HH')} d_{\HH}(v)$, the lemma follows.
+\end{proof}
+
+\begin{cor}
+    Let $G \ne K_k$ be a $k$-AT-critical graph where $k \ge 7$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, 
+	$\HH$ the subgraph of $G$ induced on $k^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  If $\Delta(G) = k$ and $\HH$ is edgeless, then
+	\[q(\L) \le 2\card{\HH} + 2\card{D}.\]
+\end{cor}
+
+\section{Gallai tree bounds}
+\begin{lem}\label{BoundFamilyWithoutKKMinusOne}
+	Let $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{z}{\IN}{\IR}$.
+	For all $k \ge 6$ and $T \in \T_k$ with $K_{k-1} \not \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + z(k)\beta(T)\]
+	whenever $p$, $f$ and $z$ satisfy all of the following conditions:
+	\begin{enumerate}
+		\item $p(k) \ge \frac{-f(k)}{k-2}$; and
+		\item $p(k) \ge \frac{-f(k)}{5} + 5 - k$; and
+		\item $0\ge f(k)\ge -k+2$; and
+		\item $p(k) \ge \frac{3 - z(k)}{k-2}$.
+	\end{enumerate}
+\end{lem}
+\begin{proof}
+A general outline for the proof is that it mirrors that of
+Lemma~\ref{BasicGallaiTreeBound}, and we add as hypotheses all of the conditions that
+we need along the way.
+
+Suppose the lemma is false and choose a counterexample $T$ minimizing $|T|$. 
+If $T$ is $K_t$ for some $t \in \{2,k-2\}$, then $t(t-1) > (k-3 + p(k))t +
+f(k)$.  After substituting $p(k)\ge \frac{-f(k)}{k-2}$ from (1), this
+simplifies to $-t(k-2)>f(k)$, which contradicts (3).  If $T$ is $C_{2r+1}$ for
+$r \ge 2$, then $2(2r+1) > (k-3 + p(k))(2r+1) + f(k)$ and hence
+$(5-k-p(k))(2r+1)>f(k)$.  Since $f(k)\le 0$, this contradicts (2).  (Note that
+we only use conditions (1), (2), and (3) when $T$ has a single block;
+these are the base cases when the proof is phrased using induction.)
+
+Let $D$ be an %endblock of $T$ and $x_B$ the cutvertex of $T$ contained in $B$. 
+induced subgraph such that $T\setminus D$ is connected.  (We will choose $D$ to
+be a connected subgraph contained in at most three blocks of $T$.)
+Let $T' = T \setminus D$. %\parens{V(B) \setminus \set{x_B}}$. 
+By the minimality of $|T|$, we have
+	\[2\size{T'} \le (k-3 + p(k))\card{T'} + f(k) + z(k)\beta(T').\]
+	Since $T$ is a counterexample, subtracting this inequality from the inequality for
+$2||T||$ gives
+	\begin{equation}
+	2\size{T} - 2\size{T'} > (k-3 + p(k))|D| + z(k)(\beta(T) - \beta(T')). \tag{*}\label{eqn:*}
+	\end{equation}
+	
+Suppose $T$ has an endblock $B$ that is $K_t$ for some $t \in \{3,\ldots,
+k-3\}$; let $x_B$ be a cut vertex of $B$ and let $D=B-x_B$.
+Now \eqref{eqn:*} gives $2\size{T}-2\size{T'} =
+\card{B}(\card{B}-1)>(k-3+p(k))(|B|-1)$, which 
+is a contradiction, since $|B|\le k-3$ and $p(k)>0$.
+Suppose instead that $T$ has an endblock $B$ that is an odd cycle.  Again, let
+$D=B-x_B$.  Now we get $2|B|>(k-3+p(k))(|B|-1)$.  This simplifies to $|B|<1+\frac2{k-5+p(k)}$, which is a contradiction, 
+since the denominator is always at least 1 (using (4) when $k=5$).
+%and $2\size{B} = 2\card{B}$ if $\card{B} > k-3$.  
+%Since $p(k) \ge \frac{3}{k-2}$ by (4), this contradicts \ref{eqn:*}.
+Finally suppose that $T$ has an endblock $B$ that is $K_2$. Now \eqref{eqn:*} gives
+$2 > k-3 + p(k)$, which is again a contradiction, since $k \ge 5$ and $p(k) > 0$.
+	
+To handle the case when $B$ is $K_{k-2}$ we need to remove $x_B$ from $T$ as
+well, so we simply let $D=B$.  
+Since $B=K_{k-2}$, we have either $d_T(x_B) = k - 2$ or $d_T(x_B) =
+k-1$. When $d_T(x_B) = k - 2$, we have
+	\[(k-2)(k-3) +2 > (k-3 + p(k))(k-2),\]
+	contradicting (4).
+	
+The only remaining case is when $B$ is $K_{k-2}$ and $d_T(x_B) =
+k - 1$.  Each case above applied when $B$ was any endblock of $T$, so we may
+assume that every endblock of $T$ is a copy of $K_{k-2}$ that shares a vertex
+with an odd cycle.  Choose an endblock $B$ that is the end of a longest path in
+the block-tree of $T$.  Let $C$ be the odd cycle sharing a vertex $x_B$ with
+$B$.  Consider a neighbor $y$ of $x_B$ on $C$ that either (i) lies only in $C$
+or (ii) lies also in an endblock $A$ that is a copy of $K_{k-2}$ (such a
+neighbor exists because $B$ is at the end of a longest path in the block-tree).
+In (i), let $D=B\cup\{y\}+yx_B$; in (ii), let $D=B\cup A+yx_B$.
+
+In (i), equation \eqref{eqn:*} gives
+
+\[(k-2)(k-3)+2(3) > (k-3+p(k))(k-1) + z(k).\]
+%
+This simplifies to $6>k-3+(k-1)p(k) + z(k)$.  Since $p(k) \ge 0$ by (1) and (3), this implies $z(k) < 9-k$. Also, by (4) we get $6>k+\frac{3-z(k)}{k-2} > k + \frac{k-6}{k-2}$, which yields a contradiction since $k \ge 6$.
+
+In (ii), equation \eqref{eqn:*} gives
+	\[2(k-2)(k-3) + 2(3) > 2(k-3 + p(k))(k-2) + z(k),\]
+	which simplifies to
+	\[3 - z(k) > (k-2)p(k),\]
+	contradicting (4).
+\end{proof}
+
+\begin{lem}\label{BoundFamilyWithKKMinusOne}
+	Let $\func{p}{\IN}{\IR}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR}$, $\func{z}{\IN}{\IR}$. 
+	For all $k \ge 6$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T) + z(k)\beta(T)\]
+	whenever $p$, $f$, $h$ and $z$ satisfy all of the following conditions:
+	\begin{enumerate}
+		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+	    \item $p(k) \ge \frac{3 - z(k)}{k-2}$; and
+		\item $p(k) \ge h(k) + 5 - k$; and
+		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item $(k-1)p(k) + (k-3)h(k) + z(k)\ge k+1$.
+	\end{enumerate}
+\end{lem}
+
+The proof is similar to that of Lemma~\ref{BoundFamilyWithoutKKMinusOne}.  The
+main difference is that now our only base case is $T=K_{k-1}$.  For this
+reason, we replace hypotheses (1), (2), and (3) of
+Lemma~\ref{BoundFamilyWithoutKKMinusOne}, which we used only for the base cases
+of that proof, with our new hypothesis (1), which we use for the current base
+case.  When some endblock $B$ is an odd cycle or $K_t$, with $t\in\{3, \ldots,
+k-3\}$, the induction step is identical to that in
+Lemma~\ref{BoundFamilyWithoutKKMinusOne}, since deleting $D$ does not change
+$q(T)$.
+It is easy to check that, as needed, $K_{k-1}\subseteq T\setminus D$.  Thus, we
+need only to consider the induction step when $T$ has an endblock $B$ that is
+$K_2$, $K_{k-2}$, or $K_{k-1}$.  As we will see, these three cases require
+hypotheses (3), (4), and (5), respectively.
+    
+Let $T$ be a counterexample minimizing $|T|$.  Let $D$ be an induced subgraph
+such that $T\setminus D$ is connected, and let $T'=T\setminus D$. The same
+argument as in Lemma~\ref{BoundFamilyWithoutKKMinusOne} now gives
+    \begin{equation}
+		2||T||-2||T'|| > (k-3 + p(k))\card{D} + h(k)\parens{q(T) - q(T')} + z(k)\parens{\beta(T) - \beta(T')}.\tag{**}\label{eqn:**}
+	\end{equation}
+If $B$ is $K_2$, then $q(T') \le q(T) + 1$ and \eqref{eqn:**} gives $2 > k-3 +
+p(k) - h(k)$, contradicting (3).
+So every endblock of $B$ is $K_{k-2}$ or $K_{k-1}$. To handle these cases, we
+will need to remove $x_B$ from $T$ as well.  Suppose some endblock $B$ is
+$K_{k-1}$ and $K_{k-1} \subseteq T\setminus B$.  Let $D=B$.  Now
+$q(T') \le q(T)-(k-2)+1$.  So \eqref{eqn:**} gives
+	
+\[ (k-1)(k-2)+2 > (k-3+p(k))(k-1)+h(k)(k-3) + z(k).\]
+This simplifies to $k+1 > (k-1)p(k)+(k-3)h(k) + z(k)$, which contradicts (5).  Thus,
+at most one endblock of $T$ is $K_{k-1}$.
+Since the cases above apply when $B$ is any endblock, each other endblock must
+be $K_{k-2}$.  Let $B$ be such an endblock, and $x_B$ its cut vertex.	So
+$d_T(x_{B}) = k - 2$ or $d_T(x_{B}) = k-1$.  In the former case, $q(T') \le
+q(T) + 1$, and in the latter, $q(T) = q(T')$.
+If $d_T(x_{B}) = k - 2$, then \eqref{eqn:**} gives
+\[(k-2)(k-3) +2 > (k-3 + p(k))(k-2) - h(k),\]
+which simplifies to $\frac{2+h(k)}{k-2} > p(k)$, and contradicts (4).
+	
+Hence, all but at most one endblock of $T$ is a copy of $K_{k-2}$ with a
+cut vertex that is also in an odd cycle.  Let $B$ be such an endblock 
+at the end of a longest path in the block-tree of $T$, and let $C$ be the odd
+cycle sharing a vertex $x_B$ with $B$.  Consider a neighbor $y$ 
+of $x_B$ on $C$ that either (i) lies only in block $C$ or (ii) lies also in an
+endblock $A$ that is a copy of $K_{k-2}$ (such a neighbor exists 
+because $B$ is at the end of a longest path in the block-tree).  In (i), let
+$D=B\cup\{y\}+yx_B$; in (ii), let $D=B\cup A+yx_B$.  Let $T'=T\setminus
+V(D)$.	In each case, we have $q(T')=q(T)$, so the analysis is identical to that
+in the proof of Lemma~\ref{BoundFamilyWithoutKKMinusOne}.
+\end{proof}
+
+\begin{cor}\label{SingleParameterBoundFamilyWithKKMinusOne}
+	Let $\func{p}{\IN}{\irange{0,1}}$.
+	For all $k \ge 6$ and $T \in \T_k$ with $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le \parens{k-3 + p(k)}\card{T} + f(k) + h(k)q(T) + z(k)\beta(T),\]
+	where
+	\begin{align*}
+	f(k) &= (k-1)\parens{3 - (k-1)p(k)},\\
+	h(k) &= (k-2)p(k) - 2,\\
+	z(k) &= 3k-5 - (k^2-4k+5)p(k).\\
+	\end{align*}
+\end{lem}
+
+
+\section{Reducible Configurations}
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \ge 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has $t$ components $H_1, H_2, \ldots, H_t$, and all are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \ge 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \ge t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+
+To deal with more than one high vertex we need the following auxiliary bipartite graph.  For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \ge 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ iff $N(y) \cap W^k(T) \ne \emptyset$.   The next lemma tells us that we have a reducible configuration if this bipartite graph has minimum degree at least three.  
+
+\begin{lem}
+	\label{MultipleHighConfigurationEuler} Let $k\ge7$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B\DefinedAs\B_{k}(V(G-Y),Y)$ we have $\delta(\B)\ge3$. 
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+We also have the following version with asymmetric degree condition on $\B$.  The point here is that this works for $k \ge 5$.  As we'll see in the next section, the consequence is that we trade a bit in our size bound for the proof to go through with $k \in \set{5,6}$.
+
+\begin{lem}
+	\label{MultipleHighConfigurationEulerLopsided} Let $k \ge 5$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $d_{\B}(y) \ge 4$ for all $y \in Y$ and $d_{\B}(T) \ge 2$ for all components $T$ of $G-Y$.
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+\end{document}
+
+ 

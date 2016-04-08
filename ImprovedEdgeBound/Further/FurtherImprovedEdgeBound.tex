@@ -126,15 +126,15 @@ Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G
 \end{proof}
 
 \begin{lem}\label{qLemma}
-	Let $G \ne K_k$ be a $k$-AT-critical graph where $k \ge 7$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH'$ the subgraph of $G$ induced on $k$-vertices, 
-	$\HH$ the subgraph of $G$ induced on $k^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  Then
-	\[q(\L) \le \size{\HH, \L} - (k-3)\card{\HH'} + 2\card{\D} + \sum_{v \in V(\HH')} d_{\HH}(v).\]
+	Let $G \ne K_k$ be a $k$-AT-critical graph where $k \ge 7$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, 
+	$\HH$ the subgraph of $G$ induced on $k^+$-vertices, $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  Then
+	\[q(\L) \le 2\card{\D} + 3\card{\HH^-} + \size{\HH^+, \L}.\]
 	
 \end{lem}
 \begin{proof}
 Put $W \DefinedAs W^k(\L)$ and $L' = V(\L) \setminus W$. Define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
 \begin{enumerate}
-\item  $B = V(\HH')$ and $A$ is the disjoint union of the following sets
+\item  $B = V(\HH^-)$ and $A$ is the disjoint union of the following sets
 $A_1, A_2$ and $A_3$,
 \item $A_1 = \D$ and each $T \in \D$ is adjacent to all $y \in B$
 where $N(y) \cap W^k(T) \ne \emptyset$,
@@ -156,13 +156,17 @@ Hence, $G$ is AT-reducible to $G'$, a contradiction.
 Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{B} + \card{\D}) + \card{A_2} + \card{A_3}$. 
 By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  
 Hence $\size{F} \ge (k-1)\card{B}$.  This gives $(k-3)\card{B} \leq 2\card{\D} + \card{A_2} + \card{A_3}$.  
-Since $B = V(\HH')$, $\card{A_2} = -q(\L) + \size{\HH, \L}$ and $\card{A_3} = \sum_{v \in V(\HH')} d_{\HH}(v)$, the lemma follows.
+Now the lemma follows since $B = V(\HH^-)$, $\card{A_3} = \sum_{v \in V(\HH^-)} d_{\HH}(v)$ and
+\begin{align*}
+\card{A_2} &= -q(\L) + \size{\HH, \L} \\
+&= -q(\L) + k\card{\HH^-}+ \size{\HH^+, \L} - \sum_{v \in V(\HH^-)} d_{\HH}(v).
+\end{align*}
 \end{proof}
 
 \begin{cor}
     Let $G \ne K_k$ be a $k$-AT-critical graph where $k \ge 7$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, 
-	$\HH$ the subgraph of $G$ induced on $k^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  If $\Delta(G) = k$ and $\HH$ is edgeless, then
-	\[q(\L) \le 2\card{\HH} + 2\card{\D}.\]
+	$\HH^-$ the subgraph of $G$ induced on $k$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  If $\Delta(G) = k$ and $\HH^-$ is edgeless, then
+	\[q(\L) \le 2\card{\D} + 3\card{\HH^-}.\]
 \end{cor}
 
 \section{Gallai tree bounds}

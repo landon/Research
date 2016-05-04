@@ -112,6 +112,7 @@
 \begin{document}
 \maketitle
 
+
 \section{Edges in list-critical graphs}
 A graph $G$ is \emph{$k$-list-critical} if $G$ is not $(k-1)$-choosable, but every
 proper subgraph of $G$ is $(k-1)$-choosable.  Replace `$(k-1)$-' with `online $(k-1)$-' and `\emph{$k$-}' with `\emph{online $k$-}' in the previous sentence and read it.
@@ -135,6 +136,37 @@ Dirac \cite{dirac1957theorem} proved this for $k$-critical graphs.  Kostochka an
 When $\card{G}$ is large compared with $k$, the conjecture holds by Gallai-type bounds on the average degree of online $k$-list-critical graphs \cite{OreVizing,DischargingLowerBound}.
 \end{proof}
 
+\subsection{The $\frac56$ bound}
+\begin{conjecture}
+Every vertex-transitive graph has $\chi \le \max \set{\omega, \ceil{\frac{5\Delta + 3}{6}}}$.
+\end{conjecture}
+\begin{proof}[\textbf{Background}]
+In \cite{vertextransitive}, the following was proved
+\begin{itemize}
+\item the conjecture holds for the fractional chromatic number $\chi^*$,
+\item the conjecture holds with $\ceil{\frac{5\Delta + 3}{6}}$ replaced by $\epsilon(\Delta + 1)$ for some $\epsilon < 1$,
+\item the conjecture holds both if Reed's $\omega, \Delta, \chi$ conjecture and the strong $2\Delta$-colorability conjecture hold for vertex-transitive graphs (only strong $\frac52\Delta$-colorability is required),
+\end{itemize}
+Does the conjecture hold for Cayley graphs?
+\end{proof}
+
+\begin{conjecture}
+Every line graph (of a multigraph) has $\chi \le \max \set{\omega, \ceil{\frac{5\Delta + 3}{6}}}$.
+\end{conjecture}
+\begin{proof}[\textbf{Background}]
+In \cite{rabern2011strengthening} this was proved with $\ceil{\frac{5\Delta + 3}{6}}$ replaced by $\frac{7\Delta + 10}{8}$.  
+Conjecture 14 in \cite{rabern2011strengthening} that implies this conjecture is now known to be false.
+\end{proof}
+
+\section{Planar graphs}
+\begin{conjecture}
+Every planar graph with no $K_5$-subdivision is $2$-fold $9$-colorable.
+\end{conjecture}
+\begin{proof}[\textbf{Background}]
+In \cite{planar92}, Cranston and R. gave a short proof of this conjecture with $K_5$-minors excluded instead of $K_5$-subdivisions (which also follows from the Four Color Theorem).  Haj{\'o}s conjectured that every graph is $(k-1)$-colorable unless it contains a subdivision of
+$K_k$. This is known to be true for $k \le 4$ and false for $k \ge 7$. The cases $k = 5$ and $k = 6$ remain unresolved.
+\end{proof}
+
 \section{Maximum degree, clique number and colorings}
 \subsection{Around Borodin-Kostochka}
 \begin{conjecture}\label{C3}
@@ -151,6 +183,7 @@ Every graph with $\chi \ge \Delta$ contains $K_{\Delta-3}$.
 \end{conjecture}
 \begin{proof}[\textbf{Background}]
 Results in \cite{bigcliques} show that this holds with $K_{\Delta-4}$ instead of $K_{\Delta-3}$.  Moreover, \cite{bigcliques} proves the conjecture for all but $\Delta \in \set{6,8,9,11,12}$.
+Reed's conjecture \cite{reed1998omega} that every graph satisfies $\chi \le \ceil{\frac{\omega + \Delta + 1}{2}}$ implies this conjecture with $K_{\Delta-2}$ instead of $K_{\Delta-3}$.
 \end{proof}
 
 \begin{conjecture}\label{C5}
@@ -172,38 +205,27 @@ The one known connected counterexample to the Borodin-Kostochka conjecture for $
 Every graph with $\theta\ge10$ and $\omega\leq\frac{\theta}{2}$ is $\floor{\frac{\theta}{2}}$-choosable. 
 \end{conjecture}
 \begin{proof}[\textbf{Background}]
+Here $\theta$ is the \emph{Ore degree} give by $\theta(G)\DefinedAs\max_{xy\in E(G)}d(x) + d(y)$.  This conjecture holds for ordinary coloring \cite{kierstead2009ore, rabern2010a, krs_one, rabern2012partitioning}.
+In \cite{KernelMagic}, the conjecture is proved for $\theta \ge 18$ for both list-coloring and online list-coloring.  Further lowering of $\theta$ would follow from improved bounds on average degree of list-critical graphs \cite{OreVizing}.
 \end{proof}
 
 \begin{conjecture}
 Every claw-free graph with $\Delta \ge 9$ and $\omega < \Delta$ is $(\Delta-1)$-choosable.
 \end{conjecture}
 \begin{proof}[\textbf{Background}]
+In \cite{cranstonrabernclaw}, this was proved for ordinary coloring. In \cite{BkClawList}, the conjecture was proved for $\Delta \ge 69$.  Also, \cite{BkClawList} proved that the full conjecture follows from the line-graph case.
 \end{proof}
 
 \begin{conjecture}
 There is a polynomial time graph algorithm that finds either a $(\Delta-1)$-coloring or a $K_{\Delta-3}$.
 \end{conjecture}
 \begin{proof}[\textbf{Background}]
-\end{proof}
-
-\subsection{The $\frac56$ bound}
-\begin{conjecture}
-If $G$ is vertex-transitive, then $\chi(G) \le \max \set{\omega(G), \ceil{\frac{5\Delta(G) + 3}{6}}}$.
-\end{conjecture}
-\begin{proof}[\textbf{Background}]
-\end{proof}
-
-\begin{conjecture}
-If $G$ is the line graph of a multigraph, then $\chi(G) \le \max \set{\omega(G), \ceil{\frac{5\Delta(G) + 3}{6}}}$.
-\end{conjecture}
-\begin{proof}[\textbf{Background}]
-\end{proof}
-
-\section{Planar graphs}
-\begin{conjecture}
-Every planar graph with no $K_5$-subdivision is $2$-fold $9$-colorable.
-\end{conjecture}
-\begin{proof}[\textbf{Background}]
+In \cite{bigcliques}, the following was proved
+\begin{itemize}
+\item the conjecture holds with $K_{\Delta-3}$ replaced by $K_{\Delta-4}$,
+\item the conjecture holds for $\Delta \ge 25$ (the proof uses algorithmic versions of the local lemma),
+\item the conjecture holds when $\Delta = 3r+1$.
+\end{itemize}
 \end{proof}
 
 \bibliographystyle{amsplain}

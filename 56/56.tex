@@ -1,0 +1,266 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[top=1.25in, bottom=1.25in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{tikz,tkz-graph}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{lemma}[thm]{Lemma}
+\newreptheorem{lemma}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newreptheorem{conj}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{clm}{Claim}
+\newtheorem{obs}[thm]{Observation}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+%\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\C}{\fancy{C}}
+\newcommand{\F}{\fancy{F}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\LB}{\mathcal{L}_B}
+\newcommand{\col}{{\textrm{col}}}
+\newcommand{\ch}{{\textrm{ch}}}
+\newcommand{\chil}{{\chi_{\ell}}}
+\newcommand{\chiol}{{\chi_{OL}}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+\newcommand{\dclaw}[1]{d_{\text{claw}}\left( #1 \right)}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand{\vph}{\varphi}
+\newcommand{\vphn}{\overline{\varphi}}
+
+\begin{document}
+
+\section{Useful lemmas}
+Let $G$ be $(k+1)$-edge-critical for some $k \ge \Delta(G) + 1$.  Call $v \in
+V(G)$ \emph{special} if every fan rooted at $v$ has at most 3 vertices
+(including $v$).
+
+\setcounter{thm}{-1}
+\begin{lem}\label{SpecialPath}
+Let $G$ be $(k+1)$-edge-critical for some $k \ge \Delta(G) + 1$.  Let $\phi$ be a
+$k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha$ is missing at $v_0$ and
+$\beta$ is missing at $v_1$.  Let $P = v_1v_2...v_r$ be an $\alpha-\beta$ path
+with edges $e_i = v_iv_{i+1}$ for $1 \le i \le r-1$.  If $v_i$ is special for
+all odd $i$, then for any $\tau$ that is missing at $v_0$ there are edges $f_i =
+v_iv_{i+1}$ for $1 \le i \le r-1$ such that $f_i = e_i$ for $i$ even and
+$\phi(f_i) = \tau$ for $i$ odd.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample minimizing $r$.  Then, by minimality of
+$r$, we must have $\phi(v_{r-1}v_r) = \alpha$ and we have $f_i = v_iv_{i+1}$ for
+$1 \le i \le r-2$ such that $f_i = e_i$ for $i$ even and $\phi(f_i) = \tau$ for
+$i$ odd.  Swap $\alpha$ and $\beta$ on $e_i$ for $1 \le i \le r-3$ and then
+color $v_0v_1$ (call this edge $e_0$) with $\alpha$ and uncolor $e_{r-2}$.  Let
+$\phi'$ be the resulting coloring.  Since $k \ge \Delta(G) + 1$, there is
+another color missing at $v_{r-2}$ besides $\alpha$, let $\gamma$ be such a color.  Now 
+$v_{r-1}$ is special since $r-1$ is odd (since $P$ starts and ends with
+$\alpha$), so there is an edge $e = v_{r-1}v_r$ with $\phi'(e) = \gamma$.  Now
+swap $\tau$ and $\alpha$ on $e_i$ for $0 \le i \le r-3$ to get a new coloring
+$\phi^*$.  Then $\gamma$ and $\tau$ are both missing at $v_{r-2}$ in $\phi^*$.
+Since $v_{r-1}$ is special, the fan with $v_{r-2}, v_{r-1}, v_r$ and $e$
+implies that there is an edge $f_{r-1} = v_{r-1}v_r$ with $\phi^*(f_{r-1}) =
+\tau$.  Now swap $\alpha$ and $\tau$ back on $e_i$ for $0 \le i \le r-3$ and
+then shift the $\alpha-\beta$ coloring one to the right to get back to $\phi$. 
+We have all the desired $f_i$, a contradiction.
+\end{proof}
+
+\begin{lem}
+Let $T$ be a maximal Tashkinov tree with respect to a $k$-edge-coloring $\phi$
+of $G-xy$.  If every $v \in V(T)$ is special, then for all $\alpha$ missing at
+$x$ and $\beta$ missing at $y$, the $\alpha-\beta$ path $P$ from $y$ to $x$ has
+$V(P) = V(T)$.
+\end{lem}
+\begin{proof}
+We show that $P$ is a maximal Tashkinov tree, then we must have $V(P) = V(T)$.
+Say $P = v_0v_1\ldots v_r$ where $v_0 = y$ and $v_r$ is the vertex right before
+$x$.  Suppose $P$ is not maximal.  Then there is some color $\delta$ missing on
+$P$ (say at $v_i$) and an edge colored $\delta$ leaving $P$ (say from $v_j$). 
+We have a 2-colored cycle, so by symmetry we may assume that $i < j$.  Using
+Lemma \ref{SpecialPath}, we can walk from $i$ to $j$ showing
+that every other edge on the path has a parallel edge colored $\delta$.  When we
+get to $v_j$, this means the $\delta$ edge ends in $P$, a contradiction.
+\end{proof}
+
+A \emph{defective color} for a
+Tashkinov tree $T$  in a critical graph $G$ is a color used on more than one edge
+from $V(T)$ to $V(G) - V(T)$.  
+\begin{lem}
+Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
+$\phi$ of $G - v_0v_1$ in $G$.  If every $v \in V(T)$ is special, then $V(T)$
+has no defective colors.
+\end{lem}
+\begin{proof}
+Use Lemma 1 to get an $\alpha-\beta$ path $P = v_0v_1\ldots v_r$ with $V(P) =
+V(T)$.  Suppose the maximum size Tashkinov tree $P$ has a defective color
+$\delta$ with respect to $\phi$. Let $\tau$ be missing at $v_2$. Consider a
+maximal $\tau-\delta$ path $Q$.  Since $V(P)$ is elementary, $\delta$ is not
+missing at any vertex of $P$ and $\tau$ is not missing at any other vertex of
+$P$ besides $v_2$.  In particular $Q$ ends outside $V(T)$.  Now $Q$ could leave
+$V(T)$ and re-enter and bounce around inside a bunch (in fact $Q$ must contain
+every $\delta$-colored edge leaving $V(T)$, but we don't need that), but $Q$
+ends outside $V(T)$, so there is a last vertex $w \in V(Q) \cap V(P)$ (this is
+what the Stiebitz book calls an "exit vertex"), say $Q$ ends at $z \in V(G) -
+V(T)$.  Let $\pi \notin \{\alpha, \beta\}$ be a color missing at $w$.  Since
+$T$ is maximum size, no edge colored $\tau$ or $\pi$ leaves $V(T)$.  So, we can
+swap $\tau$ and $\pi$ on every edge in $G - V(T)$ without changing the fact that
+$T$ is a maximum size Tashkinov tree.  Now swap $\delta$ and $\pi$ on $wQz$
+(since $\pi$ is missing at $w$, the $\delta-\pi$ path does end at $w$).  Now
+$\delta$ is missing at $w$, but $\delta$ was defective in $\phi$, so there are
+still edges colored $\delta$ leaving $V(T)$, adding such an edge gets a larger
+Tashkinov tree, a contradiction.
+\end{proof}
+
+\begin{thm}\label{AllSpecialImpliesElementary}
+If every $v \in V(G)$ is special, then $\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}$.
+\end{thm}
+\begin{proof}
+Immediate by Lemma 2 since strongly closed Tashkinov tree implies elementary.
+This is implied by Theorem 1.4 (p. 8--9) of [Stiebitz].
+\end{proof}
+
+\section{The easy bound}
+Let $G$ be a multigraph.  The \emph{claw-degree} of $x \in V(G)$ is 
+\[\dclaw{x} \DefinedAs \max_{\substack{S \subseteq N(x) \\ \card{S} = 3}}\frac14 \parens{d(x) + \sum_{v \in S} d(v)}.\]
+The \emph{claw-degree} of $G$ is 
+\[\dclaw{G} \DefinedAs \max_{x \in V(G)} \dclaw{x}.\]
+\begin{thm}\label{EasyBound}
+If $G$ is a multigraph, then
+\[\chi'(G) \le \max\set{\ceil{\chi'_f(G)}, \Delta(G) + 1, \ceil{\frac43\dclaw{G}}}.\]
+\end{thm}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\size{G}$. Then $G$ is edge-critical with $\chi'(G) = \ceil{\frac43\dclaw{G}}} + 1$. By Theorem \ref{AllSpecialImpliesElementary} there is a non-special $x \in V(G)$.
+Let $k = \ceil{\frac43\dclaw{G}}}$.  Let $xy_1 \in E(G)$ and $\phi$ a $k$-edge-coloring of $G - xy_1$ such that there is a fan $F$ of length $3$ rooted at $x$ with leaves $y_1, y_2, y_3$.  Since $V(F)$ is elementary, 
+\[2 + k - d(x) + \sum_{i \in \irange{3}} k-d(y_i) \le k,\]
+and hence
+\[\dclaw{x} \ge \frac14\parens{d(x) + \sum_{i \in \irange{3}} d(y_i)} \ge \frac{3k+2}{4}.\]
+Hence, the contradiction
+\[\ceil{\frac43\dclaw{G}}} = k \le \frac43\dclaw{G}} - \frac23.\]
+\end{proof}
+
+\section{A stronger bound}
+For $q \in \IN$, put $G_q \DefinedAs \setb{v}{V(G)}{d(v) \ge q}$.  Put
+\[d_q(G) \DefinedAs \max_{x \in G_q} \dclaw{x}.\]
+\begin{thm}\label{StrongerBound}
+If $G$ is a multigraph and $q \in \IN$, then 
+\[\chi'(G) \le \max\set{\ceil{\chi'_f(G)}, \Delta(G) + 1, \ceil{\frac43d_q(G)}, \ceil{\frac43 q}, q + \frac12\mu(G)}.\]
+\end{thm}
+
+To prove Theorem \ref{StrongerBound}, we need to analyze Tashkinov trees that have up to three non-special vertices.
+
+\begin{lem}\label{AtMostOneNonSpecial}
+Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
+$\phi$ of $G - v_0v_1$ in $G$.  If all but at most one $v \in V(T)$ is special, then $V(T)$
+has no defective colors.
+\end{lem}
+\begin{proof}
+One special vertex can't block the parallel edge making machine since we can just go the other way around the cycle.
+\end{proof}
+
+\begin{lem}\label{AtMostTwoNonSpecial}
+Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
+$\phi$ of $G - v_0v_1$ in $G$.  If all but at most two $v \in V(T)$ is special, then either $V(T)$
+has no defective colors or there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$.
+\end{lem}
+\begin{proof}
+If $T$ has one or fewer non-special vertices, we are done.  So suppose $T$ has two.  Choose $\alpha$ missing at
+$v_0$ and $\beta$ missing at $v_1$ so that the length of the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ is maximized.  
+It will suffice to show that $P$ is a maximal Tashkinov tree.  If not, then here must be non-special vertices $v_i, v_j$, where $i < j$.  Without loss of generality,
+suppose there is $\tau$ missing at $v_0$ and a $\tau$-colored edge leaving $P$ from $v_a$.  Then, by Lemma \ref{SpecialPath}, $i$ is odd, $j$ is even and $i \le a \le j$.  
+
+Suppose $j-i > 1$.  Since there a no non-special vertices between $v_i$ and $v_j$, using Lemma \ref{SpecialPath} on the path $v_i\cdots v_j$ we see that there are edges on that path that must
+have parallel edges of all colors missing at $v_i$ as well as all colors missing at $v_j$.  Since these color sets are disjoint, we have $\mu(G) \ge 2k - d(v_i) - d(v_j)$.
+
+So, $j = i + 1$.  By symmetry, we may assume $a = i$.  Consider the $\tau-\beta$ path starting at $v_i$.  If this path never returns to $P$, then the $\tau-\beta$ cycle contains only one non-special vertex on it
+(since it doesn't contain $v_j$) and so we can win as in Lemma \ref{AtMostOneNonSpecial}.  So, the $\tau-\beta$ path does return to $P$.  It must enter along a $\tau$-edge (since $P$ is an $\alpha-\beta$ path).  
+But we just showed that $\tau$ edges can only leave at $v_i$ or $v_j$.  So, the $\tau-\beta$ path re-enters $P$ at $v_j$.  But then we replaced a single edge $v_iv_j$ with a path of length at least three, 
+so the $\tau-\beta$ path is longer than the $\alpha-\beta$ path, contradicting our maximality condition on $P$.
+\end{proof}
+
+\begin{lem}\label{AtMostThreeNonSpecial}
+Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
+$\phi$ of $G - v_0v_1$ in $G$.  If all but at most three $v \in V(T)$ is special, then either $V(T)$
+has no defective colors or there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$.
+\end{lem}
+\begin{proof}
+Similar to the previous, we don't even need to take a maximal path though.  Say we get special vertices $v_i, v_b, v_j$ with $i < b < j$.  By looking at parities, it becomes evident that there 
+is no way to avoid getting $\mu(G) \ge 2k - d(v_i) - d(v_j)$ or $\mu(G) \ge 2k - d(v_i) - d(v_b)$ or $\mu(G) \ge 2k - d(v_b) - d(v_j)$
+\end{proof}
+
+The above should all be unified, like pull out a lemma dealing with the parities and when we are guaranteed $\mu(G) \ge 2k - d(v_i) - d(v_j)$.
+
+\begin{lem}\label{AtMostFourNonSpecial}
+Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
+$\phi$ of $G - v_0v_1$ in $G$.  If all but at most four $v \in V(T)$ is special, then 
+\begin{itemize}
+\item $V(T)$ has no defective colors; or 
+\item there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$; or
+\item there are non-special vertices $x_1, x_2, x_3, x_4 \in V(T)$ and hence $\sum_{i \in \irange{4}} d(x_i) \ge 3k + 2$
+\end{lem}
+\begin{proof}
+Immediate from Lemma \ref{AtMostThreeNonSpecial}.  i think we can get a bit better than $3k + 2$ because there is another vertex in $T$ since $|T|$ is odd.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{StrongerBound}]
+Let $G$ be a minimal counterexample.  Then $G$ is edge-critical.   Let $T$ be a maximum size Tashkinov tree.  We are good if $T$ has one or fewer non-special vertices.  Let $x$ be a non-special vertex in $T$.
+As in the proof of Theorem \ref{EasyBound}, we get $\dclaw{x} \ge \frac{3k+2}{4}$.  Hence if any vertex in $G_q$ is non-special we are done as in Theorem \ref{EasyBound}.  Hence every non-special vertex $x$ has $d(x) \le q-1$.
+If $T$ has four or more non-special vertices, then $4(q-1) \ge 3k + 2$ by the third bullet of Lemma \ref{AtMostFourNonSpecial}.  But then $k > \ceil{\frac43 q} - 1 \ge k + 1$, a contradiction.  
+Hence $T$ has two or three non-special vertices.  By Lemma \ref{AtMostFourNonSpecial}, we have $\mu(G) \ge 2k - 2(q-1)$ which gives $q \ge k + 1 - \frac12 \mu(G)$.  Hence $k > q + \frac12 \mu(G) - 1 \ge k$, a contradiction.
+\end{proof}
+\end{document}

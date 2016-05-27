@@ -86,6 +86,8 @@
 \newcommand{\vph}{\varphi}
 \newcommand{\vphn}{\overline{\varphi}}
 
+\newcommand{\claim}[2]{{\noindent\bf Claim #1.}~{\it #2}~~}
+
 \begin{document}
 \section{Overview}
 
@@ -307,11 +309,9 @@ Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,a,j \in \irange{r}
 $\mu(G) \ge 2k - d(v_i) - d(v_a)$ or $\mu(G) \ge 2k - d(v_a) - d(v_j)$.
 \end{cor}
 
-
-
 \begin{lem}\label{AtMostThreeNonSpecial}
-Let $T$ be a maximum size Tashkinov tree with respect to a $k$-edge-coloring
-$\vph$ of $G - v_0v_1$ in $G$.  If all but at most three $v \in V(T)$ is special, then 
+Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring
+$\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$.  If all but at most three $v \in V(T)$ is special, then 
 \begin{enumerate}
 \item $V(T)$ has no defective colors; or
 \item there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$; or
@@ -333,7 +333,77 @@ By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\al
 must appear on edges between $v_i$ and $v_{3(i-1)}$.  But then (2) is violated.  Hence $|F_i| \ge 4$ for $i \in \irange{2}$.  So, $v_1v_2$ is a non-special edge, violating (3).
 \end{proof}
 
-\newpage
+\begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
+If $Q$ is the line graph of a multigraph $G$ and $Q$ is vertex critical, then
+\[\chi(Q) \leq \max\left\{\omega(Q), \Delta(Q) + 1 - \frac{\mu(G) - 1}{2}\right\}.\]
+\end{thm}
+
+\begin{thm}
+If $Q$ is the line graph of a multigraph, then
+\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+\end{thm}
+\begin{proof}
+Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}}$. Say $Q = L(G)$ for a multigraph $G$. Then $G$ is $k$-edge-critical.
+
+\claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
+\[d(x) \le \frac{-6 + \sum_{v \in V(F-x)} d(v)}{4}.\]}
+Since $F$ is elementary, we have
+\[2 + k-d(x) + \sum_{v \in V(F-x)} k - d(v) \le k,\]
+so
+\[2 + (|F| - 1)k \le d(x) + \sum_{v \in V(F-x)} d(v).\]
+Using $k \ge \frac56(\Delta(Q) + 1) - \frac13 \ge \frac56(d(x) + d(v) - \mu(xv)) - \frac13$ for each $v \in V(F-x)$, we get
+\[2 + \sum_{v \in V(F-x)}\parens{\frac56(d(x) + d(v) - \mu(xv)) - \frac13} \le d(x) + \sum_{v \in V(F-x)} d(v),\]
+so
+\[12 + \parens{5|F| - 11}d(x) - 2(|F| - 1) \le 5\sum_{v \in V(F-x)} \mu(xv) + \sum_{v \in V(F-x)} d(v).\]
+Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this becomes
+\[12 + \parens{5|F| - 16}d(x) -2(|F| - 1) \le \sum_{v \in V(F-x)} d(v).\]
+Using $|F| = 4$ gives
+\[d(x) \le \frac{-6 + \sum_{v \in V(F-x)} d(v)}{4}.\]
+
+\claim{1}{If $x \in V(G)$ with $d(x) > \frac34 \Delta(G) - \frac32$, then $x$ is special.}
+
+Immediate from Claim 0.
+
+\claim{2}{If $x_1x_2 \in E(G)$ with $d(x_i) > \frac23 \Delta(G) - 2$ for at least one $i \in \irange{2}$, then $x_1x_2$ is special.}
+Suppose $x_1x_2$ is not special.  Then by Claim 0, we have for $i \in \irange{2}$,
+\[d(x_i) \le \frac{-6 + \sum_{v \in V(F-x_i)} d(v)}{4} \le \frac{-6 + d(x_{3-i}) + 2\Delta(G)}{4},\]
+so
+\[4d(x_i) - d(x_{3-i}) \le 2\Delta(G) - 6.\]
+Solving the system gives for $i \in \irange{2}$,
+\[d(x_i) \le \frac23 \Delta(G) - 2.\]
+
+\claim{3}{The theorem is true.}
+
+Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$.  By Lemma \ref{AtMostThreeNonSpecial} one of the following holds:
+\begin{enumerate}
+\item $V(T)$ has no defective colors; or
+\item there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$; or
+\item $E(T)$ contains a non-special edge $x_1x_2$ and $T$ has three non-special vertices; or
+\item $V(T)$ contains four non-special vertices $x_1, x_2, x_3, x_4$.
+\end{enumerate}
+
+If (1) holds, then $T$ is strongly closed and hence $\ceil{\chi_f(Q)} < k+1 \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1}$ which is impossible.
+
+If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k + 3 - \frac32\Delta(G) \ge \frac{k}{2} + 3$.  Hence Theorem \ref{CriticalMuBound} gives
+\[k + 1 \le \Delta(Q) + 1 - \frac{k + 1}{4},\]
+so
+\[\ceil{\frac{5\Delta(Q) + 3}{6}}} < k + 1 \le \frac45(\Delta(Q) + 1),\]
+a contradiction.
+
+Suppose (3) holds.  Let $x_3$ be a special vertex in $V(T) \setminus \set{x_1,x_2}$. Then
+\[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
+using Claim 1 and Claim 2, this gives
+\[2(\frac23\Delta(G) - 2) + \frac34\Delta(G) - \frac32 \ge 2k+2,\]
+so $\Delta(G) > k$, a contradiction.
+
+So, (4) must hold.  But then
+\[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
+using Claim 1 gives
+\[4(\frac34\Delta(G) - \frac32) \ge 3k+2,\]
+so $\Delta(G) > k$, a contradiction.
+\end{proof}
+
+\section{Complicated generalization}
 The \emph{claw-degree} of $x_1x_2 \in E(G)$ is 
 \[\dclaw{x_1x_2} \DefinedAs \frac14 \min_{i \in \irange{2}}\max_{\substack{S \subseteq N(x_i) \\ \card{S} = 3 \\ S \ni x_{3-i}}}\parens{d(x_i) + \sum_{v \in S} d(v)}.\]
 

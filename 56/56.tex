@@ -294,8 +294,8 @@ This gives the contradiction
 \end{proof}
 
 \section{A stronger bound}
-An edge $x_1x_2 \in E(G)$ is \emph{special} if for at least one $i \in \irange{2}$, every Vizing fan containing $x_1x_2$, rooted at $x_i$ (taken over all $k$-colorings of $G-x_1x_2$), has at most 3 vertices.
- First, some helper lemmas.
+For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
+An edge $xy \in E(G)$ is \emph{special} if $x$ is $y$-special or $y$ is $x$-special (or both).
 
 \begin{lem}\label{HelperOne}
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
@@ -309,28 +309,49 @@ Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,a,j \in \irange{r}
 $\mu(G) \ge 2k - d(v_i) - d(v_a)$ or $\mu(G) \ge 2k - d(v_a) - d(v_j)$.
 \end{cor}
 
+The notion of a \emph{normal Tashkinov tree} of Scheide (in Stiebitz book, page 160) generalizes what we have been doing with the maximal $\alpha-\beta$ cycle.  
+A Tashkinov tree $T$ with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ is \emph{normal} if it starts with a maximal $\alpha-\beta$ path where $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  It is not hard
+to show that for any $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$, if we start with the maximal $\alpha-\beta$ path, we can extend this to a Tashkinov tree with vertex set $V(T)$ (see Stiebitz book, Theorem 5.3d on page 122).
+The \emph{height} $h(T)$ of $T$ is the length of the $\alpha-\beta$ cycle.  The \emph{height} $h(G)$ of $G$ is the maximum height over all Tashkinov trees $T$ with $|T| = t(G)$.  
+We say that $T$ has $\emph{maximum height}$ if $|T| = t(G)$ and $h(T) = h(G)$.  Clearly, $h(G)$ is odd.  Scheide showed (Stiebitz book page 175) that $h(G) \ge 5$ for non-elementary $G$.  
+So, we can skip the worry i had about triangles with all non-special vertices.
+
+A multigraph $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.  For a Tashkinov tree $T$, let $\nu(T)$ be the number of non-special vertices in $T$.
+
 \begin{lem}\label{AtMostThreeNonSpecial}
-Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring
-$\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$.  If all but at most three $v \in V(T)$ is special, then 
+Let $G$ be a critical multigraph with $\chi'(G) = k + 1 \ge \Delta(G) + 2$. Suppose $G$ is $k$-thin and non-elementary. Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring
+$\vph$ of $G - v_0v_1$. If $T$ has maximum height, then 
 \begin{enumerate}
-\item $V(T)$ has no defective colors; or
-\item there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$; or
-\item $E(T)$ contains a non-special edge and $T$ has three non-special vertices.
+\item $\nu(T) = 3$ and there is a non-special edge in $E(T)$; or
+\item $\nu(T) = 4$ and there is $xy \in E(T)$ where $y$ is not special and $x$ is not $y$-special; or
+\item $\nu(T) \ge 5$.
 \end{enumerate}
 \end{lem}
 \begin{proof}
-Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the length of the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ is maximized.  Suppose both (2) and (3) do not hold.  To prove (1), it will
-suffice to show that $P$ is a maximal Tashkinov tree.  Suppose $P$ is not maximal. By Lemma \ref{AtMostOneNonSpecial} there must be non-special vertices $v_i, v_j$, where $i < j$.  Without loss of generality, 
+Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that for $\alpha-\beta$ path $P = v_1v_2\cdots v_r$ we have $E(P) \subseteq E(T)$.  
+By lemmas of Scheide (Lemmas 6.14, 6.15), we know that $t(G) - 4 \ge h(G) \ge 5$ since $G$ is non-elementary.  So $r \ge 4$ and $\card{V(T) \setminus V(P)} \ge 4$.
+
+Suppose (1), (2) and (3) do not hold.  By Lemma \ref{AtMostOneNonSpecial} there must be non-special vertices $v_i, v_j$, where $i < j$.  Without loss of generality, 
 there is $\tau \in \vphn(v_0)$ a $\tau$-colored edge leaving $P$ from $v_b$.  Then, by Lemma \ref{SpecialPath}, $i$ is odd, $j$ is even and $i \le b \le j$.  By shifting the coloring, we may assume $i = 1$.
 
-Suppose $v_t$ is special for $1 < t < j$.  Then, since (2) does not hold, Lemma \ref{HelperOne} implies $j = 2$.  By symmetry, we may assume $b = 1$.  Consider the $\tau-\beta$ path $Q$ starting at $v_1$.  
+Suppose $v_t$ is special for $1 < t < j$.  Then, since $G$ is thin, Lemma \ref{HelperOne} implies $j = 2$.  By symmetry, we may assume $b = 1$.  Consider the $\tau-\beta$ path $Q$ starting at $v_1$.  
 Plainly, $Q$ must end at $v_0$. Since $P$ is an $\alpha-\beta$ path, $Q$ must re-enter $P$ along a $\tau$-edge.
 But we just showed that $\tau$ edges can only leave at $v_1$ or $v_2$.  So, the $\tau-\beta$ path re-enters $P$ at $v_2$.  But then we replaced a single edge $v_1v_2$ with a path of length at least three, 
-so the $\tau-\beta$ path is longer than the $\alpha-\beta$ path, contradicting our maximality condition on $P$.
+so $Q$ is longer than the $\alpha-\beta$ path.  Let $T'$ be a maximal Tashkinov tree starting with $Q$.  Then $V(T') = V(T)$, so $t(T') = t(T)$ and $h(T') > h(T)$, a contradiction since $T$ has maximal height.
 
-Hence there is $1 < a < j$ such that $v_a$ is non-special.  Since (2) does not hold and we are assuming there are at most three non-special vertices, Lemma \ref{HelperTwo} implies that $a = 2$ or $a = j-1$.  
-By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\alpha$.  Let $F_i$ be a maximal fan rooted at $v_i$ for $i \in \irange{2}$.  If $|F_i| \le 3$, then all the colors in $\vphn(v_{3-i)$
-must appear on edges between $v_i$ and $v_{3(i-1)}$.  But then (2) is violated.  Hence $|F_i| \ge 4$ for $i \in \irange{2}$.  So, $v_1v_2$ is a non-special edge, violating (3).
+Hence there is $1 < a < j$ such that $v_a$ is non-special.  Suppose $\nu(T) = 3$. Since $G$ is thin, Lemma \ref{HelperTwo} implies that $a = 2$ or $a = j-1$.  
+By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\alpha$.  Let $F_i$ be a maximal fan rooted at $v_i$ for $i \in \irange{2}$.  If $|F_i| \le 3$, then all the colors in $\vphn(v_{3-i})$
+must appear on edges between $v_i$ and $v_{3(i-1)}$.  But this impossible since $G$ is thin and all the colors in $\vphn(v_j)$ also appear on edges between $v_i$ and $v_{3(i-1)}$.  
+Hence $|F_i| \ge 4$ for $i \in \irange{2}$.  So, $v_1v_2$ is a non-special edge and $\nu(T) = 3$, so (1) holds, a contradiction.
+
+Now suppose $\nu(T) = 4$.  Let $v_b$ be the other non-special vertex besides $v_1, v_a, v_j$.  First, suppose $b = 0$ or $b > j$.  Since $G$ is thin, Lemma \ref{HelperTwo} implies that $a = 2$ or $a = j-1$.  
+By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\alpha$.  Let $F_2$ be a maximal fan rooted at $v_2$.  If $|F_2| \le 3$, then all the colors in $\vphn(v_1)$ 
+must appear on edges between $v_2$ and $v_3$.  But this impossible since $G$ is thin and all the colors in $\vphn(v_j)$ also appear on edges between $v_2$ and $v_3$.  
+Hence $v_2$ is not $v_1$-special, so (2) holds, a contradiction.
+
+So, we must have $\nu(T) = 4$ and $1 < b < j$.  By symmetry, we may assume $a < b$.  
+If $a \ne 2$ and $b \ne a + 1$, then since $G$ is thin, Lemma \ref{HelperOne} shows that $a-1$ is even and $b-a$ is even and hence $b-1$ is even.  But $j-1$ is odd, so $j-b$ is odd.  
+Since $G$ is thin, Lemma \ref{HelperOne} implies that $j = b+1$.  Hence $a =2$, or $b = a+1$ or $j = b+1$.  An argument similar to the previous paragraph yields a contradiction to $G$ being thin.
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
@@ -340,129 +361,85 @@ If $Q$ is the line graph of a multigraph $G$ and $Q$ is vertex critical, then
 
 \begin{thm}
 If $Q$ is the line graph of a multigraph, then
-\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}.\]
 \end{thm}
 \begin{proof}
-Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}}$. Say $Q = L(G)$ for a multigraph $G$. Then $G$ is $k$-edge-critical.
+Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}}}$. Say $Q = L(G)$ for a multigraph $G$. Then $G$ is $k$-edge-critical.
 
 \claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
-\[d(x) \le \frac{-6 + \sum_{v \in V(F-x)} d(v)}{4}.\]}
+\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]}
 Since $F$ is elementary, we have
 \[2 + k-d(x) + \sum_{v \in V(F-x)} k - d(v) \le k,\]
 so
 \[2 + (|F| - 1)k \le d(x) + \sum_{v \in V(F-x)} d(v).\]
-Using $k \ge \frac56(\Delta(Q) + 1) - \frac13 \ge \frac56(d(x) + d(v) - \mu(xv)) - \frac13$ for each $v \in V(F-x)$, we get
-\[2 + \sum_{v \in V(F-x)}\parens{\frac56(d(x) + d(v) - \mu(xv)) - \frac13} \le d(x) + \sum_{v \in V(F-x)} d(v),\]
+Using $k \ge \epsilon(\Delta(Q) + 1) \ge \epsilon(d(x) + d(v) - \mu(xv))$ for each $v \in V(F-x)$, we get
+\[2 + \sum_{v \in V(F-x)}\epsilon(d(x) + d(v) - \mu(xv)) \le d(x) + \sum_{v \in V(F-x)} d(v),\]
 so
-\[12 + \parens{5|F| - 11}d(x) - 2(|F| - 1) \le 5\sum_{v \in V(F-x)} \mu(xv) + \sum_{v \in V(F-x)} d(v).\]
+\[2 + \parens{\epsilon|F| - 1 - \epsilon}d(x) \le \sum_{v \in V(F-x)} \epsilon\mu(xv) + \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
 Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this becomes
-\[12 + \parens{5|F| - 16}d(x) -2(|F| - 1) \le \sum_{v \in V(F-x)} d(v).\]
+\[2 + \parens{\epsilon|F| - 1 - 2\epsilon}d(x) \le \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
 Using $|F| = 4$ gives
-\[d(x) \le \frac{-6 + \sum_{v \in V(F-x)} d(v)}{4}.\]
+\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]
 
-\claim{1}{If $x \in V(G)$ with $d(x) > \frac34 \Delta(G) - \frac32$, then $x$ is special.}
+\claim{1}{If $x \in V(G)$ with $d(x) \ge \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$, then $x$ is special.}
 
 Immediate from Claim 0.
 
-\claim{2}{If $x_1x_2 \in E(G)$ with $d(x_i) > \frac23 \Delta(G) - 2$ for at least one $i \in \irange{2}$, then $x_1x_2$ is special.}
+\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) \ge \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G),\] for at least one $i \in \irange{2}$, then $x_1x_2$ is special.}
 Suppose $x_1x_2$ is not special.  Then by Claim 0, we have for $i \in \irange{2}$,
-\[d(x_i) \le \frac{-6 + \sum_{v \in V(F-x_i)} d(v)}{4} \le \frac{-6 + d(x_{3-i}) + 2\Delta(G)}{4},\]
-so
-\[4d(x_i) - d(x_{3-i}) \le 2\Delta(G) - 6.\]
+\[d(x_i) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(3-x_i) + 2\Delta(G)},\]
 Solving the system gives for $i \in \irange{2}$,
-\[d(x_i) \le \frac23 \Delta(G) - 2.\]
+\[d(x_i) < \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G).\]
 
-\claim{3}{The theorem is true.}
+\claim{3}{If $xy \in E(G)$ with \[d(x) \ge \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G),\] then $y$ is special or $x$ is $y$-special.}
+Suppose $y$ is not special and $x$ is not $y$-special.  Then by Claim 0, we have
+\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(y) + 2\Delta(G)},\]
+Since $y$ is not special, Claim 1 gives $d(y) < \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$ and thus
+\[d(x) < \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G).\]
 
-Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$.  By Lemma \ref{AtMostThreeNonSpecial} one of the following holds:
+\claim{4}{The theorem is true.}
+
+Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$ and $h(T) = h(G)$.  By Lemma \ref{AtMostThreeNonSpecial} one of the following holds:
 \begin{enumerate}
-\item $V(T)$ has no defective colors; or
-\item there are non-special vertices $x_1, x_2 \in V(T)$ such that $\mu(G) \ge 2k - d(x_1) - d(x_2)$; or
-\item $E(T)$ contains a non-special edge $x_1x_2$ and $T$ has three non-special vertices; or
-\item $V(T)$ contains four non-special vertices $x_1, x_2, x_3, x_4$.
+\item $G$ is elementary; or
+\item $G$ is not thin; or
+\item $\nu(T) = 3$ and $E(T)$ contains a non-special edge $x_1x_2$; or
+\item $\nu(T) = 4$ and $E(T)$ contains an edge $x_1x_2$ where $x_2$ is not special and $x_1$ is not $x_2$-special; or
+\item $V(T)$ contains five non-special vertices $x_1, x_2, x_3, x_4, x_5$.
 \end{enumerate}
 
-If (1) holds, then $T$ is strongly closed and hence $\ceil{\chi_f(Q)} < k+1 \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1}$ which is impossible.
+If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
 
-If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k + 3 - \frac32\Delta(G) \ge \frac{k}{2} + 3$.  Hence Theorem \ref{CriticalMuBound} gives
-\[k + 1 \le \Delta(Q) + 1 - \frac{k + 1}{4},\]
+If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k - 2\frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$.  Hence Theorem \ref{CriticalMuBound} gives
+\[\le k + 1 \le \Delta(Q) + 1 - k - \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) + \frac12,\]
 so
-\[\ceil{\frac{5\Delta(Q) + 3}{6}}} < k + 1 \le \frac45(\Delta(Q) + 1),\]
-a contradiction.
+\[2(k + 1) \le \Delta(Q) + \frac52 - \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G).\]
 
-Suppose (3) holds.  Let $x_3$ be a special vertex in $V(T) \setminus \set{x_1,x_2}$. Then
+Since $k \ge \Delta(G) + 1$, this gives
+
+\[k + 1 < \frac{\Delta(Q) + \frac52}{2 + \frac{3(1-\epsilon)}{2\epsilon -1}},\]
+which is a contradiction when $\epsilon > \frac12$.
+
+Suppose (3) holds.  Let $x_3$ be a non-special vertex in $V(T) \setminus \set{x_1,x_2}$. Then
 \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
 using Claim 1 and Claim 2, this gives
-\[2(\frac23\Delta(G) - 2) + \frac34\Delta(G) - \frac32 \ge 2k+2,\]
-so $\Delta(G) > k$, a contradiction.
+\[2\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 2k+2,\]
+which is a contradiction when $\epsilon \ge \frac{41 + \sqrt{57}}{58} \approx 0.837 > \frac56$.
 
-So, (4) must hold.  But then
+Suppose (4) holds.  Let $x_3,x_4$ be non-special vertices in $V(T) \setminus \set{x_1,x_2}$.
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
+using Claim 1 and Claim 2 gives
+\[\parens{3\frac{3(1-\epsilon)}{2\epsilon -1} + \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}}\Delta(G) \ge 3k+2,\]
+which is a contradiction when $\epsilon \ge \frac{39 + \sqrt{157}}{62} \approx 0.831$.
+
+So (5) must hold.  But then
+\[2 + \sum_{i \in \irange{5}} k - d(x_i) \le k,\]
 using Claim 1 gives
-\[4(\frac34\Delta(G) - \frac32) \ge 3k+2,\]
-so $\Delta(G) > k$, a contradiction.
+\[\frac{15(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 4k+2,\]
+which is a contradiction when $\epsilon \ge \frac{19}{23} \approx 0.826$.
+
 \end{proof}
 
-\section{Complicated generalization}
-The \emph{claw-degree} of $x_1x_2 \in E(G)$ is 
-\[\dclaw{x_1x_2} \DefinedAs \frac14 \min_{i \in \irange{2}}\max_{\substack{S \subseteq N(x_i) \\ \card{S} = 3 \\ S \ni x_{3-i}}}\parens{d(x_i) + \sum_{v \in S} d(v)}.\]
-
-For $q \in \IN$, put $G_q \DefinedAs \setb{v}{V(G)}{d(v) \ge q}$.  Put
-\[d_q(G) \DefinedAs \max_{x \in G_q} \dclaw{x},\]
-and
-\[d^e_q(G) \DefinedAs \max_{\substack{xy \in E(G) \\ \set{x,y} \cap G_q \ne \emptyset}} \dclaw{xy},\]
-
-
-\begin{thm}\label{StrongerBound}
-If $G$ is a multigraph and $q \in \IN$, then 
-\[\chi'(G) \le \max\set{\ceil{\chi'_f(G)}, \Delta(G) + 1, \ceil{\frac43d_q(G)}, \ceil{\frac43d^e_{\ceil{\frac23 q}}(G)}, \ceil{\frac43 q}, q + \ceil{\frac{\mu(G)}{2}}}.\]
-\end{thm}
-\begin{proof}
-Let $G$ be a minimal counterexample.  Then $G$ is edge-critical.   Let $T$ be a maximum size Tashkinov tree.  We are good if $T$ has one or fewer non-special vertices.  Let $x$ be a non-special vertex in $T$.
-As in the proof of Theorem \ref{EasyBound}, we get $\dclaw{x} \ge \frac{3k+2}{4}$.  Hence if any vertex in $G_q$ is non-special we are done as in Theorem \ref{EasyBound}.  Hence every non-special vertex $x$ has $d(x) \le q-1$.
-If $T$ has four or more non-special vertices, then $4(q-1) \ge 3k + 2$ .  But then $k > \ceil{\frac43 q} - 1 \ge k + 1$, a contradiction.  
-Hence $T$ has two or three non-special vertices.  If Lemma \ref{AtMostThreeNonSpecial}(2) holds, we have $\mu(G) \ge 2k - 2(q-1)$ which gives $q \ge k + 1 - \frac12 \mu(G)$.  
-Hence $k > q + \frac12 \mu(G) - 1 \ge k$, a contradiction.  So, by Lemma \ref{AtMostThreeNonSpecial}(3), $E(T)$ contains a non-special edge $x_1x_2$ there is a non-special $x_3 \in V(T) \setminus \set{x_1,x_2}$.
-
-If $\set{x_1, x_2} \cap G_{\ceil{\frac23 q}} = \emptyset$, then
-\[2 + k - d(x_1) + k - d(x_2) + k-d(x_3) \le k,\]
-so
-\[\ceil{\frac23 q} - 1 + 2(q - 1) \le 2k + 2,\]
-so $k >  \ceil{\frac43 q} - 1 \ge k + 1$, a contradiction.  
-
-Hence $\set{x_1, x_2} \cap G_{\ceil{\frac23 q}} \ne \emptyset$.  That implies $d^e_{\ceil{\frac23 q}}(G) \ge \dclaw{x_1x_2}$.  Since $x_1x_2$ is non-special, we have for $i \in \irange{2}$
-a fan $F_i$ rooted at $x_i$ such that $x_{3-i} \in V(F_i)$ and $|F_i| = 4$.  Hence
-\[2 + k - d(x_i) + k - d(x_{3-i}) + \sum_{v \in F_i \setminus \set{x_i, x_{3-i}}} d(v) \le k,\]
-so,
-\[d(x_i) + d(x_{3-i}) + \sum_{v \in F_i \setminus \set{x_i, x_{3-i}}} d(v) \ge 3k + 2,\]
-so,
-$d^e_{\ceil{\frac23 q}}(G) \ge \dclaw{x_1x_2} \ge \frac34 k + \frac12,\]
-a contradiction.
-\end{proof}
-
-\begin{cor}
-If $Q$ is the line graph of a multigraph, then
-\[\chi(Q) \le \max\set{\omega(Q), \frac56\parens{\Delta(Q) + 1} + \frac12}.\]
-\end{cor}
-\begin{proof}[sketch]
-Assume the result holds fractionally.  Suppose the result is false.  Say $Q = L(G)$.  Apply Theorem \ref{StrongerBound} with $q = \frac34 \Delta(G)$.  
-Then at least one of the bounds in the max exceed $\frac56\parens{\Delta(Q) + 1} + \frac12}$.  Suppose $\frac43 d_q(G) > \frac56\parens{\Delta(Q) + 1} + \frac12$,  we have
-$x \in G_q$ with neighbors $v_1, v_2, v_3$ such that
-
-\[(d(x) + \sum_i d(v_i)) / 3 > \frac56\parens{\Delta(Q) + 1} + \frac12,\]
-this is now just our previous computation showing that vertices of degree at least $\frac34\Delta(G)$ are special, so not possible.
-
-Now suppose $q + \frac{\mu(G)}{2} > (\frac56\parens{\Delta(Q) + 1} + \frac12$.
-Then $ \frac{\mu(G) - 1}{2} \ge \frac56\parens{\Delta(Q) + 1}  - q$, plugging into brooks strengthening, we get
-\[k+1 \le (\Delta(G) + 1) - \frac56\parens{\Delta(Q) + 1}  - q) = \frac16\parens{\Delta(Q) + 1} + q = \frac16\parens{\Delta(Q) + 1} + \frac34\Delta(G).\]
-Hence $\Delta(G) > \frac89(\Delta(Q) + 1) > k + 1$, a contradiction.
-
-So, we must have $\frac43d^e_{\ceil{\frac23 q}}(G) > \frac56\parens{\Delta(Q) + 1} + \frac12$. We have $\ceil{\frac23 q} \ge \frac12 \Delta(G)$.  So, there is $x_1x_2 \in E(G)$ where 
-$d(x_1) \ge \frac12 \Delta(G)$ (say, we know it for at least one of them) and there is $S_i \subseteq N(x_i)$ with $|S| = 3$ and $x_{3-i} \in S$ such that
-\[\parens{\frac43}\parens{\frac14}\parens{d(x_i) + \sum_{v \in S} d(v)} \ge \frac56\parens{\Delta(Q) + 1} + \frac12,\]
-so
-\[d(x_i) + d(x_{3-i}) + \sum_{v \in S \setminus \set{x_{3 -i}}} d(v)\ge \frac52\parens{\Delta(Q) + 1} + \frac32,\]
-\end{proof}
 \newpage
 
 \section{The $\frac56$-Conjecture}

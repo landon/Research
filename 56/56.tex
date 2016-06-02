@@ -317,6 +317,15 @@ there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t$ with 
 But $i_a - i_b$ is even for all $a,b \in \irange{p}$, so either $m=r$ or $m'=0$.  Hence there is a $\tau$-colored edge between $v_{\ell-1} v_{\ell}$ or $v_{\ell} v_{\ell + 1}$ contradicting $\vph(v_\ell z) = \tau$.
 \end{proof}
 
+\begin{lem}\label{HelperOne}
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
+Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,j \in \irange{r}$ with $i + 3 \le j$ such that $j-i$ is odd.  If $v_t$ is special for all $i < t < j$, then
+$\mu(G) \ge 2k - d(v_i) - d(v_j)$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
+
 We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
 \begin{lem}\label{HelperFour}
 Suppose $G$ is $k$-thin. Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.  Then there
@@ -324,7 +333,7 @@ is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.
 \end{lem}
 \begin{proof}
 Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$.
-Suppose $i_{j+1} - i_j > 1$ for all $j \in \irange{p-1}$. Since $G$ is thin, Lemma \ref{SpecialPath} implies that $i_{j+1} - i_j$ is even for all $j \in \irange{p-1}$.  
+Suppose $i_{j+1} - i_j > 1$ for all $j \in \irange{p-1}$. Since $G$ is thin, Lemma \ref{HelperOne} implies that $i_{j+1} - i_j$ is even for all $j \in \irange{p-1}$.  
 Hence $i_a - i_b$ is even for all $a,b \in \irange{p}$ violating Lemma \ref{HelperThree}.
 \end{proof}
 
@@ -344,11 +353,36 @@ But there cannot be a $\tau$ or $\beta$ edge between $v_1$ and $v_2$, a contradi
 \end{proof}
 
 \begin{lem}\label{HelperSix}
-Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) = 3$, then there are non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$.
+Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) = 3$, then there are non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ 
+is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$.
 \end{lem}
 \begin{proof}
-Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ so as to maximize the number of non-special vertices in $P$.
-Then $P$ contains $3$ non-special vertices since otherwise we can use the argument in Lemma \ref{HelperFive}.  By symmetry, we may assume that $v_1$ and $v_2$ are non-special.  Let $v_j$ be the other non-special vertex.  
+Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ so as to maximize the number of non-special vertices in $P$ and subject to that,
+to maximize $|P|$.  Then $P$ contains $3$ non-special vertices since otherwise we can use the argument in Lemma \ref{HelperFive}.  By Lemma \ref{HelperFour} and symmetry we may assume that $v_a$, $v_{a+1}$ and $v_b$ are non-special where $a+1 < b$.
+Now $(P, v_0v_1, \vph) \not \in \T(G)$, for otherwise $G$ would be elementary.  Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
+By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.
+
+\claim{0}{$b > a+2$, in particular $|P| \ge 5$.}
+
+Suppose $b = a+2$. Let $Q$ be the $\tau-\beta$ path starting at $v_\ell$.  Then $Q$ must return on a $\tau$ edge to $v_{3-\ell}$. 
+But not $Q$ contains $3$ non-special vertices and $|Q| > |P|$, contradicting our maximality condition on $P$.
+
+\claim{1}{There is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t$ with $t < a$ or $t \ge b$.}
+
+Immediate from Lemma \ref{SpecialPath}.
+
+\claim{2}{$a$ is odd, $b$ is even and $a \le \ell \le b$}
+
+By Claim 1, each $v_t$ with $t < a$ or $t > b$ is incident to a $\tau$ edge contained in $P$, so $a \le \ell \le b$.  By Lemma \ref{HelperOne}, either $b = a+2$ or $b-a$ is odd.
+Suppose $a$ is even.  Then by Claim 1, $v_a$ is incident to a $\tau$ edge contained in $P$ and hence $\ell \ne a$.  Suppose $b = a+2$.
+
+
+
+If $b$ is odd, then Lemma \ref{SpecialPath} implies that there is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t \ge 
+
+
+
+Let $Q = v_1z_1z_2\cdots z_mv_0$ be the $\tau-\beta$ path from $v_1$ to $v_0$.
 
 SKETCH:  Use the fact that the $\tau-\beta$ path starting at $v_1$ must have contiguous non-special vertices to conclude that there is a $\tau$ edge from $v_2$ to $v_j$.  
 Repeat the argument, now using the $\tau-\beta$ path instead of the $\alpha-\beta$ path and using $v_2$ and $v_j$ in place of $v_1$ and $v_2$.  This gets an edge from $v_j$ to $v_1$.

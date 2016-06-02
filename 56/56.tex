@@ -51,6 +51,7 @@
 \newcommand{\ch}{{\textrm{ch}}}
 \newcommand{\chil}{{\chi_{\ell}}}
 \newcommand{\chiol}{{\chi_{OL}}}
+\newcommand{\T}{\fancy{T}}
 
 \newcommand{\inj}{\hookrightarrow}
 \newcommand{\surj}{\twoheadrightarrow}
@@ -222,12 +223,13 @@ contradiction.
 
 A \emph{defective color} for a
 Tashkinov tree $T$  in a critical graph $G$ is a color used on more than one edge
-from $V(T)$ to $V(G) - V(T)$.  Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
-and all $k$-edge-colorings $\vph$ of $G - e$.  If a Tashkinov tree $T$ has $|T| = t(G)$, then $T$ is \emph{maximum}.
+from $V(T)$ to $V(G) \setminus V(T)$.  Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
+and all $k$-edge-colorings $\vph$ of $G - e$.  Let $\T(G)$ be the set of all triples $(T,e,\vph)$ such that $e \in E(G)$, $\vph$ is a $k$-edge-coloring of $G-e$ and
+$T$ is a Tashkinov tree with respect to $e$ and $\vph$ with $|T| = t(G)$.
 
 \begin{lem}\label{AtMostOneNonSpecial}
-Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$.  If $T$ is maximum and at most one $v \in V(T)$ is
-non-special, then $V(T)$ has no defective colors.
+Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$.  If $(T, v_0v_1, \vph) \in \T(G)$ and at most one $v \in V(T)$ is
+non-special, then $T$ has no defective colors.
 \label{lem2}
 \end{lem}
 \begin{proof}
@@ -264,8 +266,7 @@ $\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}$.
 We may assume that $G$ is critical.
 If $\chi'(G)\le \Delta(G)+1$, then we are done.
 So instead, assume that $\chi'(G)\ge \Delta(G)+2$ and let $k=\chi'(G)-1$.
-Choose $e\in E(G)$.  Now by Lemma~\ref{lem2}, $G-e$ has a $k$-edge-coloring
-$\vph$ and a maximal Tashkinov tree $T$ such that $V(T)$ has no defective color, i.e.,
+Choose $e\in E(G)$.  Now by Lemma~\ref{lem2}, there is $(T, v_0v_1, \vph) \in \T(G)$ such that $T$ has no defective color, i.e.,
 $V(T)$ is strongly closed.  By a Theorem of Andersen and Goldberg (see also
 [Stiebitz, p.~8--9]), this implies that $\chi'(G)=\ceil{\chi'_f(G)}$.
 \end{proof}
@@ -294,64 +295,77 @@ This gives the contradiction
 \end{proof}
 
 \section{A stronger bound}
+Throughout this section, let $G$ be a non-elementary critical multigraph with $\chi'(G) = k + 1 \ge \Delta(G) + 2$.
+
 For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
-An edge $xy \in E(G)$ is \emph{special} if $x$ is $y$-special or $y$ is $x$-special (or both).
 
-\begin{lem}\label{HelperOne}
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
-Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,j \in \irange{r}$ with $i + 3 \le j$ such that $j-i$ is odd.  If $v_t$ is special for all $i < t < j$, then
-$\mu(G) \ge 2k - d(v_i) - d(v_j)$.
-\end{lem}
-
-\begin{cor}\label{HelperTwo}
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
-Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,a,j \in \irange{r}$ with $i + 2 \le a \le j - 2$ such that $j-i$ is odd.  If $v_t$ is special for all $i < t < a$ and $a < t < j$, then
-$\mu(G) \ge 2k - d(v_i) - d(v_a)$ or $\mu(G) \ge 2k - d(v_a) - d(v_j)$.
-\end{cor}
-
-The notion of a \emph{normal Tashkinov tree} of Scheide (in Stiebitz book, page 160) generalizes what we have been doing with the maximal $\alpha-\beta$ cycle.  
-A Tashkinov tree $T$ with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ is \emph{normal} if it starts with a maximal $\alpha-\beta$ path where $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  It is not hard
-to show that for any $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$, if we start with the maximal $\alpha-\beta$ path, we can extend this to a Tashkinov tree with vertex set $V(T)$ (see Stiebitz book, Theorem 5.3d on page 122).
-The \emph{height} $h(T)$ of $T$ is the length of the $\alpha-\beta$ cycle.  The \emph{height} $h(G)$ of $G$ is the maximum height over all Tashkinov trees $T$ with $|T| = t(G)$.  
-We say that $T$ has $\emph{maximum height}$ if $|T| = t(G)$ and $h(T) = h(G)$.  Clearly, $h(G)$ is odd.  Scheide showed (Stiebitz book page 175) that $h(G) \ge 5$ for non-elementary $G$.  
-So, we can skip the worry i had about triangles with all non-special vertices.
-
-A multigraph $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.  For a Tashkinov tree $T$, let $\nu(T)$ be the number of non-special vertices in $T$.
-
-\begin{lem}\label{AtMostThreeNonSpecial}
-Let $G$ be a critical multigraph with $\chi'(G) = k + 1 \ge \Delta(G) + 2$. Suppose $G$ is $k$-thin and non-elementary. Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring
-$\vph$ of $G - v_0v_1$. If $T$ has maximum height, then 
-\begin{enumerate}
-\item $\nu(T) = 3$ and there is a non-special edge in $E(T)$; or
-\item $\nu(T) = 4$ and there is $xy \in E(T)$ where $y$ is not special and $x$ is not $y$-special; or
-\item $\nu(T) \ge 5$.
-\end{enumerate}
+\begin{lem}\label{HelperThree}
+Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.  Then there
+are $a,b \in \irange{r}$ such that both $v_a, v_b$ are non-special and $b - a$ is odd.
 \end{lem}
 \begin{proof}
-Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that for $\alpha-\beta$ path $P = v_1v_2\cdots v_r$ we have $E(P) \subseteq E(T)$.  
-By lemmas of Scheide (Lemmas 6.14, 6.15), we know that $t(G) - 4 \ge h(G) \ge 5$ since $G$ is non-elementary.  So $r \ge 4$ and $\card{V(T) \setminus V(P)} \ge 4$.
+Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$. By Lemma \ref{AtMostOneNonSpecial}, $p \ge 2$.  Suppose $i_a - i_b$ is even for all $a,b \in \irange{p}$.  
+Now $(P, v_0v_1, \vph) \not \in \T(G)$, for otherwise $G$ would be elementary.  Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
+By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.
 
-Suppose (1), (2) and (3) do not hold.  By Lemma \ref{AtMostOneNonSpecial} there must be non-special vertices $v_i, v_j$, where $i < j$.  Without loss of generality, 
-there is $\tau \in \vphn(v_0)$ a $\tau$-colored edge leaving $P$ from $v_b$.  Then, by Lemma \ref{SpecialPath}, $i$ is odd, $j$ is even and $i \le b \le j$.  By shifting the coloring, we may assume $i = 1$.
+Let $m$ be the least odd integer such that $v_m$ is non-special (if it exists, otherwise, let $m=r$).
+Let $m'$ be the largest even integer such that $v_{m'}$ is non-special (if it exists, otherwise, let $m'=0$).
+By Lemma \ref{SpecialPath}, there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t \in \irange{m-1}$.
+By uncoloring $v_rv_0$, coloring $v_0v_1$ with $\beta$ and then running the same argument going the opposite direction on $P$, we conclude that 
+there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t$ with $m' + 1 \le t \le r-1$.
 
-Suppose $v_t$ is special for $1 < t < j$.  Then, since $G$ is thin, Lemma \ref{HelperOne} implies $j = 2$.  By symmetry, we may assume $b = 1$.  Consider the $\tau-\beta$ path $Q$ starting at $v_1$.  
-Plainly, $Q$ must end at $v_0$. Since $P$ is an $\alpha-\beta$ path, $Q$ must re-enter $P$ along a $\tau$-edge.
-But we just showed that $\tau$ edges can only leave at $v_1$ or $v_2$.  So, the $\tau-\beta$ path re-enters $P$ at $v_2$.  But then we replaced a single edge $v_1v_2$ with a path of length at least three, 
-so $Q$ is longer than the $\alpha-\beta$ path.  Let $T'$ be a maximal Tashkinov tree starting with $Q$.  Then $V(T') = V(T)$, so $t(T') = t(T)$ and $h(T') > h(T)$, a contradiction since $T$ has maximal height.
+But $i_a - i_b$ is even for all $a,b \in \irange{p}$, so either $m=r$ or $m'=0$.  Hence there is a $\tau$-colored edge between $v_{\ell-1} v_{\ell}$ or $v_{\ell} v_{\ell + 1}$ contradicting $\vph(v_\ell z) = \tau$.
+\end{proof}
 
-Hence there is $1 < a < j$ such that $v_a$ is non-special.  Suppose $\nu(T) = 3$. Since $G$ is thin, Lemma \ref{HelperTwo} implies that $a = 2$ or $a = j-1$.  
-By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\alpha$.  Let $F_i$ be a maximal fan rooted at $v_i$ for $i \in \irange{2}$.  If $|F_i| \le 3$, then all the colors in $\vphn(v_{3-i})$
-must appear on edges between $v_i$ and $v_{3(i-1)}$.  But this impossible since $G$ is thin and all the colors in $\vphn(v_j)$ also appear on edges between $v_i$ and $v_{3(i-1)}$.  
-Hence $|F_i| \ge 4$ for $i \in \irange{2}$.  So, $v_1v_2$ is a non-special edge and $\nu(T) = 3$, so (1) holds, a contradiction.
+We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
+\begin{lem}\label{HelperFour}
+Suppose $G$ is $k$-thin. Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.  Then there
+is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.
+\end{lem}
+\begin{proof}
+Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$.
+Suppose $i_{j+1} - i_j > 1$ for all $j \in \irange{p-1}$. Since $G$ is thin, Lemma \ref{SpecialPath} implies that $i_{j+1} - i_j$ is even for all $j \in \irange{p-1}$.  
+Hence $i_a - i_b$ is even for all $a,b \in \irange{p}$ violating Lemma \ref{HelperThree}.
+\end{proof}
 
-Now suppose $\nu(T) = 4$.  Let $v_b$ be the other non-special vertex besides $v_1, v_a, v_j$.  First, suppose $b = 0$ or $b > j$.  Since $G$ is thin, Lemma \ref{HelperTwo} implies that $a = 2$ or $a = j-1$.  
-By symmetry, we may assume $a=2$.  Uncolor $v_1v_2$ and color $v_0v_1$ with $\alpha$.  Let $F_2$ be a maximal fan rooted at $v_2$.  If $|F_2| \le 3$, then all the colors in $\vphn(v_1)$ 
-must appear on edges between $v_2$ and $v_3$.  But this impossible since $G$ is thin and all the colors in $\vphn(v_j)$ also appear on edges between $v_2$ and $v_3$.  
-Hence $v_2$ is not $v_1$-special, so (2) holds, a contradiction.
 
-So, we must have $\nu(T) = 4$ and $1 < b < j$.  By symmetry, we may assume $a < b$.  
-If $a \ne 2$ and $b \ne a + 1$, then since $G$ is thin, Lemma \ref{HelperOne} shows that $a-1$ is even and $b-a$ is even and hence $b-1$ is even.  But $j-1$ is odd, so $j-b$ is odd.  
-Since $G$ is thin, Lemma \ref{HelperOne} implies that $j = b+1$.  Hence $a =2$, or $b = a+1$ or $j = b+1$.  An argument similar to the previous paragraph yields a contradiction to $G$ being thin.
+For a Tashkinov tree $T$, let $\nu(T)$ be the number of non-special vertices in $T$.
+\begin{lem}\label{HelperFive}
+Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$, then $\nu(T) \ge 3$.
+\end{lem}
+\begin{proof}
+Lemma \ref{AtMostOneNonSpecial} gives $\nu(T) \ge 2$ .  Suppose $\nu(T) = 2$.  
+Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.
+By Lemma \ref{HelperFour}, there is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.  By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $i=1$.
+
+Since $G$ is not elementary, we have $a,b \in \irange{r}$ and $\tau \in \vphn(v_a)$ such that $\vph(v_bz) = \tau$ for some $z \in V(T) \setminus V(P)$.  
+Consider the $\tau-\beta$ path $Q$ starting at $v_b$.  By Lemma \ref{HelperFour}, $v_1$ and $v_2$ (the only non-special vertices in $T$) must be contiguous on $Q$.  
+But there cannot be a $\tau$ or $\beta$ edge between $v_1$ and $v_2$, a contradiction.
+\end{proof}
+
+\begin{lem}\label{HelperSix}
+Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) = 3$, then there are non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$.
+\end{lem}
+\begin{proof}
+Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ so as to maximize the number of non-special vertices in $P$.
+Then $P$ contains $3$ non-special vertices since otherwise we can use the argument in Lemma \ref{HelperFive}.  By symmetry, we may assume that $v_1$ and $v_2$ are non-special.  Let $v_j$ be the other non-special vertex.  
+
+SKETCH:  Use the fact that the $\tau-\beta$ path starting at $v_1$ must have contiguous non-special vertices to conclude that there is a $\tau$ edge from $v_2$ to $v_j$.  
+Repeat the argument, now using the $\tau-\beta$ path instead of the $\alpha-\beta$ path and using $v_2$ and $v_j$ in place of $v_1$ and $v_2$.  This gets an edge from $v_j$ to $v_1$.
+\end{proof}
+
+\begin{lem}\label{HelperSeven}
+Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) \le 4$, then there are non-special $x_1,x_2 \in V(T)$ such that $x_1x_2 \in E(G)$ and $x_1$ is not $x_2$-special.
+\end{lem}
+\begin{proof}
+By Lemma \ref{HelperFive} and Lemma \ref{HelperSix} we may assume $\nu(T) = 4$. 
+Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ so as to maximize the number of non-special vertices in $P$.
+Then $P$ contains $4$ non-special vertices since otherwise we can use the arguments in Lemma \ref{HelperFive} and in Lemma \ref{HelperSix}.
+
+By Lemma \ref{HelperFour} there are contiguous non-special vertices in $P$.  By symmetry, we may assume that $v_1$ and $v_2$ are non-special.  Let $v_a$ and $v_b$ with $2 < a < b$ be the other two non-special vertices in $P$.
+Suppose $v_i$ is $v_{3-i}$-special for $i \in \irange{2}$.  
+
+SKETCH: Look at the fans both ways, we violate thinness on either $v_0v_1$ or $v_2v_3$ depending on the parity of $b$.
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
@@ -385,13 +399,15 @@ Using $|F| = 4$ gives
 
 Immediate from Claim 0.
 
-\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) \ge \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G),\] for at least one $i \in \irange{2}$, then $x_1x_2$ is special.}
-Suppose $x_1x_2$ is not special.  Then by Claim 0, we have for $i \in \irange{2}$,
+\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) \ge \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G),\] for at least one $i \in \irange{2}$, then $x_1$ is $x_2$-special or $x_2$ is $x_1$-special.}
+
+Suppose $x_1$ is not $x_2$-special and $x_2$ is not $x_1$-special.  Then by Claim 0, we have for $i \in \irange{2}$,
 \[d(x_i) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(3-x_i) + 2\Delta(G)},\]
 Solving the system gives for $i \in \irange{2}$,
 \[d(x_i) < \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G).\]
 
 \claim{3}{If $xy \in E(G)$ with \[d(x) \ge \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G),\] then $y$ is special or $x$ is $y$-special.}
+
 Suppose $y$ is not special and $x$ is not $y$-special.  Then by Claim 0, we have
 \[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(y) + 2\Delta(G)},\]
 Since $y$ is not special, Claim 1 gives $d(y) < \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$ and thus
@@ -399,11 +415,11 @@ Since $y$ is not special, Claim 1 gives $d(y) < \frac{3(1-\epsilon)}{2\epsilon -
 
 \claim{4}{The theorem is true.}
 
-Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$ in $G$ such that $|T| = t(G)$ and $h(T) = h(G)$.  By Lemma \ref{AtMostThreeNonSpecial} one of the following holds:
+Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemmas \ref{HelperFive}, \ref{HelperSix} and \ref{HelperSeven} one of the following holds:
 \begin{enumerate}
 \item $G$ is elementary; or
 \item $G$ is not thin; or
-\item $\nu(T) = 3$ and $E(T)$ contains a non-special edge $x_1x_2$; or
+\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$; or
 \item $\nu(T) = 4$ and $E(T)$ contains an edge $x_1x_2$ where $x_2$ is not special and $x_1$ is not $x_2$-special; or
 \item $V(T)$ contains five non-special vertices $x_1, x_2, x_3, x_4, x_5$.
 \end{enumerate}
@@ -420,15 +436,15 @@ Since $k \ge \Delta(G) + 1$, this gives
 \[k + 1 < \frac{\Delta(Q) + \frac52}{2 + \frac{3(1-\epsilon)}{2\epsilon -1}},\]
 which is a contradiction when $\epsilon > \frac12$.
 
-Suppose (3) holds.  Let $x_3$ be a non-special vertex in $V(T) \setminus \set{x_1,x_2}$. Then
+Suppose (3) holds.  So
 \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
-using Claim 1 and Claim 2, this gives
-\[2\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 2k+2,\]
-which is a contradiction when $\epsilon \ge \frac{41 + \sqrt{57}}{58} \approx 0.837 > \frac56$.
+using Claim 2, this gives
+\[3\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) \ge 2k+2,\]
+which is a contradiction when $\epsilon \ge \frac56$.
 
 Suppose (4) holds.  Let $x_3,x_4$ be non-special vertices in $V(T) \setminus \set{x_1,x_2}$.
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
-using Claim 1 and Claim 2 gives
+using Claim 1 and Claim 3 gives
 \[\parens{3\frac{3(1-\epsilon)}{2\epsilon -1} + \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}}\Delta(G) \ge 3k+2,\]
 which is a contradiction when $\epsilon \ge \frac{39 + \sqrt{157}}{62} \approx 0.831$.
 

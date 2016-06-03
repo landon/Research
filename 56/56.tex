@@ -23,6 +23,7 @@
 \newtheorem{lem}[thm]{Lemma}
 \newreptheorem{lem}{Lemma}
 \newtheorem{lemma}[thm]{Lemma}
+\newtheorem*{lemmaA}{Tashkinov's Lemma}
 \newreptheorem{lemma}{Lemma}
 \newtheorem{conj}[thm]{Conjecture}
 \newreptheorem{conj}{Conjecture}
@@ -88,6 +89,8 @@
 \newcommand{\vphn}{\overline{\varphi}}
 
 \newcommand{\claim}[2]{{\noindent\bf Claim #1.}~{\it #2}~~}
+\newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}{\leavevmode\unskip\penalty9999
+\hbox{}\nobreak\hfill\quad\hbox{$\qed$}}
 
 \begin{document}
 \section{Overview}
@@ -97,16 +100,20 @@ Over the past two decades, the main tool for attacking this problem has become
 Tashkinov trees, a vast generalization of Vizing fans and Kierstead paths.
 The second author proved that if $G$ is a line graph, then $\chi(G)\le
 \max\{\omega(G),\frac{7\Delta(G)+10}{8}\}$.  In the same paper, he conjectured
-that $\chi(G)\le \max\{\omega(G),\frac{5\Delta(G)+8}{6}\}$, which is best possible.
+that $\chi(G)\le \max\{\omega(G),\frac{5\Delta(G)+8}{6}\}$. This conjecture is best
+possible, as shown by replacing each edge in a 5-cycle by $k$ parallel edges,
+and taking the line graph.
 We call the latter inequality the $\frac56$-Conjecture, and in this paper we prove
 it.  Along the way, we develop more general techniques and results that will
 likely be of independent interest, due to their use in approaching the
 Goldberg--Seymour conjecture.
 
 A graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$; such graphs satisfy the
-Goldberg--Seymour Conjecture.  (We begin by proving that every minimal
-counterexample to the $\frac56$-Conjecture is elementary.  In Section 3, we conclude
-by also proving that every elementary graph satisfies the $\frac56$-conjecture.)  A
+Goldberg--Seymour Conjecture.  
+%(We begin by proving that every minimal counterexample to the
+%$\frac56$-Conjecture is elementary.  In Section 3, we conclude
+%by also proving that every elementary graph satisfies the $\frac56$-conjecture.)  
+A
 \emph{defective color}
 for a Tashkinov tree $T$ is a color used on more than one edge from $V(T)$ to
 $V(G)-V(T)$; a Tashkinov tree is \emph{strongly closed} if it has no defective
@@ -126,14 +133,15 @@ vertex of $G$ is special, then $G$ is elementary, i.e., $\chi'(G)=\W(G)$.  Next,
 we push our methods further, allowing our maximal Tashkinov tree to have at most
 3 non-special vertices.
 
-In Section 3, we show that if $G$ is a minimal counterexample to the
-$\frac56$-Conjecture, then every non-special vertex $v$ has
+In Section 3, we consider the %show that 
+$\frac56$-Conjecture.  As a consequence of results in Section 2,
+if $G$ is a minimal counterexample, then every non-special vertex $v$ has
 $d_G(v)<\frac34\Delta(G)$.  Since every maximal Tashkinov tree $T$ is
-elementary, and every non-special vertex misses more than $k/4$ colors, we
+elementary, and every non-special vertex misses more than $\frac{k}4$ colors, we
 conclude that $T$ has at most 3 non-special vertices.  Thus our results from
 Section 2 apply.  As a consequence, every minimal countexample to the
 $\frac56$-Conjecture is elementary.  To complete the proof of the $\frac56$-conjecture,
-we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
+%we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
 we show for each graph $G$ that if $\chi'(G)=\W(G)$, then
 $\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
 
@@ -141,20 +149,54 @@ $\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
 Graphs can have multiple edges.
 
 \section{Tashkinov Trees}
-We use the following notation.  A graph $G$ is \emph{critical} if $\chi'(G-e) < \chi'(G)$ for all $e \in E(G)$. 
- 
+We use the following notation.  
+Let $[k]$ denote $\{1,\ldots,k\}$.
+A graph $G$ is \emph{critical} if $\chi'(G-e) < \chi'(G)$ for all $e \in E(G)$. 
+For a graph $G$ and a partial $k$-edge-coloring $\varphi$, for each vertex $v\in
+V(G)$, let $\varphi(v)$ denote the set of colors used in $\varphi$ on edges
+incident to $v$.  Let $\vphn(v)=[k]\setminus\varphi(v)$.  A color $c$ is
+\emph{seen} by a vertex $v$ if $c\in \varphi(v)$ and $c$ is \emph{missed} by $v$
+if $c\in\vphn(v)$.
+Given a partial $k$-edge-coloring $\varphi$, a set $W\subseteq V(G)$ is
+\emph{elementary} (w.r.t.~$\varphi$) if each color in $[k]$ is
+missed by at most one vertex of $W$.  More formally, $\vphn(u)\cap
+\vphn(v)=\emptyset$ for all distinct $u,v\in W$.
+A \emph{defective color} for a set $X\in V(G)$ (w.r.t.~$\varphi$) is a color
+used on more than one edge from $X$ to $V(G) \setminus X$.  
+A set $X$ is \emph{strongly closed} w.r.t.~$\varphi$ if $X$ has no 
+defective color.
+%As we will see shortly, there is a strong relationship between elementary sets
+%and elementary graphs.
+% 
+
+\begin{thm}
+Let $G$ be a graph with $\chi'(G)=k+1$ for some integer $k\ge \Delta(G)$.  If
+$G$ is critical, then $G$ is elementary if and only if there exists $uv\in E(G)$,
+a $k$-coloring $\vph$ of $G-uv$, and a set $X$ with $u,v\in X$ such
+that $X$ is both elementary and strongly closed w.r.t.~$\varphi$.
+\end{thm}
+
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$. 
-Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  For each vertex $v\in V(G)$, let $\varphi(v)$ be the
-set of colors used in $\vph$ on edges incident to $v$ and let
-$\vphn(v)=[k]\setminus \vph(v)$. A \emph{Tashkinov tree} with respect to $\varphi$ is a sequence $v_0, e_1, v_1, e_2,\ldots, v_{t-1},e_t,v_t$ such that all
-$v_i$ are distinct, $e_i=v_jv_i$ and $\vph(e_i)\in \vphn(v_\ell)$ for some $j$ and $\ell$ with $0\le j< i$
-and $0\le \ell < i$.
+Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  
+%For each vertex $v\in V(G)$, let $\varphi(v)$ be the set of colors used in
+%$\vph$ on edges incident to $v$ and let $\vphn(v)=[k]\setminus \vph(v)$. 
+For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the
+maximal connected subgraph of $G$ that contains $v$ and is induced by edges with color
+$\alpha$ or $\beta$.  So $P_v(\alpha, \beta)$ is a path or a cycle.
 
-For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the subgraph of $G$ containing $v$ induced on the edges with color $\alpha$ or $\beta$.  
-Then $P_v(\alpha, \beta)$ is a path or a cycle.
+A \emph{Tashkinov tree} w.r.t.~$\varphi$ is a sequence $v_0, e_1, v_1,
+e_2,\ldots, v_{t-1},e_t,v_t$ such that all $v_i$ are distinct, $e_i=v_jv_i$ and
+$\vph(e_i)\in \vphn(v_\ell)$ for some $j$ and $\ell$ with $0\le j< i$ and $0\le
+\ell < i$.  Tashkinov trees are of interest because of the following lemma. 
 
-A \emph{defective color} for a Tashkinov tree $T$ in $G$ is a color used on more than one edge
-from $V(T)$ to $V(G) \setminus V(T)$.  Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
+\begin{lemmaA}%[Tashkinov]
+Let $G$ be a graph with $\chi'(G)=k+1$, for some integer $k\ge \Delta(G)+1$ and
+choose $e\in E(G)$ such that $\chi'(G-e)<\chi'(G)$.  Let $\varphi$ be a
+$k$-edge-coloring of $G-e$.  If $T$ is a Tashkinov tree w.r.t.~$\varphi$ and
+$e$, then $V(G)$ is elementary w.r.t.~$\varphi$.
+\end{lemmaA}
+
+Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
 and all $k$-edge-colorings $\vph$ of $G - e$.  Let $\T(G)$ be the set of all triples $(T,e,\vph)$ such that $e \in E(G)$, $\vph$ is a $k$-edge-coloring of $G-e$ and
 $T$ is a Tashkinov tree with respect to $e$ and $\vph$ with $|T| = t(G)$.  Notice that, by definition, we have $\T(G) \ne \emptyset$.
 
@@ -345,21 +387,28 @@ By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.
 
 \claim{0}{$b > a+2$, in particular $|P| \ge 5$.}
 
+\begin{claimproof}
 Suppose $b = a+2$. Let $Q$ be the $\tau-\beta$ path starting at $v_\ell$.  Then $Q$ must return on a $\tau$ edge to $v_{3-\ell}$. 
 But not $Q$ contains $3$ non-special vertices and $|Q| > |P|$, contradicting our maximality condition on $P$.
+\end{claimproof}
 
 \claim{1}{There is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t$ with $t < a$ or $t \ge b$.}
 
+\begin{claimproof}
 Immediate from Lemma \ref{SpecialPath}.
+\end{claimproof}
 
 \claim{2}{$a$ is odd, $b$ is even and $a \le \ell \le b$}
 
+\begin{claimproof}
 By Claim 1, each $v_t$ with $t < a$ or $t > b$ is incident to a $\tau$ edge contained in $P$, so $a \le \ell \le b$.  By Lemma \ref{HelperOne}, either $b = a+2$ or $b-a$ is odd.
 Suppose $a$ is even.  Then by Claim 1, $v_a$ is incident to a $\tau$ edge contained in $P$ and hence $\ell \ne a$.  Suppose $b = a+2$.
+\end{claimproof}
 
 
 
-If $b$ is odd, then Lemma \ref{SpecialPath} implies that there is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t \ge 
+If $b$ is odd, then Lemma \ref{SpecialPath} implies that there is a $\tau$ edge
+between $v_{t}$ and $v_{t+1}$ for all odd $t \ge $
 
 
 
@@ -393,10 +442,13 @@ If $Q$ is a line graph, then
 \[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}.\]
 \end{thm}
 \begin{proof}
-Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}}}$. Say $Q = L(G)$ for a graph $G$. Then $G$ is $k$-edge-critical.
+Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
+Let $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}$. Say $Q =
+L(G)$ for a graph $G$. The minimality of $Q$ implies that $G$ is $k$-edge-critical.
 
 \claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
 \[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]}
+\begin{claimproof}
 Since $F$ is elementary, we have
 \[2 + k-d(x) + \sum_{v \in V(F-x)} k - d(v) \le k,\]
 so
@@ -405,32 +457,55 @@ Using $k \ge \epsilon(\Delta(Q) + 1) \ge \epsilon(d(x) + d(v) - \mu(xv))$ for ea
 \[2 + \sum_{v \in V(F-x)}\epsilon(d(x) + d(v) - \mu(xv)) \le d(x) + \sum_{v \in V(F-x)} d(v),\]
 so
 \[2 + \parens{\epsilon|F| - 1 - \epsilon}d(x) \le \sum_{v \in V(F-x)} \epsilon\mu(xv) + \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
-Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this becomes
+Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this implies
 \[2 + \parens{\epsilon|F| - 1 - 2\epsilon}d(x) \le \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
 Using $|F| = 4$ gives
 \[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]
+\end{claimproof}
+\bigskip
 
 \claim{1}{If $x \in V(G)$ with $d(x) \ge \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$, then $x$ is special.}
 
-Immediate from Claim 0.
+\begin{claimproof}
+This is immediate from Claim 0, since $d(v)\le \Delta(G)$ for all $v\in V(F-x)$.
+\end{claimproof}
+\bigskip
+
+Note that when $\epsilon=\frac56$, every non-special vertex $x$ has
+$d(x)<\frac34\Delta(G)$.  Since $k\ge \Delta(G)+1$, every non-special vertex $x$ misses
+at least $k-d(x)> k-\frac34\Delta(G)> \frac{k}4$ colors.
+Since $T$ is elementary, $T$ has at most 3 non-special vertices.
+This observation is not needed for the present proof, but suggests how we will
+prove the $\frac56$-conjecture in the next section.
+\bigskip
 
 \claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) \ge \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G),\] for at least one $i \in \irange{2}$, then $x_1$ is $x_2$-special or $x_2$ is $x_1$-special.}
 
-Suppose $x_1$ is not $x_2$-special and $x_2$ is not $x_1$-special.  Then by Claim 0, we have for $i \in \irange{2}$,
-\[d(x_i) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(3-x_i) + 2\Delta(G)},\]
-Solving the system gives for $i \in \irange{2}$,
+\begin{claimproof}
+Suppose $x_1$ is not $x_2$-special and $x_2$ is not $x_1$-special.  By Claim 0,
+for each $i \in \irange{2}$,
+\[d(x_i) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le
+\frac{1-\epsilon}{2\epsilon -1}\parens{d(x_{3-i}) + 2\Delta(G)},\]
+Substituting the bound on $d(x_{3-i})$ into that on $d(x_i)$ and simplifying
+gives for each $i \in \irange{2}$,
 \[d(x_i) < \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G).\]
+\end{claimproof}
+\bigskip
 
 \claim{3}{If $xy \in E(G)$ with \[d(x) \ge \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G),\] then $y$ is special or $x$ is $y$-special.}
 
-Suppose $y$ is not special and $x$ is not $y$-special.  Then by Claim 0, we have
+\begin{claimproof}
+Suppose $y$ is not special and $x$ is not $y$-special.  By Claim 0, we have
 \[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(y) + 2\Delta(G)},\]
 Since $y$ is not special, Claim 1 gives $d(y) < \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$ and thus
 \[d(x) < \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G).\]
+\end{claimproof}
 
 \claim{4}{The theorem is true.}
 
-Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemmas \ref{HelperFive}, \ref{HelperSix} and \ref{HelperSeven} one of the following holds:
+\begin{claimproof}
+Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemmas \ref{HelperFive}, \ref{HelperSix},
+and \ref{HelperSeven} one of the following holds:
 \begin{enumerate}
 \item $G$ is elementary; or
 \item $G$ is not thin; or
@@ -468,6 +543,7 @@ So (5) must hold.  But then
 using Claim 1 gives
 \[\frac{15(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 4k+2,\]
 which is a contradiction when $\epsilon \ge \frac{19}{23} \approx 0.826$.
+\end{claimproof}
 
 \end{proof}
 
@@ -476,7 +552,7 @@ which is a contradiction when $\epsilon \ge \frac{19}{23} \approx 0.826$.
 \section{The $\frac56$-Conjecture}
 \begin{lem}
 If $H$ is a connected multigraph and $G = L(H)$, then $\W(H) \le
-\max\{\omega(G), 5(\Delta(G) + 1) / 6 + 3/6\}$.
+\max\{\omega(G), \frac56(\Delta(G) + 1) + \frac36\}$.
 \end{lem}
 \begin{proof}
 %$M = |N(x)|$,

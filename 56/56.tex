@@ -137,23 +137,65 @@ we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
 we show for each graph $G$ that if $\chi'(G)=\W(G)$, then
 $\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
 
-%Let $G$ be a graph with $\chi'(G)=k+1$, for some $k\ge \Delta(G)$.  Choose an
-%edge $e$ and a $k$-coloring $\vph$ of $G-e$.
 
-\section{Useful lemmas}
-%Let $G$ be $(k+1)$-edge-critical for some $k \ge \Delta(G) + 1$.  
+Graphs can have multiple edges.
 
-Throughout this section, let $G$ be a $(k+1)$-edge-critical multigraph for some
-$k \ge \Delta(G) + 1$.  We use the following notation.  Let $\varphi$ be a partial
-$k$-edge-coloring of $G$.  For each vertex $v\in V(G)$, let $\varphi(v)$ be the
+\section{Tashkinov Trees}
+We use the following notation.  A graph $G$ is \emph{critical} if $\chi'(G-e) < \chi'(G)$ for all $e \in E(G)$. 
+ 
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$. 
+Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  For each vertex $v\in V(G)$, let $\varphi(v)$ be the
 set of colors used in $\vph$ on edges incident to $v$ and let
-$\vphn(v)=[k]\setminus \vph(v)$. For an uncolored edge $e_0$, a \emph{Tashkinov
-tree} is a sequence $v_0, e_1, v_1, e_2,\ldots, v_{t-1},e_t,v_t$ such that all
-$v_i$ are distinct and $e_i=v_jv_i$ for some $j$ and $\ell$ with $0\le j< i$
-and $0\le \ell < i$ such that $\vph(e_i)\in \vphn(v_\ell)$.
+$\vphn(v)=[k]\setminus \vph(v)$. A \emph{Tashkinov tree} with respect to $\varphi$ is a sequence $v_0, e_1, v_1, e_2,\ldots, v_{t-1},e_t,v_t$ such that all
+$v_i$ are distinct, $e_i=v_jv_i$ and $\vph(e_i)\in \vphn(v_\ell)$ for some $j$ and $\ell$ with $0\le j< i$
+and $0\le \ell < i$.
 
-\setcounter{thm}{-1}
+For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the subgraph of $G$ containing $v$ induced on the edges with color $\alpha$ or $\beta$.  
+Then $P_v(\alpha, \beta)$ is a path or a cycle.
+
+A \emph{defective color} for a Tashkinov tree $T$ in $G$ is a color used on more than one edge
+from $V(T)$ to $V(G) \setminus V(T)$.  Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
+and all $k$-edge-colorings $\vph$ of $G - e$.  Let $\T(G)$ be the set of all triples $(T,e,\vph)$ such that $e \in E(G)$, $\vph$ is a $k$-edge-coloring of $G-e$ and
+$T$ is a Tashkinov tree with respect to $e$ and $\vph$ with $|T| = t(G)$.  Notice that, by definition, we have $\T(G) \ne \emptyset$.
+
+Recall that for a $k$-edge-coloring $\vph$ of $G-e$, a maximal Tashkinov tree
+starting with $e$ may not be unique.  However, if $T_1$ and $T_2$ are both such
+trees, then it is easy to show that $V(T_1)\subseteq V(T_2)$; by symmetry, also
+$V(T_2)\subseteq V(T_1)$, so $V(T_1)=V(T_2)$.
+
+TODO: NEED DEFINITION OF ELEMENTARY SET, ELEMENTARY GRAPH.  NEED TO STATE LEMMA THAT TASHKINOV TREES ARE ELEMENTARY, ALSO THAT MAXIMUM SIZE TASHKINOV TREE WITHOUT DEFECTIVE COLORS IMPLIES G IS ELEMENTARY.
+
+\begin{lem}\label{FreeColorsLemma}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+If $(T, v_0v_1, \vph) \in \T(G)$ for $v_0v_1 \in E(G)$, then for every $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ we have $V\parens{P_{v_1}(\alpha, \beta)} \subsetneq V(T)$.
+\end{lem}
+\begin{proof}
+Suppose we have $(T, v_0v_1, \vph) \in \T(G)$ for $v_0v_1 \in E(G)$ and $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ such that $V\parens{P_{v_1}(\alpha, \beta)} = V(T)$.
+Put $P = P_{v_1}(\alpha, \beta)$.  Since $G$ is non-elementary, $T$ has a defective color $\delta$ with respect to $\vph$. Let $\tau$ be
+missing at $v_2$. Let $Q = P_{v_2}(\tau, \delta)$.
+Since $P$ is maximal, $\delta$ is not missing at any vertex of $P$;
+since $V(P)$ is elementary, $\tau$ is not missing at any vertex of $P$ other 
+than $v_2$.  As a result, $Q$ ends outside $V(P)$.  Now $Q$ could leave
+$V(T)$ and re-enter it repeatedly, but $Q$ ends outside $V(P)$, so there is a last vertex $w \in V(Q) \cap V(P)$;
+say $Q$ ends at $z \in V(G)\setminus V(P)$.  Let $\pi \notin \{\alpha, \beta\}$ be a
+color missing at $w$.  Since
+$P$ is maximal, no edge colored $\tau$ or $\pi$ leaves $V(P)$.  So, we can
+swap $\tau$ and $\pi$ on every edge in $G - V(P)$ without changing the fact that
+$P$ is a maximum size Tashkinov tree.  Now swap $\delta$ and $\pi$ on the
+subpath of $Q$ from $w$ to $z$;
+since $\pi$ is missing at $w$, the $\delta-\pi$ path does end at $w$.  Now
+$\delta$ is missing at $w$, but $\delta$ was defective in $\vph$, so there are
+still edges colored $\delta$ leaving $V(P)$, adding such an edge gets a larger
+Tashkinov tree, a contradiction.
+\end{proof}
+
+
+\section{Special vertices}
+TODO: DEFINE SPECIAL.
+
+Let $\nu(T)$ be the number of non-special vertices in $T$.
 \begin{lem}\label{SpecialPath}
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
 Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path
 with edges $e_i = v_iv_{i+1}$ for $1 \le i \le r-1$.  If $v_i$ is special for
@@ -175,114 +217,42 @@ Swap $\tau$ and $\alpha$ on $e_i$ for $0 \le i \le r-3$ to get a new coloring
 $\vph^*$.  Now $\gamma$ and $\tau$ are both missing at $v_{r-2}$ in $\vph^*$.
 Since $v_{r-1}$ is special, the fan with $v_{r-2}, v_{r-1}, v_r$ and $e$
 implies that there is an edge $f_{r-1} = v_{r-1}v_r$ with $\vph^*(f_{r-1}) =
-\tau$.  
-But we have never recolored $f_{r-1}$, so $\vph(f_{r-1})=\tau$, a
-contradiction.
-%Now swap $\alpha$ and $\tau$ back on $e_i$ for $0 \le i \le r-3$ and
-%then shift the $\alpha-\beta$ coloring one to the right to get back to $\vph$. 
-%We have all the desired $f_i$, a contradiction.
-\end{proof}
-
-Recall that for a $k$-edge-coloring $\vph$ of $G-e$, a maximal Tashkinov tree
-starting with $e$ may not be unique.  However, if $T_1$ and $T_2$ are both such
-trees, then it is easy to show that $V(T_1)\subseteq V(T_2)$; by symmetry, also
-$V(T_2)\subseteq V(T_1)$, so $V(T_1)=V(T_2)$.
-
-\begin{lem}
-\label{lem1}
-Let $T$ be a maximal Tashkinov tree with respect to a $k$-edge-coloring $\vph$
-of $G-xy$.  If at most one $v \in V(T)$ is non-special, then, for all $\alpha \in \vphn(x)$
-and $\beta \in \vphn(y)$, the $\alpha-\beta$ path $P$ from $y$
-to $x$ has $V(P) = V(T)$.
-\end{lem}
-\begin{proof}
-Let $\vph$ be a $k$-edge-coloring of $G-xy$ and let $T$ be a maximal Tashkinov
-tree containing $xy$.  Choose $\alpha \in \vphn(x)$ and $\beta \in \vphn(y)$.
-Note that the $\alpha-\beta$ path $P$ starting from $y$ must end at $x$ (or
-else we can perform a Kempe swap on $P$ and color edge $xy$ with color $\alpha$).
-We show that $P$ is a maximal Tashkinov tree; hence $V(P) = V(T)$.  Say $P =
-v_0\cdots v_r$, where $v_0=y$ and $v_r = x$. 
-%and $v_r$ is the vertex right before $x$.  
-Suppose $P$ is not maximal; so some color $\tau$ is missing on
-$P$ and some edge colored $\tau$ leaves $P$.  
-%Since at most one vertex of $P$ is non-special, 
-Note that $E(P)\cup\{xy\}$ is an odd cycle.
-We can relabel $V(P)$ so that $\tau$ is missing at $v_0$, the edge 
-colored $\tau$ leaving $V(P)$ is incident to $v_i$ and all vertices $v_j$ with
-$0<j<i$ are special.  Further, if $v_i$ is non-special, then we
-can choose $i$ to be even (by possibly going around the cycle the other way).
-Also, we can recolor $E(P)\cup\{xy\}$ with $\alpha$ and $\beta$ so that only
-$v_0v_1$ is uncolored and $\alpha$ and $\beta$ are missing at $v_0$ and $v_1$,
-respectively.
-%We have a 2-colored cycle, so by symmetry we may assume that $i < j$.  
-Now by Lemma \ref{SpecialPath}, %we can walk from $i$ to $j$ showing
-each of these edges colored $\alpha$ has a parallel edge colored $\tau$.  
-In particular, the edge colored $\tau$ incident to $v_i$ ends in $P$, a
+\tau$.  But we have never recolored $f_{r-1}$, so $\vph(f_{r-1})=\tau$, a
 contradiction.
 \end{proof}
 
-A \emph{defective color} for a
-Tashkinov tree $T$  in a critical graph $G$ is a color used on more than one edge
-from $V(T)$ to $V(G) \setminus V(T)$.  Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
-and all $k$-edge-colorings $\vph$ of $G - e$.  Let $\T(G)$ be the set of all triples $(T,e,\vph)$ such that $e \in E(G)$, $\vph$ is a $k$-edge-coloring of $G-e$ and
-$T$ is a Tashkinov tree with respect to $e$ and $\vph$ with $|T| = t(G)$.
-
-\begin{lem}\label{AtMostOneNonSpecial}
-Let $T$ be a Tashkinov tree with respect to a $k$-edge-coloring $\vph$ of $G - v_0v_1$.  If $(T, v_0v_1, \vph) \in \T(G)$ and at most one $v \in V(T)$ is
-non-special, then $T$ has no defective colors.
+\begin{lem}\label{ZeroNonSpecial}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+If $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$, then $\nu(T) \ge 1$.
 \label{lem2}
 \end{lem}
 \begin{proof}
-Use Lemma~\ref{lem1} to get an $\alpha-\beta$ path $P = v_1\ldots v_rv_0$ with
-$V(P) = V(T)$; recall that $P$ is a maximum size Tashkinov tree.  Suppose that
-$P$ has a defective color $\delta$ with respect to $\vph$. Let $\tau$ be
-missing at $v_2$. Consider a maximal $\tau-\delta$ path $Q$, starting at $v_2$.  
-Since $P$ is maximal, $\delta$ is not missing at any vertex of $P$;
-since $V(P)$ is elementary, $\tau$ is not missing at any vertex of $P$ other 
-than $v_2$.  As a result, $Q$ ends outside $V(P)$.  Now $Q$ could leave
-$V(T)$ and re-enter it repeatedly, %and bounce around inside a bunch,
-%(in fact $Q$ must contain
-%every $\delta$-colored edge leaving $V(T)$, but we don't need that), 
-but $Q$ ends outside $V(P)$, so there is a last vertex $w \in V(Q) \cap V(P)$;
-%(this is what the Stiebitz book calls an "exit vertex"), 
-say $Q$ ends at $z \in V(G) - V(P)$.  Let $\pi \notin \{\alpha, \beta\}$ be a
-color missing at $w$.  Since
-$P$ is maximal, no edge colored $\tau$ or $\pi$ leaves $V(P)$.  So, we can
-swap $\tau$ and $\pi$ on every edge in $G - V(P)$ without changing the fact that
-$P$ is a maximum size Tashkinov tree.  Now swap $\delta$ and $\pi$ on the
-subpath of $Q$ from $w$ to $z$;
-since $\pi$ is missing at $w$, the $\delta-\pi$ path does end at $w$.  Now
-$\delta$ is missing at $w$, but $\delta$ was defective in $\vph$, so there are
-still edges colored $\delta$ leaving $V(P)$, adding such an edge gets a larger
-Tashkinov tree, a contradiction.
+Suppose $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$ and $\nu(T) = 0$.
+Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
+there is a $\tau$-edge in $T$ incident to every $v \in V(P - v_0)$. By symmetry, the same is true of every $v \in V(P)$.  Hence $V(P) = V(T)$ contradicting Lemma \ref{FreeColorsLemma}.
 \end{proof}
 
 \begin{thm}\label{AllSpecialImpliesElementary}
-Let $G$ be a multigraph.
-If at most one $v \in V(G)$ is non-special, then
-$\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}$.
+If $G$ is a critical graph in which every vertex is special, then
+\[\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}.\]
 \end{thm}
 \begin{proof}
-We may assume that $G$ is critical.
-If $\chi'(G)\le \Delta(G)+1$, then we are done.
-So instead, assume that $\chi'(G)\ge \Delta(G)+2$ and let $k=\chi'(G)-1$.
-Choose $e\in E(G)$.  Now by Lemma~\ref{lem2}, there is $(T, v_0v_1, \vph) \in \T(G)$ such that $T$ has no defective color, i.e.,
-$V(T)$ is strongly closed.  By a Theorem of Andersen and Goldberg (see also
-[Stiebitz, p.~8--9]), this implies that $\chi'(G)=\ceil{\chi'_f(G)}$.
+Suppose $G$ is a critical graph in which every vertex is special and put $k = \chi'(G) - 1$.  Then $k \ge \Delta(G) + 1$.
+Since $\T(G) \ne \emptyset$, applying Lemma \ref{ZeroNonSpecial}, we conclude that $G$ is elementary.  Hence $\chi'(G) = \ceil{\chi'_f(G)}$, a contradiction.
 \end{proof}
 
 \section{The easy bound}
-Let $G$ be a multigraph.  The \emph{claw-degree} of $x \in V(G)$ is 
+Let $G$ be a graph.  The \emph{claw-degree} of $x \in V(G)$ is 
 \[\dclaw{x} \DefinedAs \max_{\substack{S \subseteq N(x) \\ \card{S} = 3}}\frac14 \parens{d(x) + \sum_{v \in S} d(v)}.\]
 The \emph{claw-degree} of $G$ is 
 \[\dclaw{G} \DefinedAs \max_{x \in V(G)} \dclaw{x}.\]
 \begin{thm}\label{EasyBound}
-If $G$ is a multigraph, then
+If $G$ is a graph, then
 \[\chi'(G) \le \max\set{\ceil{\chi'_f(G)}, \Delta(G) + 1, \ceil{\frac43\dclaw{G}}}.\]
 \end{thm}
 \begin{proof}
-Suppose not and choose a counterexample $G$ minimizing $\size{G}$; note that $G$ is
-edge-critical. Let $k=\chi'(G)-1$, so $k \ge \ceil{\frac43\dclaw{G}}$. 
+Suppose not and choose a counterexample $G$ minimizing $\size{G}$; note that $G$ critical. 
+Let $k=\chi'(G)-1$, so $k \ge \ceil{\frac43\dclaw{G}}$. 
 By Theorem \ref{AllSpecialImpliesElementary}, $G$ has a non-special vertex $x$.
 Choose $xy_1 \in E(G)$ and a $k$-edge-coloring $\vph$ of $G - xy_1$ such that
 $\vph$ has a fan $F$ of length $3$ rooted at $x$ with leaves $y_1, y_2, y_3$.  
@@ -294,18 +264,17 @@ This gives the contradiction
 \[\ceil{\frac43\dclaw{G}} \le k \le \frac43\dclaw{G} - \frac23.\]
 \end{proof}
 
-\section{A stronger bound}
-Throughout this section, let $G$ be a non-elementary critical multigraph with $\chi'(G) = k + 1 \ge \Delta(G) + 2$.
+TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
 
-For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
-
-\begin{lem}\label{HelperThree}
-Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.  Then there
+\section{Properties of non-special vertices}
+\begin{lem}\label{OddDistanceNonSpecialsExist}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = P_{v_1}(\alpha, \beta)$.  Then there
 are $a,b \in \irange{r}$ such that both $v_a, v_b$ are non-special and $b - a$ is odd.
 \end{lem}
 \begin{proof}
-Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$. By Lemma \ref{AtMostOneNonSpecial}, $p \ge 2$.  Suppose $i_a - i_b$ is even for all $a,b \in \irange{p}$.  
-Now $(P, v_0v_1, \vph) \not \in \T(G)$, for otherwise $G$ would be elementary.  Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
+Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$. Suppose $i_a - i_b$ is even for all $a,b \in \irange{p}$.  
+By Lemma \ref{FreeColorsLemma}, $V(P) \subsetneq V(T)$. Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
 By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.
 
 Let $m$ be the least odd integer such that $v_m$ is non-special (if it exists, otherwise, let $m=r$).
@@ -317,42 +286,54 @@ there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t$ with 
 But $i_a - i_b$ is even for all $a,b \in \irange{p}$, so either $m=r$ or $m'=0$.  Hence there is a $\tau$-colored edge between $v_{\ell-1} v_{\ell}$ or $v_{\ell} v_{\ell + 1}$ contradicting $\vph(v_\ell z) = \tau$.
 \end{proof}
 
+As an immediate consequence of Lemma \ref{OddDistanceNonSpecialsExist}, we get the following.
+
+\begin{cor}\label{AtMostOneNonSpecial}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+If $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$, then $\nu(T) \ge 2$.
+\end{cor}
+
+\section{Thin graphs}
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
+We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
+
 \begin{lem}\label{HelperOne}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
 Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,j \in \irange{r}$ with $i + 3 \le j$ such that $j-i$ is odd.  If $v_t$ is special for all $i < t < j$, then
 $\mu(G) \ge 2k - d(v_i) - d(v_j)$.
 \end{lem}
 \begin{proof}
+TODO: ADD PROOF
 \end{proof}
 
-
-We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
 \begin{lem}\label{HelperFour}
-Suppose $G$ is $k$-thin. Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.  Then there
-is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Suppose $G$ is $k$-thin. Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive non-special vertices on $P_{v_1}(\alpha, \beta)$.
 \end{lem}
 \begin{proof}
-Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$.
+Put $P = P_{v_1}(\alpha, \beta)$ and let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$.
 Suppose $i_{j+1} - i_j > 1$ for all $j \in \irange{p-1}$. Since $G$ is thin, Lemma \ref{HelperOne} implies that $i_{j+1} - i_j$ is even for all $j \in \irange{p-1}$.  
-Hence $i_a - i_b$ is even for all $a,b \in \irange{p}$ violating Lemma \ref{HelperThree}.
+Hence $i_a - i_b$ is even for all $a,b \in \irange{p}$ violating Lemma \ref{OddDistanceNonSpecialsExist}.
 \end{proof}
 
-
-For a Tashkinov tree $T$, let $\nu(T)$ be the number of non-special vertices in $T$.
 \begin{lem}\label{HelperFive}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$, then $\nu(T) \ge 3$.
 \end{lem}
 \begin{proof}
 Lemma \ref{AtMostOneNonSpecial} gives $\nu(T) \ge 2$ .  Suppose $\nu(T) = 2$.  
-Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Let $P = v_1v_2\cdots v_rv_0$ be the $\alpha-\beta$ path from $v_1$ to $v_0$.
+Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Let $P = P_{v_1}(\alpha, \beta) = v_1v_2\cdots v_rv_0$.
 By Lemma \ref{HelperFour}, there is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.  By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $i=1$.
 
-Since $G$ is not elementary, we have $a,b \in \irange{r}$ and $\tau \in \vphn(v_a)$ such that $\vph(v_bz) = \tau$ for some $z \in V(T) \setminus V(P)$.  
-Consider the $\tau-\beta$ path $Q$ starting at $v_b$.  By Lemma \ref{HelperFour}, $v_1$ and $v_2$ (the only non-special vertices in $T$) must be contiguous on $Q$.  
+By Lemma \ref{FreeColorsLemma}, $V(P) \subsetneq V(T)$. Hence we have $a,b \in \irange{r}$ and $\tau \in \vphn(v_a)$ such that $\vph(v_bz) = \tau$ for some $z \in V(T) \setminus V(P)$.  
+Let $Q = P_{v_b}(\tau, \beta)$. By Lemma \ref{HelperFour}, $v_1$ and $v_2$ (the only non-special vertices in $T$) must be consecutive on $Q$.  
 But there cannot be a $\tau$ or $\beta$ edge between $v_1$ and $v_2$, a contradiction.
 \end{proof}
 
 \begin{lem}\label{HelperSix}
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) = 3$, then there are non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ 
 is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$.
 \end{lem}
@@ -403,16 +384,16 @@ SKETCH: Look at the fans both ways, we violate thinness on either $v_0v_1$ or $v
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
-If $Q$ is the line graph of a multigraph $G$ and $Q$ is vertex critical, then
+If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 \[\chi(Q) \leq \max\left\{\omega(Q), \Delta(Q) + 1 - \frac{\mu(G) - 1}{2}\right\}.\]
 \end{thm}
 
 \begin{thm}
-If $Q$ is the line graph of a multigraph, then
+If $Q$ is a line graph, then
 \[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}.\]
 \end{thm}
 \begin{proof}
-Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}}}$. Say $Q = L(G)$ for a multigraph $G$. Then $G$ is $k$-edge-critical.
+Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.  Put $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}}}$. Say $Q = L(G)$ for a graph $G$. Then $G$ is $k$-edge-critical.
 
 \claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
 \[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]}
@@ -461,14 +442,14 @@ Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemmas \ref{HelperFive}, \ref{HelperSix} a
 If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
 
 If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k - 2\frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$.  Hence Theorem \ref{CriticalMuBound} gives
-\[\le k + 1 \le \Delta(Q) + 1 - k - \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) + \frac12,\]
+\[k + 1 \le \Delta(Q) + 1 - k + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) + \frac12,\]
 so
-\[2(k + 1) \le \Delta(Q) + \frac52 - \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G).\]
+\[2(k + 1) \le \Delta(Q) + \frac52 + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G).\]
 
 Since $k \ge \Delta(G) + 1$, this gives
 
-\[k + 1 < \frac{\Delta(Q) + \frac52}{2 + \frac{3(1-\epsilon)}{2\epsilon -1}},\]
-which is a contradiction when $\epsilon > \frac12$.
+\[k + 1 < \frac{\Delta(Q) + \frac52}{2 - \frac{3(1-\epsilon)}{2\epsilon -1}},\]
+which is a contradiction when $\epsilon > \frac45$.
 
 Suppose (3) holds.  So
 \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]

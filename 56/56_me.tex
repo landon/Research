@@ -95,9 +95,6 @@
 \begin{document}
 \section{Overview}
 
-For a multigraph $G$, we clearly have $\chi'(G)\ge
-\ceil{|E(G)|/\floor{|V(G)|/2}}$.  Likewise, the same bound holds for any
-subgraph $H$.  Thus, 
 The biggest open problem in edge-coloring is the Goldberg--Seymour conjecture.
 Over the past two decades, the main tool for attacking this problem has become
 Tashkinov trees, a vast generalization of Vizing fans and Kierstead paths.
@@ -152,8 +149,7 @@ $\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
 Graphs can have multiple edges.
 
 \section{Tashkinov Trees}
-Recall that a graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$, as defined
-above.  We also use the following notation.  
+We use the following notation.  
 Let $[k]$ denote $\{1,\ldots,k\}$.
 A graph $G$ is \emph{critical} if $\chi'(G-e) < \chi'(G)$ for all $e \in E(G)$. 
 For a graph $G$ and a partial $k$-edge-coloring $\varphi$, for each vertex $v\in
@@ -165,23 +161,28 @@ Given a partial $k$-edge-coloring $\varphi$, a set $W\subseteq V(G)$ is
 \emph{elementary} (w.r.t.~$\varphi$) if each color in $[k]$ is
 missed by at most one vertex of $W$.  More formally, $\vphn(u)\cap
 \vphn(v)=\emptyset$ for all distinct $u,v\in W$.
-A \emph{defective color} for a set $X\subseteq V(G)$ (w.r.t.~$\varphi$) is a color
+A \emph{defective color} for a set $X\in V(G)$ (w.r.t.~$\varphi$) is a color
 used on more than one edge from $X$ to $V(G) \setminus X$.  
 A set $X$ is \emph{strongly closed} w.r.t.~$\varphi$ if $X$ has no 
 defective color.
-Elementary and strongly closed sets are of particular interest because of the
-following theorem, proved implicitly by Andersen~\cite{} and Goldberg~\cite{}.
 %As we will see shortly, there is a strong relationship between elementary sets
 %and elementary graphs.
 % 
 
 \begin{thm}
-\label{elementary}
 Let $G$ be a graph with $\chi'(G)=k+1$ for some integer $k\ge \Delta(G)$.  If
 $G$ is critical, then $G$ is elementary if and only if there exists $uv\in E(G)$,
-a $k$-edge-coloring $\vph$ of $G-uv$, and a set $X$ with $u,v\in X$ such
+a $k$-coloring $\vph$ of $G-uv$, and a set $X$ with $u,v\in X$ such
 that $X$ is both elementary and strongly closed w.r.t.~$\varphi$.
 \end{thm}
+
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$. 
+Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  
+%For each vertex $v\in V(G)$, let $\varphi(v)$ be the set of colors used in
+%$\vph$ on edges incident to $v$ and let $\vphn(v)=[k]\setminus \vph(v)$. 
+For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the
+maximal connected subgraph of $G$ that contains $v$ and is induced by edges with color
+$\alpha$ or $\beta$.  So $P_v(\alpha, \beta)$ is a path or a cycle.
 
 A \emph{Tashkinov tree} w.r.t.~$\varphi$ is a sequence $v_0, e_1, v_1,
 e_2,\ldots, v_{t-1},e_t,v_t$ such that all $v_i$ are distinct, $e_i=v_jv_i$ and
@@ -192,70 +193,48 @@ $\vph(e_i)\in \vphn(v_\ell)$ for some $j$ and $\ell$ with $0\le j< i$ and $0\le
 Let $G$ be a graph with $\chi'(G)=k+1$, for some integer $k\ge \Delta(G)+1$ and
 choose $e\in E(G)$ such that $\chi'(G-e)<\chi'(G)$.  Let $\varphi$ be a
 $k$-edge-coloring of $G-e$.  If $T$ is a Tashkinov tree w.r.t.~$\varphi$ and
-$e$, then $V(T)$ is elementary w.r.t.~$\varphi$.
+$e$, then $V(G)$ is elementary w.r.t.~$\varphi$.
 \end{lemmaA}
 
-In view of Theorem~1 and Tashkinov's Lemma, to prove that a graph $G$ is elementary,
-it suffices to find an edge $e$, a $k$-edge-coloring $\vph$ of $G-e$, and a
-Tashkinov tree $T$ containing $e$ such that $V(T)$ is strongly closed.
-This motivates our next two lemmas.  But first, we need a few more definitions.
-
-Let $t(G)$ be the maximum number of vertices in a Tashkinov tree over all $e \in E(G)$
+Let $t(G)$ be the maximum size of a Tashkinov tree over all $e \in E(G)$
 and all $k$-edge-colorings $\vph$ of $G - e$.  Let $\T(G)$ be the set of all triples $(T,e,\vph)$ such that $e \in E(G)$, $\vph$ is a $k$-edge-coloring of $G-e$ and
 $T$ is a Tashkinov tree with respect to $e$ and $\vph$ with $|T| = t(G)$.  Notice that, by definition, we have $\T(G) \ne \emptyset$.
-%
-For a $k$-edge-coloring $\vph$ of $G-e$, a maximal Tashkinov tree
+
+Recall that for a $k$-edge-coloring $\vph$ of $G-e$, a maximal Tashkinov tree
 starting with $e$ may not be unique.  However, if $T_1$ and $T_2$ are both such
 trees, then it is easy to show that $V(T_1)\subseteq V(T_2)$; by symmetry, also
 $V(T_2)\subseteq V(T_1)$, so $V(T_1)=V(T_2)$.
-%
-Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$. 
-Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  
-%For each vertex $v\in V(G)$, let $\varphi(v)$ be the set of colors used in
-%$\vph$ on edges incident to $v$ and let $\vphn(v)=[k]\setminus \vph(v)$. 
-For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the
-maximal connected subgraph of $G$ that contains $v$ and is induced by edges with color
-$\alpha$ or $\beta$.  So $P_v(\alpha, \beta)$ is a path or a cycle.
 
-%TODO: NEED DEFINITION OF ELEMENTARY SET, ELEMENTARY GRAPH.  NEED TO STATE LEMMA THAT TASHKINOV TREES ARE ELEMENTARY, ALSO THAT MAXIMUM SIZE TASHKINOV TREE WITHOUT DEFECTIVE COLORS IMPLIES G IS ELEMENTARY.
+TODO: NEED DEFINITION OF ELEMENTARY SET, ELEMENTARY GRAPH.  NEED TO STATE LEMMA THAT TASHKINOV TREES ARE ELEMENTARY, ALSO THAT MAXIMUM SIZE TASHKINOV TREE WITHOUT DEFECTIVE COLORS IMPLIES G IS ELEMENTARY.
 
 \begin{lem}\label{FreeColorsLemma}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer
-$k \ge \Delta(G) + 1$.  For every $v_0v_1 \in E(G)$, $k$-edge-coloring $\vph$ of $G-v_0v_1$ and for all $\alpha \in \vphn(v_0)$ and $\beta \in
-\vphn(v_1)$ we have $|P_{v_1}(\alpha, \beta)| < t(G)$.
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+If $(T, v_0v_1, \vph) \in \T(G)$ for $v_0v_1 \in E(G)$, then for every $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ we have $V\parens{P_{v_1}(\alpha, \beta)} \subsetneq V(T)$.
 \end{lem}
 \begin{proof}
-Suppose the lemma is false and choose $v_0v_1 \in E(G)$, a $k$-edge-coloring $\vph$ of $G-v_0v_1$, $\alpha \in \vphn(v_0)$ and $\beta \in
-\vphn(v_1)$ such that $|P_{v_1}(\alpha, \beta)| \ge t(G)$.  Put $P = P_{v_1}(\alpha, \beta)$.  
-Clearly $P$ must end at $v_0$ (or we can swap colors $\alpha$ and $\beta$ on $P$ and color $v_0v_1$), so let
-$v_1,\ldots,v_r,v_0$ denote the vertices of $P$ in order. Let $(T, v_0v_1, \vph)$ be a Tashkinov tree that begins with edges
-$v_0v_1, v_1v_2, \ldots, v_{r-1}v_r$.  Then $V(T)=V(P)$ since $t(G) \ge |T| \ge |P| \ge t(G)$.
-Since $G$ is non-elementary, Theorem~\ref{elementary} implies that $V(T)$ is not
-strongly closed, so $T$ has a defective color $\delta$ with respect to $\vph$.
-Choose $\tau\in \vphn(v_2)$. Let $Q = P_{v_2}(\tau, \delta)$.
-Since $T$ is maximal, $\delta$ is not missing at any vertex of $T$;
-since $V(T)$ is elementary, $\tau$ is not missing at any vertex of $T$ other 
-than $v_2$.  As a result, $Q$ ends outside $V(T)$.  Now $Q$ could leave
-$V(T)$ and re-enter it repeatedly, but $Q$ ends outside $V(T)$, so there is a
-last vertex $w \in V(Q) \cap V(T)$;
-say $Q$ ends at $z \in V(G)\setminus V(T)$.  Let $\pi \notin \{\alpha, \beta\}$ be a
+Suppose we have $(T, v_0v_1, \vph) \in \T(G)$ for $v_0v_1 \in E(G)$ and $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ such that $V\parens{P_{v_1}(\alpha, \beta)} = V(T)$.
+Put $P = P_{v_1}(\alpha, \beta)$.  Since $G$ is non-elementary, $T$ has a defective color $\delta$ with respect to $\vph$. Let $\tau$ be
+missing at $v_2$. Let $Q = P_{v_2}(\tau, \delta)$.
+Since $P$ is maximal, $\delta$ is not missing at any vertex of $P$;
+since $V(P)$ is elementary, $\tau$ is not missing at any vertex of $P$ other 
+than $v_2$.  As a result, $Q$ ends outside $V(P)$.  Now $Q$ could leave
+$V(T)$ and re-enter it repeatedly, but $Q$ ends outside $V(P)$, so there is a last vertex $w \in V(Q) \cap V(P)$;
+say $Q$ ends at $z \in V(G)\setminus V(P)$.  Let $\pi \notin \{\alpha, \beta\}$ be a
 color missing at $w$.  Since
-$|T| = t(G)$, no edge colored $\tau$ or $\pi$ leaves $V(T)$.  So, we can
-swap $\tau$ and $\pi$ on every edge in $G - V(T)$ without changing the fact that $T$ is a Tashkinov tree with
-$|T| = t(G)$.  Now swap $\delta$ and $\pi$ on the
+$P$ is maximal, no edge colored $\tau$ or $\pi$ leaves $V(P)$.  So, we can
+swap $\tau$ and $\pi$ on every edge in $G - V(P)$ without changing the fact that
+$P$ is a maximum size Tashkinov tree.  Now swap $\delta$ and $\pi$ on the
 subpath of $Q$ from $w$ to $z$;
 since $\pi$ is missing at $w$, the $\delta-\pi$ path does end at $w$.  Now
-$\delta$ is missing at $w$, but $\delta$ was defective in $\vph$, so some other
-edge $e$ colored $\delta$ still leaves $V(T)$, adding $e$ gets a larger
+$\delta$ is missing at $w$, but $\delta$ was defective in $\vph$, so there are
+still edges colored $\delta$ leaving $V(P)$, adding such an edge gets a larger
 Tashkinov tree, a contradiction.
 \end{proof}
 
 
 \section{Special vertices}
-Recall that a vertex $v \in V(G)$ is \emph{special} if every Vizing fan rooted
-at $v$ (taken over all $k$-colorings of $G-e$, over all edges $e$ incident to
-$v$) has at most 3 vertices, including $v$.
-%TODO: DEFINE SPECIAL.
+TODO: DEFINE SPECIAL.
+
 Let $\nu(T)$ be the number of non-special vertices in $T$.
 \begin{lem}\label{SpecialPath}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.

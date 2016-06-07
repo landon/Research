@@ -332,7 +332,7 @@ TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
 \section{Properties of non-special vertices}
 For a path $Q$ and $x,y \in V(Q)$, let $d_Q(x,y) = \ell(Q)$.
 
-\begin{lem}\label{NonSpecialsInThinAreAtEvenDistance}
+\begin{lem}\label{TauEscape}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
 If $\tau \in \vphn(x)$ for some $x \in V(C)$ and there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(G) \setminus V(C)$, then $C$ has a 
@@ -375,22 +375,27 @@ Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \i
 \end{lem}
 \begin{proof}
 Put $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
-By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
+By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
 Let $Q'$ be the subpath of $Q$ with endpoints $z_1$ and $z_2$ that contains $y$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum length subpath of $Q'$ with non-special ends.  
 Then $\ell(Q^*) = 1$ by Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, as desired.
 \end{proof}
 
+We say that $x$ is \emph{$\set{y,z}$-non-special} if there is a fan rooted at $x$ that contains $y$ and $z$.  TODO: MERGE THIS DEFINITION WITH SPECIAL.
 
 \begin{lem}\label{MasterHelper}
 Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $(T, v_0v_1, \vph) \in \T(G)$ with $\nu(T) \le 3$. Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $C = P_{v_1}(\alpha, \beta) + v_0v_1$ contains as many non-special vertices as possible.  
-Then $C$ contains non-special vertices $z_1,z_2,z_3$ such that $z_i$ is $z_{3-i}$-non-special and $z_{i+1}$ is $z_{4-i}$-non-special for $i \in \irange{2}$.
+Then $C$ contains non-special vertices $z_1,z_2,z_3$ such that either 
+\begin{itemize}
+\item $z_1$ is $\set{z_2,z_3}$-special and $z_2$ is $z_1$-special; or
+\item $z_i$ is $z_{3-i}$-non-special and $z_{i+1}$ is $z_{4-i}$-non-special for $i \in \irange{2}$.
+\end{itemize}
 \end{lem}
 \begin{proof}
 By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
 
 First, suppose $C$ contains only 2 non-special vertices, $z_1$ and $z_2$.  By Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
-By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_2$ and there are no 
+By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_2$ and there are no 
 $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.  
 
 By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$. Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  Since $z_1$ and $z_2$ are not consecutive on $C'$ and
@@ -399,7 +404,7 @@ $C'$ contains no other non-special vertices by the maximality condition on $C$, 
 So, $C$ contains exactly 3 non-special vertices, $z_1$, $z_2$ and $z_3$.  By Lemma \ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths of even length.  Also,
 $z_1$ is $z_2$-special and $z_2$ is $z_1$-special.  
 
-By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_3$ and there are no 
+By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_3$ and there are no 
 $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \set{1,3}$ (it could happen that $z_3$ is bypassed and the endpoints are $z_1, z_2$, but then we get a contradiction as in the previous case).
 By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$.  
 Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  We know that $C'$ contains $z_1$ and $z_3$ and that $z_1$ and $z_2$ are not consecutive on $C'$.  By Lemma \ref{ConsecutiveNonSpecials}, either $z_1$ and $z_3$ are consecutive on 
@@ -407,7 +412,8 @@ $C'$ or $z_2$ and $z_3$ are consecutive on $Q'$.
 
 Suppose $z_2$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  Then applying Lemma \ref{NonSpecialsInThinAreAtEvenDistance} shows that $z_2$ is $z_3$-special and $z_3$ is $z_2$-special, so we win.
 
-So it must be that $z_1$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  TODO: FIGURE OUT WHAT GOOD THING WE GET IN THIS CASE.
+So it must be that $z_1$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  If $z_1 = v_1$, we have a fan with an $\alpha$-edge from $z_1$ to $z_2$ and a $\tau$ edge from $z_1$ to $z_3$, so 
+$z_1$ is $\set{z_2,z_3}$-special.  When $z_1 \ne v_1$, we get the same thing, but have to shift the coloring over to $z_1$ like in the proof of Lemma \ref{SpecialPath} using another missing color $\gamma$ at $z_1$.
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
@@ -468,6 +474,7 @@ Substituting the bound on $d(x_{3-i})$ into that on $d(x_i)$ and simplifying
 gives for each $i \in \irange{2}$,
 \[d(x_i) < \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G).\]
 \end{claimproof}
+
 \bigskip
 
 \claim{3}{The theorem is true.}
@@ -477,7 +484,8 @@ Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemma \ref{MasterHelper}, one of the follo
 \begin{enumerate}
 \item $G$ is elementary; or
 \item $G$ is not thin; or
-\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-non-special, $x_2$ is $x_1$-non-special, $x_2$ is $x_3$-non-special and $x_3$ is $x_2$-non-special,; or
+\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-non-special, $x_2$ is $x_1$-non-special, $x_2$ is $x_3$-non-special and $x_3$ is $x_2$-non-special; or
+\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $\set{x_2,x_3}$-non-special and $x_2$ is $x_1$-non-special; or
 \item $V(T)$ contains four non-special vertices $x_1, x_2, x_3, x_4$.
 \end{enumerate}
 
@@ -499,7 +507,10 @@ using Claim 2, this gives
 \[3\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) \ge 2k+2,\]
 which is a contradiction when $\epsilon \ge \frac56$.
 
-So (4) must hold.  But then
+Suppose (4) holds.  Doing the bounding like in the proof of Claim 2 gets a contradiction when $\epsilon \ge \frac56$.
+
+
+So (5) must hold.  But then
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
 using Claim 1 gives
 \[\frac{12(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 3k+2,\]

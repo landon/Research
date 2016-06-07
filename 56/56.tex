@@ -286,12 +286,12 @@ contradiction.
 
 \begin{lem}\label{ZeroNonSpecial}
 Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-If $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$, then $\nu(T) \ge 1$.
+Let $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$.  Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  The $P$ contains a non-special vertex. 
+In particular, $\nu(T) \ge 1$.
 \label{lem2}
 \end{lem}
 \begin{proof}
-Suppose $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$ and $\nu(T) = 0$.
-Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
+Suppose every vertex of $P$ is special.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
 there is a $\tau$-edge in $T$ incident to every $v \in V(P - v_0)$. By symmetry, the same is true of every $v \in V(P)$.  Hence $V(P) = V(T)$ contradicting Lemma \ref{FreeColorsLemma}.
 \end{proof}
 
@@ -330,131 +330,84 @@ This gives the contradiction
 TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
 
 \section{Properties of non-special vertices}
-\begin{lem}\label{OddDistanceNonSpecialsExist}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $P = P_{v_1}(\alpha, \beta)$.  Then there
-are $a,b \in \irange{r}$ such that both $v_a, v_b$ are non-special and $b - a$ is odd.
+For a path $Q$ and $x,y \in V(Q)$, let $d_Q(x,y) = \ell(Q)$.
+
+\begin{lem}\label{NonSpecialsInThinAreAtEvenDistance}
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
+If $\tau \in \vphn(x)$ for some $x \in V(C)$ and there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(G) \setminus V(C)$, then $C$ has a 
+subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
+Moreover, there are no $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.
 \end{lem}
 \begin{proof}
-Let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$. Suppose $i_a - i_b$ is even for all $a,b \in \irange{p}$.  
-By Lemma \ref{FreeColorsLemma}, $V(P) \subsetneq V(T)$. Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
-By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.
-
-Let $m$ be the least odd integer such that $v_m$ is non-special (if it exists, otherwise, let $m=r$).
-Let $m'$ be the largest even integer such that $v_{m'}$ is non-special (if it exists, otherwise, let $m'=0$).
-By Lemma \ref{SpecialPath}, there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t \in \irange{m-1}$.
-By uncoloring $v_rv_0$, coloring $v_0v_1$ with $\beta$ and then running the same argument going the opposite direction on $P$, we conclude that 
-there is a $\tau$-colored edge between $v_t$ and $v_{t+1}$ for all odd $t$ with $m' + 1 \le t \le r-1$.
-
-But $i_a - i_b$ is even for all $a,b \in \irange{p}$, so either $m=r$ or $m'=0$.  Hence there is a $\tau$-colored edge between $v_{\ell-1} v_{\ell}$ or $v_{\ell} v_{\ell + 1}$ contradicting $\vph(v_\ell z) = \tau$.
+TODO: FILL THIS SPACE WITH PROOF.
 \end{proof}
-
-As an immediate consequence of Lemma \ref{OddDistanceNonSpecialsExist}, we get the following.
-
-\begin{cor}\label{AtMostOneNonSpecial}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-If $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$, then $\nu(T) \ge 2$.
-\end{cor}
 
 \section{Thin graphs}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
 We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
 
-\begin{lem}\label{HelperOne}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.  Suppose $G$ is $k$-thin.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
-Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path.  Let $i,j \in \irange{r}$ with $i + 3 \le j$ such that $j-i$ is odd.  Then there is an integer $t$ with $i < t < j$ such that $v_t$ is non-special.
+\begin{lem}\label{NonSpecialsInThinAreAtEvenDistance}
+Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
+If $Q$ is a subpath of $C$ with non-special end vertices and all special internal vertices such that $2 \le \ell(Q) \le \ell(C) - 2$, then $\ell(Q)$ is even.
 \end{lem}
 \begin{proof}
-TODO: ADD PROOF
+Suppose to the contrary that we have a subpath $Q$ of $C$ with non-special end vertices and all special internal vertices, such that $\ell(Q) \le \ell(C) - 2$ and $\ell(Q)$ is odd.  Let $x$ and $y$ be the end vertices of $Q$.
+Say $C = v_1v_2\cdots v_rv_0v_1$.  By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_1$ and $y = v_a$ where $a \ge 4$ is even.
+
+Apply Lemma \ref{SpecialPath} twice, to show that $\mu(v_2v_3) \ge 2k - d(v_1) - d(v_a)$, violating $k$-thinness.
 \end{proof}
 
-\begin{lem}\label{HelperFour}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Suppose $G$ is $k$-thin. Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive non-special vertices on $P_{v_1}(\alpha, \beta)$.
+\begin{lem}\label{ThreeNonSpecialOnCycle}
+Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  If $C$ contains exactly 3 non-special vertices,
+then $C = xyAzBx$ where $A$ and $B$ are paths of even length and $x,y,z$ are all non-special.  Moreover, $x$ is $y$-non-special and $y$ is $x$-non-special.
 \end{lem}
 \begin{proof}
-Put $P = P_{v_1}(\alpha, \beta)$ and let $v_{i_1}, \ldots v_{i_p}$ be the non-special vertices in $P$.
-Suppose $i_{j+1} - i_j > 1$ for all $j \in \irange{p-1}$. Since $G$ is thin, Lemma \ref{HelperOne} implies that $i_{j+1} - i_j$ is even for all $j \in \irange{p-1}$.  
-Hence $i_a - i_b$ is even for all $a,b \in \irange{p}$ violating Lemma \ref{OddDistanceNonSpecialsExist}.
+Immediate from Lemma \ref{NonSpecialsInThinAreAtEvenDistance} and Lemma \ref{SpecialPath}.
 \end{proof}
 
-\begin{lem}\label{HelperFive}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$, then $\nu(T) \ge 3$.
+\begin{lem}\label{ConsecutiveNonSpecials}
+Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive non-special vertices on $P_{v_1}(\alpha, \beta) + v_0v_1$.
 \end{lem}
 \begin{proof}
-Lemma \ref{AtMostOneNonSpecial} gives $\nu(T) \ge 2$ .  Suppose $\nu(T) = 2$.  
-Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Let $P = P_{v_1}(\alpha, \beta) = v_1v_2\cdots v_rv_0$.
-By Lemma \ref{HelperFour}, there is $i \in \irange{r-1}$ such that both $v_i$ and $v_{i+1}$ are non-special.  By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $i=1$.
-
-By Lemma \ref{FreeColorsLemma}, $V(P) \subsetneq V(T)$. Hence we have $a,b \in \irange{r}$ and $\tau \in \vphn(v_a)$ such that $\vph(v_bz) = \tau$ for some $z \in V(T) \setminus V(P)$.  
-Let $Q = P_{v_b}(\tau, \beta)$. By Lemma \ref{HelperFour}, $v_1$ and $v_2$ (the only non-special vertices in $T$) must be consecutive on $Q$.  
-But there cannot be a $\tau$ or $\beta$ edge between $v_1$ and $v_2$, a contradiction.
+Put $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
+By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
+Let $Q'$ be the subpath of $Q$ with endpoints $z_1$ and $z_2$ that contains $y$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum length subpath of $Q'$ with non-special ends.  
+Then $\ell(Q^*) = 1$ by Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, as desired.
 \end{proof}
 
-\begin{lem}\label{HelperSix}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) = 3$, then there are non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ 
-is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$.
+
+\begin{lem}\label{MasterHelper}
+Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+Let $(T, v_0v_1, \vph) \in \T(G)$ with $\nu(T) \le 3$. Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $C = P_{v_1}(\alpha, \beta) + v_0v_1$ contains as many non-special vertices as possible.  
+Then $C$ contains non-special vertices $z_1,z_2,z_3$ such that $z_i$ is $z_{3-i}$-non-special and $z_{i+1}$ is $z_{4-i}$-non-special for $i \in \irange{2}$.
 \end{lem}
 \begin{proof}
-Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $P = P_{v_1}(\alpha, \beta) = v_1v_2\cdots v_rv_0$ contains the maximum number of non-special vertices and subject to that,
-maximizes $|P|$.  Then $P$ contains $3$ non-special vertices since otherwise we can use the argument in Lemma \ref{HelperFive}.  By Lemma \ref{HelperFour} and symmetry we may assume that $v_a$, $v_{a+1}$ and $v_b$ are non-special where $a+1 < b$.
-By Lemma \ref{FreeColorsLemma}, $V(P) \subsetneq V(T)$.  Hence there are $j,\ell \in \irange{r}$ and $\tau \in \vphn(v_j)$ such that $\vph(v_\ell z) = \tau$ for some $z \in V(T) \setminus V(P)$.
-By rotating the $\alpha-\beta$ coloring on $P$, we may assume that $j=0$.  Let $Q = P_{v1}(\tau, \beta}$.  Let $b' = b$ if $b$ is even and $b' = a+1$ if $b$ is odd.
+By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
 
-\claim{1}{There is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t$ with $t < a$ or $t \ge b'$.  In particular, $v_a \in V(Q)$.}
+First, suppose $C$ contains only 2 non-special vertices, $z_1$ and $z_2$.  By Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
+By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_2$ and there are no 
+$\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.  
 
-\begin{claimproof}
-Immediate from Lemma \ref{SpecialPath}.
-\end{claimproof}
+By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$. Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  Since $z_1$ and $z_2$ are not consecutive on $C'$ and
+$C'$ contains no other non-special vertices by the maximality condition on $C$, Lemma \ref{ConsecutiveNonSpecials} gives a contradiction.
 
-\claim{2}{$a \le \ell \le b$}
+So, $C$ contains exactly 3 non-special vertices, $z_1$, $z_2$ and $z_3$.  By Lemma \ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths of even length.  Also,
+$z_1$ is $z_2$-special and $z_2$ is $z_1$-special.  
 
-\begin{claimproof}
-By Claim 1, each $v_t$ with $0 < t < a$ or $t > b$ is incident to a $\tau$ edge contained in $P$, so $a \le \ell \le b$.
-\end{claimproof}
+By Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_3$ and there are no 
+$\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \set{1,3}$ (it could happen that $z_3$ is bypassed and the endpoints are $z_1, z_2$, but then we get a contradiction as in the previous case).
+By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$.  
+Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  We know that $C'$ contains $z_1$ and $z_3$ and that $z_1$ and $z_2$ are not consecutive on $C'$.  By Lemma \ref{ConsecutiveNonSpecials}, either $z_1$ and $z_3$ are consecutive on 
+$C'$ or $z_2$ and $z_3$ are consecutive on $Q'$.
 
-\claim{3}{$b > a+2$, in particular $|P| \ge 5$.}
+Suppose $z_2$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  Then applying Lemma \ref{NonSpecialsInThinAreAtEvenDistance} shows that $z_2$ is $z_3$-special and $z_3$ is $z_2$-special, so we win.
 
-\begin{claimproof}
-Suppose $b = a+2$. By symmetry, we may assume that $a$ is odd.  By Claim 1 every vertex except $v_0$ and possibly $v_{a}$, $v_{a+1}$ is incident to a $\tau$-edge in $G[V(T)]$.  
-So $\ell \in \set{a,a+1}$.  The only possibility is that $Q$ contains a $\tau-\beta$ path of length at least three leaving $P$ at $v_a$ and returning at $v_{a+1}$.  Since there is a $\beta$-edge between
-$v_{a+1}$ and $v_{a+2}$, this means that $Q$ contains three non-special vertices and $|Q| > |P|$, contradicting our maximality condition on $P$.
-\end{claimproof}
-
-\claim{4}{$a$ is odd, $b$ is even}
-
-\begin{claimproof}
-By Lemma \ref{HelperOne}, either $b = a+2$ or $b-a$ is odd, so $b-a$ is odd by Claim 3.  Hence it will suffice to show that $b$ is even.
-Suppose $b$ is odd. Then Claim 1 says that there is a $\tau$ edge between $v_{t}$ and $v_{t+1}$ for all odd $t$ with $t < a$ or $t \ge a+1$.  That rules out all possibilities for $\ell$, a contradiction.
-\end{claimproof}
-
-\claim{5}{There is a $\tau$ edge between $v_{a+1}$ and $v_b$.}
-
-\begin{claimproof}
-By Lemma \ref{HelperFour}, $Q$ must have consecutive non-special vertices.  
-It cannot be that $v_a$ and $v_{a+1}$ are connected by a $\tau$-edge because then $v_a$ does not block after all (TODO: PUT THIS CHANGE INTO Lemma \ref{SpecialPath}).
-
-Suppose $v_a$ and $v_b$ are connected by a $\tau$-edge.
-
-\end{claimproof}
-\end{proof}
-
-\begin{lem}\label{HelperSeven}
-Suppose $G$ is $k$-thin. If $(T, e, \vph) \in \T(G)$ for $e \in E(G)$ and $\nu(T) \le 4$, then there are non-special $x_1,x_2 \in V(T)$ such that $x_1x_2 \in E(G)$ and $x_1$ is not $x_2$-special.
-\end{lem}
-\begin{proof}
-By Lemma \ref{HelperFive} and Lemma \ref{HelperSix} we may assume $\nu(T) = 4$. 
-Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that the $\alpha-\beta$ path $P = v_1v_2\cdots v_rv_0$ from $v_1$ to $v_0$ so as to maximize the number of non-special vertices in $P$.
-Then $P$ contains $4$ non-special vertices since otherwise we can use the arguments in Lemma \ref{HelperFive} and in Lemma \ref{HelperSix}.
-
-By Lemma \ref{HelperFour} there are contiguous non-special vertices in $P$.  By symmetry, we may assume that $v_1$ and $v_2$ are non-special.  Let $v_a$ and $v_b$ with $2 < a < b$ be the other two non-special vertices in $P$.
-Suppose $v_i$ is $v_{3-i}$-special for $i \in \irange{2}$.  
-
-SKETCH: Look at the fans both ways, we violate thinness on either $v_0v_1$ or $v_2v_3$ depending on the parity of $b$.
+So it must be that $z_1$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  TODO: FIGURE OUT WHAT GOOD THING WE GET IN THIS CASE.
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
@@ -517,26 +470,15 @@ gives for each $i \in \irange{2}$,
 \end{claimproof}
 \bigskip
 
-\claim{3}{If $xy \in E(G)$ with \[d(x) \ge \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G),\] then $y$ is special or $x$ is $y$-special.}
+\claim{3}{The theorem is true.}
 
 \begin{claimproof}
-Suppose $y$ is not special and $x$ is not $y$-special.  By Claim 0, we have
-\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le \frac{1-\epsilon}{2\epsilon -1}\parens{d(y) + 2\Delta(G)},\]
-Since $y$ is not special, Claim 1 gives $d(y) < \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$ and thus
-\[d(x) < \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}\Delta(G).\]
-\end{claimproof}
-
-\claim{4}{The theorem is true.}
-
-\begin{claimproof}
-Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemmas \ref{HelperFive}, \ref{HelperSix},
-and \ref{HelperSeven} one of the following holds:
+Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemma \ref{MasterHelper}, one of the following holds:
 \begin{enumerate}
 \item $G$ is elementary; or
 \item $G$ is not thin; or
-\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_ix_j \in E(G)$ and $x_i$ is not $x_j$-special for all $i,j \in \irange{3}$ with $i \ne j$; or
-\item $\nu(T) = 4$ and $E(T)$ contains an edge $x_1x_2$ where $x_2$ is not special and $x_1$ is not $x_2$-special; or
-\item $V(T)$ contains five non-special vertices $x_1, x_2, x_3, x_4, x_5$.
+\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-non-special, $x_2$ is $x_1$-non-special, $x_2$ is $x_3$-non-special and $x_3$ is $x_2$-non-special,; or
+\item $V(T)$ contains four non-special vertices $x_1, x_2, x_3, x_4$.
 \end{enumerate}
 
 If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
@@ -557,17 +499,11 @@ using Claim 2, this gives
 \[3\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) \ge 2k+2,\]
 which is a contradiction when $\epsilon \ge \frac56$.
 
-Suppose (4) holds.  Let $x_3,x_4$ be non-special vertices in $V(T) \setminus \set{x_1,x_2}$.
+So (4) must hold.  But then
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
-using Claim 1 and Claim 3 gives
-\[\parens{3\frac{3(1-\epsilon)}{2\epsilon -1} + \frac{1 - \epsilon^2}{\parens{2\epsilon - 1}^2}}\Delta(G) \ge 3k+2,\]
-which is a contradiction when $\epsilon \ge \frac{39 + \sqrt{157}}{62} \approx 0.831$.
-
-So (5) must hold.  But then
-\[2 + \sum_{i \in \irange{5}} k - d(x_i) \le k,\]
 using Claim 1 gives
-\[\frac{15(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 4k+2,\]
-which is a contradiction when $\epsilon \ge \frac{19}{23} \approx 0.826$.
+\[\frac{12(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 3k+2,\]
+which is a contradiction when $\epsilon \ge \frac{5}{6}$.
 \end{claimproof}
 
 \end{proof}

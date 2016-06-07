@@ -423,56 +423,47 @@ If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 
 \begin{thm}
 If $Q$ is a line graph, then
-\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}.\]
+\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
 \end{thm}
 \begin{proof}
 Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
-Let $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\epsilon(\Delta(Q) + 1)}}$. Say $Q =
-L(G)$ for a graph $G$. The minimality of $Q$ implies that $G$ is $k$-edge-critical.
+Let $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}$. Say $Q =
+L(G)$ for a graph $G$. Minimality of $Q$ implies that $G$ is $k$-edge-critical.
 
 \claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
-\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]}
+\[d(x) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)}.\]}
 \begin{claimproof}
 Since $F$ is elementary, we have
 \[2 + k-d(x) + \sum_{v \in V(F-x)} k - d(v) \le k,\]
 so
 \[2 + (|F| - 1)k \le d(x) + \sum_{v \in V(F-x)} d(v).\]
-Using $k \ge \epsilon(\Delta(Q) + 1) \ge \epsilon(d(x) + d(v) - \mu(xv))$ for each $v \in V(F-x)$, we get
-\[2 + \sum_{v \in V(F-x)}\epsilon(d(x) + d(v) - \mu(xv)) \le d(x) + \sum_{v \in V(F-x)} d(v),\]
+Using $6k \ge 5(\Delta(Q) + 1) - 2 \ge 5(d(x) + d(v) - \mu(xv)) - 2$ for each $v \in V(F-x)$, we get
+\[2 + \sum_{v \in V(F-x)}\parens{\frac56(d(x) + d(v) - \mu(xv)) -\frac13} \le d(x) + \sum_{v \in V(F-x)} d(v),\]
 so
-\[2 + \parens{\epsilon|F| - 1 - \epsilon}d(x) \le \sum_{v \in V(F-x)} \epsilon\mu(xv) + \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
+\[12 + \parens{5|F| - 11}d(x) - 2|F| \le \sum_{v \in V(F-x)} 5\mu(xv) + \sum_{v \in V(F-x)} d(v).\]
 Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this implies
-\[2 + \parens{\epsilon|F| - 1 - 2\epsilon}d(x) \le \sum_{v \in V(F-x)} (1-\epsilon)d(v).\]
+\[12 + \parens{5|F| - 16}d(x) - 2|F| \le \sum_{v \in V(F-x)} d(v).\]
 Using $|F| = 4$ gives
-\[d(x) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v).\]
+\[d(x) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)}.\]
 \end{claimproof}
 \bigskip
 
-\claim{1}{If $x \in V(G)$ with $d(x) \ge \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$, then $x$ is special.}
+\claim{1}{If $x \in V(G)$ with $d(x) > \frac34\Delta(G) - 1$, then $x$ is special.}
 
 \begin{claimproof}
 This is immediate from Claim 0, since $d(v)\le \Delta(G)$ for all $v\in V(F-x)$.
 \end{claimproof}
 \bigskip
 
-Note that when $\epsilon=\frac56$, every non-special vertex $x$ has
-$d(x)<\frac34\Delta(G)$.  Since $k\ge \Delta(G)+1$, every non-special vertex $x$ misses
-at least $k-d(x)> k-\frac34\Delta(G)> \frac{k}4$ colors.
-Since $T$ is elementary, $T$ has at most 3 non-special vertices.
-This observation is not needed for the present proof, but suggests how we will
-prove the $\frac56$-conjecture in the next section.
-\bigskip
-
-\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) \ge \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G),\] for at least one $i \in \irange{2}$, then $x_1$ is $x_2$-special or $x_2$ is $x_1$-special.}
+\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) > \frac23\Delta(G) -\frac43,\] for at least one $i \in \irange{2}$, then $x_1$ is $x_2$-special or $x_2$ is $x_1$-special.}
 
 \begin{claimproof}
 Suppose $x_1$ is not $x_2$-special and $x_2$ is not $x_1$-special.  By Claim 0,
 for each $i \in \irange{2}$,
-\[d(x_i) < \frac{1-\epsilon}{2\epsilon -1}\sum_{v \in V(F-x)} d(v) \le
-\frac{1-\epsilon}{2\epsilon -1}\parens{d(x_{3-i}) + 2\Delta(G)},\]
+\[d(x_i) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_{3-i}) + 2\Delta(G)},\]
 Substituting the bound on $d(x_{3-i})$ into that on $d(x_i)$ and simplifying
 gives for each $i \in \irange{2}$,
-\[d(x_i) < \frac{2(1-\epsilon)}{3\epsilon - 2}\Delta(G).\]
+\[d(x_i) \le -\frac43 + \frac23\Delta(G).\]
 \end{claimproof}
 
 \bigskip

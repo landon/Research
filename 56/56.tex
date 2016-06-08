@@ -423,14 +423,13 @@ If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 \end{thm}
 
 \begin{thm}
-If $Q$ is a line graph, then
-\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+If $Q$ is the line graph of $G$, then
+\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
 \end{thm}
 \begin{proof}
 Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
-Let $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}$. Say $Q =
-L(G)$ for a graph $G$. Minimality of $Q$ implies that $G$ is $k$-edge-critical.
-Also, $k \ge \ceil{\chi_f(Q)} \ge \omega(Q) \ge \Delta(G)$.
+Let $k = \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) + 3}{6}}}$. Say $Q =
+L(G)$ for a graph $G$. Minimality of $Q$ implies that $G$ is critical and $\chi(Q) = k+1$ where $k \ge \Delta(G) + 1$.
 
 \bigskip
 
@@ -536,6 +535,22 @@ a contradiction since $\Delta(G) \le k$.
 \end{claimproof}
 
 \end{proof}
+
+
+To take care of the $k = \Delta(G)$ case. The fan equation gives (see the proof in strengthening Brooks paper).
+\begin{lem}\label{CriticalMuBoundOtherWay}
+If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
+\[\chi(Q) \leq \max\left\{\Delta(G), \Delta(Q) + 1 + 2\mu(G) - \Delta(G)\right\}.\]
+\end{lem}
+
+Suppose $k = \Delta(G)$.  Then Lemma \ref{CriticalMuBoundOtherWay} gives
+\[k + 1 = \chi(Q) \le \Delta(Q) + 1 + 2\mu(G) - k,\]
+so
+\[\mu(G) \ge k - \frac{\Delta(Q)}{2}.\]
+Applying Theorem \ref{CriticalMuBound} gives
+\[k+1 = \chi(Q) \le \Delta(Q) + 1 - \frac{k - \frac{\Delta(Q)}{2} - 1}{2},\]
+and hence
+\[k+1 \le \frac56\Delta(Q) + \frac43.\]
 
 \newpage
 

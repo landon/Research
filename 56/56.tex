@@ -128,20 +128,21 @@ is elementary, it suffices to show that if $G$ is $(k+1)$-critical, then there
 exists an edge $e\in E(G)$ and a $k$-coloring $\vph$ of $G-e$ such that some
 maximal Tashkinov tree containing $e$ is strongly closed.  The following
 definition is useful.  
-A vertex $v \in V(G)$ is \emph{special} if every Vizing fan rooted at $v$ (taken over all
+
+A vertex $v \in V(G)$ is \emph{short} if every Vizing fan rooted at $v$ (taken over all
 $k$-colorings of $G-e$, over all edges $e$ incident to $v$) has at most 3 vertices,
-including $v$.
+including $v$.  Otherwise, $v$ is \emph{long}.
 As a warmup, in Section 2 we prove that if $\chi'(G)\ge \Delta(G)+2$ and every
-vertex of $G$ is special, then $G$ is elementary, i.e., $\chi'(G)=\W(G)$.  Next,
+vertex of $G$ is short, then $G$ is elementary, i.e., $\chi'(G)=\W(G)$.  Next,
 we push our methods further, allowing our maximal Tashkinov tree to have at most
-3 non-special vertices.
+3 long vertices.
 
 In Section 3, we consider the %show that 
 $\frac56$-Conjecture.  As a consequence of results in Section 2,
-if $G$ is a minimal counterexample, then every non-special vertex $v$ has
+if $G$ is a minimal counterexample, then every long vertex $v$ has
 $d_G(v)<\frac34\Delta(G)$.  Since every maximal Tashkinov tree $T$ is
-elementary, and every non-special vertex misses more than $\frac{k}4$ colors, we
-conclude that $T$ has at most 3 non-special vertices.  Thus our results from
+elementary, and every long vertex misses more than $\frac{k}4$ colors, we
+conclude that $T$ has at most 3 long vertices.  Thus our results from
 Section 2 apply.  As a consequence, every minimal countexample to the
 $\frac56$-Conjecture is elementary.  To complete the proof of the $\frac56$-conjecture,
 %we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
@@ -251,17 +252,16 @@ Tashkinov tree, a contradiction.
 \end{proof}
 
 
-\section{Special vertices}
-Recall that a vertex $v \in V(G)$ is \emph{special} if every Vizing fan rooted
+\section{Short vertices}
+Recall that a vertex $v \in V(G)$ is \emph{short} if every Vizing fan rooted
 at $v$ (taken over all $k$-colorings of $G-e$, over all edges $e$ incident to
-$v$) has at most 3 vertices, including $v$.
-%TODO: DEFINE SPECIAL.
-Let $\nu(T)$ be the number of non-special vertices in $T$.
+$v$) has at most 3 vertices, including $v$.  Otherwise, $v$ is \emph{long}.
+Let $\nu(T)$ be the number of long vertices in $T$.
 \begin{lem}\label{SpecialPath}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
 Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path
-with edges $e_i = v_iv_{i+1}$ for $1 \le i \le r-1$.  If $v_i$ is special for
+with edges $e_i = v_iv_{i+1}$ for $1 \le i \le r-1$.  If $v_i$ is short for
 all odd $i$, then for any $\tau \in \vphn(v_0)$ there are edges $f_i =
 v_iv_{i+1}$ for $1 \le i \le r-1$ such that $f_i = e_i$ for $i$ even and
 $\vph(f_i) = \tau$ for $i$ odd.
@@ -274,11 +274,11 @@ $i$ odd.  Swap $\alpha$ and $\beta$ on $e_i$ for $1 \le i \le r-3$ and then
 color $v_0v_1$ (call this edge $e_0$) with $\alpha$ and uncolor $e_{r-2}$.  Let
 $\vph'$ be the resulting coloring.  Since $k \ge \Delta(G) + 1$, some color
 other than $\alpha$ is missing at $v_{r-2}$; let $\gamma$ be such a color.  Now 
-$v_{r-1}$ is special since $r-1$ is odd (since $P$ starts and ends with
+$v_{r-1}$ is short since $r-1$ is odd (since $P$ starts and ends with
 $\alpha$), so there is an edge $e = v_{r-1}v_r$ with $\vph'(e) = \gamma$.  
 Swap $\tau$ and $\alpha$ on $e_i$ for $0 \le i \le r-3$ to get a new coloring
 $\vph^*$.  Now $\gamma$ and $\tau$ are both missing at $v_{r-2}$ in $\vph^*$.
-Since $v_{r-1}$ is special, the fan with $v_{r-2}, v_{r-1}, v_r$ and $e$
+Since $v_{r-1}$ is short, the fan with $v_{r-2}, v_{r-1}, v_r$ and $e$
 implies that there is an edge $f_{r-1} = v_{r-1}v_r$ with $\vph^*(f_{r-1}) =
 \tau$.  But we have never recolored $f_{r-1}$, so $\vph(f_{r-1})=\tau$, a
 contradiction.
@@ -286,21 +286,21 @@ contradiction.
 
 \begin{lem}\label{ZeroNonSpecial}
 Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$.  Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  The $P$ contains a non-special vertex. 
+Let $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$.  Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  The $P$ contains a long vertex. 
 In particular, $\nu(T) \ge 1$.
 \label{lem2}
 \end{lem}
 \begin{proof}
-Suppose every vertex of $P$ is special.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
+Suppose every vertex of $P$ is short.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
 there is a $\tau$-edge in $T$ incident to every $v \in V(P - v_0)$. By symmetry, the same is true of every $v \in V(P)$.  Hence $V(P) = V(T)$ contradicting Lemma \ref{FreeColorsLemma}.
 \end{proof}
 
 \begin{thm}\label{AllSpecialImpliesElementary}
-If $G$ is a critical graph in which every vertex is special, then
+If $G$ is a critical graph in which every vertex is short, then
 \[\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}.\]
 \end{thm}
 \begin{proof}
-Suppose $G$ is a critical graph in which every vertex is special and put $k = \chi'(G) - 1$.  Then $k \ge \Delta(G) + 1$.
+Suppose $G$ is a critical graph in which every vertex is short and put $k = \chi'(G) - 1$.  Then $k \ge \Delta(G) + 1$.
 Since $\T(G) \ne \emptyset$, applying Lemma \ref{ZeroNonSpecial}, we conclude that $G$ is elementary.  Hence $\chi'(G) = \ceil{\chi'_f(G)}$, a contradiction.
 \end{proof}
 
@@ -316,7 +316,7 @@ If $G$ is a graph, then
 \begin{proof}
 Suppose not and choose a counterexample $G$ minimizing $\size{G}$; note that $G$ critical. 
 Let $k=\chi'(G)-1$, so $k \ge \ceil{\frac43\dclaw{G}}$. 
-By Theorem \ref{AllSpecialImpliesElementary}, $G$ has a non-special vertex $x$.
+By Theorem \ref{AllSpecialImpliesElementary}, $G$ has a long vertex $x$.
 Choose $xy_1 \in E(G)$ and a $k$-edge-coloring $\vph$ of $G - xy_1$ such that
 $\vph$ has a fan $F$ of length $3$ rooted at $x$ with leaves $y_1, y_2, y_3$.  
 Since $V(F)$ is elementary, 
@@ -329,14 +329,14 @@ This gives the contradiction
 
 TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
 
-\section{Properties of non-special vertices}
+\section{Properties of long vertices}
 For a path $Q$ and $x,y \in V(Q)$, let $d_Q(x,y) = \ell(Q)$.
 
 \begin{lem}\label{TauEscape}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
 If $\tau \in \vphn(x)$ for some $x \in V(C)$ and there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(G) \setminus V(C)$, then $C$ has a 
-subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
+subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and long endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
 Moreover, there are no $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.
 \end{lem}
 \begin{proof}
@@ -345,16 +345,19 @@ TODO: FILL THIS SPACE WITH PROOF.
 
 \section{Thin graphs}
 Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-For vertices $x,y \in V(G)$, we say that $x$ is \emph{$y$-special} if every Vizing fan rooted at $x$, with respect to any $k$-edge-coloring of $G-xy$, has at most 3 vertices.
-We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all non-special $x,y \in V(G)$.
+For vertices $x \in V(G)$ and $S \subseteq V(G) \setminus \set{x}$, we say that $x$ is \emph{$S$-short} if 
+every Vizing fan $F$ rooted at $x$ with $S \subseteq V(F)$, has $|F| \le 3$ (with respect to any $k$-edge-coloring of $G-xy$).
+Otherwise, $x$ is \emph{$S$-long}.  For brevity, when $S = \set{y}$, we may write $y$-short instead of $\set{y}$-short.
+
+We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all long $x,y \in V(G)$.
 
 \begin{lem}\label{NonSpecialsInThinAreAtEvenDistance}
 Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
 Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
-If $Q$ is a subpath of $C$ with non-special end vertices and all special internal vertices such that $2 \le \ell(Q) \le \ell(C) - 2$, then $\ell(Q)$ is even.
+If $Q$ is a subpath of $C$ with long end vertices and all short internal vertices such that $2 \le \ell(Q) \le \ell(C) - 2$, then $\ell(Q)$ is even.
 \end{lem}
 \begin{proof}
-Suppose to the contrary that we have a subpath $Q$ of $C$ with non-special end vertices and all special internal vertices, such that $\ell(Q) \le \ell(C) - 2$ and $\ell(Q)$ is odd.  Let $x$ and $y$ be the end vertices of $Q$.
+Suppose to the contrary that we have a subpath $Q$ of $C$ with long end vertices and all short internal vertices, such that $\ell(Q) \le \ell(C) - 2$ and $\ell(Q)$ is odd.  Let $x$ and $y$ be the end vertices of $Q$.
 Say $C = v_1v_2\cdots v_rv_0v_1$.  By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_1$ and $y = v_a$ where $a \ge 4$ is even.
 
 Apply Lemma \ref{SpecialPath} twice, to show that $\mu(v_2v_3) \ge 2k - d(v_1) - d(v_a)$, violating $k$-thinness.
@@ -362,8 +365,8 @@ Apply Lemma \ref{SpecialPath} twice, to show that $\mu(v_2v_3) \ge 2k - d(v_1) -
 
 \begin{lem}\label{ThreeNonSpecialOnCycle}
 Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  If $C$ contains exactly 3 non-special vertices,
-then $C = xyAzBx$ where $A$ and $B$ are paths of even length and $x,y,z$ are all non-special.  Moreover, $x$ is $y$-non-special and $y$ is $x$-non-special.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  If $C$ contains exactly 3 long vertices,
+then $C = xyAzBx$ where $A$ and $B$ are paths of even length and $x,y,z$ are all long.  Moreover, $x$ is $y$-long and $y$ is $x$-long.
 \end{lem}
 \begin{proof}
 Immediate from Lemma \ref{NonSpecialsInThinAreAtEvenDistance} and Lemma \ref{SpecialPath}.
@@ -371,38 +374,36 @@ Immediate from Lemma \ref{NonSpecialsInThinAreAtEvenDistance} and Lemma \ref{Spe
 
 \begin{lem}\label{ConsecutiveNonSpecials}
 Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive non-special vertices on $P_{v_1}(\alpha, \beta) + v_0v_1$.
+Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive long vertices on $P_{v_1}(\alpha, \beta) + v_0v_1$.
 \end{lem}
 \begin{proof}
 Put $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
-By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and non-special endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
-Let $Q'$ be the subpath of $Q$ with endpoints $z_1$ and $z_2$ that contains $y$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum length subpath of $Q'$ with non-special ends.  
+By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and long endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
+Let $Q'$ be the subpath of $Q$ with endpoints $z_1$ and $z_2$ that contains $y$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum length subpath of $Q'$ with long ends.  
 Then $\ell(Q^*) = 1$ by Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, as desired.
 \end{proof}
 
-We say that $x$ is \emph{$\set{y,z}$-non-special} if there is a fan rooted at $x$ that contains $y$ and $z$.  TODO: MERGE THIS DEFINITION WITH SPECIAL.
-
 \begin{lem}\label{MasterHelper}
 Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$ with $\nu(T) \le 3$. Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $C = P_{v_1}(\alpha, \beta) + v_0v_1$ contains as many non-special vertices as possible.  
-Then $C$ contains non-special vertices $z_1,z_2,z_3$ such that either 
+Let $(T, v_0v_1, \vph) \in \T(G)$ with $\nu(T) \le 3$.   Then $T$ contains long vertices $z_1,z_2,z_3$ such that either 
 \begin{itemize}
-\item $z_1$ is $\set{z_2,z_3}$-special and $z_2$ is $z_1$-special; or
-\item $z_i$ is $z_{3-i}$-non-special and $z_{i+1}$ is $z_{4-i}$-non-special for $i \in \irange{2}$.
+\item $z_1$ is $\set{z_2,z_3}$-long and $z_2$ is $z_1$-long; or
+\item $z_i$ is $z_{3-i}$-long and $z_{i+1}$ is $z_{4-i}$-long for $i \in \irange{2}$.
 \end{itemize}
 \end{lem}
 \begin{proof}
+Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $C = P_{v_1}(\alpha, \beta) + v_0v_1$ contains as many long vertices as possible. 
 By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
 
-First, suppose $C$ contains only 2 non-special vertices, $z_1$ and $z_2$.  By Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
+First, suppose $C$ contains only 2 long vertices, $z_1$ and $z_2$.  By Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
 By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_2$ and there are no 
 $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.  
 
 By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$. Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  Since $z_1$ and $z_2$ are not consecutive on $C'$ and
-$C'$ contains no other non-special vertices by the maximality condition on $C$, Lemma \ref{ConsecutiveNonSpecials} gives a contradiction.
+$C'$ contains no other long vertices by the maximality condition on $C$, Lemma \ref{ConsecutiveNonSpecials} gives a contradiction.
 
-So, $C$ contains exactly 3 non-special vertices, $z_1$, $z_2$ and $z_3$.  By Lemma \ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths of even length.  Also,
-$z_1$ is $z_2$-special and $z_2$ is $z_1$-special.  
+So, $C$ contains exactly 3 long vertices, $z_1$, $z_2$ and $z_3$.  By Lemma \ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths of even length.  Also,
+$z_1$ is $z_2$-long and $z_2$ is $z_1$-long.  
 
 By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_3$ and there are no 
 $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \set{1,3}$ (it could happen that $z_3$ is bypassed and the endpoints are $z_1, z_2$, but then we get a contradiction as in the previous case).
@@ -410,10 +411,10 @@ By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$.
 Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  We know that $C'$ contains $z_1$ and $z_3$ and that $z_1$ and $z_2$ are not consecutive on $C'$.  By Lemma \ref{ConsecutiveNonSpecials}, either $z_1$ and $z_3$ are consecutive on 
 $C'$ or $z_2$ and $z_3$ are consecutive on $Q'$.
 
-Suppose $z_2$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  Then applying Lemma \ref{NonSpecialsInThinAreAtEvenDistance} shows that $z_2$ is $z_3$-special and $z_3$ is $z_2$-special, so we win.
+Suppose $z_2$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  Then applying Lemma \ref{NonSpecialsInThinAreAtEvenDistance} shows that $z_2$ is $z_3$-long and $z_3$ is $z_2$-long, so we win.
 
 So it must be that $z_1$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  If $z_1 = v_1$, we have a fan with an $\alpha$-edge from $z_1$ to $z_2$ and a $\tau$ edge from $z_1$ to $z_3$, so 
-$z_1$ is $\set{z_2,z_3}$-special.  When $z_1 \ne v_1$, we get the same thing, but have to shift the coloring over to $z_1$ like in the proof of Lemma \ref{SpecialPath} using another missing color $\gamma$ at $z_1$.
+$z_1$ is $\set{z_2,z_3}$-long.  When $z_1 \ne v_1$, we get the same thing, but have to shift the coloring over to $z_1$ like in the proof of Lemma \ref{SpecialPath} using another missing color $\gamma$ at $z_1$.
 \end{proof}
 
 \begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
@@ -429,8 +430,11 @@ If $Q$ is a line graph, then
 Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
 Let $k = \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}$. Say $Q =
 L(G)$ for a graph $G$. Minimality of $Q$ implies that $G$ is $k$-edge-critical.
+Also, $k \ge \ceil{\chi_f(Q)} \ge \omega(Q) \ge \Delta(G)$.
 
-\claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| = 4$, then
+\bigskip
+
+\claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| \ge 4$, then
 \[d(x) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)}.\]}
 \begin{claimproof}
 Since $F$ is elementary, we have
@@ -448,18 +452,18 @@ Using $|F| = 4$ gives
 \end{claimproof}
 \bigskip
 
-\claim{1}{If $x \in V(G)$ with $d(x) > \frac34\Delta(G) - 1$, then $x$ is special.}
+\claim{1}{If $x \in V(G)$ is long, then $d(x) \le \frac34\Delta(G) - 1$.}
 
 \begin{claimproof}
 This is immediate from Claim 0, since $d(v)\le \Delta(G)$ for all $v\in V(F-x)$.
 \end{claimproof}
 \bigskip
 
-\claim{2}{If $x_1x_2 \in E(G)$ with \[d(x_i) > \frac23\Delta(G) -\frac43,\] for at least one $i \in \irange{2}$, then $x_1$ is $x_2$-special or $x_2$ is $x_1$-special.}
+\claim{2}{If $x_1x_2 \in E(G)$ such that $x_i$ is $x_{3-i}$-long for $i \in \irange{2}$, then
+\[d(x_i) \le \frac23\Delta(G) -\frac43 \text{ for $i \in \irange{2}$.}\]}
 
 \begin{claimproof}
-Suppose $x_1$ is not $x_2$-special and $x_2$ is not $x_1$-special.  By Claim 0,
-for each $i \in \irange{2}$,
+By Claim 0, for each $i \in \irange{2}$,
 \[d(x_i) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_{3-i}) + 2\Delta(G)},\]
 Substituting the bound on $d(x_{3-i})$ into that on $d(x_i)$ and simplifying
 gives for each $i \in \irange{2}$,
@@ -468,44 +472,67 @@ gives for each $i \in \irange{2}$,
 
 \bigskip
 
-\claim{3}{The theorem is true.}
+\claim{3}{If $x_1x_2, x_1x_3 \in E(G)$ such that $x_1$ is $\set{x_2,x_3}$-long, $x_2$ is $x_1$-long and $x_3$ is long, then 
+\[d(x_1) \le -\frac85 + \frac35\Delta(G),\]
+\[d(x_2) \le -\frac75 + \frac{13}{20}\Delta(G).\]}
+
+\begin{claimproof}
+By Claim 0, we have
+\[d(x_1) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_2) + d(x_3) + \Delta(G)},\]
+\[d(x_2) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_1) + 2\Delta(G)},\]
+which together imply
+\[d(x_1) \le -\frac43 + \frac25\Delta(G) + \frac{4}{15}d(x_3).\]
+Since $x_3$ is long, using Claim 1, we get
+\[d(x_1) \le -\frac85 + \frac35\Delta(G),\]
+and hence
+\[d(x_2) \le -\frac75 + \frac{13}{20}\Delta(G).\]
+\end{claimproof}
+\bigskip
+
+\claim{4}{The theorem is true.}
 
 \begin{claimproof}
 Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemma \ref{MasterHelper}, one of the following holds:
 \begin{enumerate}
 \item $G$ is elementary; or
 \item $G$ is not thin; or
-\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-non-special, $x_2$ is $x_1$-non-special, $x_2$ is $x_3$-non-special and $x_3$ is $x_2$-non-special; or
-\item $\nu(T) = 3$ and $E(T)$ contains non-special $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $\set{x_2,x_3}$-non-special and $x_2$ is $x_1$-non-special; or
-\item $V(T)$ contains four non-special vertices $x_1, x_2, x_3, x_4$.
+\item $\nu(T) = 3$ and $E(T)$ contains long $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-long, $x_2$ is $x_1$-long, $x_2$ is $x_3$-long and $x_3$ is $x_2$-long; or
+\item $\nu(T) = 3$ and $E(T)$ contains long $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $\set{x_2,x_3}$-long and $x_2$ is $x_1$-long; or
+\item $V(T)$ contains four long vertices $x_1, x_2, x_3, x_4$.
 \end{enumerate}
 
 If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
 
-If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k - 2\frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G)$.  Hence Theorem \ref{CriticalMuBound} gives
-\[k + 1 \le \Delta(Q) + 1 - k + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G) + \frac12,\]
+If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k - \frac32\Delta(G) + 2$.  Hence Theorem \ref{CriticalMuBound} gives
+\[k + 1 \le \Delta(Q) + 1 - k + \frac34\Delta(G) - 1,\]
 so
-\[2(k + 1) \le \Delta(Q) + \frac52 + \frac{3(1-\epsilon)}{2\epsilon -1}\Delta(G).\]
+\[2(k + 1) \le \Delta(Q) + 1 + \frac34\Delta(G).\]
 
-Since $k \ge \Delta(G) + 1$, this gives
+Since $\Delta(G) \le k$, this gives
 
-\[k + 1 < \frac{\Delta(Q) + \frac52}{2 - \frac{3(1-\epsilon)}{2\epsilon -1}},\]
-which is a contradiction when $\epsilon > \frac45$.
+\[k + 1 \le \frac45(\Delta(Q) + 1) - \frac35 \le k,\]
+a contradiction.
 
 Suppose (3) holds.  So
 \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
 using Claim 2, this gives
-\[3\parens{\frac{2(1-\epsilon)}{3\epsilon - 2}}\Delta(G) \ge 2k+2,\]
-which is a contradiction when $\epsilon \ge \frac56$.
+\[3\parens{\frac23\Delta(G) -\frac43} \ge 2k+2,\]
+a contradiction since $\Delta(G) \le k$.
 
-Suppose (4) holds.  Doing the bounding like in the proof of Claim 2 gets a contradiction when $\epsilon \ge \frac56$.
+Suppose (4) holds.  So
+\[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
+using Claims 1 and 3, this gives
+\[-\parens{\frac85 + \frac75 + 1} + \parens{\frac35 + \frac{13}{20} + \frac34}\Delta(G)\ge 2k+2,\]
+which is
+\[-4 + 2\Delta(G) \ge 2k+2,\]
+a contradiction since $\Delta(G) \le k$.
 
 
 So (5) must hold.  But then
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
 using Claim 1 gives
-\[\frac{12(1-\epsilon)}{2\epsilon -1}\Delta(G) \ge 3k+2,\]
-which is a contradiction when $\epsilon \ge \frac{5}{6}$.
+\[4\parens{\frac34\Delta(G) - 1} \ge 3k+2,\]
+a contradiction since $\Delta(G) \le k$.
 \end{claimproof}
 
 \end{proof}

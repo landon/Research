@@ -125,7 +125,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-		This short note proves that every incomplete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{k^2-2k+2}$.  This improves the best known bound for $k = 4,5,6$.
+		This short note proves that every non-complete $k$-list-critical graph has average degree at least $k-1 + \frac{k-3}{k^2-2k+2}$.  This improves the best known bound for $k = 4,5,6$.
 		The same bound holds for online $k$-list-critical graphs.
 \end{abstract}
 
@@ -135,7 +135,7 @@ proper subgraph of $G$ is $(k-1)$-choosable.  For further definitions and notati
 Table \ref{TheTable} shows some history of lower bounds on the average degree of $k$-list-critical graphs.
 
 \begin{MainTheorem}
-	Every incomplete $k$-list-critical graph has average degree at least \[k-1 + \frac{k-3}{k^2-2k+2}.\]
+	Every non-complete $k$-list-critical graph has average degree at least \[k-1 + \frac{k-3}{k^2-2k+2}.\]
 \end{MainTheorem}
 
 Main Theorem gives a lower bound of $3 + \frac{1}{10}$ for $4$-list-critical graphs. This is the first improvement over Gallai's bound of $3 + \frac{1}{13}$. 
@@ -192,7 +192,7 @@ our proof does not work for k-Alon-Tarsi-critical graphs.  Any improvement over 
 The connected graphs in which each block is a complete graph
 or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  
 The same is true for $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability}.  For a graph $T$ and $k \in \IN$, let $\beta_k(T)$ be the independence number of the subgraph of $T$ 
-induced on the vertices of degree $k-1$.  When $k$ is defined in the context, put $\beta(T) 
+induced on the vertices of degree $k-1$ in $T$.  When $k$ is defined in the context, put $\beta(T) 
 \DefinedAs \beta_k(T)$.  
 
 \begin{lem}\label{BetaaaBound}
@@ -236,7 +236,8 @@ By Lemma \ref{BetaaaBound},
 	\beta(\L) \ge \size{\HH} + \frac{k}{2}\card{\L} - \size{G}.
 	\label{BetaBound}
 	\end{equation}
-	Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$. Then
+	Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$.   Since the vertices in $\L$ with $k-1$ neighbors in $\L$ have no neighbors in $\HH$,
+	
 	\begin{equation*}
 		\mic(G) \ge M + (k-1)\beta(\L).
 	\end{equation*}
@@ -287,7 +288,7 @@ The right side of equation (\ref{KFC}) in the above proof can be improved to $k\
 If these $K_2$'s could be handled, the average degree bound would improve to $k-1 + \frac{k-3}{(k-1)^2}$.  
 
 \begin{TheConjecture}
-Every incomplete (online) $k$-list-critical graph has average degree at least \[k-1 + \frac{k-3}{(k-1)^2}.\]
+Every non-complete (online) $k$-list-critical graph has average degree at least \[k-1 + \frac{k-3}{(k-1)^2}.\]
 \end{TheConjecture}
 
 \bibliographystyle{amsplain}

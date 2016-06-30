@@ -24,6 +24,10 @@
 \newreptheorem{lem}{Lemma}
 \newtheorem{lemma}[thm]{Lemma}
 \newtheorem*{lemmaA}{Tashkinov's Lemma}
+\newtheorem*{PEL}{Parallel Edge Lemma}
+\newtheorem*{GS}{Goldberg--Seymour Conjecture}
+\newtheorem*{main}{Theorem 16}
+\newtheorem*{main2}{Theorem 13}
 \newreptheorem{lemma}{Lemma}
 \newtheorem{conj}[thm]{Conjecture}
 \newreptheorem{conj}{Conjecture}
@@ -47,6 +51,7 @@
 \newcommand{\IN}{\mathbb{N}}
 \newcommand{\IR}{\mathbb{R}}
 \newcommand{\G}{\fancy{G}}
+\newcommand{\B}{\fancy{B}}
 \newcommand{\LB}{\mathcal{L}_B}
 \newcommand{\col}{{\textrm{col}}}
 \newcommand{\ch}{{\textrm{ch}}}
@@ -91,71 +96,111 @@
 \newcommand{\claim}[2]{{\noindent\bf Claim #1.}~{\it #2}~~}
 \newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}{\leavevmode\unskip\penalty9999
 \hbox{}\nobreak\hfill\quad\hbox{$\qed$}}
+%
+%  If the proof ends with a displayed equation, use \aftermath just
+%  before \end{proof} to put the halmos in the ``right'' place.  This
+%  may not work near page boundaries. 
+%
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
 
 \begin{document}
 \section{Overview}
 
-For a multigraph $G$, we clearly have $\chi'(G)\ge
-\ceil{|E(G)|/\floor{|V(G)|/2}}$.  Likewise, the same bound holds for any
-subgraph $H$.  Thus, 
-The biggest open problem in edge-coloring is the Goldberg--Seymour conjecture.
-Over the past two decades, the main tool for attacking this problem has become
-Tashkinov trees, a vast generalization of Vizing fans and Kierstead paths.
-The second author proved that if $G$ is a line graph, then $\chi(G)\le
-\max\{\omega(G),\frac{7\Delta(G)+10}{8}\}$.  In the same paper, he conjectured
+For every multigraph $G$, we have $\chi'(G)\ge
+\ceil{\frac{|E(G)|}{\floor{|V(G)|/2}}}$, since each color class has size at most
+$\floor{\frac{|V(G)|}2}$.  Likewise, the same bound holds for any subgraph $H$.  
+Thus, let $\W(G)=\max_{H\subseteq G}\ceil{\frac{|E(H)|}{\floor{|V(H)|/2}}}$
+(over all subgraphs $H$ with at least two vertices). Now 
+clearly $\chi'(G)\ge \W(G)$ for every multigraph $G$.  Goldberg~\cite{} and
+Seymour~\cite{} each conjectured that this lower bound holds with equality,
+whenever $\chi'(G)>\Delta(G)+1$.
+\begin{GS}
+When $\W(G)$ %\max_{H\subseteq G}\ceil{\frac{|E(H)|}{\floor{|V(H)|/2}}}$ 
+is as above, 
+every multigraph $G$ satisfies
+\[
+\chi'(G)\le\max\{\W(G), \Delta(G)+1\}.
+\]
+\end{GS}
+The Goldberg--Seymour conjecture is the major open problem in the area of
+edge-coloring multigraphs.
+%The biggest open problem in edge-coloring is 
+%Over the past two decades, the main tool for attacking this problem has become
+%Tashkinov trees, a vast generalization of Vizing fans and Kierstead paths.
+The second author showed~\cite{rabern2011strengthening} that $\chi(G)\le
+\max\{\omega(G), \frac{7\Delta(G)+10}{8}\}$  for every line graph $G$.
+In the same paper, he conjectured
 that $\chi(G)\le \max\{\omega(G),\frac{5\Delta(G)+8}{6}\}$. This conjecture is best
 possible, as shown by replacing each edge in a 5-cycle by $k$ parallel edges,
 and taking the line graph.
-We call the latter inequality the $\frac56$-Conjecture, and in this paper we prove
-it.  Along the way, we develop more general techniques and results that will
-likely be of independent interest, due to their use in approaching the
-Goldberg--Seymour conjecture.
+%We call the latter inequality the $\frac56$-Conjecture, and 
+In this paper we prove the latter inequality.  Along the way, we develop
+more general techniques and results that will likely be of independent
+interest, due to their use in approaching the Goldberg--Seymour conjecture.
 
-A graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$; such graphs satisfy the
-Goldberg--Seymour Conjecture.  
-%(We begin by proving that every minimal counterexample to the
-%$\frac56$-Conjecture is elementary.  In Section 3, we conclude
-%by also proving that every elementary graph satisfies the $\frac56$-conjecture.)  
-A
-\emph{defective color}
-for a Tashkinov tree $T$ is a color used on more than one edge from $V(T)$ to
-$V(G)-V(T)$; a Tashkinov tree is \emph{strongly closed} if it has no defective
-color.  Andersen~[] and Goldberg~[] showed that if $G$ is critical, then $G$ is
-elementary if there exists $e\in E(G)$ and $X\subseteq V(G)$ and a
-$k$-edge-coloring $\vph$ of $G-e$ such that $X$ contains the endpoints of $e$
-and $X$ is elementary and strongly closed w.r.t.~$\vph$.  Thus, to show that $G$
-is elementary, it suffices to show that if $G$ is $(k+1)$-critical, then there
-exists an edge $e\in E(G)$ and a $k$-coloring $\vph$ of $G-e$ such that some
-maximal Tashkinov tree containing $e$ is strongly closed.  The following
-definition is useful.  
+The main result of this paper is the following theorem.
+\begin{main}[$\frac56$-Theorem]
+If $Q$ the line graph of a multigraph $G$, then 
+we have $\chi(Q)\le \max\{\omega(Q),\frac{5\Delta(Q)+8}{6}\}$. 
+\end{main}
 
-A vertex $v \in V(G)$ is \emph{short} if every Vizing fan rooted at $v$ (taken over all
-$k$-colorings of $G-e$, over all edges $e$ incident to $v$) has at most 3 vertices,
-including $v$.  Otherwise, $v$ is \emph{long}.
-As a warmup, in Section 2 we prove that if $\chi'(G)\ge \Delta(G)+2$ and every
-vertex of $G$ is short, then $G$ is elementary, i.e., $\chi'(G)=\W(G)$.  Next,
-we push our methods further, allowing our maximal Tashkinov tree to have at most
-3 long vertices.
-
-In Section 3, we consider the %show that 
-$\frac56$-Conjecture.  As a consequence of results in Section 2,
-if $G$ is a minimal counterexample, then every long vertex $v$ has
-$d_G(v)<\frac34\Delta(G)$.  Since every maximal Tashkinov tree $T$ is
-elementary, and every long vertex misses more than $\frac{k}4$ colors, we
-conclude that $T$ has at most 3 long vertices.  Thus our results from
-Section 2 apply.  As a consequence, every minimal countexample to the
-$\frac56$-Conjecture is elementary.  To complete the proof of the $\frac56$-conjecture,
-%we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
-we show for each graph $G$ that if $\chi'(G)=\W(G)$, then
-$\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
+Most of our work goes toward proving the following
+intermediate result, in Section~\ref{sec:thin}.
+\begin{main2}[Weak $\frac56$-Theorem]
+If $Q$ the line graph of a multigraph $G$, then 
+$\chi(Q)\le \max\{\W(G),\Delta(G)+1,\frac{5\Delta(Q)+8}{6}\}$. 
+\end{main2}
+Finally, in Section~\ref{sec:56} we show that the Weak $\frac56$-Theorem does indeed imply
+the $\frac56$-Theorem.
 
 
-Graphs can have multiple edges.
+%A graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$; such graphs satisfy the
+%Goldberg--Seymour Conjecture.  
+%%(We begin by proving that every minimal counterexample to the
+%%$\frac56$-Conjecture is elementary.  In Section 3, we conclude
+%%by also proving that every elementary graph satisfies the $\frac56$-conjecture.)  
+%A
+%\emph{defective color}
+%for a Tashkinov tree $T$ is a color used on more than one edge from $V(T)$ to
+%$V(G)-V(T)$; a Tashkinov tree is \emph{strongly closed} if it has no defective
+%color.  Andersen~[] and Goldberg~[] showed that if $G$ is critical, then $G$ is
+%elementary if there exists $e\in E(G)$ and $X\subseteq V(G)$ and a
+%$k$-edge-coloring $\vph$ of $G-e$ such that $X$ contains the endpoints of $e$
+%and $X$ is elementary and strongly closed w.r.t.~$\vph$.  Thus, to show that $G$
+%is elementary, it suffices to show that if $G$ is $(k+1)$-critical, then there
+%exists an edge $e\in E(G)$ and a $k$-coloring $\vph$ of $G-e$ such that some
+%maximal Tashkinov tree containing $e$ is strongly closed.  The following
+%definition is useful.  
+%
+%A vertex $v \in V(G)$ is \emph{short} if every Vizing fan rooted at $v$ (taken over all
+%$k$-colorings of $G-e$, over all edges $e$ incident to $v$) has at most 3 vertices,
+%including $v$.  Otherwise, $v$ is \emph{long}.
+%As a warmup, in Section 2 we prove that if $\chi'(G)\ge \Delta(G)+2$ and every
+%vertex of $G$ is short, then $G$ is elementary, i.e., $\chi'(G)=\W(G)$.  Next,
+%we push our methods further, allowing our maximal Tashkinov tree to have at most
+%3 long vertices.
+%
+%In Section 3, we consider the %show that 
+%$\frac56$-Conjecture.  As a consequence of results in Section 2,
+%if $G$ is a minimal counterexample, then every long vertex $v$ has
+%$d_G(v)<\frac34\Delta(G)$.  Since every maximal Tashkinov tree $T$ is
+%elementary, and every long vertex misses more than $\frac{k}4$ colors, we
+%conclude that $T$ has at most 3 long vertices.  Thus our results from
+%Section 2 apply.  As a consequence, every minimal countexample to the
+%$\frac56$-Conjecture is elementary.  To complete the proof of the $\frac56$-conjecture,
+%%we prove that it follows from the Goldberg--Seymour Conjecture.  More precisely,
+%we show for each graph $G$ that if $\chi'(G)=\W(G)$, then
+%$\chi'(G)\le\max\{\omega(G),\frac{5\Delta(G)+8}6\}$.
+%
+%
 
 \section{Tashkinov Trees}
-Recall that a graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$, as defined
-above.  We also use the following notation.  
+Throughout this paper, graphs can have multiple edges unless stated otherwise.
+A graph $G$ is \emph{elementary} if $\chi'(G)=\W(G)$. 
+%as defined above.  
+%We also use the following notation.  
 Let $[k]$ denote $\{1,\ldots,k\}$.
+For a path or cycle $Q$, let \emph{$\ell(Q)$} denote the length of $Q$.
 A graph $G$ is \emph{critical} if $\chi'(G-e) < \chi'(G)$ for all $e \in E(G)$. 
 For a graph $G$ and a partial $k$-edge-coloring $\varphi$, for each vertex $v\in
 V(G)$, let $\varphi(v)$ denote the set of colors used in $\varphi$ on edges
@@ -163,7 +208,8 @@ incident to $v$.  Let $\vphn(v)=[k]\setminus\varphi(v)$.  A color $c$ is
 \emph{seen} by a vertex $v$ if $c\in \varphi(v)$ and $c$ is \emph{missed} by $v$
 if $c\in\vphn(v)$.
 Given a partial $k$-edge-coloring $\varphi$, a set $W\subseteq V(G)$ is
-\emph{elementary} (w.r.t.~$\varphi$) if each color in $[k]$ is
+\emph{elementary} with respect to $\varphi$ (henceforth,
+\emph{w.r.t.~$\varphi$}) if each color in $[k]$ is
 missed by at most one vertex of $W$.  More formally, $\vphn(u)\cap
 \vphn(v)=\emptyset$ for all distinct $u,v\in W$.
 A \emph{defective color} for a set $X\subseteq V(G)$ (w.r.t.~$\varphi$) is a color
@@ -171,7 +217,8 @@ used on more than one edge from $X$ to $V(G) \setminus X$.
 A set $X$ is \emph{strongly closed} w.r.t.~$\varphi$ if $X$ has no 
 defective color.
 Elementary and strongly closed sets are of particular interest because of the
-following theorem, proved implicitly by Andersen~\cite{} and Goldberg~\cite{}.
+following theorem, proved implicitly by Andersen~\cite{} and Goldberg~\cite{};
+see also~\cite[Theorem 1.4]{SSTF}.
 %As we will see shortly, there is a strong relationship between elementary sets
 %and elementary graphs.
 % 
@@ -187,7 +234,9 @@ that $X$ is both elementary and strongly closed w.r.t.~$\varphi$.
 A \emph{Tashkinov tree} w.r.t.~$\varphi$ is a sequence $v_0, e_1, v_1,
 e_2,\ldots, v_{t-1},e_t,v_t$ such that all $v_i$ are distinct, $e_i=v_jv_i$ and
 $\vph(e_i)\in \vphn(v_\ell)$ for some $j$ and $\ell$ with $0\le j< i$ and $0\le
-\ell < i$.  Tashkinov trees are of interest because of the following lemma. 
+\ell < i$.  
+A \emph{Vizing fan} (or simply \emph{fan}) is a Tashkinov tree that induces a
+star.  Tashkinov trees are of interest because of the following lemma. 
 
 \begin{lemmaA}%[Tashkinov]
 Let $G$ be a graph with $\chi'(G)=k+1$, for some integer $k\ge \Delta(G)+1$ and
@@ -210,111 +259,181 @@ starting with $e$ may not be unique.  However, if $T_1$ and $T_2$ are both such
 trees, then it is easy to show that $V(T_1)\subseteq V(T_2)$; by symmetry, also
 $V(T_2)\subseteq V(T_1)$, so $V(T_1)=V(T_2)$.
 %
-Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$. 
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for some integer $k \ge \Delta(G) + 1$. 
 Let $\varphi$ be a $k$-edge-coloring of $G - e_0$ for some $e_0 \in E(G)$.  
 %For each vertex $v\in V(G)$, let $\varphi(v)$ be the set of colors used in
 %$\vph$ on edges incident to $v$ and let $\vphn(v)=[k]\setminus \vph(v)$. 
 For $v \in V(G)$ and colors $\alpha, \beta$, let $P_v(\alpha, \beta)$ be the
 maximal connected subgraph of $G$ that contains $v$ and is induced by edges with color
 $\alpha$ or $\beta$.  So $P_v(\alpha, \beta)$ is a path or a cycle.
+For a $k$-edge-coloring $\vph$ of $G-v_0v_1$, we often let
+$P=P_{v_1}(\alpha,\beta)$ for some $\alpha\in\vphn(v_0)$ and
+$\beta\in\vphn(v_1)$.  
+Clearly $P$ must end at $v_0$ (or we can swap colors $\alpha$ and $\beta$ on
+$P$ and color $v_0v_1$ with $\alpha$), so let $v_1,\ldots,v_r,v_0$ denote the
+vertices of $P$ in order. 
+To \emph{rotate the $\alpha,\beta$ coloring on $P\cup\{v_0v_1\}$ by one}, we
+uncolor $v_1v_2$ and use its color on $v_0v_1$.  To \emph{rotate the
+$\alpha,\beta$ coloring on $P\cup\{v_0v_1\}$ by $j$}, we rotate the
+$\alpha,\beta$ coloring by one $j$ times in succession.
+(When we do not specify $j$, we allow $j$ to take any value from $1$ to
+$r$.)  
 
 %TODO: NEED DEFINITION OF ELEMENTARY SET, ELEMENTARY GRAPH.  NEED TO STATE LEMMA THAT TASHKINOV TREES ARE ELEMENTARY, ALSO THAT MAXIMUM SIZE TASHKINOV TREE WITHOUT DEFECTIVE COLORS IMPLIES G IS ELEMENTARY.
 
 \begin{lem}\label{FreeColorsLemma}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer
-$k \ge \Delta(G) + 1$.  For every $v_0v_1 \in E(G)$, $k$-edge-coloring $\vph$ of $G-v_0v_1$ and for all $\alpha \in \vphn(v_0)$ and $\beta \in
-\vphn(v_1)$ we have $|P_{v_1}(\alpha, \beta)| < t(G)$.
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for some integer
+$k \ge \Delta(G) + 1$.  For every $v_0v_1 \in E(G)$, $k$-edge-coloring $\vph$
+of $G-v_0v_1$, $\alpha \in \vphn(v_0)$, and $\beta \in
+\vphn(v_1)$, we have $|P_{v_1}(\alpha, \beta)| < t(G)$.
 \end{lem}
 \begin{proof}
-Suppose the lemma is false and choose $v_0v_1 \in E(G)$, a $k$-edge-coloring $\vph$ of $G-v_0v_1$, $\alpha \in \vphn(v_0)$ and $\beta \in
-\vphn(v_1)$ such that $|P_{v_1}(\alpha, \beta)| \ge t(G)$.  Put $P = P_{v_1}(\alpha, \beta)$.  
-Clearly $P$ must end at $v_0$ (or we can swap colors $\alpha$ and $\beta$ on $P$ and color $v_0v_1$), so let
-$v_1,\ldots,v_r,v_0$ denote the vertices of $P$ in order. Let $(T, v_0v_1, \vph)$ be a Tashkinov tree that begins with edges
-$v_0v_1, v_1v_2, \ldots, v_{r-1}v_r$.  Then $V(T)=V(P)$ since $t(G) \ge |T| \ge |P| \ge t(G)$.
-Since $G$ is non-elementary, Theorem~\ref{elementary} implies that $V(T)$ is not
-strongly closed, so $T$ has a defective color $\delta$ with respect to $\vph$.
-Choose $\tau\in \vphn(v_2)$. Let $Q = P_{v_2}(\tau, \delta)$.
-Since $T$ is maximal, $\delta$ is not missing at any vertex of $T$;
+Suppose the lemma is false and choose $v_0v_1 \in E(G)$, a $k$-edge-coloring
+$\vph$ of $G-v_0v_1$, $\alpha \in \vphn(v_0)$, and $\beta \in \vphn(v_1)$, such
+that $|P_{v_1}(\alpha, \beta)| \ge t(G)$.  Let $P = P_{v_1}(\alpha, \beta)$.  
+Let $(T, v_0v_1, \vph)$ be a Tashkinov tree that
+begins with edges $v_0v_1, v_1v_2, \ldots, v_{r-1}v_r$.  Now $V(T)=V(P)$ since
+$t(G) \ge |T| \ge |P| \ge t(G)$.
+By hypothesis $G$ is non-elementary, so Theorem~\ref{elementary} implies that
+$V(T)$ is not strongly closed; thus, $T$ has a defective color $\delta$ with
+respect to $\vph$.  Choose $\tau\in \vphn(v_2)$. Let $Q = P_{v_2}(\tau, \delta)$.
+Since $T$ is maximal, $\delta$ is not missing at any vertex of $T$, and
 since $V(T)$ is elementary, $\tau$ is not missing at any vertex of $T$ other 
 than $v_2$.  As a result, $Q$ ends outside $V(T)$.  Now $Q$ could leave
 $V(T)$ and re-enter it repeatedly, but $Q$ ends outside $V(T)$, so there is a
-last vertex $w \in V(Q) \cap V(T)$;
-say $Q$ ends at $z \in V(G)\setminus V(T)$.  Let $\pi \notin \{\alpha, \beta\}$ be a
-color missing at $w$.  Since
-$|T| = t(G)$, no edge colored $\tau$ or $\pi$ leaves $V(T)$.  So, we can
-swap $\tau$ and $\pi$ on every edge in $G - V(T)$ without changing the fact that $T$ is a Tashkinov tree with
-$|T| = t(G)$.  Now swap $\delta$ and $\pi$ on the
-subpath of $Q$ from $w$ to $z$;
-since $\pi$ is missing at $w$, the $\delta-\pi$ path does end at $w$.  Now
-$\delta$ is missing at $w$, but $\delta$ was defective in $\vph$, so some other
-edge $e$ colored $\delta$ still leaves $V(T)$, adding $e$ gets a larger
-Tashkinov tree, a contradiction.
+last vertex $w \in V(Q) \cap V(T)$; say $Q$ ends at $z \in V(G)\setminus V(T)$.
+ Let $\pi \notin \{\alpha, \beta\}$ be a color missing at $w$.  
+Since $\tau\in\vphn(v_2)$ and $\pi\in\vphn(w)$ and $|T| = t(G)$, no edge
+colored $\tau$ or $\pi$ leaves $V(T)$.  So we can swap $\tau$ and $\pi$ on
+every edge in $G - V(T)$ without changing the fact that $T$ is a Tashkinov tree
+with $|T| = t(G)$.  After swapping $\tau$ and $\pi$, we swap $\delta$ and $\pi$
+on the subpath of $Q$ from $w$ to $z$. Since $\pi$ is missing at $w$, the
+$\delta-\pi$ path starting at $z$ must end at $w$.  Now $\delta$ is missing at
+$w$, but $\delta$ was defective in $\vph$, so some other edge $e$ colored
+$\delta$ still leaves $V(T)$. Adding $e$ gets a larger Tashkinov tree, which is
+a contradiction.
 \end{proof}
 
 
 \section{Short vertices}
+\label{sec:short}
 Recall that a vertex $v \in V(G)$ is \emph{short} if every Vizing fan rooted
 at $v$ (taken over all $k$-colorings of $G-e$, over all edges $e$ incident to
 $v$) has at most 3 vertices, including $v$.  Otherwise, $v$ is \emph{long}.
-Let $\nu(T)$ be the number of long vertices in $T$.
+Let $\nu(T)$ be the number of long vertices in a Tashkinov tree $T$.
+
+Now we can outline our proof of the $\frac56$-Conjecture.
+We will show in Section~\ref{sec:56} that the $\frac56$-Conjecture is implied
+by the Goldberg--Seymour Conjecture.  More precisely, if $G$ is a multigraph
+such that $\chi'(G)\le\max\{\ceil{\W(G)},\Delta(G)+1\}$, then also $\chi'(G)\le
+\frac{5\Delta(G)+8}6$.  So here it suffices to show that 
+$\chi'(G)\le\max\{\ceil{\W(G)},\Delta(G)+1,\frac{5\Delta(G)+8}6\}$.  We consider
+cases based on $\nu(T)$, for some Tashkinov tree $T\in \T(G)$.
+
+In the present section, we show that if $G$ has a maximum Tashkinov tree $T$ that contains
+no short vertices, i.e., $\nu(T)=0$, then $G$ is elementary.  In fact, Lemma~7
+implies that the same is true when $\nu(T)=1$.  In the proof of
+Theorem~\ref{mainhelper}, we show that if $G$ is a minimal counterexample to
+the $\frac56$-Conjecture, then every long vertex $v$ has
+$d(v)<\frac34\Delta(G)$.  This implies that $\nu(T)< 4$, since otherwise
+the number of colors missing at vertices of $T$ is more than
+$4(k-\frac34\Delta(G))>k$, which contradicts that $V(T)$ is elementary.
+%$2|E(G)|\le (|V(G)|-4)\Delta(G)+3\Delta(G)=\Delta(G)(|V(G)|-1)$, so
+%$\ceil{\frac{|E(G)|}{\floor{\frac{|V(G)|}2}}}\le
+%\ceil{\frac{|E(G)|}{\frac{|V(G)|}2-\frac12}}=
+%\ceil{\frac{2|E(G)|}{|V(G)|-1}}\le
+%\ceil{\frac{\Delta(G)(|V(G)|-1)}{|V(G)|-1}}=\Delta(G)$, and thus
+%$G$ has too few edges to be a minimal counterexample.  
+So it remains to consider the case $\nu(T)\in\{2,3\}$.
+
+In Section~6, we introduce the notion of \emph{$k$-thin graphs}, which are
+essentially those for which $\mu(G)$ is not too large.  Using a lemma
+from~\cite{rabern2011strengthening}, we show that every minimal counterexample to the
+$\frac56$-Conjecture must be $k$-thin.  We then extend the ideas of the present
+section to show handle the case when $\nu(T)\in\{2,3\}$.  Much like when
+$\nu(T)\ge 4$, we show that $T$ has too many colors missing at its vertices to
+be elementary.  More precisely, $\sum_{v\in V(T)}|\vphn(v)|>k$, which is a
+contradiction.
+
+Short vertices were introduced in~\cite{CKPS}, where they were motivated by a
+version of the following lemma in the context of proving a strengthening of
+Reed's Conjecture for line graphs.  
+
 \begin{lem}\label{SpecialPath}
-Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  
-Let $P = v_1v_2\cdots v_r$ be an $\alpha-\beta$ path
-with edges $e_i = v_iv_{i+1}$ for $1 \le i \le r-1$.  If $v_i$ is short for
-all odd $i$, then for any $\tau \in \vphn(v_0)$ there are edges $f_i =
-v_iv_{i+1}$ for $1 \le i \le r-1$ such that $f_i = e_i$ for $i$ even and
-$\vph(f_i) = \tau$ for $i$ odd.
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for some integer $k \ge
+\Delta(G) + 1$.  Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$.  Choose
+$\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Let $P = v_1v_2\cdots v_r$
+be an $\alpha,\beta$ path with edges $e_i = v_iv_{i+1}$ for all $i\in[r-1]$. 
+If $v_i$ is short for all odd $i$, then for each $\tau \in \vphn(v_0)$ there
+are edges $f_i = v_iv_{i+1}$ for all $i\in[r-1]$ such that $f_i = e_i$ for $i$
+even and $\vph(f_i) = \tau$ for $i$ odd.
 \end{lem}
 \begin{proof}
 Suppose not and choose a counterexample minimizing $r$.  By minimality of
 $r$, we have $\vph(v_{r-1}v_r) = \alpha$ and we have $f_i = v_iv_{i+1}$ for
-$1 \le i \le r-2$ such that $f_i = e_i$ for $i$ even and $\vph(f_i) = \tau$ for
-$i$ odd.  Swap $\alpha$ and $\beta$ on $e_i$ for $1 \le i \le r-3$ and then
+all $i\in[r-2]$ such that $f_i = e_i$ for $i$ even and $\vph(f_i) = \tau$ for
+$i$ odd.  Swap $\alpha$ and $\beta$ on $e_i$ for all $i\in [r-3]$ and then
 color $v_0v_1$ (call this edge $e_0$) with $\alpha$ and uncolor $e_{r-2}$.  Let
 $\vph'$ be the resulting coloring.  Since $k \ge \Delta(G) + 1$, some color
 other than $\alpha$ is missing at $v_{r-2}$; let $\gamma$ be such a color.  Now 
 $v_{r-1}$ is short since $r-1$ is odd (since $P$ starts and ends with
 $\alpha$), so there is an edge $e = v_{r-1}v_r$ with $\vph'(e) = \gamma$.  
-Swap $\tau$ and $\alpha$ on $e_i$ for $0 \le i \le r-3$ to get a new coloring
-$\vph^*$.  Now $\gamma$ and $\tau$ are both missing at $v_{r-2}$ in $\vph^*$.
-Since $v_{r-1}$ is short, the fan with $v_{r-2}, v_{r-1}, v_r$ and $e$
-implies that there is an edge $f_{r-1} = v_{r-1}v_r$ with $\vph^*(f_{r-1}) =
-\tau$.  But we have never recolored $f_{r-1}$, so $\vph(f_{r-1})=\tau$, a
-contradiction.
+Swap $\tau$ and $\alpha$ on $e_i$ for all $i$ with $0 \le i \le r-3$ to get a
+new coloring $\vph^*$.  Now $\gamma$ and $\tau$ are both missing at $v_{r-2}$
+in $\vph^*$.  Since $v_{r-1}$ is short, the fan with $v_{r-2}, v_{r-1}, v_r$
+and $e$ implies that there is an edge $f_{r-1} = v_{r-1}v_r$ with
+$\vph^*(f_{r-1}) = \tau$.  But we have never recolored $f_{r-1}$, so
+$\vph(f_{r-1})=\tau$, which is a contradiction.
 \end{proof}
 
 \begin{lem}\label{ZeroNonSpecial}
-Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$ for some $v_0v_1 \in E(G)$.  Let $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and put $P = P_{v_1}(\alpha, \beta)$.  The $P$ contains a long vertex. 
+Let $G$ be a non-elementary critical graph with $\chi'(G) = k+1$ for some
+integer $k \ge \Delta(G) + 1$.  Choose $(T, v_0v_1, \vph) \in \T(G)$ for some
+$v_0v_1 \in E(G)$.  Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and
+let $P = P_{v_1}(\alpha, \beta)$.  Now $P$ contains a long vertex. 
 In particular, $\nu(T) \ge 1$.
 \label{lem2}
 \end{lem}
 \begin{proof}
-Suppose every vertex of $P$ is short.  Applying Lemma \ref{SpecialPath} to $P$ shows that every $\tau \in \vphn(v_0)$, 
-there is a $\tau$-edge in $T$ incident to every $v \in V(P - v_0)$. By symmetry, the same is true of every $v \in V(P)$.  Hence $V(P) = V(T)$ contradicting Lemma \ref{FreeColorsLemma}.
+Suppose every vertex of $P$ is short.  Applying Lemma \ref{SpecialPath} to $P$
+shows that for every $\tau \in \vphn(v_0)$, there is an edge in $T$ colored
+$\tau$ incident to every $v \in V(P - v_0)$.  The same is also true of every $v
+\in V(P)$; to see this, we rotate the $\alpha,\beta$ coloring of
+$P\cup\{v_0v_1\}$ and repeat the same argument.  Hence $V(P) = V(T)$, which
+contradicts Lemma \ref{FreeColorsLemma}.
 \end{proof}
 
 \begin{thm}\label{AllSpecialImpliesElementary}
 If $G$ is a critical graph in which every vertex is short, then
-\[\chi'(G) \le \max \set{\ceil{\chi'_f(G)}, \Delta(G) + 1}.\]
+\[\chi'(G) \le \max \set{\W(G), \Delta(G) + 1}.\]
 \end{thm}
 \begin{proof}
-Suppose $G$ is a critical graph in which every vertex is short and put $k = \chi'(G) - 1$.  Then $k \ge \Delta(G) + 1$.
-Since $\T(G) \ne \emptyset$, applying Lemma \ref{ZeroNonSpecial}, we conclude that $G$ is elementary.  Hence $\chi'(G) = \ceil{\chi'_f(G)}$, a contradiction.
+Suppose not and let $G$ be a counterexample. % with the fewest edges.
+%Suppose $G$ is a critical graph in which every vertex is short and 
+Let $k = \chi'(G) - 1$, and note that $k \ge \Delta(G) + 1$.  
+Since $\T(G) \ne \emptyset$, by applying Lemma \ref{ZeroNonSpecial} we conclude
+that $G$ is elementary.  Hence $\chi'(G) = \W(G)$, which is a
+contradiction.
 \end{proof}
 
-\section{The easy bound}
+\section{An easy bound}
+In this section, we apply the results of Section~\ref{sec:short} to prove an
+easy bound on $\chi'(G)$.  We also show how those results imply Reed's Conjecture, as
+well as Local and Superlocal strengthenings of Reed's Conjecture, for the class
+of line graphs.
+
 Let $G$ be a graph.  The \emph{claw-degree} of $x \in V(G)$ is 
 \[\dclaw{x} \DefinedAs \max_{\substack{S \subseteq N(x) \\ \card{S} = 3}}\frac14 \parens{d(x) + \sum_{v \in S} d(v)}.\]
 The \emph{claw-degree} of $G$ is 
 \[\dclaw{G} \DefinedAs \max_{x \in V(G)} \dclaw{x}.\]
-\begin{thm}\label{EasyBound}
+\begin{thm}
+\label{EasyBound}
 If $G$ is a graph, then
-\[\chi'(G) \le \max\set{\ceil{\chi'_f(G)}, \Delta(G) + 1, \ceil{\frac43\dclaw{G}}}.\]
+\[\chi'(G) \le \max\set{\W(G), \Delta(G) + 1, \ceil{\frac43\dclaw{G}}}.\]
 \end{thm}
 \begin{proof}
-Suppose not and choose a counterexample $G$ minimizing $\size{G}$; note that $G$ critical. 
+Suppose not and choose a counterexample $G$ with the fewest edges; note that $G$
+is critical. 
 Let $k=\chi'(G)-1$, so $k \ge \ceil{\frac43\dclaw{G}}$. 
 By Theorem \ref{AllSpecialImpliesElementary}, $G$ has a long vertex $x$.
 Choose $xy_1 \in E(G)$ and a $k$-edge-coloring $\vph$ of $G - xy_1$ such that
@@ -325,332 +444,723 @@ and hence
 \[\dclaw{x} \ge \frac14\parens{d(x) + \sum_{i \in \irange{3}} d(y_i)} \ge \frac{3k+2}{4}.\]
 This gives the contradiction
 \[\ceil{\frac43\dclaw{G}} \le k \le \frac43\dclaw{G} - \frac23.\]
+\aftermath
 \end{proof}
 
-TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
+%TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
+Reed~\cite{Reed1998omega} conjectured that $\chi(G)\le
+\ceil{\frac{\omega(G)+\Delta+1}2}$ for every
+graph $G$.  This is the average of a trivial lower bound $\omega(G)$ and a
+trivial upper bound $\Delta(G)+1$.  King~\cite{King} conjecture the stronger
+bound $\chi(G)\le \max_{v\in V(G)}\ceil{\frac{\omega(v)+d(v)+1}2}$, where
+$\omega(v)$ is the size of the largest clique containing $v$, which is now known
+to hold for many classes of graphs, including line graphs~\cite{CKPS}.  Here we
+show that for line graphs this bound is an easy consequence of our more general
+lemmas from Section~\ref{sec:short}.  The following is essentially Lemma~10 from
+\cite{CKPS}.
+
+\begin{cor}
+\label{SuperlocalReedCor}
+Let $G$ be a graph.  For $uv\in E(G)$, let
+$f(uv)=\max\{d(u)+\frac12(d(v)-\mu(uv)),d(v)+\frac12(d(u)-\mu(uv)\}$.  Let
+$f(G)=\max_{uv,vw\in E(G)}\ceil{\frac12(f(uv)+f(uw))}$.  Now 
+\[\chi'(G) \le \max\set{\W(G), \Delta(G) + 1, f(G)}.\]
+In particular, the Superlocal version of Reed's Conjecture holds for every line
+graph.
+\end{cor}
+\begin{proof}
+The first statement follows directly from Theorem~\ref{EasyBound}, by showing that
+$\ceil{\frac43d_{claw}(G)}\le f(G)$.  Choose $x\in V(G)$ and $S\in N(x)$ such
+that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.
+Now 
+\begin{align*}
+\ceil{\frac43\frac14(d(x)+d(v_1)+d(v_2)+d(v_3))} \le&
+\left\lceil\frac13\left( 
+d(v_1)+\frac12(d(x)-\mu(xv_1))\right.\right.\\
+&+d(v_2)+\frac12(d(x)-\mu(xv_2))\\
+&\left.\left.+d(v_3)+\frac12(d(x)-\mu(xv_3))\right)\right\rceil\\
+&\le \ceil{\frac13(f(xv_1)+f(xv_2)+f(xv_3))}\\
+&\le f(G).
+\end{align*}
+This proves the first statement.  For the second statement, we show that
+$\W(G)\le f(G)$, as follows.  For each vertex $v$, let $v_1, v_2,\ldots$ denote
+the neighbors of $v$ (with subscripts modulo $|N(v)|$).  Also, let
+$\overline{d}=\frac{2|E(H)|}{|V(H)|}$.
+\begin{align*}
+f(G)2|E(H)| &\ge \sum_{v\in
+V}\sum_{i=1}^{|N(v)|}\frac12(d(v)+\frac12(d(v_i)-\mu(vv_i))+d(v)+\frac12(d(v_{i+1})-\mu(vv_{i+1})))\\
+ &= \sum_{v\in
+V}\sum_{i=1}^{|N(v)|}d(v)+\frac12(d(v_i)-\mu(vv_i))\\
+& = \sum_{uv\in E(H)}\frac32d(u)+\frac32d(v)-\mu(uv) \\
+& = \sum_{v\in V(H)}\frac32d(v)^2 - |E(H)|\\
+& \ge \frac32\overline{d}^2|V(H)|-|E(H)|\\
+& = 6\frac{|E(H)|^2}{|V(H)|}-|E(H)|
+\end{align*}
+Thus $f(G)\ge \frac{3|E(H)|}{|V(H)|}-\frac12$.
+Since $\W(G)=\ceil{\frac{2|E(H)|}{|V(H)|-1}}\le
+\frac{2|E(H)|+|V(H)|-3}{|V(H)|-1}$, 
+it suffices to have 
+$\frac{3|E(H)|}{|V(H)|}-\frac12 \ge \frac{2|E(H)|+|V(H)|-3}{|V(H)|-1}$. 
+Now solving for $|E(H)|$
+gives $|E(H)|\ge \frac32|V(H)|\frac{|V(H)|-\frac73}{|V(H)|-3}$.  Taking
+$|V(H)|\ge 5$, it suffices to have $2|V(H)|\le |E(H)|$.  Suppose, to the
+contrary, that we have $|E(H)|<2|V(H)|$.  It will suffice to show that
+$\frac{2|E(H)|}{|V(H)|-1}\le \Delta(H)$.  Now solving
+$\frac{4|V(H)|}{|V(H)|-1}\le \Delta(H)$ (using $|V(H)|\ge 5$), shows that it
+suffices to have $\Delta(H)\ge 5$.\\
+TODO: HANDLE $\Delta(H)\in\{3,4\}$.
+\end{proof}
+
+%\begin{lem}
+%\label{ReedHelper}
+%Let $G$ be a mulitgraph with a long vertex $v_0$.  
+%If $k=\max_{uv\in E(G)}d(u)+\frac12(d(v)-\mu(uv))$, then $\chi'(G)\le k$.
+%\end{lem}
+%\begin{proof}
+%Suppose the lemma is false and let $G$ be a minimal counterexample.  So
+%$\chi'(G)=k+1$ and $\chi'(G-e)=k$ for all $e\in E(G)$.
+%Choose $e$ incident to $v_0$ such that $G-e$ has a $k$-coloring $\phi$ and some
+%fan $F$ rooted at $v_0$ and containing $e$ has length at least 3.  Subject to
+%this, let $F$ be maximal, and let $v_1,\ldots,v_\ell$ denote the leaves of $F$.
+%Since $F$ is a Tashkinov tree, $V(F)$ must be elementary.  Further, since $F$ is
+%maximal, each edge incident to $v_0$ with other endpoint outside of $F$ must use
+%a color that is not missing at every vertex of $F$.  This gives
+%\begin{align*}
+%2+\sum_{i=0}^\ell k-d(v_i) + d(v_0)-\sum_{i=1}^\ell\mu(v_0v_i) &\le k\\
+%2+\sum_{i=1}^\ell k-d(v_i) &\le \sum_{i=1}^\ell\mu(v_0v_i) 
+%\end{align*}
+%For each edge $v_0v_i$ we have $d(v_i)+\frac12(d(v_0)-\mu(v_0v_i))\le k$.
+%Substituting this gives
+%\begin{align*}
+%2+\sum_{i=1}^\ell d(v_i)+\frac12(d(v_0)-\mu(v_0v_i))-d(v_i) &\le
+%\sum_{i=1}^\ell\mu(v_0v_i) \\
+%2+\sum_{i=1}^\ell \frac12d(v_0) &\le \frac32\sum_{i=1}^\ell\mu(v_0v_i) \\
+%\frac{l}2d(v_0)< \frac32d(v_0),
+%\end{align*}
+%since $\ell\ge 3$.
+
+%\begin{cor}
+%The Local Strengthening of Reed's Conjecture holds for line graphs.
+%\end{cor}
+%\begin{proof}
+%Suppose the corollary is false and let $G$ be a counterexample with as few edges
+%as possible.  Note that $G$ is critical.
+%If $G$ contains a long vertex $x$, then the bound follows from
+%Lemma~\ref{ReedHelper}.  So suppose $G$ has no long vertex.  By
+%Lemma~\ref{AllSpecialImpliesElementary},
+%now we have $\chi'(G) \le \max \set{\W(G), \Delta(G) + 1}.$  TODO: SHOW THIS
+%IMPLIES LOCAL REED'S.
+%\end{proof}
 
 \section{Properties of long vertices}
-For a path $Q$ and $x,y \in V(Q)$, let $d_Q(x,y) = \ell(Q)$.
+For a path $Q$, recall that $\ell(Q)$ denotes the length of $Q$.
+For $x,y \in V(Q)$, let $xQy$ denote the subpath of $Q$ with
+endvertices $x$ and $y$, and let $d_Q(x,y) = \ell(xQy)$, i.e., the distance
+from $x$ to $y$ along $Q$.
 
 \begin{lem}\label{TauEscape}
-Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
-If $\tau \in \vphn(x)$ for some $x \in V(C)$ and there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(G) \setminus V(C)$, then $C$ has a 
-subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and long endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
-Moreover, there are no $\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for some integer $k \ge \Delta(G) + 1$.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Choose $\alpha \in \vphn(v_0)$
+and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  If
+$\tau \in \vphn(x)$ for some $x \in V(C)$ and there is a $\tau$-colored edge
+from $y \in V(C)$ to $w \in V(G) \setminus V(C)$, then $C$ has a subpath $Q$
+with long endpoints $z_1,z_2$ such that $x \in V(Q)$, $y \not \in V(Q-z_1-z_2)$
+and the distance from $x$ to $z_i$ along $Q$ is odd for each $i \in \irange{2}$. 
+Moreover, for each $i \in \irange{2}$, there are no $\tau$-colored edges
+between $z_i$ and its neighbors along $C$.
 \end{lem}
 \begin{proof}
-TODO: FILL THIS SPACE WITH PROOF.
+Let $G$, $\alpha$, $\beta$, $\tau$, $x$, and $y$ be as in the statement of the
+lemma.  Choose $z_1$ (resp. $z_2$) to be the first vertex at an odd distance
+from $x$ along $C$ in the clockwise (resp. counterclockwise) direction with no
+incident $\tau$-colored edge parallel to some edge of $C$.  
+Let $Q$ be the subpath of $C$ with endpoints $z_1$ and $z_2$ that contains $x$.
+By the choice of $z_1$ each vertex $w$ between $x$ and $z_1$ with $d_Q(xw)$ odd
+has a $\tau$-colored edge parallel to some edge of $C$.  The presence of these
+edges implies the same for each $w$ for which $d_Q(xw)$ is even.  By the proof
+of the Parallel Edge Lemma, $z_1$ must be long, since otherwise it would have an
+incident $\tau$-colored edge parallel to some edge of $C$.  The same argument
+applies to $z_2$.
+%By rotating the $\alpha,\beta$ coloring, we can assume that $x=v_0$.
+%By the Parallel Edge Lemma, we must not reach $y$ before we reach $z_1$ (resp.
+%$z_2$).
+%each vertex between $x$ and $z_1$ (exclusive)
+%must be incident to a $\tau$-colored edge that is parallel to some edge of $C$.
+%The same is true for each vertex between $x$ and $z_2$, as shown by making the
+%same argument going around the cycle in the other direction.
+%FILL THIS SPACE WITH PROOF.
+%
+%TODO: EXPLAIN WHY $y\notin\{z_1,z_2\}$ (OR CHANGE STATEMENT).
 \end{proof}
 
 \section{Thin graphs}
-Let $G$ be a critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
+\label{sec:thin}
+Let $G$ be a critical graph with $\chi'(G) = k+1$ for some integer $k \ge \Delta(G) + 1$.
 For vertices $x \in V(G)$ and $S \subseteq V(G) \setminus \set{x}$, we say that $x$ is \emph{$S$-short} if 
 every Vizing fan $F$ rooted at $x$ with $S \subseteq V(F)$, has $|F| \le 3$ (with respect to any $k$-edge-coloring of $G-xy$).
 Otherwise, $x$ is \emph{$S$-long}.  For brevity, when $S = \set{y}$, we may write $y$-short instead of $\set{y}$-short.
+It is worth noting that in Lemma~\ref{SpecialPath} we can weaken the hypothesis
+that $v_i$ is short for all odd $i$ to require only that $v_i$ is
+$v_{i-1}$-short for all odd $i$, since this is what we use in the proof.  
 
-We say that $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all long $x,y \in V(G)$.
+A graph $G$ is \emph{$k$-thin} if $\mu(G) < 2k - d(x) - d(y)$ for all
+long $x,y \in V(G)$.  In the proof of Theorem~\ref{mainhelper}, we will show that
+every counterexample to the $\frac56$-Conjecture must be $k$-thin.
 
 \begin{lem}\label{NonSpecialsInThinAreAtEvenDistance}
-Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
-If $Q$ is a subpath of $C$ with long end vertices and all short internal vertices such that $2 \le \ell(Q) \le \ell(C) - 2$, then $\ell(Q)$ is even.
+Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for some integer $k \ge \Delta(G) + 1$.
+Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Choose $\alpha \in \vphn(v_0)$
+and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.
+Let $Q$ be a subpath of $C$ with long end vertices.  If all internal vertices
+of $Q$ are short and $2 \le \ell(Q) \le \ell(C) - 2$, then $\ell(Q)$ is even.
 \end{lem}
 \begin{proof}
-Suppose to the contrary that we have a subpath $Q$ of $C$ with long end vertices and all short internal vertices, such that $\ell(Q) \le \ell(C) - 2$ and $\ell(Q)$ is odd.  Let $x$ and $y$ be the end vertices of $Q$.
-Say $C = v_1v_2\cdots v_rv_0v_1$.  By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_1$ and $y = v_a$ where $a \ge 4$ is even.
+Suppose to the contrary that we have a subpath $Q$ of $C$ with end vertices
+long, all internal vertices short, $2\le \ell(Q) \le \ell(C) - 2$,
+and $\ell(Q)$ odd.  Let $x$ and $y$ be the end vertices of $Q$.
+Say $C = v_1v_2\cdots v_rv_0v_1$.  By rotating the $\alpha,\beta$ coloring of
+$C$, we may assume that $x = v_0$ and $y = v_a$, where $a \ge 3$ is odd.
 
-Apply Lemma \ref{SpecialPath} twice, to show that $\mu(v_2v_3) \ge 2k - d(v_1) - d(v_a)$, violating $k$-thinness.
+We now apply Lemma \ref{SpecialPath} twice, to show that $\mu(v_1v_2) \ge 2k -
+d(v_0) - d(v_a)$, which contradicts that $G$ is $k$-thin.  More specifically,
+assume that the edges $v_0v_1,v_1v_2,\ldots$ go clockwise around $C$.  We apply
+Lemma~\ref{SpecialPath} once going clockwise starting from $v_0$ and once going
+counterclockwise starting from $v_a$.  The first application implies that every
+color in $\vphn(v_0)$ appears on some edge parallel to $v_1v_2$; the second
+implies the same for every color in $\vphn(v_a)$.  Since $|\vphn(v_i)|=k-d(v_i)$
+for each $i\in\{0,a\}$ and $\vphn(v_0)\cap \vphn(v_a)=\emptyset$, the conclusion
+follows.
 \end{proof}
 
 \begin{lem}\label{ThreeNonSpecialOnCycle}
-Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  If $C$ contains exactly 3 long vertices,
-then $C = xyAzBx$ where $A$ and $B$ are paths of even length and $x,y,z$ are all long.  Moreover, $x$ is $y$-long and $y$ is $x$-long.
+Let $G$ be a $k$-thin, critical graph with $\chi'(G) = k+1$ for some integer $k
+\ge \Delta(G) + 1$.  Let $\vph$ be a $k$-edge-coloring of $G-v_0v_1$. Suppose
+$\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ and let $C = P_{v_1}(\alpha,
+\beta) + v_0v_1$.  If $C$ contains exactly 3 long vertices, then $C = xyAzBx$
+where $A$ and $B$ are paths of even length and $x,y,z$ are all long.  Moreover,
+$x$ is $y$-long and $y$ is $x$-long.
 \end{lem}
 \begin{proof}
-Immediate from Lemma \ref{NonSpecialsInThinAreAtEvenDistance} and Lemma \ref{SpecialPath}.
+Let $G$ be a graph satisfying the hypotheses, and let $x$, $y$, $z$ be the
+three long vertices.
+The three subpaths of $C$ with endpoints $x$,
+$y$, and $z$ either (i) all have odd length or (ii) include two paths of even
+length and one of odd length.  
+First assume that $\ell(C)\ge 5$.  
+%Since $\ell(C)\ge 5$, 
+If we are in (i), then the longest of these three subpaths
+violates Lemma~\ref{NonSpecialsInThinAreAtEvenDistance}; so we are in (ii), and
+also the path of odd length is simply an edge.  This proves the first statement.
+For the second statement, assume to the contrary that $x$ is $y$-short.
+By rotating the $\alpha,\beta$ coloring, we can assume that $y=v_0$ and $x=v_1$.
+As in the previous lemma, we use Lemma~\ref{SpecialPath} (and the comment in the
+first paragraph of Section~\ref{sec:thin}) to conclude that $\mu(v_1v_2)\ge
+2k-d(v_0)-d(z)$.  As above, this contradicts that $G$ is $k$-thin; this
+contradiction proves the second statement.
 \end{proof}
 
 \begin{lem}\label{ConsecutiveNonSpecials}
-Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$. Suppose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$.  Then there are consecutive long vertices on $P_{v_1}(\alpha, \beta) + v_0v_1$.
+Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for
+some integer $k \ge \Delta(G) + 1$.  Choose $(T, v_0v_1, \vph) \in \T(G)$. If
+$\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$, then $P_{v_1}(\alpha,
+\beta) + v_0v_1$ contains consecutive long vertices.
 \end{lem}
 \begin{proof}
-Put $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
-By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$, $y \not \in V(Q)$ and long endpoints $z_1,z_2$ such that $d_Q(x, z_i)$ is odd for $i \in \irange{2}$.  
-Let $Q'$ be the subpath of $Q$ with endpoints $z_1$ and $z_2$ that contains $y$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum length subpath of $Q'$ with long ends.  
-Then $\ell(Q^*) = 1$ by Lemma \ref{NonSpecialsInThinAreAtEvenDistance}, as desired.
+Let $C = P_{v_1}(\alpha, \beta) + v_0v_1$.  By Lemma \ref{FreeColorsLemma},
+there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a
+$\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
+Lemma \ref{TauEscape} implies that $C$ has a subpath $Q$ with $x \in V(Q)$
+ and long endpoints $z_1,z_2$ such that the distance from $x$ to
+$z_i$ along $Q$ is odd for each $i \in \irange{2}$.  
+Let $Q'$ be the subpath of $C$ with endpoints $z_1$ and $z_2$ that does not contain
+$x$. Since $C$ is an odd cycle, $\ell(Q')$ is odd.  Let $Q^*$ be a minimum
+length subpath of $Q'$ with long ends.  Now $\ell(Q^*) = 1$ by Lemma
+\ref{NonSpecialsInThinAreAtEvenDistance}, as desired.
 \end{proof}
 
 \begin{lem}\label{MasterHelper}
-Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for an integer $k \ge \Delta(G) + 1$.
-Let $(T, v_0v_1, \vph) \in \T(G)$ with $\nu(T) \le 3$.   Then $T$ contains long vertices $z_1,z_2,z_3$ such that either 
-\begin{itemize}
+Let $G$ be a non-elementary, $k$-thin, critical graph with $\chi'(G) = k+1$ for
+some integer $k \ge \Delta(G) + 1$.  If $(T, v_0v_1, \vph) \in \T(G)$ and
+$\nu(T) \le 3$, then $T$ contains long vertices $z_1,z_2,z_3$ such that either 
+\begin{enumerate}
 \item $z_1$ is $\set{z_2,z_3}$-long and $z_2$ is $z_1$-long; or
-\item $z_i$ is $z_{3-i}$-long and $z_{i+1}$ is $z_{4-i}$-long for $i \in \irange{2}$.
-\end{itemize}
+%\item $z_i$ is $z_{3-i}$-long and $z_{i+1}$ is $z_{4-i}$-long for $i \in \irange{2}$.
+\item $z_i$ is $z_j$-long and $z_j$ is $z_i$-long for each %unordered pair
+$(i,j)\in\{(1,2),(2,3)\}$.
+\end{enumerate}
 \end{lem}
 \begin{proof}
-Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that $C = P_{v_1}(\alpha, \beta) + v_0v_1$ contains as many long vertices as possible. 
-By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$ such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T) \setminus V(C)$.
+Choose $\alpha \in \vphn(v_0)$ and $\beta \in \vphn(v_1)$ so that
+$P_{v_1}(\alpha, \beta)$ contains as many long vertices as possible;
+let $C=P_{v_1}(\alpha,\beta)+v_0v_1$.
+By Lemma \ref{FreeColorsLemma}, there is $x \in V(C)$ and $\tau \in \vphn(x)$
+such that there is a $\tau$-colored edge from $y \in V(C)$ to $w \in V(T)
+\setminus V(C)$.  By Lemma~\ref{ConsecutiveNonSpecials}, $C$ has at least two
+long vertices.
 
-First, suppose $C$ contains only 2 long vertices, $z_1$ and $z_2$.  By Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
-By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_2$ and there are no 
-$\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \irange{2}$.  
+First suppose that $C$ contains only 2 long vertices, $z_1$ and $z_2$.  By
+Lemma \ref{ConsecutiveNonSpecials}, $z_1$ and $z_2$ are consecutive on $C$.
+Lemma \ref{TauEscape} implies that $C$ has a subpath $Q$ 
+with endpoints $z_1,z_2$ such that $x \in V(Q)$ and $y \not \in V(Q-z_1-z_2)$ 
+and for each $i \in \irange{2}$ 
+there are no $\tau$-colored edges between $z_i$ and its neighbors on $C$.
+%
+By rotating the $\alpha,\beta$ coloring of $C$, we can assume that $x = v_0$ and
+$\alpha,\tau\in \vphn(v_0)$ and $\beta\in\vphn(v_1)$. 
+Note that $P_{v_1}(\tau,\beta)$ must end at $v_0$ (since otherwise we can
+recolor the Kempe chain and color $v_0v_1$ with $\tau$).  
+Let $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  Note that $C'$ must include $v_1Qz_1$
+and also $v_0Qz_2$ (the $\beta$-colored edges are present by definition and the
+$\tau$-colored edges are present by the Parallel Edge Lemma).  Thus, $z_1,z_2\in
+V(C')$.  Since $z_1$ and $z_2$ are not consecutive on $C'$
+and $C'$ contains no other long vertices by the maximality condition on $C$,
+Lemma \ref{ConsecutiveNonSpecials} gives a contradiction.
 
-By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$. Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  Since $z_1$ and $z_2$ are not consecutive on $C'$ and
-$C'$ contains no other long vertices by the maximality condition on $C$, Lemma \ref{ConsecutiveNonSpecials} gives a contradiction.
+So instead $C$ contains exactly 3 long vertices, $z_1$, $z_2$, and $z_3$.  By Lemma
+\ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths
+of even length.  Also, $z_1$ is $z_2$-long and $z_2$ is $z_1$-long.  
 
-So, $C$ contains exactly 3 long vertices, $z_1$, $z_2$ and $z_3$.  By Lemma \ref{ThreeNonSpecialOnCycle}, $C = z_1z_2Az_3Bz_1$ where $A$ and $B$ are paths of even length.  Also,
-$z_1$ is $z_2$-long and $z_2$ is $z_1$-long.  
+By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ 
+with endpoints $z_1,z_3$ and with $x \in V(Q)$ and $y \not
+\in V(Q-z_1-z_3)$ 
+such that there are no $\tau$-colored edges
+between $z_i$ and its neighbors along $C$ for each $i \in \set{1,3}$ (it could
+happen that $z_3$ has a $\tau$-colored edge parallel to an edge of $C$,
+so the endpoints of $Q$ are $z_1, z_2$, but now we get a contradiction
+as in the previous case, by letting $C'=P_{v_1}(\tau,\beta)+v_0v_1$).  By
+rotating the $\alpha,\beta$ coloring of $C$, we
+may assume that $x = v_0$.  Again, let $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  We
+know that $C'$ contains $z_1$ and $z_3$ and that $z_1$ and $z_2$ are not
+consecutive on $C'$.  Note also that all long vertices in $V(C')$ must be among
+$z_1,z_2,z_3$, since otherwise $\nu(T)\ge 4$, contradicting our hypothesis.
+So by Lemma~\ref{ConsecutiveNonSpecials}, either $z_1$ and
+$z_3$ are consecutive on $C'$ or $z_2$ and $z_3$ are consecutive on $C'$.
 
-By Lemma \ref{TauEscape}, $C$ has a subpath $Q$ with $x \in V(Q)$ and $y \not \in V(Q)$ with endpoints $z_1,z_3$ and there are no 
-$\tau$-colored edges between $z_i$ and $N_C(z_i)$ for $i \in \set{1,3}$ (it could happen that $z_3$ is bypassed and the endpoints are $z_1, z_2$, but then we get a contradiction as in the previous case).
-By rotating the $\alpha-\beta$ coloring of $C$, we may assume that $x = v_0$.  
-Consider $C' = P_{v_1}(\tau, \beta) + v_0v_1$.  We know that $C'$ contains $z_1$ and $z_3$ and that $z_1$ and $z_2$ are not consecutive on $C'$.  By Lemma \ref{ConsecutiveNonSpecials}, either $z_1$ and $z_3$ are consecutive on 
-$C'$ or $z_2$ and $z_3$ are consecutive on $Q'$.
+Suppose that $z_2$ and $z_3$ are consecutive on $C'$, and thus connected by a
+$\tau$-colored edge.  Now applying Lemma \ref{ThreeNonSpecialOnCycle} shows that $z_2$
+is $z_3$-long and $z_3$ is $z_2$-long, so we satisfy (2) in the conclusion of
+the lemma (by swapping the names of $z_1$ and $z_2$).
 
-Suppose $z_2$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  Then applying Lemma \ref{NonSpecialsInThinAreAtEvenDistance} shows that $z_2$ is $z_3$-long and $z_3$ is $z_2$-long, so we win.
+So instead $z_1$ and $z_3$ must be consecutive on $C'$, and thus connected by a
+$\tau$-colored edge.  If $z_1 = v_1$, then we have a fan with an
+$\alpha$-colored edge from $z_1$ to $z_2$ and a $\tau$-colored edge from $z_1$
+to $z_3$, so $z_1$ is $\set{z_2,z_3}$-long. 
 
-So it must be that $z_1$ and $z_3$ are consecutive on $C'$ and connected by a $\tau$ edge.  If $z_1 = v_1$, we have a fan with an $\alpha$-edge from $z_1$ to $z_2$ and a $\tau$ edge from $z_1$ to $z_3$, so 
-$z_1$ is $\set{z_2,z_3}$-long.  When $z_1 \ne v_1$, we get the same thing, but have to shift the coloring over to $z_1$ like in the proof of Lemma \ref{SpecialPath} using another missing color $\gamma$ at $z_1$.
+Now assume that $z_1\ne v_1$.
+Let $z_1'$ be the predecessor of $z_1$ on the path from $v_0$ (through $v_1$) to
+$z_1$.  We can shift the coloring so that $z_1'z_1$ is uncolored and $z_1z_2$
+is colored $\alpha$ (as in the proof of the Parallel Edge Lemma).  In fact, 
+we can shift either the $\alpha,\beta$ edges or the $\tau,\beta$ edges.  This
+gives the options that either $\alpha\in \vphn(z_1')$ or $\tau\in \vphn(z_1')$,
+whichever we prefer.  Suppose we shift the $\tau,\beta$ edges.
+Now choose $\gamma\in \vphn(z_1')-\alpha-\tau$.  Consider
+the $\gamma$-colored edge $e$ incident to $z_1$.  If $e$ goes to $z_2$, then we
+$z_1$ is $\{z_2,z_3\}$-long, by colors $\gamma$ and $\tau$; so we satisfy (1) in
+the conclusion of the lemma.
+If instead $e$ goes to $z_3$, then instead of shifting the $\tau,\beta$ edges we
+shift the $\alpha,\beta$ edges; note that this recoloring preserves the fact
+that $\gamma$ is missing at $z_1'$.  Now again $z_1$ is $\{z_2,z_3\}$-long, this
+time by colors $\alpha$ and $\gamma$; so we again satisfy (1) in the conclusion
+of the lemma.
+
+Finally, assume that the $\gamma$-colored edge incident to $z_1$ goes to some
+vertex other than $z_2$ and $z_3$.  Now let $C''=P_{z_1}(\gamma,\beta)+z_1z_1'$.
+Since $V(C'')\subseteq V(T)$, Lemmas~\ref{ConsecutiveNonSpecials} and
+\ref{ThreeNonSpecialOnCycle} imply that $z_2$ and $z_3$ are
+adjacent on $C''$ and furthermore $z_2$ is $z_3$-long and $z_3$ is $z_2$-long;
+thus, we satisfy (2) in the conclusion of the lemma.
+%can win by shifting the $\tau,\gamma$ edges.  Similarly, if $e$ goes to $z_3$, then
+%we can win by shifting the $\alpha,\gamma$ edges.  
+%The question is why do we know that e goes to either z_2 or z_3?
+%When $z_1 \ne v_1$, we get the same thing, but have to shift the coloring over
+%to $z_1$ like in the proof of Lemma \ref{SpecialPath} using another missing
+%color $\gamma$ at $z_1$.
 \end{proof}
 
-\begin{thm}[from strengthening Brooks paper]\label{CriticalMuBound}
+We need the following result from~\cite{rabern2011strengthening}, which we use
+to handle the case when $G$ is not $k$-thin.
+
+\begin{thm}[\cite{rabern2011strengthening}]\label{CriticalMuBound}
 If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 \[\chi(Q) \leq \max\left\{\omega(Q), \Delta(Q) + 1 - \frac{\mu(G) - 1}{2}\right\}.\]
 \end{thm}
 
+Now we prove the main result of this section.
+
 \begin{thm}
 If $Q$ is the line graph of $G$, then
 \[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+\label{mainhelper}
 \end{thm}
 \begin{proof}
 Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
-Let $k = \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) + 3}{6}}}$. Say $Q =
-L(G)$ for a graph $G$. Minimality of $Q$ implies that $G$ is critical and $\chi(Q) = k+1$ where $k \ge \Delta(G) + 1$.
+Let $k = \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) +
+3}{6}}}$. Say $Q = L(G)$ for a graph $G$. The minimality of $Q$ implies that
+$G$ is critical and $\chi(Q) = k+1$, for some $k \ge \Delta(G) + 1$.
 
+The heart of the proof is Claim~1, which roughly says that if $x$ is long, then
+$d(x)<\frac34\Delta(G)$. Moreover, we can improve this bound further if $x$ is
+the root of a long fan $F$ such that either (i) $F$ has length more than 3 or (ii)
+some of the other vertices in $F$ have degree less than $\Delta(G)$.  The claims
+thereafter are all essentially applications of Claim~1.
 \bigskip
 
-\claim{0}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of $G - xy$.  If $|F| \ge 4$, then
-\[d(x) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)}.\]}
+\claim{1}{Let $F$ be a fan rooted at $x$ with respect to a $k$-edge-coloring of
+$G - xy$.  If $S\subseteq V(F)-x$ and $|S| \ge 3$, then
+\[d(x) \le \frac1{5|S|-11}\parens{2|S|-12 + \sum_{v \in S} d(v)}.\]
+In particular, if $|S|=3$, then $d(x) \le \frac1{4}\parens{-6 + \sum_{v \in S}
+d(v)}.$}
 \begin{claimproof}
 Since $F$ is elementary, we have
-\[2 + k-d(x) + \sum_{v \in V(F-x)} k - d(v) \le k,\]
+\[2 + k-d(x) + \sum_{v \in S} k - d(v) \le k,\]
 so
-\[2 + (|F| - 1)k \le d(x) + \sum_{v \in V(F-x)} d(v).\]
-Using $6k \ge 5(\Delta(Q) + 1) - 2 \ge 5(d(x) + d(v) - \mu(xv)) - 2$ for each $v \in V(F-x)$, we get
-\[2 + \sum_{v \in V(F-x)}\parens{\frac56(d(x) + d(v) - \mu(xv)) -\frac13} \le d(x) + \sum_{v \in V(F-x)} d(v),\]
-so
-\[12 + \parens{5|F| - 11}d(x) - 2|F| \le \sum_{v \in V(F-x)} 5\mu(xv) + \sum_{v \in V(F-x)} d(v).\]
-Now $\sum_{v \in V(F-x)} \mu(xv) \le d(x)$, so this implies
-\[12 + \parens{5|F| - 16}d(x) - 2|F| \le \sum_{v \in V(F-x)} d(v).\]
-Using $|F| = 4$ gives
-\[d(x) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)}.\]
+\[2 + |S|k \le d(x) + \sum_{v \in S} d(v).\]
+Using $k \ge \frac56(\Delta(Q) + 1) - \frac13 \ge \frac56(d(x) + d(v) - \mu(xv))
+- \frac13$ for each $v
+\in S$, we get
+\[2 + \sum_{v \in S}\parens{\frac56(d(x) + d(v) - \mu(xv)) -\frac13} \le d(x) +
+\sum_{v \in S} d(v),\]
+so multiplying by 6 and rearranging terms gives
+\[12 + \parens{5|S| - 6}d(x) - 2|S| \le \sum_{v \in S} 5\mu(xv) + \sum_{v \in S} d(v).\]
+Now $\sum_{v \in S} \mu(xv) \le d(x)$, so this implies
+\[12 + \parens{5|S| - 11}d(x) - 2|S| \le \sum_{v \in S} d(v).\]
+Solving for $d(x)$ gives
+\[d(x) \le \frac1{5|S|-11}\parens{2|S|-12 + \sum_{v \in S} d(v)},\]
+and when $|S| = 3$, we get
+$d(x) \le \frac14\parens{-6 + \sum_{v \in S} d(v)}.$
 \end{claimproof}
 \bigskip
 
-\claim{1}{If $x \in V(G)$ is long, then $d(x) \le \frac34\Delta(G) - 1$.}
+\claim{2}{If $x \in V(G)$ is long, then $d(x) \le \frac34\Delta(G) - 1$.}
 
 \begin{claimproof}
-This is immediate from Claim 0, since $d(v)\le \Delta(G)$ for all $v\in V(F-x)$.
+This is immediate from Claim 1, since $d(v)\le \Delta(G)$ for all $v\in S$.
 \end{claimproof}
 \bigskip
 
-\claim{2}{If $x_1x_2 \in E(G)$ such that $x_i$ is $x_{3-i}$-long for $i \in \irange{2}$, then
-\[d(x_i) \le \frac23\Delta(G) -\frac43 \text{ for $i \in \irange{2}$.}\]}
+\claim{3}{If $x_1x_2 \in E(G)$ such that $x_1$ is $x_2$-long and $x_2$ is
+$x_1$-long, % for all $i \in \irange{2}$, 
+then
+\[d(x_i) \le \frac23\Delta(G) -2 \text{ for all $i \in \irange{2}$.}\]}
 
 \begin{claimproof}
-By Claim 0, for each $i \in \irange{2}$,
-\[d(x_i) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_{3-i}) + 2\Delta(G)},\]
+By Claim 1, for each $i \in \irange{2}$,
+\[d(x_i) \le \frac14\parens{-6 + \sum_{v \in S} d(v)} \le \frac14\parens{-6 + d(x_{3-i}) + 2\Delta(G)},\]
 Substituting the bound on $d(x_{3-i})$ into that on $d(x_i)$ and simplifying
 gives for each $i \in \irange{2}$,
-\[d(x_i) \le -\frac43 + \frac23\Delta(G).\]
+\[d(x_i) \le -2 + \frac23\Delta(G).\]
 \end{claimproof}
 
 \bigskip
 
-\claim{3}{If $x_1x_2, x_1x_3 \in E(G)$ such that $x_1$ is $\set{x_2,x_3}$-long, $x_2$ is $x_1$-long and $x_3$ is long, then 
+\claim{4}{If $x_1x_2, x_1x_3 \in E(G)$ such that $x_1$ is $\set{x_2,x_3}$-long, $x_2$ is $x_1$-long and $x_3$ is long, then 
 \[d(x_1) \le -\frac85 + \frac35\Delta(G),\]
 \[d(x_2) \le -\frac75 + \frac{13}{20}\Delta(G).\]}
 
 \begin{claimproof}
-By Claim 0, we have
-\[d(x_1) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_2) + d(x_3) + \Delta(G)},\]
-\[d(x_2) \le \frac14\parens{-4 + \sum_{v \in V(F-x)} d(v)} \le \frac14\parens{-4 + d(x_1) + 2\Delta(G)},\]
-which together imply
-\[d(x_1) \le -\frac43 + \frac25\Delta(G) + \frac{4}{15}d(x_3).\]
-Since $x_3$ is long, using Claim 1, we get
-\[d(x_1) \le -\frac85 + \frac35\Delta(G),\]
+By Claim 1, we have
+\[d(x_1) \le \frac14\parens{-6 + \sum_{v \in S} d(v)} \le \frac14\parens{-6 + d(x_2) + d(x_3) + \Delta(G)},\]
+\[d(x_2) \le \frac14\parens{-6 + \sum_{v \in S} d(v)} \le \frac14\parens{-6 + d(x_1) + 2\Delta(G)}.\]
+By the same calculation as in Claim~3, these together imply
+\[d(x_1) \le -2 + \frac25\Delta(G) + \frac{4}{15}d(x_3).\]
+Since $x_3$ is long, using Claim 2, we get
+%\[d(x_1) \le -\frac85 + \frac35\Delta(G),\]
+\[d(x_1) \le -\frac{34}{15} + \frac35\Delta(G),\]
 and hence
-\[d(x_2) \le -\frac75 + \frac{13}{20}\Delta(G).\]
+%\[d(x_2) \le -\frac75 + \frac{13}{20}\Delta(G).\]
+\[d(x_2) \le -\frac{61}{15} + \frac{13}{20}\Delta(G).\]
 \end{claimproof}
 \bigskip
 
-\claim{4}{The theorem is true.}
+\claim{5}{The theorem is true.}
 
 \begin{claimproof}
 Let $(T, v_0v_1, \vph) \in \T(G)$. By Lemma \ref{MasterHelper}, one of the following holds:
 \begin{enumerate}
 \item $G$ is elementary; or
-\item $G$ is not thin; or
-\item $\nu(T) = 3$ and $E(T)$ contains long $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $x_2$-long, $x_2$ is $x_1$-long, $x_2$ is $x_3$-long and $x_3$ is $x_2$-long; or
-\item $\nu(T) = 3$ and $E(T)$ contains long $x_1,x_2,x_3 \in V(T)$ such that $x_1$ is $\set{x_2,x_3}$-long and $x_2$ is $x_1$-long; or
+\item $G$ is not $k$-thin; or
+\item $\nu(T) = 3$ and $V(T)$ contains vertices $x_1,x_2,x_3$ such that $x_1$
+is $x_2$-long, $x_2$ is $x_1$-long, $x_2$ is $x_3$-long, and $x_3$ is $x_2$-long; or
+\item $\nu(T) = 3$ and $V(T)$ contains vertices $x_1,x_2,x_3$ such that $x_1$ is
+$\set{x_2,x_3}$-long, $x_2$ is $x_1$-long, and $x_3$ is long; or
 \item $V(T)$ contains four long vertices $x_1, x_2, x_3, x_4$.
 \end{enumerate}
 
-If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
+%If (1) holds, then $k + 1 = \ceil{\chi_f(Q)} \le k$, a contradiction.
+If (1) holds, then $\chi(Q) = \ceil{\chi_f(Q)}$, which contradicts our choice of
+$Q$ as a counterexample.
 
-If (2) holds, then by Claim 1 we have $\mu(G) \ge 2k - \frac32\Delta(G) + 2$.  Hence Theorem \ref{CriticalMuBound} gives
-\[k + 1 \le \Delta(Q) + 1 - k + \frac34\Delta(G) - 1,\]
+If (2) holds, then Claim 2 implies that $\mu(G) \ge 2k - \frac32\Delta(G) + 2$. 
+Now Theorem \ref{CriticalMuBound} gives
+\begin{align*}
+k + 1 &\le \Delta(Q)+1-\frac{2k-\frac32\Delta(G)+2}2\\
+&=\Delta(Q) + 1 - k +
+\frac34\Delta(G) - 1,
+\end{align*}
 so
 \[2(k + 1) \le \Delta(Q) + 1 + \frac34\Delta(G).\]
 
-Since $\Delta(G) \le k$, this gives
+Substituting $\Delta(G) \le k$ and solving for $k$ gives
 
-\[k + 1 \le \frac45(\Delta(Q) + 1) - \frac35 \le k,\]
-a contradiction.
+\[k  \le \frac45\Delta(Q) - \frac45 < \frac56\Delta(Q)+\frac12 \le k,\]
+which is a contradiction.
 
-Suppose (3) holds.  So
+Suppose (3) holds.  
+Now \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
+so Claim 3 implies
+\[3\parens{\frac23\Delta(G) -2} \ge 2k+2,\]
+which is a contradiction, since $\Delta(G) \le k$.
+
+Suppose (4) holds.  Now
 \[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
-using Claim 2, this gives
-\[3\parens{\frac23\Delta(G) -\frac43} \ge 2k+2,\]
-a contradiction since $\Delta(G) \le k$.
-
-Suppose (4) holds.  So
-\[2 + \sum_{i \in \irange{3}} k - d(x_i) \le k,\]
-using Claims 1 and 3, this gives
-\[-\parens{\frac85 + \frac75 + 1} + \parens{\frac35 + \frac{13}{20} + \frac34}\Delta(G)\ge 2k+2,\]
+so Claims 2 and 4 give
+\[ \parens{\frac35 + \frac{13}{20} + \frac34}\Delta(G)-\parens{\frac{34}{15} + \frac{16}{15} + 1}\ge 2k+2,\]
 which is
-\[-4 + 2\Delta(G) \ge 2k+2,\]
-a contradiction since $\Delta(G) \le k$.
+\[2\Delta(G) -\frac{13}3\ge 2k+2,\]
+again a contradiction, since $\Delta(G) \le k$.
 
 
-So (5) must hold.  But then
+So (5) must hold.  But now
 \[2 + \sum_{i \in \irange{4}} k - d(x_i) \le k,\]
-using Claim 1 gives
+so using Claim 2 gives
 \[4\parens{\frac34\Delta(G) - 1} \ge 3k+2,\]
 a contradiction since $\Delta(G) \le k$.
 \end{claimproof}
 
+This finishes the final case of Claim~5, which proves the theorem.
 \end{proof}
 
+In the previous theorem, we showed that 
+$\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) +
+3}{6}}}$.  Now we show that if the maximum is attained by the second argument,
+then $G$ satisfies the $\frac56$-Conjecture.
+We use the following lemma, which is implicit in~\cite{rabern2011strengthening}.
 
-To take care of the $k = \Delta(G)$ case. The fan equation gives (see the proof in strengthening Brooks paper).
 \begin{lem}\label{CriticalMuBoundOtherWay}
 If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 \[\chi(Q) \leq \max\left\{\Delta(G), \Delta(Q) + 1 + 2\mu(G) - \Delta(G)\right\}.\]
 \end{lem}
+\begin{proof}
+The fan equation implies this (see the proof in strengthening Brooks paper).
+\end{proof}
 
-Suppose $k = \Delta(G)$.  Then Lemma \ref{CriticalMuBoundOtherWay} gives
+%To take care of the $k = \Delta(G)$ case. 
+
+\begin{cor}
+If $Q$ is the line graph of $G$, then
+\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \frac56\Delta(Q)+ \frac43}.\]
+\label{mainCor}
+\end{cor}
+\begin{proof}
+Since $\ceil{\frac56\Delta+\frac36}\le\frac56\Delta+\frac86$, the bound follows
+directly from Theorem~\ref{mainhelper} unless we have $k +1=\chi'(G)=
+\Delta(G)+1$.  So assume this is true.
+Now Lemma \ref{CriticalMuBoundOtherWay} gives
 \[k + 1 = \chi(Q) \le \Delta(Q) + 1 + 2\mu(G) - k,\]
-so
+so solving for $\mu(G)$ gives
 \[\mu(G) \ge k - \frac{\Delta(Q)}{2}.\]
 Applying Theorem \ref{CriticalMuBound} gives
 \[k+1 = \chi(Q) \le \Delta(Q) + 1 - \frac{k - \frac{\Delta(Q)}{2} - 1}{2},\]
-and hence
+and solving for $k+1$ yields
 \[k+1 \le \frac56\Delta(Q) + \frac43.\]
+\end{proof}
 
 \newpage
 
-\section{The $\frac56$-Conjecture}
+\section{With slack variables}
 \begin{lem}
-If $H$ is a connected multigraph and $G = L(H)$, then $\W(H) \le
-\max\{\omega(G), \frac56(\Delta(G) + 1) + \frac36\}$.
+Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$.  
+If $k = \epsilon\parens{\Delta(Q) + 1} + \beta$, then for all $x \in V(G)$,
+\[\card{N(x)} = \frac{\epsilon\parens{|G| - \Delta(G) - d_G(x) - 1 + S_1 + S_2 + S_3\parens{\card{G} - 1}}}{(1-\epsilon)\Delta(G) - \epsilon d_G(x) + 1 - \beta + S_3},\]
+where 
+\[S_1 \DefinedAs \sum_{v \in N(x)} \Delta(Q) - d_Q(xv),\]
+\[S_2 \DefinedAs 2 + \sum_{v \in V(G) \setminus N(x)} \Delta(G) - d_G(v),\]
+\[S_3 = k - (\Delta(G) + 1).\]
 \end{lem}
 \begin{proof}
-%$M = |N(x)|$,
-Let $d = d_H(x)$,  $\Delta = \Delta(H)$, and $h = |H|$. 
-Also, let $p = \sum_{v \in N(x)} d_H(v)$ and
-%Here's a way that seems a little simpler to me.  
-let $t = \Delta h-2||H||$.
-Note that $0 < t \le \Delta$.  Also $p \ge Md - t$.  Now summing over $N_H(x)$
-gives
-
-\begin{align*}
-|N(x)|(\Delta h-t)/(h-1) > 5/6((|N(x)|-1)d + |N(x)|\Delta - t) + |N(x)|/2
-\end{align*}
-
-Solving for $|N(x)|$ gives
-
-\begin{align*}
-|N(x)| < (5d+5t)/(3+5d+5\Delta-6(\Delta h-t)/(h-1)).
-\end{align*}
-
-Since the numerator and denominator are linear in $t$, the right side is
-maximized at one end of the interval $1 \le t \le D$.  Letting $t = D$,
-gives $|N(x)| < (5d+5\Delta)/(3+5d-\Delta)$, like you had originally.  Letting $t = 1$,
-gives $|N(x)| < (5d+5)/(3+5d+5\Delta-6(\Delta h-1)/(h-1))$, which requires a little more
-analysis, akin to what you wrote in your most recent email.
-
-Does that look right to you?
-
-
-
-I did the analysis a little differently, but I got to the same
-conclusion: Substituting $d \ge 4D/5$ gives that if $M \ge 3$, then we
-must have $h \le 4$, which implies $h \le 3$, which contradicts $M \ge 3$.
-
-So, I think I believe it.  I also agree there must be an easier way.
-One thing that seems a little magical is that when $5/6 - M/(h-1) \ge 0$
-all of the h's go away.
-
-$w(H)$ really has a ceiling in its definition, not sure how much that changes
-things.   without, it is the fractional chromatic index.
-
-i think we get some gain as well from the $\Delta(H) + 2$ in place of $\Delta(H)$
-we get as i wrote in the previous emails.   Maybe this helps with the ceiling.
-
-We can use $|H|$ odd to get a bit better on the ceiling in what you wrote since the top is even (divide both by two before doing ceiling approximation).
-
-Thinking about your comment that we can assume H is critical, we can,  but not how i was setting it up.   Probably you are already thinking something like this:
-
-Assume Goldberg.   Take minimum counterexample to 5/6 conjecture, say 
-$G = L(H)$.   The $H$ is critical.  From the argument like in strengthening of
-Brooks,  we get $\chi(G) \ge \Delta(H) + 2$.  By Goldberg this implies
-
-\begin{align*}
-\chi(G) = \max_{Q \subseteq H \mbox{ s.t.~$|Q|\ge 3$ and odd
-}}\ceil{\frac{2||Q||}{|Q| - 1}}
-\end{align*}
-
-If the max is achieved at a proper subgraph of $H$, then there is an edge we
-can remove without decreasing the max, but this decreases the chromatic number
-by criticality and the max is a lower bound, so impossible. Therefore, $|H|$ is odd and
-
-\begin{align*}
-\chi(G)  =  \ceil{\frac{2||H||}{|H| - 1}}
-\end{align*}
-
-so,
-
-\begin{align*}
-\ceil{\frac{2||H||}{|H| - 1}} \ge \Delta(H) + 2
-\end{align*}
-
-\begin{align*}
-2||H|| / (|H| - 1) \ge \Delta(H) + 1
-\end{align*}
-using 
-\begin{align*}
-\Delta(H)|H| \ge 2||H||,
-\end{align*}
-
-using $\Delta(H)|H| \ge 2||H||$, I get
-
-\begin{align*}
-\Delta(H) \ge |H| - 1,
-\end{align*}
+Since $G$ is critical and elementary, $\card{G}$ is odd and
+\begin{equation}\label{eq1}
+k = \frac{2(\size{G} - 1)}{\card{G} - 1}.
+\end{equation}
+Let $x \in V(G)$, put $M \DefinedAs \card{N(x)}$ and 
+\[P \DefinedAs \sum_{v \in N(x)} d_G(v).\] 
+Then
+\begin{equation}\label{eq2}
+2(\size{G} - 1) = \Delta(G)(|G| - M) - S_2 + P.
+\end{equation}
+Since 
+\[\frac{2(\size{G} - 1)}{\card{G} - 1} = k = \Delta(G) + 1 + S_3,\]
+using \eqref{eq2}, we get
+\[P = (|G| - 1)(\Delta(G) + 1 + S_3) - \Delta(G)(|G| - M) + S_2,\]
+which is
+\begin{equation}\label{eq3}
+P = \Delta(G)(M-1) + |G| - 1 + S_2 + S_3(|G| - 1).
+\end{equation}
+Also, using $k = \epsilon\parens{\Delta(Q) + 1} + \beta$, we get
+\[kM = \beta M + \epsilon S_1 + \epsilon\sum_{v \in N(x)} d_G(x) + d_G(v) - \mu(xv),\]
+Since $\sum_{v \in N(x)} \mu(xv) = d_G(x)$,we have
+\begin{equation}\label{eq4}
+kM = \beta M + \epsilon S_1 + \epsilon d_G(x)(M - 1) + \epsilon P.
+\end{equation}
+Plugging \eqref{eq3} into \eqref{eq4} and solving for $M$ gives
+\[M= \frac{\epsilon\parens{|G| - \Delta(G) - d_G(x) - 1 + S_1 + S_2 + S_3\parens{\card{G} - 1}}}{(1-\epsilon)\Delta(G) - \epsilon d_G(x) + 1 - \beta + S_3},\]
+as desired.
 \end{proof}
 
-%About  the partial results.   Supposing we have the bound on w(H) to be good enough for Golberg (or at least the partial result we want to use),
+\begin{lem}
+Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
+If $k = \parens{\Delta(Q) + 1} + \beta$, then for all $x \in V(G)$,
+\[\card{N(x)} = \frac{5\parens{|G| - \Delta(G) - d_G(x) - 1 + S_1 + S_2 + S_3\parens{\card{G} - 1}}}{\Delta(G) - 5 d_G(x) + 6(1 - \beta + S_3)},\]
+where 
+\[S_1 \DefinedAs \sum_{v \in N(x)} \Delta(Q) - d_Q(xv),\]
+\[S_2 \DefinedAs 2 + \sum_{v \in V(G) \setminus N(x)} \Delta(G) - d_G(v),\]
+\[S_3 = k - (\Delta(G) + 1).\]
+\end{lem}
+\end{lem}
+
+Now, we must have $|N(x)| = 2 + S_4$ for some $S_4 \ge 0$.  Putting this in and computing gives
+
+\[(5+5S_4)d_G(x) = (7 + S_4)\Delta(G) - 5|G| + 17 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4 - 5S_1 - 5S_2.\]
+
+Since $x \in V(G) \setminus N(x)$, we always have
+\[S_2 \ge 2 + \Delta(G) - d_G(v),\]
+using this and $S_1 \ge 0$ gives
+\[(5S_4)d_G(x) = (2 + S_4)\Delta(G) - 5|G| + 7 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4.\]
+This implies
+\[d(x) \le \frac{3}{5} \Delta(G),\]
+whenever $S_4 \ge 1$ and
+\[- 5|G| + 7 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4 + Z\le 0,\]
+where
+\[Z \DefinedAs  \parens{\frac{\card{N(x)}}{5\card{N(x)} - 10} - \frac35}}\Delta(G).\]
+Note that $Z \le 0$. This simplifies to
+\[- 5|G| + 13 - (12 + 6S_4)\beta + S_3(-5|G| + 17 + 6S_4) + Z  \le 0,\]
+In our application, we have $\beta \ge -\frac13$, so we need
+\[- 5|G| + 17 + 2S_4 + S_3(-5|G| + 17 + 6S_4) + Z\le 0,\]
+in particular, we are good if
+\[|G| \ge \frac{17 + 6S_4}{5} + \frac{5Z}{1 + S_3},\]
+getting rid of $S_3, S_4$, this is
+\[|G| \ge 1 + \frac65\card{N(x)} + \frac{5Z}{k - \Delta(G)}.\]
+If $\card{N(x)} = 3$, we are good since $\card{G} \ge 5$.  Otherwise, ... 
+
+\section{The $\frac56$-Conjecture}
+\label{sec:56}
+%\begin{comment}
+\begin{lem}
+\label{56helper}
+Let $H$ be an elementary multigraph and let $J$ be the underlying simple graph.
+If $H$ is a minimal counterexample to the $\frac56$-Conjecture, then
+$J$ is the a subdivision of (i) a cycle with a chord, 
+(ii) a copy of $K_4$,
+(iii) a cycle with two
+chords with disjoint sets of endpoints, or 
+(iv) a cycle with two chords with a common endpoint.
+\end{lem}
+We assume that $H$ is elementary, and that $H$ is a minimal counterexample to
+the $\frac56$-Conjecture.  We will show that if a vertex $v\in V(H)$ has more
+than two neighbors, then $d(v)$ is small.  In particular, if $|N(v)|\ge 3$, then
+$d(v)<$ and if $N(v)|\ge 4$, then $d(v)<$.  An immediate consequence of the
+first inequality is that $H$ has at most four vertices $v$ with $|N(v)|\ge 3$.
+%We are attempting to prove Goldberg implies $\frac56$ bound. 
 %
-%partial results are like
-%
-%\chi'(H) \le max(\Delta(H) + sqrt(\Delta(H) / 2),  ceiling(w(H)))
-%
-%so we can use s = sqrt(\Delta(H) / 2) in the more general bound we get from strengthening brooks (first email).
+%Assume Goldberg.
+
+Let $H$ be a minimal counterexample to $\frac56$-conjecture. Then $\chi'(H) \ge
+\Delta(H) + 2$, so by Goldberg we have $\chi'(H) = \ceil{\W(H)} >
+\ceil{\frac{5\Delta(L(H)) + 3}6}$.  Suppose $Q \subseteq V(H)$ achieves max in
+$\ceil{\W(H)}$.  If there is $e \in E(H) \setminus E(Q)$, then removing it we get
+$\chi'(H-e) < \chi'(H)$, but $\ceil{\W(H-e)} = \ceil{\W(H)}$, so  $\chi'(H) >
+\chi'(G-e) \ge \ceil{\W(H-e)} =  \ceil{\W(H)} = \chi'(H)$, a contradiction. Hence $Q
+= H$.
+
+Choose $x \in H$, and let $M = |N(x)|$ and $p = \sum_{v \in N(x)} d_H(v)$.
+
+\begin{align}
+\W(H) & = \ceil{\frac{2||H||}{|H| - 1}} \\
+& \le \frac{2||H|| + |H| - 3}{|H|-1}  \nonumber \\
+& \le \frac{\Delta(H)(|H| - M) + p + |H| - 3}{|H|-1} \nonumber
+\end{align}
+
+Also, summing $\W(H) > \frac56(\Delta(G) + 1)$ over all $v \in N(x)$, and using
+$\sum_{y\in N(x)}\mu(xy)\le d(x)$, gives
+
+\begin{align}
+\W(H)M & >  \frac56\sum_{y\in N(x)}d(x)+d(y)-\mu(xy) \nonumber \\
+& \ge \frac56((M-1)d(x) + p).
+\end{align}
+
+So, with (1),
+
+\begin{align*}
+ \frac56((M-1)d(x) + p) <  M\frac{\Delta(H)(|H| - M) + p + |H| - 3}{|H|-1}.
+\end{align*}
+
+Thus
+
+\begin{align}
+\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} - \frac56(M-1)d(x) > \left(\frac56 -
+\frac{M}{|H| - 1}\right)p
+\end{align}
+
+Since,
+$\ceil{\W(H)} = \chi'(H) \ge \Delta(H) + 2$, we have
+$\frac{2||H||}{|H| - 1} + 1 \ge \Delta(H) + 2$ (here the `+1' on the left comes
+from the ceiling).
+%actually only need a bit less)
+So,
+
+\begin{align*}
+2||H|| \ge |H|\Delta(H) + |H| - 1 - \Delta(H),
+\end{align*}
+which implies that
+
+\begin{align}
+p \ge (M-1)\Delta(H) + |H| - 1.
+\end{align}
+
+Now substituting (4) into (3) gives
+
+\begin{align*}
+\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} - \frac56(M-1)d(x) > \left(\frac56 -
+\frac{M}{|H| - 1}\right)((M-1)\Delta(H) + |H| - 1)
+\end{align*}
+
+\begin{align*}
+\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} + M\frac{(M-1)\Delta(H) %+ |H| - 1
+}{|H| - 1}+M > \frac56(M-1)(d(x) + \Delta(H)) + \frac56(|H| - 1)
+\end{align*}
+
+\begin{align*}
+M(\Delta(H) + 2) - \frac{2M}{|H| - 1} &>  \frac56(M-1)(d(x) + \Delta(H)) + \frac56(|H|
+- 1) \\
+&= \frac56M(d(x) + \Delta(H)) - \frac56(d(x) + \Delta(H)) + \frac56(|H| - 1)\\
+\left(\frac{\Delta(H)}6 - \frac56d(x) + 2\right)M &> \frac{2M}{|H| - 1} + 
+\frac56(|H| - 1) - \frac56(d(x) + \Delta(H))\\
+(\Delta(H) - 5d(x) + 12)M &> \frac{12M}{|H| - 1} +  5(|H| - 1) - 5(d(x) +
+\Delta(H))\\ & > 5(|H| - 1) - 5(d(x) + \Delta(H))\\
+M &< 5\frac{d(x) + \Delta(H) + 1 - |H|}{5d(x) - \Delta(H) - 12}
+\end{align*}
+The final inequality follows from the previous one because
+$\Delta(H)-5d(x)+12<0$, since: WHY???\\
+We want to find bounds on $d(x)$ that ensure $M$ is small.  To this end, we
+write $M<2+Y$, for some expression $Y$ and solve $Y<1$ to get the desired bounds
+on $d(x)$.
+
+\begin{align*}
+M &< \frac{10d(x) - 2\Delta(H) - 24}{5d(x) - \Delta(H) - 12} + \frac{7\Delta(H) -
+5d(x) + 29 - 5|H|}{5d(x) - \Delta(H) - 12} \\
+&= 2 + \frac{7\Delta(H) - 5d(x) + 29 - 5|H|}{5d(x) - \Delta(H) - 12}.
+\end{align*}
+So $M\le 2$ when
+
+\begin{align*}
+7\Delta(H) - 5d(x) + 29 - 5|H| < 5d(x) - \Delta(H) - 12
+\end{align*}
+which simplifies to
+
+\begin{align*}
+d(x) > \frac{8\Delta(H) + 41 - 5|H|}{10}.
+\end{align*}
+
 
 
 \bigskip
@@ -675,62 +1185,258 @@ $|B|=4$ is a subdivided $K_4$ or a subdivision of a 4-cycle where one
 matching has multiplicity 2.
 $|B|=3$ is a subdivision of a triangulated 5-cycle.  I haven't worked
 out those cases, but I don't think they should be too hard.
-\newpage
 
 \begin{lem}
-\label{lem-A}
-Suppose $G=L(H)$ and $G$ is a minimal counterexample to the
-$\frac56$-Conjecture.  Let $k = \frac56(\Delta(G)+1)$.  If $T$ is a Tashkinov
-tree w.r.t.~a $k$-edge-coloring $\vph$ of $H-e$, then
-\begin{align*}
-\sum_{v\in V(T)}d_H(v)(5d_T(v)-6) &\le -12 + 5\sum_{e\in E(T)}\mu_H(e)
-\end{align*}
+If $H$ %is an elementary graph that 
+is a minimal counterexample to the $\frac56$-Conjecture, then $H$ has no
+path of three or more vertices of degree two.
+\label{no3path}
+\end{lem}
+\begin{proof}[Proof Ideas]
+%So a natural thing to try is to rule out long paths of 2-vertices.  
+That lemma from strengthening Brooks is
+helpful because it shows that $\mu(G) \le \Delta(G)/3$.  Using that I
+showed that $G$ can't have any path of 3 or more 2-vertices.  For 4 or
+more, I think you can just delete those edges, then extend the
+coloring.  For exactly 3, it looks like we can contract two of those
+edges on the path (then possibly reduce the multiplicity of the
+remaining edges on the path, so we don't increase $\Delta(G)$). 
+From that coloring, it seems like we can extend fairly easily
+(after possibly uncoloring some of them).
+\end{proof}
+
+\begin{lem}
+If $H$ is an elementary multigraph that is critical, then $|V(H)|$ is odd.
+\label{elem-odd}
 \end{lem}
 \begin{proof}
-Since $T$ is elementary, the sets of colors missing at vertices of $T$ are
-disjoint, so $2+\sum_{v\in V(T)}(k-d_H(v))\le k$.  Rewriting this gives
-$k(|V(T)|-1)\le -2 + \sum_{v\in V(T)}d_H(v)$.  
-For each edge $xy\in E(T)$, we
-have $k = \frac56(\Delta(G)+1)\ge \frac56(d_H(x)+d_H(y)-\mu_H(xy))$.
-Summing over all $|T|-1$ edges gives
-\begin{align*}
--2 + \sum_{v\in V(T)} d_H(v) &\ge k(|V(T)|-1) \\
-&\ge \frac56(\Delta(G)+1)(|T|-1) \\
-&\ge \frac56 \sum_{uv\in E(T)}(d_H(u)+d_H(v)-\mu_H(uv)) \\
-& = \frac56\sum_{v\in V(T)}d_H(v)d_T(v)-\frac56\sum_{uv\in E(T)}\mu_H(uv)
-\end{align*}
-
-To prove the lemma, we take the first and last expressions in the inequality
-chain, multiply by 6, then rearrange terms.
+Proof is from Scheinerman and Ullman, Section 4.2.  The basic idea is to show
+that if $|V(H)|$ is odd, and $v\in V(H)$ with $d(v)=\delta(H)$, then
+$\chi'(H-v)\ge \chi'(H)$, so $H$ is not critical.
 \end{proof}
 
-\begin{cor}
-If $G=L(H)$ and $G$ is a minimal counterexample to the
-$\frac56$-Conjecture, then each $x\in V(H)$ is special if $d_H(x) >
-\frac34\Delta(H)-3$.  
-\end{cor}
+\begin{thm}
+The $\frac56$-Conjecture is true.  That is, if $Q$ is the line graph of a
+multigraph, then $\chi(Q)\le \max\{\omega(Q),\frac{5\Delta(Q)+8}6\}$.
+\end{thm}
 \begin{proof}
-Suppose that $x$ is a non-special vertex.  Choose $e$ incident to $x$ and a
-$k$-edge-coloring $\vph$ of $G-e$ such that there exists a Vizing fan $T$
-rooted at $x$ with $|T|\ge 4$.  Since every edge in $F$ is incident to $x$, we
-have $\sum_{e\in E(T)}\mu_H(e)\le d_H(x)$.
-From Lemma~\ref{lem-A}, we have 
+Suppose the theorem is false and let $H$ be a minimal counterexample.  By
+Corollary~\ref{mainCor}, we know that $H$ is elementary.  By
+Lemma~\ref{no3path}, we also know that the underlying simple graph $J$ of $H$
+has no path of three or more consecutive 2-vertices.
+By Lemma~\ref{56helper}, we know that $J$ is a subdivision of 
+(i) a cycle with a chord, (ii) a copy of $K_4$, (iii) a cycle with two chords
+with disjoint sets of endpoints, or (iv) a cycle with two chords with a common
+endpoint.  We consider these four possibilities in succession.  In each case we
+find a small dominating set $S$ in the line graph $Q$ of $H$ and sum
+$\frac56(1+d_Q(v))$ over all $v\in S$ to show that
+$\chi(Q)=\ceil{\frac{2|E(H)|}{|V(H)|-1}}\le \ceil{\frac{5\Delta(Q)+3}6}$.
+
+(i) Suppose that $H$ is a subdivision of a cycle with a chord, i.e., $J$
+consists of two 3-vertices joined by three internally disjoint paths, each
+with length between 1 and 3 (by Lemma~\ref{no3path}).  
+%Call these 3-vertices $v_1$ and $v_2$, and 
+Denote these three paths by $A$, $B$, and $C$.  By
+symmetry, assume that $|A|\le |B|\le |C|$.  A priori, we have ${5\choose 3}$
+possibilities for the lengths of $A$, $B$, and $C$.  However, by
+Lemma~\ref{elem-odd}, we know that $|V(H)|$ is odd, so $|A|+|B|+|C|$ is even.  
+Thus, $(|A|,|B|,|C|)\in\{(1,1,2),(1,2,3),(2,2,2),(2,3,3)\}$.
+The first case is trivial, since $Q$ is a clique.  So assume $|A|=1$, $|B|=2$,
+and $|C|=3$.  By considering an initial edge $e_1$ and a final edge $e_2$ of
+$C$, we get $2(\frac56(\Delta(Q)+1))\ge
+\frac56((d_Q(e_1)+1)+(d_Q(e_2)+1))\ge\frac56(|E(H)|+2)$. Now
+$\frac56(\Delta(Q)+1)\ge\frac5{12}(|E(H)|+2)$, which gives
+$\frac{5\Delta(Q)+3}6>\frac{|E(H)|}2$, so taking ceilings gives the desired
+bound on $\chi'(H)$.  When $|A|=|B|=|C|=2$, essentially the same argument works,
+but now we consider an initial edge on $A$ and a final edge on $B$.
+Finally, suppose $|A|=2$ and $|B|=|C|=3$.  Now we take an initial edge on $B$
+and a final edge on $C$.  This gives $2(\frac56(\Delta(Q)+1))\ge\frac56|E(H)|$, so
+$\frac{5\Delta(Q)+3}6\ge\frac5{12}|E(H)|-\frac13\ge\frac13|E(H)|$, since
+$|E(H)|\ge 4$.  Again, taking ceilings gives the desired bound on $\chi'(H)$.
+
+
+Before considering further possibilities for $J$ we prove the
+following claim, which generalizes the approach we took in (i) above.
+We use this claim repeatedly in the rest of the proof.
+
+\begin{clm}
+Let $S$ be a subset of $j$ vertices in $Q$ such that each vertex $w$ of $Q$ appears in
+the closed neighborhood of at least $k$ vertices in $S$ 
+%i.e. $\sum_{v\in S}|\{w\}\cap N[v]|\ge k$ 
+and such that $\sum_{v\in S}|N[v]|\ge k|V(Q)|+\ell$, for some positive integers
+$j$, $k$, $\ell$.  Now $H$ satisfies the $\frac56$-Conjecture when $\frac{5k}{6j}\ge
+\frac2{|V(H)|-1}$ and $|E(H)|(\frac{5k}{6j} - \frac2{|V(H)|-1}) \ge
+\frac56\left(\frac25 - \frac{l}j\right)$.  In particular, this is true when
+$\frac{5k}{6j}\ge \frac2{|V(H)|-1}$ and $\frac{\ell}{j}\ge\frac25$. 
+\end{clm}
+\begin{claimproof}
+The second statement follows from the first, since the left side is nonnegative
+and the right side is nonpositive.  Now we prove the first statement.
+We have 
 \begin{align*}
--12+5d_H(x) &\ge -12+5\sum_{e\in E(T)}\mu_H(e) \\
-& \ge \sum_{v\in T}(5d_T(v)-6)d_H(v) \\
-& \ge (5d_T(x)-6)d_H(x)+\sum_{v\in T-x}(5d_T(v)-6)d_H(v) \\
-& = (5(|T|-1)-6)d_H(x)-\sum_{v\in V(T-x)}d_H(v),
+j\frac56(\Delta(Q)+1) &\ge \sum_{v \in S}\frac56(d_Q(v)+1)\\ 
+& = \frac56(k|V(Q)|+\ell) \\ 
+&= \frac{5k}6|E(H)|+\frac{5\ell}6\\
+\frac{5\Delta(Q)+3}6 &\ge
+\frac{5k}{6j}|E(H)|+\frac{5}6\left(\frac{\ell}{j}-\frac25\right).
 \end{align*}
-where the final equality holds because each vertex $v\in T-x$ is a leaf.
-Now rearranging terms gives
-\begin{align*}
--12 + \sum_{v\in V(T-x)}d_H(v) & \ge (5(|T|-1)-11)d_H(x)\\
--12 + (|T|-1)\Delta(H) & \ge (5(|T|-16)d_H(x)\\
-d_H(x) & \le \frac{-12+(|T|-1)\Delta(H)}{5|T|-16}\\
-d_H(x) & \le \frac{-12+3\Delta(H)}{4} = \frac34\Delta(H)-3,
-\end{align*}
-where the final inequality holds because $|T|\ge 4$ and the right side decreases
-as a function of $|T|$.
+To show that $H$ satisfies the $\frac56$-Conjecture,
+it suffices to show that the final expression is at least
+$\frac{2|E(H)|}{|V(H)|-1}$, and this follows immediately from the hypothesis.
+\end{claimproof}
+
+
+(ii) and (iii) Suppose that $J$ is a subdivision of $K_4$ or a subdivision
+of a cycle with two chords with no common endpoint; for brevity, we write these
+two cases as $K'_4$ and $C'_4$.  Now we have
+$|V(H)|\in\{15,13,11,9,7,5\}$.  Note that always $|E(J)|=|V(J)|+2$.  Let $T$
+denote the four vertices of degree 3 in $J$.
+It is useful to observe that if at most four of the paths in $J$ with endpoints in
+$T$ have length 3, then $Q$ has a dominating set of size four.  For reference,
+we call this Fact 1.  The idea of the proof is to
+choose an edge incident to each vertex in $S$ such that we choose one edge from
+each path of length 3.  It is straightforward to check that we can do this (up
+to symmetry, when $J$ is $K'_4$ we have only two possibilities for the paths of
+length 3 and when $J$ is $C'_4$ we have four possibilities).
+
+Suppose $|V(H)|=15$.  Choose an arbitrary middle edge $e$ of some path of length
+3 and contract it. By Fact~1, $Q-e$ has a dominating set $S$ of size 4, so
+$S\cup\{e\}$ is a dominating set of size 5 with $\sum_{v\in
+S\cup\{e\}}|N_Q(v)|\ge |V(Q)|+2$.  Thus, we are done by Claim 1, with $j=5$,
+$k=1$, and $\ell=2$, since $\frac2{|V(H)|-1}=\frac17$.
+
+Suppose $|V(H)|=13$.  By Fact~1, $Q$ has a dominating set of size 4.
+We use Claim~1 with $j=4$, $k=1$, and $\ell\ge 0$.  Cleary, $\frac5{24}\ge
+\frac16$.  Also $|E(H)|\ge \frac13/(\frac{5}{24}-\frac16)=8$, so we are
+done.
+
+Suppose $|V(H)|=11$. Again, by Fact~1, $Q$ has a dominating set of size 4.
+%we get $4(\frac56(\Delta(Q)+1)\ge\frac56(|E(H)|+3)$, which is
+Now we use Claim~1 with $j=4$, $k=1$, and $\ell\ge 3$.
+(That $\ell\ge3$ comes from the fact that $|E(J)|=13$ but the sum of sizes
+of closed neighborhoods in $Q$ is at least $4(4)=16$.)  
+
+Suppose $|V(H)|=9$.
+Now $|E(H)|=9+2=11$. So among paths in $J$ joining vertices of $T$, the number
+with length 1 is one more than that with length 3.  In particular, at least one
+such path has length 1 and at most two have length 3.
+We use these observations to find a dominating set $S$ in $Q$ of size 3.
+We choose one edge $e$ on a path of length 1, say with endpoints $v_1$ and $v_2$,
+where $T=\{v_1,v_2,v_3,v_4\}$.  Now we must also choose edges incident to $v_3$
+and $v_4$ such that we choose one edge from each path of length 3.  To succeed,
+we must choose $e$ that (a) does not form a triangle with two paths of length 3,
+when $J=K'_4$, (b) does not share both endpoints with a path of length 3, when
+$J=C'_4$, and (c) does not share a common endpoint $v_i$ with two paths of
+length 3, when $J=C'_4$.  That we can choose such an $e$ follows from the fact
+that $J$ has more paths of length 1 than of length 3.  Now we apply Claim~1 with
+$j=3$, $k=1$, and $\ell\ge 2$.  (Note that $\ell\ge 5+4+4-|E(H)|=2$, since the
+size of each closed neighborhood in $Q$ of an edge in $S$ is at least 4 and that
+of $e$ is 5.)
+
+Suppose $|V(H)|=7$.  Now the lengths of the paths, with multiplicity, are either
+(a) $2,2,2,1,1,1$ or (b) $3,2,1,1,1,1$.  First assume that $J=C'_4$.  
+Note that no two paths of length 1 can share both endpoints, since $J$ would be
+non-simple, which is a contradiction.  
+Suppose that we are in (a).  Now there
+exist two paths of length 1 that do not share any
+endpoints, so the edges of these paths form a dominating set in $Q$; we
+apply Claim~1 with $j=2$, $k=1$, and $\ell=0$ (using that $|E(H)|\ge 4$).
+%If no such two paths of length 1 exist, then two paths of 
+%length 2 share both endpoints and two paths of 
+%length 1 share both endpoints, so $J$ is not simple, which is a contradiction.
+So now suppose that we are in (b).  Now $J$ contains a 7-cycle, which consists
+of the edges of all paths except for two of length 1.  Now taking $S$ to be the
+edges of the 7-cycle, we apply Claim~1 with $j=7$, $k=3$, and $\ell\ge 2$
+(since each path of length 1 not in the 7-cycle has four incident edges on that
+cycle).  This concludes the case $J=C'_4$.
+
+Now assume that $J=K'_4$.  
+%Suppose that the path lengths are as in (a).
+%So instead the path lengths are as in (b).  
+First suppose that $J$ contains a 7-cycle such
+that the two edges excluded from it each have four incident edges on the cycle.
+In this case we, we apply Claim~1 with $j=7$, $k=3$, and $\ell=2$.  This covers
+all of (b), as well as the case of (a) when the three paths of length 2 together
+form a path of length 6.  So assume instead that we are in (a) and either the
+three paths of length 2 have a common endpoint or they form a 6-cycle.
+In the former case, let $S$ consist of the three edges of these paths not
+incident to their common endpoint.
+%In the former case, let $S$ consist of three independent edges of this 6-cycle.
+In the latter case, let $S$ be the edges of the three paths of length 1.
+In each case we apply Claim~1 with $j=3$, $k=1$, and $\ell=3$.
+
+Finally, suppose that $|V(H)|=5$.  As above, no two paths of length 1 can share
+both endpoints, since $J$ would be non-simple, which is a contradiction.  
+Thus, we must have $J=K'_4$.  Let $e$ be the edge of $J$ with no endpoint in
+common with the path of length 2, and let $S=E(J)-e$.  Now we apply Claim~1 with
+$j=6$, $k=4$, and $\ell=0$ (and using $|E(H)|\ge 2$).
+
+(iv) Suppose that $H$ is a subdivision of a cycle with two chords with a common
+endpoint.
+In $J$, let $u_1$, $u_2$, $u_3$ denote the vertices of degree greater than two,
+and assume $d(u_1)=4$ and $d(u_2)=d(u_3)=3$.  Let $A$ and $B$ denote paths from
+$u_1$ to $u_2$, let $C$ and $D$ denote paths from $u_1$ to $u_3$, and let $E$
+denote a path from $u_2$ to $u_3$.  Recall that each path has length at most 3.
+Trivially, we can assume that $|V(H)|>3$, since otherwise the line graph of $H$
+is a clique.  Thus, by Lemma~\ref{elem-odd}, we know that
+$|V(H)|\in\{13,11,9,7,5\}$.
+Let $v_{a_1}$ denote a vertex of $Q$ corresponding to a first edge on $A$ in
+$J$; define $v_{b_i},\ldots,v_{e_i}$ analogously.  
+
+Suppose $|V(H)|=13$.
+%By symmetry, we assume that $|D|=3$, $|C|\ge 2$, and $|B|\ge 2$.
+Let $S=\{v_{a_1},v_{b_2},v_{c_2},v_{d_3},v_{e_1}\}$ and note that $S$ 
+is a dominating set in $Q$.  Furthermore, 
+%when $|V(H)|=15$,  
+both $v_{b_3}$ and $v_{c_3}$ have two neighbors in $S$, so $\sum_{v\in
+S}|N[v]|\ge |V(Q)|+2=|E(H)|+2$.  
+%The same bound holds when $|V(H)|=13$.  
+Thus,
+$5(\frac56(\Delta(Q)+1)\ge\frac56(|E(H)|+2)$, so $\frac{5\Delta(Q)+3}6 \ge
+\frac{|E(H)|}6$, which implies $\ceil{\frac{5\Delta(Q)+3}6}\ge
+\ceil{\frac{|E(H)|}6}\ge\chi(Q)$, as desired.
+
+Suppose $|V(H)|\in\{11,9\}$.  First assume that $J$ has four paths of length
+3; since $|V(H)|\le 11$, the fifth path has length 1.
+By considering an initial and a final edge on each path of length 3, we have
+$8(\frac56(\Delta(Q)+1))\ge \frac56(2|E(H)|+2)$, so
+$\frac{5\Delta(Q)+3}6\ge\frac5{24}|E(H)|-\frac3{24}\ge\frac{|E(H)|}5$, since
+$|E(H)|\ge 15$.  So assume instead that $J$ has at most three paths of length 3.
+
+Now we show that $Q$ has a dominating set of size 3.  Form a bipartite
+graph $\B$ with $u_1$, $u_2$, $u_3$ as one part and the paths of length three as
+the other part.  It is easy to check that $\B$ has a matching saturating the
+paths of length three.  This matching corresponds to a subset of $Q$.  If the
+subset has size less than 3, then extend it to include one edge of $H$ incident to
+each of $u_1$, $u_2$, $u_3$.  Now, $3(\frac56(\Delta(Q)+1))\ge \frac56|E(H)|$,
+so $\frac{5\Delta(Q)+3}6\ge \frac5{18}|E(H)|-\frac13\ge\frac14|E(H)|$, so taking
+ceilings yields the desired bound (the final inequality holds since $|E(H)|\ge
+12$, because $\frac{|E(H)|}{\floor{\frac{|V(H)|}2}}>\Delta(H)\ge d(u_1)=4$).
+%So now we assume that $|V(H)|=7$.
 \end{proof}
+
+%I think I see mostly how to finish the proof.  I just worked out most
+%of the details for subdivisions of cycle+chord and cycle+2chords.
+%Basically, the idea is to find small dominating sets in the line
+%graph.  For the cycle+2chords, in the line graph we can always find a
+%dominating set of size at most 5.  This uses the fact that in the
+%underlying simple graph, we never have a path of 3 or more successive
+%2-vertices, like I wrote earlier.  In the case where H actually has
+%13 vertices (the most possible), we end up with $5(5/6)(\Delta+1) \ge
+%(5/6)|E(H)|$.  Then canceling the 5, and taking the ceiling, we get the
+%desired bound (actually, we need to argue that we can lower the left
+%side by like 1/3 before taking the ceiling, but that is not hard).
+%The case of cycle+chord should be even easier.  Still need to think
+%about the case of $K_4$ with a $2K_2$ of multiplicity 2.
+
+%Using the idea in the proof of Theorem~12 (actually of Lemma~6 in ``Strengthening
+%Brooks''), we can show that $J$ cannot have adjacent 2-vertices.  I also found a
+%paper of Eggan and Plantholt (JCTB '86) that proves Goldberg--Seymour for graphs
+%$G$ that have a $v$ such that $G-v$ is bipartite, which would cut down our
+%search space.  But I don't think that's actually helpful, since we already are
+%assuming Goldberg--Seymour.
+
+\bibliographystyle{plain}
+\bibliography{GraphColoring}
 
 \end{document}

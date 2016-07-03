@@ -1022,11 +1022,11 @@ where
 
 \begin{lem}\label{DegreeBoundedForMiddling}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
-If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$,
+If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$ with $\card{N(x)} \ge 3$,
 \[d_G(x) \le \frac{\card{N(x)}}{5\parens{\card{N(x)} - 2}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
 \end{lem}
 \begin{proof}
-Say $|N(x)| = 2 + S_4$ for some $1 \le S_4 \le \frac58\card{G} - 2$.  Applying Lemma \ref{Slacked56} and simplifying using $S_1 \ge 0$ and $\beta \ge -\frac13$ gives
+Say $|N(x)| = 2 + S_4$ for some $S_4 \ge 1$.  Applying Lemma \ref{Slacked56} and simplifying using $S_1 \ge 0$ and $\beta \ge -\frac13$ gives
 \begin{equation}\label{longeq}
 (5+5S_4)d_G(x) \le (7 + S_4)\Delta(G) - 5|G| + 21 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - 5S_2.
 \end{equation}
@@ -1036,14 +1036,34 @@ Then $S_2 = t + 2 + \Delta(G) - d_G(x)$.  Using this in \eqref{longeq}, we get
 \begin{equation}\label{longeq2}
 5S_4d_G(x) \le (2 + S_4)\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - 5t.
 \end{equation}
-The desired bound follows as long as
+The desired bound follows when $S_4 \le \frac58\card{G} - 2$, since then
 \[- 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 \le 0.\]
-But that follows since $S_4 \le \frac58\card{G} - 2$.
+
+
+So, suppose $S_4 > \frac58\card{G} - 2$. Rearranging, we get
+\begin{equation}\label{longeq2}
+5S_4d_G(x) \le 3S_4\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - (2S_4-2)\Delta(G)
+\end{equation}
+We know that
+\[- 5|G| + 10 + 5S_4 +S_3(-5|G| + 10 + 5S_4) \le 0,\]
+so
+\begin{equation}\label{longeq2}
+5S_4d_G(x) \le 3S_4\Delta(G) + 1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G)
+\end{equation}
+Since $d_G(x) \ge |N(x)| \ge \frac58|G| \ge \frac58\Delta(G)$, we have a contradiction unless
+\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) > 0\]
+By Shannon's bound $S_3 \le \frac{\Delta(G)}{2}$, so 
+\[1 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)+6}{2}S_4 - 2S_4\Delta(G) > 0,\]
+which is
+\[1 + \parens{\frac72 + 2}\Delta(G) > \frac{3\Delta(G)-6}{2}S_4,\]
+so
+\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)+2}{3\Delta(G)-6}.\]
+
 \end{proof}
 
 \begin{cor}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
-If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there are at most two $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$
+If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there are at most two $x \in V(G)$ with $\card{N(x)} \ge 3$
 and if there are two $x_1, x_2$, then $\card{N(x_1)} = \card{N(x_2)} = 3$ and $x_1 \adj x_2$.
 \end{cor}
 \begin{proof}

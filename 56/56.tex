@@ -1009,44 +1009,59 @@ as desired.
 
 Using $\epsilon = \frac56$, we get the following.
 
-\begin{lem}
+\begin{lem}\label{Slacked56}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
 If $k = \frac56\parens{\Delta(Q) + 1} + \beta$, then for all $x \in V(G)$,
 \[\card{N(x)} = \frac{5\parens{|G| - \Delta(G) - d_G(x) - 1 + S_1 + S_2 + S_3\parens{\card{G} - 1}}}{\Delta(G) - 5 d_G(x) + 6(1 - \beta + S_3)},\]
-\end{lem}
-
-
-\begin{lem}
-Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
-If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$,
-\[\card{N(x)} \le ,\]
-where
+where 
+\[S_1 \DefinedAs \sum_{v \in N(x)} \Delta(Q) - d_Q(xv),\]
 \[S_2 \DefinedAs 2 + \sum_{v \in V(G) \setminus N(x)} \Delta(G) - d_G(v),\]
+\[S_3 = k - (\Delta(G) + 1).\]
 \end{lem}
 
-Now, we must have $|N(x)| = 2 + S_4$ for some $S_4 \ge 0$.  Putting this in and computing gives
 
-\[(5+5S_4)d_G(x) = (7 + S_4)\Delta(G) - 5|G| + 17 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4 - 5S_1 - 5S_2.\]
+\begin{lem}\label{DegreeBoundedForMiddling}
+Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
+If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$,
+\[d_G(x) \le \frac{\card{N(x)}}{5\parens{\card{N(x)} - 2}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
+\end{lem}
+\begin{proof}
+Say $|N(x)| = 2 + S_4$ for some $1 \le S_4 \le \frac58\card{G} - 2$.  Applying Lemma \ref{Slacked56} and simplifying using $S_1 \ge 0$ and $\beta \ge -\frac13$ gives
+\begin{equation}\label{longeq}
+(5+5S_4)d_G(x) \le (7 + S_4)\Delta(G) - 5|G| + 21 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - 5S_2.
+\end{equation}
+Put 
+\[t \DefinedAs \sum_{v \in V(G) \setminus N[x]} \Delta(G) - d_G(v).\]
+Then $S_2 = t + 2 + \Delta(G) - d_G(x)$.  Using this in \eqref{longeq}, we get
+\begin{equation}\label{longeq2}
+5S_4d_G(x) \le (2 + S_4)\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - 5t.
+\end{equation}
+The desired bound follows as long as
+\[- 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 \le 0.\]
+But that follows since $S_4 \le \frac58\card{G} - 2$.
+\end{proof}
 
-Since $x \in V(G) \setminus N(x)$, we always have
-\[S_2 \ge 2 + \Delta(G) - d_G(x),\]
-using this and $S_1 \ge 0$ gives
-\[(5S_4)d_G(x) = (2 + S_4)\Delta(G) - 5|G| + 7 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4.\]
-This implies
-\[d(x) \le \frac{3}{5} \Delta(G),\]
-whenever $S_4 \ge 1$ and
-\[- 5|G| + 7 - 12\beta + S_3(-5|G| + 17 + 6S_4) + 6(1-\beta)S_4 + Z\le 0,\]
-where
-\[Z \DefinedAs  \parens{\frac{\card{N(x)}}{5\card{N(x)} - 10} - \frac35}}\Delta(G).\]
-Note that $Z \le 0$. This simplifies to
-\[- 5|G| + 13 - (12 + 6S_4)\beta + S_3(-5|G| + 17 + 6S_4) + Z  \le 0,\]
-In our application, we have $\beta \ge -\frac13$, so we need
-\[- 5|G| + 17 + 2S_4 + S_3(-5|G| + 17 + 6S_4) + Z\le 0,\]
-in particular, we are good if
-\[|G| \ge \frac{17 + 6S_4}{5} + \frac{5Z}{1 + S_3},\]
-getting rid of $S_3, S_4$, this is
-\[|G| \ge 1 + \frac65\card{N(x)} + \frac{5Z}{k - \Delta(G)}.\]
-If $\card{N(x)} = 3$, we are good since $\card{G} \ge 5$.  Otherwise, ... 
+\begin{cor}
+Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
+If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there are at most two $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$
+and if there are two $x_1, x_2$, then $\card{N(x_1)} = \card{N(x_2)} = 3$ and $x_1 \adj x_2$.
+\end{cor}
+\begin{proof}
+Since $G$ is critical and elementary, $\card{G}$ is odd and
+\[\frac{2(\size{G} - 1)}{\card{G} - 1} = k \ge \Delta(G) + 1,\]
+so
+\[2\size{G} \ge \Delta(G)\card{G} + \card{G} - \Delta(G) + 1.\]
+In particular,
+\[\sum_{v \in V(G)} \Delta(G) - d_G(v) \le \Delta(G) - 1 - \card{G}.\]
+By Lemma \ref{DegreeBoundedForMiddling}, every $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$ has $d_G(x) \le \frac35\Delta(G)$, so there are at most two such $x$ since
+$\frac25 + \frac25 + \frac25 > 1$.
+
+Suppose there are two such $x_1, x_2$ with $x_1 \nonadj x_2$.  If $\card{N(x_1)} \ge 4$, then Lemma \ref{DegreeBoundedForMiddling} gives $d_G(x_1) \le \frac25\Delta(G)$ which is impossible because $d_G(x_2) \le \frac35\Delta(G)$.  So, we must have $\card{N(x_1)} = \card{N(x_2)} = 3$.  Since $x_1 \nonadj x_2$, Lemma \ref{DegreeBoundedForMiddling} gives for $i \in \irange{2}$,
+\[d_G(x_i) \le \frac35\Delta(G) - (\Delta(G) - d_G(x_{3-i})),\]
+so
+\[d_G(x_i) - d_G(x_{3-i}) \le -\frac25\Delta(G),\]
+so $d_G(x_1) < d_G(x_2) < d_G(x_1)$, a contradiction.
+\end{proof}
 
 \section{The $\frac56$-Conjecture}
 \label{sec:56}

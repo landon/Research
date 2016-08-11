@@ -106,24 +106,24 @@
 \begin{document}
 \section{Overview}
 
-For every multigraph $G$, we have $\chi'(G)\ge
+By \emph{graph} we mean multigraph without loops. For every graph $G$, we have $\chi'(G)\ge
 \ceil{\frac{|E(G)|}{\floor{|V(G)|/2}}}$, since each color class has size at most
 $\floor{\frac{|V(G)|}2}$.  Likewise, the same bound holds for any subgraph $H$.  
 Thus, let $\W(G)=\max_{H\subseteq G}\ceil{\frac{|E(H)|}{\floor{|V(H)|/2}}}$
 (over all subgraphs $H$ with at least two vertices). Now 
-clearly $\chi'(G)\ge \W(G)$ for every multigraph $G$.  Goldberg~\cite{} and
+clearly $\chi'(G)\ge \W(G)$ for every graph $G$.  Goldberg~\cite{} and
 Seymour~\cite{} each conjectured that this lower bound holds with equality,
 whenever $\chi'(G)>\Delta(G)+1$.
 \begin{GS}
 When $\W(G)$ %\max_{H\subseteq G}\ceil{\frac{|E(H)|}{\floor{|V(H)|/2}}}$ 
 is as above, 
-every multigraph $G$ satisfies
+every graph $G$ satisfies
 \[
 \chi'(G)\le\max\{\W(G), \Delta(G)+1\}.
 \]
 \end{GS}
 The Goldberg--Seymour conjecture is the major open problem in the area of
-edge-coloring multigraphs.
+edge-coloring graphs.
 %The biggest open problem in edge-coloring is 
 %Over the past two decades, the main tool for attacking this problem has become
 %Tashkinov trees, a vast generalization of Vizing fans and Kierstead paths.
@@ -140,14 +140,14 @@ interest, due to their use in approaching the Goldberg--Seymour conjecture.
 
 The main result of this paper is the following theorem.
 \begin{main}[$\frac56$-Theorem]
-If $Q$ the line graph of a multigraph $G$, then 
+If $Q$ the line graph of a graph $G$, then 
 we have $\chi(Q)\le \max\{\omega(Q),\frac{5\Delta(Q)+8}{6}\}$. 
 \end{main}
 
 Most of our work goes toward proving the following
 intermediate result, in Section~\ref{sec:thin}.
 \begin{main2}[Weak $\frac56$-Theorem]
-If $Q$ the line graph of a multigraph $G$, then 
+If $Q$ the line graph of a graph $G$, then 
 $\chi(Q)\le \max\{\W(G),\Delta(G)+1,\frac{5\Delta(Q)+8}{6}\}$. 
 \end{main2}
 Finally, in Section~\ref{sec:56} we show that the Weak $\frac56$-Theorem does indeed imply
@@ -324,7 +324,7 @@ Let $\nu(T)$ be the number of long vertices in a Tashkinov tree $T$.
 
 Now we can outline our proof of the $\frac56$-Conjecture.
 We will show in Section~\ref{sec:56} that the $\frac56$-Conjecture is implied
-by the Goldberg--Seymour Conjecture.  More precisely, if $G$ is a multigraph
+by the Goldberg--Seymour Conjecture.  More precisely, if $G$ is a graph
 such that $\chi'(G)\le\max\{\ceil{\W(G)},\Delta(G)+1\}$, then also $\chi'(G)\le
 \frac{5\Delta(G)+8}6$.  So here it suffices to show that 
 $\chi'(G)\le\max\{\ceil{\W(G)},\Delta(G)+1,\frac{5\Delta(G)+8}6\}$.  We consider
@@ -456,8 +456,86 @@ bound $\chi(G)\le \max_{v\in V(G)}\ceil{\frac{\omega(v)+d(v)+1}2}$, where
 $\omega(v)$ is the size of the largest clique containing $v$, which is now known
 to hold for many classes of graphs, including line graphs~\cite{CKPS}.  Here we
 show that for line graphs this bound is an easy consequence of our more general
-lemmas from Section~\ref{sec:short}.  The following is essentially Lemma~10 from
-\cite{CKPS}.
+lemmas from Section~\ref{sec:short}.  
+
+
+\begin{thm}
+\label{EasyBound2}
+If $G$ is a critical graph that is not a thickened cycle, then
+\[\chi'(G) \le \max\set{\Delta(G) + 1, \ceil{\frac43\dclaw{G}}}.\]
+\end{thm}
+\begin{proof}
+Suppose not and let $G$ be a counterexample. By Theorem \ref{EasyBound}, $G$ is elementary.
+Since $G$ is critical and elementary, $\card{G}$ is odd and
+\begin{equation}\label{eq1}
+k = \frac{2(\size{G} - 1)}{\card{G} - 1}.
+\end{equation}
+Let $x \in V(G)$ with $\card{N(x)} \ge 3$. Put $M \DefinedAs \card{N(x)}$, 
+\[P \DefinedAs \sum_{v \in N(x)} d_G(v),\]
+\[S_2 \DefinedAs 2 + \sum_{v \in V(G) \setminus N(x)} \Delta(G) - d_G(v),\]
+\[S_3 \DefinedAs k - (\Delta(G) + 1).\] 
+Then
+\begin{equation}\label{eq2}
+2(\size{G} - 1) = \Delta(G)(|G| - M) - S_2 + P.
+\end{equation}
+Since 
+\[\frac{2(\size{G} - 1)}{\card{G} - 1} = k = \Delta(G) + 1 + S_3,\]
+using \eqref{eq2}, we get
+\[P = (|G| - 1)(\Delta(G) + 1 + S_3) - \Delta(G)(|G| - M) + S_2,\]
+which is
+\begin{equation}\label{eq3}
+P = \Delta(G)(M-1) + |G| - 1 + S_2 + S_3(|G| - 1).
+\end{equation}
+
+Let $N(x) = \set{v_0, v_1, \ldots, v_{M-1}}$ and consider
+\[R \DefinedAs \sum_{i=0}^{M - 1} \frac13 \parens{d_G(x) + d_G(v_i) + d_G(v_{i+1}) + d_G(v_{i+2})},\]
+where indices are taken modulo $M$.  Since $k \ge \frac43\dclaw{G}$, there is $S_4 \ge 0$ such that
+\[Mk - S_4 = R = \frac{M}{3}d_G(x) + P,\]
+so
+\[Mk = \frac{M}{3}d_G(x) + \Delta(G)(M-1) + |G| - 1 + S_2 + S_3(|G| - 1) + S_4,\]
+which gives, for some $S_5 \ge 0$,
+\[3 + S_5 = M =  \frac{S_2 + (S_3 + 1)(|G| - 1) + S_4 -\Delta(G)}{S_3 + 1 - \frac13d_G(x)}, \]
+hence
+\[(3 + S_5)(S_3 + 1) - \parens{1 + \frac{S_5}{3}}d_G(x) = S_2 + (S_3 + 1)(|G| - 1) + S_4 -\Delta(G),\]
+so
+\[\parens{1 + \frac{S_5}{3}}d_G(x) = \Delta(G)  - (S_2 - 2) + \parens{4 + S_5 - |G|}S_3 + \parens{2 + S_5 - |G|} - S_4.\]
+Suppose $4 + S_5 - |G| \le 0$.  Then
+\[\parens{1 + \frac{S_5}{3}}d_G(x) \le \Delta(G)  - (S_2 - 2) - 2.\]
+Now $S_2 \ge 2 + \Delta(G) - d_G(x)$, so we have
+\[\parens{1 + \frac{S_5}{3}}d_G(x) \le d_G(x) - 2,\]
+a contradiction since $S_5 \ge 0$.  So, we must have $4 + S_5 - |G| > 0$, that is, 
+\[|G| \le S_5 + 3 = |N(x)| \le |G| - 1,\] a contradiction.
+\end{proof}
+For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put 
+\[\C_r(Q) \DefinedAs \setb{X}{V(Q)}{X \text{ is a clique and either } |X| = r \text { or } |X| < r \text{ and } X \text { is maximal}}.\]
+Put
+\[\gamma_r(Q) \DefinedAs \max_{X \in \C_r(Q)} \frac{1}{|X|}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
+Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$.  In particular, the following generalizes the superlocal version of Reed's conjecture for line graphs
+proved by King and Edwards.
+
+\begin{cor}\label{SuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$
+\end{cor}
+\begin{proof}
+Let $Q = L(G)$. For $uv\in E(G)$, put 
+\[f(uv) \DefinedAs \max\{d(u)+\frac12(d(v)-\mu(uv)),d(v)+\frac12(d(u)-\mu(uv)\}.\]
+Choose $x\in V(G)$ and $S\in N(x)$ such that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.
+Now 
+\begin{align*}
+\ceil{\parens{\frac43}\parens{\frac14}\parens{d(x)+d(v_1)+d(v_2)+d(v_3)}} \le&
+\left\lceil\frac13\left( 
+d(v_1)+\frac12(d(x)-\mu(xv_1))\right.\right.\\
+&+d(v_2)+\frac12(d(x)-\mu(xv_2))\\
+&\left.\left.+d(v_3)+\frac12(d(x)-\mu(xv_3))\right)\right\rceil\\
+&\le \ceil{\frac13(f(xv_1)+f(xv_2)+f(xv_3))}.
+\end{align*}
+\end{proof}
+
+\begin{conj}\label{SuperDuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
+\end{conj}
+
+The following is essentially Lemma~10 from \cite{CKPS}.
 
 \begin{cor}
 \label{SuperlocalReedCor}
@@ -963,7 +1041,7 @@ and solving for $k+1$ yields
 Since $\omega(Q) \le \ceil{\chi_f(Q)}$, Theorem~\ref{mainhelper} and Corollary~\ref{mainCorHelper} together imply the following.
 
 \begin{cor}
-If $Q$ is the line graph of a multigraph, then
+If $Q$ is the line graph of a graph, then
 \[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
 \label{mainCor}
 \end{cor}
@@ -1086,145 +1164,25 @@ so $d_G(x_1) < d_G(x_2) < d_G(x_1)$, a contradiction.
 
 \begin{thm}
 If $Q$ is the line graph of a
-multigraph, then $\chi(Q)\le \max\set{\omega(Q),\ceil{\frac{5\Delta(Q)+3}{6}}}$.
+graph, then $\chi(Q)\le \max\set{\omega(Q),\ceil{\frac{5\Delta(Q)+3}{6}}}$.
 \end{thm}
 \begin{proof}
-Suppose the theorem is false and choose a counterexample $Q$ minimizing $\card{Q}$.  Then $Q = L(G)$ for a critical multigraph $G$.  Say $\chi(Q) = \chi'(G) = k + 1$.  Then
+Suppose the theorem is false and choose a counterexample $Q$ minimizing $\card{Q}$.  Then $Q = L(G)$ for a critical graph $G$.  Say $\chi(Q) = \chi'(G) = k + 1$.  Then
 $k = \max\set{\omega(Q),\ceil{\frac{5\Delta(Q)+3}{6}}}$ by minimality of $\card{Q}$.  By Corollary \ref{mainCor},
 \[k+1 \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q)+3}{6}}},\]
 so
 \[\ceil{\chi_f(Q)} = \ceil{\frac{5\Delta(Q)+3}{6}} + 1 = \chi(Q).\]
 Therefore $G$ is elementary and $k = \frac56\parens{\Delta(Q) + 1} + \beta$ for some $\beta \ge -\frac13$.  By Corollary~\ref{mainCorHelper}, $k \ge \Delta(G) + 1$.
-Hence we may apply Corollary \ref{CriticalElementary56} to conclude that there are at most two $x \in V(G)$ with $\card{N(x)} \ge 3$
-and if there are two such $x_1, x_2$, then $\card{N(x_1)} = \card{N(x_2)} = 3$ and $x_1 \adj x_2$.
+Let $H$ be the underlying simple graph of $G$.
+We may apply Corollary \ref{CriticalElementary56} to conclude that there are at most two $x \in V(G)$ with $d_H(x) \ge 3$
+and if there are two such $x_1, x_2$, then $d_H(x_1) = d_H(x_2) = 3$ and $x_1 \adj x_2$.  
+Since $G$ is critical, $\delta(H) \ge 2$.  Hence $H$ is a cycle, two cycles sharing a vertex, or two cycles sharing an edge.
+
+TODO: FINISH, we could compute the edge chromatic number of these directly, easier way?
 
 
 \end{proof}
 
-%\section{The $\frac56$-Conjecture}
-%\label{sec:56}
-%%\begin{comment}
-%\begin{lem}
-%\label{56helper}
-%Let $H$ be an elementary multigraph and let $J$ be the underlying simple graph.
-%If $H$ is a minimal counterexample to the $\frac56$-Conjecture, then
-%$J$ is the a subdivision of (i) a cycle with a chord, 
-%(ii) a copy of $K_4$,
-%(iii) a cycle with two
-%chords with disjoint sets of endpoints, or 
-%(iv) a cycle with two chords with a common endpoint.
-%\end{lem}
-%We assume that $H$ is elementary, and that $H$ is a minimal counterexample to
-%the $\frac56$-Conjecture.  We will show that if a vertex $v\in V(H)$ has more
-%than two neighbors, then $d(v)$ is small.  In particular, if $|N(v)|\ge 3$, then
-%$d(v)<$ and if $N(v)|\ge 4$, then $d(v)<$.  An immediate consequence of the
-%first inequality is that $H$ has at most four vertices $v$ with $|N(v)|\ge 3$.
-%%We are attempting to prove Goldberg implies $\frac56$ bound. 
-%%
-%%Assume Goldberg.
-%
-%Let $H$ be a minimal counterexample to $\frac56$-conjecture. Then $\chi'(H) \ge
-%\Delta(H) + 2$, so by Goldberg we have $\chi'(H) = \ceil{\W(H)} >
-%\ceil{\frac{5\Delta(L(H)) + 3}6}$.  Suppose $Q \subseteq V(H)$ achieves max in
-%$\ceil{\W(H)}$.  If there is $e \in E(H) \setminus E(Q)$, then removing it we get
-%$\chi'(H-e) < \chi'(H)$, but $\ceil{\W(H-e)} = \ceil{\W(H)}$, so  $\chi'(H) >
-%\chi'(G-e) \ge \ceil{\W(H-e)} =  \ceil{\W(H)} = \chi'(H)$, a contradiction. Hence $Q
-%= H$.
-%
-%Choose $x \in H$, and let $M = |N(x)|$ and $p = \sum_{v \in N(x)} d_H(v)$.
-%
-%\begin{align}
-%\W(H) & = \ceil{\frac{2||H||}{|H| - 1}} \\
-%& \le \frac{2||H|| + |H| - 3}{|H|-1}  \nonumber \\
-%& \le \frac{\Delta(H)(|H| - M) + p + |H| - 3}{|H|-1} \nonumber
-%\end{align}
-%
-%Also, summing $\W(H) > \frac56(\Delta(G) + 1)$ over all $v \in N(x)$, and using
-%$\sum_{y\in N(x)}\mu(xy)\le d(x)$, gives
-%
-%\begin{align}
-%\W(H)M & >  \frac56\sum_{y\in N(x)}d(x)+d(y)-\mu(xy) \nonumber \\
-%& \ge \frac56((M-1)d(x) + p).
-%\end{align}
-%
-%So, with (1),
-%
-%\begin{align*}
-% \frac56((M-1)d(x) + p) <  M\frac{\Delta(H)(|H| - M) + p + |H| - 3}{|H|-1}.
-%\end{align*}
-%
-%Thus
-%
-%\begin{align}
-%\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} - \frac56(M-1)d(x) > \left(\frac56 -
-%\frac{M}{|H| - 1}\right)p
-%\end{align}
-%
-%Since,
-%$\ceil{\W(H)} = \chi'(H) \ge \Delta(H) + 2$, we have
-%$\frac{2||H||}{|H| - 1} + 1 \ge \Delta(H) + 2$ (here the `+1' on the left comes
-%from the ceiling).
-%%actually only need a bit less)
-%So,
-%
-%\begin{align*}
-%2||H|| \ge |H|\Delta(H) + |H| - 1 - \Delta(H),
-%\end{align*}
-%which implies that
-%
-%\begin{align}
-%p \ge (M-1)\Delta(H) + |H| - 1.
-%\end{align}
-%
-%Now substituting (4) into (3) gives
-%
-%\begin{align*}
-%\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} - \frac56(M-1)d(x) > \left(\frac56 -
-%\frac{M}{|H| - 1}\right)((M-1)\Delta(H) + |H| - 1)
-%\end{align*}
-%
-%\begin{align*}
-%\frac{(\Delta(H)(|H| - M) + |H| - 3)M}{|H| - 1} + M\frac{(M-1)\Delta(H) %+ |H| - 1
-%}{|H| - 1}+M > \frac56(M-1)(d(x) + \Delta(H)) + \frac56(|H| - 1)
-%\end{align*}
-%
-%\begin{align*}
-%M(\Delta(H) + 2) - \frac{2M}{|H| - 1} &>  \frac56(M-1)(d(x) + \Delta(H)) + \frac56(|H|
-%- 1) \\
-%&= \frac56M(d(x) + \Delta(H)) - \frac56(d(x) + \Delta(H)) + \frac56(|H| - 1)\\
-%\left(\frac{\Delta(H)}6 - \frac56d(x) + 2\right)M &> \frac{2M}{|H| - 1} + 
-%\frac56(|H| - 1) - \frac56(d(x) + \Delta(H))\\
-%(\Delta(H) - 5d(x) + 12)M &> \frac{12M}{|H| - 1} +  5(|H| - 1) - 5(d(x) +
-%\Delta(H))\\ & > 5(|H| - 1) - 5(d(x) + \Delta(H))\\
-%M &< 5\frac{d(x) + \Delta(H) + 1 - |H|}{5d(x) - \Delta(H) - 12}
-%\end{align*}
-%The final inequality follows from the previous one because
-%$\Delta(H)-5d(x)+12<0$, since: WHY???\\
-%We want to find bounds on $d(x)$ that ensure $M$ is small.  To this end, we
-%write $M<2+Y$, for some expression $Y$ and solve $Y<1$ to get the desired bounds
-%on $d(x)$.
-%
-%\begin{align*}
-%M &< \frac{10d(x) - 2\Delta(H) - 24}{5d(x) - \Delta(H) - 12} + \frac{7\Delta(H) -
-%5d(x) + 29 - 5|H|}{5d(x) - \Delta(H) - 12} \\
-%&= 2 + \frac{7\Delta(H) - 5d(x) + 29 - 5|H|}{5d(x) - \Delta(H) - 12}.
-%\end{align*}
-%So $M\le 2$ when
-%
-%\begin{align*}
-%7\Delta(H) - 5d(x) + 29 - 5|H| < 5d(x) - \Delta(H) - 12
-%\end{align*}
-%which simplifies to
-%
-%\begin{align*}
-%d(x) > \frac{8\Delta(H) + 41 - 5|H|}{10}.
-%\end{align*}
-%
-%
-%
-%\bigskip
-%\bigskip
-%
 %I think we should be able to prove that the conjecture follows from
 %Goldberg--Seymour.
 %That lemma you proved is pretty useful.  We can assume that H is
@@ -1496,6 +1454,6 @@ and if there are two such $x_1, x_2$, then $\card{N(x_1)} = \card{N(x_2)} = 3$ a
 %%assuming Goldberg--Seymour.
 
 \bibliographystyle{plain}
-\bibliography{GraphColoring}
+\bibliography{GraphColoring1}
 
 \end{document}

@@ -423,7 +423,8 @@ well as Local and Superlocal strengthenings of Reed's Conjecture, for the class
 of line graphs.
 
 Let $G$ be a graph.  The \emph{claw-degree} of $x \in V(G)$ is 
-\[\dclaw{x} \DefinedAs \max_{\substack{S \subseteq N(x) \\ \card{S} = 3}}\frac14 \parens{d(x) + \sum_{v \in S} d(v)}.\]
+\[\dclaw{x} \DefinedAs \max_{\substack{S \subseteq N(x) \\ \card{S} = 3}}\frac14 \parens{d(x) + \sum_{v \in S} d(v)},\]
+where $\dclaw{x} \DefinedAs 0$ when $|N(x)| \le 2$.
 The \emph{claw-degree} of $G$ is 
 \[\dclaw{G} \DefinedAs \max_{x \in V(G)} \dclaw{x}.\]
 \begin{thm}
@@ -447,17 +448,15 @@ This gives the contradiction
 \aftermath
 \end{proof}
 
-%TODO: ADD REED, LOCAL REED AND SUPERLOCAL REED CONSEQUENCES.
 Reed~\cite{Reed1998omega} conjectured that $\chi(G)\le
 \ceil{\frac{\omega(G)+\Delta+1}2}$ for every
 graph $G$.  This is the average of a trivial lower bound $\omega(G)$ and a
-trivial upper bound $\Delta(G)+1$.  King~\cite{King} conjecture the stronger
+trivial upper bound $\Delta(G)+1$.  King~\cite{King} conjectured the stronger
 bound $\chi(G)\le \max_{v\in V(G)}\ceil{\frac{\omega(v)+d(v)+1}2}$, where
 $\omega(v)$ is the size of the largest clique containing $v$, which is now known
 to hold for many classes of graphs, including line graphs~\cite{CKPS}.  Here we
 show that for line graphs this bound is an easy consequence of our more general
 lemmas from Section~\ref{sec:short}.  
-
 
 \begin{thm}
 \label{EasyBound2}
@@ -507,128 +506,45 @@ a contradiction since $S_5 \ge 0$.  So, we must have $4 + S_5 - |G| > 0$, that i
 \[|G| \le S_5 + 3 = |N(x)| \le |G| - 1,\] a contradiction.
 \end{proof}
 For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put 
-\[\C_r(Q) \DefinedAs \setb{X}{V(Q)}{X \text{ is a clique and either } |X| = r \text { or } |X| < r \text{ and } X \text { is maximal}}.\]
+\[\C_r(Q) \DefinedAs \setb{X}{V(Q)}{X \text{ is a maximal clique or } X \text { is a clique with } \card{X} = r}.\]
 Put
 \[\gamma_r(Q) \DefinedAs \max_{X \in \C_r(Q)} \frac{1}{|X|}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
 Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$.  In particular, the following generalizes the superlocal version of Reed's conjecture for line graphs
 proved by King and Edwards.
 
 \begin{cor}\label{SuperDuperLocalReed}
-If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
 \end{cor}
 \begin{proof}
-Let $Q = L(G)$. For $uv\in E(G)$, put 
-\[f(uv) \DefinedAs \max\{d(u)+\frac12(d(v)-\mu(uv)),d(v)+\frac12(d(u)-\mu(uv)\}.\]
-Choose $x\in V(G)$ and $S\in N(x)$ such that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.
-Now 
+Suppose not and let $Q$ be a counterexample minimizing $\card{Q}$. Let $Q = L(G)$.  Then $G$ is critical.
+
+First, suppose $G$ is not a thickening of a cycle. For $uv\in E(G)$, put 
+\[f(uv) \DefinedAs \max\{d_G(u)+\frac12(d_G(v)-\mu(uv)),d_G(v)+\frac12(d_G(u)-\mu(uv)\}.\]
+For $uv \in E(G)$, we have
 \begin{align*}
-\ceil{\parens{\frac43}\parens{\frac14}\parens{d(x)+d(v_1)+d(v_2)+d(v_3)}} \le&
-\left\lceil\frac13\left( 
-d(v_1)+\frac12(d(x)-\mu(xv_1))\right.\right.\\
-&+d(v_2)+\frac12(d(x)-\mu(xv_2))\\
-&\left.\left.+d(v_3)+\frac12(d(x)-\mu(xv_3))\right)\right\rceil\\
-&\le \ceil{\frac13(f(xv_1)+f(xv_2)+f(xv_3))}.
+f(uv) &= \frac{d_G(u) + d_G(v) - \mu(uv) + \max\set{d_G(u), d_G(v)}}{2}\\
+&\le \frac{d_Q(uv) + \omega(uv) + 1}{2}.
 \end{align*}
+Choose $x\in V(G)$ and $S\in N(x)$ such that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.  Say
+$S = \set{v_1, v_2, v_3}$.  Then
+\begin{align*}
+\ceil{\frac43\dclaw{G}} &= \ceil{\parens{\frac43}\parens{\frac14}\parens{d_G(x)+\sum_{i \in \irange{3}} d_G(v_i)}} \\
+&\le \ceil{\frac13\sum_{i \in \irange{3}} d_G(v_i) + \frac12(d_G(x) - \mu(xv_i))}\\
+&\le \ceil{\frac13\sum_{i \in \irange{3}} f(xv_i)}\\
+&\le \ceil{\frac13\sum_{i \in \irange{3}} \frac{d_Q(xv_i) + \omega(xv_i) + 1}{2}}\\
+&\le \ceil{\gamma_3(Q)}.
+\end{align*}
+
+By Theorem \ref{EasyBound2}, we have
+\[\chi(Q) \le \max\set{\Delta(G) + 1, \ceil{\gamma_3(Q)}}.\]
+Since $\chi(Q) > \ceil{\gamma_3(Q)}$, this gives $\chi(Q) \le \Delta(G) + 1$.  TODO: EASY WAY TO FINISH THIS?
+
+TODO: HANDLE THICKENED CYCLE CASE.
 \end{proof}
 
 \begin{conj}\label{SuperDuperDuperLocalReed}
 If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
 \end{conj}
-
-The following is essentially Lemma~10 from \cite{CKPS}.
-
-\begin{cor}
-\label{SuperlocalReedCor}
-Let $G$ be a graph.  For $uv\in E(G)$, let
-$f(uv)=\max\{d(u)+\frac12(d(v)-\mu(uv)),d(v)+\frac12(d(u)-\mu(uv)\}$.  Let
-$f(G)=\max_{uv,vw\in E(G)}\ceil{\frac12(f(uv)+f(uw))}$.  Now 
-\[\chi'(G) \le \max\set{\W(G), \Delta(G) + 1, f(G)}.\]
-In particular, the Superlocal version of Reed's Conjecture holds for every line
-graph.
-\end{cor}
-\begin{proof}
-The first statement follows directly from Theorem~\ref{EasyBound}, by showing that
-$\ceil{\frac43d_{claw}(G)}\le f(G)$.  Choose $x\in V(G)$ and $S\in N(x)$ such
-that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.
-Now 
-\begin{align*}
-\ceil{\frac43\frac14(d(x)+d(v_1)+d(v_2)+d(v_3))} \le&
-\left\lceil\frac13\left( 
-d(v_1)+\frac12(d(x)-\mu(xv_1))\right.\right.\\
-&+d(v_2)+\frac12(d(x)-\mu(xv_2))\\
-&\left.\left.+d(v_3)+\frac12(d(x)-\mu(xv_3))\right)\right\rceil\\
-&\le \ceil{\frac13(f(xv_1)+f(xv_2)+f(xv_3))}\\
-&\le f(G).
-\end{align*}
-This proves the first statement.  For the second statement, we show that
-$\W(G)\le f(G)$, as follows.  For each vertex $v$, let $v_1, v_2,\ldots$ denote
-the neighbors of $v$ (with subscripts modulo $|N(v)|$).  Also, let
-$\overline{d}=\frac{2|E(H)|}{|V(H)|}$.
-\begin{align*}
-f(G)2|E(H)| &\ge \sum_{v\in
-V}\sum_{i=1}^{|N(v)|}\frac12(d(v)+\frac12(d(v_i)-\mu(vv_i))+d(v)+\frac12(d(v_{i+1})-\mu(vv_{i+1})))\\
- &= \sum_{v\in
-V}\sum_{i=1}^{|N(v)|}d(v)+\frac12(d(v_i)-\mu(vv_i))\\
-& = \sum_{uv\in E(H)}\frac32d(u)+\frac32d(v)-\mu(uv) \\
-& = \sum_{v\in V(H)}\frac32d(v)^2 - |E(H)|\\
-& \ge \frac32\overline{d}^2|V(H)|-|E(H)|\\
-& = 6\frac{|E(H)|^2}{|V(H)|}-|E(H)|
-\end{align*}
-Thus $f(G)\ge \frac{3|E(H)|}{|V(H)|}-\frac12$.
-Since $\W(G)=\ceil{\frac{2|E(H)|}{|V(H)|-1}}\le
-\frac{2|E(H)|+|V(H)|-3}{|V(H)|-1}$, 
-it suffices to have 
-$\frac{3|E(H)|}{|V(H)|}-\frac12 \ge \frac{2|E(H)|+|V(H)|-3}{|V(H)|-1}$. 
-Now solving for $|E(H)|$
-gives $|E(H)|\ge \frac32|V(H)|\frac{|V(H)|-\frac73}{|V(H)|-3}$.  Taking
-$|V(H)|\ge 5$, it suffices to have $2|V(H)|\le |E(H)|$.  Suppose, to the
-contrary, that we have $|E(H)|<2|V(H)|$.  It will suffice to show that
-$\frac{2|E(H)|}{|V(H)|-1}\le \Delta(H)$.  Now solving
-$\frac{4|V(H)|}{|V(H)|-1}\le \Delta(H)$ (using $|V(H)|\ge 5$), shows that it
-suffices to have $\Delta(H)\ge 5$.\\
-TODO: HANDLE $\Delta(H)\in\{3,4\}$.
-\end{proof}
-
-%\begin{lem}
-%\label{ReedHelper}
-%Let $G$ be a mulitgraph with a long vertex $v_0$.  
-%If $k=\max_{uv\in E(G)}d(u)+\frac12(d(v)-\mu(uv))$, then $\chi'(G)\le k$.
-%\end{lem}
-%\begin{proof}
-%Suppose the lemma is false and let $G$ be a minimal counterexample.  So
-%$\chi'(G)=k+1$ and $\chi'(G-e)=k$ for all $e\in E(G)$.
-%Choose $e$ incident to $v_0$ such that $G-e$ has a $k$-coloring $\phi$ and some
-%fan $F$ rooted at $v_0$ and containing $e$ has length at least 3.  Subject to
-%this, let $F$ be maximal, and let $v_1,\ldots,v_\ell$ denote the leaves of $F$.
-%Since $F$ is a Tashkinov tree, $V(F)$ must be elementary.  Further, since $F$ is
-%maximal, each edge incident to $v_0$ with other endpoint outside of $F$ must use
-%a color that is not missing at every vertex of $F$.  This gives
-%\begin{align*}
-%2+\sum_{i=0}^\ell k-d(v_i) + d(v_0)-\sum_{i=1}^\ell\mu(v_0v_i) &\le k\\
-%2+\sum_{i=1}^\ell k-d(v_i) &\le \sum_{i=1}^\ell\mu(v_0v_i) 
-%\end{align*}
-%For each edge $v_0v_i$ we have $d(v_i)+\frac12(d(v_0)-\mu(v_0v_i))\le k$.
-%Substituting this gives
-%\begin{align*}
-%2+\sum_{i=1}^\ell d(v_i)+\frac12(d(v_0)-\mu(v_0v_i))-d(v_i) &\le
-%\sum_{i=1}^\ell\mu(v_0v_i) \\
-%2+\sum_{i=1}^\ell \frac12d(v_0) &\le \frac32\sum_{i=1}^\ell\mu(v_0v_i) \\
-%\frac{l}2d(v_0)< \frac32d(v_0),
-%\end{align*}
-%since $\ell\ge 3$.
-
-%\begin{cor}
-%The Local Strengthening of Reed's Conjecture holds for line graphs.
-%\end{cor}
-%\begin{proof}
-%Suppose the corollary is false and let $G$ be a counterexample with as few edges
-%as possible.  Note that $G$ is critical.
-%If $G$ contains a long vertex $x$, then the bound follows from
-%Lemma~\ref{ReedHelper}.  So suppose $G$ has no long vertex.  By
-%Lemma~\ref{AllSpecialImpliesElementary},
-%now we have $\chi'(G) \le \max \set{\W(G), \Delta(G) + 1}.$  TODO: SHOW THIS
-%IMPLIES LOCAL REED'S.
-%\end{proof}
 
 \section{Properties of long vertices}
 For a path $Q$, recall that $\ell(Q)$ denotes the length of $Q$.

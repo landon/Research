@@ -105,6 +105,25 @@
 \begin{document}
 \maketitle
 
+\section{Other $\beta$ Lemmas}
+\begin{lem}
+If $G$ is a connected graph, then
+\[\alpha(G) \ge \card{G} - \frac12\size{G} - \frac12.\]
+\end{lem}
+
+\begin{lem}
+If $G$ is a connected graph, then
+\[\alpha(G) \ge \frac23\card{G} - \frac14\size{G} - \frac13.\]
+\end{lem}
+
+\begin{lem}\label{betaLemmaB}
+	Let $G$ be an OC-irreducible graph with $\delta(G) = k-1$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
+	Then,
+	\[\beta(\L) \le \size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{k - \frac12}\card{\HH}}{k-1}.\]
+\end{lem}
+
+
+
 \section{Generalities}
 \begin{defn}
 A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,

@@ -105,11 +105,14 @@
 \begin{document}
 \maketitle
 
-\section{A general bound}
-Let $q_k(G)$ be the number of non-cut vertices in $G$ that appear in copies of $K_{k-1}$.  Let $\beta_k(G)$ be the independence number of the subgraph of $G$ induced on the vertices of degree $k-1$.  
-When $k$ is defined in context, we just write $q(G)$ and $\beta(G)$.
+\section{Introduction}
 
-Sections 2 and 3 prove the following upper bounds on $q(\L)$ and $\beta(\L)$.
+\begin{MainTheorem}
+For $k \ge 7$, every non-complete $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
+\end{MainTheorem}
+
+Let $q_k(G)$ be the number of non-cut vertices in $G$ that appear in copies of $K_{k-1}$.  Let $\beta_k(G)$ be the independence number of the subgraph of $G$ induced on the vertices of degree $k-1$.  
+When $k$ is defined in context, we just write $q(G)$ and $\beta(G)$.  Sections 3 and 4 prove the following upper bounds on $q(\L)$ and $\beta(\L)$.
 \begin{lem}\label{qLemmaList}
 	Let $G$ be a non-complete $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, 
 	$\HH$ the subgraph of $G$ induced on $k^+$-vertices, $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  Then
@@ -123,6 +126,7 @@ Sections 2 and 3 prove the following upper bounds on $q(\L)$ and $\beta(\L)$.
 	\[\beta(\L) \le \frac{2}{\lambda}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - 1}{k-1}.\]
 \end{lem}
 
+\section{General bounds on average degree}
 \begin{defn}
 A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,
 the following hold:
@@ -132,10 +136,9 @@ the following hold:
 \end{itemize}
 \end{defn}
 
-
 \begin{thm}\label{k7}
 	Let $\parens{p,h,z,f}$ be $7^$-Gallai.  If $k \ge 7$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
-	\[d(G) \ge \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (2h(k) + f(k))c(\L)}{\card{G}}}{k+1 + 3h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (2h(k) + f(k))c(\L)}{\card{G}}}{k+1 + 3h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
 	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
 \end{thm}
 \begin{proof}
@@ -194,8 +197,8 @@ Now using \eqref{eq2c} to get a lower bound on $\card{\HH^-}$ gives
 2\size{G} \ge \frac{\parens{k - (k-5)h(k)- p(k) - \frac{kz(k)}{2(k-1)}}\card{\L}+\parens{(k+1)(k-3)h(k) + \frac{(3k-4)z(k)}{2(k-1)} + 1}\card{G} + S_2}{1 + (k-2)h(k) + \frac{z(k)}{k-1}}.
 \end{align*}
 \end{equation}
-Using \eqref{eq1} to get a lower bound on $\card{\L}$ and simplifying gives
-\begin{equation}\label{eq12}
+Using \eqref{eq1c} to get a lower bound on $\card{\L}$ and simplifying gives
+\begin{equation}\label{eq12c}
 \frac{2\size{G}}{\card{G}} \ge \frac{k^2 + 3(k-1)h(k) - kp(k) + 1 - \frac{k^2-3k+4}{2(k-1)}z(k) + \frac{S_2}{\card{G}}}{k+1 + 3h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}}.
 \end{equation}
 Now factoring out $k-1$ gives the desired bound.
@@ -205,178 +208,48 @@ Now factoring out $k-1$ gives the desired bound.
 
 \begin{thm}\label{k5}
 	Let $\parens{p,h,z,f}$ be $5^$-Gallai.  If $k \ge 5$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
-	\[d(G) \ge \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (2h(k) + f(k))c(\L)}{\card{G}}}{k+1 + 4h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (h(k) + f(k))c(\L)}{\card{G}}}{k+1 + 4h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
 	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
 \end{thm}
 
 \noindent When $k=4$, we cannot apply Lemma \ref{qLemmaList}, but using $h(k)=0$ and running through the same argument proves the following bound for $k\ge 4$.
 \begin{thm}\label{k4}
 	Let $\parens{p,0,z,f}$ be $4^$-Gallai.  If $k \ge 4$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
-	\[d(G) \ge \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - f(k)c(\L)}{\card{G}}}{k+1 - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - f(k)c(\L)}{\card{G}}}{k+1 - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
 	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
 \end{thm}
 
-When $z(k) < 2$, using Lemma \ref{betaLemmaList} worsens the lower bound, so we may as well use $z(k)=0$.  Running through the argument with $z(k)=0$ proves Lemmas \ref{k7}, \ref{k5}, \ref{k4} with $z(k)=0$.
-Note how this is the exact same form as the bounds proved by Cranston and R. \cite{DischargingLowerBound}.
+When $z(k) < 2$, using Lemma \ref{betaLemmaList} worsens the lower bound, so we may as well use $z(k)=0$; that is, drop the $\beta(\L)$ term entirely.  
+Doing so in the above argument shows that Theorems \ref{k7}, \ref{k5}, \ref{k4} also hold for $z(k) = 0$.  This gives the bounds proved by discharging in Cranston and R. \cite{DischargingLowerBound}.
 
-\section{Introduction}
+\section{Gallai quadruples}
 
-\begin{MainTheorem}
-For $k \ge 7$, every non-complete $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
-\end{MainTheorem}
-
-\section{The Proof}
-
-
-The final piece we need is a bound on the number of edges in Gallai trees, proved in Section 4.
-\begin{lem}\label{GallaiTreeBound}
-For all $k \ge 5$ and Gallai trees $T \ne K_k$ with $\Delta(T) \le k - 1$,
-\[2\size{T} \le \parens{k-3 + \frac{3k-7}{k^2-4k+5}}\card{T} - \frac{2(k-1)(k-4)}{k^2-4k+5} + \frac{(k-1)(k-4)}{k^2-4k+5}q(T) + 2\beta(T)\]
+\begin{lem}[Gallai \cite{gallai1963kritische}]
+$\parens{\frac{k+1}{k-1}, 0, 0, -2}$ is $4$-Gallai.
 \end{lem}
-\bigskip
-\begin{proof}[Proof of Main Theorem]
-Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, $\HH$ the subgraph of $G$ induced on $k^+$-vertices, $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.
-Plainly, the following bounds hold.
-\begin{equation}\label{eq1}
-2\size{G} \ge k\card{G} - \card{\L}
-\end{equation}
-\begin{equation}\label{eq2}
-2\size{G} \ge (k+1)\card{G} - \card{\HH^-} - 2\card{\L}
-\end{equation}
-\begin{equation}\label{eq3}
-2\size{G} \ge k\card{\HH^-} + (k-1)\card{\L} + \size{\HH^+, \L}
-\end{equation}
-\begin{equation}\label{eq4}
-\size{\HH,\L} = (k-1)\card{\L} - 2\size{\L}
-\end{equation}
-Put
-\begin{align*}
-p(k) &\DefinedAs \frac{3k-7}{k^2-4k+5}\\
-h(k) &\DefinedAs \frac{(k-1)(k-4)}{k^2-4k+5}\\
-f(k) &\DefinedAs 2h(k)
-\end{align*}
-By Lemma \ref{GallaiTreeBound},
-\begin{equation}\label{eq5}
-2\size{\L} \le \parens{k-3 + p(k)}\card{\L} - f(k)c(\L) + h(k)q(\L) + 2\beta(\L)
-\end{equation}
-By Lemma \ref{qLemmaList},
-\[q(\L) \le 2\card{\D} + 3\card{\HH^-} + \size{\HH^+, \L},\]
-plugging this into \eqref{eq5} and using the fact that $c(\L) \ge \card{\D}$ gives
-\begin{equation}\label{eq6}
-2\size{\L} \le \parens{k-3 + p(k)}\card{\L} + 3h(k)\card{\HH^-} + h(k)\size{\HH^+, \L} + 2\beta(\L).
-\end{equation}
-Now using \eqref{eq1} and \eqref{eq6},
-\begin{align*}
-	2\size{G} &= 2\size{\HH} + 2\size{\HH, \L} + 2\size{\L}\\
-	&= 2\size{\HH} + 2((k-1)\card{\L} - 2\size{\L}) + 2\size{\L}\\
-	&= 2\size{\HH} + 2(k-1)\card{\L} - 2\size{\L}\\
-	&\ge 2\size{\HH} + \parens{k+1 - p(k)}\card{\L} - 3h(k)\card{\HH^-} - h(k)\size{\HH^+, \L} - 2\beta(\L)\numberthis \label{eq7}\\
-\end{align*}
-Adding $h(k)$ times \eqref{eq3} to \eqref{eq7} gives
-\begin{equation}\label{eq8}
-\parens{1 + h(k)}(2\size{G}) \ge 2\size{\HH} + \parens{k+1 +(k-1)h(k)- p(k)}\card{\L} + (k- 3)h(k)\card{\HH^-}  - 2\beta(\L)
-\end{equation}
-Lemma \ref{betaLemmaList} gives
-\[\beta(\L) \le \size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{k - \frac12}\card{\HH}}{k-1}.\]
-Plugging this into \eqref{eq8} yields
-\begin{equation}\label{eq9}
-\begin{align*}
-\parens{1 + h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 +(k-1)h(k)- p(k)}\card{\L}\\ 
-&+ (k- 3)h(k)\card{\HH^-} +\frac{2(k-2)}{k-1}\card{G} + \frac{2k-1}{k-1}\card{\HH}.
-\end{align*}
-\end{equation}
-Now using $\card{\HH} = \card{G} - \card{\L}$ gives
-\begin{equation}\label{eq10}
-\begin{align*}
-\parens{1 + h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 +(k-1)h(k)- p(k) - \frac{2k-1}{k-1}}\card{\L}\\ 
-&+ (k- 3)h(k)\card{\HH^-} +\frac{4k-5}{k-1}\card{G}.
-\end{align*}
-\end{equation}
-Now using \eqref{eq2} to get a lower bound on $\card{\HH^-}$ gives
-\begin{equation}\label{eq11}
-\begin{align*}
-\parens{1 + (k-2)h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 - (k-5)h(k)- p(k) - \frac{2k-1}{k-1}}\card{\L}\\ 
-&+\parens{(k+1)(k-3)h(k) + \frac{4k-5}{k-1}}\card{G}.
-\end{align*}
-\end{equation}
-Finally, using \eqref{eq1} to get a lower bound on $\card{\L}$ gives
-\begin{equation}\label{eq12}
-\frac{2\size{G}}{\card{G}} \ge \frac{k(k+1) + 3(k-1)h(k) - kp(k) + \frac{4k-5}{k-1} - \frac{k(2k-1)}{k-1}}{k+2 + 3h(k) - p(k) + \frac{2}{k-1}- \frac{2k-1}{k-1}}.
-\end{equation}
-Plugging in the values for $p(k)$ and $h(k)$ and simplifying proves the theorem.
-\end{proof}
-\bigskip
-\begin{proof}[Proof of Main Theorem 5,6]
-Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, $\HH$ the subgraph of $G$ induced on $k^+$-vertices, $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.
-Plainly, the following bounds hold.
-\begin{equation}\label{eq1b}
-2\size{G} \ge k\card{G} - \card{\L}
-\end{equation}
-\begin{equation}\label{eq2b}
-2\size{G} \ge (k+1)\card{G} - \card{\HH^-} - 2\card{\L}
-\end{equation}
-\begin{equation}\label{eq3b}
-2\size{G} \ge k\card{\HH^-} + (k-1)\card{\L} + \size{\HH^+, \L}
-\end{equation}
-\begin{equation}\label{eq4b}
-\size{\HH,\L} = (k-1)\card{\L} - 2\size{\L}
-\end{equation}
-Put
-\begin{align*}
-p(k) &\DefinedAs \frac{3k-7}{k^2-4k+5}\\
-h(k) &\DefinedAs \frac{(k-1)(k-4)}{k^2-4k+5}\\
-f(k) &\DefinedAs 2h(k)
-\end{align*}
-By Lemma \ref{GallaiTreeBound},
-\begin{equation}\label{eq5b}
-2\size{\L} \le \parens{k-3 + p(k)}\card{\L} - f(k)c(\L) + h(k)q(\L) + 2\beta(\L)
-\end{equation}
-By Lemma \ref{qLemmaList},
-\[q(\L) \le \card{\D} + 4\card{\HH^-} + \size{\HH^+, \L},\]
-plugging this into \eqref{eq5b} and using the fact that $c(\L) \ge \card{\D}$ gives
-\begin{equation}\label{eq6b}
-2\size{\L} \le \parens{k-3 + p(k)}\card{\L} + 4h(k)\card{\HH^-} + h(k)\size{\HH^+, \L} + 2\beta(\L).
-\end{equation}
-Now using \eqref{eq1b} and \eqref{eq6b},
-\begin{align*}
-	2\size{G} &= 2\size{\HH} + 2\size{\HH, \L} + 2\size{\L}\\
-	&= 2\size{\HH} + 2((k-1)\card{\L} - 2\size{\L}) + 2\size{\L}\\
-	&= 2\size{\HH} + 2(k-1)\card{\L} - 2\size{\L}\\
-	&\ge 2\size{\HH} + \parens{k+1 - p(k)}\card{\L} - 4h(k)\card{\HH^-} - h(k)\size{\HH^+, \L} - 2\beta(\L)\numberthis \label{eq7b}\\
-\end{align*}
-Adding $h(k)$ times \eqref{eq3b} to \eqref{eq7b} gives
-\begin{equation}\label{eq8b}
-\parens{1 + h(k)}(2\size{G}) \ge 2\size{\HH} + \parens{k+1 +(k-1)h(k)- p(k)}\card{\L} + (k- 4)h(k)\card{\HH^-}  - 2\beta(\L)
-\end{equation}
-Lemma \ref{betaLemmaList} gives
-\[\beta(\L) \le \size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{k - \frac12}\card{\HH}}{k-1}.\]
-Plugging this into \eqref{eq8b} yields
-\begin{equation}\label{eq9b}
-\begin{align*}
-\parens{1 + h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 +(k-1)h(k)- p(k)}\card{\L}\\ 
-&+ (k- 4)h(k)\card{\HH^-} +\frac{2(k-2)}{k-1}\card{G} + \frac{2k-1}{k-1}\card{\HH}.
-\end{align*}
-\end{equation}
-Now using $\card{\HH} = \card{G} - \card{\L}$ gives
-\begin{equation}\label{eq10b}
-\begin{align*}
-\parens{1 + h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 +(k-1)h(k)- p(k) - \frac{2k-1}{k-1}}\card{\L}\\ 
-&+ (k- 4)h(k)\card{\HH^-} +\frac{4k-5}{k-1}\card{G}.
-\end{align*}
-\end{equation}
-Now using \eqref{eq2b} to get a lower bound on $\card{\HH^-}$ gives
-\begin{equation}\label{eq11b}
-\begin{align*}
-\parens{1 + (k-3)h(k) + \frac{2}{k-1}}(2\size{G}) &\ge \parens{k+1 - (k-7)h(k)- p(k) - \frac{2k-1}{k-1}}\card{\L}\\ 
-&+\parens{(k+1)(k-4)h(k) + \frac{4k-5}{k-1}}\card{G}.
-\end{align*}
-\end{equation}
-Finally, using \eqref{eq1b} to get a lower bound on $\card{\L}$ gives
-\begin{equation}\label{eq12b}
-\frac{2\size{G}}{\card{G}} \ge \frac{k(k+1) + 4(k-1)h(k) - kp(k) + \frac{4k-5}{k-1} - \frac{k(2k-1)}{k-1}}{k+2 + 4h(k) - p(k) + \frac{2}{k-1}- \frac{2k-1}{k-1}}.
-\end{equation}
-Plugging in the values for $p(k)$ and $h(k)$ and simplifying proves the theorem.
-\end{proof}
+
+\begin{lem}[Kostochka-Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}]
+$\parens{\frac{4(k-1)}{k^2 - 3k + 4}, \frac{k^2 - 3k}{k^2-3k+4}, 0, \frac{-4(k^2-3k+2)}{k^2-3k+4}}$ is $7$-Gallai.
+\end{lem}
+
+\begin{lem}[Cranston-R. \cite{DischargingLowerBound}]
+$\parens{\frac{3k-5}{k^2-4k+5}, \frac{k(k-3)}{k^2-4k+5}, 0, \frac{-2(k-1)(2k-5)}{k^2-4k+5}}$ is $5$-Gallai.
+\end{lem}
+
+\begin{lem}[R. \cite{Better4ListCriticalBound}]
+$\parens{1, 0, 2, 0}$ is $4$-Gallai.
+\end{lem}
+
+\begin{lem}
+	If $\func{p}{\IN}{\IR}$, then $\parens{p,h,z,f}$ is $5$-Gallai, 
+	where
+	\begin{align*}
+	f(k) &\DefinedAs (k-1)\parens{3 - (k-1)p(k)},\\
+	h(k) &\DefinedAs (k-2)p(k) - 2,\\
+	z(k) &\DefinedAs 3k-5 - (k^2-4k+5)p(k).
+	\end{align*}
+\end{lem}
+
 
 \section{Bounding $q(\L)$}
 This section is devoted to extracting the reusable Lemma \ref{qLemma} from the proof of Kierstead and R. \cite{OreVizing}.
@@ -549,22 +422,20 @@ Fix $\lambda$ with $2 \le \lambda \le \frac{6(k-1)}{k}$. Let $M$ be the maximum 
 	\begin{equation}
 		\mic(G) \ge M + (k-1)\beta(\L).\label{eq0}
 	\end{equation}
-\claim{1}{If $C$ is a component of $G[\HH]$, then \[M \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.\]}
+\claim{1}{If $C$ is a component of $G[\HH]$, then \[k\alpha(C) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.\]}
 
 First, suppose $\size{C} < \card{C}$.  Then $\size{C} = \card{C} - 1$ and $C$ is a tree.  If $\card{C} \ge 2$, then
 	\begin{align*}
-		M &\ge k\alpha(C) \\
-		&\ge k\frac{\card{C}}{2}\\
+		k\alpha(C) &\ge k\frac{\card{C}}{2}\\
 		&\ge \parens{\frac{k}{2} - \frac{k-1}{\lambda}}\card{C} + \frac{2(k-1)}{\lambda}\\
 		&=\parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\parens{\card{C} - 1}\\
 		&=\parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.
 	\end{align*}
-If instead, $\card{C} = 1$, then $M \ge k \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}} = \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}$ since $\lambda \ge 2$.
+If instead, $\card{C} = 1$, then $k\alpha(C) = k \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}} = \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}$ since $\lambda \ge 2$.
 
 So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound}, we conclude
 	\begin{align*}
-		M &\ge k\alpha(C) \\
-		&\ge \frac{2k}{3}\card{C} - \frac{k}{3}\size{C} \\
+		k\alpha(C) &\ge \frac{2k}{3}\card{C} - \frac{k}{3}\size{C} \\
 		&= \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C} +  \parens{\frac{k}{6} - \frac{k-1}{\lambda}}\card{C} - \parens{\frac{k}{3} - \frac{2(k-1)}{\lambda}}\size{C} \\
 		&= \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C} +  \parens{\frac{k-1}{\lambda} -\frac{k}{6}}\card{C}\\
 		&\ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C},
@@ -574,7 +445,8 @@ So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound},
 \smallskip
 
 \noindent\claim{2}{Lemma \ref{betaLemma} is true.}
-	Combining \eqref{eq0} and Claim 1 gives
+
+	Summing the bound in Claim 1 over all components of $G[\HH]$ and plugging into \eqref{eq0} gives
 	\begin{equation}
 	 \mic(G) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - \parens{\frac{2(k-1)}{\lambda}}\size{\HH} + (k-1)\beta(\L).
 	 \label{eq19}

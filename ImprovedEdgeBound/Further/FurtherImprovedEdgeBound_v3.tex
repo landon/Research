@@ -288,7 +288,7 @@ the contradiction (since $\beta(T^*) < \beta(T)$)
 	whenever $p$, $f$, $h$ and $z$ satisfy all of the following conditions:
 	\begin{enumerate}
 		\item[(1)] $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
-	    \item[(2)] $p(k) \ge \frac{3 - z(k)}{k-2}$; and
+	    \item[(2)] $p(k) \ge \frac{3 - \frac{z(k)}{2}}{k-2}$; and
 		\item[(3)] $p(k) \ge h(k) + 5 - k$; and
 		\item[(4)] $p(k) \ge \frac{2+h(k)}{k-2}$; and
 		\item[(5)] $(k-1)p(k) + (k-3)h(k) + z(k)\ge k+1$.
@@ -330,6 +330,22 @@ We have $q(T') \le q(T) + 1$, so this is gives the contradiction (to (4))
 \[2 > (k-1)p(k) - h(k).\]
 
 \noindent\claim{5}{$T$ does not exist.}
+
+By Claims 2 and 3, all but at most one endblock of $T$ is $K_{k-2}$ with a cutvertex that is also in an odd cycle. 
+Pick and endblock $B$ that is the end of a
+longest path in the block-tree of $T$.  Let $C$ be the odd cycle sharing $x_B$ with $B$.  Since $B$ is the end of a longest path in the block-tree, there is
+a neighbor $y$ of $x_B$ on $C$ such that $d_T(y) = 2$ or $y$ is contained in another endblock $A$ (which must be a $K_{k-2}$).  
+First, suppose $d_T(y) = 2$.
+Removing $V(B) \cup \set{y}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives (since $q(T') = q(T)$ and $\beta(T') < \beta(T)$)
+\[(k-2)(k-3) + 6 > \parens{k-3 + p(k)}\parens{k-1} + z(k),\]
+so
+\[p(k) < \frac{9-k-z(k)}{k-1},\]
+contradicting (2).
+Hence $y$ is contained in another $K_{k-2}$ endblock $A$.  Removing $V(B) \cup V(A)$ from $T$ to get $T^*$ and applying minimality of $\card{T}$ gives(since $q(T^*) = q(T)$ and $\beta(T^*) < \beta(T)$)
+\[2(k-2)(k-3) + 6 > \parens{k-3 + p(k)}\parens{2(k-2)} + z(k),\]
+so
+\[6 > 2(k-2)p(k) + z(k),\]
+contradicting (2).
 \end{proof}
 
 

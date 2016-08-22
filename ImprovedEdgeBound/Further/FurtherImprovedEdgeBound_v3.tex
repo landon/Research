@@ -258,11 +258,9 @@ If $T$ has only one block, then $2\size{T} \le \parens{k-3}\card{T}$.
 
 \noindent\claim{2}{Each endblock of $T$ is $K_{k-2}$.}
 
-Suppose $T$ has an endblock $B$ that is an odd cycle or $K_t$ where $2 \le t \le k-3$. Then removing $V(B)\setminus\set{x_B}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives
-\[2\size{B} > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{\card{B} - 1} + z(k)(\beta(T) - \beta(T')).\]
-This is a contradiction unless $k=5$, $B = K_3$, $z(k) \ge 2$ and $\beta(T) = \beta(T')$.  Removing $V(B)$ from $T$ to get $T^*$ and applying minimality of $\card{T}$ gives
-\[6 + 2(d_T(x_B) - 2) > 3\parens{2 + \frac{2}{3}} + 2(\beta(T) - \beta(T^*)).\]
-This is a contradiction unless $d_T(x_B) = 4$ and $\beta(T^*) = \beta(T)$.  But $\beta(T^*) < \beta(T)$ since $x_B$'s neighbors in $T^*$ have degree at most $3$ in $T^*$.
+Suppose $T$ has an endblock $B$ that is not $K_{k-2}$. Then removing $V(B)\setminus\set{x_B}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives
+\[2\size{B} > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{\card{B} - 1}.\]
+This is a contradiction unless $k=5$ and $B = K_3$, but then $B = K_{k-2}$, a contradiction.
 
 \noindent\claim{3}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
 
@@ -315,11 +313,21 @@ Finally, suppose $B$ is an odd cycle of length $\ell$.  Then, we have
 \[2\ell > \parens{k-3 + p(k)}\parens{\ell-1}.\]
 This simplifies to
 \[\ell < 1 + \frac{2}{k-5+p(k)}.\]
-Since $k-5+p(k) \ge 1$ when $k \ge 6$, this implies that $k = 5$.  Using (4), we conclude $\ell = 3$, but then $B = K_{k-2}$.  
+Since $k-5+p(k) \ge 1$ when $k \ge 6$, this implies that $k = 5$.  Using (4), we conclude $\ell = 3$, but then $B = K_{k-2}$, a contradiction.
 
 \noindent\claim{3}{$T$ has at most one $K_{k-1}$ endblock.}
 
+Suppose $T$ has at least two $K_{k-1}$ endblocks.  Let $B$ be one of them.    Then removing $V(B)$ from $T$ leaves a graph $T'$ with $K_{k-1} \subseteq T'$.  So, we may apply minimality of $\card{T}$ to get
+\[(k-1)(k-2) + 2 > \parens{k-3 + p(k)}\parens{k-1} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+Now $\beta(T') < \beta(T)$ and $q(T') \le q(T) - (k-2) + 1$, so we have the contradiction (to (5))
+\[k+1 > (k-1)p(k) + (k-3)h(k) + z(k).\]
+
 \noindent\claim{4}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
+
+Suppose $B$ is an endblock of $T$ with $d_T(x_B) < k-1$.  Then $B = K_{k-2}$ by Claim 2.  Removing $V(B)$ from $T$ leaves a graph $T'$ with $K_{k-1} \subseteq T'$.  So, we may apply minimality of $\card{T}$ to get
+\[(k-2)(k-3) + 2 > \parens{k-3 + p(k)}\parens{k-2} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+We have $q(T') \le q(T) + 1$, so this is gives the contradiction (to (4))
+\[2 > (k-1)p(k) - h(k).\]
 
 \noindent\claim{5}{$T$ does not exist.}
 \end{proof}

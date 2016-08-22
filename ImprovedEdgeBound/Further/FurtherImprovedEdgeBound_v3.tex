@@ -284,16 +284,16 @@ the contradiction (since $\beta(T^*) < \beta(T)$)
 \end{proof}
 
 \begin{lem}\label{bwkk1}
-	Let $\func{p}{\IN}{\IR_{\ge 0}}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR_{\ge 0}}$, $\func{z}{\IN}{\IR_{\ge 0}}$. 
+	Let $\func{p}{\IN}{\IR_{\ge 0}}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR_{\ge 0}}$, $\func{z}{\IN}{\IR_{\ge 0}}$ such that $z(k) = 0$ or $z(k) \ge 2$.
 	For all $k \ge 5$ and Gallai trees $T \ne K_k$ with $\Delta(T) \le k-1$ and $K_{k-1} \subseteq T$, we have
 	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T) + z(k)\beta(T)\]
 	whenever $p$, $f$, $h$ and $z$ satisfy all of the following conditions:
 	\begin{enumerate}
-		\item $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
-	    \item $p(k) \ge \frac{3 - z(k)}{k-2}$; and
-		\item $p(k) \ge h(k) + 5 - k$; and
-		\item $p(k) \ge \frac{2+h(k)}{k-2}$; and
-		\item $(k-1)p(k) + (k-3)h(k) + z(k)\ge k+1$.
+		\item[(1)] $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+	    \item[(2)] $p(k) \ge \frac{3 - z(k)}{k-2}$; and
+		\item[(3)] $p(k) \ge h(k) + 5 - k$; and
+		\item[(4)] $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item[(5)] $(k-1)p(k) + (k-3)h(k) + z(k)\ge k+1$.
 	\end{enumerate}
 \end{lem}
 \begin{proof}
@@ -301,17 +301,27 @@ Suppose the lemma is false and choose a counterexample $T$ minimizing $\card{T}$
 
 \noindent\claim{1}{$T$ has at least two blocks.}
 
-\noindent\claim{2}{$T$ has no $K_t$ endblock where $3 \le t \le k-3$.}
+Otherwise, $T = K_{k-1}$ and (1) gives a contradiction.
 
-\noindent\claim{3}{$T$ has no $K_2$ endblock.}
+\noindent\claim{2}{Each endblock of $T$ is $K_{k-2}$ or $K_{k-1}$.}
 
-\noindent\claim{4}{Each endblock of $T$ is $K_{k-2}$ or $K_{k-1}$.}
+Suppose $T$ has an endblock $B$ that is not $K_{k-2}$ or $K_{k-1}$. Then removing $V(B)\setminus\set{x_B}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives
+\[2\size{B} > \parens{k-3 + p(k)}\parens{\card{B} - 1} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+If $B = K_2$, then $q(T') \le q(T) + 1$, otherwise $q(T') = q(T)$.  For $B=K_2$, we have to contradiction (to (3))
+\[2 > \parens{k-3 + p(k)} - h(k).\]
+Suppose $B = K_t$ for $4 \le t \le k-3$.  Then we have the contradiction
+\[t(t-1) > \parens{k-3 + p(k)}\parens{t-1}.\]
+Finally, suppose $B$ is an odd cycle of length $\ell$.  Then, we have
+\[2\ell > \parens{k-3 + p(k)}\parens{\ell-1}.\]
+This simplifies to
+\[\ell < 1 + \frac{2}{k-5+p(k)}.\]
+Since $k-5+p(k) \ge 1$ when $k \ge 6$, this implies that $k = 5$.  Using (4), we conclude $\ell = 3$, but then $B = K_{k-2}$.  
 
-\noindent\claim{5}{$T$ has at most one $K_{k-1}$ endblock.}
+\noindent\claim{3}{$T$ has at most one $K_{k-1}$ endblock.}
 
-\noindent\claim{6}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
+\noindent\claim{4}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
 
-\noindent\claim{7}{$T$ does not exist.}
+\noindent\claim{5}{$T$ does not exist.}
 \end{proof}
 
 

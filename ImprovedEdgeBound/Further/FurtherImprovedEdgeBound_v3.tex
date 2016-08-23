@@ -242,10 +242,27 @@ $\parens{\frac{3k-5}{k^2-4k+5}, \frac{k(k-3)}{k^2-4k+5}, 0, \frac{-2(k-1)(2k-5)}
 $\parens{1, 0, 2, 0}$ is $4$-Gallai.
 \end{lem}
 
+
+\begin{lem}
+If $\func{z}{\IN}{\IR}$ is such that $z(k) = 0$ or $2 \le z(k) \le \frac{k(k-3)}{k-2}$  for all $k \in \IN$, then 
+$(p,h,z,f)$ is $5$-Gallai, where
+\[h(k) \DefinedAs \frac{k(k-3) - (k-2)z(k)}{k^2-4k+5},\]
+\[p(k) \DefinedAs \frac{2 + h(k)}{k-2},\]
+\[f(k) \DefinedAs (k-1)(1 - h(k) - p(k)).\]
+\end{lem}
+
+\begin{lem}
+$\parens{\frac{3k-7}{k^2-4k+5}, \frac{(k-1)(k-4)}{k^2-4k+5}, 2, \frac{-2(k-1)(k-4)}{k^2-4k+5}}$ is $5$-Gallai.
+\end{lem}
+
+\begin{lem}
+$\parens{\frac{3k-5}{k^2-3k+3}, \frac{(k-1)(k-4)}{k^2-3k+3}, \frac{(3k-5)(k-2)}{k^2-3k+3}, \frac{-(k-1)(k-4)}{k^2-3k+3}}$ is $5$-Gallai.
+\end{lem}
+
 For an endblock $B$ of a Gallai tree $T$, let $x_B$ be the cutvertex contained in $B$.
 
 \begin{lem}\label{nokkm1}
-	Let $\func{z}{\IN}{\IR}$ such that $z(k) = 0$ or $z(k) \ge 2$.
+	Let $\func{z}{\IN}{\IR}$ such that $z(k) = 0$ or $z(k) \ge 2$ for all $k \in \IN$.
 	For all $k \ge 5$ and Gallai trees $T$ with $\Delta(T) \le k-1$ and $K_{k-1} \not \subseteq T$, we have
 	\[2\size{T} \le \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\card{T} + z(k)\beta(T).\]
 \end{lem}

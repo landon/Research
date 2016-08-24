@@ -1,33 +1,16 @@
 \documentclass[10pt]{article}
+\usepackage{e-jc}
 \usepackage{amsmath, amsthm, amssymb}
-\usepackage{hyperref}
-\usepackage{verbatim}
-\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
-\usepackage{color}
-\pagestyle{plain}
-
-\makeatletter
-\newtheorem*{rep@theorem}{\rep@title}
-\newcommand{\newreptheorem}[2]{
-\newenvironment{rep#1}[1]{
- \def\rep@title{#2 \ref{##1}}
- \begin{rep@theorem}}
- {\end{rep@theorem}}}
-\makeatother
+\usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=blue]{hyperref}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
 \newtheorem*{KernelMagic}{Kernel Magic}
 \newtheorem*{MainTheorem}{Main Theorem}
-\newreptheorem{thm}{Theorem}
 \newtheorem{prop}[thm]{Proposition}
-\newreptheorem{prop}{Proposition}
 \newtheorem{lem}[thm]{Lemma}
-\newreptheorem{lem}{Lemma}
 \newtheorem{conjecture}[thm]{Conjecture}
-\newreptheorem{conjecture}{Conjecture}
 \newtheorem{cor}[thm]{Corollary}
-\newreptheorem{cor}{Corollary}
 \newtheorem{prob}[thm]{Problem}
 
 \newtheorem*{KernelLemma}{Kernel Lemma}
@@ -102,8 +85,23 @@
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \title{A better lower bound on average degree of $k$-list-critical graphs.}
 \author{Landon Rabern}
+%\author{Landon Rabern\\
+%\small LBD Data\\[-0.8ex]
+%\small 314 Euclid Ave.\\[-0.8ex] 
+%\small Mount Gretna, Pennsylvania, USA\\
+%\small\tt landon@lbd-data.com}
+%
+%\date{\dateline{Aug 24, 2016}{XX}\\
+%\small Mathematics Subject Classifications: 05C15}
 \begin{document}
 \maketitle
+
+\begin{abstract}
+		We improve the best known bounds on average degree of $k$-list-critical graphs for $k \ge 6$. 
+		Specifically, for $k \ge 7$ we show that every non-complete $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
+		and every non-complete $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+		The same bounds holds for online $k$-list-critical graphs.
+\end{abstract}
 
 \section{Introduction}
 A graph $G$ is \emph{$k$-list-critical} if $G$ is not $(k-1)$-choosable, but every
@@ -556,7 +554,7 @@ Now the second inequality in the lemma follows as before.
 \end{proof}
 
 \section{Bounding $\beta(\L)$}
-This section is devoted to extracting the reusable Lemma \ref{betaLemma} from the proof of R. \cite{4ListCritical}.
+This section is devoted to extracting the reusable Lemma \ref{betaLemma} from the proof of R. \cite{Better4ListCriticalBound}.
 
 \begin{defn} A graph $G$ is \emph{OC-reducible} to $H$ if $H$ is a nonempty induced
 subgraph of $G$ which is online $f_{H}$-choosable where $f_{H}(v)\DefinedAs\delta(G)+d_{H}(v)-d_{G}(v)$

@@ -1,24 +1,8 @@
 \documentclass[10pt]{article}
-%\usepackage{e-jc}
-
-\usepackage[a4paper]{geometry}
-\setlength{\textwidth}{6.3in}
-\setlength{\textheight}{8.7in}
-\setlength{\topmargin}{0pt}
-\setlength{\headsep}{0pt}
-\setlength{\headheight}{0pt}
-\setlength{\oddsidemargin}{0pt}
-\setlength{\evensidemargin}{0pt}
-
-\usepackage{amssymb}
-\renewcommand{\geq}{\geqslant}
-\renewcommand{\leq}{\leqslant}
-\renewcommand{\ge}{\geqslant}
-\renewcommand{\le}{\leqslant}
-
-
-\usepackage{amsmath, amsthm}
-\usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=blue]{hyperref}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\pagestyle{plain}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
@@ -182,12 +166,12 @@ The following upper bounds on $q(\L)$ and $\beta(\L)$ are likely to be reusable.
 			4 & 3.0769 & --- & --- & --- & \bf{3.1000} & 3.1000\\
 			5 & 4.0909 & --- & 4.0984 & 4.1000 & \bf{4.1176} & 4.1176\\
 			6 & 5.0909 & --- & 5.1053 & 5.1076 & 5.1153 & \bf{5.1214}\\
-			7 & 6.0870 & --- & 6.1149 & 6.1192} & 6.1081 & \bf{6.1296}\\
-			8 & 7.0820 & --- & 7.1128 & 7.1167} & 7.1000 & \bf{7.1260}\\
-			9 & 8.0769 & 8.0838 & 8.1094 & 8.1130} & 8.0923 & \bf{8.1213}\\
-			10 & 9.0722 & 9.0793 & 9.1055 & 9.1088} & 9.0853 & \bf{9.1162}\\
-			15 & 14.0541 & 14.0610 & 14.0864 & 14.0884} & 14.0609 & \bf{14.0930}\\
-			20 & 19.0428 & 19.0490 & 19.0719 & 19.0733} & 19.0469 & \bf{19.0762}\\
+			7 & 6.0870 & --- & 6.1149 & 6.1192 & 6.1081 & \bf{6.1296}\\
+			8 & 7.0820 & --- & 7.1128 & 7.1167 & 7.1000 & \bf{7.1260}\\
+			9 & 8.0769 & 8.0838 & 8.1094 & 8.1130 & 8.0923 & \bf{8.1213}\\
+			10 & 9.0722 & 9.0793 & 9.1055 & 9.1088 & 9.0853 & \bf{9.1162}\\
+			15 & 14.0541 & 14.0610 & 14.0864 & 14.0884 & 14.0609 & \bf{14.0930}\\
+			20 & 19.0428 & 19.0490 & 19.0719 & 19.0733 & 19.0469 & \bf{19.0762}\\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -611,7 +595,7 @@ If $G$ is a connected graph, then
 \begin{proof}
 By Theorem \ref{Lowenstein},
 \[\alpha(G) \ge \frac23\card{G} - \frac13\size{G} + \frac{1}{12}\size{G} - \frac13,\]
-so, the corollary holds if $\frac{1}{12}\size{G} \ge \frac13$.  If not, then \size{G} < 4$, so $G$ is
+so, the corollary holds if $\frac{1}{12}\size{G} \ge \frac13$.  If not, then $\size{G} < 4$, so $G$ is
 $K_1$, $K_2$, $P_3$ or $K_3$ which all satisfy the desired bound.
 \end{proof}
 

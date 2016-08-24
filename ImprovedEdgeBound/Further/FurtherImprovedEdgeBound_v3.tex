@@ -137,8 +137,8 @@ When $k$ is defined in context, we just write $c^*(\L)$, $q(\L)$ and $\beta(\L)$
 The following upper bounds on $q(\L)$ and $\beta(\L)$ are likely to be reusable.  More general versions of these lemmas are stated and proved in sections 4 and 5.
 
 \begin{lem}\label{qLemmaList}
-	Let $G$ be a non-complete $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, 
-	$\HH$ the subgraph of $G$ induced on $k^+$-vertices and $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	Let $G$ be a non-complete $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices
+	and $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
 	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
 	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
 \end{lem}
@@ -444,10 +444,10 @@ All of the hard work was already done in \cite{OreVizing}.
 \end{defn}
 
 \begin{lem}\label{qLemma}
-	Let $G$ be a non-complete AT-irreducible graph with $\delta(G) = k-1$ where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices, 
-	$\HH$ the subgraph of $G$ induced on $k^+$-vertices, $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.  Then
-	\[q(\L) \le \card{\D} + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
-	\[q(\L) \le 2\card{\D} + 3\card{\HH^-} + \size{\HH^+, \L}.\]
+	Let $G$ be a non-complete AT-irreducible graph with $\delta(G) = k-1$ where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices and 
+	$\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
+	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
 \end{lem}
 
 \begin{observation}
@@ -510,6 +510,7 @@ The consequence is that we trade a bit in our bound for the proof to go through 
 \end{lem}
 
 \begin{proof}[Proof of Lemma \ref{qLemma}]
+Let $\HH$ be the subgraph of $G$ induced on $k^+$-vertices and let $\D$ be the components of $\L$ containing a copy of $K_{k-1}$. 
 Put $W \DefinedAs W^k(\L)$ and $L' \DefinedAs V(\L) \setminus W$. Define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
 \begin{enumerate}
 \item  $B = V(\HH^-)$ and $A$ is the disjoint union of the following sets
@@ -607,7 +608,7 @@ Fix $\lambda$ with $2 \le \lambda \le \frac{6(k-1)}{k}$. Let $M$ be the maximum 
 	\begin{equation}
 		\mic(G) \ge M + (k-1)\beta(\L).\label{eq0}
 	\end{equation}
-\claim{1}{If $C$ is a component of $G[\HH]$, then \[k\alpha(C) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.\]}
+\claim{1}{If $C$ is a component of $\HH$, then \[k\alpha(C) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.\]}
 
 First, suppose $\size{C} < \card{C}$.  Then $\size{C} = \card{C} - 1$ and $C$ is a tree.  If $\card{C} \ge 2$, then
 	\begin{align*}
@@ -631,7 +632,7 @@ So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound},
 
 \noindent\claim{2}{Lemma \ref{betaLemma} is true.}
 
-	Summing the bound in Claim 1 over all components of $G[\HH]$ and plugging into \eqref{eq0} gives
+	Summing the bound in Claim 1 over all components of $\HH$ and plugging into \eqref{eq0} gives
 	\begin{equation}
 	 \mic(G) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - \parens{\frac{2(k-1)}{\lambda}}\size{\HH} + (k-1)\beta(\L).
 	 \label{eq19}

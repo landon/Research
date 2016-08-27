@@ -1018,6 +1018,8 @@ where
 \begin{lem}\label{DegreeBoundedForMiddling}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
 If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$ with $\card{N(x)} \ge 3$,
+\[d_G(x) \le \frac{3}{5}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
+If additionally, $\card{N(x)} \le \frac58\card{G}$, then
 \[d_G(x) \le \frac{\card{N(x)}}{5\parens{\card{N(x)} - 2}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
 \end{lem}
 \begin{proof}
@@ -1034,25 +1036,40 @@ Then $S_2 = t + 2 + \Delta(G) - d_G(x)$.  Using this in \eqref{longeq}, we get
 The desired bound follows when $S_4 \le \frac58\card{G} - 2$, since then
 \[- 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 \le 0.\]
 
-
 So, suppose $S_4 > \frac58\card{G} - 2$. Rearranging, we get
 \begin{equation}\label{longeq2}
-5S_4d_G(x) \le 3S_4\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - (2S_4-2)\Delta(G)
+5S_4d_G(x) \le 3S_4\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - (2S_4-2)\Delta(G) - 5t
 \end{equation}
 We know that
 \[- 5|G| + 10 + 5S_4 +S_3(-5|G| + 10 + 5S_4) \le 0,\]
 so
 \begin{equation}\label{longeq2}
-5S_4d_G(x) \le 3S_4\Delta(G) + 1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G)
+5S_4d_G(x) \le 3S_4\Delta(G) + 1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) - 5t
 \end{equation}
-Since $d_G(x) \ge |N(x)| \ge \frac58|G| \ge \frac58\Delta(G)$, we have a contradiction unless
-\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) > 0\]
-By Shannon's bound $S_3 \le \frac{\Delta(G)}{2}$, so 
-\[1 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)+6}{2}S_4 - 2S_4\Delta(G) > 0,\]
+If
+\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) \le 0,\]
+then we have the contradiction
+\[d_G(x) \le \frac{3}{5}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
+
+So, assume 
+\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) > 0,\]
+
+By Shannon's bound $k + 1 \le \frac32\Delta(G)$, so $S_3 \le \frac{\Delta(G)}{2} - 2$, so 
+\[-13 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)+2}{2}S_4 - 2S_4\Delta(G) > 0,\]
 which is
-\[1 + \parens{\frac72 + 2}\Delta(G) > \frac{3\Delta(G)-6}{2}S_4,\]
+\[-13 + \frac{11}{2}\Delta(G) > \frac{3\Delta(G)-2}{2}S_4,\]
 so
-\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)+2}{3\Delta(G)-6}.\]
+\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)-26}{3\Delta(G)-2},\]
+which implies
+\[\card{G} < \frac{136}{15} - \frac{448}{15(3\Delta(G) - 2)},\]
+hence $\card{G} \le 9$.
+
+\bigskip
+
+By Vizing's bound $k + 1 \le \Delta(G) + \mu(G)$, so $S_3 \le \mu(G) - 2$, so 
+\[-13 + 7\mu(G) + (\mu(G) + 1)S_4 - 2(S_4 - 1)\Delta(G) > 0,\]
+which is
+\[\mu(G) > \frac{(2\Delta(G) - 1)S_4 + 13 - 2\Delta(G)}{S_4 + 7}
 
 \end{proof}
 

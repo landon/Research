@@ -1054,22 +1054,20 @@ then we have the contradiction
 So, assume 
 \[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) > 0,\]
 
-By Shannon's bound $k + 1 \le \frac32\Delta(G)$, so $S_3 \le \frac{\Delta(G)}{2} - 2$, so 
-\[-13 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)+2}{2}S_4 - 2S_4\Delta(G) > 0,\]
+By Shannon's theorem and a result of Vizing, $k + 1 \le \floor{\frac32\Delta(G)} - 1$ unless $G$ is a fat triangle, so $S_3 \le \frac{\Delta(G)}{2} - 3$, so 
+\[-20 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)}{2}S_4 - 2S_4\Delta(G) > 0,\]
 which is
-\[-13 + \frac{11}{2}\Delta(G) > \frac{3\Delta(G)-2}{2}S_4,\]
+\[-20 + \frac{11}{2}\Delta(G) > \frac{3\Delta(G)}{2}S_4,\]
 so
-\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)-26}{3\Delta(G)-2},\]
+\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)-40}{3\Delta(G)},\]
 which implies
-\[\card{G} < \frac{136}{15} - \frac{448}{15(3\Delta(G) - 2)},\]
+\[\card{G} < \frac{136}{15} - \frac{64}{3\Delta(G)},\]
 hence $\card{G} \le 9$.
 
-\bigskip
-
-By Vizing's bound $k + 1 \le \Delta(G) + \mu(G)$, so $S_3 \le \mu(G) - 2$, so 
-\[-13 + 7\mu(G) + (\mu(G) + 1)S_4 - 2(S_4 - 1)\Delta(G) > 0,\]
-which is
-\[\mu(G) > \frac{(2\Delta(G) - 1)S_4 + 13 - 2\Delta(G)}{S_4 + 7}
+%By Vizing's bound $k + 1 \le \Delta(G) + \mu(G)$, so $S_3 \le \mu(G) - 2$, so 
+%\[-13 + 7\mu(G) + (\mu(G) + 1)S_4 - 2(S_4 - 1)\Delta(G) > 0,\]
+%which is
+%\[\mu(G) > \frac{(2\Delta(G) - 1)S_4 + 13 - 2\Delta(G)}{S_4 + 7}
 
 \end{proof}
 

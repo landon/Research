@@ -1036,39 +1036,38 @@ Then $S_2 = t + 2 + \Delta(G) - d_G(x)$.  Using this in \eqref{longeq}, we get
 The desired bound follows when $S_4 \le \frac58\card{G} - 2$, since then
 \[- 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 \le 0.\]
 
-So, suppose $S_4 > \frac58\card{G} - 2$. Rearranging, we get
-\begin{equation}\label{longeq2}
+So, suppose $S_4 > \frac58\card{G} - 2$. Rearranging \eqref{longeq2}, we get
+\begin{equation}\label{longeq3}
 5S_4d_G(x) \le 3S_4\Delta(G) - 5|G| + 11 + S_3(-5|G| + 17 + 6S_4) + 8S_4 - (2S_4-2)\Delta(G) - 5t
 \end{equation}
-We know that
-\[- 5|G| + 10 + 5S_4 +S_3(-5|G| + 10 + 5S_4) \le 0,\]
+Now $S_4 = \card{N(x)} - 2 = \card{G} - 3 + S_5$, where
+\[S_5 \DefinedAs S_4 + 3 - \card{G} \le 0.\]
+Thus
+\[-5|G| + 15 + 5S_4 +S_3(-5|G| + 15 + 5S_4) - 5S_5(1 + S_3) = 0,\]
 so
-\begin{equation}\label{longeq2}
-5S_4d_G(x) \le 3S_4\Delta(G) + 1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) - 5t
+\begin{equation}\label{longeq4}
+5S_4d_G(x) \le 3S_4\Delta(G) - 4 + 2S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) + 5S_5(1 + S_3) - 5t 
 \end{equation}
 If
-\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) \le 0,\]
+\[-4 + 2S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) + 5S_5(1 + S_3) \le 0,\]
 then we have the contradiction
 \[d_G(x) \le \frac{3}{5}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
-
-So, assume 
-\[1 + 7S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) > 0,\]
-
-By Shannon's theorem and a result of Vizing, $k + 1 \le \floor{\frac32\Delta(G)} - 1$ unless $G$ is a fat triangle, so $S_3 \le \frac{\Delta(G)}{2} - 3$, so 
-\[-20 + \parens{\frac72 + 2}\Delta(G) + \frac{\Delta(G)}{2}S_4 - 2S_4\Delta(G) > 0,\]
+So, we have
+\[-4 + 2S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) + 5S_5(1 + S_3) > 0,\]
 which is
-\[-20 + \frac{11}{2}\Delta(G) > \frac{3\Delta(G)}{2}S_4,\]
+\begin{equation}\label{MM3}
+(2 + S_4)S_3 + 3S_4 > (2S_4-2)\Delta(G) + 4 - 5S_5(S_3 + 1).
+\end{equation}
+By Shannon's theorem $k + 1 \le \frac32\Delta(G)$, so $S_3 \le \frac{\Delta(G)}{2} - 2$. After plugging in for $S_3$ on the left side and solving for $S_4$, we get
+\[S_5 + \card{G} - 3 = S_4 < \frac{6\Delta(G) - 16 + 10S_5(S_3+1)}{3\Delta(G) - 2} = 2 + \frac{5S_5(S_3 + 1) - 12}{3\Delta(G) - 2},\]
 so
-\[\frac58|G| - 2 < S_4 < \frac{11\Delta(G)-40}{3\Delta(G)},\]
-which implies
-\[\card{G} < \frac{136}{15} - \frac{64}{3\Delta(G)},\]
-hence $\card{G} \le 9$.
-
-%By Vizing's bound $k + 1 \le \Delta(G) + \mu(G)$, so $S_3 \le \mu(G) - 2$, so 
-%\[-13 + 7\mu(G) + (\mu(G) + 1)S_4 - 2(S_4 - 1)\Delta(G) > 0,\]
-%which is
-%\[\mu(G) > \frac{(2\Delta(G) - 1)S_4 + 13 - 2\Delta(G)}{S_4 + 7}
-
+\[\card{G} < 5 + \frac{(10S_3 - 3\Delta(G) + 12)S_5 - 12}{3\Delta(G) - 2}.\]
+Since $S_5 \le 0$, this implies $\card{G} \le 3$, unless $10S_3 - 3\Delta(G) + 12 < 0$.  So $S_3 < \frac{3}{10}\Delta(G) - \frac65$. 
+Since $S_5 \le 0$, \eqref{MM3} implies
+\[(2 + S_4)S_3 + 3S_4 > (2S_4-2)\Delta(G) + 4\]
+Plugging in $S_3 < \frac{3}{10}\Delta(G)$ gives
+\[\card{G} - 3 \le S_4 < \frac{26\Delta(G) - 64}{17\Delta(G) - 18} < 2,\]
+a contradiction.
 \end{proof}
 
 \begin{cor}\label{CriticalElementary56}

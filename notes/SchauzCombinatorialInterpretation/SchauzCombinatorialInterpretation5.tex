@@ -1,0 +1,218 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+\usepackage{hyperref}
+\usepackage{mathscinet}
+\usepackage{tikz,tkz-graph,tkz-berge}
+\usetikzlibrary{positioning}
+\usepackage{verbatim, xcolor}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\newcommand{\boundellipse}[3]% center, xdim, ydim
+{(#1) ellipse (#2 and #3)
+}
+
+\pagestyle{plain}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{Theorem}{Theorem}
+\newtheorem*{Lemma}{Lemma}
+\newtheorem*{Nullstellensatz}{Combinatorial Nullstellensatz}
+\newtheorem*{CoefficientFormula}{Coefficient Formula}
+\newtheorem*{EulerianOrientationsLemma}{Eulerian Reduction}
+
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\AsDefined}{=\mathrel{\mathop:}}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+
+\newcommand{\erdos}{Erd\H{o}s}
+\newcommand{\CondOne}{\hyperref[cond1]{Condition (1)}}
+\newcommand{\CondTwo}{\hyperref[cond2]{Condition (2)}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\L{\fancy{L}}
+\def\H{\fancy{H}}
+\def\P{\fancy{P}}
+\def\F{\fancy{F}}
+\def\T{\fancy{T}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+\newcommand{\powset}[1]{\mathcal{P}\parens{#1}}
+
+\title{graph theory notes\thanks{clarifications, errors, simplifications $\Rightarrow$ \texttt{landon.rabern@gmail.com}}\\ \bigskip
+Schauz's combinatorial interpretation of Alon and Tarsi's algebraic technique}
+\date{}
+\begin{document}
+\maketitle
+
+In \cite{Alon1992125}, Noga Alon and Michael Tarsi introduced a beautiful algebraic technique for proving the existence of list colorings.  In \cite{schauz2010flexible}, Uwe Schauz gave a new combinatorial proof that extended the technique to online list coloring.  Suppose we have graph $G$ and $\func{f}{V(G)}{\IN}$ for which we would like to show that $G$ is $f$-choosable.  We could show this easily by just being greedy if we could find an \emph{acyclic} orientation of $G$ where $d^+(v) < f(v)$ for every $v \in V(G)$.  Being acyclic is a strong requirement, so it is natural to seek weaker conditions that allow us to conclude $f$-choosability.  That is, we want to find properties $\P$ such that if $G$ has a $\P$-orientation where $d^+(v) < f(v)$ for every $v \in V(G)$, then $G$ is $f$-choosable.  A simple inductive argument shows that ``kernel-perfect'' is such a $\P$.  Using long division of polynomials, Alon and Tarsi proved that ``differing number of even and odd spanning Eulerian subgraphs having'' is another such $\P$.  Schauz's combinatorial proof of this result is clever and a big step towards understanding what is really going on. But it is still somewhat mysterious why Eulerian subgraphs would matter.  Here we redo Schauz's proof attempting to isolate the specific attributes of the property ``differing number of even and odd spanning Eulerian subgraphs having'' that allow the proof to go through.
+
+\section{A general framework}
+It will be convenient to have notation to talk about sets of degree sequences. For a set $S$, let $\IN^S$ be all functions from $S$ to $\IN$.  Let $T \subseteq S$. For $g\in \IN^S$ and $h \in \IN^T$, define $g+h \in \IN^S$ by $(g+h)(x) = g(x) + h(x)$ for $x \in T$ and $(g+h)(x) = g(x)$ for $x \in S\setminus T$. Define $g-h \in \IN^S$ by $(g-h)(x) = \max\set{0, g(x) - h(x)}$ for $x \in T$ and $(g-h)(x) = g(x)$ for $x \in S\setminus T$.  Let $1_T \in \IN^T$ be given by $1_T(x) = 1$ for $x \in T$.  When $T = \set{u}$, we write $1_u$ in place of $1_{\set{u}}$.  For $h \in \IN^S$ and $T \subseteq S$, put $h(T) = \sum_{v \in T} h(v)$.
+
+For a set $S$, let $\powset{S}$ be the power set of $S$. We consider functions $\rho$ that take a graph $G$ and $h \in \IN^{V(G)}$, where $\rho(G,h) \subseteq \powset{V(G)}$.  The end goal is to prove results of the form:
+\[\text{if } h \in \IN^{V(G)} \text{ with } \rho(G, h) = \powset{V(G)}\text{, then } G \text{ is } (h + 1_{V(G)})\text{-paintable}.\]
+\newpage
+\begin{defn}\label{tame}
+	We say that $\rho$ is \emph{tame} if for all $h \in \IN^{V(G)}$ and $S \in \rho(G, h)$, the following conditions hold:
+\begin{enumerate}
+	\item if $h(S) > 0$, then there are $A, B \subseteq S$ and $h' \in \IN^{V(G)}$ such that
+	\begin{enumerate}
+	\item $A \neq \emptyset$; and
+	\item $S \setminus A \subseteq B$; and
+	\item $B \in \rho(G, h')$; and
+	\item $h'(v) < h(v)$ for all $v \in A$.
+	\end{enumerate}
+	\item if $h(S) = 0$, then $S$ is independent in $G$ and there is $f \le h$ such that 
+	\[\rho\parens{G - S, \restr{f}{V(G-S)}} = \powset{V(G-S)}.\]
+\end{enumerate}
+\end{defn}
+
+\begin{lem}\label{GetSuperStable}
+	Suppose $\rho$ is tame, $G$ is a graph and $h \in \IN^{V(G)}$.  If $S \in \rho(G, h)$, then there is $T \subseteq S$ and $g \in \IN^{V(G)}$ such that
+	\begin{itemize}
+		\item $g(T) = 0$; and
+		\item $g(v) < h(v)$ for all $v \in S\setminus T$; and
+		\item $T \in \rho(G, g)$.
+	\end{itemize}
+\end{lem}
+\begin{proof}
+Suppose not and let $S \in \rho(G, h)$ be a set for which the statement fails minimizing $h(S)$. If $h(S) = 0$, using $T = S$ and $g = h$ gives a contradiction.
+So, $h(S) > 0$. Since $\rho$ is tame, there are $A, B \subseteq S$ and $h' \in \IN^{V(G)}$ as in the definition.
+Since $A \ne \emptyset$, we have $h'(B) \le h'(S) < h(S)$.  Applying minimality of $h(S)$ to $B$ and $h'$ gives $g \in \IN^{V(G)}$ and $T \subseteq B$ with $g(T) = 0$, 
+$T \in \rho(G, g)$ and $g(v) < h'(v)$ for all $v \in B \setminus T$.   But $T \subseteq B \subseteq S$ and $S\setminus T \subseteq A \cup \parens{B \setminus T}$,
+so $T$ and $g$ give a contradiction.
+
+\end{proof}
+
+\begin{thm}\label{TameRhoWins}
+	If $\rho$ is tame, $G$ is a graph and $h \in \IN^{V(G)}$ with $\rho(G, h) = \powset{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable.
+\end{thm}
+\begin{proof}
+	Suppose not and choose a counterexample $G$ minimizing $|G| + h(V(G))$.  Say Lister lists nonempty $S \subseteq V(G)$ on the first move.
+	By Lemma \ref{GetSuperStable}, there is $T \subseteq S$ and $g \in \IN^{V(G)}$ such that $g(T) = 0$, $T \in \rho(G, g)$ and $g(v) < h(v)$ for all $v \in S\setminus T$.
+	Since $g(T) = 0$, part 2 of the definition of tame implies that $T$ is independent and there is $f \le g$ such that
+	\[\rho\parens{G - T, \restr{f}{V(G-T)}} = \powset{V(G-T)}.\]
+	Since $S$ is nonempty and $f(v) < h(v)$ for all $v \in S\setminus T$, we have 
+	\[\card{G-T} + h(V(G-T)) < \card{G} + h(V(G)).\]
+	Now Painter can paint $T$ and win by minimality of $|G| + h(V(G))$ since $f(v) < h(v)$ for all $v \in S\setminus T$.
+\end{proof}
+
+
+\section{Eulerian subgraphs}
+Now we can finish Schauz's combinatorial proof by just showing that a certain $\rho$ is tame.  For all graphs $G$ under consideration, we fix an ordering of $V(G)$ and say an orientation of $G$ is even (resp. odd) if the number of edges pointing to the right is even (resp. odd).  For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$. Let $S \in \rho(G, h)$ if and only if the number of even orientations of $G$ with out-degree sequence in $h + \IN^S$ differs from the number of odd orientations of $G$ with out-degree sequence in $h + \IN^S$.  We claim that $\rho$ is tame.  
+
+For tame part (1), suppose $h$ is not zero on all of $S$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
+\[(h - 1_u) + \IN^S = (h + \IN^S) \cup ((h - 1_u) + \IN^{S \setminus u}).\]
+Note also that $h + \IN^S$ and $(h - 1_u) + \IN^{S \setminus u}$ are disjoint.  Since $S \in \rho(G, h)$, the number of even/odd orientations of $G$ with degree sequence in $h + \IN^S$ differ.  
+Because of our observed equality, this is impossible if $S \not \in \rho(G, h - 1_u)$ and $S \setminus u \not \in \rho(G, h - 1_u)$. 
+Hence using $A = \set{u}$ and $h' = h - 1_u$ with one of $B=A$ or $B = A \setminus u$ proves part (1).
+
+If tame part (2a) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
+
+Finally, we prove (2b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $S \not \in \rho(G-xy, h - 1_x)$ and $S \not \in \rho(G-xy, h - 1_y)$, then $S \not \in \rho(G, h)$.  Note that, since $h(S)=0$, if $x \in S$, then $h - 1_x = h$.  This proves (2b) and finishes the proof that $\rho$ is tame.
+
+\section{Paintability is tame}
+For a graph $G$ and $h \in \IN^{V(G)}$, let $\rho(G,h)$ be all $S \subseteq V(G)$ for which there is independent $T \subseteq S$ such that $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  We claim that $\rho$ is tame.  Suppose $S \in \rho(G,h)$. For (1), suppose $h(S)>0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Note that $T$ must contain every $x \in S$ with $h(x)=0$.  If $T=S$, then for any $x \in S$ with $h(x)>0$ we have $S \in \rho(G, h - 1_x)$.  If $T \ne S$, then for any $x \in S \setminus T$ we have $h(x) > 0$ and $S\setminus x \in \rho(G, h - 1_x)$ since $T \subseteq S\setminus x$.
+
+To prove (2), suppose $h(S) = 0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Then $T=S$ and hence $S$ is independent, proving (2a).  If $xy \in E(G)$, then $G-xy$ is easier to paint than $G$, so we must have $S \in \rho(G-xy, h)$, this proves (2b).  Now (2c) is immediate since $G-S$ is $\parens{\restr{h}{V(G-S)} + 1_{V(G-S)}}$-paintable.  So, $\rho$ is tame and we have proved the following.
+
+\begin{thm}
+	There exists a tame $\rho$ such that if $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if $\rho(G, h) = 2^{V(G)}$.
+\end{thm}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}
+
+ 
+

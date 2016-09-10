@@ -189,17 +189,36 @@ so $T$ and $g$ give a contradiction.
 
 
 \section{Eulerian subgraphs}
-Now we can finish Schauz's combinatorial proof by just showing that a certain $\rho$ is tame.  For all graphs $G$ under consideration, we fix an ordering of $V(G)$ and say an orientation of $G$ is even (resp. odd) if the number of edges pointing to the right is even (resp. odd).  For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$. Let $S \in \rho(G, h)$ if and only if the number of even orientations of $G$ with out-degree sequence in $h + \IN^S$ differs from the number of odd orientations of $G$ with out-degree sequence in $h + \IN^S$.  We claim that $\rho$ is tame.  
+Now we can finish Schauz's combinatorial proof by just showing that a certain $\rho$ is tame.  
+For all graphs $G$ under consideration, we fix an ordering of $V(G)$ and say an orientation of $G$ is even (resp. odd) if the number of edges pointing to the right is even (resp. odd).  
+For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$. Let $S \in \rho(G, h)$ if and only if the number of even orientations of $G$ 
+with out-degree sequence in $h + \IN^S$ differs from the number of odd orientations of $G$ with out-degree sequence in $h + \IN^S$.  We claim that $\rho$ is tame.  
 
-For tame part (1), suppose $h$ is not zero on all of $S$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
-\[(h - 1_u) + \IN^S = (h + \IN^S) \cup ((h - 1_u) + \IN^{S \setminus u}).\]
+For tame part 1, suppose $h(S) > 0$ and pick $u \in S$ with $h(u) > 0$.  Observe that 
+\begin{equation}\label{DJunionequal}
+(h - 1_u) + \IN^S = (h + \IN^S) \cup ((h - 1_u) + \IN^{S \setminus u}).
+\end{equation}
 Note also that $h + \IN^S$ and $(h - 1_u) + \IN^{S \setminus u}$ are disjoint.  Since $S \in \rho(G, h)$, the number of even/odd orientations of $G$ with degree sequence in $h + \IN^S$ differ.  
-Because of our observed equality, this is impossible if $S \not \in \rho(G, h - 1_u)$ and $S \setminus u \not \in \rho(G, h - 1_u)$. 
-Hence using $A = \set{u}$ and $h' = h - 1_u$ with one of $B=A$ or $B = A \setminus u$ proves part (1).
+Because of \eqref{DJunionequal}, this is impossible if $S \not \in \rho(G, h - 1_u)$ and $S \setminus u \not \in \rho(G, h - 1_u)$. 
+Hence using $A = \set{u}$ and $h' = h - 1_u$ with one of $B=S$ or $B = S \setminus u$ proves part (1).
 
-If tame part (2a) is false, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
+Now we prove tame part 2. Suppose $h(S) = 0$.  If $S$ is not independent, then we have $xy \in E(G[S])$ with $h(x) = h(y) = 0$.  But then for any orientation of $G$ with out-degree sequence in $h + \IN^S$, the orientation made by reversing $xy$ also has out-degree sequence in $h + \IN^S$.  This gives a bijection between the even and odd orientations of $G$ with out-degree sequence in $h + \IN^S$, a contradiction.
 
-Finally, we prove (2b).  Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  A little thought shows that this gives bijections that imply if $S \not \in \rho(G-xy, h - 1_x)$ and $S \not \in \rho(G-xy, h - 1_y)$, then $S \not \in \rho(G, h)$.  Note that, since $h(S)=0$, if $x \in S$, then $h - 1_x = h$.  This proves (2b) and finishes the proof that $\rho$ is tame.
+Let $xy \in E(G)$.  Removing $xy$ from an orientation $D$ of $G$ with out-degree sequence in $h + \IN^S$ gives an orientation $D'$ of $G-xy$ in $((h - 1_x) + \IN^S) \cup ((h - 1_y) + \IN^S)$.  
+Note that $D'$ has the same parity as $D$ if $xy$ points to the left and the opposite parity as $D$ if $xy$ points to the right.  
+Conversely, each orientation of $G-xy$ extends to one orientation of $G$ with the same parity and one with the opposite parity.  
+Therefore,
+\begin{equation}\label{EdgeKiller}
+\text{if } S \in \rho(G, h) \text{, then } S \in \rho(G-xy, h - 1_x) \text{ or } S \in \rho(G-xy, h - 1_y).
+\end{equation}
+Note that, since $h(S)=0$, if $x \in S$, then $h - 1_x = h$.
+Put $G' = G - E(S, V(G-S))$ Applying \eqref{EdgeKiller} to the edges between $S$ and $G-S$ in an arbitrary order gives $f \le h$ such that $S \in \rho(G', f)$.
+That means that the number of even orientations of $G'$ 
+with out-degree sequence in $f + \IN^S$ differs from the number of odd orientations of $G'$ with out-degree sequence in $f + \IN^S$.  But
+the vertices in $S$ all have out-degree zero in any orientation of $G'$, so $\emptyset \in \rho(G', f)$ and hence $\emptyset \in \rho\parens{G' - S, \restr{f}{V(G'-S)}}$.
+Since every orientation of $G'-S$ has out-degree sequence with sum $\size{G'-S}$, this implies $\rho\parens{G' - S, \restr{f}{V(G'-S)}} = \powset{V(G'-S)}$.
+
+
 
 \section{Paintability is tame}
 For a graph $G$ and $h \in \IN^{V(G)}$, let $\rho(G,h)$ be all $S \subseteq V(G)$ for which there is independent $T \subseteq S$ such that $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  We claim that $\rho$ is tame.  Suppose $S \in \rho(G,h)$. For (1), suppose $h(S)>0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Note that $T$ must contain every $x \in S$ with $h(x)=0$.  If $T=S$, then for any $x \in S$ with $h(x)>0$ we have $S \in \rho(G, h - 1_x)$.  If $T \ne S$, then for any $x \in S \setminus T$ we have $h(x) > 0$ and $S\setminus x \in \rho(G, h - 1_x)$ since $T \subseteq S\setminus x$.
@@ -207,7 +226,7 @@ For a graph $G$ and $h \in \IN^{V(G)}$, let $\rho(G,h)$ be all $S \subseteq V(G)
 To prove (2), suppose $h(S) = 0$.  Let $T \subseteq S$ such that $T$ is independent and $G-T$ is $\parens{\restr{h}{V(G-T)} + 1_{V(G-S)}}$-paintable.  Then $T=S$ and hence $S$ is independent, proving (2a).  If $xy \in E(G)$, then $G-xy$ is easier to paint than $G$, so we must have $S \in \rho(G-xy, h)$, this proves (2b).  Now (2c) is immediate since $G-S$ is $\parens{\restr{h}{V(G-S)} + 1_{V(G-S)}}$-paintable.  So, $\rho$ is tame and we have proved the following.
 
 \begin{thm}
-	There exists a tame $\rho$ such that if $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if $\rho(G, h) = 2^{V(G)}$.
+	There exists a tame $\rho$ such that if $G$ is a graph and $h \in \IN^{V(G)}$, then $G$ is $(h + 1_{V(G)})$-paintable if and only if $\rho(G, h) = \powset{V(G)}$.
 \end{thm}
 
 \bibliographystyle{amsplain}

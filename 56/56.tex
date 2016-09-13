@@ -1072,8 +1072,7 @@ a contradiction.
 
 \begin{cor}\label{CriticalElementary56}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
-If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there are at most two $x \in V(G)$ with $\card{N(x)} \ge 3$
-and if there are two such $x_1, x_2$, then $\card{N(x_i)} > \frac58\card{G}$ for $i \in \irange{2}$ and $x_1 \nonadj x_2$.
+If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there is at most one $x \in V(G)$ with $\card{N(x)} \ge 3$.
 \end{cor}
 \begin{proof}
 Since $G$ is critical and elementary, $\card{G}$ is odd and
@@ -1083,7 +1082,13 @@ so
 In particular,
 \[\sum_{v \in V(G)} \Delta(G) - d_G(v) \le \Delta(G) - 1 - \card{G}.\]
 By Lemma \ref{DegreeBoundedForMiddling}, every $x \in V(G)$ with $\card{N(x)} \ge 3$ has $d_G(x) \le \frac35\Delta(G)$, so there are at most two such $x$ since
-$\frac25 + \frac25 + \frac25 > 1$.  Suppose there are $x_1, x_2$ with $\card{N(x_1)} \ge \card{N(x_2)} \ge 3$
+$\frac25 + \frac25 + \frac25 > 1$.  Suppose there are $x_1, x_2$ with $\card{N(x_1)} \ge \card{N(x_2)} \ge 3$.
+
+Let $z \in V(G)$ with $d_G(z) = \Delta(G)$.  Then, by Lemma \ref{DegreeBoundedForMiddling}, $\card{N(z)} = 2$, so $\mu(G) \ge \frac12\Delta(G)$.
+By Theorem \ref{CriticalMuBound}, $\mu(G) < \frac13(\Delta(Q) + 1)$.  We conclude
+\begin{equation}
+\Delta(G) < \frac23(\Delta(Q) + 1).\label{DeltaGQUpperBound}
+\end{equation}
 
 First, suppose $x_1 \adj x_2$.  Since $Q$ is vertex-critical, 
 \begin{align*}
@@ -1091,13 +1096,23 @@ k &\le d_Q(x_1x_2)\\
 &=d_G(x_1) + d_G(x_2) - \mu(x_1x_2) - 1\\
 &\le \frac65\Delta(G) - \mu(x_1x_2) - 1,
 \end{align*}
-So, $\Delta(G) >\frac56k$.  By Theorem \ref{CriticalMuBound}, $\mu(G) < \frac13(\Delta(Q) + 1)$ Let $z \in V(G)$ with $d_G(z) = \Delta(G)$.  Then, by Lemma \ref{DegreeBoundedForMiddling}, $\card{N(z)} = 2$, so $\mu(G) \ge \frac12\Delta(G)$.  So,
+So, $\Delta(G) >\frac56k$.  By \eqref{DeltaGQUpperBound},
 \[\frac56k < \Delta(G) < \frac23(\Delta(Q) + 1),\]
-and hence $k < \frac45(\Delta(Q) + 1)$, a contradiction.  So, $x_1 \nonadj x_2$.
+and hence $k < \frac45(\Delta(Q) + 1)$, a contradiction.  
 
-Now suppose $\card{N(x_2)} \le \frac58\card{G}$.  Since $x_1 \nonadj x_2$, Lemma \ref{DegreeBoundedForMiddling} gives
+So, $x_1 \nonadj x_2$. Now suppose $\card{N(x_2)} \le \frac58\card{G}$.  Since $x_1 \nonadj x_2$, Lemma \ref{DegreeBoundedForMiddling} gives
 \[d_G(x_2) \le \frac35\Delta(G) - (\Delta(G) - d_G(x_1)) \le \frac15\Delta(G),\]
-a contradiction since $\frac45 + \frac25 > 1$.
+a contradiction since $\frac45 + \frac25 > 1$. 
+
+So, $\card{N(x_i)} > \frac58\card{G}$ for $i \in \irange{2}$.  In particular, there is $y \in N(x_1) \cap N(x_2)$.  Since $\card{N(y)} = 2$, by symmetry
+we may assume $\mu(x_1y) \ge \frac12 d_G(y)$.  Hence, using \eqref{DeltaGQUpperBound},
+\begin{align*}
+k &\le d_Q(x_1y) \\
+&= d_G(x_1) + d_G(y) - \mu(x_1y) < d_G(x_1) + \frac12d_G(y) \\
+&\le \frac{11}{10}\Delta(G) \\
+&< \frac{11}{15}(\Delta(Q) + 1),
+\end{align*}
+a contradiction.
 \end{proof}
 
 \begin{thm}
@@ -1112,12 +1127,10 @@ so
 \[\ceil{\chi_f(Q)} = \ceil{\frac{5\Delta(Q)+3}{6}} + 1 = \chi(Q).\]
 Therefore $G$ is elementary and $k = \frac56\parens{\Delta(Q) + 1} + \beta$ for some $\beta \ge -\frac13$.  By Corollary~\ref{mainCorHelper}, $k \ge \Delta(G) + 1$.
 Let $H$ be the underlying simple graph of $G$.
-We may apply Corollary \ref{CriticalElementary56} to conclude that there are at most two $x \in V(G)$ with $d_H(x) \ge 3$
-and if there are two such $x_1, x_2$, then $d_H(x_1) = d_H(x_2) = 3$ and $x_1 \adj x_2$.  
-Since $G$ is critical, $\delta(H) \ge 2$.  Hence $H$ is a cycle, two cycles sharing a vertex, or two cycles sharing an edge.
+We may apply Corollary \ref{CriticalElementary56} to conclude that there is at most one $x \in V(G)$ with $d_H(x) \ge 3$.
+Since $G$ is critical, $\delta(H) \ge 2$ and $H$ has no cut vertices. Hence $H$ is a cycle. 
 
-%TODO: FINISH, we could compute the edge chromatic number of these directly, easier way?
-Let's handle the case when $H$ is a cycle.  Choose $t$ such that $|V(H)|=2t+1$.
+Choose $t$ such that $|V(H)|=2t+1$.
 Let $x_1,\ldots,x_{2t+1}$ denote the multiplicities of the edges in $G$, and let
 $X=\sum_{i=1}^{2t+1}x_i$.  Since $G$ is elementary, we have
 $\chi'(G)=\ceil{\frac{X}t}$.  
@@ -1144,14 +1157,6 @@ First suppose that $X\le 12$.
 Now $\chi'(G)\le \ceil{\frac{12}3}=4\le\ceil{\frac{5(4)+3}6}$.
 So instead assume that $X=13$, which implies that $\Delta(Q)\ge 5$.
 Now $\chi'(G)\le \ceil{\frac{13}3}=5\le\ceil{\frac{5(5)+3}6}$, as desired.
-
-Now we consider the case when $H$ is a cycle with a chord.  Similar to before, it
-suffices to show that $3X\ge 4t+10+\frac{20}{t-2}$.  Thus, when $t\in\{4,5\}$, we can
-assume $X\le 12$.  Since $\Delta(Q)\ge 4$, we are done (actually, $G$ cannot be
-critical).  For $t=3$, we can assume $X\le 13$.  If $\Delta(Q)\ge 5$, then we
-are done.  So assume that $\Delta(Q)\le 4$.  This implies that $X\le
-7(4+1)/3<12$.  Now $\chi'(G)\le \ceil{\frac{12}3}=4\le \ceil{\frac{5(4)+3}6}$,
-as desired.
 \end{proof}
 
 %I think we should be able to prove that the conjecture follows from

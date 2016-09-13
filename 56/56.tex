@@ -1018,7 +1018,7 @@ where
 \begin{lem}\label{DegreeBoundedForMiddling}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
 If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then for all $x \in V(G)$ with $\card{N(x)} \ge 3$,
-\[d_G(x) \le \frac{3}{5}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
+\[d_G(x) \le \frac{3}{5}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
 If additionally, $\card{N(x)} \le \frac58\card{G}$, then
 \[d_G(x) \le \frac{\card{N(x)}}{5\parens{\card{N(x)} - 2}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
 \end{lem}
@@ -1051,7 +1051,7 @@ so
 If
 \[-4 + 2S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) + 5S_5(1 + S_3) \le 0,\]
 then we have the contradiction
-\[d_G(x) \le \frac{3}{5}}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
+\[d_G(x) \le \frac{3}{5}\Delta(G) - \frac{1}{\card{N(x)} - 2}\sum_{v \in V(G)\setminus N[x]} \Delta(G) - d_G(v).\]
 So, we have
 \[-4 + 2S_3 + (S_3 + 3)S_4 - (2S_4-2)\Delta(G) + 5S_5(1 + S_3) > 0,\]
 which is
@@ -1065,7 +1065,7 @@ so
 Since $S_5 \le 0$, this implies $\card{G} \le 3$, unless $10S_3 - 3\Delta(G) + 12 < 0$.  So $S_3 < \frac{3}{10}\Delta(G) - \frac65$. 
 Since $S_5 \le 0$, \eqref{MM3} implies
 \[(2 + S_4)S_3 + 3S_4 > (2S_4-2)\Delta(G) + 4\]
-Plugging in $S_3 < \frac{3}{10}\Delta(G)$ gives
+Plugging in $S_3 < \frac{3}{10}\Delta(G)-\frac65$ gives
 \[\card{G} - 3 \le S_4 < \frac{26\Delta(G) - 64}{17\Delta(G) - 18} < 2,\]
 a contradiction.
 \end{proof}
@@ -1108,9 +1108,42 @@ We may apply Corollary \ref{CriticalElementary56} to conclude that there are at 
 and if there are two such $x_1, x_2$, then $d_H(x_1) = d_H(x_2) = 3$ and $x_1 \adj x_2$.  
 Since $G$ is critical, $\delta(H) \ge 2$.  Hence $H$ is a cycle, two cycles sharing a vertex, or two cycles sharing an edge.
 
-TODO: FINISH, we could compute the edge chromatic number of these directly, easier way?
+%TODO: FINISH, we could compute the edge chromatic number of these directly, easier way?
+Let's handle the case when $H$ is a cycle.  Choose $t$ such that $|V(H)|=2t+1$.
+Let $x_1,\ldots,x_{2t+1}$ denote the multiplicities of the edges in $G$, and let
+$X=\sum_{i=1}^{2t+1}x_i$.  Since $G$ is elementary, we have
+$\chi'(G)=\ceil{\frac{X}t}$.  
+Let $Q=L(G)$ and let $v_i$ be a vertex of $Q$
+corresponding to an edge of $G$ counted by $x_i$.  Now
+$d_Q(v_i)=x_{i-1}+x_i+x_{i+1}-1$.  It suffices to show that there exists
+$j\in[2t+1]$ such that $\frac{X}t\le \frac{5d_Q(v_j)+3}6$.  We will prove the
+stronger statement that $\frac{X}t\le \frac{5\overline{d}+3}6$, where
+$\overline{d}=\frac{1}{2t+1}\sum_{i=1}^{2t+1}d_Q(v_i)$.
+Since $\frac{5\overline{d}+3}6 =\frac{5X}{2(2t+1)}-\frac13$, it suffices to have 
+$\frac{5X}{2(2t+1)}-\frac13\ge \frac{X}t$.  Simplifying (for $t\ge 3$) gives $X\ge
+\frac13(4t+10+\frac{20}{t-2})$.  Since $X\ge 2t+1$, this always holds when $t\ge
+6$.  When $t=5$, it suffices to have $X\ge 13$.  When $t=4$, it suffices to have
+$X\ge 12$, and when $t=3$, it suffices to have $X\ge 14$.  Suppose $t=5$ and
+$X\le 12$.  
+Now $\chi'(G)\le \ceil{\frac{12}5}=3\le\ceil{\frac{5(2)+3}6}$.
+Suppose instead that $t=4$ and $X\le 11$.
+Now $\chi'(G)\le \ceil{\frac{11}4}=3\le\ceil{\frac{5(2)+3}6}$.
+Finally, suppose that $t=3$ and $X\le 13$.
+If $X\le 9$, then again 
+Now $\chi'(G)\le \ceil{\frac{9}3}=3\le\ceil{\frac{5(2)+3}6}$.
+So assume that $X\ge 10$, which implies that $\Delta(Q)\ge 4$.
+First suppose that $X\le 12$.
+Now $\chi'(G)\le \ceil{\frac{12}3}=4\le\ceil{\frac{5(4)+3}6}$.
+So instead assume that $X=13$, which implies that $\Delta(Q)\ge 5$.
+Now $\chi'(G)\le \ceil{\frac{13}3}=5\le\ceil{\frac{5(5)+3}6}$, as desired.
 
-
+Now we consider the case when $H$ is a cycle with a chord.  Similar to before, it
+suffices to show that $3X\ge 4t+10+\frac{20}{t-2}$.  Thus, when $t\in\{4,5\}$, we can
+assume $X\le 12$.  Since $\Delta(Q)\ge 4$, we are done (actually, $G$ cannot be
+critical).  For $t=3$, we can assume $X\le 13$.  If $\Delta(Q)\ge 5$, then we
+are done.  So assume that $\Delta(Q)\le 4$.  This implies that $X\le
+7(4+1)/3<12$.  Now $\chi'(G)\le \ceil{\frac{12}3}=4\le \ceil{\frac{5(4)+3}6}$,
+as desired.
 \end{proof}
 
 %I think we should be able to prove that the conjecture follows from

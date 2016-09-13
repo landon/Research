@@ -1073,7 +1073,7 @@ a contradiction.
 \begin{cor}\label{CriticalElementary56}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$. 
 If $k = \frac56\parens{\Delta(Q) + 1} + \beta$ where $\beta \ge -\frac13$, then there are at most two $x \in V(G)$ with $\card{N(x)} \ge 3$
-and if there are two such $x_1, x_2$, then $\card{N(x_1)} = \card{N(x_2)} = 3$ and $x_1 \adj x_2$.
+and if there are two such $x_1, x_2$, then $\card{N(x_i)} > \frac58\card{G}$ for $i \in \irange{2}$ and $x_1 \nonadj x_2$.
 \end{cor}
 \begin{proof}
 Since $G$ is critical and elementary, $\card{G}$ is odd and
@@ -1082,14 +1082,22 @@ so
 \[2\size{G} \ge \Delta(G)\card{G} + \card{G} - \Delta(G) + 1.\]
 In particular,
 \[\sum_{v \in V(G)} \Delta(G) - d_G(v) \le \Delta(G) - 1 - \card{G}.\]
-By Lemma \ref{DegreeBoundedForMiddling}, every $x \in V(G)$ with $3 \le \card{N(x)} \le \frac58\card{G}$ has $d_G(x) \le \frac35\Delta(G)$, so there are at most two such $x$ since
-$\frac25 + \frac25 + \frac25 > 1$.
+By Lemma \ref{DegreeBoundedForMiddling}, every $x \in V(G)$ with $\card{N(x)} \ge 3$ has $d_G(x) \le \frac35\Delta(G)$, so there are at most two such $x$ since
+$\frac25 + \frac25 + \frac25 > 1$.  Suppose there are $x_1, x_2$ with $\card{N(x_1)} \ge \card{N(x_2)} \ge 3$
 
-Suppose there are two such $x_1, x_2$ with $x_1 \nonadj x_2$.  If $\card{N(x_1)} \ge 4$, then Lemma \ref{DegreeBoundedForMiddling} gives $d_G(x_1) \le \frac25\Delta(G)$ which is impossible because $d_G(x_2) \le \frac35\Delta(G)$.  So, we must have $\card{N(x_1)} = \card{N(x_2)} = 3$.  Since $x_1 \nonadj x_2$, Lemma \ref{DegreeBoundedForMiddling} gives for $i \in \irange{2}$,
-\[d_G(x_i) \le \frac35\Delta(G) - (\Delta(G) - d_G(x_{3-i})),\]
-so
-\[d_G(x_i) - d_G(x_{3-i}) \le -\frac25\Delta(G),\]
-so $d_G(x_1) < d_G(x_2) < d_G(x_1)$, a contradiction.
+First, suppose $x_1 \adj x_2$.  Since $Q$ is vertex-critical, 
+\begin{align*}
+k &\le d_Q(x_1x_2)\\
+&=d_G(x_1) + d_G(x_2) - \mu(x_1x_2) - 1\\
+&\le \frac65\Delta(G) - \mu(x_1x_2) - 1,
+\end{align*}
+So, $\Delta(G) >\frac56k$.  By Theorem \ref{CriticalMuBound}, $\mu(G) < \frac13(\Delta(Q) + 1)$ Let $z \in V(G)$ with $d_G(z) = \Delta(G)$.  Then, by Lemma \ref{DegreeBoundedForMiddling}, $\card{N(z)} = 2$, so $\mu(G) \ge \frac12\Delta(G)$.  So,
+\[\frac56k < \Delta(G) < \frac23(\Delta(Q) + 1),\]
+and hence $k < \frac45(\Delta(Q) + 1)$, a contradiction.  So, $x_1 \nonadj x_2$.
+
+Now suppose $\card{N(x_2)} \le \frac58\card{G}$.  Since $x_1 \nonadj x_2$, Lemma \ref{DegreeBoundedForMiddling} gives
+\[d_G(x_2) \le \frac35\Delta(G) - (\Delta(G) - d_G(x_1)) \le \frac15\Delta(G),\]
+a contradiction since $\frac45 + \frac25 > 1$.
 \end{proof}
 
 \begin{thm}

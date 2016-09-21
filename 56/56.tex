@@ -472,20 +472,43 @@ Now $S_2 \ge 2 + \Delta(G) - d_G(x)$, so we have
 a contradiction since $S_5 \ge 0$.  So, we must have $4 + S_5 - |G| > 0$, that is, 
 \[|G| \le S_5 + 3 = |N(x)| \le |G| - 1,\] a contradiction.
 \end{proof}
-For a graph $Q$ and $r \in \IN$, put
+For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put
 \[\C_r(Q) \DefinedAs \setbs{X \subseteq V(Q)}{X \text{ is a maximal clique with } \card{X} < r \text { or } X \text { is a clique with } \card{X} = r}.\]  
 Put
 \[\gamma_r(Q) \DefinedAs \max_{X \in \C_r(Q)} \frac{1}{|X|}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
-In these terms King and Edwards superlocal version of Reed's conjecture for line graphs is the following.
+In terms of $\gamma_r$, the local version of Reed's conjecture for line graphs proved by Chudnovsky et al. and the superlocal version proved by King and Edwards are the following two theorems.
+\begin{thm}[Chudnovsky et al.]
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_1(Q)}$.\label{LocalReed}
+\end{thm}
+
 \begin{thm}[King and Edwards]
 If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_2(Q)}$.\label{KingEdwardsSuperLocal}
 \end{thm}
 
-Note that if $a, b \in \IN$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$.  We prove the following strengthening of Theorem \ref{KingEdwardsSuperLocal}.
+Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$, so Theorem \ref{KingEdwardsSuperLocal} implies Theorem \ref{LocalReed}.  
+We prove the next bound in the sequence.
+\begin{thm}\label{SuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
+\end{thm}
 
-\begin{cor}\label{SuperDuperLocalReed}
+King and Edwards conjectured the fractional version of the following bound without the round-up for all graphs.
+\begin{conj}\label{SuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
+\end{conj}
+
+It is not obvious that $\gamma_r$ is monotone, so let's prove that first.
+
+\begin{lem}\label{MonotoneHelper}
+If $A$ and $B$ are graphs with $A \subseteq B$ and $r \in \IN \cup \set{\infty}$, then $\gamma_r(A) \le \gamma_r(B)$.
+\end{lem}
+\begin{proof}
+\textcolor{red}{This is true for all graphs on at most 8 vertices and line graphs of graphs on at most 8 vertices.  Don't have a proof yet.
+Is this obvious?}
+\end{proof}
+
+\begin{lem}\label{SuperDuperLocalReedHelper}
 Let $Q = L(G)$ where $G$ is a critical graph. If $G$ is not a thickened cycle, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
-\end{cor}
+\end{lem}
 \begin{proof}
 Suppose $G$ is not a thickened cycle. For $uv\in E(G)$, put 
 \[f(uv) \DefinedAs \max\{d_G(u)+\frac12(d_G(v)-\mu(uv)),d_G(v)+\frac12(d_G(u)-\mu(uv)\}.\]
@@ -523,15 +546,12 @@ Otherwise, some $v \in M$ has $d(v) \ge \omega(Q)$ and hence $\ceil{\gamma_3(Q)}
 \eqref{EasyBoundEquation}, this gives $\chi(Q) \le \ceil{\gamma_3(Q)}$.
 \end{proof}
 
-Now Theorem \ref{KingEdwardsSuperLocal} follows easily.
-
-\begin{proof}[Proof of Theorem \ref{KingEdwardsSuperLocal}]
-Suppose Theorem \ref{KingEdwardsSuperLocal} is false, and choose a counterexample $Q$ minimizing $\card{Q}$.
-Say $Q = L(G)$.  Minimality of $\card{Q}$ implies that $G$ is critical.  So Corollary \ref{SuperDuperLocalReed} gives
-a contradiction unless $G$ is a thickened cycle.  So, $Q$ is a circular-interval graph and the superlocal version of Reed's
-conjecture for fractional coloring combined with Niessen and Kind's proof of the round-up property for circular-interval graphs
-gives a contradiction.  \textcolor{red}{TODO:  Handle the thickened cycle case easily without having to fall back on
-superlocal reed for fractional?}
+\begin{proof}[Proof of Theorem \ref{SuperDuperLocalReed}]
+Suppose Theorem \ref{SuperDuperLocalReed} is false, and choose a counterexample $Q$ minimizing $\card{Q}$.
+Say $Q = L(G)$.  Minimality of $\card{Q}$ and Lemma \ref{MonotoneHelper} imply that $G$ is critical.  So Lemma \ref{SuperDuperLocalReedHelper} gives
+a contradiction unless $G$ is a thickened cycle.  \textcolor{red}{We should be able to finish, for example if King and Edwards conjecture is true 
+(that $\gamma_\infty(Q)$ is an upper bound on fractional chromatic number), then since $G$ is a circular-interval graph, it has the round-up property and so
+$\chi(Q) \le \ceil{\gamma_\infty(Q)} \le \gamma_3(Q)$.  But it should be simpler than that, we can compute the chromatic number directly.}
 \end{proof}  
 \section{Properties of long vertices}
 For a path $Q$, recall that $\ell(Q)$ denotes the length of $Q$.

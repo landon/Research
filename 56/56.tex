@@ -109,19 +109,27 @@
 \begin{document}
 \maketitle
 \begin{abstract}
+In 2011, the second author conjectured that every line graph $G$ satisfies
+$\chi(G)\le \max\set{\omega(G),\frac{5\Delta(G)+8}{6}}$. This conjecture is best
+possible, as shown by replacing each edge in a 5-cycle by $k$ parallel edges,
+and taking the line graph. In this paper we prove the conjecture.
+We also develop more general techniques and results that will likely be of
+independent interest, due to their use in attacking the Goldberg--Seymour
+conjecture.  
 \end{abstract}
 
 \section{Overview}
 
-By \emph{graph} we mean multigraph without loops.  Our notation follows Diestel \cite{diestel}.
+By \emph{graph} we mean multigraph without loops.  Our notation follows Diestel
+\cite{diestel2010}.
 In \cite{rabern2011strengthening}, the second author showed that $\chi(G)\le
 \max\set{\omega(G), \frac{7\Delta(G)+10}{8}}$ for every line graph $G$.
 In the same paper, he conjectured
 that $\chi(G)\le \max\set{\omega(G),\frac{5\Delta(G)+8}{6}}$. This conjecture is best
 possible, as shown by replacing each edge in a 5-cycle by $k$ parallel edges,
-and taking the line graph. In this paper we prove the latter inequality.  Along the way, we develop
-more general techniques and results that will likely be of independent interest.
-The main result of this paper is the following theorem.
+and taking the line graph. In this paper we prove the latter inequality.  Along
+the way, we develop more general techniques and results that will likely be of
+independent interest.  The main result of this paper is the following theorem.
 \begin{main}[$\frac56$-Theorem]
 If $Q$ is a line graph, then 
 \[\chi(Q)\le \max\set{\omega(Q),\frac{5\Delta(Q)+8}{6}}.\]
@@ -130,10 +138,13 @@ If $Q$ is a line graph, then
 For every graph $G$, we have $\chi'(G)\ge
 \ceil{\frac{\size{G}}{\floor{\frac{\card{G}}{2}}}}$, since each color class has size at most
 $\floor{\frac{\card{G}}{2}}$.  Likewise, the same bound holds for any subgraph $H$.  
-Thus $\W(G)\DefinedAs\max_{H\subseteq G}\ceil{\frac{\size{H}}{\floor{\frac{\card{H}}{2}}}}$
-(over all subgraphs $H$ with at least two vertices) is a lower bound on $\chi'(G)$.
-Goldberg~\cite{} and Seymour~\cite{} each conjectured that this lower bound holds with equality,
-whenever $\chi'(G)>\Delta(G)+1$.
+Thus $\chi'(G)\ge \max_{H\subseteq G}\ceil{\frac{\size{H}}{\floor{\frac{\card{H}}{2}}}}$
+(where the max is over all subgraphs $H$ with at least two vertices).
+For convenience, we let $\W(G)\DefinedAs\max_{H\subseteq
+G}\ceil{\frac{\size{H}}{\floor{\frac{\card{H}}{2}}}}$.
+Goldberg~\cite{goldberg1973,GoldbergJGT} and
+Seymour~\cite{seymour1979a,seymour1979b} each conjectured that this lower bound
+holds with equality, whenever $\chi'(G)>\Delta(G)+1$.
 \begin{GS}
 Every graph $G$ satisfies
 \[
@@ -148,8 +159,8 @@ intermediate result, in Section~\ref{sec:thin}.
 If $Q$ the line graph of a graph $G$, then 
 \[\chi(Q)\le \max\set{\W(G),\Delta(G)+1,\frac{5\Delta(Q)+8}{6}}.\]
 \end{main2}
-Finally, in Section~\ref{sec:56} we show that the Weak $\frac56$-Theorem does indeed imply
-the $\frac56$-Theorem.
+Finally, in Section~\ref{sec:final} we show that the Weak $\frac56$-Theorem
+does indeed imply the $\frac56$-Theorem.
 
 
 \section{Tashkinov Trees}
@@ -174,8 +185,8 @@ used on more than one edge from $X$ to $V(G) \setminus X$.
 A set $X$ is \emph{strongly closed} w.r.t.~$\varphi$ if $X$ has no 
 defective color.
 Elementary and strongly closed sets are of particular interest because of the
-following theorem, proved implicitly by Andersen~\cite{} and Goldberg~\cite{};
-see also~\cite[Theorem 1.4]{SSTF}.
+following theorem, proved implicitly by Andersen~\cite{andersen1977edge} and
+Goldberg~\cite{GoldbergJGT}; see also~\cite[Theorem 1.4]{SSTF}.
 %As we will see shortly, there is a strong relationship between elementary sets
 %and elementary graphs.
 % 
@@ -407,7 +418,7 @@ This gives the contradiction
 Reed~\cite{Reed1998omega} conjectured that $\chi(G)\le
 \ceil{\frac{\omega(G)+\Delta+1}2}$ for every
 graph $G$.  This is the average of a trivial lower bound $\omega(G)$ and a
-trivial upper bound $\Delta(G)+1$.  King~\cite{King} conjectured the stronger
+trivial upper bound $\Delta(G)+1$.  King~\cite{King-diss} conjectured the stronger
 bound $\chi(G)\le \max_{v\in V(G)}\ceil{\frac{\omega(v)+d(v)+1}2}$, where
 $\omega(v)$ is the size of the largest clique containing $v$, which is now known
 to hold for many classes of graphs, including line graphs~\cite{CKPS}.  Here we
@@ -461,28 +472,54 @@ Now $S_2 \ge 2 + \Delta(G) - d_G(x)$, so we have
 a contradiction since $S_5 \ge 0$.  So, we must have $4 + S_5 - |G| > 0$, that is, 
 \[|G| \le S_5 + 3 = |N(x)| \le |G| - 1,\] a contradiction.
 \end{proof}
-For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put 
-\[\C_r(Q) \DefinedAs \setb{X}{V(Q)}{X \text{ is a maximal clique or } X \text { is a clique with } \card{X} = r}.\]
+For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put
+\[\C_r(Q) \DefinedAs \setbs{X \subseteq V(Q)}{X \text{ is a maximal clique with } \card{X} < r \text { or } X \text { is a clique with } \card{X} = r}.\]  
 Put
 \[\gamma_r(Q) \DefinedAs \max_{X \in \C_r(Q)} \frac{1}{|X|}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
-Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$.  
-In particular, the following generalizes the superlocal version of Reed's conjecture for line graphs
-proved by King and Edwards.
+In terms of $\gamma_r$, the local version of Reed's conjecture for line graphs proved by Chudnovsky et al. and the superlocal version proved by King and Edwards are the following two theorems.
+\begin{thm}[Chudnovsky et al.]
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_1(Q)}$.\label{LocalReed}
+\end{thm}
 
-\begin{cor}\label{SuperDuperLocalReed}
+\begin{thm}[King and Edwards]
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_2(Q)}$.\label{KingEdwardsSuperLocal}
+\end{thm}
+
+Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$, so Theorem \ref{KingEdwardsSuperLocal} implies Theorem \ref{LocalReed}.  
+We prove the next bound in the sequence.
+\begin{thm}\label{SuperDuperLocalReed}
 If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
-\end{cor}
+\end{thm}
+
+King and Edwards conjectured the fractional version of the following bound without the round-up for all graphs.
+\begin{conj}\label{SuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
+\end{conj}
+
+It is not obvious that $\gamma_r$ is monotone, so let's prove that first.
+
+\begin{lem}\label{MonotoneHelper}
+If $A$ and $B$ are graphs with $A \subseteq B$ and $r \in \IN \cup \set{\infty}$, then $\gamma_r(A) \le \gamma_r(B)$.
+\end{lem}
 \begin{proof}
-Suppose not and let $Q$ be a counterexample minimizing $\card{Q}$. Let $Q = L(G)$.  Then $G$ is critical.
-First, suppose $G$ is not a thickening of a cycle. For $uv\in E(G)$, put 
+\textcolor{red}{This is true for all graphs on at most 8 vertices and line graphs of graphs on at most 8 vertices.  Don't have a proof yet.
+Is this obvious?}
+\end{proof}
+
+\begin{lem}\label{SuperDuperLocalReedHelper}
+Let $Q = L(G)$ where $G$ is a critical graph. If $G$ is not a thickened cycle, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
+\end{lem}
+\begin{proof}
+Suppose $G$ is not a thickened cycle. For $uv\in E(G)$, put 
 \[f(uv) \DefinedAs \max\{d_G(u)+\frac12(d_G(v)-\mu(uv)),d_G(v)+\frac12(d_G(u)-\mu(uv)\}.\]
 For $uv \in E(G)$, we have
 \begin{align*}
 f(uv) &= \frac{d_G(u) + d_G(v) - \mu(uv) + \max\set{d_G(u), d_G(v)}}{2}\\
 &\le \frac{d_Q(uv) + \omega(uv) + 1}{2}.
 \end{align*}
-Choose $x\in V(G)$ and $S\subseteq N(x)$ such that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$.  Say
-$S = \set{v_1, v_2, v_3}$.  Then
+Since $G$ is critical, we have $\card{N(v)} \ge 2$ for all $v \in V(G)$.  
+Since $G$ is not a thickened cycle, we may choose $x\in V(G)$ and $S\subseteq N(x)$ with $|S| = 3$ such that $x$ and $S$ achieve maximality in the definition of $d_{claw}(G)$. 
+Say $S = \set{v_1, v_2, v_3}$.  Then
 \begin{align*}
 \ceil{\frac43\dclaw{G}} &= \ceil{\parens{\frac43}\parens{\frac14}\parens{d_G(x)+\sum_{i \in \irange{3}} d_G(v_i)}} \\
 &\le \ceil{\frac13\sum_{i \in \irange{3}} d_G(v_i) + \frac12(d_G(x) - \mu(xv_i))}\\
@@ -490,20 +527,32 @@ $S = \set{v_1, v_2, v_3}$.  Then
 &\le \ceil{\frac13\sum_{i \in \irange{3}} \frac{d_Q(xv_i) + \omega(xv_i) + 1}{2}}\\
 &\le \ceil{\gamma_3(Q)}.
 \end{align*}
-
 By Theorem \ref{EasyBound2}, we have
-\[\chi(Q) \le \max\set{\Delta(G) + 1, \ceil{\gamma_3(Q)}}.\]
-Since $\chi(Q) > \ceil{\gamma_3(Q)}$, this gives $\chi(Q) \le \Delta(G) + 1$.  TODO: EASY WAY TO FINISH THIS?
+\begin{equation}\label{EasyBoundEquation}
+\chi(Q) \le \max\set{\Delta(G) + 1, \ceil{\gamma_3(Q)}}.
+\end{equation}
 
-TODO: HANDLE THICKENED CYCLE CASE.
+Let $M \subseteq V(Q)$ be a maximum clique in $Q$.  
+Then $\card{M} \ge 3$, so we can choose $X \subseteq M$ with $\card{X} = 3$ maximizing
+\[\frac{1}{3}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
+We have
+\begin{align*}
+\gamma_3(Q) &\ge \frac{1}{3}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}\\
+&\ge \frac{1}{\card{M}}\sum_{v \in M} \frac{d(v) + \omega(v) + 1}{2}\\
+&\ge \omega(Q) + \sum_{v \in M} \frac{d(v) + 1 - \omega(v)}{2}.
+\end{align*}
+If $V(Q) = M$, then $\ceil{\gamma_3(Q)} = \omega(Q) = \Delta(Q) = \chi(Q)$, as desired.
+Otherwise, some $v \in M$ has $d(v) \ge \omega(Q)$ and hence $\ceil{\gamma_3(Q)} \ge \omega(Q) + 1 \ge \Delta(Q) + 1$.  Using 
+\eqref{EasyBoundEquation}, this gives $\chi(Q) \le \ceil{\gamma_3(Q)}$.
 \end{proof}
 
-King and Edwards conjectured that $\gamma_\infty(Q)$ is an upper bound on the fractional chromatic number for any graph $Q$.  With a round-up, we think this
-may hold for the chromatic number of line graphs.
-\begin{conj}\label{SuperDuperDuperLocalReed}
-If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
-\end{conj}
-
+\begin{proof}[Proof of Theorem \ref{SuperDuperLocalReed}]
+Suppose Theorem \ref{SuperDuperLocalReed} is false, and choose a counterexample $Q$ minimizing $\card{Q}$.
+Say $Q = L(G)$.  Minimality of $\card{Q}$ and Lemma \ref{MonotoneHelper} imply that $G$ is critical.  So Lemma \ref{SuperDuperLocalReedHelper} gives
+a contradiction unless $G$ is a thickened cycle.  \textcolor{red}{We should be able to finish, for example if King and Edwards conjecture is true 
+(that $\gamma_\infty(Q)$ is an upper bound on fractional chromatic number), then since $G$ is a circular-interval graph, it has the round-up property and so
+$\chi(Q) \le \ceil{\gamma_\infty(Q)} \le \gamma_3(Q)$.  But it should be simpler than that, we can compute the chromatic number directly.}
+\end{proof}  
 \section{Properties of long vertices}
 For a path $Q$, recall that $\ell(Q)$ denotes the length of $Q$.
 For $x,y \in V(Q)$, let $xQy$ denote the subpath of $Q$ with
@@ -741,13 +790,13 @@ Now we prove the main result of this section.
 
 \begin{thm}
 If $Q$ is the line graph of $G$, then
-\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+\[\chi(Q) \le \max\set{\W(Q), \Delta(G) + 1, \frac{5\Delta(Q) + 8}{6}}.\]
 \label{mainhelper}
 \end{thm}
 \begin{proof}
 Suppose the theorem is false and choose a counterexample minimizing $\card{Q}$.
-Let $k = \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) +
-3}{6}}}$. Say $Q = L(G)$ for a graph $G$. The minimality of $Q$ implies that
+Let $k = \max\set{\W(Q), \Delta(G) + 1, \frac{5\Delta(Q) + 8}{6}}$. Say $Q =
+L(G)$ for a graph $G$. The minimality of $Q$ implies that
 $G$ is critical and $\chi(Q) = k+1$, for some $k \ge \Delta(G) + 1$.
 
 The heart of the proof is Claim~1, which roughly says that if $x$ is long, then
@@ -883,22 +932,23 @@ This finishes the final case of Claim~5, which proves the theorem.
 \end{proof}
 
 In the previous theorem, we showed that 
-$\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \Delta(G) + 1, \ceil{\frac{5\Delta(Q) +
-3}{6}}}$.  Now we show that if the maximum is attained by the second argument,
+$\chi(Q) \le \max\set{\W(Q), \Delta(G) + 1, \frac{5\Delta(Q) +
+8}{6}}$.  Now we show that if the maximum is attained by the second argument,
 then $G$ satisfies the $\frac56$-Conjecture.
-We use the following lemma, which is implicit in~\cite{rabern2011strengthening}.
+We use the following lemma, which is implicit in~\cite{rabern2011strengthening};
+see the proof of Lemma~9 therein.
 
 \begin{lem}\label{CriticalMuBoundOtherWay}
 If $Q$ is the line graph of a graph $G$ and $Q$ is vertex critical, then
 \[\chi(Q) \leq \max\left\{\Delta(G), \Delta(Q) + 1 + 2\mu(G) - \Delta(G)\right\}.\]
 \end{lem}
-\begin{proof}
-The fan equation implies this (see the proof in strengthening Brooks paper).
-\end{proof}
+%\begin{proof}
+%The fan equation implies this (see the proof in strengthening Brooks paper).
+%\end{proof}
 
 \begin{cor}
 If $Q$ is the line graph of a critical graph $G$ and $\chi(Q) \le \Delta(G) + 1$, then
-\[\chi(Q) \le \max\set{\omega(Q), \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+\[\chi(Q) \le \max\set{\omega(Q), \frac{5\Delta(Q) + 8}{6}}.\]
 \label{mainCorHelper}
 \end{cor}
 \begin{proof}
@@ -909,18 +959,20 @@ so solving for $\mu(G)$ gives
 Applying Theorem \ref{CriticalMuBound} gives
 \[k+1 = \chi(Q) \le \Delta(Q) + 1 - \frac{k - \frac{\Delta(Q)}{2} - 1}{2},\]
 and solving for $k+1$ yields
-\[\chi(Q) = k+1 \le \frac56\Delta(Q) + \frac43 \le \ceil{\frac{5\Delta(Q) + 3}{6}}.\]
+\[\chi(Q) = k+1 \le \frac56\Delta(Q) + \frac43 = \frac{5\Delta(Q) + 8}{6}.\]
 \end{proof}
 
-Since $\omega(Q) \le \ceil{\chi_f(Q)}$, Theorem~\ref{mainhelper} and Corollary~\ref{mainCorHelper} together imply the following.
+Since $\omega(Q) \le \max\{\Delta(G),\W(G)\}$, Theorem~\ref{mainhelper} and
+Corollary~\ref{mainCorHelper} together imply the following.
 
 \begin{cor}
-If $Q$ is the line graph of a graph, then
-\[\chi(Q) \le \max\set{\ceil{\chi_f(Q)}, \ceil{\frac{5\Delta(Q) + 3}{6}}}.\]
+If $Q$ is the line graph of a graph $G$, then
+\[\chi(Q) \le \max\set{\Delta(G),\W(G), \frac{5\Delta(Q) + 8}{6}}.\]
 \label{mainCor}
 \end{cor}
 
 \section{The $\frac56$-Conjecture}
+\label{sec:final}
 \begin{lem}
 Let $G$ be a critical, elementary graph with $\chi'(G) = k + 1$ where $k \ge \Delta(G) + 1$.  Put $Q \DefinedAs L(G)$.  
 If $k = \epsilon\parens{\Delta(Q) + 1} + \beta$, then for all $x \in V(G)$,

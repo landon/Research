@@ -476,7 +476,8 @@ For a graph $Q$ and $r \in \IN \cup \set{\infty}$, put
 \[\C_r(Q) \DefinedAs \setbs{X \subseteq V(Q)}{X \text{ is a maximal clique with } \card{X} < r \text { or } X \text { is a clique with } \card{X} = r}.\]  
 Put
 \[\gamma_r(Q) \DefinedAs \max_{X \in \C_r(Q)} \frac{1}{|X|}\sum_{v \in X} \frac{d(v) + \omega(v) + 1}{2}.\]
-In terms of $\gamma_r$, the local version of Reed's conjecture for line graphs proved by Chudnovsky et al. and the superlocal version proved by King and Edwards are the following two theorems.
+In terms of $\gamma_r$, the local version of Reed's conjecture for line graphs proved by Chudnovsky et al. and the superlocal version proved by King and Edwards 
+are the following two theorems.
 \begin{thm}[Chudnovsky et al.]
 If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_1(Q)}$.\label{LocalReed}
 \end{thm}
@@ -486,25 +487,99 @@ If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_2(Q)}$.\label{KingEdwards
 \end{thm}
 
 Note that if $a, b \in \IN \cup \set{\infty}$ with $a \le b$, then $\gamma_a(Q) \ge \gamma_b(Q)$, so Theorem \ref{KingEdwardsSuperLocal} implies Theorem \ref{LocalReed}.  
-We prove the next bound in the sequence.
-\begin{thm}\label{SuperDuperLocalReed}
-If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
-\end{thm}
-
-King and Edwards conjectured the fractional version of the following bound without the round-up for all graphs.
-\begin{conj}\label{SuperDuperLocalReed}
-If $Q$ is a line graph, then $\chi(Q) \le \ceil{\gamma_\infty(Q)}$.
+King and Edwards conjectured that $\gamma_\infty(Q)$ is an upper bound on the fractional chromatic number for all graphs $Q$.
+\begin{conj}[King and Edwards]
+If $Q$ is a any graph, then $\chi_f(Q) \le \gamma_\infty(Q)$.
 \end{conj}
-
-It is not obvious that $\gamma_r$ is monotone, so let's prove that first.
-
-\begin{lem}\label{MonotoneHelper}
-If $A$ and $B$ are graphs with $A \subseteq B$ and $r \in \IN \cup \set{\infty}$, then $\gamma_r(A) \le \gamma_r(B)$.
+Unfortunately, $\gamma_\infty$ is not monotone and hence not very induction-friendly.
+\begin{lem}
+$\gamma_1$ and $\gamma_2$ are monotone, but $\gamma_r$ is not monotone for $r \ge 3$.
 \end{lem}
 \begin{proof}
-\textcolor{red}{This is true for all graphs on at most 8 vertices and line graphs of graphs on at most 8 vertices.  Don't have a proof yet.
-Is this obvious?}
+The first statement is clear.
+For the second statement, let $Q$ be the graph in Figure \ref{fig:NotMonotone}.  For $r \ge 3$, we have $\gamma_r(Q -x) = \frac{11}{2} > \frac{16}{3} = \gamma_r(Q)$.
 \end{proof}
+
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale = 10]
+\tikzstyle{VertexStyle} = []
+\tikzstyle{EdgeStyle} = []
+\tikzstyle{labeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw]
+\tikzstyle{unlabeledStyle}=[shape = circle, minimum size = 6pt, inner sep = 1.2pt, draw, fill]
+\Vertex[style = labeledStyle, x = 0.700, y = 0.900, L = \tiny {$x$}]{v0}
+\Vertex[style = unlabeledStyle, x = 0.600, y = 0.750, L = \tiny {}]{v1}
+\Vertex[style = unlabeledStyle, x = 0.800, y = 0.750, L = \tiny {}]{v2}
+\Vertex[style = unlabeledStyle, x = 0.300, y = 0.300, L = \tiny {}]{v3}
+\Vertex[style = unlabeledStyle, x = 1.100, y = 0.300, L = \tiny {}]{v4}
+\Vertex[style = unlabeledStyle, x = 0.600, y = 0.600, L = \tiny {}]{v5}
+\Vertex[style = unlabeledStyle, x = 0.800, y = 0.600, L = \tiny {}]{v6}
+\Vertex[style = unlabeledStyle, x = 0.550, y = 0.550, L = \tiny {}]{v7}
+\Vertex[style = unlabeledStyle, x = 0.850, y = 0.550, L = \tiny {}]{v8}
+\Vertex[style = unlabeledStyle, x = 0.500, y = 0.500, L = \tiny {}]{v9}
+\Vertex[style = unlabeledStyle, x = 0.900, y = 0.500, L = \tiny {}]{v10}
+\Vertex[style = unlabeledStyle, x = 0.450, y = 0.450, L = \tiny {}]{v11}
+\Vertex[style = unlabeledStyle, x = 0.950, y = 0.450, L = \tiny {}]{v12}
+\Vertex[style = unlabeledStyle, x = 0.400, y = 0.400, L = \tiny {}]{v13}
+\Vertex[style = unlabeledStyle, x = 1.000, y = 0.400, L = \tiny {}]{v14}
+\Vertex[style = unlabeledStyle, x = 0.350, y = 0.350, L = \tiny {}]{v15}
+\Vertex[style = unlabeledStyle, x = 1.050, y = 0.350, L = \tiny {}]{v16}
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v2)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v7)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v9)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v11)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v13)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v1)(v15)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v0)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v4)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v6)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v8)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v10)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v12)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v14)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v2)(v16)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v4)(v3)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v6)(v5)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v8)(v7)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v10)(v9)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v12)(v11)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v14)(v13)
+\Edge[label = \tiny {}, labelstyle={auto=right, fill=none}](v16)(v15)
+\end{tikzpicture}
+\caption{A graph $Q$ where $\gamma_r(Q - x) > \gamma_r(Q)$ for all $r \ge 3$.}
+\label{fig:NotMonotone}
+\end{figure}
+
+
+For $r\in \IN \cup \set{\infty}$, put
+\[\tilde{\gamma}(Q) \DefinedAs \max_{H \subseteq Q} \gamma_r(H).\]
+
+\begin{conj}\label{KingEdwardsReplacement}
+If $Q$ is any graph, then $\chi_f(Q) \le \tilde{\gamma}_\infty(Q)$.
+\end{conj}
+
+\begin{conj}\label{SuperDuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\tilde{\gamma}_\infty(Q)}$.
+\end{conj}
+
+\begin{thm}
+Conjecture \ref{SuperDuperDuperLocalReed} follows from Conjecture \ref{KingEdwardsReplacement} and the Goldberg-Seymour Conjecture.
+\end{thm}
+\begin{proof}
+Assume that Conjecture \ref{KingEdwardsReplacement} and the Goldberg-Seymour Conjecture are true and Conjecture \ref{SuperDuperDuperLocalReed} is false. 
+Let $Q$ be a counterexample, say $Q = L(G)$.   
+Then $\ceil{\tilde{\gamma}_\infty(Q)} < \chi(Q) \le \Delta(G) + 1 \le \omega(Q) + 1$.  So, $\ceil{\tilde{\gamma}_\infty(Q)} = \omega(Q)$ and hence
+$Q$ is complete.  But that is impossible since $\omega(Q) = \ceil{\tilde{\gamma}_\infty(Q)} < \chi(Q)$.  \textcolor{red}{TODO: simplify me.}
+\end{prof}
+
+We prove the next bound in the sequence.
+\begin{thm}\label{SuperDuperLocalReed}
+If $Q$ is a line graph, then $\chi(Q) \le \ceil{\tilde{\gamma}_3(Q)}$.
+\end{thm}
 
 \begin{lem}\label{SuperDuperLocalReedHelper}
 Let $Q = L(G)$ where $G$ is a critical graph. If $G$ is not a thickened cycle, then $\chi(Q) \le \ceil{\gamma_3(Q)}$.
@@ -548,8 +623,8 @@ Otherwise, some $v \in M$ has $d(v) \ge \omega(Q)$ and hence $\ceil{\gamma_3(Q)}
 
 \begin{proof}[Proof of Theorem \ref{SuperDuperLocalReed}]
 Suppose Theorem \ref{SuperDuperLocalReed} is false, and choose a counterexample $Q$ minimizing $\card{Q}$.
-Say $Q = L(G)$.  Minimality of $\card{Q}$ and Lemma \ref{MonotoneHelper} imply that $G$ is critical.  So Lemma \ref{SuperDuperLocalReedHelper} gives
-a contradiction unless $G$ is a thickened cycle.  \textcolor{red}{We should be able to finish, for example if King and Edwards conjecture is true 
+Say $Q = L(G)$.  Minimality of $\card{Q}$ and monotonicity of $\tilde{\gamma}_3$ imply that $G$ is critical.  So Lemma \ref{SuperDuperLocalReedHelper} gives
+a contradiction unless $G$ is a thickened cycle.  \textcolor{red}{We should be able to finish easily, for example if King and Edwards conjecture is true 
 (that $\gamma_\infty(Q)$ is an upper bound on fractional chromatic number), then since $G$ is a circular-interval graph, it has the round-up property and so
 $\chi(Q) \le \ceil{\gamma_\infty(Q)} \le \gamma_3(Q)$.  But it should be simpler than that, we can compute the chromatic number directly.}
 \end{proof}  

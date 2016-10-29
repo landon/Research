@@ -80,7 +80,7 @@ graph with no vertices at all.  Given one color, we can handle all graphs with n
 any path and any cycle with an even number of vertices [PICTURE].  But, we can't handle a triangle or any other cycle with an odd number of vertices [PICTURE].
 In fact, odd cycles are really the only thing that will prevent us from using two colors. 
 A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. \aaside{subgraph, $\subseteq$}{}
-When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$.
+When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$. \aaside{$G-v$}{}
 A graph is $k$-colorable if we can color its vertices with (at most) $k$ colors such that adjacent vertices receive different colors. \aaside{$k$-colorable}{}
 \begin{theorem}
 A graph is $2$-colorable just in case it contains no odd cycle.

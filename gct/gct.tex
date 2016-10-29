@@ -68,7 +68,7 @@ We write $\card{G}$ for the number of vertices in $V(G)$ and $\size{G}$ for the 
 Two vertices
 are \emph{adjacent} \aaside{adjacent}{+0.15in} if they are connected by an edge.  The set
 of vertices to which $v$ is adjacent is its \emph{neighborhood}, written $N(v)$. \aaside{neighborhood}{+0.0in} \aaside{$N(v)$}{+0.15in}
-For the size of $v$'s neighborhood $\card{N(v)}$, we write $d(v)$. \aaside{$d(v)$}{+0.3in}
+For the size of $v$'s neighborhood $\card{N(v)}$, we write $d(v)$ and call this the \emph{degree} of $v$. \aaside{$d(v)$, degree}{+0.3in}
 
 [ADD PICTURES]
 
@@ -92,5 +92,35 @@ Surely, $|G| > 0$, so we may pick $v \in V(G)$.  If $x, y \in N(v)$, then $x$ is
 So we can construct a graph $H$ from $G$ by removing $v$ and identifying all of $N(v)$ to a new vertex $x_v$.  Any odd cycle
 in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$.  So $H$ contains no odd cycle. Since $|H| < |G|$, we can 2-color $H$, say with red and blue
 where $x_v$ gets colored red.  But this gives a 2-coloring of $G$ by coloring all vertices in $N(v)$ red and $v$ blue, a contradiction.
+\end{proof}
+
+Well, this is embarrassing, coloring appears to be easy.  Fortunately, things get more interesting when we move up to three colors.
+\begin{theorem}
+3-coloring is hard supposing other things we think are hard are actually hard.
+\end{theorem}
+\begin{proof}
+reduce 3-SAT to 3-coloring.
+\end{proof}
+
+\section*{basic estimates}
+Even though finding the minimum number of colors needed to color a graph is hard in general (supposing it is), we can still
+look for lower and upper bounds on this value.  The \emph{chromatic number} $\chi(G)$ of a graph $G$ is the smallest $k$ for which $G$ is $k$-colorable.
+\aaside{chromatic number}{+0.0in}\aaside{$\chi(G)$}{+0.15in}
+The simplest thing we can do is give each vertex a different color.
+\begin{theorem}
+For every graph $G$, we have $\chi(G) \le \card{G}$.
+\end{theorem}
+We can usually do much better by just arbitrarily coloring vertices, reusing colors when we can.  \aaside{maximum degree}{+0.0in}\aaside{$\Delta(G)$}{+0.15in}The \emph{maximum degree} $\Delta(G)$ of a graph $G$ is the largest degree
+of any vertex in $G$; that is 
+\[\Delta(G) \DefinedAs \max_{v \in V(G)} d(v).\]
+
+\begin{theorem}
+For every graph $G$, we have $\chi(G) \le \Delta(G) + 1$.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $\parens{\Delta(G) + 1}$-colorable.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
+Surely, $\card{G} > 0$, so we may pick $v \in V(G)$.  Then $\card{G-v} < \card{G}$ and $\Delta(G-v) \le \Delta(G)$, so we have a $\parens{\Delta(G) + 1}$-coloring
+of $G-v$.  But $v$ has at most $\Delta(G)$ neighbors, so there is some color, say red, not used on $N(v)$, coloring $v$ red gives a $\parens{\Delta(G) + 1}$-coloring
+of $G$, a contradiction.
 \end{proof}
 \end{document}

@@ -82,7 +82,7 @@ In fact, odd cycles are really the only thing that will prevent us from using tw
 A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. \aaside{subgraph, $\subseteq$}{}
 When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$. \aaside{$G-v$}{}
 A graph is $k$-colorable if we can color its vertices with (at most) $k$ colors such that adjacent vertices receive different colors. \aaside{$k$-colorable}{}
-\begin{theorem}
+\begin{theorem}\label{TwoColoring}
 A graph is $2$-colorable just in case it contains no odd cycle.
 \end{theorem}
 \begin{proof}
@@ -90,7 +90,7 @@ A graph containing an odd cycle clearly can't be $2$-colored.  For the other imp
 there is a graph that is not $2$-colorable and doesn't contain an odd cycle.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
 Surely, $|G| > 0$, so we may pick $v \in V(G)$.  If $x, y \in N(v)$, then $x$ is not adjacent to $y$ since then $xyz$ would be an odd cycle.
 So we can construct a graph $H$ from $G$ by removing $v$ and identifying all of $N(v)$ to a new vertex $x_v$.  Any odd cycle
-in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$.  So $H$ contains no odd cycle. Since $|H| < |G|$, we can 2-color $H$, say with red and blue
+in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$.  So $H$ contains no odd cycle. Since $|H| < |G|$, appplying the theorem to $H$ gives a 2-coloring of $H$, say with red and blue
 where $x_v$ gets colored red.  But this gives a 2-coloring of $G$ by coloring all vertices in $N(v)$ red and $v$ blue, a contradiction.
 \end{proof}
 
@@ -107,24 +107,45 @@ Even though finding the minimum number of colors needed to color a graph is hard
 look for lower and upper bounds on this value.  The \emph{chromatic number} $\chi(G)$ of a graph $G$ is the smallest $k$ for which $G$ is $k$-colorable.
 \aaside{chromatic number}{+0.0in}\aaside{$\chi(G)$}{+0.15in}
 The simplest thing we can do is give each vertex a different color.
-\begin{theorem}
-For every graph $G$, we have $\chi(G) \le \card{G}$.
+\begin{theorem}\label{WorstUpperBound}
+If $G$ is a graph, then $\chi(G) \le \card{G}$.
 \end{theorem}
+The only graphs that attain the upper bound in Theorem \ref{WorstUpperBound} are the \emph{complete} graphs; those in which
+any two vertices are adjacent. \aaside{complete}{}
 We can usually do much better by just arbitrarily coloring vertices, reusing colors when we can.  \aaside{maximum degree}{+0.0in}\aaside{$\Delta(G)$}{+0.15in}The \emph{maximum degree} $\Delta(G)$ of a graph $G$ is the largest degree
 of any vertex in $G$; that is 
 \[\Delta(G) \DefinedAs \max_{v \in V(G)} d(v).\]
 
-\begin{theorem}
-For every graph $G$, we have $\chi(G) \le \Delta(G) + 1$.
+\begin{theorem}\label{SecondWorstUpperBound}
+If $G$ is a graph, then $\chi(G) \le \Delta(G) + 1$.
 \end{theorem}
 \begin{proof}
 Suppose there is a graph $G$ that is not $\parens{\Delta(G) + 1}$-colorable.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
-Surely, $\card{G} > 0$, so we may pick $v \in V(G)$.  Then $\card{G-v} < \card{G}$ and $\Delta(G-v) \le \Delta(G)$, so we have a $\parens{\Delta(G) + 1}$-coloring
+Surely, $\card{G} > 0$, so we may pick $v \in V(G)$.  Then $\card{G-v} < \card{G}$ and $\Delta(G-v) \le \Delta(G)$, so applying the theorem to $G-v$ gives a $\parens{\Delta(G-v) + 1}$-coloring
 of $G-v$.  But $v$ has at most $\Delta(G)$ neighbors, so there is some color, say red, not used on $N(v)$, coloring $v$ red gives a $\parens{\Delta(G) + 1}$-coloring
 of $G$, a contradiction.
 \end{proof}
 
-\section*{Brooks' theorem}
+Both complete graphs and odd cycles attain the upper bound in Theorem \ref{SecondWorstUpperBound}.  Theorem \ref{TwoColoring} says
+we can do better for graphs that don't contain odd cycles.  We can also do better for graphs that don't contain large complete subgraphs.
+A set of vertices $S$ in a graph $G$ is a \emph{clique} if the vertices in $S$ are pairwise adjacent.\aaside{clique}{}  
+The \emph{clique number} of a graph $G$, written $\omega(G)$, is the number of vertices in a largest clique in $G$.\aaside{$\omega(G)$}{}
+A set of vertices $S$ in a graph $G$ is \emph{independent} if the vertices in $S$ are pairwise non-adjacent.\aaside{independent}{}  
+The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of vertices in a largest independent set in $G$.\aaside{$\alpha(G)$}{}
+
+\begin{theorem}[Brooks' theorem]
+If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\chi(G) \le \Delta(G)$.
+\label{BrooksTheorem}
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$  with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$ that is not $\Delta(G)$-colorable.  
+Then we may pick such a graph $G$ with $\card{G}$ as small as possible.  Let $S$ be 
+a maximal independent set in $G$.  Since $S$ is maximal, every vertex in $G-S$ has a neighbor in $S$, so $\Delta(G) \ge \Delta(G-S) + 1$.
+If red is an unused color in a $\chi(G-S)$-coloring of $G-S$, then by coloring all vertices in $S$ red we get a $\parens{\chi(G-S)+1}$-coloring of $G$.  
+So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$.  
+Since $\card{G-S} < \card{G}$ applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\omega(G - S) > \Delta(G -S)$.
+
+\end{proof}
 
 \chapter*{edge coloring}
 two-coloring

@@ -142,10 +142,27 @@ Suppose there is a graph $G$  with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G
 Then we may pick such a graph $G$ with $\card{G}$ as small as possible.  Let $S$ be 
 a maximal independent set in $G$.  Since $S$ is maximal, every vertex in $G-S$ has a neighbor in $S$, so $\Delta(G) > \Delta(G-S)$.
 If red is an unused color in a $\chi(G-S)$-coloring of $G-S$, then by coloring all vertices in $S$ red we get a $\parens{\chi(G-S)+1}$-coloring of $G$.  
-So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$.  
-Since $\card{G-S} < \card{G}$, applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\Delta(G -S) < \omega(G - S)$.
+So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$ and thus $\Delta(G) = \chi(G-S) = \Delta(G-S) + 1$ by Theorem \ref{SecondWorstUpperBound}.
+Since $\card{G-S} < \card{G}$, applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\Delta(G -S) < \omega(G - S)$.  
+So, either $\chi(G-S) = \Delta(G) = 3$ or $\omega(G-S) \ge \Delta(G)$.  In the former case, let $X$ be the vertex set of an odd cycle in $G-S$ guaranteed by Theorem \ref{TwoColoring}.  
+In the latter case, let $X$ be a $\Delta(G)$-clique in $G-S$.
 
-\end{proof}
+Since $S$ is maximal and $\omega(G) \le \Delta(G)$, there are $x_1, x_2 \in X$ and $y_1, y_2 \in S$ such that $x_1$ is adjacent to $y_1$ and $x_2$ is adjacent to $y_2$.
+Construct a graph $H$ from $G-X$ by adding the edge $y_1y_2$.  Since $\card{H} < \card{G}$, applying the theorem to $H$ shows that $\omega(H) > \Delta(G)$ or $\chi(H) \le \Delta(G)$.
+Suppose $\chi(H) \le \Delta(G)$.  Then there is a $\Delta(G)$-coloring of $G-X$ where $y_1$ and $y_2$ receive different colors, say red and blue respectively.
+Pick the first vertex $z$ in a shortest path $P$ from $x_1$ to $x_2$ in $X$ that has a blue colored neighbor in $V(H)$. 
+Each vertex in $X$ has $\Delta(G)-1$ neighbors in $X$ and hence at most one neighbor in $V(H)$.  So, $z \ne x_1$ since $x_1$ already has a red colored neighbor in $V(H)$.
+Let $w$ be be the vertex preceding $z$ on $P$. Then $w$ has no blue colored neighbor.  Since $X$ is the vertex set of a cycle or a 
+complete graph, there is a path $Q$ from $w$ to $z$ passing through every vertex of $X$.  Color $w$ blue and then proceed along $Q$, coloring one vertex at a time.  
+Since each vertex we encounter before we get to $z$ has at most $\Delta(G) - 1$ colored neighbors, we always have an available color to use.  But, $z$ is adjacent
+to both $w$ and another blue colored vertex in $V(H)$, so there is an available color for $z$ as well.  This gives a $\Delta(G)$-coloring of $G$, a contradiction.
+
+So, $\omega(H) > \Delta(G)$.  In particular, $y_1$ and $y_2$ each have exactly one neighbor in $X$ and $\Delta(G) - 1$ neighbors in the same $\Delta(G) -1$ clique $A$ in $G - X$.
+ Since $S$ is maximal and $\card{X} \ge 3$, there must be adjacent
+$x_3 \in X \setminus \set{x_1,x_2}$ and $y_3 \in S \setminus \set{y_1,y_2}$.  Applying the same argument with $x_3, y_3$ in place of $x_2, y_2$ shows
+that $y_1$ and $y_3$ each have exactly one neighbor in $X$ and $\Delta(G) - 1$ neighbors in the same $\Delta(G) -1$ clique $B$ in $G - X$.
+But $\card{A\cap B} = \card{A} + \card{B} - \card{A\cup B} \ge 2(\Delta(G) - 1) - d(y_1) \ge \Delta(G) - 2 > 0$.  But there can't be a vertex
+in $A \cap B$ since it would be adjacent to $y_1,y_2,y_3$ as well as $\Delta(G) - 2$ vertices in $A$ and thus have degree greater than $\Delta(G)$, a contradiction. 
 
 \chapter*{edge coloring}
 two-coloring

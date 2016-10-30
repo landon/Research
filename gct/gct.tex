@@ -140,10 +140,10 @@ If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\c
 \begin{proof}
 Suppose there is a graph $G$  with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$ that is not $\Delta(G)$-colorable.  
 Then we may pick such a graph $G$ with $\card{G}$ as small as possible.  Let $S$ be 
-a maximal independent set in $G$.  Since $S$ is maximal, every vertex in $G-S$ has a neighbor in $S$, so $\Delta(G) \ge \Delta(G-S) + 1$.
+a maximal independent set in $G$.  Since $S$ is maximal, every vertex in $G-S$ has a neighbor in $S$, so $\Delta(G) > \Delta(G-S)$.
 If red is an unused color in a $\chi(G-S)$-coloring of $G-S$, then by coloring all vertices in $S$ red we get a $\parens{\chi(G-S)+1}$-coloring of $G$.  
 So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$.  
-Since $\card{G-S} < \card{G}$ applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\omega(G - S) > \Delta(G -S)$.
+Since $\card{G-S} < \card{G}$, applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\Delta(G -S) < \omega(G - S)$.
 
 \end{proof}
 

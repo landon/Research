@@ -80,7 +80,7 @@ graph with no vertices at all.  Given one crayon, we can handle all graphs with 
 any path and any cycle with an even number of vertices [PICTURE].  But, we can't handle a triangle or any other cycle with an odd number of vertices [PICTURE].
 In fact, odd cycles are really the only thing that will prevent us from using just two crayons. 
 A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. \aaside{subgraph, $\subseteq$}{}
-When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$. \aaside{$G-v$}{}
+When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{0.12in}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$. \aaside{$G-v$}{0.05in}
 A graph is $k$-colorable if we can color its vertices with (at most) $k$ colors such that adjacent vertices receive different colors. \aaside{$k$-colorable}{}
 A $0$-colorable graph is \emph{empty}, a $1$-colorable graph is \emph{edgeless} and a $2$-colorable graph is \emph{bipartite}. \aaside{empty}{}\aaside{edgeless}{+0.1in}\aaside{bipartite}{+0.2in}
 \begin{theorem}\label{TwoColoring}
@@ -192,10 +192,13 @@ A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-re
 $v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
 
 \begin{theorem}\label{HallsMarriageTheorem}
-Let $G = (R,B)$ be a bipartite graph.  If $\card{N(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
+Let $G = (R,B)$ be a bipartite graph.  If $\card{N_G(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
 every vertex of $R$.
 \end{theorem}
 \begin{proof}
+Suppose the theorem does not hold.  Then we may pick a counterexample $G = (R,B)$ with $\size{G}$ as small as possible.  Surely, $\size{G} > 0$.
+For any $e \in E(G)$, since a matching in $G-e$ is also a matching in $G$, any matching in $G-e$ must fail to match some vertex $v_e \in R$.
+As $\size{G-e} < \size{G}$, we may apply the theorem to $G-e$ to conclude that there is $X_e \subseteq R$ such that $\card{N_{G-e}(X_e)} < \card{X_e}$.
 \end{proof}
 
 \section*{edge coloring bipartite graphs}

@@ -74,14 +74,15 @@ For the size of $v$'s neighborhood $\card{N(v)}$, we write $d(v)$ and call this 
 
 \chapter*{coloring vertices}
 The entire book concerns one simple task: we want to color the vertices of a given graph so that adjacent vertices receive different colors.
-With no preferences about what the coloring should look like, this is easy, we just give each vertex a different color.  Things get
-interesting when we ask how few colors we can use.  We are definitely going to need at least zero colors and that will only do for the
-graph with no vertices at all.  Given one color, we can handle all graphs with no edges.  With two colors, we can do
+With sufficiently many crayons and no preferences about what the coloring should look like, this is easy, we just use a different crayon for each vertex.  
+Things get interesting when we ask how few different crayons we can use.  We are definitely going to need an empty box of crayons and that will only do for the
+graph with no vertices at all.  Given one crayon, we can handle all graphs with no edges.  With two crayons, we can do
 any path and any cycle with an even number of vertices [PICTURE].  But, we can't handle a triangle or any other cycle with an odd number of vertices [PICTURE].
-In fact, odd cycles are really the only thing that will prevent us from using two colors. 
+In fact, odd cycles are really the only thing that will prevent us from using just two crayons. 
 A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. \aaside{subgraph, $\subseteq$}{}
 When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{}  If $v \in V(G)$, then $G-v$ is the graph we get by removing $v$ and all edges incident to $v$ from $G$. \aaside{$G-v$}{}
 A graph is $k$-colorable if we can color its vertices with (at most) $k$ colors such that adjacent vertices receive different colors. \aaside{$k$-colorable}{}
+A $0$-colorable graph is \emph{empty}, a $1$-colorable graph is \emph{edgeless} and a $2$-colorable graph is \emph{bipartite}. \aaside{empty}{}\aaside{edgeless}{+0.1in}\aaside{bipartite}{+0.2in}
 \begin{theorem}\label{TwoColoring}
 A graph is $2$-colorable just in case it contains no odd cycle.
 \end{theorem}
@@ -90,7 +91,7 @@ A graph containing an odd cycle clearly can't be $2$-colored.  For the other imp
 there is a graph that is not $2$-colorable and doesn't contain an odd cycle.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
 Surely, $|G| > 0$, so we may pick $v \in V(G)$.  If $x, y \in N(v)$, then $x$ is not adjacent to $y$ since then $xyz$ would be an odd cycle.
 So we can construct a graph $H$ from $G$ by removing $v$ and identifying all of $N(v)$ to a new vertex $x_v$.  Any odd cycle
-in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$.  So $H$ contains no odd cycle. Since $|H| < |G|$, appplying the theorem to $H$ gives a 2-coloring of $H$, say with red and blue
+in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$ passing through $v$.  So $H$ contains no odd cycle. Since $|H| < |G|$, appplying the theorem to $H$ gives a 2-coloring of $H$, say with red and blue
 where $x_v$ gets colored red.  But this gives a 2-coloring of $G$ by coloring all vertices in $N(v)$ red and $v$ blue, a contradiction.
 \end{proof}
 
@@ -130,6 +131,11 @@ Both complete graphs and odd cycles attain the upper bound in Theorem \ref{Secon
 we can do better for graphs that don't contain odd cycles.  We can also do better for graphs that don't contain large complete subgraphs.
 A set of vertices $S$ in a graph $G$ is a \emph{clique} if the vertices in $S$ are pairwise adjacent.\aaside{clique}{}  
 The \emph{clique number} of a graph $G$, written $\omega(G)$, is the number of vertices in a largest clique in $G$.\aaside{$\omega(G)$}{}
+
+\begin{theorem}\label{OmegaLowerBound}
+If $G$ is a graph, then $\chi(G) \ge \omega(G)$.
+\end{theorem}
+
 A set of vertices $S$ in a graph $G$ is \emph{independent} if the vertices in $S$ are pairwise non-adjacent.\aaside{independent}{}  
 The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of vertices in a largest independent set in $G$.\aaside{$\alpha(G)$}{}
 
@@ -165,11 +171,64 @@ Now $\card{A\cap B} = \card{A} + \card{B} - \card{A\cup B} \ge 2(\Delta(G) - 1) 
 in $A \cap B$ since it would be adjacent to $y_1,y_2,y_3$ as well as $\Delta(G) - 2$ vertices in $A$ and thus have degree greater than $\Delta(G)$, a contradiction. 
 
 \chapter*{edge coloring}
-two-coloring
-\section*{Hall's theorem}
-\section*{a Hall's theorem game}
-\section*{Vizing's theorem}
+It is also useful to consider coloring the edges of a graph so that incident edges receive different colors.  This
+appears to be at odds with our previous claim that this book was only about coloring vertices of graph; fortunately, edge coloring
+is just a special case of vertex coloring.  If $G$ is a graph, the \emph{line graph} of $G$, written
+$L(G)$ is the graph with vertex set $E(G)$ where two edges of $G$ are adjacent in $L(G)$ if they are incident in $G$.  Coloring
+the edges of $G$ is equivalent to coloring the vertices of $L(G)$.
+
+For graphs with maximum degree zero (that is, no edges at all), we can get by with zero colors.  
+With just one color we can edge color any graph with maximum degree at most one.  We will definitely always need at least $\Delta(G)$ colors
+to edge color a graph $G$.  Could we be so fortunate that the pattern continues
+and we can edge color any graph $G$ with only $\Delta(G)$-colors? Not quite, but we can do so for bipartite ($2$-colorable) graphs.
+A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ colors such that incident edges receive different colors.
+Before proving this result, we develop a tool that will useful throughout the book.
+
+\section*{Hall's marriage theorem}
+Suppose $G$ is a bipartite graph, say it has a $2$-coloring with colors red and blue.  Let $R \subseteq V(G)$ be the vertices colored red and
+$B \subseteq V(G)$ the vertices colored red.  Then $R$ and $B$ are independent sets in $G$.  This situation is so common, we need special notation
+to introduce bipartite graphs with the sets $R$ and $B$ already labeled, like so: let $G = (R,B)$ be a bipartite graph.\aaside{$G = (R,B)$}{}
+A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-regular}{} A $1$-regular graph is a \emph{matching}. \aaside{matching}{0.15in} If $H \subseteq G$ is a matching, then
+$v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
+
+\begin{theorem}\label{HallsMarriageTheorem}
+Let $G = (R,B)$ be a bipartite graph.  If $\card{N(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
+every vertex of $R$.
+\end{theorem}
+\begin{proof}
+\end{proof}
+
+\section*{edge coloring bipartite graphs}
+
+\begin{theorem}\label{DeltaEdgeColoring}
+If $G$ is a bipartite graph, then $G$ is $\Delta(G)$-edge-colorable.
+\end{theorem}
+\begin{proof}
+\end{proof}
+
+\section*{a game version of Hall's marriage theorem}
+It may come as a surpise that even though we might need more than $\Delta(G)$ colors to edge color a graph $G$, we will only ever need at most one extra color.
+To prove this result, we develop a dynamic version of Hall's marriage theorem that can be conveniently phrased as a game.
+
+
+\section*{edge coloring general graphs}
+
+\begin{theorem}\label{VizingsTheorem}
+If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
+\end{theorem}
+\begin{proof}
+\end{proof}
+
 \section*{hardness}
+We now know that every graph $G$ can be edge colored with either $\Delta(G)$ or $\Delta(G) + 1$ colors.  So, edge coloring is basically trivial, right?
+Furtunately, no it isn't, the collection of graphs requiring $\Delta(G) + 1$ colors is very rich.  Another way to say this, is that it is a hard problem
+to decide whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors.
+
+\begin{theorem}\label{HolyerEdgeColoringDecisionIsHard}
+Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors is hard supposing other things we think are hard are actually hard.
+\end{theorem}
+\begin{proof}
+\end{proof}
 
 \chapter*{vertex coloring, again}
 \section*{list coloring}

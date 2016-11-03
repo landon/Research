@@ -1,0 +1,197 @@
+\documentclass{article}
+\usepackage{amssymb}
+\def\labelenumi{(\arabic{enumi})}
+\def\chil{{\chi_\ell}}
+\def\chiol{\chi_{\rm{OL}}}
+\newcommand{\ch}{\textrm{ch}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\begin{document}
+Please thank the referees for reading our paper carefully, and suggesting a number
+of improvements.  We have implemented nearly all of their suggestions.
+Below are our detailed responses.  (We first address the more detailed reported.)
+
+\setcounter{section}{-1}
+\section{Abstract}
+\begin{enumerate}
+\item Changed the sentence to read ``The problem of determining
+the minimum number of edges in a $k$-critical graph with $n$ vertices has been
+widely studied\ldots''
+\item Changed the sentence to read ``In this paper, we improve the best
+known lower bound on the number of edges in a $k$-list-critical graph.''
+\item Added the following sentence: `` In fact,
+our result on $k$-list-critical graphs is derived from a lower bound on the
+number of edges in a graph that is critical with respect to its Alon--Tarsi
+number.''
+\end{enumerate}
+\section{Introduction}
+\begin{enumerate}
+\item Changed capitalization as requested.
+\item Added citations to Brooks, Dirac, and Gallai.
+\item Added missing parentheses.
+\item Changed ``Alon-Tarsi'' to ``Alon--Tarsi''.
+\item Changed the sentence to ``In contrast,
+Krivelevich's proof [14] does not easily translate to list
+coloring, since it uses a lemma of Stiebitz [19], which says that
+in a color-critical graph, the subgraph induced by vertices of degree at least
+$k$ has no more components than the subgraph induced by vertices of degree
+$k-1$ (but no analogous lemma is known for list coloring).''
+\item Changed the sentence to read ``The discharging argument is more
+intuitive and we believe that it may be easier to modify in the future for use
+with new reducibility lemmas.''
+\item Changed ``\ldots$f$-assignment such that $f(v)=k$\ldots'' to
+``\ldots$f$-assignment where $f(v)=k$\ldots'' 
+\item We kept this notation as $d_0$-assignment to remain with consistent in
+previous papers.  (We avoid $d$-assignment to avoid confusion with
+$k$-assignment, where $f(v)=k$ for all $v\in V(G)$.)
+\item We added the definition of $d_G(v)$ and $d(v)$ at the start of Section~2.
+\item Changed ``called Gallai Trees'' to ``known as \emph{Gallai Trees}''.
+\item Now, just after Lemma 1.2, we write: ``
+From the definitions and Lemma 1.2, it is easy to check that always
+$\chi(G)\le \chil(G)\le \chiol(G)\le AT(G)\le \Delta(G)+1$.''
+\item
+\item The first time we mention the discharging method, we added a citation of
+the paper by Cranston and West.
+\end{enumerate}
+\section{Gallai's bound via discharging}
+\begin{enumerate}
+\item We have kept the (repeated) definition of Gallai Tree.  Our motivation is
+to gather all of the definitions in one place for easy reference.  (If readers
+read papers from start to end at one sitting this would be less necessary.  But
+that is not the case.)
+\item Changed ``\ldots precisely the $d_0$-choosable\ldots'' to ``\ldots
+precisely the non-$d_0$-choosable\ldots''
+\item Changed ``\ldots set of all Gallai Trees of degree\ldots'' to
+``\ldots set of all Gallai Trees of maximum degree\ldots'' 
+\item Added the following to the proof of Theorem 2.1:
+(Suppose there exists $v\in V(G)$ with $d(v)\le k-2$. Since $G$ is
+$k$-AT-critical, $G-v$ has an orientation $D'$ with $d^+_{D'}(w)<k$ for all
+$w\in V(G)-v$ and $EE(D')\ne EO(D')$.  Orienting all edges incident to $v$ away
+from $v$ gives an orientation $D$ of $G$ also with $d^+_D(w)<k$ for all $w\in
+V(G)$ and $EE(D)\ne EO(D)$.  So, we assume that $\delta(G)\ge k-1$.)
+\item Added to the proof of Theorem 2.1 the sentence ``Note that the sum of
+hte charge assigned to the vertices is preserved by these operations and equals
+the sum of the degrees. So\ldots''
+\item Changed $ch^*(v)$ to $\ch^*(v)$.
+\item Removed ``instead'' from the start of the sentence.
+\item Changed previous wording to ``The total charge received by vertices of
+$T$ from the $k^+$-vertices is precisely''
+\item Defined $d_T(v)$ at start of Section~2.
+\item Added the following to the proof of Theorem 2.1:
+Recall from the introduction that a connected graph is not
+$d_0$-choosable precisely when it is a Gallai Tree.  So $T$ must be a Gallai
+Tree; otherwise, we can $(k-1)$-color $G-T$ (since $G$ is $k$-critical), and
+extend the coloring to $T$, since $T$ is $d_0$-choosable.
+\item Added citation to Gallai paper for Lemma 2.2.
+\end{enumerate}
+\section{A refined bound on $\|T\|$}
+\begin{enumerate}
+\item Changed (2) to (ii) in last sentence of first paragraph on page 6.
+\item Changed 1., 2., 3., and 4. in statement of Lemma 3.1 to (1), (2), (3), and
+(4).
+\item The first line of Lemma 3.1 already states: ``Let $p:\IN\to\IR$,
+$f:\IN\to\IR$.  For all $k\ge 5\ldots$''
+\item Changed $t\in\{2,k-2\}$ to $t\in\{2,\ldots,k-2\}$.
+\item Changed start of second paragraph in proof of Lemma 3.1 to read as
+follows.  ``Suppose the lemma is false and choose a counterexample $T$ minimizing $|T|$. 
+If $T$ is $K_t$ for some $t \in \{2,\ldots,k-2\}$, then $t(t-1) > (k-3 + p(k))t +
+f(k)$.  After substituting $p(k)\ge \frac{-f(k)}{k-2}$ from (1), this
+implies that $-t(k-2)(k-2-t)>(k-2-t)f(k)$.  When $t=k-2$, both sides are 0,
+which is a contradiction.  Otherwise, dividing by $k-2-t$ gives that
+$-t(k-2)>f(k)$, which contradicts (3).''
+	
+\item Revised paragraph in proof of Lemma 3.1 beginning ``To handle\ldots'' to
+the following.
+``Suppose next that $B$ is $K_{k-2}$ and notice that, since $T$ has maximum degree
+at most $k-1$ and $T\ne K_{k-2}$, this implies that $d_T(x_B)$ is either $k-2$
+or $k-1$.  In the former case, we set $D=B$ and obtain.
+	\[(k-2)(k-3) +2 > (k-3 + p(k))(k-2),\]
+	contradicting (4).''
+
+\item Changed 1., 2.,\ldots in statement of Lemma 3.1 to (1), (2), \ldots
+\end{enumerate}
+\section{Discharging}
+\begin{enumerate}
+\item Changed the sentence in the first paragraph of the discharging section to
+the following.  ``It is helpful to view our proof here as a refinement and
+strengthening of the proof of Gallai's bound in Section~\ref{sec:gallai},
+Theorem~\ref{thm:Gallai}.''  (The point of using the term ``Gallai's bound'' is
+that it is likely easier for the reader to know what is meant, without looking
+back to the earlier section of the paper.)
+\item The term $(k-1)$-neighbor is defined at the start of Section~2.
+\item On page 11 (in the paragraph starting ``First, note\ldots''), changed $Q$
+to be italicized.
+\end{enumerate}
+\section{Reducible Configurations}
+\section{References}
+\begin{enumerate}
+\item Added the missing accent to Kr\'{a}l'.
+\end{enumerate}
+
+\section*{Second Referee}
+\begin{itemize}
+\item p1: Dirac proved that every $k$-critical graph other than $K_k$ [...]
+
+Changed as requested.
+\item p2.14:  I do not think the term Ore degree is established. Maybe use "degree sums"?
+
+We added the following footnote: The \emph{Ore degree} of an edge $xy$ is the sum
+$d(x)+d(y)$.  The Ore degree of a graph is the maximum Ore degree of its edges.
+\item p2.15: use "the" Alon-Tarsi number through out.
+
+Changed as requested.
+
+\item p3: Why do you mention the bounds for $k$-critcal graphs, $k\le10$ from [8]?
+They are worse than previous bounds, and somewhat confusing in the table.
+
+The other obvious option would be to use a `---'.  However, our interpretation
+of a `---' (if we were unaware of the history of this problem) would be that [8]
+had not proved any bounds for these values of $d(G)$, which is incorrect.  Thus,
+we include them.
+
+\item p5: Include a short argument that $T'$ is in $T_k$ in both cases, it tripped me up for a minute.
+\item p6: Just write "The proof mirrors that of [...]". No need to say that this sentence is the proof outline.
+
+Changed as requested.
+\item p7.13: "require" is maybe a bit too strong here. You don't give an argument (and you shouldn't) that (3), (4) and (5) are absolutely necessary.
+
+Changed ``require" to ``rely on''
+\item p7.18: delete "need to"
+
+Changed as requested.
+\item p7.23: each $\to$ every
+
+Changed as requested.
+\item p9.1: see $\to$ study ?
+
+Changed as requested.
+\item p9.7: How is this "instead"? 
+
+Here we are first choosing the value of $p(k)$ (which then constrains the value
+of $h(k)$, instead of first choosing the value of $h(k)$ (which then constrains
+the value of $p(k)$).
+
+Alternately, the first paragraph assigns one pair of values to $p(k)$ and
+$h(k)$.  Instead, the second paragraph assigns them a different pair of values.
+
+\item p9: can you make the formulas in Cor3.3 and Lem3.4 look even more similar by multiplying out some factors?
+
+\item p10.22: Should it be $k$-list-critical here?
+
+Changed to $k$-AT-irreducible.
+
+\item p10.27: the proof $\to$ our proof ?
+
+Changed as requested.
+\item p11.5: This sounds like your believe is the unfortunate part...
+
+Changed to the following.
+``However, we believe this is false. Fortunately, something similar is true.''
+
+\item p15: I am sure you have discussed this, but in my opinion you should switch sections 4 and 5. You frequently refer to section 5 in section 4, and it would be comforting to know at that point that all results in section 5 were established before elsewhere.
+
+We do not prove anything in Section~5.  We merely record (for reference) three
+lemmas from [9].  We choose to put that section last, because we want to
+emphasize the discharging, which we see as a primary contribution of the paper.
+\end{itemize}
+\end{document}

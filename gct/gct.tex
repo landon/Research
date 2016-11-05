@@ -182,24 +182,29 @@ With just one color we can edge color any graph with maximum degree at most one.
 to edge color a graph $G$.  Could we be so fortunate that the pattern continues
 and we can edge color any graph $G$ with only $\Delta(G)$-colors? Not quite, but we can do so for bipartite ($2$-colorable) graphs.
 A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ colors such that incident edges receive different colors.
-Before proving this result, we develop a tool that will useful throughout the book.
 
-\section*{Hall's marriage theorem}
-Suppose $G$ is a bipartite graph, say it has a $2$-coloring with colors red and blue.  Let $R \subseteq V(G)$ be the vertices colored red and
-$B \subseteq V(G)$ the vertices colored red.  Then $R$ and $B$ are independent sets in $G$.  This situation is so common, we need special notation
-to introduce bipartite graphs with the sets $R$ and $B$ already labeled, like so: let $G = (R,B)$ be a bipartite graph.\aaside{$G = (R,B)$}{}
-A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-regular}{} A $1$-regular graph is a \emph{matching}. \aaside{matching}{0.15in} If $H \subseteq G$ is a matching, then
-$v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
-
-\begin{theorem}\label{HallsMarriageTheorem}
-Let $G = (R,B)$ be a bipartite graph.  If $\card{N_G(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
-every vertex of $R$.
-\end{theorem}
-\begin{proof}
-Suppose the theorem does not hold.  Then we may pick a counterexample $G = (R,B)$ with $\size{G}$ as small as possible.  Surely, $\size{G} > 0$.
-For any $e \in E(G)$, since a matching in $G-e$ is also a matching in $G$, any matching in $G-e$ must fail to match some vertex $v_e \in R$.
-As $\size{G-e} < \size{G}$, we may apply the theorem to $G-e$ to conclude that there is $X_e \subseteq R$ such that $\card{N_{G-e}(X_e)} < \card{X_e}$.
-\end{proof}
+%Before proving this result, we develop a tool that will useful throughout the book.
+%\section*{Hall's marriage theorem}
+%Suppose $G$ is a bipartite graph, say it has a $2$-coloring with colors red and blue.  Let $R \subseteq V(G)$ be the vertices colored red and
+%$B \subseteq V(G)$ the vertices colored red.  Then $R$ and $B$ are independent sets in $G$.  This situation is so common, we need special notation
+%to introduce bipartite graphs with the sets $R$ and $B$ already labeled, like so: let $G = (R,B)$ be a bipartite graph.\aaside{$G = (R,B)$}{}
+%A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-regular}{} A $1$-regular graph is a \emph{matching}. \aaside{matching}{0.15in} If $H \subseteq G$ is a matching, then
+%$v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
+%
+%\begin{theorem}\label{HallsMarriageTheorem}
+%Let $G = (R,B)$ be a bipartite graph.  If $\card{N_G(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
+%every vertex of $R$.
+%\end{theorem}
+%\begin{proof}
+%Suppose the theorem does not hold.  Then we may pick a counterexample $G = (R,B)$ with $\size{G}$ as small as possible.  Surely, $\size{G} > 0$.
+%For any $uv \in E(G)$ with $u \in R$,, since a matching in $G-uv$ is also a matching in $G$, any matching in $G-uv$ must fail to match some vertex in $R$.
+%As $\size{G-uv} < \size{G}$, we may apply the theorem to $G-uv$ to conclude that there is $X_{uv} \subseteq R$ such that $\card{N_{G-uv}(X_{uv})} < \card{X_{uv}}$.
+%Since $\card{N_{G}(X_{uv})} \ge \card{X_{uv}}$, this means $v \not \in N_{G}(X_{uv}\setminus\set{u})$.
+%For every $v \in R$, the condition gives $\card{N_G(\set{v})} \ge \card{\set{v}} = 1$, so $d_G(v) \ge 1$.  If $d_G(v) = 1$ for every $v \in R$, then
+%$\card{N_G(R)} \ge \card{R}$ implies that $G$ contains a matching $H$ that matches
+%every vertex of $R$, a contradiction.  Hence we may pick $w \in R$ with $d_G(w) \ge 2$.  Let $wy, wz \in E(G)$.
+%Then $y \not \in N_{G}(X_{wy}\setminus\set{w})$ and $z \not \in N_{G}(X_{wz}\setminus\set{w})$
+%\end{proof}
 
 \section*{edge coloring bipartite graphs}
 

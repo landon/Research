@@ -72,8 +72,22 @@ Go back to the beginning before any knowledge.  Fully understand everything from
 Numbers are just functions $\func{n}{\IN}{\IZ}$. Multiplication is given by 
 \[\parens{n\star m}(i) \DefinedAs n(i) + m(i).\]
 The greatest common divisor is
-\[\gcd(m,n)(i) \DefinedAs \min\set{m(i),n(i)}.\]
+\[\gcd(n,m)(i) \DefinedAs \min\set{n(i),m(i)}.\]
 The really interesting operation is addition.
 \[\parens{n\dagger m}(i) \DefinedAs \\\\???\]
+The $k$-th prime for $k \in\IN$ is given by the Kronecker delta:
+\[p_k(i) \DefinedAs \delta_{ki}.\]
+With this we can state some properties of $\dagger$ and $\star$.  We have
+\begin{align*}
+a\star(b\star c) &= (a\star b)\star c\\
+a\dagger(b\dagger c) &= (a\dagger b)\dagger c\\
+n \star m &= m \star n\\
+n \dagger m &= m \dagger n\\
+a\star(b\dagger c) &= (a\star b)\dagger (a\star c)\\
+a\dagger(b\star c) &= (a\dagger b)\star (a\dagger c)\\
+n \dagger n &= p_0 \star n\\
+\end{align*}
+
+
 \end{document}
 

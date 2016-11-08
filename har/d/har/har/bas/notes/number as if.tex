@@ -62,31 +62,22 @@
 \newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
-\title{}
+\def\gcd{\bigtriangledown}
+\def\lcm{\bigtriangleup}
+
+\title{number as if}
 \begin{document}
 \maketitle
 
-Go back to the beginning before any knowledge.  Fully understand everything from the beginning, numbers, primes, factorization.
-
-\section{primes}
-Numbers are just functions $\func{n}{\IN}{\IZ}$. Multiplication is given by 
-\[\parens{n\star m}(i) \DefinedAs n(i) + m(i).\]
-The greatest common divisor is
-\[\gcd(n,m)(i) \DefinedAs \min\set{n(i),m(i)}.\]
-The really interesting operation is addition.
-\[\parens{n\dagger m}(i) \DefinedAs \\\\???\]
-The $k$-th prime for $k \in\IN$ is given by the Kronecker delta:
-\[p_k(i) \DefinedAs \delta_{ki}.\]
-With this we can state some properties of $\dagger$ and $\star$.  We have
-\begin{align*}
-a\star(b\star c) &= (a\star b)\star c\\
-a\dagger(b\dagger c) &= (a\dagger b)\dagger c\\
-n \star m &= m \star n\\
-n \dagger m &= m \dagger n\\
-a\star(b\dagger c) &= (a\star b)\dagger (a\star c)\\
-n \dagger n &= p_0 \star n\\
-\end{align*}
-
+The inhabitants of the land of Nog look, act and sound just like us.  But they differ in number,
+not in their count, but in their manner. In our mind a number is a quantity, a stack of like items, but in Nog
+a number is a crystal of facets in infinite dimensional space. Workers of Nog regularly combine numbers in crystal form
+to create new numbers.  Outsiders have been able to replicate a few of these techniques.   For example, given numbers $n$ and $m$ in crystal form, the
+number $n\star m$ is made by letting each dimension aggregate individually. The number $n\gcd m$ is made by taking the
+smallest in each dimension.  The number $n\lcm m$ is made by taking the
+largest in each dimension.  There is a technique $n\dagger m$ practiced only by the great masters of Nog.  The $\dagger$ technique is a powerful
+tool in the hands of these masters.  I have personally witnessed a master create extraordinarily intricate crystal structure with just one application of $\dagger$, starting from simple
+numbers in crystal form. 
 
 \end{document}
 

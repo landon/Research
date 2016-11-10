@@ -1,0 +1,224 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+\newcommand{\type}{\operatorname{type}}
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+\newcommand{\gcd}{\operatorname{gcd}}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\def\gcd{\bigtriangledown}
+\def\lcm{\bigtriangleup}
+\def\no{\natural}
+
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\newcommand{\Bond}[6]%
+% start, end, thickness, incolor, outcolor, iterations
+{ \begin{pgfonlayer}{background}
+        \colorlet{InColor}{#4}
+        \colorlet{OutColor}{#5}
+        \foreach \I in {#6,...,1}
+        {   \pgfmathsetlengthmacro{\r}{#3/#6*\I}
+            \pgfmathsetmacro{\C}{sqrt(1-\r*\r/#3/#3)*100}
+            \draw[InColor!\C!OutColor, line width=\r] (#1.center) -- (#2.center);
+        }
+    \end{pgfonlayer}
+}
+
+\newcommand{\BlackBond}[2]%
+% start, end
+{   \Bond{#1}{#2}{0.7071mm}{black!25}{black!25!black}{10}
+}
+
+
+\begin{document}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[   AA/.style={circle, ball color=gray!75, minimum size=16mm, inner sep=0},
+]
+   \node[AA] (A1) at (0,0) {};
+\end{tikzpicture}
+\caption{The white ball.}
+\end{figure}
+
+I saw objects sort of like molecules, balls of different colors joined by bars.   Pairs of objects were placed in
+some kind of machine with four buttons, labeled $\star, \lcm, \gcd$ and $\dagger$.  After the pressing one of the buttons the original
+objects were gone, replaced by a new object.  He showed me many demonstrations of this, pressing different buttons, with differently colored balls coming out
+connected in various ways.  It was clear that he we trying to show me what this machine did, the look on his face said ``you see, yes?''  I tried to write down as much
+as I could afterwards, hoping that he would show me more next time.  The colors definitely have meaning, there is a structure there.  Two white balls
+make a red ball when you push $\dagger$ and a red and white ball make a blue ball when you push $\dagger$ (whether you blue white in the first or second slot
+does not appear to matter).  He showed me a few with the $\star$ button as well.  A red and blue ball with $\star$ makes just joins the balls by a black bar.  
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[   AA/.style={circle, ball color=gray!75, minimum size=16mm, inner sep=0},
+	BB/.style={circle, ball color=red!75, minimum size=16mm, inner sep=0},
+]
+    \node[AA] (A1) at (0,0) {};
+	\node at (1.5,0) {\huge $\dagger$};
+	\node[AA] (A2) at (3,0) {};
+	\node at (4.5,0) {\huge $=$};
+	\node[BB] (B1) at (6,0) {};
+\end{tikzpicture}
+\caption{Two white balls in the machine produced a red ball when the $\dagger$ button was pressed.}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[   AA/.style={circle, ball color=gray!75, minimum size=16mm, inner sep=0},
+	BB/.style={circle, ball color=red!75, minimum size=16mm, inner sep=0},
+	CC/.style={circle, ball color=blue!75, minimum size=16mm, inner sep=0},
+]
+    \node[AA] (A1) at (0,0) {};
+	\node at (1.5,0) {\huge $\dagger$};
+	\node[BB] (A2) at (3,0) {};
+	\node at (4.5,0) {\huge $=$};
+	\node[CC] (B1) at (6,0) {};
+\end{tikzpicture}
+\caption{A white and a red ball in the machine produced a blue ball when the $\dagger$ button was pressed.}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[   AA/.style={circle, ball color=red!75, minimum size=10mm, inner sep=0},
+BB/.style={circle, ball color=blue!75, minimum size=10mm, inner sep=0},
+CC/.style={circle, ball color=gray!75, minimum size=10mm, inner sep=0}
+]
+    \node[AA] (A1) at (0,0) {};
+	\node at (1,0) {\huge $\star$};
+	\node[BB] (A2) at (2,0) {};
+	\node at (3,0) {\huge $=$};
+	\node[AA] (A3) at (4,0) {};
+	\node[BB] (A4) at (6,0) {};
+	\BlackBond{A3}{A4}
+	
+	\begin{scope}[shift = {(8,0)}]
+	\node[AA] (A1) at (0,0) {};
+	\node at (1,0) {\huge $\star$};
+	\node[CC] (A2) at (2,0) {};
+	\node at (3,0) {\huge $=$};
+	\node[AA] (A3) at (4,0) {};
+	\end{scope}
+	
+	\begin{scope}[shift = {(8,-3)}]
+	\node[BB] (A1) at (0,0) {};
+	\node at (1,0) {\huge $\star$};
+	\node[CC] (A2) at (2,0) {};
+	\node at (3,0) {\huge $=$};
+	\node[BB] (A3) at (4,0) {};
+	\end{scope}
+	
+	\begin{scope}[shift = {(0,-3)}]
+	 \node[AA] (A1) at (0,0) {};
+	\node at (1,0) {\huge $\star$};
+	\node[AA] (A2) at (2,0) {};
+	\node at (3,0) {\huge $=$};
+	\node[AA] (A3) at (4,0) {};
+	\node[AA] (A4) at (6,0) {};
+	\BlackBond{A3}{A4}
+\end{scope}
+\end{tikzpicture}
+\caption{}
+\end{figure}
+
+I thought I was starting to see the pattern, but then he showed me that a white and blue ball with $\star$ gives just a blue ball.  Then things
+started to get really weird, easiest to see it in pictures.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[   AA/.style={circle, ball color=red!75, minimum size=8mm, inner sep=0},
+BB/.style={circle, ball color=blue!75, minimum size=8mm, inner sep=0},
+CC/.style={circle, ball color=green!75, minimum size=8mm, inner sep=0}
+]
+
+\begin{scope}[shift = {(0,0)}]
+	\node[AA] (A3) at (0,0) {};
+	\node[AA] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+\end{scope}
+
+\node at (1,1) {\huge $\dagger$};
+
+  \begin{scope}[shift = {(2,0)}]
+	\node[AA] (A3) at (0,0) {};
+	\node[BB] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+\end{scope}
+
+\node at (3,1) {\huge $=$};
+	
+	  \begin{scope}[shift = {(4,0)}]
+	\node[AA] (A3) at (0,0) {};
+	\node[CC] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+\end{scope}
+\end{tikzpicture}
+\caption{}
+\end{figure}
+
+\end{document}

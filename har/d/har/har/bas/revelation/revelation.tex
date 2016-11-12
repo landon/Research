@@ -113,8 +113,15 @@
 {   \Bond{#1}{#2}{0.7071mm}{black!25}{black!25!black}{10}
 }
 
-
+\title{Finding structure in a meditative state}
+\author{Bas Rasmussen}
 \begin{document}
+\maketitle
+I have been experimenting with meditation for a long time, but just recently I seem to have come across another being in there.  It may just be me looking at me, but whatever it is, it is
+showing me some really interesting arrangements of colored balls.  At first, I thought it was just random colors and shapes, but it became very ordered.  It was like this being (me?)
+was trying to talk to me but couldn't, so was showing me some math in pictures.   I have gone in many times now and am trying to write things down here.  Has anyone else
+ever seen this?  My best guess so far is he is showing me a machine that might be useful to rapidly factor integers.  I detail this in the analysis below.  There is a lot of extra structure
+that I am currently disregarding, but is probably also something interesting.  I will report more when I know more.
 
 \section{Early encounters}
 \begin{figure}
@@ -358,8 +365,21 @@ In the absence of white balls, $\star$ button just adds the values in each slot.
 \end{conjecture}
 
 \section{The $\dagger$ button is sort of like nuclear fission}
-I have seen applications of $\dagger$ produce many balls from just a few.  Figure \ref{ManyFromFew} shows an example of this.  It is almost as if the red balls are
-the simplest element and $\dagger$ breaks down cyan and yellow balls into many more red balls somehow.
+The $\dagger$ operation appears much more complicated than $\star$. I have seen applications of $\dagger$ produce many balls from just a few.  Figure \ref{ManyFromFew} shows an example of this.  It is almost as if the red balls are
+the simplest element and $\dagger$ breaks down cyan and yellow balls into many more red balls somehow.  I don't know how the machine is performing $\dagger$, but I have a conjecture
+as to what it is doing.  The idea doesn't account for the extra structural properties I mentioned before that make $\dagger$ not actually commutative.  But, if we forget about that extra
+structure for now, I think he might be showing me numbers, or rather factored numbers.  Here is the idea:  interpret the white ball as $1$, the red ball as $2$, the blue ball as $3$, the green ball
+as $5$, the yellow ball as $7$ and cyan ball as $11$.  Now the $\star$ operation is multiplication and $\dagger$ is addition.  Let me do it more formally.
+
+\begin{conjecture}
+The ball sequence $(1,0,0,\ldots)$ represents the number $1$.  A ball sequence $(0, a_1, a_2, a_3, a_4, a_5, \ldots)$ represents the number $2^{a_1}3^{a_2}5^{a_3}7^{a_4}11^{a_5}\cdots$.
+The $\star$ button multiplies the two numbers and the $\dagger$ button adds the two numbers.
+\end{conjecture}
+
+This works for all the demonstrations I can remember (disregarding the non-commutative structure).   I have seen massive objects put into the machine and the operations always seems to be instantaneous.  For a lot of these
+larger demonstrations, I don't remember the objects precisely, so I can't check the conjecture.  But if the conjecture is true and the machine is using some efficient physical operation to do $\dagger$, I think we could
+use the machine to do fast integer factorization.  The universe can factor efficiently using Shor's quantum algorithm, so maybe the machine is doing something similar?   I am working on trying to get the being to let me give 
+him objects to try in the machine, but no luck yet.  It would be rather amusing to break encryption by going into a deep meditative state and use this being's machine to factor integers.
 
 \begin{figure}\label{ManyFromFew}
 \centering

@@ -320,7 +320,7 @@ Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
 \caption{}
 \end{figure}
 
-\section{Possible patterns in the noise}
+\section{Possible patterns?}
 
 After four or five more encounters with this being, I was starting to have some guesses at some basic rules he was trying to communicate through all these examples.
 Pressing the buttons appears to start some sort of reaction inside the machine that combines the two objects.  So, it makes sense to view $\star$ and $\dagger$ as binary operations.
@@ -356,5 +356,57 @@ In the absence of white balls, $\star$ button just adds the values in each slot.
 \[(\textcolor{gray}{0},\textcolor{red}{a_2},\textcolor{blue}{a_3},\ldots) \star
 (\textcolor{gray}{0},\textcolor{red}{b_2},\textcolor{blue}{b_3}, \ldots) = (\textcolor{gray}{0},\textcolor{red}{a_2+b_2},\textcolor{blue}{a_3+b_3}, \ldots).\]  In particular, $\star$ never creates new colors.
 \end{conjecture}
+
+\section{The $\dagger$ button is sort of like nuclear fission}
+I have seen applications of $\dagger$ produce many balls from just a few.  Figure \ref{ManyFromFew} shows an example of this.  It is almost as if the red balls are
+the simplest element and $\dagger$ breaks down cyan and yellow balls into many more red balls somehow.
+
+\begin{figure}\label{ManyFromFew}
+\centering
+\begin{tikzpicture}
+[   
+Z1/.style={circle, ball color=gray!75, minimum size=8mm, inner sep=0},
+Z2/.style={circle, ball color=red!75, minimum size=8mm, inner sep=0},
+Z3/.style={circle, ball color=blue!75, minimum size=8mm, inner sep=0},
+Z5/.style={circle, ball color=green!75, minimum size=8mm, inner sep=0},
+Z7/.style={circle, ball color=yellow!75, minimum size=8mm, inner sep=0},
+Z11/.style={circle, ball color=cyan!75, minimum size=8mm, inner sep=0},
+Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
+]
+
+	  \begin{scope}[shift = {(0,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z11] (A4) at (0,2) {};
+	\node[Z11] (A5) at (2,2) {};
+	\BlackBond{A3}{A4}
+	\BlackBond{A4}{A5}
+\end{scope}
+\node at (3,1) {\huge $\dagger$};
+
+  \begin{scope}[shift = {(5,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z7] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+
+\end{scope}
+
+\node at (7,1) {\huge $=$};
+
+  \begin{scope}[shift = {(9,0)}]
+	\foreach \c in {1,...,4}
+    {  
+	    \node[Z2] (C\c) at ($(1,1)+((\c*90 - 45:1.5)$) {};
+		\node[Z2] (CW\c) at ($(1,1)+(\c*90:1.5)$) {};
+		\BlackBond{C\c}{CW\c}
+    }
+	\BlackBond{CW1}{C2}
+	\BlackBond{CW2}{C3}
+	\BlackBond{CW3}{C4}
+	\BlackBond{CW4}{C1}
+\end{scope}
+
+\end{tikzpicture}
+\caption{Some sort of splitting?}
+\end{figure}
 
 \end{document}

@@ -139,7 +139,7 @@ some kind of machine with four buttons, labeled $\star, \lcm, \gcd$ and $\dagger
 objects were gone, replaced by a new object.  He showed me many demonstrations of this, pressing different buttons, with differently colored balls coming out
 connected in various ways.  It was clear that he we trying to show me what this machine did, the look on his face said ``you see, yes?''  I tried to write down as much
 as I could afterwards, hoping that he would show me more next time.  The colors definitely have meaning, there is a structure there.  Two white balls
-make a red ball when you push $\dagger$ and a red and white ball make a blue ball when you push $\dagger$ (whether you blue white in the first or second slot
+make a red ball when you push $\dagger$ and a red and white ball make a blue ball when you push $\dagger$ (whether you put white in the first or second slot
 does not appear to matter).  He showed me a few with the $\star$ button as well.  A red and blue ball with $\star$ makes just joins the balls by a black bar.  
 \begin{figure}
 \centering
@@ -217,7 +217,7 @@ CC/.style={circle, ball color=gray!75, minimum size=10mm, inner sep=0}
 \end{figure}
 
 I thought I was starting to see the pattern, but then he showed me that a white and blue ball with $\star$ gives just a blue ball.  Then things
-started to get really weird, with new ball colors appearing with no immediately apparent pattern.  He showed my more images than I readily
+started to get really weird, with new ball colors appearing with no immediately apparent pattern.  He showed my more images than I can readily
 reproduce without it becoming overwhelming.  
 
 \begin{figure}
@@ -311,21 +311,7 @@ Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
 \end{tikzpicture}
 \end{figure}
 
-\begin{figure}
-\centering
-\begin{tikzpicture}
-[   
-Z1/.style={circle, ball color=gray!75, minimum size=8mm, inner sep=0},
-Z2/.style={circle, ball color=red!75, minimum size=8mm, inner sep=0},
-Z3/.style={circle, ball color=blue!75, minimum size=8mm, inner sep=0},
-Z5/.style={circle, ball color=green!75, minimum size=8mm, inner sep=0},
-Z7/.style={circle, ball color=yellow!75, minimum size=8mm, inner sep=0},
-Z11/.style={circle, ball color=cyan!75, minimum size=8mm, inner sep=0},
-Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
-]
-\end{tikzpicture}
-\caption{}
-\end{figure}
+
 
 \section{Possible patterns?}
 
@@ -376,7 +362,7 @@ The ball sequence $(1,0,0,\ldots)$ represents the number $1$.  A ball sequence $
 The $\star$ button multiplies the two numbers and the $\dagger$ button adds the two numbers.
 \end{conjecture}
 
-This works for all the demonstrations I can remember (disregarding the non-commutative structure).   I have seen massive objects put into the machine and the operations always seems to be instantaneous.  For a lot of these
+This works for all the demonstrations I can remember (disregarding the non-commutative structure).   I have seen massive objects put into the machine and the operations always seem to be instantaneous.  For a lot of these
 larger demonstrations, I don't remember the objects precisely, so I can't check the conjecture.  But if the conjecture is true and the machine is using some efficient physical operation to do $\dagger$, I think we could
 use the machine to do fast integer factorization.  The universe can factor efficiently using Shor's quantum algorithm, so maybe the machine is doing something similar?   I am working on trying to get the being to let me give 
 him objects to try in the machine, but no luck yet.  It would be rather amusing to break encryption by going into a deep meditative state and use this being's machine to factor integers.
@@ -429,4 +415,97 @@ Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
 \caption{Some sort of splitting?}
 \end{figure}
 
+\section{The other buttons}
+The experiments he has shown me that use the $\gcd$ and $\lcm$ buttons appear to be doing greatest common divisor and least common multiple, respectively.  That is,
+assuming we really are dealing with factored integers here.  Figure \ref{GCD} and Figure \ref{LCM} show examples of these.
+
+\begin{figure}\label{GCD}
+\centering
+\begin{tikzpicture}
+[   
+Z1/.style={circle, ball color=gray!75, minimum size=8mm, inner sep=0},
+Z2/.style={circle, ball color=red!75, minimum size=8mm, inner sep=0},
+Z3/.style={circle, ball color=blue!75, minimum size=8mm, inner sep=0},
+Z5/.style={circle, ball color=green!75, minimum size=8mm, inner sep=0},
+Z7/.style={circle, ball color=yellow!75, minimum size=8mm, inner sep=0},
+Z11/.style={circle, ball color=cyan!75, minimum size=8mm, inner sep=0},
+Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
+]
+
+	  \begin{scope}[shift = {(0,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z11] (A4) at (0,2) {};
+	\node[Z11] (A5) at (2,2) {};
+	\BlackBond{A3}{A4}
+	\BlackBond{A4}{A5}
+\end{scope}
+\node at (3,1) {\huge $\gcd$};
+
+  \begin{scope}[shift = {(5,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z7] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+
+\end{scope}
+
+\node at (7,1) {\huge $=$};
+
+  \begin{scope}[shift = {(9,0)}]
+	\node[Z2] (A3) at (0,1) {};
+\end{scope}
+\end{tikzpicture}
+\caption{greatest common divisor}
+\end{figure}
+
+\begin{figure}\label{LCM}
+\centering
+\begin{tikzpicture}
+[   
+Z1/.style={circle, ball color=gray!75, minimum size=8mm, inner sep=0},
+Z2/.style={circle, ball color=red!75, minimum size=8mm, inner sep=0},
+Z3/.style={circle, ball color=blue!75, minimum size=8mm, inner sep=0},
+Z5/.style={circle, ball color=green!75, minimum size=8mm, inner sep=0},
+Z7/.style={circle, ball color=yellow!75, minimum size=8mm, inner sep=0},
+Z11/.style={circle, ball color=cyan!75, minimum size=8mm, inner sep=0},
+Z13/.style={circle, ball color=magenta!75, minimum size=8mm, inner sep=0}
+]
+
+	  \begin{scope}[shift = {(0,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z11] (A4) at (0,2) {};
+	\node[Z11] (A5) at (2,2) {};
+	\BlackBond{A3}{A4}
+	\BlackBond{A4}{A5}
+\end{scope}
+\node at (3,1) {\huge $\lcm$};
+
+  \begin{scope}[shift = {(5,0)}]
+	\node[Z2] (A3) at (0,0) {};
+	\node[Z7] (A4) at (0,2) {};
+	\BlackBond{A3}{A4}
+
+\end{scope}
+
+\node at (7,1) {\huge $=$};
+
+  \begin{scope}[shift = {(9,0)}]
+		\node[Z2] (A3) at (0,0) {};
+	\node[Z11] (A4) at (0,2) {};
+	\node[Z11] (A5) at (2,2) {};
+	\node[Z7] (A7) at (2,0) {};
+	\BlackBond{A3}{A4}
+	\BlackBond{A4}{A5}
+	\BlackBond{A7}{A5}
+	\BlackBond{A7}{A3}
+\end{scope}
+\end{tikzpicture}
+\caption{least common multiple}
+\end{figure}
+\section{What else could it be?}
+Still disregarding the non-commutative structure seen with $\dagger$ for now, is there something else this machine could be doing besides adding and multiplying factored integers?  
+I guess, clearly yes, since I have only seen finitely many examples, there are infinitely many binary operations I could make satisfy all the examples I've seen.  But are there
+other interesting/natural binary operations that do this?  I imagine operations on these ball sequences with similar properties have been studied before in different language.  
+Yeah, definitely, we are talking about commutative rings here.  Now the non-commutative nature of $\dagger$ needs more research.  My best guess is that when
+he pushes the $\dagger$ button, the machine is performing a binary operation in a larger non-commuatitive ring, the image of this operation in the projection down to the integers 
+is addition.  So, maybe the universe can do more than just factor efficiently.
 \end{document}

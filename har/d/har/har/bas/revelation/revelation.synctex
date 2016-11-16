@@ -1,14 +1,14 @@
 SyncTeX Version:1
 Input:1:C:/Users/landon/Documents/GitHub/Research/har/d/har/har/bas/revelation/revelation.tex
-Input:2:C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls
-Input:3:C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo
-Input:4:C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
-Input:5:C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
-Input:6:C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
-Input:7:C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
-Input:8:C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
-Input:9:C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
-Input:10:C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
+Input:2:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls
+Input:3:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size12.clo
+Input:4:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
+Input:5:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
+Input:6:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+Input:7:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+Input:8:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+Input:9:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
+Input:10:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
 Input:11:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\frontendlayer\tikz.sty
 Input:12:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\basiclayer\pgf.sty
 Input:13:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\utilities\pgfrcs.sty
@@ -18,14 +18,14 @@ Input:16:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pg
 Input:17:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\ms\everyshi.sty
 Input:18:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfrcs.code.tex
 Input:19:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\basiclayer\pgfcore.sty
-Input:20:C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
-Input:21:C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty
-Input:22:C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty
-Input:23:C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty
-Input:24:C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg
-Input:25:C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def
-Input:26:C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty
-Input:27:C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty
+Input:20:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+Input:21:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+Input:22:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+Input:23:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty
+Input:24:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg
+Input:25:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def
+Input:26:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty
+Input:27:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty
 Input:28:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\systemlayer\pgfsys.sty
 Input:29:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsys.code.tex
 Input:30:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeys.code.tex
@@ -36,7 +36,7 @@ Input:34:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\
 Input:35:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsyssoftpath.code.tex
 Input:36:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsysprotocol.code.tex
 Input:37:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty
-Input:38:C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg
+Input:38:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg
 Input:39:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcore.code.tex
 Input:40:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmath.code.tex
 Input:41:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathcalc.code.tex
@@ -84,17 +84,18 @@ Input:82:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\libraries\pg
 Input:83:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\modules\pgfmodulematrix.code.tex
 Input:84:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarytopaths.code.tex
 Input:85:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarycalc.code.tex
-Input:86:C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\revelation\revelation.aux
+Input:86:revelation.aux
 Input:87:C:\Users\landon\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
-Input:88:C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
-Input:89:C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+Input:88:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
+Input:89:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+Input:90:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd
 Output:pdf
 Magnification:1000
 Unit:1
 X Offset:0
 Y Offset:0
 Content:
-!8265
+!8382
 {1
 (1,132:0,6578176:6578176,6578176,0
 [1,132:0,6578176:0,6578176,0
@@ -180,9 +181,7 @@ x1,119:23174803,14574850
 (1,119:23174803,14574850:0,647392,0
 $1,119:23174803,14574850
 (1,119:23174803,14232383:360449,304925,0
-$1,119:23174803,14232383
 x1,119:23502484,14232383
-$1,119:23502484,14232383
 )
 $1,119:23535252,14574850
 k1,119:23174803,14574850:-360449
@@ -244,9 +243,9 @@ k1,120:24605202,19376983:282383
 x1,120:24990222,19376983
 k1,120:25272605,19376983:282383
 x1,120:26684345,19376983
-k1,120:26966727,19376983:282382
-x1,120:28677927,19376983
-k1,120:28966736,19376983:288809
+k1,120:26966728,19376983:282383
+x1,120:28677928,19376983
+k1,120:28966736,19376983:288808
 x1,120:30121796,19376983
 k1,120:30404179,19376983:282383
 x1,120:31670467,19376983
@@ -803,9 +802,7 @@ k1,139:32851230,36086480:0
 k1,119:8170557,37497688:878367
 $1,119:8170557,37497688
 (1,119:8170557,37259863:301284,213447,0
-$1,119:8170557,37259863
 x1,119:8439073,37259863
-$1,119:8439073,37259863
 )
 $1,119:8471841,37497688
 )
@@ -900,7 +897,7 @@ k1,158:32851230,46187806:12587010
 )
 ]
 ]
-!20528
+!20430
 }1
 !10
 {2
@@ -1396,42 +1393,42 @@ k1,139:32851230,23493699:0
 (1,158:7292190,24443971:25559040,546132,152916
 x1,158:8447250,24443971
 x1,158:10629030,24443971
-k1,140:10900574,24443971:271544
-x1,140:11542274,24443971
-k1,140:11813819,24443971:271545
-x1,140:12220229,24443971
-x1,140:12861929,24443971
-x1,140:13075829,24443971
-x1,140:14192387,24443971
-k1,140:14463931,24443971:271544
-x1,140:15020071,24443971
-x1,140:15383701,24443971
-x1,140:16286359,24443971
-k1,140:16673193,24443971:386834
-x1,140:17250450,24443971
-k1,140:17521994,24443971:271544
-x1,140:18078134,24443971
-x1,140:18745502,24443971
-k1,140:19017047,24443971:271545
-x1,140:20599907,24443971
-k1,140:20871451,24443971:271544
-x1,140:22283191,24443971
-k1,140:22554735,24443971:271544
-x1,140:23324775,24443971
-k1,140:23596320,24443971:271545
-x1,140:24152460,24443971
-x1,140:24473310,24443971
-k1,140:24744854,24443971:271544
-x1,140:25750184,24443971
-x1,140:26776904,24443971
-k1,140:27048449,24443971:271545
-x1,140:27732929,24443971
-k1,140:28004473,24443971:271544
-x1,140:29121031,24443971
-x1,140:29655781,24443971
-k1,140:29927326,24443971:271545
-x1,140:30911266,24443971
-k1,140:31182810,24443971:271544
+k1,140:10877558,24443971:248528
+x1,140:11519258,24443971
+k1,140:11767787,24443971:248529
+x1,140:12174197,24443971
+x1,140:12815897,24443971
+x1,140:13029797,24443971
+x1,140:14146355,24443971
+k1,140:14394883,24443971:248528
+x1,140:14951023,24443971
+x1,140:15314653,24443971
+x1,140:16217311,24443971
+k1,140:16556834,24443971:339523
+x1,140:17134091,24443971
+k1,140:17382620,24443971:248529
+x1,140:17938760,24443971
+x1,140:18606128,24443971
+k1,140:18854656,24443971:248528
+x1,140:20437516,24443971
+k1,140:20686045,24443971:248529
+x1,140:22097785,24443971
+k1,140:22346313,24443971:248528
+x1,140:23116353,24443971
+k1,140:23364882,24443971:248529
+x1,140:23921022,24443971
+x1,140:24588390,24443971
+k1,140:24836918,24443971:248528
+x1,140:25842248,24443971
+x1,140:26868968,24443971
+k1,140:27117497,24443971:248529
+x1,140:27801977,24443971
+k1,140:28050505,24443971:248528
+x1,140:29167063,24443971
+x1,140:29701813,24443971
+k1,140:29950342,24443971:248529
+x1,140:30934282,24443971
+k1,140:31182810,24443971:248528
 x1,140:32851230,24443971
 k1,140:32851230,24443971:0
 )
@@ -4908,28 +4905,28 @@ x1,350:28591409,23661117
 )
 x1,350:29104769,23661117
 )
-(1,351:7292190,25119230:25559040,546132,152916
-x1,351:8021104,25119230
-g1,350:8296357,25119230
-x1,350:8689576,25119230
-x1,350:11776352,25119230
-g1,350:12051605,25119230
-$1,350:12051605,25119230
-x1,350:12436625,25119230
-$1,350:12436625,25119230
-g1,350:12711878,25119230
-x1,350:14530521,25119230
-g1,350:14805774,25119230
-x1,350:15484079,25119230
-x1,350:15798655,25119230
-x1,350:17076620,25119230
-g1,350:17351873,25119230
-x1,350:18649498,25119230
-g1,350:18924751,25119230
-x1,350:19278649,25119230
-x1,350:21097291,25119230
-k1,351:32851230,25119230:11753939
-g1,351:32851230,25119230
+(1,351:7292190,25119231:25559040,546132,152916
+x1,351:8021104,25119231
+g1,350:8296357,25119231
+x1,350:8689576,25119231
+x1,350:11776352,25119231
+g1,350:12051605,25119231
+$1,350:12051605,25119231
+x1,350:12436625,25119231
+$1,350:12436625,25119231
+g1,350:12711878,25119231
+x1,350:14530521,25119231
+g1,350:14805774,25119231
+x1,350:15484079,25119231
+x1,350:15798655,25119231
+x1,350:17076620,25119231
+g1,350:17351873,25119231
+x1,350:18649498,25119231
+g1,350:18924751,25119231
+x1,350:19278649,25119231
+x1,350:21097291,25119231
+k1,351:32851230,25119231:11753939
+g1,351:32851230,25119231
 )
 (1,353:7292190,27705008:25559040,786432,220201
 (1,353:7292190,27705008:1911028,729808,0
@@ -7394,9 +7391,9 @@ x1,507:10518739,43132982
 x1,507:10946539,43132982
 x1,507:11566849,43132982
 x1,507:13260937,43132982
-k1,507:13721495,43132982:460558
-x1,507:13999292,43132982
-k1,508:14295371,43132982:296079
+k1,507:13721494,43132982:460557
+x1,507:13999291,43132982
+k1,508:14295371,43132982:296080
 x1,508:16271807,43132982
 k1,508:16577786,43132982:305979
 x1,508:18780956,43132982
@@ -8890,9 +8887,9 @@ k1,513:32851230,46187806:12587010
 ]
 !32921
 }6
-Input:90:C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\revelation\revelation.aux
-!105
+Input:91:revelation.aux
+!34
 Postamble:
-Count:6383
-!27
+Count:6379
+!26
 Post scriptum:

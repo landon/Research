@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+\newtheorem{theorem}{Theorem}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+\newcommand{\type}{\operatorname{type}}
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+\newcommand{\gcd}{\operatorname{gcd}}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\def\gcd{\bigtriangledown}
+\def\lcm{\bigtriangleup}
+\def\no{\natural}
+
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\newcommand{\Bond}[6]%
+% start, end, thickness, incolor, outcolor, iterations
+{ \begin{pgfonlayer}{background}
+        \colorlet{InColor}{#4}
+        \colorlet{OutColor}{#5}
+        \foreach \I in {#6,...,1}
+        {   \pgfmathsetlengthmacro{\r}{#3/#6*\I}
+            \pgfmathsetmacro{\C}{sqrt(1-\r*\r/#3/#3)*100}
+            \draw[InColor!\C!OutColor, line width=\r] (#1.center) -- (#2.center);
+        }
+    \end{pgfonlayer}
+}
+
+\newcommand{\BlackBond}[2]%
+% start, end
+{   \Bond{#1}{#2}{0.7071mm}{black!25}{black!25!black}{10}
+}
+
+\title{teaching philosophy}
+\author{landon rabern}
+\begin{document}
+\maketitle
+
+I want the students to leave the class knowing more math than when they came in and also feeling better about math than when they came in.  When 
+they meet someone at a party who says they are a mathematician, i don't want their first response to be ``oh, I always hated that''.  Even if before my
+class that is their state, afterwards i want them to have at least a little light to share about math, something positive.
+
+A good way to achieve positive feelings about math is to separate the math from the formalism in the students minds.  Often, when someone says they hated math, it isn't math they hate
+but some specific formalism, maybe it was set builder notation, functions, those weird integral signs, the dreaded Leibniz derivative notation?  Or maybe it was even more basic at
+the level of algebra, at some point something beautiful was replaced with something ugly and all they got to work with after that was the ugly stand-in.  An example, i tell someone
+that i am a writer and they say they always hated writing, but not really, they always just had to do their writing in Microsoft Word and that tool is what they hate.  They have
+not experienced writing in any other form, their only association is pain in Microsoft Word.  As teacher, one of my jobs is to separate the tools from the topics so that the students can 
+learn new friendlier tools to deal with topics they once thought they hated.
+
+Math is beautiful.  Many math tools are not.  Since students come from many backgrounds, having used disparate tools, there is no good way to backtrack them all efficiently.  The
+best thing to do is to start over, at the beginning.  With very simple things, done right, in a friendly beautiful way.  Done this way, we can build back up to where we need to be
+quickly, only the things we need we will learn, the rest along the way.  As tools are really needed they will be introduced, no tools for tools-sake, just tools for the job.  Different
+students may need different tools to do the same thing, we can do that.
+
+A class consists of the material to be taught and the classroom mechanics. Classroom mechanics are important.  How much homework, how difficult of homework, should students work in groups or alone, how much help do i give them?
+All important questions, i come in with a few prior assumptions about what works well, but not with any real certainty.  Faced with this, there is a clear solution: science.
+Teaching philosophy cannot be static, must be dynamic changing as new information is gathered about how students learn best, what drives them to work, etc.  
+
+Keeping the mechanics separate from the material, only interacting at a simple fixed interface is important, so that either can be changed internally without needing to change the other.  The material
+is where the real fun is and we will treat it as such.  One beautiful thing about math as we go further along is that it is broad enough that we can take on the tools of math and the mechanics of teaching
+as the material of math itself.  So we study the math tools with math using the math tools.  This is turn allows us to build better math tools and repeat, we achieve optimal tools and optimal teaching in short order.
+
+
+\end{document}

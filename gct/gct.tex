@@ -49,13 +49,13 @@
 \begin{document}
 \frontmatter
 \title[gct]{graph coloring tools}
-\author{landon rabern}
+\author{}
 \maketitle
 \tableofcontents
 
 \chapter*{Preface}
 
-This is the preface.
+this comes prior to the face.
 
 \mainmatter
 
@@ -139,7 +139,7 @@ If $G$ is a graph, then $\chi(G) \ge \omega(G)$.
 A set of vertices $S$ in a graph $G$ is \emph{independent} if the vertices in $S$ are pairwise non-adjacent.\aaside{independent}{}  
 The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of vertices in a largest independent set in $G$.\aaside{$\alpha(G)$}{}
 
-\begin{theorem}[Brooks' theorem]
+\begin{theorem}
 If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\chi(G) \le \Delta(G)$.
 \label{BrooksTheorem}
 \end{theorem}
@@ -184,14 +184,14 @@ and we can edge color any graph $G$ with only $\Delta(G)$-colors? Not quite, but
 A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ colors such that incident edges receive different colors.
 
 %Before proving this result, we develop a tool that will useful throughout the book.
-%\section*{Hall's marriage theorem}
+
 %Suppose $G$ is a bipartite graph, say it has a $2$-coloring with colors red and blue.  Let $R \subseteq V(G)$ be the vertices colored red and
 %$B \subseteq V(G)$ the vertices colored red.  Then $R$ and $B$ are independent sets in $G$.  This situation is so common, we need special notation
 %to introduce bipartite graphs with the sets $R$ and $B$ already labeled, like so: let $G = (R,B)$ be a bipartite graph.\aaside{$G = (R,B)$}{}
 %A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-regular}{} A $1$-regular graph is a \emph{matching}. \aaside{matching}{0.15in} If $H \subseteq G$ is a matching, then
 %$v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
 %
-%\begin{theorem}\label{HallsMarriageTheorem}
+%\begin{theorem}
 %Let $G = (R,B)$ be a bipartite graph.  If $\card{N_G(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
 %every vertex of $R$.
 %\end{theorem}
@@ -214,14 +214,14 @@ If $G$ is a bipartite graph, then $G$ is $\Delta(G)$-edge-colorable.
 \begin{proof}
 \end{proof}
 
-\section*{a game version of Hall's marriage theorem}
+\section*{a game version marriage theorem}
 It may come as a surpise that even though we might need more than $\Delta(G)$ colors to edge color a graph $G$, we will only ever need at most one extra color.
-To prove this result, we develop a dynamic version of Hall's marriage theorem that can be conveniently phrased as a game.
+To prove this result, we develop a dynamic version of marriage theorem that can be conveniently phrased as a game.
 
 
 \section*{edge coloring general graphs}
 
-\begin{theorem}\label{VizingsTheorem}
+\begin{theorem}
 If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
 \end{theorem}
 \begin{proof}
@@ -232,7 +232,7 @@ We now know that every graph $G$ can be edge colored with either $\Delta(G)$ or 
 Furtunately, no it isn't, the collection of graphs requiring $\Delta(G) + 1$ colors is very rich.  Another way to say this, is that it is a hard problem
 to decide whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors.
 
-\begin{theorem}\label{HolyerEdgeColoringDecisionIsHard}
+\begin{theorem}
 Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors is hard supposing other things we think are hard are actually hard.
 \end{theorem}
 \begin{proof}
@@ -242,7 +242,7 @@ Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$
 \section*{list coloring}
 \section*{online list coloring}
 \section*{kernel tools}
-\subsection*{Brooks again}
+\subsection*{degree again}
 \subsection*{maximum independent covers}
 \section*{polynomial tools}
 \subsection*{combinatorial nullstellensatz}
@@ -251,29 +251,29 @@ Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$
 
 \chapter*{edge coloring, again}
 \section*{fans as a greedy strategy}
-\section*{Kierstead paths}
-\section*{Tashkinov trees}
+\section*{acceptable paths}
+\section*{acceptable trees}
 \section*{edge list coloring}
 \subsection*{more kernel method}
 \subsection*{2-edge-coloring}
-\subsection*{improved Brooks' theorem}
+\subsection*{improved degree theorem}
 \subsection*{a hint of quasiline and claw-free graphs}
 
-\chapter*{Lov\'{a}sz-Catlin shuffle tool}
+\chapter*{shuffle tool}
 \section*{destroying non-complete}
-\section*{Mozhan basics}
-\section*{a hint of Kostochka's technique}
+\section*{shuffling with more rules}
+\section*{looking at the entire recoloring digraph}
 
 \chapter*{independent transversalls}
 \section*{randomly}
 \section*{Haxell's tool}
-\subsection*{a hint of Sperner's lemma}
-\section*{Hajnal and Kostochka maximum clique tool}
-\section*{King's lemma}
+\subsection*{triangles within triangles are neat}
+\section*{big maximum cliques intersect in simple ways}
+\section*{going lopsided}
 
 \chapter*{vertex transitive graphs}
 \section*{strong coloring}
 \section*{medium clique implies big clique}
 
-\chapter*{Kostochka-Yancey potential tool}
+\chapter*{potential potential tool}
 \end{document}

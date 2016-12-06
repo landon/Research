@@ -100,7 +100,7 @@ Well, this is embarrassing, coloring appears to be easy.  Fortunately, things ge
 3-coloring is hard supposing other things we think are hard are actually hard.
 \end{theorem}
 \begin{proof}
-reduce 3-SAT to 3-coloring.
+We need a concise proof of this without having to introduce too much background.  Please submit a pull request on GitHub.
 \end{proof}
 
 \section*{basic estimates}
@@ -203,6 +203,16 @@ For bipartite graphs we were able to repair an almost correct coloring by swappi
 general case we don't have the same control over a path between two vertices, but we can exert some measure of control over paths leaving and entering a larger structure. 
 The larger structure we use here is the whole neighborhood of a vertex.
 
+\begin{theorem}
+If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $(\Delta(G) + 1)$-edge-colorable.  Then we may pick such a graph $G$ with $\size{G}$ as small as possible.
+Now $\size{G} > 0$, since we can surely color a graph with zero edges using at most one color. Let $xy$ be an edge in $G$.  Since $\size{G-xy} < \size{G}$,
+applying the theorem to $G-xy$ gives an edge coloring $\pi$ of $G-xy$ using at most $\Delta(G) + 1$ colors.  Let's name the neighbors of $x$, say $y_0, y_1, \ldots, y_k$ where
+$y_0 = y$ and $k < \Delta(G)$.  Say $\pi(xy_i) = i + 2$ for $i \in \irange{k}$.  Each of $x$ and $y_0$ is incident to at most $\Delta(G) - 1$ colored edges, so
+each has at least two available colors.  By symmetry, we may assume that $1,2$ are available at $x$ and $3,4$ are available at $y_0$.
+\end{proof}
 
 
 %Before proving this result, we develop a tool that will useful throughout the book.
@@ -228,21 +238,18 @@ The larger structure we use here is the whole neighborhood of a vertex.
 %Then $y \not \in N_{G}(X_{wy}\setminus\set{w})$ and $z \not \in N_{G}(X_{wz}\setminus\set{w})$
 %\end{proof}
 
-\begin{theorem}
-If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
-\end{theorem}
-\begin{proof}
-\end{proof}
+
 
 \section*{hardness}
 We now know that every graph $G$ can be edge colored with either $\Delta(G)$ or $\Delta(G) + 1$ colors.  So, edge coloring is basically trivial, right?
 Furtunately, no it isn't, the collection of graphs requiring $\Delta(G) + 1$ colors is very rich.  Another way to say this, is that it is a hard problem
-to decide whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors.
+to decide whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors.  
 
 \begin{theorem}
 Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors is hard supposing other things we think are hard are actually hard.
 \end{theorem}
 \begin{proof}
+We need a concise proof of this without having to introduce too much background.  Please submit a pull request on GitHub.
 \end{proof}
 
 \chapter*{vertex coloring, again}

@@ -182,6 +182,28 @@ With just one color we can edge color any graph with maximum degree at most one.
 to edge color a graph $G$.  Could we be so fortunate that the pattern continues
 and we can edge color any graph $G$ with only $\Delta(G)$-colors? Not quite, but we can do so for bipartite ($2$-colorable) graphs.
 A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ colors such that incident edges receive different colors.
+A color $c$ us $\emph{used}$\aaside{used}{} at a vertex $v$ of $G$ if an edge incident to $v$ in $G$ is colored with $c$. Otherwise, $c$ is \emph{available}\aaside{available}{} at $v$.
+A \emph{path}\aaside{path}{+0.15in} in $G$ is a sequence of pairwise distinct vertices $x_1x_2\cdots x_k$ such that $x_i$ is adjacent to $x_{i+1}$ for $i \in \irange{k-1}$.
+
+\begin{theorem}\label{DeltaEdgeColoring}
+If $G$ is a bipartite graph, then $G$ is $\Delta(G)$-edge-colorable.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $\Delta(G)$-edge-colorable.  Then we may pick such a graph $G$ with $\size{G}$ as small as possible.
+Now $\size{G} > 0$, since we can surely color a graph with zero edges using zero colors.  Let $xy$ be an edge in $G$.  Since $\size{G-xy} < \size{G}$,
+applying the theorem to $G-xy$ gives an edge coloring of $G-xy$ using at most $\Delta(G)$ colors.  Now each of $x$ and $y$ are incident to at most $\Delta(G) - 1$ edges
+in $G-xy$ and $G$ has no $\Delta(G)$-edge-coloring, so there is a color red available at $x$ and a different color blue available at $y$.  There is a unique maximal length
+path $P$ starting at $x$ with edges alternately colored blue and red. Let $z$ be the last vertex of $P$.  Since $P$ alternates between two colors, $P$ has even length.
+In particular, $z \ne y$ since $G$ does not contain an odd cycle by Theorem \ref{TwoColoring}.  But then we get a $\Delta(G)$-edge-coloring of $G$ by swapping the colors red and blue 
+along $P$ and coloring $xy$ blue, a contradiction.
+\end{proof}
+
+It may come as a surpise that even though we might need more than $\Delta(G)$ colors to edge color a graph $G$, we will only ever need at most one extra color.
+For bipartite graphs we were able to repair an almost correct coloring by swapping colors along a path because we had control over where this path ended.  In the
+general case we don't have the same control over a path between two vertices, but we can exert some measure of control over paths leaving and entering a larger structure. 
+The larger structure we use here is the whole neighborhood of a vertex.
+
+
 
 %Before proving this result, we develop a tool that will useful throughout the book.
 
@@ -205,21 +227,6 @@ A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ color
 %every vertex of $R$, a contradiction.  Hence we may pick $w \in R$ with $d_G(w) \ge 2$.  Let $wy, wz \in E(G)$.
 %Then $y \not \in N_{G}(X_{wy}\setminus\set{w})$ and $z \not \in N_{G}(X_{wz}\setminus\set{w})$
 %\end{proof}
-
-\section*{edge coloring bipartite graphs}
-
-\begin{theorem}\label{DeltaEdgeColoring}
-If $G$ is a bipartite graph, then $G$ is $\Delta(G)$-edge-colorable.
-\end{theorem}
-\begin{proof}
-\end{proof}
-
-\section*{a game version marriage theorem}
-It may come as a surpise that even though we might need more than $\Delta(G)$ colors to edge color a graph $G$, we will only ever need at most one extra color.
-To prove this result, we develop a dynamic version of marriage theorem that can be conveniently phrased as a game.
-
-
-\section*{edge coloring general graphs}
 
 \begin{theorem}
 If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.

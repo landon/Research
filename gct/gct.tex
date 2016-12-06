@@ -210,9 +210,12 @@ If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
 Suppose there is a graph $G$ that is not $(\Delta(G) + 1)$-edge-colorable.  Then we may pick such a graph $G$ with $\size{G}$ as small as possible.
 Now $\size{G} > 0$, since we can surely color a graph with zero edges using at most one color. Let $xy$ be an edge in $G$.  Since $\size{G-xy} < \size{G}$,
 applying the theorem to $G-xy$ gives an edge coloring $\pi$ of $G-xy$ using at most $\Delta(G) + 1$ colors.  Let's name the neighbors of $x$, say $y_0, y_1, \ldots, y_k$ where
-$y_0 = y$ and $k < \Delta(G)$.  Say $\pi(xy_i) = i + 2$ for $i \in \irange{k}$.  Each of $x$ and $y_0$ is incident to at most $\Delta(G) - 1$ colored edges, so
-each has at least two available colors.  By symmetry, we may assume that $1,2$ are available at $x$ and $3,4$ are available at $y_0$.
+$y_0 = y$ and $k < \Delta(G)$.  By symmetry, we may assume that $1, \ldots, a$ are available at $x$ and $a+1, \ldots, b$ are available at $y_0$ where $a \ge 2$ and $b-a \ge 2$.
+Also by symmetry, we may assume that $\pi(xy_i) = a + i$ for $i \in \irange{k}$. Now each of $y_i$ for $i \in \irange{k}$ has at least one available color $c_i$.  If $c_i \in \set{1,\ldots, a}$ for some $i \in \irange{b-a}$, then we get a $(\Delta(G)+1)$-coloring of 
+$G$ by coloring $xy_i$ with $c_i$ and $xy_0$ with $\pi(xy_i)$, a contradiction.  
+
 \end{proof}
+
 
 
 %Before proving this result, we develop a tool that will useful throughout the book.

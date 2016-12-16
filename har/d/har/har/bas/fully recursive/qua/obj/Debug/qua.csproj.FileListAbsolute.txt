@@ -1,0 +1,6 @@
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\bin\Debug\qua.exe.config
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\bin\Debug\qua.exe
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\bin\Debug\qua.pdb
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\obj\Debug\qua.csprojResolveAssemblyReference.cache
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\obj\Debug\qua.exe
+C:\Users\landon\Documents\GitHub\Research\har\d\har\har\bas\fully recursive\qua\obj\Debug\qua.pdb

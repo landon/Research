@@ -11,9 +11,11 @@ namespace qua
         static void Main(string[] args)
         {
             var sb = new StringBuilder();
+            sb.AppendLine(@"\begin{align*}");
             for (int i = 0; i < 100; i++)
-                sb.Append("$"+ Numberify(i) + "$,");
+                sb.AppendLine("&"+Numberify(i) + @"\\");
 
+            sb.AppendLine(@"\end{align*}");
             var ss = sb.ToString();
             Console.WriteLine(ss);
             Console.ReadKey();

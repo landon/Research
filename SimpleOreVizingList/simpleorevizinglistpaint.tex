@@ -139,12 +139,12 @@ then it is \emph{OC-irreducible}.
 
 \begin{lem}\label{ConsantListMicStrength} 
 	Every OC-irreducible graph $G$ with $\delta(G) = k-1$ satisfies
-	\[2\size{G} \ge (k-2)\card{G} + \mic(G) + 1.\]
+	\[2\size{G} > (k-2)\card{G} + \mic(G).\]
 \end{lem}
 
-\begin{lem}
+\begin{lem}\label{LBound}
 If $G$ is an OC-irreducible graph where $\HH(G)$ is edgeless and $\delta(G) = k - 1$ where $k \DefinedAs \Delta(G)$ and $\L\DefinedAs\L(G)$, then
-\[2\size{\L} \ge \parens{k-2 - \frac{2}{k-2}}\card{\L} + \frac{k(k-1)}{k-2}\beta(\L) + \frac{k}{k-2}.\]
+\[2\size{\L} > \parens{k-2 - \frac{2}{k-2}}\card{\L} + \frac{k(k-1)}{k-2}\beta(\L) + \frac{k}{k-2}.\]
 \end{lem}
 \begin{proof}
 Let $G$ be such a graph. Put $\HH \DefinedAs \HH(G)$ and $\L \DefinedAs \L(G)$.  Since
@@ -157,13 +157,13 @@ so, by Lemma \ref{ConsantListMicStrength},
 
 \begin{align*}
 (k-1)\card{\L} + k\card{\HH} &= 2\size{G}\\
-&\ge (k-2)\card{G} + \mic(G) + 1 \\
+&> (k-2)\card{G} + \mic(G) \\
 &\ge (k-2)\card{G} + k\card{\HH} + (k-1)\beta(\L) + 1\\
 &= (k-2)\card{\L} + (2k-2)\card{\HH} + (k-1)\beta(\L) + 1,\\
 \end{align*}
 so simplifying and using \eqref{ha} again gives
 \begin{align*}
-\card{\L} &\ge (k-2)\card{\HH} + (k-1)\beta(\L) + 1\\
+\card{\L} &> (k-2)\card{\HH} + (k-1)\beta(\L) + 1\\
 &= \frac{k-2}{k}\parens{(k-1)\card{\L} - 2\size{\L}} + (k-1)\beta(\L) + 1,
 \end{align*}
 now some mild manipulation yields the desired bound. 
@@ -186,7 +186,15 @@ $(p,h,z,f)$ is $5$-Gallai, where
 \[f(k) \DefinedAs (k-1)(1 - h(k) - p(k)).\]
 \end{lem}
 
+\begin{cor}\label{GBound}
+$\parens{\frac{2}{k-2}, 0, \frac{k(k-3)}{k-2}, \frac{(k-1)(k-4)}{k-2}}$ is $7$-Gallai.
+\end{cor}
 
-\bibliographystyle{amsplain}
-\bibliography{GraphColoring1}
+\begin{thm}\label{LBoundT}
+There does not exist an OC-irreducible graph $G$ where $\Delta(G) = \delta(G) + 1 \ge 7$ and $\HH(G)$ is edgeless.
+\end{thm}
+\begin{proof}
+If one did, then combining Lemma \ref{LBound} and Corollary \ref{GBound} would give the contradiction
+\[(k-2)\card{\HH} \le \card{\L} < k + \frac{4}{k-6} - \frac{2k}{k-6}\beta(\L).\]
+\end{proof}
 \end{document} 

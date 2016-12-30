@@ -144,7 +144,7 @@ then it is \emph{OC-irreducible}.
 
 \begin{lem}\label{LBound}
 If $G$ is an OC-irreducible graph where $\HH(G)$ is edgeless, $\Delta \DefinedAs \Delta(G) = \delta(G) + 1$ and $\L\DefinedAs\L(G)$, then
-\[2\size{\L} > \parens{\Delta-2 - \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-1)}{\Delta-2}\beta(\L) + \frac{\Delta}{\Delta-2}.\]
+\[2\size{\L} > \parens{\Delta-2 - \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-1)}{\Delta-2}\beta_{\Delta}(\L).\]
 \end{lem}
 \begin{proof}
 Let $G$ be such a graph. Put $\HH \DefinedAs \HH(G)$ and $\L \DefinedAs \L(G)$.  Since
@@ -158,13 +158,13 @@ so, by Lemma \ref{ConsantListMicStrength},
 \begin{align*}
 (\Delta-1)\card{\L} + \Delta\card{\HH} &= 2\size{G}\\
 &> (\Delta-2)\card{G} + \mic(G) \\
-&\ge (\Delta-2)\card{G} + \Delta\card{\HH} + (\Delta-1)\beta(\L)\\
-&= (\Delta-2)\card{\L} + (2\Delta-2)\card{\HH} + (\Delta-1)\beta(\L),\\
+&\ge (\Delta-2)\card{G} + \Delta\card{\HH} + (\Delta-1)\beta_{\Delta}(\L)\\
+&= (\Delta-2)\card{\L} + (2\Delta-2)\card{\HH} + (\Delta-1)\beta_{\Delta}(\L),\\
 \end{align*}
 so simplifying and using \eqref{ha} again gives
 \begin{align*}
-\card{\L} &> (\Delta-2)\card{\HH} + (\Delta-1)\beta(\L) + 1\\
-&= \frac{\Delta-2}{\Delta}\parens{(\Delta-1)\card{\L} - 2\size{\L}} + (\Delta-1)\beta(\L),
+\card{\L} &> (\Delta-2)\card{\HH} + (\Delta-1)\beta_{\Delta}(\L)\\
+&= \frac{\Delta-2}{\Delta}\parens{(\Delta-1)\card{\L} - 2\size{\L}} + (\Delta-1)\beta_{\Delta}(\L),
 \end{align*}
 now some mild manipulation yields the desired bound. 
 \end{proof}
@@ -187,14 +187,19 @@ $(p,h,z,f)$ is $5$-Gallai, where
 \end{lem}
 
 \begin{cor}\label{GBound}
-$\parens{\frac{2}{k-2}, 0, \frac{k(k-3)}{k-2}, \frac{(k-1)(k-4)}{k-2}}$ is $7$-Gallai.
+$\parens{\frac{2}{k-2}, 0, \frac{k(k-3)}{k-2}, \frac{(k-1)(k-4)}{k-2}}$ is $5$-Gallai.
 \end{cor}
 
 \begin{thm}\label{LBoundT}
-There does not exist an OC-irreducible graph $G$ where $\Delta(G) = \delta(G) + 1 \ge 7$ and $\HH(G)$ is edgeless.
+
 \end{thm}
 \begin{proof}
-If one did, then combining Lemma \ref{LBound} and Corollary \ref{GBound} would give the contradiction
-\[(\Delta-2)\card{\HH} \le \card{\L} < \Delta + \frac{4}{\Delta-6} - \frac{2\Delta}{\Delta-6}\beta(\L).\]
+Combining Lemma \ref{LBound} and Corollary \ref{GBound} gives
+\begin{align*}
+&\parens{\Delta-2 - \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-1)}{\Delta-2}\beta_{\Delta}(\L) <\\
+&\parens{\Delta - 3 + \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-3)}{\Delta-2}\beta_{\Delta}(\L) + \frac{(\Delta-1)(\Delta-4)}{\Delta-2}c_0(\L),\\
+\end{align*}
+so
+\[(\Delta-6)\card{\L} + 2\Delta\beta_{\Delta}(\L) < (\Delta-1)(\Delta-4)c_0(\L).\]
 \end{proof}
 \end{document} 

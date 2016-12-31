@@ -123,8 +123,9 @@
 \begin{document}
 \maketitle
 
-For a graph $G$, let $\beta_k(G)$ be the independence number of the subgraph of $G$ induced on the vertices of degree $k-1$.  
-When $k$ is defined in context, we just write $\beta(G)$.  Let $\HH(G)$ be the subgraph of $G$ induced on vertices of degree greater than $\delta(G)$.
+Let $c_k^*(\L)$ be the number of components of $\L$ containing a copy of $K_{k-1}$. Let $q_k(\L)$ be the number of non-cut vertices in $\L$ that appear in copies of $K_{k-1}$.  
+Let $\beta_k(\L)$ be the independence number of the subgraph of $\L$ induced on the vertices of degree $k-1$.  
+When $k$ is defined in context, we just write $c^*(\L)$, $q(\L)$ and $\beta(\L)$.  Let $\HH(G)$ be the subgraph of $G$ induced on vertices of degree greater than $\delta(G)$.
 Let $\L(G)$ be the subgraph of $G$ induced on vertices of degree $\delta(G)$.
 \begin{defn} The \emph{maximum independent cover number }of a graph $G$
 	is the maximum $\mic(G)$ of $\size{I, V(G) \setminus I}$ over all independent sets $I$
@@ -169,37 +170,69 @@ so simplifying and using \eqref{ha} again gives
 now some mild manipulation yields the desired bound. 
 \end{proof}
 
-\begin{defn}
-A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,
-the following hold:
-\begin{itemize}
-\item if $K_{k-1} \subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + h(k)q(T) + z(k)\beta(T) + f(k)$; and
-\item if $K_{k-1} \not\subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + z(k)\beta(T)$.
-\end{itemize}
-\end{defn}
+%\begin{defn}
+%A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,
+%the following hold:
+%\begin{itemize}
+%\item if $K_{k-1} \subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + h(k)q(T) + z(k)\beta(T) + f(k)$; and
+%\item if $K_{k-1} \not\subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + z(k)\beta(T)$.
+%\end{itemize}
+%\end{defn}
+%
+%\begin{lem}
+%If $\func{z}{\IN}{\IR}$ is such that $z(k) = 0$ or $2 \le z(k) \le \frac{k(k-3)}{k-2}$  for all $k \in \IN$, then 
+%$(p,h,z,f)$ is $5$-Gallai, where
+%\[h(k) \DefinedAs \frac{k(k-3) - (k-2)z(k)}{k^2-4k+5},\]
+%\[p(k) \DefinedAs \frac{2 + h(k)}{k-2},\]
+%\[f(k) \DefinedAs (k-1)(1 - h(k) - p(k)).\]
+%\end{lem}
+%
+%\begin{cor}\label{GBound}
+%$\parens{\frac{2}{k-2}, 0, \frac{k(k-3)}{k-2}, \frac{(k-1)(k-4)}{k-2}}$ is $5$-Gallai.
+%\end{cor}
+%
+%\begin{thm}\label{LBoundT}
+%If $G$ is an OC-irreducible graph where $\HH(G)$ is edgeless, $\Delta \DefinedAs \Delta(G) = \delta(G) + 1$ and $\L\DefinedAs\L(G)$, then
+%\[c_\Delta^*(\L) > \frac{(\Delta-6)\card{\L} + 2\Delta\beta_{\Delta}(\L)}{(\Delta-1)(\Delta-4)}.\]
+%\end{thm}
+%\begin{proof}
+%Combining Lemma \ref{LBound} and Corollary \ref{GBound} gives
+%\begin{align*}
+%&\parens{\Delta-2 - \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-1)}{\Delta-2}\beta_{\Delta}(\L) <\\
+%&\parens{\Delta - 3 + \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-3)}{\Delta-2}\beta_{\Delta}(\L) + \frac{(\Delta-1)(\Delta-4)}{\Delta-2}c_\Delta^*(\L),\\
+%\end{align*}
+%so
+%\[(\Delta-6)\card{\L} + 2\Delta\beta_{\Delta}(\L) < (\Delta-1)(\Delta-4)c_\Delta^*(\L).\]
+%\end{proof}
 
-\begin{lem}
-If $\func{z}{\IN}{\IR}$ is such that $z(k) = 0$ or $2 \le z(k) \le \frac{k(k-3)}{k-2}$  for all $k \in \IN$, then 
-$(p,h,z,f)$ is $5$-Gallai, where
-\[h(k) \DefinedAs \frac{k(k-3) - (k-2)z(k)}{k^2-4k+5},\]
-\[p(k) \DefinedAs \frac{2 + h(k)}{k-2},\]
-\[f(k) \DefinedAs (k-1)(1 - h(k) - p(k)).\]
+\begin{lem}\label{Gallai7Up}
+$\parens{\frac{3k-7}{k^2-4k+5}, \frac{(k-1)(k-4)}{k^2-4k+5}, 2, \frac{-2(k-1)(k-4)}{k^2-4k+5}}$ is $5$-Gallai.
 \end{lem}
 
-\begin{cor}\label{GBound}
-$\parens{\frac{2}{k-2}, 0, \frac{k(k-3)}{k-2}, \frac{(k-1)(k-4)}{k-2}}$ is $5$-Gallai.
-\end{cor}
+\begin{lem}\label{qLemma}
+	Let $G$ be a non-complete AT-irreducible graph with $\delta(G) = k-1$ where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices and 
+	$\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
+	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
+\end{lem}
 
-\begin{thm}\label{LBoundT}
+\begin{lem}\label{QuaBound}
+If $G$ is an OC-irreducible graph where $\HH(G)$ is edgeless, $\Delta \DefinedAs \Delta(G) = \delta(G) + 1 \ge 7$, $\L\DefinedAs\L(G)$ and $\HH \DefinedAs \HH(G)$, then
 
-\end{thm}
+\[2\size{\L} \le \parens{\Delta-3 + \frac{3\Delta-7}{\Delta^2-4\Delta+5}}\card{\L} + \frac{3(\Delta-1)(\Delta-4)}{\Delta^2-4\Delta+5}\card{\HH} +  2\beta_{\Delta}(\L).\]
+\end{lem}
 \begin{proof}
-Combining Lemma \ref{LBound} and Corollary \ref{GBound} gives
-\begin{align*}
-&\parens{\Delta-2 - \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-1)}{\Delta-2}\beta_{\Delta}(\L) <\\
-&\parens{\Delta - 3 + \frac{2}{\Delta-2}}\card{\L} + \frac{\Delta(\Delta-3)}{\Delta-2}\beta_{\Delta}(\L) + \frac{(\Delta-1)(\Delta-4)}{\Delta-2}c_0(\L),\\
-\end{align*}
-so
-\[(\Delta-6)\card{\L} + 2\Delta\beta_{\Delta}(\L) < (\Delta-1)(\Delta-4)c_0(\L).\]
+Combine the second inequality in Lemma \ref{qLemma} with Lemma \ref{Gallai7Up}.
 \end{proof}
+
+\begin{lem}
+If $G$ is an OC-irreducible graph where $\HH(G)$ is edgeless, $\Delta \DefinedAs \Delta(G) = \delta(G) + 1 \ge 7$, $\L\DefinedAs\L(G)$ and $\HH \DefinedAs \HH(G)$, then
+
+\[\parens{\Delta-10 + \frac{4(\Delta+1)}{\Delta^2-4\Delta+5}}\card{\L} + \parens{\Delta^2-3\Delta+4}\beta_{\Delta}(\L)< 0,\]
+in particular, $\Delta \le 9$.
+\end{lem}
+\begin{proof}
+Combine Lemma \ref{LBound} with Lemma \ref{QuaBound} and the fact that $\card{\HH} < \frac{\card{L}}{\Delta-2}$.
+\end{proof}
+
 \end{document} 

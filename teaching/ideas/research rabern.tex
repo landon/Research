@@ -1,0 +1,140 @@
+\documentclass[12pt]{article} 
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, stmaryrd, color, verbatim, tikz, verbatim}
+
+
+   \addtolength{\oddsidemargin}{-.875in}
+	\addtolength{\evensidemargin}{-.875in}
+	\addtolength{\textwidth}{1.75in}
+
+	\addtolength{\topmargin}{-.875in}
+	\addtolength{\textheight}{1.75in}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{FixerMove}{\bf {Fixer's turn}}
+\newtheorem*{BreakerMove}{\bf {Breaker's turn}}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+\newcommand{\im}{\operatorname{im}}
+
+
+\renewcommand{\S}{\fancy{S}}
+\newcommand{\W}{\fancy{W}}
+\newcommand{\T}{\fancy{T}}
+\renewcommand{\P}{\fancy{P}}
+
+\newcommand{\F}{\mathfrak{F}}
+\newcommand{\B}{\mathfrak{B}}
+                                                                  
+
+%\title{Research Statement}
+%\author{Landon Rabern}
+
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large \sc Recent Research and Future Plans}\\
+{\sc Landon Rabern}
+\end{center}
+
+\vspace{.3in}
+
+\section{Edge Coloring}
+In \cite{rabern2012game} I proved a common generalization of Hall's theorem on the existence of systems of distinct representatives and Vizing's edge coloring theorem in terms of winning strategies in a two-player game played on a complete graph. In \cite{cranston2015edge}, Cranston and I generalized this into a framework for showing that graphs are reducible for edge-coloring.  A particular form of reducibility, called \emph{fixability}, can be considered without reference to a containing graph.  This has two key benefits: (i) we can now formulate necessary conditions for fixability, and (ii) the problem of fixability is easy for a computer to solve. The necessary condition of \emph{superabundance} is sufficient for multistars and we conjecture that it is for trees as well (this would generalize the technique of Tashkinov trees). Via computer, we can generate thousands of reducible configurations, but we have short proofs for only a small fraction of these.  The computer is able to write \LaTeX\ code for its proofs, but they are only marginally enlightening and can run thousands of pages long. 
+
+As an application of these ideas, we \cite{cranston2015subcubic} answered a question of Jakobsen~\cite{Jakobsen73} about class 2 graphs with maximum degree $3$.  Jakobsen noted that the
+Petersen graph with a vertex deleted, $P^*$, is class 2 and has average degree only $2+\frac23$.  He showed
+that every critical graph has average degree at least $2+\frac23$, and asked if
+$P^*$ is the only graph where equality holds.  We answered his
+question affirmatively.  Our main result was that every subcubic critical graph, other than $P^*$, has average degree at least $2+\frac{26}{37}=2.\overline{702}$.  Using computer-proved reducibility results, we were able to improve the lower bound on the average degree to $2+\frac{42}{59}$. 
+
+Many more results can be proved using computer-proved reducibility results, we are currently trying to find ways of turning these computer proofs into \emph{simple} human-readable proofs.  For example, we proved the following conjecture for $\Delta=4$.
+
+\begin{conjecture}[Hilton and Zhao]
+	A connected graph $G$ with $\Delta(G_\Delta) \le 2$ is class 2 if and only if $G$ is $P^*$ or $G$ is overfull.
+\end{conjecture}
+
+We have an idea that appears to work for all $\Delta$, modulo the need to prove a few reducibility results the computer knows.
+
+\section{Fractional Coloring}
+A $2$-fold coloring of a graph is an assignment of sets of size two to the vertices of the graph so that adjacent vertices get disjoint sets.  If the sets are all subsets of $\set{1, \ldots, k}$, then the coloring is a $2$-fold $k$-coloring.  If a graph has a $2$-fold $k$-coloring, then its fractional chromatic number is at most $\frac{k}{2}$.
+
+\subsection{The Motivating Problem}
+The Borodin-Kostochka Conjecture can be weakened as follows.
+
+\begin{conjecture}\label{twofold}
+	Every graph with maximum degree $\Delta \geq 9$ not containing $K_\Delta$ has a $2$-fold $(2\Delta-1)$-coloring.
+\end{conjecture}
+
+If the Borodin-Kostochka Conjecture holds, then in fact such a graph has a $2$-fold $(2\Delta-2)$-coloring, so this is indeed a weakening; moreover, I believe Conjecture \ref{twofold} should actually hold for $\Delta \geq 8$.  For $2$-fold colorings I have been able to improve on the list coloring results in \cite{cranstonrabernapriori} which severely restricts possible counterexamples to Conjecture \ref{twofold}.  A proof of this conjecture would solve open questions about the fractional chromatic number in \cite{king2012fractional} and \cite{edwards2012bounding}.
+
+\subsection{Related Results}
+In an attempt to better understand fractional coloring and prove Conjecture \ref{twofold}, Cranston and I worked on related problems.  In \cite{cranston2014planar}, we answered a question of Scheinerman and Ullman~\cite[p.~75]{SU-book} from 1997 by giving a short proof that planar graphs have fractional chromatic number at most $\frac92$.  In fact, we proved the stronger statement that every planar graph has a $2$-fold $9$-coloring.  I am continuing to think about bounds between $4$ and $4.5$ to try to understand the complexity required to prove the $4$-color theorem.
+
+The chromatic number of the plane is the chromatic number of the uncountably
+infinite graph that has as its vertices the points of the plane and has an edge
+between two points if their distance is 1.  This chromatic number is written $\chi(\Re^2)$.  
+The problem was introduced in 1950, and shortly thereafter 
+it was proved that $4\le \chi(\Re^2)\le 7$.
+These bounds are both easy to prove, but after more than 60 years they
+are still the best known.
+
+Cranston and I \cite{cranston2015fractional} also investigated the fractional chromatic number of the plane $\chi_f(\Re^2)$.
+The previous best bounds (rounded to five decimal places) were $3.5556 \le
+\chi_f(\Re^2)\le 4.3599$.  We improved the lower bound to $\frac{105}{29}\approx3.6207$ using a discharging argument.
+
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring}
+\end{document}

@@ -129,7 +129,7 @@ If you take such a group of people $K$ out of the red room into the green room,
 then person in the green room is spoken for on some committee by someone in the red room. 
 You also want to leave a representative of each committee (not necessarily one that can speak for the group) in the red room
 at all times; that is, we want to make sure that $C \not \subseteq K$ for all committees $C$.  Such a group $K$ is a \emph{kernel} for the oriented hypergraph $(P,X,\sigma)$.  
-More succinctly, $K \subseteq P$ is a kernel for $(P,X,\sigma)$ just in case $K \cap \sigma(C) \ne \emptyset$ and $C \not \subseteq K$ for all committees $C \in X$.  Deciding
+More succinctly, $K \subseteq P$ is a kernel for $(P,X,\sigma)$ just in case $C \not \subseteq K$ for all committees $C \in X$ and for each person $x\in P\setminus K$, there is a committee $C \ni x$ such that $K \cap \sigma(C) \ne \emptyset$.  Deciding
 whether or not a given oriented hypergraph has a kernel appears to be a hard problem (many known NP-hard problems are special cases of this).  But things are not hard for
 all oriented hypergraphs and you can build some tools by looking for useful structure.  For constructing kernels the notion of an \emph{induced oriented subhypergraph} will be indispensable.
 Let $\HH \DefinedAs (P,X,\sigma)$ be an oriented hypergraph.  If $A \subseteq P$, then the \emph{oriented subhypergraph of $\HH$ induced on $A$}, written $\HH[A]$ is the tuple 
@@ -145,7 +145,7 @@ such that $\sigma(C) > 1$ for all $C \in X\brackets{P \setminus K}$, then $\HH$ 
 \begin{proof}
 Suppose for the moment that the lemma is false.  Go grab a counterexample $\HH \DefinedAs (P,X,\sigma)$ with $\card{\HH}$ as small as possible.
 Then $\HH$ contains no kernel by minimality of $\card{\HH}$; in particular $\card{\HH} > 0$. Now grab $K \subseteq P$ containing no committee of $\HH$ such that $\sigma(C) > 1$ for all $C \in X\brackets{P \setminus K}$.  Since $K$ contains no
-committee of $\HH$ and it isn't a kernel, we can grab $C \in X$ with $K \cap \sigma(C) = \emptyset$.  Grab $x \in \sigma(C)$.  Since $\card{\HH - x} < \card{\HH}$ applying the lemma to $\HH -x$ gives a kernel $L \subseteq P \setminus\set{x}$ in $\HH-x$.
+committee of $\HH$ and it isn't a kernel, we can grab $x \in P\setminus K$ so that $\sigma(C) \cap K = \emptyset$ for every $C \in X$ with $x \in C$.  Grab $x \in \sigma(C)$.  Since $\card{\HH - x} < \card{\HH}$ applying the lemma to $\HH -x$ gives a kernel $L \subseteq P \setminus\set{x}$ in $\HH-x$.
 \end{proof}
 
 \end{document}

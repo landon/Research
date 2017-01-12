@@ -1,0 +1,296 @@
+\documentclass{amsbook}
+\usepackage{amsfonts}
+\usepackage{marginnote}
+
+\newcommand{\aside}[1]{\marginnote{\scriptsize{#1}}[0cm]}
+\newcommand{\aaside}[2]{\marginnote{\scriptsize{#1}}[#2]}
+
+\theoremstyle{plain}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+\newtheorem{theorem}{Theorem}
+\numberwithin{equation}{chapter}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\begin{document}
+\frontmatter
+\title[gct]{embodied graph theory}
+\author{}
+\maketitle
+\tableofcontents
+
+\chapter*{preface}
+
+this comes prior to the face.
+
+\mainmatter
+
+\chapter*{graphs}
+This book is about groups of people.  Not about individual people, but about the structure of relationships in the group.  
+Each person wears a belt with many loops.  There are ropes with caribiners on both ends for attaching two people by their belt-loops.
+We say that two people are \emph{joined}\aaside{joined}{} if they are connected by a rope.  A \emph{graph} is a group of \emph{people} together with some joinings.
+If $G$ is a graph, then $P(G)$ is its group of people and $R(G)$ its collection of ropes. \aaside{$P(G)$, $R(G)$}{-.15in}
+We write $\card{G}$ for the number of people in $P(G)$ and $\size{G}$ for the number of ropes in $R(G)$. \aaside{$\card{G}$, $\size{G}$}{}
+The group of people to which $p$ is joined is her \emph{neighborhood}, written $N(v)$. \aaside{neighborhood}{+0.0in} \aaside{$N(v)$}{+0.15in}
+For the size of $v$'s neighborhood $\card{N(v)}$, we write $d(v)$ and call this the \emph{degree} of $v$. \aaside{$d(v)$, degree}{+0.3in}
+
+\chapter*{grouping people}
+The entire book concerns one simple task: we want to group the people of a given graph so that joined people are in different groups.
+With sufficiently many groups and no preferences about what the groupings should look like, this is easy, we just put each person in her own group.  
+Things get interesting when we ask how few different groups we can use.  We are definitely going to need at least zero groups and that will only do for the
+graph with no people at all.  Given one group, we can handle all graphs with no joins.  With two groups, we can do
+any path and any cycle with an even number of people.  But, we can't handle a triangle or any other cycle with an odd number of people.
+In fact, odd cycles are really the only thing that will prevent us from using just two groups. 
+A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $P(H) \subseteq P(G)$ and $R(H) \subseteq R(G)$. \aaside{subgraph, $\subseteq$}{}
+When $H \subseteq G$, we say that $G$ \emph{contains} $H$. \aaside{contains}{0.12in}  If $p \in P(G)$, then $G-p$ is the graph we get by removing $p$ from the group along with all the ropes attached to her. \aaside{$G-v$}{0.05in}
+
+It will be convenient to have all the members of a group wear the same color shirt.  So, we might have the red shirted group and the blue shirted group, etc.
+A graph is $k$-colorable if we can group its people into (at most) $k$ groups such that joined people are in different groups. \aaside{$k$-colorable}{}
+A $0$-colorable graph is \emph{empty}, a $1$-colorable graph is \emph{ropeless} and a $2$-colorable graph is \emph{bipartite}. \aaside{empty}{}\aaside{ropeless}{+0.1in}\aaside{bipartite}{+0.2in}
+\begin{theorem}\label{TwoColoring}
+A graph is $2$-colorable just in case it contains no odd cycle.
+\end{theorem}
+\begin{proof}
+A graph containing an odd cycle clearly can't be $2$-colored.  For the other implication, suppose
+there is a graph that is not $2$-colorable and doesn't contain an odd cycle.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
+Surely, $|G| > 0$, so we may pick $v \in P(G)$.  If $x, y \in N(v)$, then $x$ is not joined to $y$ since then $xyz$ would be an odd cycle.
+So we can construct a graph $H$ from $G$ by removing $v$ and identifying all of $N(v)$ to a new person $x_v$.  Any odd cycle
+in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$ passing through $v$.  So $H$ contains no odd cycle. Since $|H| < |G|$, 
+applying the theorem to $H$ gives a 2-coloring of $H$, say into the red and blue groups
+where $x_v$ is in the red group.  But this gives a 2-coloring of $G$ by putting all people in $N(v)$ in the red group and putting $v$ in the blue group, a contradiction.
+\end{proof}
+
+Well, this is embarrassing, coloring appears to be easy.  Fortunately, things get more interesting when we move up to three colors.
+\begin{theorem}
+3-coloring is hard supposing other things we think are hard are actually hard.
+\end{theorem}
+\begin{proof}
+We need a concise proof of this without having to introduce too much background.  Please submit a pull request on GitHub.
+\end{proof}
+
+\section*{basic estimates}
+Even though finding the minimum number of colors needed to color a graph is hard in general (supposing it is), we can still
+look for lower and upper bounds on this value.  The \emph{chromatic number} $\chi(G)$ of a graph $G$ is the smallest $k$ for which $G$ is $k$-colorable.
+\aaside{chromatic number}{+0.0in}\aaside{$\chi(G)$}{+0.15in}
+The simplest thing we can do is give each person a different colored shirt.
+\begin{theorem}\label{WorstUpperBound}
+If $G$ is a graph, then $\chi(G) \le \card{G}$.
+\end{theorem}
+The only graphs that attain the upper bound in Theorem \ref{WorstUpperBound} are the \emph{complete} graphs; those in which
+any two people are joined. \aaside{complete}{}
+We can usually do much better by just arbitrarily putting colored shirts on people, reusing colors when we can.  \aaside{maximum degree}{+0.0in}\aaside{$\Delta(G)$}{+0.15in}The \emph{maximum degree} $\Delta(G)$ of a graph $G$ is the largest degree
+of any person in $G$; that is 
+\[\Delta(G) \DefinedAs \max_{v \in V(G)} d(v).\]
+We are going to need smooth language to talk about putting various colored shirts on people.
+Let's say that ``to color a person red'' means to put a red shirt on them, etc.
+\begin{theorem}\label{SecondWorstUpperBound}
+If $G$ is a graph, then $\chi(G) \le \Delta(G) + 1$.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $\parens{\Delta(G) + 1}$-colorable.  Then we may pick such a graph $G$ with as few people as possible.
+Surely $G$ has at least one person, so we may pick $v \in V(G)$.  Then $\card{G-v} < \card{G}$ and $\Delta(G-v) \le \Delta(G)$, so applying the theorem to $G-v$ gives a $\parens{\Delta(G-v) + 1}$-coloring
+of $G-v$.  But $v$ has at most $\Delta(G)$ neighbors, so there is some color, say red, not used on $N(v)$, coloring $v$ red gives a $\parens{\Delta(G) + 1}$-coloring
+of $G$, a contradiction.
+\end{proof}
+
+Both complete graphs and odd cycles attain the upper bound in Theorem \ref{SecondWorstUpperBound}.  Theorem \ref{TwoColoring} says
+we can do better for graphs that don't contain odd cycles.  We can also do better for graphs that don't contain large complete subgraphs.
+A group of people $S$ in a graph $G$ is a \emph{clique} if the people in $S$ are pairwise joined.\aaside{clique}{}  
+The \emph{clique number} of a graph $G$, written $\omega(G)$, is the number of people in a largest clique in $G$.\aaside{$\omega(G)$}{}
+
+\begin{theorem}\label{OmegaLowerBound}
+If $G$ is a graph, then $\chi(G) \ge \omega(G)$.
+\end{theorem}
+
+A group of people $S$ in a graph $G$ is \emph{independent} if the people in $S$ are pairwise non-joined.\aaside{independent}{}  
+The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of people in a largest independent set in $G$.\aaside{$\alpha(G)$}{}
+
+\begin{theorem}
+If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\chi(G) \le \Delta(G)$.
+\label{BrooksTheorem}
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$ that is not $\Delta(G)$-colorable.  
+Then we may pick such a graph $G$ with as few people as possible.  Let $S$ be 
+a maximal independent set in $G$.  Since $S$ is maximal, every person in $G-S$ has a neighbor in $S$, so $\Delta(G) > \Delta(G-S)$.
+If red is an unused color in a $\chi(G-S)$-coloring of $G-S$, then by coloring all people in $S$ red we get a $\parens{\chi(G-S)+1}$-coloring of $G$.  
+So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$ and thus $\Delta(G) = \chi(G-S) = \Delta(G-S) + 1$ by Theorem \ref{SecondWorstUpperBound}.
+Since $\card{G-S} < \card{G}$, applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\Delta(G -S) < \omega(G - S)$.  
+So, either $\chi(G-S) = \Delta(G) = 3$ or $\omega(G-S) \ge \Delta(G)$.  In the former case, let $X$ be the people group of an odd cycle in $G-S$ guaranteed by Theorem \ref{TwoColoring}.  
+In the latter case, let $X$ be a $\Delta(G)$-clique in $G-S$.
+
+Since $S$ is maximal and $\omega(G) \le \Delta(G)$, there are $x_1, x_2 \in X$ and $y_1, y_2 \in S$ such that $x_1$ is joined to $y_1$ and $x_2$ is joined to $y_2$.
+Construct a graph $H$ from $G-X$ by adding the rope $y_1y_2$.  Since $\card{H} < \card{G}$, applying the theorem to $H$ shows that $\omega(H) > \Delta(G)$ or $\chi(H) \le \Delta(G)$.
+Suppose $\chi(H) \le \Delta(G)$.  Then there is a $\Delta(G)$-coloring of $G-X$ where $y_1$ and $y_2$ receive different colors, say red and blue respectively.
+Pick the first person $z$ in a shortest path $P$ from $x_1$ to $x_2$ in $X$ that has a blue colored neighbor in $V(H)$. 
+Each person in $X$ has $\Delta(G)-1$ neighbors in $X$ and hence at most one neighbor in $V(H)$.  So, $z \ne x_1$ since $x_1$ already has a red colored neighbor in $V(H)$.
+Let $w$ be be the person preceding $z$ on $P$. Then $w$ has no blue colored neighbor.  Since $X$ is the person group of a cycle or a 
+complete graph, there is a path $Q$ from $w$ to $z$ passing through every person of $X$.  Color $w$ blue and then proceed along $Q$, coloring one person at a time.  
+Since each person we encounter before we get to $z$ has at most $\Delta(G) - 1$ colored neighbors, we always have an available color to use.  But, $z$ is joined
+to both $w$ and another blue colored person in $V(H)$, so there is an available color for $z$ as well.  This gives a $\Delta(G)$-coloring of $G$, a contradiction.
+
+So, $\omega(H) > \Delta(G)$.  In particular, $y_1$ and $y_2$ each have exactly one neighbor in $X$ and $\Delta(G) - 1$ neighbors in the same $\Delta(G) -1$ clique $A$ in $G - X$.
+ Since $S$ is maximal and $\card{X} \ge 3$, there must be joined
+$x_3 \in X \setminus \set{x_1,x_2}$ and $y_3 \in S \setminus \set{y_1,y_2}$.  Applying the same argument with $x_3, y_3$ in place of $x_2, y_2$ shows
+that $y_1$ and $y_3$ each have exactly one neighbor in $X$ and $\Delta(G) - 1$ neighbors in the same $\Delta(G) -1$ clique $B$ in $G - X$.
+Now $\card{A\cap B} = \card{A} + \card{B} - \card{A\cup B} \ge 2(\Delta(G) - 1) - d(y_1) \ge \Delta(G) - 2 > 0$.  But there can't be a person
+in $A \cap B$ since she would be joined to $y_1,y_2,y_3$ as well as $\Delta(G) - 2$ people in $A$ and thus have degree greater than $\Delta(G)$, a contradiction. 
+
+\chapter*{edge coloring}
+It is also useful to consider coloring the edges of a graph so that incident edges receive different colors.  This
+appears to be at odds with our previous claim that this book was only about coloring vertices of graph; fortunately, edge coloring
+is just a special case of vertex coloring.  If $G$ is a graph, the \emph{line graph} of $G$, written
+$L(G)$ is the graph with vertex set $E(G)$ where two edges of $G$ are adjacent in $L(G)$ if they are incident in $G$.  Coloring
+the edges of $G$ is equivalent to coloring the vertices of $L(G)$.
+
+For graphs with maximum degree zero (that is, no edges at all), we can get by with zero colors.  
+With just one color we can edge color any graph with maximum degree at most one.  We will definitely always need at least $\Delta(G)$ colors
+to edge color a graph $G$.  Could we be so fortunate that the pattern continues
+and we can edge color any graph $G$ with only $\Delta(G)$-colors? Not quite, but we can do so for bipartite ($2$-colorable) graphs.
+A graph is $k$-edge-colorable if we can color its edges with (at most) $k$ colors such that incident edges receive different colors.
+A color $c$ us $\emph{used}$\aaside{used}{} at a vertex $v$ of $G$ if an edge incident to $v$ in $G$ is colored with $c$. Otherwise, $c$ is \emph{available}\aaside{available}{} at $v$.
+A \emph{path}\aaside{path}{+0.15in} in $G$ is a sequence of pairwise distinct vertices $x_1x_2\cdots x_k$ such that $x_i$ is adjacent to $x_{i+1}$ for $i \in \irange{k-1}$.
+
+\begin{theorem}\label{DeltaEdgeColoring}
+If $G$ is a bipartite graph, then $G$ is $\Delta(G)$-edge-colorable.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $\Delta(G)$-edge-colorable.  Then we may pick such a graph $G$ with $\size{G}$ as small as possible.
+Now $\size{G} > 0$, since we can surely color a graph with zero edges using zero colors.  Let $xy$ be an edge in $G$.  Since $\size{G-xy} < \size{G}$,
+applying the theorem to $G-xy$ gives an edge coloring of $G-xy$ using at most $\Delta(G)$ colors.  Now each of $x$ and $y$ are incident to at most $\Delta(G) - 1$ edges
+in $G-xy$ and $G$ has no $\Delta(G)$-edge-coloring, so there is a color red available at $x$ and a different color blue available at $y$.  There is a unique maximal length
+path $P$ starting at $x$ with edges alternately colored blue and red. Let $z$ be the last vertex of $P$.  Since $P$ alternates between two colors, $P$ has even length.
+In particular, $z \ne y$ since $G$ does not contain an odd cycle by Theorem \ref{TwoColoring}.  But then we get a $\Delta(G)$-edge-coloring of $G$ by swapping the colors red and blue 
+along $P$ and coloring $xy$ blue, a contradiction.
+\end{proof}
+
+It may come as a surpise that even though we might need more than $\Delta(G)$ colors to edge color a graph $G$, we will only ever need at most one extra color.
+For bipartite graphs we were able to repair an almost correct coloring by swapping colors along a path because we had control over where this path ended.  In the
+general case we don't have the same control over a path between two vertices, but we can exert some measure of control over paths leaving and entering a larger structure. 
+The larger structure we use here is the whole neighborhood of a vertex.
+
+\begin{theorem}
+If $G$ is a graph, then $G$ is $\parens{\Delta(G) + 1}$-edge-colorable.
+\end{theorem}
+\begin{proof}
+Suppose there is a graph $G$ that is not $(\Delta(G) + 1)$-edge-colorable.  Then we may pick such a graph $G$ with $\size{G}$ as small as possible.
+Now $\size{G} > 0$, since we can surely color a graph with zero edges using at most one color. Let $xy$ be an edge in $G$.  Since $\size{G-xy} < \size{G}$,
+applying the theorem to $G-xy$ gives an edge coloring $\pi$ of $G-xy$ using at most $\Delta(G) + 1$ colors.  Let's name the neighbors of $x$, say $y_0, y_1, \ldots, y_k$ where
+$y_0 = y$ and $k < \Delta(G)$.  By symmetry, we may assume that $1, \ldots, a$ are available at $x$ and $a+1, \ldots, b$ are available at $y_0$ where $a \ge 2$ and $b-a \ge 2$.
+Also by symmetry, we may assume that $\pi(xy_i) = a + i$ for $i \in \irange{k}$. Now each of $y_i$ for $i \in \irange{k}$ has at least one available color $c_i$.  If $c_i \in \set{1,\ldots, a}$ for some $i \in \irange{b-a}$, then we get a $(\Delta(G)+1)$-coloring of 
+$G$ by coloring $xy_i$ with $c_i$ and $xy_0$ with $\pi(xy_i)$, a contradiction.  
+
+\end{proof}
+
+
+
+%Before proving this result, we develop a tool that will useful throughout the book.
+
+%Suppose $G$ is a bipartite graph, say it has a $2$-coloring with colors red and blue.  Let $R \subseteq V(G)$ be the vertices colored red and
+%$B \subseteq V(G)$ the vertices colored red.  Then $R$ and $B$ are independent sets in $G$.  This situation is so common, we need special notation
+%to introduce bipartite graphs with the sets $R$ and $B$ already labeled, like so: let $G = (R,B)$ be a bipartite graph.\aaside{$G = (R,B)$}{}
+%A graph $G$ is $k$-regular if every vertex in $G$ has degree $k$. \aaside{$k$-regular}{} A $1$-regular graph is a \emph{matching}. \aaside{matching}{0.15in} If $H \subseteq G$ is a matching, then
+%$v \in V(G)$ is \emph{matched} in $H$ if $v$ is the endpoint of some edge in $H$.\aaside{matched}{0.1in}
+%
+%\begin{theorem}
+%Let $G = (R,B)$ be a bipartite graph.  If $\card{N_G(X)} \ge \card{X}$ for every $X \subseteq R$, then $G$ contains a matching $H$ that matches
+%every vertex of $R$.
+%\end{theorem}
+%\begin{proof}
+%Suppose the theorem does not hold.  Then we may pick a counterexample $G = (R,B)$ with $\size{G}$ as small as possible.  Surely, $\size{G} > 0$.
+%For any $uv \in E(G)$ with $u \in R$,, since a matching in $G-uv$ is also a matching in $G$, any matching in $G-uv$ must fail to match some vertex in $R$.
+%As $\size{G-uv} < \size{G}$, we may apply the theorem to $G-uv$ to conclude that there is $X_{uv} \subseteq R$ such that $\card{N_{G-uv}(X_{uv})} < \card{X_{uv}}$.
+%Since $\card{N_{G}(X_{uv})} \ge \card{X_{uv}}$, this means $v \not \in N_{G}(X_{uv}\setminus\set{u})$.
+%For every $v \in R$, the condition gives $\card{N_G(\set{v})} \ge \card{\set{v}} = 1$, so $d_G(v) \ge 1$.  If $d_G(v) = 1$ for every $v \in R$, then
+%$\card{N_G(R)} \ge \card{R}$ implies that $G$ contains a matching $H$ that matches
+%every vertex of $R$, a contradiction.  Hence we may pick $w \in R$ with $d_G(w) \ge 2$.  Let $wy, wz \in E(G)$.
+%Then $y \not \in N_{G}(X_{wy}\setminus\set{w})$ and $z \not \in N_{G}(X_{wz}\setminus\set{w})$
+%\end{proof}
+
+
+
+\section*{hardness}
+We now know that every graph $G$ can be edge colored with either $\Delta(G)$ or $\Delta(G) + 1$ colors.  So, edge coloring is basically trivial, right?
+Furtunately, no it isn't, the collection of graphs requiring $\Delta(G) + 1$ colors is very rich.  Another way to say this, is that it is a hard problem
+to decide whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors.  
+
+\begin{theorem}
+Deciding whether or not edge coloring a given graph $G$ requires $\Delta(G) + 1$ colors is hard supposing other things we think are hard are actually hard.
+\end{theorem}
+\begin{proof}
+We need a concise proof of this without having to introduce too much background.  Please submit a pull request on GitHub.
+\end{proof}
+
+\chapter*{vertex coloring, again}
+\section*{list coloring}
+\section*{online list coloring}
+\section*{kernel tools}
+\subsection*{degree again}
+\subsection*{maximum independent covers}
+\section*{polynomial tools}
+\subsection*{combinatorial nullstellensatz}
+\subsection*{coefficient formulae}
+\subsection*{a combinatorial interpretation}
+
+\chapter*{edge coloring, again}
+\section*{fans as a greedy strategy}
+\section*{acceptable paths}
+\section*{acceptable trees}
+\section*{edge list coloring}
+\subsection*{more kernel method}
+\subsection*{2-edge-coloring}
+\subsection*{improved degree theorem}
+\subsection*{a hint of quasiline and claw-free graphs}
+
+\chapter*{shuffle tool}
+\section*{destroying non-complete}
+\section*{shuffling with more rules}
+\section*{looking at the entire recoloring digraph}
+
+\chapter*{independent transversalls}
+\section*{randomly}
+\section*{Haxell's tool}
+\subsection*{triangles within triangles are neat}
+\section*{big maximum cliques intersect in simple ways}
+\section*{going lopsided}
+
+\chapter*{vertex transitive graphs}
+\section*{strong coloring}
+\section*{medium clique implies big clique}
+
+\chapter*{potential potential tool}
+\end{document}

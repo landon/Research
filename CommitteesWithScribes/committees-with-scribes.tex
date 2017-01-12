@@ -133,8 +133,7 @@ More succinctly, $K \subseteq P$ is a kernel for $(P,X,\sigma)$ just in case $C 
 whether or not a given oriented hypergraph has a kernel appears to be a hard problem (many known NP-hard problems are special cases of this).  But things are not hard for
 all oriented hypergraphs and you can build some tools by looking for useful structure.  For constructing kernels the notion of an \emph{induced oriented subhypergraph} will be indispensable.
 Let $\HH \DefinedAs (P,X,\sigma)$ be an oriented hypergraph.  If $A \subseteq P$, then the \emph{oriented subhypergraph of $\HH$ induced on $A$}, written $\HH[A]$ is the tuple 
-$(A, X\brackets{A}, \sigma)$ where $X\brackets{A}$ is the set of $C \in X$ where $C \subseteq A$ and we view $\sigma$ as restricted to $X\brackets{A}$.  To simplify notation, write 
-$\HH-x$ for $\HH\brackets{P\setminus\set{x}}$ when $x \in P$. 
+$(A, X\brackets{A}, \sigma)$ where $X\brackets{A}$ is the set of $C \in X$ where $C \subseteq A$ and we view $\sigma$ as restricted to $X\brackets{A}$.  
 An oriented hypergraph $\HH$ is \emph{kernel-perfect} if every induced oriented subhypergraph of $\HH$ has a kernel.  When $\HH \DefinedAs (P,X,\sigma)$, set $\card{\HH} \DefinedAs \card{P}$
 and $\size{\HH} \DefinedAs \card{X}$.
 
@@ -145,7 +144,8 @@ such that $\sigma(C) > 1$ for all $C \in X\brackets{P \setminus K}$, then $\HH$ 
 \begin{proof}
 Suppose for the moment that the lemma is false.  Go grab a counterexample $\HH \DefinedAs (P,X,\sigma)$ with $\card{\HH}$ as small as possible.
 Then $\HH$ contains no kernel by minimality of $\card{\HH}$; in particular $\card{\HH} > 0$. Now grab $K \subseteq P$ containing no committee of $\HH$ such that $\sigma(C) > 1$ for all $C \in X\brackets{P \setminus K}$.  Since $K$ contains no
-committee of $\HH$ and it isn't a kernel, we can grab $x \in P\setminus K$ so that $\sigma(C) \cap K = \emptyset$ for every $C \in X$ with $x \in C$.  Grab $x \in \sigma(C)$.  Since $\card{\HH - x} < \card{\HH}$ applying the lemma to $\HH -x$ gives a kernel $L \subseteq P \setminus\set{x}$ in $\HH-x$.
+committee of $\HH$ and it isn't a kernel, we can grab $x \in P\setminus K$ so that $\sigma(C) \cap K = \emptyset$ for every $C \in X$ with $x \in C$.  
+
 \end{proof}
 
 \end{document}

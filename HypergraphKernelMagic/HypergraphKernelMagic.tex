@@ -135,8 +135,10 @@
 \title{hypergraph kernel magic notes}
  \maketitle
 \section{Hypergraph orientations}
-Let $H = (V, E)$ be a hypergraph. An \emph{orientation} of $H$ is a function $q$ that assigns to each $e \in E$, a subset of $e$, that is $q(e) \subseteq e$. Given an orientation $q$ of $H$, the \emph{out-degree} of $v \in V$ is $d_q^+(v) \DefinedAs \card{\setb{e}{E}{v \in q(e)}}$.
-We say that and orientation $q$ of $H$ is \emph{kernel-perfect} if for all induced subhypergraphs $H' = (V', E')$ of $H$, there is $S \subseteq V'$ such that $S$ is independent and for each $v \in V' \setminus S$, there is $e \in E'$ with $e \cap S \ne \emptyset$ and $v \in q(e)$.  Such an $S$ is a \emph{kernel}.
+Let $H = (V, E)$ be a hypergraph. An \emph{orientation} of $H$ is a function $q$ that assigns to each $e \in E$, a subset of $e$, that is $q(e) \subseteq e$. 
+Given an orientation $q$ of $H$, the \emph{out-degree} of $v \in V$ is $d_q^+(v) \DefinedAs \card{\setb{e}{E}{v \in q(e)}}$.
+We say that an orientation $q$ of $H$ is \emph{kernel-perfect} if for all induced subhypergraphs $H' = (V', E')$ of $H$, there is $S \subseteq V'$ 
+such that $S$ is independent and for each $v \in V' \setminus S$, there is $e \in E'$ with $e \cap S \ne \emptyset$ and $v \in q(e)$.  Such an $S$ is a \emph{kernel}.
  
 
 \begin{lem}\label{HypergraphKernelLemma}
@@ -155,5 +157,11 @@ We say that and orientation $q$ of $H$ is \emph{kernel-perfect} if for all induc
 \begin{proof}
 	Suppose not and choose a counterexample $H = (V,E)$ with $q$ so as to minimize $|V|$.  Then every proper induced subhypergraph of $H$ has a kernel by minimality of $|V|$.  So, it must be that $H$ has no kernel.  In particular, $S$ is not a kernel of $H$ with $q$.  So, there is $v \in V \setminus S$ such that $v \not \in q(e)$ for every $e \in E$ with $v \in e$ and $e \cap S \ne \emptyset$.  Since $q(e) \ge 1$ for all $e \in E$ and $q(e) \ge 2$ for all $e \subseteq E\setminus S$, for each $e \in E$ with $v \in e$, we can choose $x_e \in q(e) \setminus \set{v}$.  Let $H' = H - \parens{\set{v} \cup \setbs{x_e}{e \in E \text{ with } v\in e}}$.  Then $H'$ has a kernel $A'$ by minimality of $|V|$.  We claim that $A \DefinedAs A' \cup \set{v}$ is a kernel in $H$.  	If $A$ was not independent, then there would be $e \in E$ with $v \in E$ and $e \subseteq A$.  But then $x_e \in A'$ which is impossible since $x_e$ is not in $H'$.  So, $A$ in independent.  So, $A$ is a kernel since $v \in A$ and $x_e \in q(e)$ for all $e$ containing $v$.  This contradiction completes the proof.
 \end{proof}
+
+\begin{thm}
+Let $H = (V, E)$ be a hypergraph and $\func{f}{V}{\IN}$.  If $M\subseteq V$ is independent and 
+\[\sum_{e \in E}\]
+then $H$ is $f$-paintable.
+\end{thm}
  
 \end{document}

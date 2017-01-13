@@ -72,7 +72,7 @@ For the size of $v$'s neighborhood $\card{N(v)}$, we write $d(v)$ and call this 
 The entire book concerns one simple task: we want to group the people of a given graph so that joined people are in different groups.
 With sufficiently many groups and no preferences about what the groupings should look like, this is easy, we just put each person in her own group.  
 Things get interesting when we ask how few different groups we can use.  We are definitely going to need at least zero groups and that will only do for the
-graph with no people at all.  Given one group, we can handle all graphs with no joins.  With two groups, we can do
+graph with no people at all.  Given one group, we can handle all graphs with no ropes.  With two groups, we can do
 any path and any cycle with an even number of people.  But, we can't handle a triangle or any other cycle with an odd number of people.
 In fact, odd cycles are really the only thing that will prevent us from using just two groups. 
 A graph $H$ is a \emph{subgraph} of a graph $G$, written $H \subseteq G$ if $P(H) \subseteq P(G)$ and $R(H) \subseteq R(G)$. \aaside{subgraph, $\subseteq$}{}
@@ -86,7 +86,7 @@ A graph is $2$-colorable just in case it contains no odd cycle.
 \end{theorem}
 \begin{proof}
 A graph containing an odd cycle clearly can't be $2$-colored.  For the other implication, suppose
-there is a graph that is not $2$-colorable and doesn't contain an odd cycle.  Then we may pick such a graph $G$ with $\card{G}$ as small as possible.
+there is a graph that is not $2$-colorable and doesn't contain an odd cycle.  Then we may pick such a graph $G$ with as few people as possible.
 Surely, $|G| > 0$, so we may pick $v \in P(G)$.  If $x, y \in N(v)$, then $x$ is not joined to $y$ since then $xyz$ would be an odd cycle.
 So we can construct a graph $H$ from $G$ by removing $v$ and identifying all of $N(v)$ to a new person $x_v$.  Any odd cycle
 in $H$ would contain $x_v$ and hence give rise to an odd cycle in $G$ passing through $v$.  So $H$ contains no odd cycle. Since $|H| < |G|$, 
@@ -111,7 +111,7 @@ The simplest thing we can do is give each person a different colored shirt.
 If $G$ is a graph, then $\chi(G) \le \card{G}$.
 \end{theorem}
 The only graphs that attain the upper bound in Theorem \ref{WorstUpperBound} are the \emph{complete} graphs; those in which
-any two people are joined. \aaside{complete}{}
+any two people are joined by a rope. \aaside{complete}{}
 We can usually do much better by just arbitrarily putting colored shirts on people, reusing colors when we can.  \aaside{maximum degree}{+0.0in}\aaside{$\Delta(G)$}{+0.15in}The \emph{maximum degree} $\Delta(G)$ of a graph $G$ is the largest degree
 of any person in $G$; that is 
 \[\Delta(G) \DefinedAs \max_{v \in V(G)} d(v).\]
@@ -137,7 +137,7 @@ If $G$ is a graph, then $\chi(G) \ge \omega(G)$.
 \end{theorem}
 
 A group of people $S$ in a graph $G$ is \emph{independent} if the people in $S$ are pairwise non-joined.\aaside{independent}{}  
-The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of people in a largest independent set in $G$.\aaside{$\alpha(G)$}{}
+The \emph{independence number} of a graph $G$, written $\alpha(G)$, is the number of people in a largest independent group in $G$.\aaside{$\alpha(G)$}{}
 
 \begin{theorem}
 If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\chi(G) \le \Delta(G)$.
@@ -146,7 +146,7 @@ If $G$ is a graph with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$, then $\c
 \begin{proof}
 Suppose there is a graph $G$ with $\Delta(G) \ge 3$ and $\omega(G) \le \Delta(G)$ that is not $\Delta(G)$-colorable.  
 Then we may pick such a graph $G$ with as few people as possible.  Let $S$ be 
-a maximal independent set in $G$.  Since $S$ is maximal, every person in $G-S$ has a neighbor in $S$, so $\Delta(G) > \Delta(G-S)$.
+a maximal independent group in $G$.  Since $S$ is maximal, every person in $G-S$ has a neighbor in $S$, so $\Delta(G) > \Delta(G-S)$.
 If red is an unused color in a $\chi(G-S)$-coloring of $G-S$, then by coloring all people in $S$ red we get a $\parens{\chi(G-S)+1}$-coloring of $G$.  
 So, $\Delta(G) + 1 \le \chi(G) \le \chi(G-S) + 1$. We conclude $\chi(G-S) > \Delta(G - S)$ and thus $\Delta(G) = \chi(G-S) = \Delta(G-S) + 1$ by Theorem \ref{SecondWorstUpperBound}.
 Since $\card{G-S} < \card{G}$, applying the theorem to $G-S$ shows that $\Delta(G-S) < 3$ or $\Delta(G -S) < \omega(G - S)$.  

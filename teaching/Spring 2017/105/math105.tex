@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{epigraph}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{xspace}
+\usepackage{termcal}
+\usepackage{color}
+\usepackage{fmtcount}
+
+\makeatletter
+\DeclareRobustCommand{\maybefakesc}[1]{%
+  \ifnum\pdfstrcmp{\f@series}{\bfdefault}=\z@
+    {\fontsize{\dimexpr0.8\dimexpr\f@size pt\relax}{0}\selectfont\uppercase{#1}}%
+  \else
+    \textsc{#1}%
+  \fi
+}
+\newcommand\AM{\,\maybefakesc{am}\xspace}
+\newcommand\PM{\,\maybefakesc{pm}\xspace}
+\makeatother
+
+\newcommand{\MWFClass}{%
+\calday[Monday]{\classday}
+\skipday % Tuesday (no class)
+\calday[Wednesday]{\classday}
+\skipday % Thursday (no class)
+\calday[Friday]{\classday}
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\Holiday}[2]{%
+\options{#1}{\noclassday}
+\caltext{#1}{#2}
+}
+
+
+\pagestyle{plain}
+\title{Math 105: Preparation for College Mathematics\\ \bigskip\small{Spring 2017}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{tabular}{r l}
+\textbf{instructor:}& landon rabern\\
+\textbf{email:}& \href{mailto:lrabern@fandm.edu}{\nolinkurl{lrabern@fandm.edu}}\\
+\textbf{class webpage:}& \href{http://bit.ly/precalculus2017}{\nolinkurl{bit.ly/precalculus2017}}\\
+\textbf{class meetings:}& 8:00\AM--8:50\AM MWF in STA 215 (lecture / group work)\\
+& 8:00\AM--8:50\AM T in STA 215 (practice)\\
+\textbf{office hours:}& 9:00\AM--9:59\AM MWF in STA 320\\
+\textbf{textbook:}& \textit{Pre-Calculus, 6E}, by Stewart, Redlin, and Watson\\
+\end{tabular}
+
+\section*{What is this class about?}
+We will learn all about numbers as well as various machines that take numbers as input and output other numbers.
+We will encounter many sorts of numbers, \emph{rational} ones, \emph{irrational} ones, \emph{transcendental} ones and even \emph{imaginary} ones. 
+The machines that operate on our numbers we call \emph{functions}, there are a few basic types of such machines: \emph{polynomials}, \emph{exponentials} and \emph{trigonometric} functions.
+We will see how to break these machines down into the smaller machines they are made out of and how to make machines that undo other machines' work.  Finally, we will 
+imagine how these various machines could be used by our engineers to tame the natural world.
+\section*{Homework} 
+\epigraph{I can only show you the door. You're the one that has to walk through it.}{}
+To achieve fluency in this subject, you will need to immerse yourself in the material.  
+Working tons of problems is a great way to do this.  How many problems?  
+My recommendation is to work problems of a given type until they become easy for you.
+
+I will put lists of practice problems on the class webpage. 
+To encourage you to make working problems a regular activity, you will need to maintain a journal containing your practice work.
+These journals will be inspected periodically.  There are many ways you could structure such a journal, we will go over some
+basic guidelines in class.
+
+On Tuesdays we practice.  There are many ways we could structure practice time, I have some ideas on what works well, but the practice is
+entirely for your benefit, so you will determine what works best.
+
+\section*{Computing devices}
+We will not need calculators, computers or brain implants for this class.  
+
+\section*{Exams}
+There will be two in-class exams and then a final exam during finals week. 
+The purpose of the exams is to test your understanding of, and ability to reason about, the mathematical concepts. 
+Since you can use your textbook as well as any other written material, no memorization is required; however, 
+these exams occur in a finite time period, so rapid recall of facts will serve you well. 
+
+\section*{Graded work breakdown}
+\begin{tabular}{r | r | l}
+what & \% & when \\
+\hline
+journal & 15 & random times \\
+participation & 15 & always\\
+exam \#1 & 15 & TBA, in class \\
+exam \#2 & 25 & TBA, in class \\
+final exam & 30 & TBA, in finals week \\
+\end{tabular}
+
+\section*{Help}
+If you need help or just want to know more about something, please come to my scheduled office hours or set up another time to meet. 
+In addition to my office hours, there are several undergraduate mathematics teaching assistants who hold regular hours.
+
+\section*{Attendance}
+If you do not attend class regularly, it is less likely that you will learn.
+\end{document}

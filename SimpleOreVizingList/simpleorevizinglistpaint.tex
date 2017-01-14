@@ -241,4 +241,23 @@ Let $G$ be a directed graph and $x_1x_2 \in E(G)$ such that $d^-(x_i) = 1$ for a
 \[EE(G + x_1y + x_2y)-EO(G + x_1y + x_2y) = EE(G) - EO(G).\]
 \end{lem}
 
+\section{Using Minimality}
+
+\begin{defn}
+A graph $A$ is a \emph{child} of a graph $G$ if there exists $H \lhd G$ and an epimorphism $f\colon H \surj A$.  
+\end{defn}
+
+Note that the child-of relation is a strict partial order on the set of (finite simple) graphs $\fancy{G}$.  We call this the \emph{child order} on $\fancy{G}$ and denote it by `$\prec$'.
+
+\begin{lem}\label{well-founded}
+The ordering $\prec$ is well-founded on $\fancy{G}$.  That is, every non-empty subset of $\fancy{G}$ has a minimal element under $\prec$.
+\end{lem}
+\begin{proof}
+Let $\fancy{T}$ be a non-empty subset of $\fancy{G}$.  Pick $G \in \fancy{T}$ with the minimum number of vertices.  Since any child of $G$ must have fewer vertices, we see that $G$ is minimal in $\fancy{T}$ with respect to $\prec$.
+\end{proof}
+
+\begin{defn}
+Let $\fancy{T}$ be a collection of graphs.  A minimal graph in $\fancy{T}$ under the child order is called a \emph{$\fancy{T}$-mule}.
+\end{defn}
+
 \end{document} 

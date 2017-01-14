@@ -236,7 +236,7 @@ Combine Lemma \ref{LBound} with Lemma \ref{QuaBound} and the fact that $\card{\H
 \end{proof}
 
 \section{Further Reducibility Lemmas}
-\begin{lem}
+\begin{lem}\label{RootLemma}
 Let $G$ be a directed graph and $x_1x_2 \in E(G)$ such that $d^-(x_i) = 1$ for all $i\in \irange{2}$.  If $y \in V(G) \setminus \set{x_1,x_2}$, then
 \[EE(G + x_1y + x_2y)-EO(G + x_1y + x_2y) = EE(G) - EO(G).\]
 \end{lem}
@@ -259,5 +259,20 @@ Let $\fancy{T}$ be a non-empty subset of $\fancy{G}$.  Pick $G \in \fancy{T}$ wi
 \begin{defn}
 Let $\fancy{T}$ be a collection of graphs.  A minimal graph in $\fancy{T}$ under the child order is called a \emph{$\fancy{T}$-mule}.
 \end{defn}
+
+Let $Q_k$ be the collection of graphs $G$ with $\AT(G) = \Delta(G) = k$ such that no two vertices of degree $k$ are adjacent.
+We'd like to show that $Q_k = \emptyset$ for $k \ge 6$.  If not, then a $Q_k$-mule exists.
+
+\begin{lem}
+Let $G$ be a $Q_k$-mule.  If $x$ is a $k$-vertex, then $x$ has at most one neighbor in any $K_{k-1} \subseteq V(\L(G))$.
+\end{lem}
+\begin{proof}
+Suppose $x$ is $k$-vertex and $A \subseteq V(\L(G))$ is a $K_{k-1}$ in which $x$ has at least two neighbors.  
+Now $\set{x} \cup A$ cannot be a $K_k$ since then 
+\end{proof}
+
+\begin{lem}
+Let $G$ be a $Q_k$-mule.
+\end{lem}
 
 \end{document} 

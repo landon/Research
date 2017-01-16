@@ -60,16 +60,16 @@
 \newcommand{\brackets}[1]{\left[ #1 \right]}
 \newcommand{\DefinedAs}{\mathrel{\mathop:}=}
 
-\newcommand{\mic}{\operatorname{mic}}
-\newcommand{\AT}{\operatorname{AT}}
-\newcommand{\col}{\operatorname{col}}
-\newcommand{\ch}{\operatorname{ch}}
-\newcommand{\type}{\operatorname{type}}
-\newcommand{\nonsep}{\bar{S}}
-\newcommand{\type}{\operatorname{type}}
-\def\adj{\leftrightarrow}
-\def\nonadj{\not\!\leftrightarrow}
-\newcommand{\gcd}{\operatorname{gcd}}
+%\newcommand{\mic}{\operatorname{mic}}
+%\newcommand{\AT}{\operatorname{AT}}
+%\newcommand{\col}{\operatorname{col}}
+%\newcommand{\ch}{\operatorname{ch}}
+%\newcommand{\type}{\operatorname{type}}
+%\newcommand{\nonsep}{\bar{S}}
+%\newcommand{\type}{\operatorname{type}}
+%\def\adj{\leftrightarrow}
+%\def\nonadj{\not\!\leftrightarrow}
+%\newcommand{\gcd}{\operatorname{gcd}}
 
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
   \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
@@ -82,13 +82,13 @@
 \def\C{\fancy{C}}
 \def\A{\fancy{A}}
 
-\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
-\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
-\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+%\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+%\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+%\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
-\def\gcd{\bigtriangledown}
-\def\lcm{\bigtriangleup}
-\def\no{\natural}
+%\def\gcd{\bigtriangledown}
+%\def\lcm{\bigtriangleup}
+%\def\no{\natural}
 
 
 \usepackage{tikz}
@@ -114,51 +114,96 @@
 {   \Bond{#1}{#2}{0.7071mm}{black!25}{black!25!black}{10}
 }
 
-\title{teaching philosophy}
-\author{landon rabern}
+\title{Teaching Philosophy}
+\author{Landon Rabern}
+\date{}
 \begin{document}
 \maketitle
-I approach teaching as an ongoing engagement with a core problem: how can one enable students to balance the rigorous and 
-sometimes repetitive work that is necessary to achieve thorough understanding, with motivation and enjoyment? 
-Further, how can I maximize students' retention of material beyond the context of an upcoming exam? 
-I seek to transmit to my students, who will come into the classroom with a range of interests and ability levels
-depending on the course, positive experiences that affirm why mathematics matters.
+Teaching addresses a core question: How can I help students to balance
+their own enjoyment and motivation against the rigorous and sometimes repetitive
+work needed to understand mathematics?
+Further, how can I help them retain the material beyond the next
+exam?  My students enter the classroom with a range of interests and
+ability levels.  For each of them, I seek to create positive experiences that
+affirm why mathematics matters.
 
-When I work with students in pre-calculus or calculus, I notice that it is more likely for students to enter the course with negative feelings about math. 
-In addition to communicating content, I consider that part of my function is to help them accumulate positive associations with the subject. 
-I find that one effective way of achieving this involves delineating math as such from formalistic tools we have developed to teach and communicate. 
-For example, perhaps students shut down when they encounter set builder notation, integral signs, the Leibniz derivative notation, etc. 
-We might liken this to students who perceive that they dread writing, when in fact they dread the tool of Microsoft Word. As an educator, 
-I search out opportunities to separate the tools from the topics so that students can simultaneously develop respect for and interest in mathematical principles, 
-while together we investigate friendlier tools. In order to excite some passion about concepts, I explore applications that I hope will resonate with the group. 
-In a multivariable calculus class, for example, 3D games provide an ideal backdrop for a discussion of Euler angles and their susceptibility to gimbal lock. 
-This can lead organically into the topic of quaternions and their advantages in performing smooth 3D rotations. Introducing applications like these can, 
-I have found, provoke drastic changes in student attitudes that enable students to embrace the rigor of the discipline with more curiosity. 
+Students starting pre-calculus or calculus 
+are more likely to already have negative feelings about math. 
+So, in addition to communicating content, I need to help them build
+positive associations with the subject. 
+One effective way I do this is by distinguishing the actual mathematics from 
+the formal tools we use to teach and communicate it. 
+For example, students may shut down when they encounter set builder notation,
+integral signs, the Leibniz derivative notation, etc. 
+Compare this with students who think that they dread writing, when in
+fact they really dread using Microsoft Word (a tool, not inherent to writing).
+As an educator, 
+I search for opportunities to separate tools from topics, so that
+students grow their respect for and interest in mathematical principles, while
+together we investigate friendlier tools. 
 
-My background in industry also informs my approach in classroom, in particular my emphasis on group work and peer review. As a Senior Software Engineer and Scientific Programmer,
-I've mentored many junior software engineers. I've learned that, at least in this realm, the single most effective way to help an individual to improve is through communication to 
-and with a group, with a clear shared goal in mind. For example, how can we as a team write code that is the purest logical expression of the idea/algorithm in the given language? 
-How can each individual contribute maximally to this shared goal? At Wall Street On Demand in Boulder, we initiated code reviews, during which a small subset of the 
-engineers -- together -- reviewed one another's code line by line. This tedious-sounding practice was extremely effective in improving code and engineer quality, 
-and produced a positive ethos of teamwork. Inspired by these results, I tried a similar idea in a graduate graph theory course at Arizona State University. 
-A student would present a homework solution on the board and the rest of the class would give feedback. To prevent progress being quashed by negative feedback, 
-we took the ``Yes and...'' approach espoused by theatrical improvisation, wherein feedback must build on the
-good parts of the solution instead of just pointing out the bad. While students were initially shy, I found that by the end of the semester they were better 
-able to articulate their own reasoning, communicate with others, and in general had a greater sense of pride and focus toward finding the best possible collective solution. 
+To excite passion about concepts, I explore applications that I hope will
+resonate with the group.  In a multivariable calculus class, for example, 3D
+games provide an ideal backdrop for a discussion of euler angles and their
+susceptibility to gimbal lock (a loss of a degree of freedom in a
+three-dimensional mechanism when axes of two of the three gimbals become
+parallel).  This can lead naturally into studying
+quaternions and their advantages in performing smooth 3D rotations. 
+Seeing applications like these can lead students to dramatically change their
+attitudes, and help them to embrace the rigor of the discipline, with more
+curiosity. 
 
-Each time I teach a class of any level, I like to experiment with classroom mechanics such as the balance between working alone and in groups, moving toward 
-best possible practices. Last year, I had students keep a \emph{Practice Journal} in which they worked suggested exercises. I gave them a large list of exercises of 
-each type and instructed them to keep working problems in their journals until they became easy, without giving them further guidelines. I indicated that I would 
-be collecting journals for inspection every few weeks, so as to gain greater insight into their individual processes and progress. I learned that it proved to be 
-unfeasible to collect and review journals as often as I'd planned, and initially thought that the journal idea was a total failure. However, at the end of the course, 
-a large fraction of the students remarked on the efficacy of this requirement.  Allowing students ownership over the number of problems seemed to inspire more rigor and 
-repetition than I would have asked of them. As with the strategy of peer review, I continually look for ways in which I can be a facilitator of students' self-motivation, 
-which I believe is essential to achieving solid conceptual understanding. 
+My background in industry also informs my approach in the classroom, in particular
+my emphasis on group work and peer review. As a Senior Software Engineer and
+Scientific Programmer, I've mentored many junior software engineers. 
+%I've learned that, at least in this realm, 
+The most effective way I've seen to help an individual improve is through
+communicating to and with a group, with a clear shared goal in mind. 
+For example, how can we as a team write code that is the purest logical
+expression of the idea/algorithm in the given language? 
+How can each individual contribute the most to this shared goal? 
+At Wall Street On Demand in Boulder, we initiated code reviews: 
+a small subset of the engineers sat together and reviewed one another's code,
+line by line. This tedious-sounding practice was extremely effective at
+improving both code and engineer quality, 
+and it also produced a positive ethos of teamwork. 
 
-Beyond these mechanics, I bring a great love of and enthusiasm for mathematics to the classroom. Knowing that my path within the discipline is unique to me, 
+Inspired by the results of the code reviews, I tried a similar idea in a
+graduate graph theory course at Arizona State University. 
+A student would present a homework solution on the board and the rest of the
+class would give feedback. 
+To foster a positive atmosphere, we took the ``Yes and...'' approach espoused
+by theatrical improvisation: all feedback must build on the
+good parts of the solution instead of just pointing out the bad. 
+Students were initially shy, but by the end of the semester they could better 
+articulate their own reasoning and communicate with others, and they also
+had a greater sense of pride and focus on finding the best possible
+collective solution. 
+
+When I teach a class at any level, I like to experiment with classroom
+mechanics such as the balance between working alone and in groups. 
+%moving toward best possible practices. 
+Last year, I had students keep a \emph{Practice Journal} in which they worked
+suggested exercises. I gave them a large list of exercises of 
+each type and simply instructed them to keep working problems in their journals
+until they became easy. I said that I would 
+be collecting journals for inspection every few weeks, to better understand
+their individual processes and progress.  It turned out to be
+unfeasible to collect and review journals this often, and initially I thought
+that the journal idea was a total failure. But at the end of the course, 
+a large fraction of the students remarked on the efficacy of this requirement. 
+Allowing students ownership over the number of problems had inspired more rigor
+and repetition than I would have asked of them. As with the peer review, I
+continually look for ways that I can facilitate students' self-motivation, 
+which is essential for them to deeply understand the concepts.
+
+Beyond these mechanics, I bring to the classroom a great love of and enthusiasm
+for mathematics. Because my path within the discipline is unique to me, 
 I seek to mentor the infinite possible paths that my individual students might take, from a standpoint of interest in and respect for their work. 
-I aim to balance the rigor that is necessary for mastery of the discipline with the pleasure that will motivate students to think beyond the confines of a single class. 
-Though practicing rigor is not always comfortable, I endeavor to communicate to my students that the payoff is worth it, because the work opens up crucial windows into perceiving 
+I aim to balance rigor, which is necessary for mastery of the discipline, with
+pleasure, which will motivate students to think beyond a single course. 
+Though rigor is often uncomfortable, I want my students to see that the payoff
+is worth it, because the work opens up crucial windows into perceiving 
 the structure of the world. 
 
 \end{document}

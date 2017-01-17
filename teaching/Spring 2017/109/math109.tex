@@ -74,38 +74,23 @@
 
 \bigskip
 
-\section*{Why Calculus?}
-For the purposes of this class, assume our universe runs on a computer with finite memory.  One way this could work is for both space and time to be \emph{discrete}; that is, there is a smallest possible distance $\Delta d$ between any two objects and there is a smallest unit of time $\Delta t$.  Let's work with a simple model where the universe is broken up into little cubes with side length $\Delta d$.  Objects (or parts of objects) must be located within some cube, there is no in between and in one time step an object can only move to an adjacent cube.  
-
-Ok, so that's our universe.  Say you throw a rock straight up and want to know when it will come back down so you can look up from your phone and catch it.  If you threw the rock up with speed $v$ (in units of $\Delta d$ per $\Delta t$) and gravity increases its downward speed at a rate of $a$ (in units of $\Delta d$ per $\Delta t$ per $\Delta t$), then with a little work we can compute the equation for its height above the ground at time $t$ as:
-\[h(t) = vt - \frac{a}{2}t^2 + \frac{a}{2}t\Delta t.\]
-Setting $h(t)$ to whatever height you want to catch the rock at and solving for $t$ will give you your answer.  But your answer will contain $\Delta t$.  There are a few of problems with this:
-\begin{enumerate}
-	\itemsep 0em 
-	\item we don't know the value of $\Delta t$,
-	\item if we want to compute more complicated things like planetary orbits and rocket trajectories, these extra terms with $\Delta t$ will proliferate making a giant complicated mess,
-	\item often the mess in (2) will lead to equations that we cannot solve exactly.
-\end{enumerate}
-But, we really want a usable way to compute rocket trajectories, so what can we do?  Well, fortunately we appear to live in a universe where $\Delta t$ is very small, so we can get very accurate approximations by replacing all $\Delta t$'s with some small value like a nanosecond.  That solves problem (1). To solve problems (2) and (3), we need to completely get rid of the $\Delta t$ terms.  In the 17th century, this problem was solved by the inventors of Calculus by using \emph{infinitesimals} which are new numbers that are bigger than zero but smaller than every positive real number.  While these seemed to work, they were not completely understood which led to mistakes in their application.  It wasn't until the 20th century that mathematicians gave a complete account of infinitesimals.  In the intervening years the concept of a \emph{limit} was introduced to replace the use of infinitesimals in getting rid of the $\Delta t$ terms.  Using limits we get an approximation to our function $h$ that solves (2) and (3):
-\[h(t) = vt - \frac{a}{2}t^2 + \frac{a}{2}t\Delta t \approx vt - \frac{a}{2}t^2.\]
-In effect, we have taken $\Delta t$ down to zero and we are modeling our discrete universe by a \emph{continuous} universe.  Calculus is the collection of tools we need to work with these continuous models.
-
+\section*{What is this class about?}
+We will learn all about numbers as well as various machines that take numbers as input and output other numbers.
+The machines that operate on our numbers we call \emph{functions}, there are a few basic types of such machines: \emph{polynomials}, \emph{exponentials} and \emph{trigonometric} functions.
+We will learn a systematic way to draw diagrams of these machines' operation.  Some machines are easier to work with than others and our diagrams give us ways to talk about this.  For
+example, if a machines' diagram can be drawn without lifting our pencil, then we call the machine \emph{continuous}.  More specific features of the diagrams such as peaks and valleys will turn out
+to be useful for solving real-world optimization problems.  In this class, we develop a toolkit for identifying and working with such features.
 \section*{Homework} 
 \epigraph{I can only show you the door. You're the one that has to walk through it.}{}
 To achieve fluency in this subject, you will need to immerse yourself in the material.  
 Working tons of problems is a great way to do this.  How many problems?  
 My recommendation is to work problems of a given type until they become easy for you.
-
-I will put lists of practice problems on the class webpage. 
+\section*{Journal} 
 To encourage you to make working problems a regular activity, you will need to maintain a journal containing your practice work.
-These journals will be inspected periodically.  There are many ways you could structure such a journal, we will go over some
-basic guidelines in class.
-
+These journals will be inspected periodically.  In addition to problems, your journal will contain your summaries of each week's video.
+\section*{Practice}
 On Thursdays we practice.  There are many ways we could structure practice time, I have some ideas on what works well, but the practice is
 entirely for your benefit, so you will determine what works best.
-
-\section*{Computing devices}
-We will not need calculators, computers or brain implants for this class.  
 
 \section*{Exams}
 There will be two in-class exams and then a final exam during finals week. 

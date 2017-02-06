@@ -43,6 +43,8 @@
 \newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
 \newtheorem*{Reed}{Reed's Conjecture}
 \newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+\newtheorem*{ReedDecomp}{Reed's Decomposition}
+\newtheorem*{FajtlowiczDecomp}{Fajtlowicz's Decomposition}
 
 
 \theoremstyle{definition}
@@ -136,6 +138,79 @@ The $d_0$-choosable graphs were classified by Borodin \cite{borodin1977criterion
 graphs whose every block is either complete or an odd cycle (a connected such graph is a \emph{Gallai tree}).  Classifying the $d_r$-choosable graphs for any $r \ge 1$ appears
 to be a hard problem.  However, we can get useful sufficient conditions for a graph to be $d_1$-choosable.  For example, all of the graphs here are $d_1$-choosable (the vertex color indicates
 components of the complement): \url{https://landon.github.io/graphdata/borodinkostochka/offline/index.html}
+
+\section{Decompositions}
+\subsection{Reed's decomposition}
+In \cite{reed1999strengthening}, Reed proved the Borodin-Kostochka conjecture for graphs $G$ with $\Delta(G) \ge 10^{14}$.  A piece of that proof was a decomposition of $G$
+into dense chunks and one sparse chunk that also works for smaller $\Delta(G)$.  The following tight form of this decomposition is proved in \cite{denseneighborhoods}.
+Let $\CC_t(G)$ be the maximal cliques in $G$ having at least $t$ vertices.
+
+\begin{ReedDecomp}
+Suppose $G$ is a graph with $\Delta(G) \ge 8$ that contains no $K_{\Delta(G)}$ and has no $d_1$-choosable induced sugraph. If
+$\frac{\Delta(G) + 5}{2} \le t \le \Delta(G) - 1$, then $\bigcup \CC_t(G)$ can be
+partitioned into sets $D_1, \ldots, D_r$ such that for each $i \in \irange{r}$
+at least one of the following holds:
+\begin{enumerate}
+  \item $D_i = C_i \in \CC_t(G)$,
+  \item $D_i = C_i \cup \set{x_i}$ where $C_i \in \CC_t(G)$ and $\card{N(x_i) \cap C_i} \geq t-1$.
+\end{enumerate}
+\end{ReedDecomp}
+
+\subsection{Fajtlowicz's decomposition}
+In \cite{fajtlowicz1984independence}, Fajtlowicz proved that every graph has $\alpha(G) \ge \frac{2\card{G}}{\omega(G) + \Delta(G) + 1}$.  The proof of this result
+gives a decomposition which we state in the special case needed for the Borodin-Kostochka conjecture.
+
+\begin{FajtlowiczDecomp}
+Suppose $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$.  Then $V(G)$ can be partitioned into sets $M, T,$ and $K$ such that
+\begin{enumerate}
+\item $M$ contains a maximum independent set $I$ of $G$; and
+\item each $v \in T$ has $d_G(v) = \Delta(G)$, two neighbors in $I$ and zero neighbors in $M\setminus I$; and
+\item $K$ can be covered by $\alpha(G)$ (or fewer) cliques; and
+\item each $v \in K$ has exactly one neighbor in $I$ and at most one neighbor in $M\setminus I$ (none if $d_G(v) < \Delta(G))$; and
+\item the vertices in $M \setminus I$ can be ordered $v_1, \ldots, v_r$ such that for $i \in \irange{r}$, either $v_i$ has at least three neighbors in $I \cup \set{v_1, \ldots, v_{i-1}}$
+or $d_G(v_i) < \Delta(G)$ and $v_i$ has at least two neighbors in $I \cup \set{v_1, \ldots, v_{i-1}}$.
+\end{enumerate}
+\end{FajtlowiczDecomp}
+
+\section{Properties of minimum counterexamples}
+In \cite{cranstonrabernapriori} Cranston and R. used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
+of a minimum counterexample to the Borodin-Kostochka conjecture.  Almost all of the proofs there (specifically, the proofs only involving edge addition and not vertex set contraction)
+work for minimum counterexamples within a given collection of graphs that is closed under taking induced subgraphs and adding edges.  Call such a collection of graphs \emph{permissible}.
+For example, the following improves a lemma Reed used in his proof \cite{reed1999strengthening}.
+
+\begin{lem}
+Let $\A$ be a permissible collection of graphs for which the Borodin-Kostochka conjecture does not hold.  Let $G \in \A$ be a counterexample with the minimum number of 
+vertices (of graphs in $\A$). 
+\begin{enumerate}
+\item If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$; and
+\item Let $A$ and $B$ be disjoint subgraphs of $G$ with $\card{A} + \card{B} = \Delta(G)$ such that $\card{A},\card{B} \ge 4$.  If $G$ contains all edges between $A$ and $B$,
+then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
+\end{enumerate}
+
+\end{lem}
+
+\section{Counterexamples have some sparse neighborhoods}
+In \cite{denseneighborhoods}, R. showed that any counterexample to the Borodin-Kostochka conjecture must some sparse neighborhoods and large 
+independence number (increasing with $\Delta(G)$).  For example,
+\begin{lem}
+If $G$ is a counterexample to the Borodin-Kostochka conjecture, then
+\begin{enumerate}
+\item there exists $v \in V(G)$ such that $v$ is not contained in any clique with at least $\frac23\Delta(G) + 2$ vertices; and
+\item there exists $v \in V(G)$ such that $G[N(v)]$ has average degree at most $\frac23\Delta(G) + 3$; and
+\item $\alpha(G) \ge \frac{\Delta(G)}{4}$; and 
+\item $\card{G} \ge 16\Delta(G)^2 - 528\Delta(G) + 3527$.
+\end{enumerate}
+\end{lem}
+
+\section{Results from kernel methods}
+In \cite{KernelMagic}, Kierstead and R. proved a general lemma that allows the user to get list colorings for free from large independent sets.  Specialized the the Borodin-Kostochka conjecture,
+this becomes.
+
+\begin{KernelMagic}
+Suppose $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$.  For every induced subgraph $H$ of $G$ and independent set $I$ in $H$, we have
+\[\sum_{v \in V(I)} d_H(v) < \sum_{v \in V(H)} \Delta(G) + 2 - d_G(v).\]
+\end{KernelMagic}
+
 
 \section{Claw-free graphs}
 In \cite{cranstonrabernclaw}, Cranston and R. proved the Borodin-Kostochka conjecture for claw-free graphs using some of the $d_1$-choosable graphs in Section \ref{d1choosable} 

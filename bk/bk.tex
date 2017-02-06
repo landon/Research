@@ -117,14 +117,29 @@
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
-\title{}
+\title{notes on the Borodin-Kostochka conjecture}
 \author{}
 
 \begin{document}
 \maketitle
-A \emph{graph} is a collection of dots we call \emph{vertices} some of which are connected by curves we call \emph{edges}. 
-The relative location of the dots and the shape of the curves are not relevant, we are only concerned with whether or not a given
-pair of dots is connected by a curve.  Edges can be \emph{weak} or \emph{strong}.  Our goal is to assign each vertex two colors so that 
-each weak edge sees at least three colors and each strong edge sees four colors.
 
+\section{Introduction}
+The goal here is to prove Borodin and Kostochka's conjecture from 1977.  If proving the full conjecture is unfeasable, we aim to prove the conjecture for large classes of graphs.
+\begin{conjecture}[Borodin and Kostochka \cite{borodin1977upper}]
+Every graph $G$ with $\Delta(G) \ge 9$ satisfies $\chi(G) \le \max\set{\omega(G), \Delta(G) - 1}$.
+\end{conjecture}
+
+\section{Excluded induced subgraphs by $d_1$-choosability}\label{d1choosable}
+A graph $G$ is \emph{$d_r$-choosable} if $G$ can be $L$-colored from every list assingment $L$ with $\card{L(v)} \ge d_G(v) - r$ for all $v \in V(G)$.
+Every graph is $d_{-1}$-choosable.  
+The $d_0$-choosable graphs were classified by Borodin \cite{borodin1977criterion} and independently by Erd\H{o}s, Rubin, and Taylor \cite{erdos1979choosability} as those
+graphs whose every block is either complete or an odd cycle (a connected such graph is a \emph{Gallai tree}).  Classifying the $d_r$-choosable graphs for any $r \ge 1$ appears
+to be a hard problem.  However, we can get useful sufficient conditions for a graph to be $d_1$-choosable.  For example, all of the graphs here are $d_1$-choosable (the vertex color indicates
+components of the complement): \url{https://landon.github.io/graphdata/borodinkostochka/offline/index.html}
+
+\section{Claw-free graphs}
+In \cite{cranstonrabernclaw}, Cranston and R. proved the Borodin-Kostochka conjecture for claw-free graphs using some of the $d_1$-choosable graphs in Section \ref{d1choosable} 
+combined with the structure theorem for quasi-line graphs of Chudnovsky and Seymour \cite{chudnovsky2005structure}.
+\bibliographystyle{plain}
+\bibliography{GraphColoring1}
 \end{document} 

@@ -37,7 +37,7 @@
 \newreptheorem{cor}{Corollary}
 \newtheorem{prob}[thm]{Problem}
 
-\newtheorem*{KernelLemma}{Kernel Lemma}
+\newtheorem*{KernelMagic}{Kernel Magic}
 \newtheorem*{MainTheorem}{Main Theorem}
 \newtheorem*{BK}{Borodin-Kostochka Conjecture}
 \newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
@@ -171,6 +171,16 @@ Suppose $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$.  Then $V(G)$ 
 or $d_G(v_i) < \Delta(G)$ and $v_i$ has at least two neighbors in $I \cup \set{v_1, \ldots, v_{i-1}}$.
 \end{enumerate}
 \end{FajtlowiczDecomp}
+\begin{proof}
+Let $I$ be a maximum independent set in $G$.  Construct a maximal length sequence $I = M_0 \subsetneq M_1 \subsetneq \cdots \subsetneq M_r$ such that for $j>0$, 
+\begin{itemize}
+\item every $v \in M_j$ with $d_G(v) = \Delta(G)$ either has at least three neighbors in $M_{j-1}$ or at least two neighbors in $M_{j-1} \setminus I$; and
+\item every $v \in M_j$ with $d_G(v) = \Delta(G) - 1$ either has at least two neighbors in $M_{j-1}$ or at least one neighbor in $M_{j-1} \setminus I$.
+\end{itemize}
+Now let $M = M_r$, let $T$ be the vertices in $V(G) \setminus M$ with exactly one neighbor in $I$ and let $K$ be the vertices in $V(G) \setminus M$ with exactly two neighbors in $I$.
+The decomposition has the properties 1,2,4 and 5 since the sequence $M_0 \subsetneq M_1 \subsetneq \cdots \subsetneq M_r$ was chosen to be maximal length.  Property 3 follows since
+for each $v \in I$, the set of $x \in X$ adjacent to $v$ must be a clique for otherwise we could get an independent set larger than $I$.
+\end{proof}
 
 \section{Properties of minimum counterexamples}
 In \cite{cranstonrabernapriori} Cranston and R. used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
@@ -189,7 +199,7 @@ then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
 
 \end{lem}
 
-\section{Counterexamples have some sparse neighborhoods}
+\section{Counterexamples have some sparse neighborhoods}\label{sparseneighborhoods}
 In \cite{denseneighborhoods}, R. showed that any counterexample to the Borodin-Kostochka conjecture must some sparse neighborhoods and large 
 independence number (increasing with $\Delta(G)$).  For example,
 \begin{lem}
@@ -203,7 +213,8 @@ If $G$ is a counterexample to the Borodin-Kostochka conjecture, then
 \end{lem}
 
 \section{Results from kernel methods}
-In \cite{KernelMagic}, Kierstead and R. proved a general lemma that allows the user to get list colorings for free from large independent sets.  Specialized the the Borodin-Kostochka conjecture,
+In \cite{KernelMagic}, Kierstead and R. proved a general lemma that allows the user to get list colorings for free from large independent sets.  
+Specialized to the Borodin-Kostochka conjecture,
 this becomes.
 
 \begin{KernelMagic}
@@ -211,6 +222,24 @@ Suppose $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$.  For every in
 \[\sum_{v \in V(I)} d_H(v) < \sum_{v \in V(H)} \Delta(G) + 2 - d_G(v).\]
 \end{KernelMagic}
 
+Applied with $H=G$, this gives:
+\begin{cor}
+If $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$, then $\alpha(G) < \frac{2\card{G}}{\Delta(G)}$.
+\end{cor}
+
+\section{Mozhan partitions}\label{shuffle}
+Extending ideas of Mozhan \cite{mozhan1983}, Cranston and R. \cite{bigcliques} proved the following.
+\begin{thm}
+If $G$ is a vertex-critical graph with $\chi(G) = \Delta(G) \ge 13$, then $\omega(G) \ge \Delta(G) - 3$.
+\end{thm}
+
+\section{Vertex-transitive graphs}
+In \cite{vertextransitive} Cranston and R. used Reed's decomposition and the ideas in Sections \ref{sparseneighborhoods} and \ref{shuffle} to prove the Borodin-Kostochka conjecture for 
+vertex-transitive graphs with $\Delta(G) \ge 13$.  It would be interesting to improve this to $\Delta(G) \ge 9$.
+
+\begin{thm}
+Every vertex-transitive graph $G$ with $\Delta(G) \ge 13$ satisfies $\chi(G) \le \max\set{\omega(G), \Delta(G) - 1}$.
+\end{thm}
 
 \section{Claw-free graphs}
 In \cite{cranstonrabernclaw}, Cranston and R. proved the Borodin-Kostochka conjecture for claw-free graphs using some of the $d_1$-choosable graphs in Section \ref{d1choosable} 

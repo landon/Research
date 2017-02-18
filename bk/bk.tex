@@ -131,6 +131,16 @@ The goal here is to prove Borodin and Kostochka's conjecture from 1977.  If prov
 Every graph $G$ with $\Delta(G) \ge 9$ satisfies $\chi(G) \le \max\set{\omega(G), \Delta(G) - 1}$.
 \end{conjecture}
 
+\section{$3K_1$-free graphs}
+Let's use $3K_1$-free graphs as a test case for the various methods of attack on the Borodin-Kostochka conjecture.  The results in Section \ref{sparseneighborhoods} prove the
+conjecture in this case for $\Delta(G) \ge 13$.  We want to get this down to $\Delta(G) \ge 9$. Here are a few known facts that should help.  The results in Section \ref{mules}
+can be used to prove the following.
+\begin{lem}
+If $G$ is a minimum counterexample to the Borodin-Kostochka conjecture for $3K_1$-free graphs, then $\omega(G) \le \Delta(G) - 2$.
+\end{lem}
+
+
+
 \section{Excluded induced subgraphs by $d_1$-choosability}\label{d1choosable}
 A graph $G$ is \emph{$d_r$-choosable} if $G$ can be $L$-colored from every list assingment $L$ with $\card{L(v)} \ge d_G(v) - r$ for all $v \in V(G)$.
 Every graph is $d_{-1}$-choosable.  
@@ -182,7 +192,7 @@ The decomposition has the properties 1,2,4 and 5 since the sequence $M_0 \subset
 for each $v \in I$, the set of $x \in X$ adjacent to $v$ must be a clique for otherwise we could get an independent set larger than $I$.
 \end{proof}
 
-\section{Properties of minimum counterexamples}
+\section{Properties of minimum counterexamples}\label{mules}
 In \cite{cranstonrabernapriori} Cranston and R. used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
 of a minimum counterexample to the Borodin-Kostochka conjecture.  Almost all of the proofs there (specifically, the proofs only involving edge addition and not vertex set contraction)
 work for minimum counterexamples within a given collection of graphs that is closed under taking induced subgraphs and adding edges.  Call such a collection of graphs \emph{permissible}.

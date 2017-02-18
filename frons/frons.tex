@@ -1,4 +1,6 @@
-\documentclass{amsbook}
+\documentclass{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
 \usepackage{amsfonts}
 \usepackage{marginnote}
 
@@ -27,7 +29,7 @@
 \newtheorem{solution}{Solution}
 \newtheorem{summary}{Summary}
 \newtheorem{theorem}{Theorem}
-\numberwithin{equation}{chapter}
+
 
 \newcommand{\set}[1]{\left\{ #1 \right\}}
 \newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
@@ -46,22 +48,19 @@
 \newcommand{\brackets}[1]{\left[ #1 \right]}
 \newcommand{\DefinedAs}{\mathrel{\mathop:}=}
 
-\begin{document}
-\frontmatter
-\title[frons]{fron theory}
+\title{fron theory}
 \author{}
+
+\begin{document}
+
 \maketitle
-\tableofcontents
 
-\chapter*{Preface}
-
-this comes prior to the face.
-
-\mainmatter
-
-\chapter*{frons}
+\section*{frons}
 A \emph{fron} is a collection of \emph{erbs}.   Each pair of erbs is either \emph{not}, \emph{nit} or \emph{nat}.
 We are interested in painting the erbs in a fron respectfully.  That means painting each erb with two colors so that 
-nit erbs do not get the exact same colors and nat erbs share no colors at all. 
+nit erbs do not get the exact same colors and nat erbs share no colors at all.   A collection $E$ of erbs in a fron $F$ is 
+\emph{notted}, \emph{nitted} or \emph{natted} just in case every pair of erbs in $E$ are not, nit, or nat, respectively.
+The \emph{notnumber}, \emph{nitnumber} and \emph{natnumber} of $F$ are, respectively, the largest notted collection of erbs in $F$, the largest
+nitted collection of erbs in $F$, and the largest natted collection of erbs in $F$.
 
 \end{document}

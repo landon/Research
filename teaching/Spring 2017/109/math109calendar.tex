@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage{termcal}
+\usepackage{color}
+
+\newcommand{\MWClass}{%
+\calday[Monday]{\classday} % Monday
+\skipday % Tuesday (no class)
+\calday[Wednesday]{\classday} % Wednesday
+\skipday % Thursday (no class)
+\skipday % Friday 
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\TRClass}{%
+\skipday % Monday (no class)
+\calday[Tuesday]{\classday} % Tuesday
+\skipday % Wednesday (no class)
+\calday[Thursday]{\classday} % Thursday
+\skipday % Friday 
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\MWFClass}{%
+\calday[Monday]{\classday}
+\skipday % Tuesday (no class)
+\calday[Wednesday]{\classday}
+\skipday % Thursday (no class)
+\calday[Friday]{\classday}
+\skipday\skipday % weekend (no class)
+}
+
+\newcommand{\Holiday}[2]{%
+\options{#1}{\noclassday}
+\caltext{#1}{#2}
+}
+
+\begin{document}
+\paragraph*{schedule up to exam 2}
+\begin{center}
+\begin{calendar}{2/20/2017}{4}
+\setlength{\calboxdepth}{.3in}
+\MWFClass
+\caltextnext{$sin$, $cos$ and $tan$}
+\caltextnext{$arcsin$, $arccos$, and $arctan$}
+\caltextnext{$log$ and $ln$}
+\caltextnext{$x^{x^{x^x}}$ and friends}
+\caltextnext{\textcolor{blue}{exam \#2 review}}
+\caltextnext{\textcolor{blue}{exam \#2 review}}
+\caltextnext{\textcolor{blue}{\textbf{in-class exam \#2}}}
+
+
+\Holiday{3/10/2017}{Spring Break}
+\Holiday{3/11/2017}{Spring Break}
+\Holiday{3/12/2017}{Spring Break}
+\Holiday{3/13/2017}{Spring Break}
+\Holiday{3/14/2017}{Spring Break}
+\Holiday{3/15/2017}{Spring Break}
+\Holiday{3/16/2017}{Spring Break}
+\Holiday{3/17/2017}{Spring Break}
+\Holiday{3/18/2017}{Spring Break}
+\Holiday{3/19/2017}{Spring Break}
+
+\Holiday{4/24/2017}{Reading Day}
+\Holiday{4/25/2017}{Reading Day}
+\Holiday{4/26/2017}{Reading Day}
+\Holiday{4/27/2017}{Reading Day}
+
+\Holiday{5/2/2015}{Finals week}
+\Holiday{5/2/2015}{Finals week}
+\Holiday{5/3/2015}{Finals week}
+\Holiday{5/4/2015}{Finals week}
+\Holiday{5/5/2015}{Finals week}
+\Holiday{5/6/2015}{Finals week}
+\end{calendar}
+\end{center}
+\end{document}

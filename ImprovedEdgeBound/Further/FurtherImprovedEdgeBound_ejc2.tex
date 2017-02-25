@@ -1,0 +1,698 @@
+\documentclass[10pt]{article}
+\usepackage{e-jc}
+
+\usepackage{amsmath, amsthm}
+\usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{KernelMagic}{Kernel Magic}
+\newtheorem*{MainTheorem}{Main Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{TheDefinition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\title{A better lower bound on average degree of $k$-list-critical graphs}
+\author{Landon Rabern}
+%\author{Landon Rabern\\
+%\small LBD Data\\[-0.8ex]
+%\small 314 Euclid Ave.\\[-0.8ex] 
+%\small Mount Gretna, Pennsylvania, USA\\
+%\small\tt landon@lbd-data.com}
+%
+%\date{\dateline{Aug 24, 2016}{XX}\\
+%\small Mathematics Subject Classifications: 05C15}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+		We improve the best known bounds on average degree of $k$-list-critical graphs for $k \ge 6$. 
+		Specifically, for $k \ge 7$ we show that every non-complete $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
+		and every non-complete $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+		The same bounds holds for online $k$-list-critical graphs.
+\end{abstract}
+
+\section{Introduction}
+%A graph $G$ is \emph{$k$-list-critical} if $G$ is not $(k-1)$-choosable, but every
+%proper subgraph of $G$ is $(k-1)$-choosable. Table \ref{TheTable} shows some history of lower bounds on average degree of $k$-list-critical graphs.
+
+A \emph{$k$-coloring} of a graph $G$ is a function $\func{\pi}{V(G)}{\irange{k}}$ such that $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.  
+The least $k$ for which $G$ has a $k$-coloring is the \emph{chromatic number} $\chi(G)$ of $G$. We say that $G$ is \emph{$k$-chromatic} when $\chi(G) = k$.  
+A graph $G$ is \emph{$k$-critical} if $G$ is not $(k-1)$-colorable, but every proper subgraph of $G$ is $(k-1)$-colorable. A $k$-critical graph $G$ is $k$-chromatic 
+since for any vertex $v$, a $(k-1)$-coloring of $G-v$ extends to a $k$-coloring of $G$ by giving $v$ a new color.  If $G$ is $k$-chromatic, then any minimal $k$-chromatic 
+subgraph of $G$ is $k$-critical.  In this way, many questions about $k$-chromatic graphs can be reduced to questions about $k$-critical graphs which have more structure.  
+It is easy to see that a $k$-critical graph $G$ must have minimum degree at least $k-1$ and hence $2\size{G} \ge (k-1)\card{G}$.  
+The problem of determining the minimum number of edges in a $k$-critical graph has a long history. 
+First, in 1957, Dirac \cite{dirac1957theorem} generalized Brooks' theorem \cite{brooks1941colouring} by showing that any $k$-critical graph $G$ 
+with $k \ge 4$ and $\card{G} \ge k+2$ must satisfy 
+
+\[2\size{G} \ge (k-1)\card{G} + k-3.\]
+
+In 1963, this bound was improved for large $\card{G}$ by Gallai \cite{gallai1963kritische}.  Put 
+\[g_k(n, c) \DefinedAs \parens{k-1 + \frac{k-3}{(k-c)(k-1) + k-3}}n.\]
+Gallai showed that every $k$-critical graph $G$ with $k \ge 4$ and $\card{G} \ge k+2$ satisfies $2\size{G} \ge g_k(\card{G}, 0)$.  In 1997, Krivelevich \cite{krivelevich1997minimal} improved Gallai's bound by replacing $g_k(\card{G}, 0)$ with $g_k(\card{G}, 2)$.  Then, in 2003, Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} improved this by showing that a $k$-critical graph with $k \ge 6$ and $\card{G} \ge k+2$ must satisfy $2\size{G} \ge g_k(\card{G}, (k-5)\alpha_k)$ where
+
+\[\alpha_k \DefinedAs \frac12 - \frac{1}{(k-1)(k-2)}.\]
+
+Table \ref{TheTable} gives the values of these bounds for small $k$.  In 2012, Kostochka and Yancey \cite{kostochkayancey2012ore} achieved a drastic improvement by showing that every $k$-critical graph $G$ with $k \ge 4$ must satisfy
+
+\[\size{G} \ge \ceil{\frac{(k+1)(k-2)\card{G} - k(k-3)}{2(k-1)}}.\]%HK Combined paragraphs
+Moreover, they show that their bound is tight for $k=4$ and $n \ge 6$ as well as for infinitely many values of $\card{G}$ for any $k \ge 5$.  This bound has many interesting coloring applications such as a very short proof of Gr\"otsch's theorem on the $3$-colorability of triangle-free planar graphs \cite{kostochka2012oregrotsch} and short proofs of the results on coloring with respect to Ore degree in \cite{kierstead2009ore, rabern2010a, krs_one}.  %HK Broke paragraph. Expand table and add reference here???
+
+Given the applications to coloring theory, it makes sense to investigate the same problem for more general types of coloring.  In this article, we obtain improved lower bounds on the number of edges for both the list coloring and online list coloring problems.  To state our results we need some definitions.
+
+\emph{List coloring} was introduced by Vizing \cite{vizing1976} and independently Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  Let $G$ be a graph. A list assignment on $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.   A graph $G$ is \emph{$L$-critical} if $G$ is not $L$-colorable, but every proper subgraph $H$ of $G$ is $\restr{L}{V(H)}$-colorable. For $\func{f}{V(G)}{\IN}$, a list assignment $L$ is an \emph{$f$-assignment} if $\card{L(v)} = f(v)$ for each $v \in V(G)$.  If $f(v) = k$ for all $v \in V(G)$, then we also call an $f$-assignment a $k$-assignment.  We say that $G$ is \emph{$f$-choosable} if $G$ is $L$-colorable for every $f$-assignment $L$.  
+%HK We use "k-list-critical" in the table but do not define it.  I think we should have defined it, but if we do we should go through the paper and use it starting with the first sentence after the definition.  Also we should define and use "online k-list-critical 
+We say that $G$ is $k$-list-critical if $G$ is $L$-critical for some $k$-list assignment $L$. %HK
+The best, known-lower bound on the number of edges in a $k$-list-critical graph, was given by Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} in 2003. %HK edits
+It states that for $k \ge 9$ and every graph $G \ne K_k$ if $G$ is a $k$-list-critical graph, then $2\size{G} \ge g_k(\card{G}, \frac13 (k-4)\alpha_k)$.  We improve their bound to $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$ for $k\ge7$ (see Table \ref{tab:1}).
+
+\emph{Online list coloring} was independently introduced by Zhu \cite{zhu2009online} and Schauz \cite{schauz2009mr} (Schauz called it \emph{paintability}). Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{online $f$-choosable} if $f(v) \ge 1$ for all $v \in V(G)$ and for every $S \subseteq V(G)$ there is an independent set $I \subseteq S$ such that $G-I$ is online $f'$-choosable where $f'(v) \DefinedAs f(v)$ for $v \in V(G) - S$ and $f'(v) \DefinedAs f(v) - 1$ for $v \in S - I$. %HK Added sentence.
+Observe that if a graph is online $f$-choosable then it is $f$-choosable. 
+ When $f(v) \DefinedAs k-1$ for all $v \in V(G)$, we say that $G$ is \emph{online $k$-list-critical} if $G$ is not online $f$-choosable, 
+  but every proper subgraph $H$ of $G$ is online $\restr{f}{V(H)}$-choosable.  In 2012, Riasat and Schauz \cite{riasat2012critically} showed that Gallai's bound  $2\size{G} \ge g_k(\card{G}, 0)$ holds for online $k$-list-critical graphs.  We improve this for $k \ge 7$ %HK changed 8 to 7
+ by proving the same bound as we have for list coloring: $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$.
+
+Our main theorem shows that a graph either has many edges or an induced subgraph which has a certain kind of good orientation.  To describe these good orientations we need a few definitions. A subgraph $H$ of a directed multigraph $D$ is called \emph{Eulerian} if $d^-_H(v) = d^+_H(v)$ for every $v \in V(H)$.  We call $H$ \emph{even} if $\size{H}$ is even and \emph{odd} otherwise.  Let $EE(D)$ be the number of even, spanning, Eulerian subgraphs of $D$ and $EO(D)$ the number of odd, spanning, Eulerian subgraphs of $D$.  Note that the edgeless subgraph of $D$ is even and hence we always have $EE(D) > 0$.
+
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon-Tarsi} (for brevity, \emph{$f$-AT}) if $G$ has an orientation $D$ where $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$ and $EE(D) \ne EO(D)$. One simple way to achieve $EE(D) \ne EO(D)$ is to have $D$ be acyclic since then we have $EE(D) = 1$ and $EO(D) = 0$.  In this case, ordering the vertices so that all edges point the same direction and coloring greedily shows that $G$ is $f$-choosable. If we require $f$ to be constant, we get the familiar \emph{coloring number} $\col(G)$; that is, $\col(G)$ is the smallest $k$ for which $G$ has an acyclic orientation $D$ with $k \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Alon and Tarsi \cite{Alon1992125} generalized from the acyclic case to arbitrary $f$-AT orientations.
+
+\begin{lem}\label{AlonTarsi}
+If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is $f$-choosable.
+\end{lem}
+
+\noindent Schauz \cite{schauz2010flexible} extended this result to online $f$-choosability.
+
+\begin{lem}\label{Schauz}
+If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is online $f$-choosable.
+\end{lem}
+
+\begin{MainTheorem}
+For $k \ge 7$, every non-complete $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
+Every non-complete $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+\end{MainTheorem}
+
+The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
+Basically, we show that the average degree of the subgraph induced on vertices of degree $k-1$ is small, which implies that the number of edges incident to the vertices of degree at least $k$ must be large,
+and hence the number of vertices of degree at least $k$ must be large; that is, the graph must have high average degree.  That is how all known proofs of lower bounds on average degree of $k$-list-critical graphs work.
+A tight bound on the average degree of the subgraph induced on vertices of degree $k-1$ in a $k$-list-critical graph was proved by Gallai \cite{gallai1963kritische}.  The connected graphs in which each block is a complete graph
+or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  
+The same is true for $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability}.  Since Gallai's bound is tight, it may appear that there is no hope of improvement using the above method.  
+While it is true that the upper bound on average degree of Gallai trees cannot be improved in general, it can be improved in the absence of certain \emph{bad} properties.  
+Let $G$ be a $k$-list-critical graph and let $\L$ be the subgraph of $G$ induced on vertices of degree $k-1$.
+If the presence of bad properties in $\L$ could be shown to lead to reducible configurations in $G$, we would have a pathway to improvement.  Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}
+made the first progress along these lines.  Further improvements in \cite{OreVizing}, \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound} follow the same general outline.  
+As in \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound}, it is convenient to have a measure of how bad $\L$ is.  So, if $b$ is a function measuring badness, this could be realized as
+an upper bound of the form:
+\[2\size{\L} \le s(k)\card{\L} + t(k)b(\L).\]
+Of course, we can measure badness along multiple axes (in badness space?).  In our proof we use two badness measures $\beta(\L)$ and $q(\L)$, so the upper bound looks like:
+\[2\size{\L} \le s(k)\card{L} + h(k)\beta(\L) + z(k)q(\L).\]
+High $\beta(\L)$ badness leads to reducible configurations by kernel-perfect orientations and high $q(\L)$ badness leads to reducible configurations by Alon-Tarsi orientations.
+That means the same proof shows that Main Theorem holds for online $k$-list-critical graphs as well (in fact, for the larger class of $OC$-irreducible graphs with $\delta(G) = k-1$ defined in section 5).
+
+Let $c_k^*(\L)$ be the number of components of $\L$ containing a copy of $K_{k-1}$. Let $q_k(\L)$ be the number of non-cut vertices in $\L$ that appear in copies of $K_{k-1}$.  
+Let $\beta_k(\L)$ be the independence number of the subgraph of $\L$ induced on the vertices of degree $k-1$.  
+When $k$ is defined in context, we just write $c^*(\L)$, $q(\L)$ and $\beta(\L)$.  
+
+We need upper bounds on our badness parameters $q(\L)$ and $\beta(\L)$.
+
+\begin{lem}\label{qLemmaList}
+	Let $G$ be a non-complete $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices
+	and $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
+	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
+\end{lem}
+
+\begin{lem}\label{betaLemmaList}
+	Let $G$ be a $k$-list-critical graph.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
+	If $2 \le \lambda \le \frac{6(k-1)}{k}$, then
+	\[\beta(\L) \le \frac{2}{\lambda}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - 1}{k-1}.\]
+\end{lem}
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+			\hline
+			& Gallai \cite{gallai1963kritische}
+			& KS \cite{kostochkastiebitzedgesincriticalgraph} 
+			& KR \cite{OreVizing}
+			& CR \cite{DischargingLowerBound}
+			& R \cite{Better4ListCriticalBound}
+			& Here \\
+			$k$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$\\
+			\hline 
+			4 & 3.0769 & --- & --- & --- & \bf{3.1000} & 3.1000\\
+			5 & 4.0909 & --- & 4.0984 & 4.1000 & \bf{4.1176} & 4.1176\\
+			6 & 5.0909 & --- & 5.1053 & 5.1076 & 5.1153 & \bf{5.1214}\\
+			7 & 6.0870 & --- & 6.1149 & 6.1192} & 6.1081 & \bf{6.1296}\\
+			8 & 7.0820 & --- & 7.1128 & 7.1167} & 7.1000 & \bf{7.1260}\\
+			9 & 8.0769 & 8.0838 & 8.1094 & 8.1130} & 8.0923 & \bf{8.1213}\\
+			10 & 9.0722 & 9.0793 & 9.1055 & 9.1088} & 9.0853 & \bf{9.1162}\\
+			15 & 14.0541 & 14.0610 & 14.0864 & 14.0884} & 14.0609 & \bf{14.0930}\\
+			20 & 19.0428 & 19.0490 & 19.0719 & 19.0733} & 19.0469 & \bf{19.0762}\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Lower bounds on average degree $d(G)$ of a $k$-list-critical graph $G$.}
+	\label{TheTable}
+\end{table}
+
+In Section 2, we prove Lemma \ref{qLemmaList}.
+In Section 3, we prove upper bounds on the average degree of Gallai trees.
+
+\section{Bounding $q(\L)$}
+This section is devoted to extracting the reusable Lemma \ref{qLemma} from the proof of Kierstead and Rabern \cite{OreVizing}.
+All of the hard work was already done in \cite{OreVizing}.
+
+\begin{defn}
+	A graph $G$ is \emph{AT-reducible} to $H$ if $H$ is a nonempty induced subgraph of $G$ which is $f_H$-AT where $f_H(v) \DefinedAs \delta(G) + d_H(v) - d_G(v)$ for all $v \in V(H)$.  
+	If $G$ is not AT-reducible to any nonempty induced subgraph, then it is \emph{AT-irreducible}.
+\end{defn}
+
+\begin{lem}\label{qLemma}
+	Let $G$ be a non-complete AT-irreducible graph with $\delta(G) = k-1$ where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices and 
+	$\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
+	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
+\end{lem}
+
+\begin{observation}
+The hypotheses of Lemma \ref{qLemma} are satisfied by non-complete $k$-critical, $k$-list-critical, online $k$-list-critical and $k$-AT-critical graphs.
+\end{observation}
+
+The proof of Lemma \ref{qLemma} requires the following four lemmas from \cite{OreVizing}.
+
+\begin{lem}\label{DegenerateEuler}
+Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  If $\size{G} > \sum_{v \in V(G)} f(v)$, then $G$ has an induced subgraph $H$ such that $d_H(v) > f(v)$ for each $v \in V(H)$.
+\end{lem}
+\begin{proof}
+Suppose not and choose a counterexample $G$ minimizing $\card{G}$. Then $\card{G} \ge 3$ and we have $x \in V(G)$ with $d_G(x) \leq f(x)$. But now $\size{G-x} > \sum_{v \in V(G-x)} f(v)$, contradicting minimality of $\card{G}$.
+\end{proof}
+
+Let $\T_k$ be the Gallai trees with maximum degree at most $k-1$, excepting $K_k$. For a graph $G$, let $W^k(G)$ be the set of vertices of $G$ that are contained in some $K_{k-1}$ in $G$.  
+
+\begin{lem}\label{ConfigurationTypeOneEuler}
+Let $k \ge 5$ and let $G$ be a graph with $x \in V(G)$ such that:
+\begin{enumerate}
+\item $K_k \not \subseteq G$; and
+\item $G-x$ has $t$ components $H_1, H_2, \ldots, H_t$, and all are in $\T_k$; and
+\item $d_G(v) \leq k - 1$ for all $v \in V(G-x)$; and
+\item $\card{N(x) \cap W^k(H_i)} \ge 1$ for $i \in \irange{t}$; and
+\item $d_G(x) \ge t+2$.
+\end{enumerate}
+
+\noindent Then $G$ is $f$-AT where $f(x) = d_G(x) - 1$ and $f(v) = d_G(v)$ for all $v \in V(G - x)$.
+\end{lem}
+
+For a graph $G$, $\set{X, Y}$ a partition of $V(G)$ and $k \ge 4$, let $\B_k(X, Y)$ be the bipartite graph with one part $Y$ and the other part the components of $G[X]$.  Put an edge between $y \in Y$ and a component $T$ of $G[X]$ iff $N(y) \cap W^k(T) \ne \emptyset$.   The next lemma tells us that we have a reducible configuration if this bipartite graph has minimum degree at least three.  
+
+\begin{lem}
+	\label{MultipleHighConfigurationEuler} Let $k\ge7$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B\DefinedAs\B_{k}(V(G-Y),Y)$ we have $\delta(\B)\ge3$. 
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.\end{lem}
+
+We also have the following version with asymmetric degree condition on $\B$.  
+The point here is that this works for $k \ge 5$.  
+The consequence is that we trade a bit in our bound for the proof to go through with $k \in \set{5,6}$.
+
+\begin{lem}
+	\label{MultipleHighConfigurationEulerLopsided} Let $k \ge 5$ and let $G$ be a graph with
+	$Y\subseteq V(G)$ such that: 
+	\begin{enumerate}
+		\item $K_{k}\not\subseteq G$; and 
+		\item the components of $G-Y$ are in $\T_{k}$; and 
+		\item $d_{G}(v)\leq k-1$ for all $v\in V(G-Y)$; and 
+		\item with $\B \DefinedAs \B_k(V(G-Y), Y)$ we have $d_{\B}(y) \ge 4$ for all $y \in Y$ and $d_{\B}(T) \ge 2$ for all components $T$ of $G-Y$.
+	\end{enumerate}
+	\noindent Then $G$ has an induced subgraph $G'$ that is $f$-AT where $f(y)=d_{G'}(y)-1$
+	for $y\in Y$ and $f(v)=d_{G'}(v)$ for all $v\in V(G'-Y)$.
+\end{lem}
+
+\begin{proof}[Proof of Lemma \ref{qLemma}]
+Let $\HH$ be the subgraph of $G$ induced on $k^+$-vertices and let $\D$ be the components of $\L$ containing a copy of $K_{k-1}$. 
+Put $W \DefinedAs W^k(\L)$ and $L' \DefinedAs V(\L) \setminus W$. Define an auxiliary bipartite graph $F$ with parts $A$ and $B$ where:
+\begin{enumerate}
+\item  $B = V(\HH^-)$ and $A$ is the disjoint union of the following sets
+$A_1, A_2$ and $A_3$,
+\item $A_1 = \D$ and each $T \in \D$ is adjacent to all $y \in B$
+where $N(y) \cap W^k(T) \ne \emptyset$,
+\item For each $v \in L'$, let $A_2(v)$ be a set of $\card{N(v) \cap
+B}$ vertices connected to $N(v) \cap B$ by a matching in $F$.  Let
+$A_2$ be the disjoint union of the $A_2(v)$ for $v \in L'$,
+\item For each $y \in B$, let $A_3(y)$ be a set of $d_{\HH}(y)$ vertices
+which are all joined to $y$ in $F$.  Let $A_3$ be the disjoint union
+of the $A_3(y)$ for $y \in B$.
+\end{enumerate}
+
+Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_1 \cup A_2 \cup A_3$ and $f(v) = 3$ for all $v \in B$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  
+Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  
+In particular, $V(Q) \subseteq B \cup A_1$ and $d_Q(v) \ge 4$ for $v \in B \cap V(Q)$ and $d_Q(v) \ge 2$ for $v \in A_1 \cap V(Q)$.  
+Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. 
+Now $Z \DefinedAs G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEulerLopsided}, so $Z$ has an induced subgraph $G'$ that is $f$-AT 
+where $f(y) = d_{G'}(y) - 1$ for $y \in Y$ and $f(v) = d_{G'}(v)$ for $v \in X$.  Since $Y \subseteq B$ and $X \subseteq V(\L)$, we have $f(v) = k-1 + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  
+Hence, $G$ is AT-reducible to $G'$, a contradiction.
+Therefore $\size{F} \le \sum_{v \in V(F)} f(v) = 3\card{B} + \card{\D} + \card{A_2} + \card{A_3}$. 
+By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  
+Hence $\size{F} \ge (k-1)\card{B}$.  This gives $(k-4)\card{B} \le \card{\D} + \card{A_2} + \card{A_3}$.  
+Now the first inequality in the lemma follows since $B = V(\HH^-)$, $\card{A_3} = \sum_{v \in V(\HH^-)} d_{\HH}(v)$ and
+\begin{align*}
+\card{A_2} &= -q(\L) + \size{\HH, \L} \\
+&= -q(\L) + k\card{\HH^-}+ \size{\HH^+, \L} - \sum_{v \in V(\HH^-)} d_{\HH}(v).
+\end{align*}
+
+Suppose $k \ge 7$.  Define $\func{f}{V(F)}{\IN}$ by $f(v) = 1$ for all $v \in A_2 \cup A_3$ and $f(v) = 2$ for all $v \in B \cup A_1$.  First, suppose $\size{F} > \sum_{v \in V(F)} f(v)$.  
+Then by Lemma \ref{DegenerateEuler}, $F$ has an induced subgraph $Q$ such that $d_Q(v) > f(v)$ for each $v \in V(Q)$.  
+In particular, $V(Q) \subseteq B \cup A_1$ and $\delta(Q) \ge 3$.  Put $Y \DefinedAs B \cap V(Q)$ and let $X$ be $\bigcup_{T \in V(Q) \cap A_1} V(T)$. 
+Now $Z \DefinedAs G[X \cup Y]$ satisfies the hypotheses of Lemma \ref{MultipleHighConfigurationEuler}, so $Z$ has an induced subgraph $G'$ that is $f$-AT 
+where $f(y) = d_{G'}(y) - 1$ for $y \in Y$ and $f(v) = d_{G'}(v)$ for $v \in X$.  Since $Y \subseteq B$ and $X \subseteq V(\L)$, we have $f(v) = k-1 + d_{G'}(v) - d_G(v)$ for all $v \in V(G')$.  
+Hence, $G$ is AT-reducible to $G'$, a contradiction.
+
+Therefore $\size{F} \leq \sum_{v \in V(F)} f(v) = 2(\card{B} + \card{\D}) + \card{A_2} + \card{A_3}$. 
+By Lemma \ref{ConfigurationTypeOneEuler}, for each $y \in B$ we have $d_F(y) \ge k-1$.  
+Hence $\size{F} \ge (k-1)\card{B}$.  This gives $(k-3)\card{B} \leq 2\card{\D} + \card{A_2} + \card{A_3}$.  
+Now the second inequality in the lemma follows as before.
+\end{proof}
+
+\section{Bounding $\beta(\L)$}
+This section is devoted to extracting the reusable Lemma \ref{betaLemma} from the proof of R. \cite{Better4ListCriticalBound}.
+
+\begin{defn} A graph $G$ is \emph{OC-reducible} to $H$ if $H$ is a nonempty induced
+subgraph of $G$ which is online $f_{H}$-choosable where $f_{H}(v)\DefinedAs\delta(G)+d_{H}(v)-d_{G}(v)$
+for all $v\in V(H)$. If $G$ is not OC-reducible to any nonempty induced subgraph,
+then it is \emph{OC-irreducible}. 
+\end{defn}
+
+\begin{lem}\label{betaLemma}
+	Let $G$ be an OC-irreducible graph with $\delta(G) = k-1$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
+	If $2 \le \lambda \le \frac{6(k-1)}{k}$, then
+	\[\beta(\L) \le \frac{2}{\lambda}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - 1}{k-1}.\]
+\end{lem}
+
+\begin{observation}
+The hypotheses of Lemma \ref{betaLemma} are satisfied by $k$-critical, $k$-list-critical and online $k$-list-critical graphs.
+\end{observation}
+
+The proof of Lemma \ref{betaLemma} requires the following lemma from Kierstead and Rabern \cite{KernelMagic} 
+that generalizes a kernel technique of Kostochka and Yancey \cite{kostochkayancey2012ore}.
+
+\begin{TheDefinition} The \emph{maximum independent cover number }of a graph $G$
+	is the maximum $\mic(G)$ of $\size{I, V(G) \setminus I}$ over all independent sets $I$
+	of $G$. 
+\end{TheDefinition}
+
+\begin{KernelMagic}\label{ConsantListMicStrength} 
+	Every OC-irreducible graph $G$ with $\delta(G) = k-1$ satisfies
+	\[2\size{G} \ge (k-2)\card{G} + \mic(G) + 1.\]
+\end{KernelMagic}
+
+
+\begin{thm}[L{\"o}wenstein, et al. \cite{lowenstein2011independence}]\label{Lowenstein}
+If $G$ is a connected graph, then
+\[\alpha(G) \ge \frac23\card{G} - \frac14\size{G} - \frac13.\]
+\end{thm}
+
+\begin{cor}\label{AlphaBound}
+If $G$ is a connected graph, then
+\[\alpha(G) \ge \frac23\card{G} - \frac13\size{G}.\]
+\end{cor}
+\begin{proof}
+By Theorem \ref{Lowenstein},
+\[\alpha(G) \ge \frac23\card{G} - \frac13\size{G} + \frac{1}{12}\size{G} - \frac13,\]
+so, the corollary holds if $\frac{1}{12}\size{G} \ge \frac13$.  If not, then \size{G} < 4$, so $G$ is
+$K_1$, $K_2$, $P_3$ or $K_3$ which all satisfy the desired bound.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{betaLemma}]
+Fix $\lambda$ with $2 \le \lambda \le \frac{6(k-1)}{k}$. Let $M$ be the maximum of $\size{I, V(G) \setminus I}$ over all independent sets $I$ of $G$ with $I \subseteq \HH$.   Since the vertices in $\L$ with $k-1$ neighbors in $\L$ have no neighbors in $\HH$,
+	\begin{equation}
+		\mic(G) \ge M + (k-1)\beta(\L).\label{eq0}
+	\end{equation}
+\claim{1}{If $C$ is a component of $\HH$, then \[k\alpha(C) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.\]}
+
+First, suppose $\size{C} < \card{C}$.  Then $\size{C} = \card{C} - 1$ and $C$ is a tree.  If $\card{C} \ge 2$, then
+	\begin{align*}
+		k\alpha(C) &\ge k\frac{\card{C}}{2}\\
+		&\ge \parens{\frac{k}{2} - \frac{k-1}{\lambda}}\card{C} + \frac{2(k-1)}{\lambda}\\
+		&=\parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\parens{\card{C} - 1}\\
+		&=\parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}.
+	\end{align*}
+If instead, $\card{C} = 1$, then $k\alpha(C) = k \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}} = \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C}$ since $\lambda \ge 2$.
+
+So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound}, we conclude
+	\begin{align*}
+		k\alpha(C) &\ge \frac{2k}{3}\card{C} - \frac{k}{3}\size{C} \\
+		&= \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C} +  \parens{\frac{k}{6} - \frac{k-1}{\lambda}}\card{C} - \parens{\frac{k}{3} - \frac{2(k-1)}{\lambda}}\size{C} \\
+		&= \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C} +  \parens{\frac{k-1}{\lambda} -\frac{k}{6}}\card{C}\\
+		&\ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{C} - \parens{\frac{2(k-1)}{\lambda}}\size{C},
+	\end{align*}
+	where in the final inequality we used $\lambda \le \frac{6(k-1)}{k}$.
+	
+\smallskip
+
+\noindent\claim{2}{Lemma \ref{betaLemma} is true.}
+
+	Summing the bound in Claim 1 over all components of $\HH$ and plugging into \eqref{eq0} gives
+	\begin{equation}
+	 \mic(G) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - \parens{\frac{2(k-1)}{\lambda}}\size{\HH} + (k-1)\beta(\L).
+	 \label{eq19}
+	\end{equation}
+	Applying Kernel Magic using \eqref{eq19} and solving for $\beta(\L)$ proves the claim.
+\end{proof}
+
+
+\section{General lower bounds on average degree}
+This is the counting portion of the proof, which is simpler and more general than the counting in \cite{OreVizing} and \cite{DischargingLowerBound}.
+\begin{defn}
+A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,
+the following hold:
+\begin{itemize}
+\item if $K_{k-1} \subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + h(k)q(T) + z(k)\beta(T) + f(k)$; and
+\item if $K_{k-1} \not\subseteq T$, then $2\size{T} \le \parens{k-3 + p(k)}\card{T} + z(k)\beta(T)$.
+\end{itemize}
+\end{defn}
+
+\begin{thm}\label{k7}
+	Let $\parens{p,h,z,f}$ be $7$-Gallai.  If $k \ge 7$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (2h(k) + f(k))c^*(\L)}{\card{G}}}{k+1 + 3h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
+\end{thm}
+\begin{proof}
+Let $\HH^-$ the subgraph of $G$ induced on $k$-vertices, $\HH$ the subgraph of $G$ induced on $k^+$-vertices, 
+$\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices and $\D$ the components of $\L$ containing $K_{k-1}$.
+Plainly, the following bounds hold.
+\begin{equation}\label{eq1c}
+2\size{G} \ge k\card{G} - \card{\L}
+\end{equation}
+\begin{equation}\label{eq2c}
+2\size{G} \ge (k+1)\card{G} - \card{\HH^-} - 2\card{\L}
+\end{equation}
+\begin{equation}\label{eq3c}
+2\size{G} \ge k\card{\HH^-} + (k-1)\card{\L} + \size{\HH^+, \L}
+\end{equation}
+\begin{equation}\label{eq4c}
+\size{\HH,\L} = (k-1)\card{\L} - 2\size{\L}
+\end{equation}
+Since $\parens{p,h,z,f}$ is $7$-Gallai,
+\begin{equation}\label{eq5c}
+2\size{\L} \le \parens{k-3 + p(k)}\card{\L} + f(k)\card{\D} + h(k)q(\L) + z(k)\beta(\L)
+\end{equation}
+By Lemma \ref{qLemmaList},
+\[q(\L) \le 2\card{\D} + 3\card{\HH^-} + \size{\HH^+, \L},\]
+plugging this into \eqref{eq5c} gives
+\begin{equation}\label{eq6c}
+2\size{\L} \le \parens{k-3 + p(k)}\card{\L} + 3h(k)\card{\HH^-} + h(k)\size{\HH^+, \L} + z(k)\beta(\L) + S_1,
+\end{equation}
+where
+\[S_1 \DefinedAs (2h(k) + f(k))\card{\D}.\]
+Now using \eqref{eq1c} and \eqref{eq6c},
+\begin{align*}
+	2\size{G} &= 2\size{\HH} + 2\size{\HH, \L} + 2\size{\L}\\
+	&= 2\size{\HH} + 2((k-1)\card{\L} - 2\size{\L}) + 2\size{\L}\\
+	&= 2\size{\HH} + 2(k-1)\card{\L} - 2\size{\L}\\
+	&\ge 2\size{\HH} + \parens{k+1 - p(k)}\card{\L} - 3h(k)\card{\HH^-} - h(k)\size{\HH^+, \L} - z(k)\beta(\L) - S_1\numberthis \label{eq7c}\\
+\end{align*}
+Adding $h(k)$ times \eqref{eq3c} to \eqref{eq7c} gives
+\begin{equation}\label{eq8c}
+2\size{G} \ge \frac{2\size{\HH} + \parens{k+1 +(k-1)h(k)- p(k)}\card{\L} + (k- 3)h(k)\card{\HH^-}  - z(k)\beta(\L) - S_1}{1 + h(k)}
+\end{equation}
+Lemma \ref{betaLemmaList} gives
+\[\beta(\L) \le \frac{2}{z(k)}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{z(k)}}\card{\HH} - 1}{k-1}.\]
+Plugging this into \eqref{eq8c} yields
+\begin{equation}\label{eq9c}
+2\size{G} \ge \frac{\parens{k+1 +(k-1)h(k)- p(k)}\card{\L} + (k- 3)h(k)\card{\HH^-} +\frac{(k-2)z(k)}{k-1}\card{G} + \parens{\frac{kz(k)}{2(k-1)} + 1}\card{\HH} + S_2}{1 + h(k) + \frac{z(k)}{k-1}},
+\end{equation}
+where
+\[S_2 \DefinedAs \frac{z(k)}{k-1} - S_1.\]
+Now using $\card{\HH} = \card{G} - \card{\L}$ gives
+\begin{equation}\label{eq10c}
+2\size{G} \ge \frac{\parens{k +(k-1)h(k)- p(k) - \frac{kz(k)}{2(k-1)}}\card{\L} + (k- 3)h(k)\card{\HH^-} + \parens{\frac{(3k-4)z(k)}{2(k-1)} + 1}\card{G} + S_2}{1 + h(k) + \frac{z(k)}{k-1}}.
+\end{equation}
+Now using \eqref{eq2c} to get a lower bound on $\card{\HH^-}$ gives
+\begin{equation}\label{eq11c}
+2\size{G} \ge \frac{\parens{k - (k-5)h(k)- p(k) - \frac{kz(k)}{2(k-1)}}\card{\L}+\parens{(k+1)(k-3)h(k) + \frac{(3k-4)z(k)}{2(k-1)} + 1}\card{G} + S_2}{1 + (k-2)h(k) + \frac{z(k)}{k-1}}.
+\end{equation}
+Using \eqref{eq1c} to get a lower bound on $\card{\L}$ and simplifying gives
+\begin{equation}\label{eq12c}
+\frac{2\size{G}}{\card{G}} \ge \frac{k^2 + 3(k-1)h(k) - kp(k) + 1 - \frac{k^2-3k+4}{2(k-1)}z(k) + \frac{S_2}{\card{G}}}{k+1 + 3h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}}.
+\end{equation}
+Now factoring out $k-1$ gives the desired bound.
+\end{proof}
+
+\noindent A nearly identical argument, using the other inequality in Lemma \ref{qLemmaList}, proves a bound that holds for $k \ge 5$.
+
+\begin{thm}\label{k5}
+	Let $\parens{p,h,z,f}$ be $5$-Gallai.  If $k \ge 5$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - (h(k) + f(k))c^*(\L)}{\card{G}}}{k+1 + 4h(k) - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
+\end{thm}
+
+\noindent When $k=4$, we cannot apply Lemma \ref{qLemmaList}, but using $h(k)=0$ and running through the same argument proves the following bound for $k\ge 4$.
+\begin{thm}\label{k4}
+	Let $\parens{p,0,z,f}$ be $4$-Gallai.  If $k \ge 4$ and $2 \le z(k) \le \frac{6(k-1)}{k}$, then for any non-complete $k$-list-critical graph $G$,
+	\[d(G) \ge k-1 + \frac{2 - p(k) - \frac{z(k)}{k-1} + \frac{\frac{z(k)}{k-1} - f(k)c^*(\L)}{\card{G}}}{k+1 - p(k) - \frac{(k-2)z(k)}{2(k-1)}},\]
+	where $\L$ is the subgraph of $G$ induced on $(k-1)$-vertices.
+\end{thm}
+
+When $z(k) < 2$, using Lemma \ref{betaLemmaList} worsens the lower bound, so we may as well use $z(k)=0$; that is, drop the $\beta(\L)$ term entirely.  
+Doing so in the above argument shows that Theorems \ref{k7}, \ref{k5}, \ref{k4} hold for $z(k) = 0$ if we replace $k+1$ in the denominator with $k+2$.  
+This gives the bounds proved by discharging in Cranston and R. \cite{DischargingLowerBound}.
+
+\section{Gallai quadruples}
+All known proofs of lower bounds for average degree of list-critical graphs are essentially a counting argument combined with the fact that some quadruple is Gallai.
+
+\begin{lem}[Gallai \cite{gallai1963kritische}]
+The tuple $\parens{\frac{k+1}{k-1}, 0, 0, -2}$ is $4$-Gallai.
+\end{lem}
+
+\begin{lem}[Kostochka-Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}]
+The tuple $\parens{\frac{4(k-1)}{k^2 - 3k + 4}, \frac{k^2 - 3k}{k^2-3k+4}, 0, \frac{-4(k^2-3k+2)}{k^2-3k+4}}$ is $7$-Gallai.
+\end{lem}
+
+\begin{lem}[Cranston-R. \cite{DischargingLowerBound}]
+The tuple $\parens{\frac{3k-5}{k^2-4k+5}, \frac{k(k-3)}{k^2-4k+5}, 0, \frac{-2(k-1)(2k-5)}{k^2-4k+5}}$ is $5$-Gallai.
+\end{lem}
+
+\begin{lem}[R. \cite{Better4ListCriticalBound}]\label{Rbound}
+The tuple $\parens{1, 0, 2, 0}$ is $4$-Gallai.
+\end{lem}
+
+We give a a list of inequalities that provide a sufficient condition for $(p,h,z,f)$ to be $5$-Gallai.  
+These inequalities take a form quite similar to the inequalities in Cranston and R. \cite{DischargingLowerBound}, but now
+they involve $z(k)$ as well.   The sufficiency proof is a small modification of the proof in \cite{DischargingLowerBound}. 
+To use a Gallai quadruple in Lemma \ref{k7}, we want $2h(k) + f(k) \le 0$ to get rid of the term involving $c^*(\L)$.  Similarly,
+for Lemma \ref{k5}, we want $h(k) + f(k) \le 0$.   Finding the $p,h,z,f$ that give the largest average degree subject to these constraints
+is a fractional linear program that can be converted to a linear program and solved for each $k$.  This is useful
+for verification of bounds, but we want a formula in terms of $k$.  For $k \ge 7$, we use the following quadruple.
+
+\begin{lem}\label{Gallai7Up}
+The tuple $\parens{\frac{3k-7}{k^2-4k+5}, \frac{(k-1)(k-4)}{k^2-4k+5}, 2, \frac{-2(k-1)(k-4)}{k^2-4k+5}}$ is $5$-Gallai.
+\end{lem}
+
+\noindent For $k=6$, we use the following quadruple.  For $k=5$, the quadruple in Lemma \ref{Rbound} is the optimal choice of $p,h,z,f$.
+
+\begin{lem}\label{Gallai6Up}
+The tuple $\parens{\frac{3k-5}{k^2-3k+3}, \frac{(k-1)(k-4)}{k^2-3k+3}, \frac{(3k-5)(k-2)}{k^2-3k+3}, \frac{-(k-1)(k-4)}{k^2-3k+3}}$ is $5$-Gallai.
+\end{lem}
+
+\noindent Now on to the sufficiency proof.  For an endblock $B$ of a Gallai tree $T$, let $x_B$ be the cutvertex contained in $B$.
+
+\begin{lem}\label{nokkm1}
+	Let $\func{z}{\IN}{\IR}$ such that $z(k) = 0$ or $z(k) \ge 2$ for all $k \in \IN$.
+	For all $k \ge 5$ and Gallai trees $T$ with $\Delta(T) \le k-1$ and $K_{k-1} \not \subseteq T$, we have
+	\[2\size{T} \le \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\card{T} + z(k)\beta(T).\]
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $T$ minimizing $\card{T}$.  
+
+\noindent\claim{1}{$T$ has at least two blocks.}
+
+If $T$ has only one block, then $2\size{T} \le \parens{k-3}\card{T}$.
+
+\noindent\claim{2}{Each endblock of $T$ is $K_{k-2}$.}
+
+Suppose $T$ has an endblock $B$ that is not $K_{k-2}$. Then removing $V(B)\setminus\set{x_B}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives
+\[2\size{B} > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{\card{B} - 1}.\]
+This is a contradiction unless $k=5$ and $B = K_3$, but then $B = K_{k-2}$, a contradiction.
+
+\noindent\claim{3}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
+
+Suppose $B$ is an endblock of $T$ with $d_T(x_B) < k-1$.  Then $B = K_{k-2}$ by Claim 2 and hence $d_T(x_B) = k-2$.  Removing $V(B)$ from $T$ to get $T^*$ and applying minimality of $\card{T}$ gives
+the contradiction
+\[(k-2)(k-3) + 6 > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{k-1}.\]
+
+\noindent\claim{4}{$T$ does not exist.}
+
+By the previous claims, we know that every endblock $T$ is a $K_{k-2}$ that shares a vertex with an odd cycle.  Pick and endblock $B$ that is the end of a
+longest path in the block-tree of $T$.  Let $C$ be the odd cycle sharing $x_B$ with $B$.  Since $B$ is the end of a longest path in the block-tree, there is
+a neighbor $y$ of $x_B$ on $C$ such that $d_T(y) = 2$ or $y$ is contained in another endblock $A$ (which must be a $K_{k-2}$).  
+First, suppose $d_T(y) = 2$.
+Removing $V(B) \cup \set{y}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives the contradiction (since $\beta(T') < \beta(T)$)
+\[(k-2)(k-3) + 6 > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{k-1} + z(k)(\beta(T) - \beta(T')).\]
+Hence $y$ is contained in another $K_{k-2}$ endblock $A$.  Removing $V(B) \cup V(A)$ from $T$ to get $T^*$ and applying minimality of $\card{T}$ gives
+the contradiction (since $\beta(T^*) < \beta(T)$)
+\[2(k-2)(k-3) + 6 > \parens{k-3 + \frac{\max\set{2, 3-z(k)}}{k-2}}\parens{2(k-2)} + z(k)(\beta(T) - \beta(T^*)).\]
+\end{proof}
+
+\begin{lem}\label{bwkk1}
+	Let $\func{p}{\IN}{\IR_{\ge 0}}$, $\func{f}{\IN}{\IR}$, $\func{h}{\IN}{\IR_{\ge 0}}$, $\func{z}{\IN}{\IR_{\ge 0}}$ such that $z(k) = 0$ or $z(k) \ge 2$.
+	For all $k \ge 5$ and Gallai trees $T \ne K_k$ with $\Delta(T) \le k-1$ and $K_{k-1} \subseteq T$, we have
+	\[2\size{T} \le (k-3 + p(k))\card{T} + f(k) + h(k)q(T) + z(k)\beta(T)\]
+	whenever $p$, $f$, $h$ and $z$ satisfy all of the following conditions:
+	\begin{enumerate}
+		\item[(1)] $f(k) \ge (k-1)(1- p(k) - h(k))$; and	
+	    \item[(2)] $p(k) \ge \frac{3 - \frac{z(k)}{2}}{k-2}$; and
+		\item[(3)] $p(k) \ge h(k) + 5 - k$; and
+		\item[(4)] $p(k) \ge \frac{2+h(k)}{k-2}$; and
+		\item[(5)] $(k-1)p(k) + (k-3)h(k) + z(k)\ge k+1$.
+	\end{enumerate}
+\end{lem}
+\begin{proof}
+Suppose the lemma is false and choose a counterexample $T$ minimizing $\card{T}$.  
+
+\noindent\claim{1}{$T$ has at least two blocks.}
+
+Otherwise, $T = K_{k-1}$ and (1) gives a contradiction.
+
+\noindent\claim{2}{Each endblock of $T$ is $K_{k-2}$ or $K_{k-1}$.}
+
+Suppose $T$ has an endblock $B$ that is not $K_{k-2}$ or $K_{k-1}$. Then removing $V(B)\setminus\set{x_B}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives
+\[2\size{B} > \parens{k-3 + p(k)}\parens{\card{B} - 1} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+If $B = K_2$, then $q(T') \le q(T) + 1$, otherwise $q(T') = q(T)$.  For $B=K_2$, we have to contradiction (to (3))
+\[2 > \parens{k-3 + p(k)} - h(k).\]
+Suppose $B = K_t$ for $4 \le t \le k-3$.  Then we have the contradiction
+\[t(t-1) > \parens{k-3 + p(k)}\parens{t-1}.\]
+Finally, suppose $B$ is an odd cycle of length $\ell$.  Then, we have
+\[2\ell > \parens{k-3 + p(k)}\parens{\ell-1}.\]
+This simplifies to
+\[\ell < 1 + \frac{2}{k-5+p(k)}.\]
+Since $k-5+p(k) \ge 1$ when $k \ge 6$, this implies that $k = 5$.  Using (4), we conclude $\ell = 3$, but then $B = K_{k-2}$, a contradiction.
+
+\noindent\claim{3}{$T$ has at most one $K_{k-1}$ endblock.}
+
+Suppose $T$ has at least two $K_{k-1}$ endblocks.  Let $B$ be one of them.    Then removing $V(B)$ from $T$ leaves a graph $T'$ with $K_{k-1} \subseteq T'$.  So, we may apply minimality of $\card{T}$ to get
+\[(k-1)(k-2) + 2 > \parens{k-3 + p(k)}\parens{k-1} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+Now $\beta(T') < \beta(T)$ and $q(T') \le q(T) - (k-2) + 1$, so we have the contradiction (to (5))
+\[k+1 > (k-1)p(k) + (k-3)h(k) + z(k).\]
+
+\noindent\claim{4}{If $B$ is an endblock of $T$, then $d_T(x_B) = k-1$.}
+
+Suppose $B$ is an endblock of $T$ with $d_T(x_B) < k-1$.  Then $B = K_{k-2}$ by Claim 2.  Removing $V(B)$ from $T$ leaves a graph $T'$ with $K_{k-1} \subseteq T'$.  So, we may apply minimality of $\card{T}$ to get
+\[(k-2)(k-3) + 2 > \parens{k-3 + p(k)}\parens{k-2} + h(k)(q(T) - q(T')) + z(k)(\beta(T) - \beta(T')).\]
+We have $q(T') \le q(T) + 1$, so this is gives the contradiction (to (4))
+\[2 > (k-1)p(k) - h(k).\]
+
+\noindent\claim{5}{$T$ does not exist.}
+
+By Claims 2 and 3, all but at most one endblock of $T$ is $K_{k-2}$ with a cutvertex that is also in an odd cycle. 
+Pick and endblock $B$ that is the end of a
+longest path in the block-tree of $T$.  Let $C$ be the odd cycle sharing $x_B$ with $B$.  Since $B$ is the end of a longest path in the block-tree, there is
+a neighbor $y$ of $x_B$ on $C$ such that $d_T(y) = 2$ or $y$ is contained in another endblock $A$ (which must be a $K_{k-2}$).  
+First, suppose $d_T(y) = 2$.
+Removing $V(B) \cup \set{y}$ from $T$ to get $T'$ and applying minimality of $\card{T}$ gives (since $q(T') = q(T)$ and $\beta(T') < \beta(T)$)
+\[(k-2)(k-3) + 6 > \parens{k-3 + p(k)}\parens{k-1} + z(k),\]
+so
+\[p(k) < \frac{9-k-z(k)}{k-1},\]
+contradicting (2).
+Hence $y$ is contained in another $K_{k-2}$ endblock $A$.  Removing $V(B) \cup V(A)$ from $T$ to get $T^*$ and applying minimality of $\card{T}$ gives(since $q(T^*) = q(T)$ and $\beta(T^*) < \beta(T)$)
+\[2(k-2)(k-3) + 6 > \parens{k-3 + p(k)}\parens{2(k-2)} + z(k),\]
+so
+\[6 > 2(k-2)p(k) + z(k),\]
+contradicting (2).
+\end{proof}
+
+The proof of Lemma \ref{Gallai7Up} and Lemma \ref{Gallai6Up} are now straightforward computations.  
+That is all we need to prove our lower bounds on average degree. If a good upper bound on $c^*(\L)$ is known, it may be better to allow $2h(k) + f(k) > 0$.
+In that case, one could use the following.
+
+\begin{lem}
+If $\func{z}{\IN}{\IR}$ is such that $z(k) = 0$ or $2 \le z(k) \le \frac{k(k-3)}{k-2}$  for all $k \in \IN$, then 
+$(p,h,z,f)$ is $5$-Gallai, where
+\[h(k) \DefinedAs \frac{k(k-3) - (k-2)z(k)}{k^2-4k+5},\]
+\[p(k) \DefinedAs \frac{2 + h(k)}{k-2},\]
+\[f(k) \DefinedAs (k-1)(1 - h(k) - p(k)).\]
+\end{lem}
+
+\bibliographystyle{amsplain}
+\bibliography{GraphColoring1}
+\end{document}
+
+ 

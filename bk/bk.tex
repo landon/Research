@@ -187,9 +187,9 @@ Let $I$ be a maximum independent set in $G$.  Construct a maximal length sequenc
 \item every $v \in M_j$ with $d_G(v) = \Delta(G)$ either has at least three neighbors in $M_{j-1}$ or at least two neighbors in $M_{j-1} \setminus I$; and
 \item every $v \in M_j$ with $d_G(v) = \Delta(G) - 1$ either has at least two neighbors in $M_{j-1}$ or at least one neighbor in $M_{j-1} \setminus I$.
 \end{itemize}
-Now let $M = M_r$, let $T$ be the vertices in $V(G) \setminus M$ with exactly one neighbor in $I$ and let $K$ be the vertices in $V(G) \setminus M$ with exactly two neighbors in $I$.
+Now let $M = M_r$, let $T$ be the vertices in $V(G) \setminus M$ with exactly two neighbors in $I$ and let $K$ be the vertices in $V(G) \setminus M$ with exactly one neighbor in $I$.
 The decomposition has the properties 1,2,4 and 5 since the sequence $M_0 \subsetneq M_1 \subsetneq \cdots \subsetneq M_r$ was chosen to be maximal length.  Property 3 follows since
-for each $v \in I$, the set of $x \in X$ adjacent to $v$ must be a clique for otherwise we could get an independent set larger than $I$.
+for each $v \in I$, the set of $x \in K$ adjacent to $v$ must be a clique for otherwise we could get an independent set larger than $I$.
 \end{proof}
 
 \section{Properties of minimum counterexamples}\label{mules}

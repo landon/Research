@@ -106,53 +106,26 @@
 
 \section{Introduction}
 
-
-A list assignment on a graph $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   
-A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.   
-A graph $G$ is \emph{$L$-critical} if $G$ is not $L$-colorable, but every proper subgraph $H$ of $G$ is $\restr{L}{V(H)}$-colorable. 
-For $\func{f}{V(G)}{\IN}$, a list assignment $L$ is an \emph{$f$-assignment} if $\card{L(v)} = f(v)$ for each $v \in V(G)$.  
-If $f(v) = k$ for all $v \in V(G)$, then we also call an $f$-assignment a $k$-assignment.  
-We say that $G$ is \emph{$f$-choosable} if $G$ is $L$-colorable for every $f$-assignment $L$.  
-We say that $G$ is $k$-list-critical if $G$ is $L$-critical for some $k$-list assignment $L$.
-
-A \emph{$k$-coloring} of a graph $G$ is a function $\func{\pi}{V(G)}{\irange{k}}$ such that $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.  
-The least $k$ for which $G$ has a $k$-coloring is the \emph{chromatic number} $\chi(G)$ of $G$. We say that $G$ is \emph{$k$-chromatic} when $\chi(G) = k$.  
-A graph $G$ is \emph{$k$-critical} if $G$ is not $(k-1)$-colorable, but every proper subgraph of $G$ is $(k-1)$-colorable. 
-It is easy to see that a $k$-critical graph $G$ must have minimum degree at least $k-1$ and hence $2\size{G} \ge (k-1)\card{G}$.  
-The problem of determining the minimum number of edges in a $k$-critical graph has a long history. 
-First, in 1957, Dirac \cite{dirac1957theorem} generalized Brooks' theorem \cite{brooks1941colouring} by showing that any $k$-critical graph $G$ 
-with $k \ge 4$ and $\card{G} \ge k+2$ must satisfy 
-
-\[2\size{G} \ge (k-1)\card{G} + k-3.\]
-
-In 1963, this bound was improved for large $\card{G}$ by Gallai \cite{gallai1963kritische}.  Put 
-\[g_k(n, c) \DefinedAs \parens{k-1 + \frac{k-3}{(k-c)(k-1) + k-3}}n.\]
-Gallai showed that every $k$-critical graph $G$ with $k \ge 4$ and $\card{G} \ge k+2$ satisfies $2\size{G} \ge g_k(\card{G}, 0)$.  In 1997, Krivelevich \cite{krivelevich1997minimal} improved Gallai's bound by replacing $g_k(\card{G}, 0)$ with $g_k(\card{G}, 2)$.  Then, in 2003, Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} improved this by showing that a $k$-critical graph with $k \ge 6$ and $\card{G} \ge k+2$ must satisfy $2\size{G} \ge g_k(\card{G}, (k-5)\alpha_k)$ where
-
-\[\alpha_k \DefinedAs \frac12 - \frac{1}{(k-1)(k-2)}.\]
-
-Table \ref{TheTable} gives the values of these bounds for small $k$.  In 2012, Kostochka and Yancey \cite{kostochkayancey2012ore} achieved a drastic improvement by showing that every $k$-critical graph $G$ with $k \ge 4$ must satisfy
-
-\[\size{G} \ge \ceil{\frac{(k+1)(k-2)\card{G} - k(k-3)}{2(k-1)}}.\]%HK Combined paragraphs
-Moreover, they show that their bound is tight for $k=4$ and $n \ge 6$ as well as for infinitely many values of $\card{G}$ for any $k \ge 5$.  This bound has many interesting coloring applications such as a very short proof of Gr\"otsch's theorem on the $3$-colorability of triangle-free planar graphs \cite{kostochka2012oregrotsch} and short proofs of the results on coloring with respect to Ore degree in \cite{kierstead2009ore, rabern2010a, krs_one}.  %HK Broke paragraph. Expand table and add reference here???
-
-Given the applications to coloring theory, it makes sense to investigate the same problem for more general types of coloring.  In this article, we obtain improved lower bounds on the number of edges for both the list coloring and online list coloring problems.  To state our results we need some definitions.
-
-\emph{List coloring} was introduced by Vizing \cite{vizing1976} and independently Erd\H{o}s, Rubin and Taylor \cite{erdos1979choosability}.  Let $G$ be a graph. A list assignment on $G$ is a function $L$ from $V(G)$ to the subsets of $\IN$.   A graph $G$ is \emph{$L$-colorable} if there is $\func{\pi}{V(G)}{\IN}$ such that $\pi(v) \in L(v)$ for each $v \in V(G)$ and $\pi(x) \ne \pi(y)$ for each $xy \in E(G)$.   A graph $G$ is \emph{$L$-critical} if $G$ is not $L$-colorable, but every proper subgraph $H$ of $G$ is $\restr{L}{V(H)}$-colorable. For $\func{f}{V(G)}{\IN}$, a list assignment $L$ is an \emph{$f$-assignment} if $\card{L(v)} = f(v)$ for each $v \in V(G)$.  If $f(v) = k$ for all $v \in V(G)$, then we also call an $f$-assignment a $k$-assignment.  We say that $G$ is \emph{$f$-choosable} if $G$ is $L$-colorable for every $f$-assignment $L$.  
-%HK We use "k-list-critical" in the table but do not define it.  I think we should have defined it, but if we do we should go through the paper and use it starting with the first sentence after the definition.  Also we should define and use "online k-list-critical 
-We say that $G$ is $k$-list-critical if $G$ is $L$-critical for some $k$-list assignment $L$. %HK
-The best, known-lower bound on the number of edges in a $k$-list-critical graph, was given by Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph} in 2003. %HK edits
-It states that for $k \ge 9$ and every graph $G \ne K_k$ if $G$ is a $k$-list-critical graph, then $2\size{G} \ge g_k(\card{G}, \frac13 (k-4)\alpha_k)$.  We improve their bound to $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$ for $k\ge7$ (see Table \ref{tab:1}).
-
-\emph{Online list coloring} was independently introduced by Zhu \cite{zhu2009online} and Schauz \cite{schauz2009mr} (Schauz called it \emph{paintability}). Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{online $f$-choosable} if $f(v) \ge 1$ for all $v \in V(G)$ and for every $S \subseteq V(G)$ there is an independent set $I \subseteq S$ such that $G-I$ is online $f'$-choosable where $f'(v) \DefinedAs f(v)$ for $v \in V(G) - S$ and $f'(v) \DefinedAs f(v) - 1$ for $v \in S - I$. %HK Added sentence.
-Observe that if a graph is online $f$-choosable then it is $f$-choosable. 
- When $f(v) \DefinedAs k-1$ for all $v \in V(G)$, we say that $G$ is \emph{online $k$-list-critical} if $G$ is not online $f$-choosable, 
-  but every proper subgraph $H$ of $G$ is online $\restr{f}{V(H)}$-choosable.  In 2012, Riasat and Schauz \cite{riasat2012critically} showed that Gallai's bound  $2\size{G} \ge g_k(\card{G}, 0)$ holds for online $k$-list-critical graphs.  We improve this for $k \ge 7$ %HK changed 8 to 7
- by proving the same bound as we have for list coloring: $2\size{G} \ge g_k(\card{G}, (k-3)\alpha_k)$.
-
-Our main theorem shows that a graph either has many edges or an induced subgraph which has a certain kind of good orientation.  To describe these good orientations we need a few definitions. A subgraph $H$ of a directed multigraph $D$ is called \emph{Eulerian} if $d^-_H(v) = d^+_H(v)$ for every $v \in V(H)$.  We call $H$ \emph{even} if $\size{H}$ is even and \emph{odd} otherwise.  Let $EE(D)$ be the number of even, spanning, Eulerian subgraphs of $D$ and $EO(D)$ the number of odd, spanning, Eulerian subgraphs of $D$.  Note that the edgeless subgraph of $D$ is even and hence we always have $EE(D) > 0$.
-
-Let $G$ be a graph and $\func{f}{V(G)}{\IN}$.  We say that $G$ is \emph{$f$-Alon-Tarsi} (for brevity, \emph{$f$-AT}) if $G$ has an orientation $D$ where $f(v) \ge d_{D}^+(v) + 1$ for all $v \in V(D)$ and $EE(D) \ne EO(D)$. One simple way to achieve $EE(D) \ne EO(D)$ is to have $D$ be acyclic since then we have $EE(D) = 1$ and $EO(D) = 0$.  In this case, ordering the vertices so that all edges point the same direction and coloring greedily shows that $G$ is $f$-choosable. If we require $f$ to be constant, we get the familiar \emph{coloring number} $\col(G)$; that is, $\col(G)$ is the smallest $k$ for which $G$ has an acyclic orientation $D$ with $k \ge d_{D}^+(v) + 1$ for all $v \in V(D)$.  Alon and Tarsi \cite{Alon1992125} generalized from the acyclic case to arbitrary $f$-AT orientations.
+Imagine a classroom with $n$ children and one teacher.  Each child wishes to go to lunch with a group of her friends, but the teacher is dreadfully strict
+and will only allow certain groups of students to leave for lunch at a time.  The teacher starts by giving each child $k$ lunch tokens.  Then she selects
+a group of students $S$ and the children must decide on a group of friends $F$ from $S$ to go to lunch.  The group of friends $F$ leave for lunch and the remaining
+students in $S$ each give the teacher one of their lunch tokens.  The teacher keeps picking groups of students and allowing the children to decide on a subgroup of
+friends to go to lunch like this until either all of the students have gone to lunch with a lunch token in hand; or some student has no lunch tokens left.
+The teacher wants to be strict, but fair, so she desires to find the smallest number $k$ of tokens to give each student so that there is always a way for the children
+to play that ends up with all the children going to lunch with a token and a group of friends.  To her chagrin, she cannot find an easy way to determine the smallest $k$
+for a given classroom of children; it seems she has constructed a nearly impossible problem for herself in her perverse authoritarian zeal.  We do not really
+want to help her solve her problem so she can inflict this game upon the children, but it is an interesting problem nonetheless. So, let us think about the problem and
+just not tell her of any progress we make.  First off, we can abstract things a little and consider a graph $G$ with vertex set consisting of all the children 
+such that vertices $x$ and $y$ (representing children) are adjacent just in case $x$ and $y$ are not friends.  Then a group of friends is just an independent set in $G$.
+We can think of giving a number of lunch tokens to each student as a function from $V(G)$ to $\IN$ where $f(v)$ is the number of tokens child $v$ gets.
+For such a function $f$, say that $G$ is \emph{online $f$-list-colorable} just in case $V(G)$ is empty, or for every $S \subseteq V(G)$ there is an independent set $F \subseteq S$
+such that $G - F$ is online $f'$-list-colorable where $f'$ is the function from $V(G) \setminus F$ to $\IN$ given by $f'(v) = f(v) - 1$ for $v \in S \setminus F$ and $f'(v) = f(v)$
+for $v \in V(G) \setminus S$.  For $k \in \IN$, we say that $G$ is \emph{online $k$-list-colorable} just in case $G$ is online $f$-list-colorable where $f(v) = k$ for all $v \in V(G)$.  
+The smallest $k$ for which $G$ is online $k$-list-colorable is the online list-chromatic number of $G$.  The teacher's problem then becomes the following.  
+\begin{problem}
+Given a graph $G$ that represents a classroom of children and their friend relationships, how can we find the online list-chromatic number of $G$?
+\end{problem}
+This problem is hard (supposing other problems we think are hard are in fact hard). For further standard graph theory notation, we refer the reader to Diestel's excellent textbook \cite{diestel2010}.
 
 \begin{lem}\label{AlonTarsi}
 If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is $f$-choosable.

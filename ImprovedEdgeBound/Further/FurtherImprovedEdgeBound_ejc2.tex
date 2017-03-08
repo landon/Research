@@ -123,39 +123,36 @@ such that $G - F$ is online $f'$-list-colorable where $f'$ is the function from 
 for $v \in V(G) \setminus S$.  For $k \in \IN$, we say that $G$ is \emph{online $k$-list-colorable} just in case $G$ is online $f$-list-colorable where $f(v) = k$ for all $v \in V(G)$.  
 The smallest $k$ for which $G$ is online $k$-list-colorable is the online list-chromatic number of $G$.  The teacher's problem then becomes the following.  
 \begin{problem}
-Given a graph $G$ that represents a classroom of children and their friend relationships, how can we find the online list-chromatic number of $G$?
+Given a graph $G$ that represents a classroom of children and their friend relationships, how can we best find the online list-chromatic number of $G$?
 \end{problem}
-This problem is hard (supposing other problems we think are hard are in fact hard). For further standard graph theory notation, we refer the reader to Diestel's excellent textbook \cite{diestel2010}.
-
-\begin{lem}\label{AlonTarsi}
-If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is $f$-choosable.
-\end{lem}
-
-\noindent Schauz \cite{schauz2010flexible} extended this result to online $f$-choosability.
-
-\begin{lem}\label{Schauz}
-If a graph $G$ is $f$-AT for $\func{f}{V(G)}{\IN}$, then $G$ is online $f$-choosable.
-\end{lem}
+This problem is hard (supposing other problems we think are hard are in fact hard \cite{gutowskiline}), we will not solve it here.  Surely, more friendships 
+amongst the children should make it easier for the teacher to use fewer tokens per child.  This intuition is most succinctly captured by the 
+\emph{average degree} $d(G)$ of the vertices in the non-friend graph $G$ defined above.  
+Specifically, a low average degree should make it easier for the teacher to use fewer tokens per child.  We improve the best known quantitative bounds for this problem.
+For standard graph theory definitions and notation, we refer the reader to Diestel's textbook \cite{diestel2010}.
 
 \begin{MainTheorem}
-For $k \ge 7$, every non-complete $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
-Every non-complete $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+For $k \ge 7$, every non-complete online $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
+Every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
 \end{MainTheorem}
 
-The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
+The theorem also holds, with a nearly identical proof, for offline list coloring.  The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
 Basically, we show that the average degree of the subgraph induced on vertices of degree $k-1$ is small, which implies that the number of edges incident to the vertices of degree at least $k$ must be large,
-and hence the number of vertices of degree at least $k$ must be large; that is, the graph must have high average degree.  That is how all known proofs of lower bounds on average degree of $k$-list-critical graphs work.
-A tight bound on the average degree of the subgraph induced on vertices of degree $k-1$ in a $k$-list-critical graph was proved by Gallai \cite{gallai1963kritische}.  The connected graphs in which each block is a complete graph
-or an odd cycle are called \emph{Gallai trees}.  Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  
-The same is true for $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability}.  Since Gallai's bound is tight, it may appear that there is no hope of improvement using the above method.  
+and hence the number of vertices of degree at least $k$ must be large; that is, the graph must have high average degree.  
+A tight bound on the average degree of the subgraph induced on vertices of degree $k-1$ in an online $k$-list-critical graph was proved by Gallai \cite{gallai1963kritische}.  
+The connected graphs in which each block is a complete graph or an odd cycle are called \emph{Gallai trees}.  
+Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  
+The same is true for online $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability, schauz2009mr}.  
+Since Gallai's bound is tight, it may appear that there is no hope of improvement using the above method.  
 While it is true that the upper bound on average degree of Gallai trees cannot be improved in general, it can be improved in the absence of certain \emph{bad} properties.  
 Let $G$ be a $k$-list-critical graph and let $\L$ be the subgraph of $G$ induced on vertices of degree $k-1$.
-If the presence of bad properties in $\L$ could be shown to lead to reducible configurations in $G$, we would have a pathway to improvement.  Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}
+If the presence of bad properties in $\L$ could be shown to lead to reducible configurations in $G$, we would have a pathway to improvement.  
+Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}
 made the first progress along these lines.  Further improvements in \cite{OreVizing}, \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound} follow the same general outline.  
 As in \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound}, it is convenient to have a measure of how bad $\L$ is.  So, if $b$ is a function measuring badness, this could be realized as
 an upper bound of the form:
 \[2\size{\L} \le s(k)\card{\L} + t(k)b(\L).\]
-Of course, we can measure badness along multiple axes (in badness space?).  In our proof we use two badness measures $\beta(\L)$ and $q(\L)$, so the upper bound looks like:
+Of course, we can measure badness along multiple axes.  In our proof we use two badness measures $\beta(\L)$ and $q(\L)$, so the upper bound looks like:
 \[2\size{\L} \le s(k)\card{L} + h(k)\beta(\L) + z(k)q(\L).\]
 High $\beta(\L)$ badness leads to reducible configurations by kernel-perfect orientations and high $q(\L)$ badness leads to reducible configurations by Alon-Tarsi orientations.
 That means the same proof shows that Main Theorem holds for online $k$-list-critical graphs as well (in fact, for the larger class of $OC$-irreducible graphs with $\delta(G) = k-1$ defined in section 5).
@@ -163,22 +160,31 @@ That means the same proof shows that Main Theorem holds for online $k$-list-crit
 Let $c_k^*(\L)$ be the number of components of $\L$ containing a copy of $K_{k-1}$. Let $q_k(\L)$ be the number of non-cut vertices in $\L$ that appear in copies of $K_{k-1}$.  
 Let $\beta_k(\L)$ be the independence number of the subgraph of $\L$ induced on the vertices of degree $k-1$.  
 When $k$ is defined in context, we just write $c^*(\L)$, $q(\L)$ and $\beta(\L)$.  
-
-We need upper bounds on our badness parameters $q(\L)$ and $\beta(\L)$.
+We need upper bounds on our badness parameters $q(\L)$ and $\beta(\L)$.  More general versions of the following two lemmas are proved in Section \ref{qBad} and Section \ref{betaBad},
+respectively.  The first lemma allows us a measure of control over $K_{k-1}$ blocks in $\L$.
 
 \begin{lem}\label{qLemmaList}
-	Let $G$ be a non-complete $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices
+	Let $G$ be a non-complete online $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices
 	and $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
 	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
 	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
 \end{lem}
 
+The second lemma allows us some control over the number of vertices in $\L$ with no neighbors in $\HH$.
+
 \begin{lem}\label{betaLemmaList}
-	Let $G$ be a $k$-list-critical graph.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
+	Let $G$ be an online $k$-list-critical graph.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
 	If $2 \le \lambda \le \frac{6(k-1)}{k}$, then
 	\[\beta(\L) \le \frac{2}{\lambda}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - 1}{k-1}.\]
 \end{lem}
 
+In Section \ref{GeneralBounds}, we use these two lemmas and a little careful counting to prove general lower bounds on the average degree of online $k$-list-critical graphs in terms
+of parameters $p,h,z,f$ that are functions of $k$ and satisfy bounds of the form
+\[2\size{T} \le \parens{k-3 + p(k)}\card{T} + h(k)q(T) + z(k)\beta(T) + f(k),\]
+for every Gallai tree $T$ with $\Delta(T) \le k-1$ (and a few further caveats).  So, basically Section \ref{GeneralBounds} is about turning upper bounds on the average degree of Gallai trees
+into lower bounds on the average degree of online $k$-list-critical graphs.
+
+Finally, Section \ref{quadruples} proves upper bounds on the average degree of Gallai trees in terms of the parameters $p,h,z,f$.
 \begin{table}
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -207,10 +213,9 @@ We need upper bounds on our badness parameters $q(\L)$ and $\beta(\L)$.
 	\label{TheTable}
 \end{table}
 
-In Section 2, we prove Lemma \ref{qLemmaList}.
-In Section 3, we prove upper bounds on the average degree of Gallai trees.
 
-\section{Bounding $q(\L)$}
+
+\section{Bounding $q(\L)$}\label{qBad}
 This section is devoted to extracting the reusable Lemma \ref{qLemma} from the proof of Kierstead and Rabern \cite{OreVizing}.
 All of the hard work was already done in \cite{OreVizing}.
 
@@ -330,8 +335,8 @@ Hence $\size{F} \ge (k-1)\card{B}$.  This gives $(k-3)\card{B} \leq 2\card{\D} +
 Now the second inequality in the lemma follows as before.
 \end{proof}
 
-\section{Bounding $\beta(\L)$}
-This section is devoted to extracting the reusable Lemma \ref{betaLemma} from the proof of R. \cite{Better4ListCriticalBound}.
+\section{Bounding $\beta(\L)$}\label{betaBad}
+This section is devoted to extracting the reusable Lemma \ref{betaLemma} from the proof of Rabern \cite{Better4ListCriticalBound}.
 
 \begin{defn} A graph $G$ is \emph{OC-reducible} to $H$ if $H$ is a nonempty induced
 subgraph of $G$ which is online $f_{H}$-choosable where $f_{H}(v)\DefinedAs\delta(G)+d_{H}(v)-d_{G}(v)$
@@ -417,7 +422,7 @@ So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound},
 \end{proof}
 
 
-\section{General lower bounds on average degree}
+\section{General lower bounds on average degree}\label{GeneralBounds}
 This is the counting portion of the proof, which is simpler and more general than the counting in \cite{OreVizing} and \cite{DischargingLowerBound}.
 \begin{defn}
 A quadruple $\parens{p,h,z,f}$ of functions from $\IN$ to $\IR$ is \emph{$r$-Gallai} if for every $k \ge r$ and Gallai tree $T \ne K_k$ with $\Delta(T) \le k-1$,
@@ -512,9 +517,9 @@ Now factoring out $k-1$ gives the desired bound.
 
 When $z(k) < 2$, using Lemma \ref{betaLemmaList} worsens the lower bound, so we may as well use $z(k)=0$; that is, drop the $\beta(\L)$ term entirely.  
 Doing so in the above argument shows that Theorems \ref{k7}, \ref{k5}, \ref{k4} hold for $z(k) = 0$ if we replace $k+1$ in the denominator with $k+2$.  
-This gives the bounds proved by discharging in Cranston and R. \cite{DischargingLowerBound}.
+This gives the bounds proved by discharging in Cranston and Rabern \cite{DischargingLowerBound}.
 
-\section{Gallai quadruples}
+\section{Gallai quadruples}\label{quadruples}
 All known proofs of lower bounds for average degree of list-critical graphs are essentially a counting argument combined with the fact that some quadruple is Gallai.
 
 \begin{lem}[Gallai \cite{gallai1963kritische}]
@@ -525,21 +530,22 @@ The tuple $\parens{\frac{k+1}{k-1}, 0, 0, -2}$ is $4$-Gallai.
 The tuple $\parens{\frac{4(k-1)}{k^2 - 3k + 4}, \frac{k^2 - 3k}{k^2-3k+4}, 0, \frac{-4(k^2-3k+2)}{k^2-3k+4}}$ is $7$-Gallai.
 \end{lem}
 
-\begin{lem}[Cranston-R. \cite{DischargingLowerBound}]
+\begin{lem}[Cranston-Rabern \cite{DischargingLowerBound}]
 The tuple $\parens{\frac{3k-5}{k^2-4k+5}, \frac{k(k-3)}{k^2-4k+5}, 0, \frac{-2(k-1)(2k-5)}{k^2-4k+5}}$ is $5$-Gallai.
 \end{lem}
 
-\begin{lem}[R. \cite{Better4ListCriticalBound}]\label{Rbound}
+\begin{lem}[Rabern \cite{Better4ListCriticalBound}]\label{Rbound}
 The tuple $\parens{1, 0, 2, 0}$ is $4$-Gallai.
 \end{lem}
 
 We give a a list of inequalities that provide a sufficient condition for $(p,h,z,f)$ to be $5$-Gallai.  
-These inequalities take a form quite similar to the inequalities in Cranston and R. \cite{DischargingLowerBound}, but now
+These inequalities take a form quite similar to the inequalities in Cranston and Rabern \cite{DischargingLowerBound}, but now
 they involve $z(k)$ as well.   The sufficiency proof is a small modification of the proof in \cite{DischargingLowerBound}. 
 To use a Gallai quadruple in Lemma \ref{k7}, we want $2h(k) + f(k) \le 0$ to get rid of the term involving $c^*(\L)$.  Similarly,
 for Lemma \ref{k5}, we want $h(k) + f(k) \le 0$.   Finding the $p,h,z,f$ that give the largest average degree subject to these constraints
 is a fractional linear program that can be converted to a linear program and solved for each $k$.  This is useful
-for verification of bounds, but we want a formula in terms of $k$.  For $k \ge 7$, we use the following quadruple.
+for verification of bounds, but we want a formula in terms of $k$.  
+For $k \ge 7$, we use the following quadruple.
 
 \begin{lem}\label{Gallai7Up}
 The tuple $\parens{\frac{3k-7}{k^2-4k+5}, \frac{(k-1)(k-4)}{k^2-4k+5}, 2, \frac{-2(k-1)(k-4)}{k^2-4k+5}}$ is $5$-Gallai.
@@ -551,7 +557,8 @@ The tuple $\parens{\frac{3k-7}{k^2-4k+5}, \frac{(k-1)(k-4)}{k^2-4k+5}, 2, \frac{
 The tuple $\parens{\frac{3k-5}{k^2-3k+3}, \frac{(k-1)(k-4)}{k^2-3k+3}, \frac{(3k-5)(k-2)}{k^2-3k+3}, \frac{-(k-1)(k-4)}{k^2-3k+3}}$ is $5$-Gallai.
 \end{lem}
 
-\noindent Now on to the sufficiency proof.  For an endblock $B$ of a Gallai tree $T$, let $x_B$ be the cutvertex contained in $B$.
+\noindent Now on to the sufficiency proof. We prove two technical lemmas, the proof of Lemma \ref{Gallai7Up} and Lemma \ref{Gallai6Up} are straightforward computations from these.
+For an endblock $B$ of a Gallai tree $T$, let $x_B$ be the cutvertex contained in $B$.
 
 \begin{lem}\label{nokkm1}
 	Let $\func{z}{\IN}{\IR}$ such that $z(k) = 0$ or $z(k) \ge 2$ for all $k \in \IN$.
@@ -657,7 +664,7 @@ so
 contradicting (2).
 \end{proof}
 
-The proof of Lemma \ref{Gallai7Up} and Lemma \ref{Gallai6Up} are now straightforward computations.  
+
 That is all we need to prove our lower bounds on average degree. If a good upper bound on $c^*(\L)$ is known, it may be better to allow $2h(k) + f(k) > 0$.
 In that case, one could use the following.
 

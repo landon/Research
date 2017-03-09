@@ -84,7 +84,7 @@
 \newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
 \newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
-\title{A better lower bound on average degree of $k$-list-critical graphs}
+\title{A better lower bound on the average degree of online $k$-list-critical graphs}
 \author{Landon Rabern}
 %\author{Landon Rabern\\
 %\small LBD Data\\[-0.8ex]
@@ -98,10 +98,10 @@
 \maketitle
 
 \begin{abstract}
-		We improve the best known bounds on the average degree of $k$-list-critical graphs for $k \ge 6$. 
-		Specifically, for $k \ge 7$ we show that every non-complete $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
-		and every non-complete $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
-		The same bounds holds for online $k$-list-critical graphs.
+		We improve the best known bounds on the average degree of online $k$-list-critical graphs for $k \ge 6$. 
+		Specifically, for $k \ge 7$ we show that every non-complete online $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
+		and every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+		The same bounds holds for offline $k$-list-critical graphs.
 \end{abstract}
 
 \section{Introduction}
@@ -129,15 +129,18 @@ This problem is hard (supposing other problems we think are hard are in fact har
 amongst the children should make it easier for the teacher to use fewer tokens per child.  This intuition is most succinctly captured by the 
 \emph{average degree} $d(G)$ of the vertices in the non-friend graph $G$ defined above.  
 Specifically, a low average degree should make it easier for the teacher to use fewer tokens per child.  We improve the best known quantitative bounds for this problem.
-For standard graph theory definitions and notation, we refer the reader to Diestel's textbook \cite{diestel2010}.
+A graph $G$ is \emph{online $k$-list-critical} if $G$ is not online $(k-1)$-list-colorable, but every proper subgraph of $G$ is.
+For further graph theory definitions and notation, we refer the reader to Diestel's textbook \cite{diestel2010}.
 
 \begin{MainTheorem}
 For $k \ge 7$, every non-complete online $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
 Every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
 \end{MainTheorem}
 
-The theorem also holds, with a nearly identical proof, for offline list coloring.  The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
-Basically, we show that the average degree of the subgraph induced on vertices of degree $k-1$ is small, which implies that the number of edges incident to the vertices of degree at least $k$ must be large,
+The theorem also holds, with a nearly identical proof, for offline list coloring.  The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, 
+but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
+Basically, we show that the average degree of the subgraph induced on vertices of degree $k-1$ is small, which implies that the number of edges incident to the vertices 
+of degree at least $k$ must be large,
 and hence the number of vertices of degree at least $k$ must be large; that is, the graph must have high average degree.  
 A tight bound on the average degree of the subgraph induced on vertices of degree $k-1$ in an online $k$-list-critical graph was proved by Gallai \cite{gallai1963kritische}.  
 The connected graphs in which each block is a complete graph or an odd cycle are called \emph{Gallai trees}.  
@@ -145,7 +148,7 @@ Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the verti
 The same is true for online $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability, schauz2009mr}.  
 Since Gallai's bound is tight, it may appear that there is no hope of improvement using the above method.  
 While it is true that the upper bound on average degree of Gallai trees cannot be improved in general, it can be improved in the absence of certain \emph{bad} properties.  
-Let $G$ be a $k$-list-critical graph and let $\L$ be the subgraph of $G$ induced on vertices of degree $k-1$.
+Let $G$ be an online $k$-list-critical graph and let $\L$ be the subgraph of $G$ induced on vertices of degree $k-1$.
 If the presence of bad properties in $\L$ could be shown to lead to reducible configurations in $G$, we would have a pathway to improvement.  
 Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}
 made the first progress along these lines.  Further improvements in \cite{OreVizing}, \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound} follow the same general outline.  

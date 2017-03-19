@@ -1,0 +1,222 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+
+
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{KernelMagic}{Kernel Magic}
+\newtheorem*{MainTheorem}{Main Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\newtheorem*{KernelLemma}{Kernel Lemma}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem*{TheDefinition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\title{A better lower bound on the average degree of online $k$-list-critical graphs}
+\author{Landon Rabern}
+%\author{Landon Rabern\\
+%\small LBD Data\\[-0.8ex]
+%\small 314 Euclid Ave.\\[-0.8ex] 
+%\small Mount Gretna, Pennsylvania, USA\\
+%\small\tt landon@lbd-data.com}
+%
+%\date{\dateline{Aug 24, 2016}{XX}\\
+%\small Mathematics Subject Classifications: 05C15}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+		We improve the best known bounds on the average degree of online $k$-list-critical graphs for $k \ge 6$. 
+		Specifically, for $k \ge 7$ we show that every non-complete online $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
+		and every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+		The same bounds holds for offline $k$-list-critical graphs.
+\end{abstract}
+
+\section{Introduction}
+
+Imagine a classroom with $n$ children and one teacher.  Each child wishes to go to lunch with a group of her friends, but the teacher is dreadfully strict
+and will only allow certain groups of students to leave for lunch at a time.  The teacher starts by giving each child $k$ lunch tokens.  Then she selects
+a group of students $S$ and the children must decide on a group of friends $F$ from $S$ to go to lunch.  The group of friends $F$ leave for lunch and the remaining
+students in $S$ each give the teacher one of their lunch tokens.  The teacher keeps picking groups of students and allowing the children to decide on a subgroup of
+friends to go to lunch like this until either all of the students have gone to lunch with a lunch token in hand; or some student has no lunch tokens left.
+The teacher wants to be strict, but fair, so she desires to find the smallest number $k$ of tokens to give each student so that there is always a way for the children
+to play that ends up with all the children going to lunch with a token and a group of friends.  To her chagrin, she cannot find an easy way to determine the smallest $k$
+for a given classroom of children; it seems she has constructed a nearly impossible problem for herself in her perverse authoritarian zeal.  We do not really
+want to help her solve her problem so she can inflict this game upon the children, but it is an interesting problem nonetheless. So, let us think about the problem and
+just not tell her of any progress we make.  First off, we can abstract things a little and consider a graph $G$ with vertex set consisting of all the children 
+such that vertices $x$ and $y$ (representing children) are adjacent just in case $x$ and $y$ are not friends.  Then a group of friends is just an independent set in $G$.
+We can think of giving a number of lunch tokens to each student as a function from $V(G)$ to $\IN$ where $f(v)$ is the number of tokens child $v$ gets.
+For such a function $f$, say that $G$ is \emph{online $f$-list-colorable} just in case $V(G)$ is empty, or for every $S \subseteq V(G)$ there is an independent set $F \subseteq S$
+such that $G - F$ is online $f'$-list-colorable where $f'$ is the function from $V(G) \setminus F$ to $\IN$ given by $f'(v) = f(v) - 1$ for $v \in S \setminus F$ and $f'(v) = f(v)$
+for $v \in V(G) \setminus S$.  For $k \in \IN$, we say that $G$ is \emph{online $k$-list-colorable} just in case $G$ is online $f$-list-colorable where $f(v) = k$ for all $v \in V(G)$.  
+The smallest $k$ for which $G$ is online $k$-list-colorable is the online list-chromatic number of $G$.  The teacher's problem then becomes the following.  
+\begin{problem}
+Given a graph $G$ that represents a classroom of children and their friend relationships, how can we best find the online list-chromatic number of $G$?
+\end{problem}
+This problem is hard (supposing other problems we think are hard are in fact hard \cite{gutowskiline}), we will not solve it here.  Surely, more friendships 
+amongst the children should make it easier for the teacher to use fewer tokens per child.  This intuition is most succinctly captured by the 
+\emph{average degree} $d(G)$ of the vertices in the non-friend graph $G$ defined above.  
+Specifically, a low average degree should make it easier for the teacher to use fewer tokens per child.  We improve the best known quantitative bounds for this problem.
+A graph $G$ is \emph{online $k$-list-critical} if $G$ is not online $(k-1)$-list-colorable, but every proper subgraph of $G$ is.
+For further graph theory definitions and notation, we refer the reader to Diestel's textbook \cite{diestel2010}.
+
+\begin{MainTheorem}
+For $k \ge 7$, every non-complete online $k$-list-critical graph has average degree at least \[k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}.\]
+Every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
+\end{MainTheorem}
+
+The theorem also holds, with a nearly identical proof, for offline list coloring.  The proof is similar to the $4$-list-critical case in \cite{Better4ListCriticalBound}, 
+but now we incorporate reducibility lemmas from Kierstead and Rabern \cite{OreVizing}.  
+Basically, we show that the average degree of the subgraph induced on vertices of degree $k-1$ is small, which implies that the number of edges incident to the vertices 
+of degree at least $k$ must be large,
+and hence the number of vertices of degree at least $k$ must be large; that is, the graph must have high average degree.  
+A tight bound on the average degree of the subgraph induced on vertices of degree $k-1$ in an online $k$-list-critical graph was proved by Gallai \cite{gallai1963kritische}.  
+The connected graphs in which each block is a complete graph or an odd cycle are called \emph{Gallai trees}.  
+Gallai \cite{gallai1963kritische} proved that in a $k$-critical graph, the vertices of degree $k-1$ induce a disjoint union of Gallai trees.  
+The same is true for online $k$-list-critical graphs \cite{borodin1977criterion, erdos1979choosability, schauz2009mr}.  
+Since Gallai's bound is tight, it may appear that there is no hope of improvement using the above method.  
+While it is true that the upper bound on average degree of Gallai trees cannot be improved in general, it can be improved in the absence of certain \emph{bad} properties.  
+Let $G$ be an online $k$-list-critical graph and let $\L$ be the subgraph of $G$ induced on vertices of degree $k-1$.
+If the presence of bad properties in $\L$ could be shown to lead to reducible configurations in $G$, we would have a pathway to improvement.  
+Kostochka and Stiebitz \cite{kostochkastiebitzedgesincriticalgraph}
+made the first progress along these lines.  Further improvements in \cite{OreVizing}, \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound} follow the same general outline.  
+As in \cite{DischargingLowerBound} and \cite{Better4ListCriticalBound}, it is convenient to have a measure of how bad $\L$ is.  So, if $b$ is a function measuring badness, this could be realized as
+an upper bound of the form:
+\[2\size{\L} \le s(k)\card{\L} + t(k)b(\L).\]
+Of course, we can measure badness along multiple axes.  In our proof we use two badness measures $\beta(\L)$ and $q(\L)$, so the upper bound looks like:
+\[2\size{\L} \le s(k)\card{L} + h(k)\beta(\L) + z(k)q(\L).\]
+High $\beta(\L)$ badness leads to reducible configurations by kernel-perfect orientations and high $q(\L)$ badness leads to reducible configurations by Alon-Tarsi orientations.
+That means the same proof shows that Main Theorem holds for online $k$-list-critical graphs as well (in fact, for the larger class of $OC$-irreducible graphs with $\delta(G) = k-1$ defined in section 5).
+
+Let $c_k^*(\L)$ be the number of components of $\L$ containing a copy of $K_{k-1}$. Let $q_k(\L)$ be the number of non-cut vertices in $\L$ that appear in copies of $K_{k-1}$.  
+Let $\beta_k(\L)$ be the independence number of the subgraph of $\L$ induced on the vertices of degree $k-1$.  
+When $k$ is defined in context, we just write $c^*(\L)$, $q(\L)$ and $\beta(\L)$.  
+We need upper bounds on our badness parameters $q(\L)$ and $\beta(\L)$.  More general versions of the following two lemmas are proved in Section \ref{qBad} and Section \ref{betaBad},
+respectively.  The first lemma allows us a measure of control over $K_{k-1}$ blocks in $\L$.
+
+\begin{lem}\label{qLemmaList}
+	Let $G$ be a non-complete online $k$-list-critical graph where $k \ge 5$.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices, $\HH^-$ the subgraph of $G$ induced on $k$-vertices
+	and $\HH^+$ the subgraph of $G$ induced on $(k+1)^+$-vertices.  Then
+	\[q(\L) \le c^*(\L) + 4\card{\HH^-} + \size{\HH^+, \L},\] and if $k \ge 7$, then
+	\[q(\L) \le 2c^*(\L) + 3\card{\HH^-} + \size{\HH^+, \L}.\]
+\end{lem}
+
+The second lemma allows us some control over the number of vertices in $\L$ with no neighbors in $\HH$.
+
+\begin{lem}\label{betaLemmaList}
+	Let $G$ be an online $k$-list-critical graph.  Let $\L$ be the subgraph of $G$ induced on $(k-1)$-vertices and	$\HH$ the subgraph of $G$ induced on $k^+$-vertices.  
+	If $2 \le \lambda \le \frac{6(k-1)}{k}$, then
+	\[\beta(\L) \le \frac{2}{\lambda}\size{\HH} + \frac{2\size{G} - (k-2)\card{G} - \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - 1}{k-1}.\]
+\end{lem}
+
+In Section \ref{GeneralBounds}, we use these two lemmas and a little careful counting to prove general lower bounds on the average degree of online $k$-list-critical graphs in terms
+of parameters $p,h,z,f$ that are functions of $k$ and satisfy bounds of the form
+\[2\size{T} \le \parens{k-3 + p(k)}\card{T} + h(k)q(T) + z(k)\beta(T) + f(k),\]
+for every Gallai tree $T$ with $\Delta(T) \le k-1$ (and a few further caveats).  So, basically Section \ref{GeneralBounds} is about turning upper bounds on the average degree of Gallai trees
+into lower bounds on the average degree of online $k$-list-critical graphs.
+
+Finally, Section \ref{quadruples} proves upper bounds on the average degree of Gallai trees in terms of the parameters $p,h,z,f$.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+			\hline
+			& Gallai \cite{gallai1963kritische}
+			& KS \cite{kostochkastiebitzedgesincriticalgraph} 
+			& KR \cite{OreVizing}
+			& CR \cite{DischargingLowerBound}
+			& R \cite{Better4ListCriticalBound}
+			& Here \\
+			$k$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$ & $d(G) \ge$\\
+			\hline 
+			4 & 3.0769 & --- & --- & --- & \bf{3.1000} & 3.1000\\
+			5 & 4.0909 & --- & 4.0984 & 4.1000 & \bf{4.1176} & 4.1176\\
+			6 & 5.0909 & --- & 5.1053 & 5.1076 & 5.1153 & \bf{5.1214}\\
+			7 & 6.0870 & --- & 6.1149 & 6.1192} & 6.1081 & \bf{6.1296}\\
+			8 & 7.0820 & --- & 7.1128 & 7.1167} & 7.1000 & \bf{7.1260}\\
+			9 & 8.0769 & 8.0838 & 8.1094 & 8.1130} & 8.0923 & \bf{8.1213}\\
+			10 & 9.0722 & 9.0793 & 9.1055 & 9.1088} & 9.0853 & \bf{9.1162}\\
+			15 & 14.0541 & 14.0610 & 14.0864 & 14.0884} & 14.0609 & \bf{14.0930}\\
+			20 & 19.0428 & 19.0490 & 19.0719 & 19.0733} & 19.0469 & \bf{19.0762}\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Lower bounds on average degree $d(G)$ of a $k$-list-critical graph $G$.}
+	\label{TheTable}
+\end{table}
+
+
+
+\end{document}
+
+ 

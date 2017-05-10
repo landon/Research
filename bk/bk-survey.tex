@@ -227,9 +227,12 @@ Every graph $G$ with $\chi(G) \ge \Delta(G) \ge 8$ such that every
 vertex is in a clique on $\frac23\Delta(G) + 1$ vertices contains $K_{\Delta(G)}$.
 \end{thm}
 \begin{proof}
-Suppose the theorem does not hold and let $G$ be a counterexample minimizing $\card{G}$.  First, suppose $G$ does not contain a $K_{\Delta(G)} - e$.
-Apply Reed's decomposition with $t \DefinedAs \ceil{\frac23\Delta(G) + 1}$ to get sets $D_1, \ldots, D_r$.  Create $G'$ from $G$ by removing all the edges in $G[D_i]$ for
-each $i \in \irange{r}$.  By Haxell's bound, $s\chi(G') \le 3\Delta(G') - 1$.
+Suppose the theorem does not hold and let $G$ be a counterexample minimizing $\card{G}$.  
+Apply Reed's decomposition with $t \DefinedAs \ceil{\frac23\Delta(G)} + 1$ to get sets $D_1, \ldots, D_r$ with $\bigcup_{i\in\irange{r}} D_i = V(G)$.  
+Create $G'$ from $G$ by removing all the edges in $G[D_i]$ for each $i \in \irange{r}$.  
+By Haxell's bound, $s\chi(G') \le 3\Delta(G') - 1 \le 3(\Delta(G) - (t-1)) - 1 \le \Delta(G)-1$. If $\card{D_i} \le \Delta(G)- 1$, this gives
+a $\parens{\Delta(G)-1}$-coloring of $G$, a contradiction.  By symmetry, we may assume $\card{D_1} \ge \Delta(G)$.  Then it must be that $D_1 = C_1 \cup \set{x}$ where
+$C_1$ is a $K_{\Delta(G)-1}$ and $x$ has at least $\ceil{\frac23\Delta(G)}$ neighbors in $C_1$.
 \end{proof}
 
 If the strong coloring conjecture holds, we get the following improvement.

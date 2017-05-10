@@ -145,27 +145,10 @@ components of the complement): \url{https://landon.github.io/graphdata/borodinko
 
 Cranston and Rabern \cite{mules} classified all $d_1$-choosable graphs of the form $\join{A}{B}$.
 
-\section{Counterexamples have some sparse neighborhoods}\label{sparseneighborhoods}
-In \cite{denseneighborhoods}, using ideas from strong coloring \cite{haxell2004strong, aharoni2007independent}, Rabern showed that any counterexample to the 
-Borodin-Kostochka conjecture must have some sparse neighborhoods and large independence number (increasing with $\Delta(G)$). 
-
-For a positive integer $r$, a graph $G$ with $\card{G} = rk$ is called \emph{strongly $r$-colorable} if for every partition of $V(G)$ into parts of size $r$ there is a proper coloring of $G$ that uses all $r$ colors on each part.  If $\card{G}$ is not a multiple of $r$, then $G$ is strongly $r$-colorable iff the graph formed by adding $r\ceil{\frac{|G|}{r}} - |G|$ isolated vertices to $G$ is strongly $r$-colorable.  
-The \emph{strong chromatic number} $s\chi(G)$ is the smallest $r$ for which $G$ is strongly $r$-colorable.
-
-Note that a strong $r$-coloring of $G$ with respect to a partition $V_1, \ldots, V_k$ of $V(G)$ with $\card{V_i} = r$ must partition $V(G)$ into $r$ 
-independent transversals of $V_1, \ldots, V_k$. In \cite{szabo2006extremal}, Szab{\'o} and Tardos constructed partitioned graphs with part sizes $2\Delta - 1$ 
-that have no independent transversal.  So we must have $s\chi(G) \geq 2\Delta(G)$.  
-
-Haxell \cite{haxell2004strong} proved that $s\chi(G) \leq 3\Delta(G) - 1$.  
-Aharoni, Berger and Ziv \cite{aharoni2007independent} gave a simple proof that $s\chi(G) \leq 3\Delta(G)$.  
-It is this latter proof whose recoloring technique we use.  First we need a lemma allowing us to pick an independent transversal 
-when one of the sets has only one element.  We'll skip the proof since it is in \cite{aharoni2007independent} 
-and is a special case of Lemma \ref{SingletonSetTransversalLopsided} proved below.
-
 \section{Decompositions}
 \subsection{Reed's decomposition}
 In \cite{reed1999strengthening}, Reed proved the Borodin-Kostochka conjecture for graphs $G$ with $\Delta(G) \ge 10^{14}$.  A piece of that proof was a decomposition of $G$
-into dense chunks and one sparse chunk that also works for smaller $\Delta(G)$.  The following tight form of this decomposition is proved in \cite{denseneighborhoods}.
+into dense chunks and one sparse chunk that also works for smaller $\Delta(G)$.  The following tight form of this decomposition is given in \cite{denseneighborhoods}.
 Let $\CC_t(G)$ be the maximal cliques in $G$ having at least $t$ vertices.
 
 \begin{ReedDecomp}
@@ -205,57 +188,103 @@ The decomposition has the properties 1,2,4 and 5 since the sequence $M_0 \subset
 for each $v \in I$, the set of $x \in K$ adjacent to $v$ must be a clique for otherwise we could get an independent set larger than $I$.
 \end{proof}
 
+\section{Results from strong coloring}\label{sparseneighborhoods}
+In \cite{denseneighborhoods}, using ideas from strong coloring \cite{haxell2004strong, aharoni2007independent}, Rabern showed that any counterexample to the 
+Borodin-Kostochka conjecture must have some sparse neighborhood and large independence number.
+
+\begin{thm}\label{TwoThirdsCliqueCor}
+Every graph $G$ with $\chi(G) \geq \Delta(G) \geq 9$ such that every
+vertex is in a clique on $\frac23\Delta(G) + 2$ vertices contains $K_{\Delta(G)}$.
+\end{thm}
+
+\begin{thm}\label{BKdense}
+Every graph $G$ with $\omega(G) < \Delta(G)$ such that $d(G[N(v)]) \geq \frac23\Delta(G) + 4$ for each $v \in V(G)$ is $(\Delta(G)-1)$-colorable.
+\end{thm}
+
+\begin{thm}
+Every graph $G$ satisfies $\chi(G) \le \max\set{\omega(G), \Delta(G) - 1, 4\alpha(G)}$.
+\end{thm}
+
+In the next subsection, we improve Theorem \ref{TwoThirdsCliqueCor} and Theorem \ref{BKdense} slightly.
+
+\subsection{An improvement}
+The proof of Theorem \ref{TwoThirdsCliqueCor} in \cite{denseneighborhoods} uses techniques developed for strong coloring.  
+Here we show how to use the best known bounds for strong coloring directly and hence get a small improvement.
+
+For a positive integer $r$, a graph $G$ with $\card{G} = rk$ is called \emph{strongly $r$-colorable} if for every partition 
+of $V(G)$ into parts of size $r$ there is a proper coloring of $G$ that uses all $r$ colors on each part.  
+If $\card{G}$ is not a multiple of $r$, then $G$ is strongly $r$-colorable iff the graph formed by adding $r\ceil{\frac{|G|}{r}} - |G|$ isolated vertices to $G$ is strongly $r$-colorable.  
+The \emph{strong chromatic number} $s\chi(G)$ is the smallest $r$ for which $G$ is strongly $r$-colorable.
+
+Note that a strong $r$-coloring of $G$ with respect to a partition $V_1, \ldots, V_k$ of $V(G)$ with $\card{V_i} = r$ must partition $V(G)$ into $r$ 
+independent transversals of $V_1, \ldots, V_k$. In \cite{szabo2006extremal}, Szab{\'o} and Tardos constructed partitioned graphs with part sizes $2\Delta - 1$ 
+that have no independent transversal.  So we must have $s\chi(G) \geq 2\Delta(G)$.  That the upper bound $s\chi(G) \le 2\Delta(G)$ holds is the \emph{strong coloring conjecture}.
+
+Haxell \cite{haxell2004strong} proved that $s\chi(G) \leq 3\Delta(G) - 1$.  
+
+\begin{thm}\label{TwoThirdsCliqueCorImproved}
+Every graph $G$ with $\chi(G) \ge \Delta(G) \ge 8$ such that every
+vertex is in a clique on $\frac23\Delta(G) + 1$ vertices contains $K_{\Delta(G)}$.
+\end{thm}
+\begin{proof}
+Suppose the theorem does not hold and let $G$ be a counterexample minimizing $\card{G}$.  First, suppose $G$ does not contain a $K_{\Delta(G)} - e$.
+Apply Reed's decomposition with $t \DefinedAs \ceil{\frac23\Delta(G) + 1}$ to get sets $D_1, \ldots, D_r$.  Create $G'$ from $G$ by removing all the edges in $G[D_i]$ for
+each $i \in \irange{r}$.  By Haxell's bound, $s\chi(G') \le 3\Delta(G') - 1$.
+\end{proof}
+
+If the strong coloring conjecture holds, we get the following improvement.
+
+\begin{conjecture}\label{TwoThirdsCliqueCorImprovedMore}
+Every graph $G$ with $\chi(G) \ge \Delta(G) \ge 8$ such that every
+vertex is in a clique on $\frac{\Delta(G) + 5}{2}$ vertices contains $K_{\Delta(G)}$.
+\end{conjecture}
+
 \section{Properties of minimum counterexamples}\label{mules}
-In \cite{cranstonrabernapriori} Cranston and R. used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
-of a minimum counterexample to the Borodin-Kostochka conjecture.  Almost all of the proofs there (specifically, the proofs only involving edge addition and not vertex set contraction)
-work for minimum counterexamples within a given collection of graphs that is closed under taking induced subgraphs and adding edges.  Call such a collection of graphs \emph{permissible}.
-For example, the following improves a lemma Reed used in his proof \cite{reed1999strengthening}.
+In \cite{cranstonrabernapriori} Cranston and Rabern used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
+of a minimum counterexample to the Borodin-Kostochka conjecture.  For example, the following improves a lemma Reed used in his proof \cite{reed1999strengthening}.
 
 \begin{lem}
-Let $\A$ be a permissible collection of graphs for which the Borodin-Kostochka conjecture does not hold.  Let $G \in \A$ be a counterexample with the minimum number of 
-vertices (of graphs in $\A$). 
-\begin{enumerate}
-\item If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$; and
-\item Let $A$ and $B$ be disjoint subgraphs of $G$ with $\card{A} + \card{B} = \Delta(G)$ such that $\card{A},\card{B} \ge 4$.  If $G$ contains all edges between $A$ and $B$,
-then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
-\end{enumerate}
+Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture.  If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$.
+\end{lem}
 
+\begin{lem}
+Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture. Let $A$ and $B$ be disjoint subgraphs of $G$ with $\card{A} + \card{B} = \Delta(G)$ 
+such that $\card{A},\card{B} \ge 3$.  If $G$ contains all edges between $A$ and $B$,
+then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
 \end{lem}
 
 
-
-
 \section{Results from kernel methods}
-In \cite{KernelMagic}, Kierstead and R. proved a general lemma that allows the user to get list colorings for free from large independent sets.  
+In \cite{KernelMagic}, Kierstead and Rabern proved a general lemma that allows the user to get list colorings for free from large independent sets.  
 Specialized to the Borodin-Kostochka conjecture,
 this becomes.
 
 \begin{KernelMagic}
 Suppose $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$.  For every induced subgraph $H$ of $G$ and independent set $I$ in $H$, we have
-\[\sum_{v \in V(I)} d_H(v) < \sum_{v \in V(H)} \Delta(G) + 2 - d_G(v).\]
+\[\sum_{v \in I} d_H(v) < \sum_{v \in V(H)} \Delta(G) + 2 - d_G(v).\]
 \end{KernelMagic}
 
 Applied with $H=G$, this gives:
 \begin{cor}
-If $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$, then $\alpha(G) < \frac{2\card{G}}{\Delta(G)}$.
+If $G$ is a vertex-critical graph with $\chi(G) = \Delta(G)$, then $\alpha(G) < \frac{2\card{G}}{\Delta(G)-1}$.
 \end{cor}
 
 \section{Mozhan partitions}\label{shuffle}
-Extending ideas of Mozhan \cite{mozhan1983}, Cranston and R. \cite{bigcliques} proved the following.
+Extending ideas of Mozhan \cite{mozhan1983}, Cranston and Rabern \cite{bigcliques} proved the following.
 \begin{thm}
 If $G$ is a vertex-critical graph with $\chi(G) = \Delta(G) \ge 13$, then $\omega(G) \ge \Delta(G) - 3$.
 \end{thm}
 
 \section{Vertex-transitive graphs}
-In \cite{vertextransitive} Cranston and R. used Reed's decomposition and the ideas in Sections \ref{sparseneighborhoods} and \ref{shuffle} to prove the Borodin-Kostochka conjecture for 
-vertex-transitive graphs with $\Delta(G) \ge 13$.  It would be interesting to improve this to $\Delta(G) \ge 9$.
+In \cite{vertextransitive} Cranston and Rabern used Reed's decomposition and the ideas in Sections \ref{sparseneighborhoods} and \ref{shuffle} to prove 
+the Borodin-Kostochka conjecture for vertex-transitive graphs with $\Delta(G) \ge 13$.  It would be interesting to improve this to $\Delta(G) \ge 9$.
 
 \begin{thm}
 Every vertex-transitive graph $G$ with $\Delta(G) \ge 13$ satisfies $\chi(G) \le \max\set{\omega(G), \Delta(G) - 1}$.
 \end{thm}
 
 \section{Claw-free graphs}
-In \cite{cranstonrabernclaw}, Cranston and R. proved the Borodin-Kostochka conjecture for claw-free graphs using some of the $d_1$-choosable graphs in Section \ref{d1choosable} 
+In \cite{cranstonrabernclaw}, Cranston and Rabern proved the Borodin-Kostochka conjecture for claw-free graphs using some of the $d_1$-choosable graphs in Section \ref{d1choosable} 
 combined with the structure theorem for quasi-line graphs of Chudnovsky and Seymour \cite{chudnovsky2005structure}.
 \bibliographystyle{plain}
 \bibliography{GraphColoring1}

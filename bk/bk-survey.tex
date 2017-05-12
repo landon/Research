@@ -119,7 +119,7 @@
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
-\title{notes on the Borodin-Kostochka conjecture}
+\title{survey on the Borodin-Kostochka conjecture}
 \author{}
 
 \begin{document}
@@ -144,6 +144,48 @@ to be a hard problem.  However, we can get useful sufficient conditions for a gr
 components of the complement): \url{https://landon.github.io/graphdata/borodinkostochka/offline/index.html}
 
 Cranston and Rabern \cite{mules} classified all $d_1$-choosable graphs of the form $\join{A}{B}$.
+
+\section{Properties of minimum counterexamples}\label{mules}
+In \cite{cranstonrabernapriori} Cranston and Rabern used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
+of a minimum counterexample to the Borodin-Kostochka conjecture.  For example, the following improves a lemma Reed used in his proof \cite{reed1999strengthening}.
+
+\begin{lem}\label{EdgesIntoDeltaMinusOneClique}
+Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture for fixed $\Delta(G) \ge 8$. 
+If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$.
+\end{lem}
+
+In combination with more $d_1$-choosable graphs, Cranston and Rabern \cite{cranstonrabernapriori} used Lemma \ref{EdgesIntoDeltaMinusOneClique} to severely restrict the kinds of joins
+a minimum counterexample can contain.
+
+\begin{thm}
+Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture for fixed $\Delta(G) \ge 9$.  Let $A$ and $B$ be disjoint subgraphs of $G$ with $\card{A} + \card{B} = \Delta(G)$ 
+such that $\card{A},\card{B} \ge 3$.  If $G$ contains all edges between $A$ and $B$, then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
+\end{thm}
+
+\begin{cor}
+If $G$ is a minimum counterexample to the Borodin-Kostochka conjecture for fixed $\Delta(G) \ge 9$, then $\join{K_3}{\overline{K_{\Delta(G)-3}}} \not \subseteq G$.
+\end{cor}
+
+\subsection{Lemma \ref{EdgesIntoDeltaMinusOneClique} in restricted classes of graphs}
+\begin{defn}
+For $r \in \IN$, a collection of graphs $\C$ is \emph{$r$-permissible} if the following three conditions hold:
+\begin{enumerate}
+\item $\Delta(G) \le r$ for all $G \in \C$; and
+\item if $\Delta(G) \le r$ and there is $e \in E(G)$ such that $G-e \in \C$, then $G \in \C$; and
+\item if $G \in \C$ and $S \subseteq V(G)$ has $\card{S} \in \set{r-1,r,r+1}$ and $\size{G[S]} \ge \binom{|S|}{2} - 3$, then $G-S \in \C$.
+\end{enumerate}
+\end{defn}
+
+For example, if $\D$ is a collection of graphs closed under vertex removal and edge addition, then the collection of graphs in $\D$ with maximum degree at most $r$ is $r$-permissible.
+Not all $r$-permissible collections are if this form, later we will use the collection of graphs with maximum degree at most $r$ where every vertex is in a clique on at least $\frac23 r + 1$ vertices.
+
+\begin{lem}\label{EdgesIntoDeltaMinusOneCliqueGeneral}
+Let $\C$ be an $r$-permissible collection of graphs where $r \ge 8$.  Suppose there exist graphs $H \in \C$ with $\chi(H) = \Delta(H) = r$ and $\omega(H) < r$.  Let
+$G \in \C$ be such an $H$ minimizing $\card{G}$.
+If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$.
+\end{lem}
+
+
 
 \section{Decompositions}
 \subsection{Reed's decomposition}
@@ -219,7 +261,6 @@ The \emph{strong chromatic number} $s\chi(G)$ is the smallest $r$ for which $G$ 
 Note that a strong $r$-coloring of $G$ with respect to a partition $V_1, \ldots, V_k$ of $V(G)$ with $\card{V_i} = r$ must partition $V(G)$ into $r$ 
 independent transversals of $V_1, \ldots, V_k$. In \cite{szabo2006extremal}, Szab{\'o} and Tardos constructed partitioned graphs with part sizes $2\Delta - 1$ 
 that have no independent transversal.  So we must have $s\chi(G) \geq 2\Delta(G)$.  That the upper bound $s\chi(G) \le 2\Delta(G)$ holds is the \emph{strong coloring conjecture}.
-
 Haxell \cite{haxell2004strong} proved that $s\chi(G) \leq 3\Delta(G) - 1$.  
 
 \begin{thm}\label{TwoThirdsCliqueCorImproved}
@@ -229,10 +270,10 @@ vertex is in a clique on $\frac23\Delta(G) + 1$ vertices contains $K_{\Delta(G)}
 \begin{proof}
 Suppose the theorem does not hold and let $G$ be a counterexample minimizing $\card{G}$.  
 Apply Reed's decomposition with $t \DefinedAs \ceil{\frac23\Delta(G)} + 1$ to get sets $D_1, \ldots, D_r$ with $\bigcup_{i\in\irange{r}} D_i = V(G)$.  
+By Lemma \ref{EdgesIntoDeltaMinusOneCliqueGeneral}, $\card{D_i} \le \Delta(G) - 1$ for all $i \in \irange{r}$.
 Create $G'$ from $G$ by removing all the edges in $G[D_i]$ for each $i \in \irange{r}$.  
-By Haxell's bound, $s\chi(G') \le 3\Delta(G') - 1 \le 3(\Delta(G) - (t-1)) - 1 \le \Delta(G)-1$. If $\card{D_i} \le \Delta(G)- 1$, this gives
-a $\parens{\Delta(G)-1}$-coloring of $G$, a contradiction.  By symmetry, we may assume $\card{D_1} \ge \Delta(G)$.  Then it must be that $D_1 = C_1 \cup \set{x}$ where
-$C_1$ is a $K_{\Delta(G)-1}$ and $x$ has at least $\ceil{\frac23\Delta(G)}$ neighbors in $C_1$.
+By Haxell's bound, $s\chi(G') \le 3\Delta(G') - 1 \le 3(\Delta(G) - (t-1)) - 1 \le \Delta(G)-1$. This gives
+a $\parens{\Delta(G)-1}$-coloring of $G$, a contradiction.  
 \end{proof}
 
 If the strong coloring conjecture holds, we get the following improvement.
@@ -241,20 +282,6 @@ If the strong coloring conjecture holds, we get the following improvement.
 Every graph $G$ with $\chi(G) \ge \Delta(G) \ge 8$ such that every
 vertex is in a clique on $\frac{\Delta(G) + 5}{2}$ vertices contains $K_{\Delta(G)}$.
 \end{conjecture}
-
-\section{Properties of minimum counterexamples}\label{mules}
-In \cite{cranstonrabernapriori} Cranston and Rabern used the $d_1$-choosable graphs in Section \ref{d1choosable} to prove properties 
-of a minimum counterexample to the Borodin-Kostochka conjecture.  For example, the following improves a lemma Reed used in his proof \cite{reed1999strengthening}.
-
-\begin{lem}
-Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture.  If $X$ is a $K_{\Delta(G) - 1}$ in $G$, then every $v \in V(G-X)$ has at most one neighbor in $X$.
-\end{lem}
-
-\begin{lem}
-Let $G$ be a minimum counterexample to the Borodin-Kostochka conjecture. Let $A$ and $B$ be disjoint subgraphs of $G$ with $\card{A} + \card{B} = \Delta(G)$ 
-such that $\card{A},\card{B} \ge 3$.  If $G$ contains all edges between $A$ and $B$,
-then $A = K_1 + K_{\card{A} - 1}$ and $B = K_1 + K_{\card{B} - 1}$.
-\end{lem}
 
 
 \section{Results from kernel methods}

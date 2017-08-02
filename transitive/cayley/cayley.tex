@@ -132,11 +132,41 @@ Let $G$ be an abelian group and $G_A$ a standard cayley graph.  If $\Delta(G) \g
 \end{conjecture}
 i am trying to make the $\Delta=8$ example as a cayley graph of $C_5 \times C_3$, with the standard generators, its missing some edges though so need to throw more into $A$.
 
-\begin{lem}
+\begin{lem}\label{IndependentSetShiftingLemma}
 If $a$ and $b$ are adjacent in a standard cayley graph $G_A$, then for any independent set $X$ in $G_A$
 \[\frac{1}{X}a \bigcap \frac{1}{X}b = \emptyset.\]
 \end{lem}
 \begin{proof}
-Suppose there is $c \in \frac{1}{X}a \bigcap \frac{1}{X}b$.  Then $c = x^{-1}a$ and $c = y^{-1}b$ for some $x,y \in X$. So $yx^{-1} = ba^{-1} \in A$, so $x$ and $y$ are adjacent, but they can't be since both in independent set $X$.
+Suppose there is $c \in \frac{1}{X}a \bigcap \frac{1}{X}b$.  Then $c = x^{-1}a$ and $c = y^{-1}b$ for some $x,y \in X$. So $yx^{-1} = ba^{-1} \in A$, so $x$ and $y$ are adjacent, but they can't be since 
+both are in the independent set $X$.
 \end{proof}
+Since we are just working with abelian groups now, we can use a nicer form of Lemma \ref{IndependentSetShiftingLemma}.
+
+\begin{lem}\label{IndependentSetShiftingLemmaAbelian}
+Let $G$ be an abelian group and $G_A$ a standard cayley graph.   Then for any clique $K$ and independent set $X$ in $G_A$,
+\begin{enumerate}
+\item $\card{XK} = \card{X}\card{K}$, and\\
+\item $\card{\frac{1}{X}K} = \card{X}\card{K}$
+\end{enumerate}
+\end{lem}
+\begin{proof}
+Part (2) is immediate from Lemma \ref{IndependentSetShiftingLemma} since the sets $\setbs{\frac{1}{X}a}{a \in K}$ are pairwise disjoint and $\card{\frac{1}{X}} = \card{X}$.
+
+For (1), suppose $a,b \in K$ are different vertices such that $Xa \cap Xb \ne \emptyset$.  Then for $c \in Xa \cap Xb$, we have $c = xa = yb$ for some $x,y \in X$.  But then
+$ab^{-1} = x^{-1}y = yx^{-1}$.  But $a$ and $b$ are adjacent, so $ab^{-1} \in A$, so $yx^{-1} \in A$, so $x$ and $y$ are adjacent, a contradiction.  Now (1) follows in the same way as (2).
+\end{proof}
+Using this, we can get our first bound on the chromatic number.
+\begin{thm}\label{OmegaTilingColoring}
+Let $G$ be an abelian group and $G_A$ a standard cayley graph.  Then 
+\[\chi(G_A) \le \omega(G_A) + |G| - \omega(G_A)\alpha(G_A).\]
+\end{thm}
+\begin{proof}
+Take a maximum independent set $X$ in $G_A$ and maximum clique $K$ in $G_A$.  By Lemma \ref{IndependentSetShiftingLemmaAbelian} $\setbs{\frac{1}{X}a}{a \in K}$ is 
+a collection of pairwise disjoint maximum independent sets in $G_A$.  Using one color for each of those and then one color for each vertex in $G_A - XK$ gives the bound.
+\end{proof}
+
+Generally, that is a terrible bound, but we have a lot of room for improvement in coloring the leftover bit $G_A - XK$.  The case where $G_A - XK$ is empty matches up nicely
+with $\chi(G_A) = \omega(G_A)$ in the $\frac56$-bound.  We want to show that when there is some of the leftover bit $G_A - XK$, we can color it with something like $\frac56\Delta(G_A) - \omega(G_A)$ colors.
+There is a lot to play with here. For example, we can swap a vertex in $G_A - XK$ that has only one neighbor in $X$ for its neighbor to get $X'$  Now we get a new coloring by looking at $X'K$ which has a lot in common
+with our previous coloring.  Right now i am trying to see what sorts of information we can get out of this.
 \end{document}

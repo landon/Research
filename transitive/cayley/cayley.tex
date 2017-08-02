@@ -1,0 +1,142 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+
+\pagestyle{plain}
+
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usepackage[position=bottom]{subfig}
+
+\usepackage{longtable}
+\usepackage{array}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{
+\newenvironment{rep#1}[1]{
+ \def\rep@title{#2 \ref{##1}}
+ \begin{rep@theorem}}
+ {\end{rep@theorem}}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newreptheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newreptheorem{prop}{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newreptheorem{lem}{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newreptheorem{conjecture}{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newreptheorem{cor}{Corollary}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{observation}{Observation}
+\newtheorem*{mainconj}{Main Conjecture}
+\newtheorem*{mainthm}{Main Theorem}
+
+\newtheorem*{SmallPotLemma}{Small Pot Lemma}
+\newtheorem*{BK}{Borodin-Kostochka Conjecture}
+\newtheorem*{BK2}{Borodin-Kostochka Conjecture (restated)}
+\newtheorem*{Reed}{Reed's Conjecture}
+\newtheorem*{ClassificationOfd0}{Classification of $d_0$-choosable graphs}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 \mid #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\nint}[1]{\widetilde{N}\left(#1\right)}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\Q{\fancy{Q}}
+\def\Z{\fancy{Z}}
+
+\newcommand{\bigclique}[1]{\frac{2}{3}\Delta(#1) + 5}
+\newcommand{\bigcliqueraw}{\frac{2}{3}\Delta + 5}
+\newcommand{\cliqueparts}{\frac{2}{3}\Delta}
+
+% any changes to \claim should be mirrored in \claimnonum and \subclaim
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\claimnonum}[1]{{\bf Claim.}~{\it #1}~~}
+\newcommand{\subclaim}[2]{{\bf Subclaim #1.}~{\it #2}~~}
+
+
+\title{notes on coloring cayley graphs}
+\begin{document}
+\maketitle
+\section{Basics}
+
+\begin{defn}
+For a group $G$ and $A \subseteq G$, the \emph{cayley graph} of $G$ with respect to $A$ is the directed graph with vertex set $G$ and an edge from $x$ to $xa$ for each $x \in G$ and $a \in A$.
+Write $\C(G,A)$ for this digraph.
+\end{defn}
+
+We are concerned with coloring undirected graphs without loops, so we want $A$ to not contain the identity element of $G$ and $\frac{1}{A} = A$, where
+\[\frac{1}{A} = \setbs{a^{-1}}{a \in A}.\]
+Given this, $\C(G,A)$ has all edges directed both ways.  Let $G_A$ be the undirected graph with the structure of $\C(G,A)$.  We call such $G_A$ a \emph{standard cayley graph}.
+
+\begin{remark}
+$a$ and $b$ are adjacent in a standard cayley graph $G_A$ just in case $ab^{-1} \in A$.
+\end{remark}
+
+
+\begin{conjecture}
+Let $G$ be an abelian group and $G_A$ a standard cayley graph.  If $\Delta(G) \ge 9$ and $\omega(G) < \Delta(G)$, then $\chi(G) < \Delta(G)$.
+\end{conjecture}
+i am trying to make the $\Delta=8$ example as a cayley graph of $C_5 \times C_3$, with the standard generators, its missing some edges though so need to throw more into $A$.
+
+\begin{lem}
+If $a$ and $b$ are adjacent in a standard cayley graph $G_A$, then for any independent set $X$ in $G_A$
+\[\frac{1}{X}a \bigcap \frac{1}{X}b = \emptyset.\]
+\end{lem}
+\begin{proof}
+Suppose there is $c \in \frac{1}{X}a \bigcap \frac{1}{X}b$.  Then $c = x^{-1}a$ and $c = y^{-1}b$ for some $x,y \in X$. So $yx^{-1} = ba^{-1} \in A$, so $x$ and $y$ are adjacent, but they can't be since both in independent set $X$.
+\end{proof}
+\end{document}

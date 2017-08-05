@@ -292,10 +292,14 @@ This science seems like a useful persuit, but limited.  Let's spawn a subprocess
 
 Now we have these two subprocesses running.  If we could make them run more efficiently, that seems good, right? So now
 again we are trying to come up with useful tactics for exploring the math part of mindspace.  But, if we could
-make the process of coming up with such useful tactics for exploring the math part of mindspace more efficiently, then
+make the process of coming up with such useful tactics for exploring the math part of mindspace more efficient, then
 we could come up with useful tactics faster.  That there---optimizing our process of optimization---is itself a useful tactic.
 Let's spawn a subprocess conciousness and leave it working on optimizing our process of optimization.
 
+What else is there to do?  Is there a limit to how much we can optimize our process of optimization? Another way to ask that: 
+are there "maximally good" strategies for exploring mindspace?  Say where we place value on more of mindspace being explored.*
+We need to define things more precisely to make sense of the question.  There are surely multiple ways to make things precise
+that would let us look at different aspects of the question.  It seems useful to just try to think of one way and explore what it would mean.
 
 
 

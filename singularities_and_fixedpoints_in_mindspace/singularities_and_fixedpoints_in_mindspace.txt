@@ -372,7 +372,12 @@ we find new acts of knowledge in this process, we can run the tactic in this doc
 appear to be a good way to decide what to do because we have no way to measure goodness without putting down some more technical definitions.
 We need to actually look at some examples closely to try to find useful technical definitions.
 
-\section{The two FMCAI process}
+\section{A pair of intereacting FMCAIs}
+Analyze what might happen when a pair of FMCAIs interact with eachother.
+
+\section{Preprogrammed directives and values}
+\section{If we are going to build an FMCAI, what should we influence it to do?}
+Can we even influence it? Can we contain it within some set parameters?
 \tableofcontents
 
 

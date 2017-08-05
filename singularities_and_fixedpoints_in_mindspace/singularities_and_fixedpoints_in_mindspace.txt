@@ -208,6 +208,15 @@
 
 \frontmatter
 \maketitle 
+
+\begin{doublespace}
+\noindent\fontsize{18}{22}\selectfont\itshape
+\nohyphenation
+For Rachel, Atticus and Alfred.
+\end{doublespace}
+\vfill
+\vfill
+
 \tableofcontents
 \chapter{Introduction}
 We will analyze possible ways a mental singularity might arise after the first concious artificial intelligence is created.
@@ -383,15 +392,7 @@ Can we even influence it? Can we contain it within some set parameters?
 
 
 
-\cleardoublepage
-~\vfill
-\begin{doublespace}
-\noindent\fontsize{18}{22}\selectfont\itshape
-\nohyphenation
-For Rachel, Atticus and Alfred.
-\end{doublespace}
-\vfill
-\vfill
+
 
 \backmatter
 \appendix

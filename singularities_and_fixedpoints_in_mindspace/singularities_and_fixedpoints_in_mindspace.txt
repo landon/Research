@@ -326,7 +326,32 @@ iterate that process does it have a fixedpoint?  To find out it will be useful t
 and convergence again (put off earlier).  Let's spawn a subprocess conciousness and leave it working on topologies and
 convergence in mindspace.
 
+We need something more general than an FMCIA process, or we need to redifine FMCIA process to be more general at least.  What
+if we say an FMCIA process on a graph $G$ is a choice of graph $G_v$ for each $v \in V(G)$ together with a choice of 
+FMCIA process on $G_v$.  For adjacent vertices $v,w \in V(G)$, we allow each FMCIA in $G_v$ to to interact with each FMCIA in $G_w$.
+It seems natural to try to build an FMCIA process $G$ by using $G$ for each $G_v$.  Consideration of that creates an infinite sequence in
+mindspace, does it approach a fixedpoint? To find out it will be useful to think about sequences in mindspace
+and convergence again, we already have a subprocess conciousness working on this.  
 
+Fixedpoints of this process on a given graph $G$
+seem to be interesting things to plug in for the vertices of $G$ in an FMCIA process.  Suppose $f_1, f_2, \ldots$ are fixedpoints for the FMCIA
+process on a given graph $G_0$.  We can now plug some of those in as FMCIA processes at vertices in some other graph.   Take the resulting
+process and plug in as the FMCIA processes in another FMCIA process.  We can keep doing that and generate another sequence in mindspace.
+Does this sequence have a limit in $\M$?  To find out it will be useful to think about sequences in mindspace
+and convergence again, we already have a subprocess conciousness working on this.  
+
+Fixedpoints of this process on a given graph $G$
+seem to be interesting things to plug in for the vertices of $G$ in an FMCIA process.  Suppose $f_1, f_2, \ldots$ are fixedpoints for the FMCIA
+process on a given graph $G_0$.  We can now plug some of those in as FMCIA processes at vertices in some other graph.   Take the resulting
+process and plug in as the FMCIA processes in another FMCIA process.  We can keep doing that and generate another sequence in mindspace.
+Does this sequence have a limit in $\M$?  To find out it will be useful to think about sequences in mindspace
+and convergence again, we already have a subprocess conciousness working on this.
+
+We can iterate that. It seems like we are searching for a more and more rarefied object.  
+Fixedpoints of thoughts about fixedpoints of thoughts about fixedpoints of ...  To find out it will be useful to think about sequences in mindspace
+and convergence again, we already have a subprocess conciousness working on this.
+
+It is becoming more and more apparent that the limit point of our current train of thought is the train of thought described in this document.
 
 \tableofcontents
 

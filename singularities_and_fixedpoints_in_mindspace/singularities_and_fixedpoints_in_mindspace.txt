@@ -358,7 +358,21 @@ Let's spawn a subprocess conciousness and leave it doing this iteration.
 \section{Are we becoming more efficient?}
 It seems that we can just keep iterating over sequences of sequences forever.  What does doing so actually get us?  Where is the
 ancillary stuff?  If we never actually get into the mind of one of the subprocesses we spawned, it doesn't seem that we learn
-very much new stuff. 
+very much new stuff. Basically we are just starting over and over again using the tactic in this document.  If we
+understand this tactic better by seeing what the subprocesses do then perhaps iterations will start kicking out ancillary ideas.
+Like we a stuck in a fixedpoint of this document's tactic, so we add a little noise by incorporating what out subprocesses have accomplished up to here.
+We want to iterate this process of getting stuck, adding noise and continuing iterating.  Let's spawn a subprocess conciousness and leave it 
+running this iteration.
+
+Again it looks like we are stuck in the fixedpoint that is this document.  We can keep doing this forever creating a massive tree of subprocesses.
+For most of these subprocesses, if we imagine being them, we just move up the tree and don't learn anything new.  But what about
+for the processes that have not spawned child subprocesses, like the math and science subprocesses.  They seem to be kicking out
+ancillary facts when we imagine running them, so we do that more and explore more mindspace.  But for how long?  When
+we find new acts of knowledge in this process, we can run the tactic in this document starting from that point.  There doesn't
+appear to be a good way to decide what to do because we have no way to measure goodness without putting down some more technical definitions.
+We need to actually look at some examples closely to try to find useful technical definitions.
+
+\section{The two FMCIA process}
 \tableofcontents
 
 

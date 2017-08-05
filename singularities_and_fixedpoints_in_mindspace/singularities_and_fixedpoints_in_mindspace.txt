@@ -270,8 +270,31 @@ needs a some tweaking and more argumentation, for one an assumption that $M$ is 
 Also, need the proof that this sequence actually converges to $\D$, so some further assumptions on the topology of $\M$.  Details
 to be worked out later for the sake of continuing deeper now.*
 
-So, there are some tactics, like $f$ above that can lead to fixedpoints when iterated.  This seems like an interesting
+So, there are some tactics, like $f$ above, that can lead to fixedpoints when iterated.  This seems like an interesting
 feature of tactics to investigate further.  So, now we know that too.
+
+In would be really nice to know what this act of knowing $\D$ with $f(\D) = \D$ is about.  It seems like we really do need to
+be more rigorous in showing that $\D$ is really a fixedpoint of $f$, doing so should help us understand $\D$ better.  Where
+does this train of thought in $\D$ go, what does it generate (itself, but what does that look like?).  Maybe
+mindspace isn't "closed" and this train of thought has no limit point in mindspace.  What would that mean?
+
+So, fixedpoints of tactics are an interesting feature of mindspace, but we could have other goals as well.
+Like maybe it is useful to explore "more" of mindspace, to know more of the variety of acts of knowing.
+We don't know that's useful, but it seems plausabible and doesn't seem that it could hurt, so we can start searching around and naming
+pieces of knowledge we acquire.  Perhaps it seems useful to be able to count how many iterations of a tactic have occurred, so we
+can invent counting.  But now we know about numbers and we can investigate them, this exploration opens up all of mathematics.
+This seems like a useful persuit, but also limited, it would be good to have more and more tools from mathematics.  So,
+let's sort if spawn off a subprocess conciousness and leave it working on math, we can check in as needed.
+
+We also have some sensory inputs, there are things we see and hear. Again, it doesn't seem that it would hurt to look at this
+data and try to discern patterns, make predictions, in general just try to figure out ways this sense world might work.
+This science seems like a useful persuit, but limited.  Let's spawn a subprocess conciousness and leave it working on science.
+
+Now we have these two subprocesses running.  If we could make them run more efficiently, that seems good, right? So now
+again we are trying to come up with useful tactics for exploring the math part of mindspace.  But, if we could
+make the process of coming up with such useful tactics for exploring the math part of mindspace more efficiently, then
+we could come up with useful tactics faster.  That there---optimizing our process of optimization---is itself a useful tactic.
+
 
 
 

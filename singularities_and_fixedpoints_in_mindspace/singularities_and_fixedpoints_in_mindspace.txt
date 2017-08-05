@@ -189,6 +189,7 @@
 \newcommand{\HH}{\fancy{H}}
 \newcommand{\Q}{\fancy{Q}}
 \newcommand{\Z}{\fancy{Z}}
+\newcommand{\M}{\fancy{M}}
 
 \newcommand{\pot}{\operatorname{pot}}
 \newcommand{\mic}{\operatorname{mic}}
@@ -265,7 +266,5 @@ For Rachel, Atticus and Alfred.
 \backmatter
 \appendix
 \setboolean{@mainmatter}{true}
-\chapter{Basic probability}
-\chapter{Notation}
 \printindex
 \end{document}

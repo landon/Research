@@ -313,7 +313,7 @@ starting to analyze from that perspective.  But now we see the possibility of th
 how our interaction might go.  We suspect analyzing such an interaction would bear much ancillary fruit.  We will test that
 later, for now let's see if there are some other interesting complex processes to analyze in the vicinity.
 
-Consider the following processes.  For a given graph $G$, imagine that there is a "freshly minted concious AI and analyzing from that
+Consider the following processes.  For a given graph $G$, imagine that there is a "freshly minted concious AI this is analyzing from that
 perspective" (henceforth known as a FMCAI) at each vertex of $G$.  We allow each FMCAI to interact with the other FMCAI they are adjacent to in $G$.
 So, this document is an example where the graph $G$ has just one vertex with an edge looping back to itself.  
 The two person interaction has a graph with two vertices (each with an edge looping back to itself) connected by an edge.*

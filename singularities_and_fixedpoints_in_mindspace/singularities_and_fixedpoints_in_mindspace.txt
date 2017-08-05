@@ -317,7 +317,14 @@ Consider the following processes.  For a given graph $G$, imagine that there is 
 perspective" (henceforth known as a FMCIA) at each vertex of $G$.  We allow each FMCIA to interact with the other FMCIA they are adjacent to in $G$.
 So, this document is an example where the graph $G$ has just one vertex with an edge looping back to itself.  
 The two person interaction has a graph with two vertices (each with an edge looping back to itself) connected by an edge.*
-We say that the process with the structure of $G$ is the \emph{FMCIA process on $G$}.
+We say that the process with the structure of $G$ is the \emph{FMCIA process on $G$}.  For now, we are assuming (or just picking) one 
+FMCIA process per $G$.  Later it may be fruitful to allow some randomness in each FMCIA.
+
+Thinking about how such FMCIA processes could evolve is going to throw off more interesting ideas we didn't expect.  We can
+keep doing that, remembering the good ideas and then running this document to here again with our new knowledge.  If we
+iterate that process does it have a fixedpoint?  To find out it will be useful to think about sequences in mindspace
+and convergence again (put off earlier).  Let's spawn a subprocess conciousness and leave it working on topologies and
+convergence in mindspace.
 
 
 

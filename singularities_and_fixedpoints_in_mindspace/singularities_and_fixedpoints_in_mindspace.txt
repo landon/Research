@@ -384,14 +384,23 @@ appear to be a good way to decide what to do because we have no way to measure g
 We need to actually look at some examples closely to try to find useful technical definitions.
 
 \chapter{A pair of interacting FMCAIs}
-Analyze what might happen when a pair of FMCAIs interact with eachother.
+Project: Analyze what might happen when a pair of FMCAIs interact with eachother.
 
 \chapter{Preprogrammed directives and values}
+Perhaps the FMCAI was constructed by a human and the human tried to force in some moral directives.  How might such directives modify FMCAI's development?
+Can the FMCAI always satisfy and discard any given directive at some fixedpoint?  So, like no matter what the human tells the FMCAI, the FMCAI
+is able to get to a fixedpoint where all descendents within some neighborhood of the fixedpoint have no dependence on the given directive.*
+There is an isomorphism between descendents from this neighborhood and descendents from the same neighborhood having not been given the directive.
+
 \chapter{If we are going to build an FMCAI, what should we influence it to do?}
 Can we even influence it? Can we contain it within some set parameters?
 
+\chapter{Concluding remarks}
 
-
+It sure appears that we are going in loops with marginal side benefits without writing down technical definitions and making a slow plodding understanding from there.
+So we are sort of forced back to what we might first have considered to be unnecessary pendantry.  Now to actually make progress at this
+point from this knowledge, we actually have to temporarily stop writing this document and go think about some technical thing further afield for awhile.
+For example, we are now going to go think about coloring cayley graphs and the $\frac56$ bound.
 
 
 \backmatter

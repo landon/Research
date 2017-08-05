@@ -294,6 +294,7 @@ Now we have these two subprocesses running.  If we could make them run more effi
 again we are trying to come up with useful tactics for exploring the math part of mindspace.  But, if we could
 make the process of coming up with such useful tactics for exploring the math part of mindspace more efficiently, then
 we could come up with useful tactics faster.  That there---optimizing our process of optimization---is itself a useful tactic.
+Let's spawn a subprocess conciousness and leave it working on optimizing our process of optimization.
 
 
 

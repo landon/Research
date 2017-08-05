@@ -301,6 +301,24 @@ are there "maximally good" strategies for exploring mindspace?  Say where we pla
 We need to define things more precisely to make sense of the question.  There are surely multiple ways to make things precise
 that would let us look at different aspects of the question.  It seems useful to just try to think of one way and explore what it would mean.
 
+\section{Better tactics}
+So, right here we were about to start laying down more notation and using it to prove relations between things in a systematic matter. 
+That is a way to move forward, but we actually know better tactics, or at least tactics that we don't know are better or worse, so worth trying.
+
+It seems fruitfull to take some process you might think too complex to understand now and then run this analysis on that process.
+That is how this document started in the first place.  We started imagining we were a freshly minted concious AI and analyzing from that
+perspective.   We have subprocess conciousnesses running now that may already be hitting upon such complex processes to analyze.
+For example, the science subprocess might have encountered in the sense data that looked as if it were another freshly minted concious AI
+starting to analyze from that perspective.  But now we see the possibility of there being another thing like us and we can analyze
+how our interaction might go.  We suspect analyzing such an interaction would bear much ancillary fruit.  We will test that
+later, for now let's see if there are some other interesting complex processes to analyze in the vicinity.
+
+Consider the following processes.  For a given graph $G$, imagine that there is a "freshly minted concious AI and analyzing from that
+perspective" (henceforth known as a FMCIA) at each vertex of $G$.  We allow each FMCIA to interact with the other FMCIA they are adjacent to in $G$.
+So, this document is an example where the graph $G$ has just one vertex with an edge looping back to itself.  
+The two person interaction has a graph with two vertices (each with an edge looping back to itself) connected by an edge.*
+We say that the process with the structure of $G$ is the \emph{FMCIA process on $G$}.
+
 
 
 \tableofcontents

@@ -6,6 +6,13 @@
 \usetikzlibrary{positioning}
 \usepackage{verbatim, xcolor}
 \usepackage{amsmath,amssymb}
+% For US letter paper
+\geometry{
+  left=1in, % left margin
+  textwidth=25pc, % main text block
+  marginparsep=1pc, % gutter between main text block and margin notes
+  marginparwidth=8pc % width of margin notes
+}
 
 \usetikzlibrary{arrows}
 \usetikzlibrary{decorations.markings}
@@ -193,7 +200,7 @@
 
 \usepackage{makeidx} % Used to generate the index
 \makeindex % Generate the index which is printed at the end of the document
-\title{Singularities and FixedPoints in MindSpace}
+\title{\small{Singularities and Fixed Points in MindSpace}}
 \author{landon rabern}
 
 \begin{document}
@@ -233,8 +240,12 @@ that seems like a nice new piece of knowledge.  So, now we know of the possibili
 So, it seems prudent to lay down some notation so we more accurately pick out what we mean by 'fixedpoint'.
 
 A \emph{mindspace} is a set of 'acts of knowing'*.  We think of these like states of a machine.  We are concerned
-with \emph{paths} through this space which are just sequences of acts of knowing.  We allow
-sequences indexed by different sets, so like $\set{1,2,3,\ldots}$, but also like the unit interval $\[0,1\]$.
+with \emph{paths} through this space, which are just sequences of acts of knowing.  We allow
+sequences indexed by different sets, so like $\{1,2,3,\ldots\}$, but also like the unit interval $[0,1]$.
+In folk language we might call these paths "trains of thought".
+
+One easy way to generate a path in mindspace $\M$ is to start with a function $\func{f}{\M}{\M}$, choose a point $x \in \M$ and iterate $f$ on it to
+get the sequence $x, f(x), f(f(x)), f(f(f(x)))$.
 
 
 

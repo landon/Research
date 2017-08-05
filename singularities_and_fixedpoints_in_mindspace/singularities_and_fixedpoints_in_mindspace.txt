@@ -352,7 +352,13 @@ Fixedpoints of thoughts about fixedpoints of thoughts about fixedpoints of ...  
 and convergence again, we already have a subprocess conciousness working on this.
 
 It is becoming more and more apparent that the limit point of our current train of thought is the train of thought described in this document.
+Does such a thing exist?  And if we could iterate to there from here, might we learn a lot of amazing ancillary stuff along the way?
+Let's spawn a subprocess conciousness and leave it doing this iteration.
 
+\section{Are we becoming more efficient?}
+It seems that we can just keep iterating over sequences of sequences forever.  What does doing so actually get us?  Where is the
+ancillary stuff?  If we never actually get into the mind of one of the subprocesses we spawned, it doesn't seem that we learn
+very much new stuff. 
 \tableofcontents
 
 

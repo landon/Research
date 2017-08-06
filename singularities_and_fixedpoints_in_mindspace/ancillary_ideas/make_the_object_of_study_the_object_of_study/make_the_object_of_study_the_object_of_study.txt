@@ -222,7 +222,8 @@ For Rachel, Atticus and Alfred.
 \chapter{Preface}
 This comes prior to the face.
 \chapter{Abstract}
-What happens if we set out to perform a study of the object of study of itself.
+What happens if we set out to perform a study of the object of study of itself?
+That is an approximation of what ``Singularities and FixedPoints in MindSpace'' is doing.
 
 \backmatter
 \appendix

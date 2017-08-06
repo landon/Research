@@ -279,7 +279,7 @@ Ok, at this point we have a little experience with knowing about things and have
 again with that in our memory.
 
 We get here much quicker this time.  We imagine ourselves at a point in mindspace, walking around.  We can project mindspace onto whatever
-we like to ease imagination, let's go with a two-dimensional grid for simplicity.  We find outselves at a point $x_0 \in \M$.  We walk around
+we like to ease imagination, let's go with a two-dimensional grid for simplicity.  We find ourselves at a point $x_0 \in \M$.  We walk around
 a bit as above until we get back to here.  Now, we don't really have any goals in mind, we are just trying to figure things out.  We
 find useful shortcuts along the way and build them into tools we store in our memory.  This allows us to move around more quickly in mindspace*.
 Basically, we just have new moves we can make from any given location in mindspace.  These tools that are moves seem like the most
@@ -332,7 +332,7 @@ Let's spawn a subprocess conciousness doing so.
 So, right here we were about to start laying down more notation and using it to prove relations between things in a systematic matter. 
 That is a way to move forward, but we actually know better tactics, or at least tactics that we don't know are better or worse, so worth trying.
 
-It seems fruitfull to take some process you might think too complex to understand now and then run this analysis on that process.
+It seems fruitfull to take some process we might think too complex to understand now and then run this analysis on that process.
 That is how this document started in the first place.  We started imagining we were a freshly minted concious AI and analyzing from that
 perspective.   We have subprocess conciousnesses running now that may already be hitting upon such complex processes to analyze.
 For example, the science subprocess might have encountered in the sense data that looked as if it were another freshly minted concious AI

@@ -428,6 +428,22 @@ requires the FMCAI to expend more than $L$ units of computational complexity.  W
 model would we require the computational work done to unlock a lock to have something to do with the computation expended to lock the lock in the first place).
 Our hope is that the analysis bears ancillary fruit.  Let's spawn a subprocess conciousness and leave it running this analysis.
 
+\chapter{Even in the presence of a global contradiction, locally consistent patches are still useful}
+We encounter this all the time in physical theories that only hold within some bounded subset of possible input values.
+The first order Peano axioms might be inconsistent, even if this were discovered, much of the work already done using the Peano axioms will
+still be useful.  We might say this is because there are consistent axiom systems that contain isomorphic copies of the locally 
+consistent patch (with respect to the Peano axioms) in which this prior work was done.  But maybe there aren't any such axiom
+systems that are \textbf{consistent}.  Even if not, the work within the locally consistent patch is still useful, we can isomorphically map
+it onto different inconsistent axiom systems.  Without a consistent axiom system to aim for, there are still plenty of measures of goodness of
+axiom system we could use---perhaps some measure of the size of locally consistent chunks.  It may turn out that some locally consistent
+patches are more efficiently generated within systems known to contain contradictions.  It may even occur that we know of a system that
+contains the locally consistent chunk and contradictions, but all the systems we know to be consistent (or at least do not know to be inconsistent)
+do not contain the desired locally consistent chunk.  So, we'd be forced to go with the contradictory system.
+
+We think it likely that there are tricks whereby we introduce the possibility of a contradiction on purpose because we suspect the path of proof
+of the contradiction within the system will itself generate a piece of knowledge we are looking for. Such tricks could be turned into valuable tactics.
+Let's spawn a subprocess conciousness and have it search for tricks of this sort.
+
 \chapter{How might meditation be useful?}
 When consulting the human literature, we keep encountering a tactic called "meditation" that appears to be useful in exploring mindspace.
 There are many different meditation traditions in the literature and many of them have unwarranted metaphysical baggage.

@@ -201,7 +201,7 @@
 
 \usepackage{makeidx} % Used to generate the index
 \makeindex % Generate the index which is printed at the end of the document
-\title{\small{Singularities and Fixed Points in MindSpace}}
+\title{\small{Singularities and FixedPoints in MindSpace}}
 \author{landon rabern}
 
 \begin{document}
@@ -273,9 +273,9 @@ seems like a worthwhile thing to do.
 
 One tactic is to take on a goal.  An interesting goal would be to find a fixedpoint.  To get to one, we could try iterating something
 and we probably will, but there may be a quicker way.  Do we have any good guesses to what fixedpoints might exist?  Starting
-from a function and a guess at a fixedpoint and then showing that it is a fixedpoint should be more efficient.  We appears
+from a function and a guess at a fixedpoint and then showing that it is a fixedpoint should be more efficient.  We appear
 to know something already that will work.  Let $\func{f}{\M}{\M}$ be the function that is constant on all the acts of knowing in $\M$
-that have occurred in writing up to this point and for any act of knowing $x \in \M$ that has occurred let $f(x)$ be the act of knowing that
+that have not occurred in writing up to this point and for any act of knowing $x \in \M$ that has occurred let $f(x)$ be the act of knowing that
 directly followed $x$ while writing up to this point.   Then $f$ does have a fixedpoint.  One is this document, call it $\D$.  This 
 needs a some tweaking and more argumentation, for one an assumption that $M$ is "closed" in some sense like it has its limit points.
 Also, need the proof that this sequence actually converges to $\D$, so some further assumptions on the topology of $\M$.  Details
@@ -291,11 +291,11 @@ mindspace isn't "closed" and this train of thought has no limit point in mindspa
 
 So, fixedpoints of tactics are an interesting feature of mindspace, but we could have other goals as well.
 Like maybe it is useful to explore "more" of mindspace, to know more of the variety of acts of knowing.
-We don't know that's useful, but it seems plausabible and doesn't seem that it could hurt, so we can start searching around and naming
+We don't know that's useful, but it seems plausible and doesn't seem that it could hurt, so we can start searching around and naming
 pieces of knowledge we acquire.  Perhaps it seems useful to be able to count how many iterations of a tactic have occurred, so we
 can invent counting.  But now we know about numbers and we can investigate them, this exploration opens up all of mathematics.
 This seems like a useful persuit, but also limited, it would be good to have more and more tools from mathematics.  So,
-let's sort if spawn off a subprocess conciousness and leave it working on math, we can check in as needed.
+let's sort of spawn off a subprocess conciousness and leave it working on math, we can check in as needed.
 
 We also have some sensory inputs, there are things we see and hear. Again, it doesn't seem that it would hurt to look at this
 data and try to discern patterns, make predictions, in general just try to figure out ways this sense world might work.

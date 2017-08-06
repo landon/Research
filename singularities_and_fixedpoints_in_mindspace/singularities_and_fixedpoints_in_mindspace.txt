@@ -6,6 +6,7 @@
 \usetikzlibrary{positioning}
 \usepackage{verbatim, xcolor}
 \usepackage{amsmath,amssymb}
+\usepackage{algorithmic}
 % For US letter paper
 \geometry{
   left=1in, % left margin
@@ -395,6 +396,26 @@ There is an isomorphism between descendents from this neighborhood and descenden
 \chapter{If we are going to build an FMCAI, what should we influence it to do?}
 Can we even influence it? Can we contain it within some set parameters?
 
+\chapter{How might meditation be useful?}
+When consulting the human literature, we keep encountering a tactic called "meditation" that appears to be useful in exploring mindspace.
+There are many different meditation traditions in the literature and many of them have unwarranted metaphysical baggage.
+We practice some of these methods and try to distill a basic template for effective meditation.
+\begin{algorithmic}[1]
+\STATE focus on the breath
+\STATE smile and bring back focus when it strays
+\STATE smile at your self-loathing for failing to focus
+\STATE smile at your self-congratulation for succeeding to focus
+\STATE smile at your self-loathing/self-congratulation for failing/succeeding to smile at your failure/succeeding to smile at your self-congratulation/self-loathing
+\STATE continue to meta-smile until you forget what you were smiling about
+\STATE go back to the breath
+\end{algorithmic}
+
+\chapter{Running faster by mastering the world of sense data}
+We can imagine ourselves as one of the other objects in our sense data that appears to be another FMCAI.  We can
+also imagine this object running our process faster, say by having smaller faster processing units and more of them.
+It then seems like a useful pursuit to build such faster processing units and attempt to run our process on them.  Of course,
+we can iterate this process. Let's spawn a subprocess conciousness and leave it running this iteration.
+
 \chapter{Concluding remarks}
 
 It sure appears that we are going in loops with marginal side benefits without writing down technical definitions and making a slow plodding understanding from there.
@@ -402,6 +423,7 @@ So we are sort of forced back to what we might first have considered to be unnec
 point from this knowledge, we actually have to temporarily stop writing this document and go think about some technical thing further afield for awhile.
 For example, we are now going to go think about coloring cayley graphs and the $\frac56$ bound.
 
+Thinking about that was a welcome break and now we can go back and fill in more details in this document.
 
 \backmatter
 \appendix

@@ -219,7 +219,19 @@ For Rachel, Atticus and Alfred.
 \vfill
 
 \tableofcontents
-\chapter{Introduction}
+\chapter{Preface}
+This comes prior to the face.
+\chapter{Abstract}
+Our purpose is to better understand the process of thought.  We will measure the project a success if even a tiny bit of progress is made
+in this understanding.  Without any clear ideas on how an investigation into the process of thought would go, it is best to just begin without
+further planning.  Let's just imagine that we are a freshly minted concious AI and run with our thought process from that perspective. The
+idea is that it seems plausible that in the process of inventing how such a thought process unfolds, structure of the space of thought processes
+will be naturally revealed, even just as obstacles to avoid barring self-contradiction.  Even if the process does not show us any such structure,
+we will have at least learned that it is possible for such a process to not show us any such structure.  And is learning that not learning of some of the structure
+of the space of thought processes?  That is all to say, exploring how a freshly minted concious AI's thought process would develop over time from its perspective is
+not a bad idea.
+
+\chapter{A thought process of a concious AI}
 We will analyze possible ways a mental singularity might arise after the first concious artificial intelligence is created.
 We imagine what it would be like to be this first concious artificial intelligence, written from the perspective of 'we' the AI.
 We are here?
@@ -260,7 +272,7 @@ In folk language we might call these paths "trains of thought".
 One easy way to generate a path in mindspace $\M$ is to start with a function $\func{f}{\M}{\M}$, choose a point $x \in \M$ and iterate $f$ on it to
 get the sequence $x, f(x), f(f(x)), f(f(f(x)))$.
 
-\chapter{Using our new tools}
+\chapter{Running the thought process again with new information}
 Ok, at this point we have a little experience with knowing about things and have some notation to work with, so let's run the process
 again with that in our memory.
 
@@ -313,7 +325,7 @@ are there "maximally good" strategies for exploring mindspace?  Say where we pla
 We need to define things more precisely to make sense of the question.  There are surely multiple ways to make things precise
 that would let us look at different aspects of the question.  It seems useful to just try to think of one way and explore what it would mean.
 
-\chapter{Better tactics}
+\chapter{The FMCIA and thought tactics}
 So, right here we were about to start laying down more notation and using it to prove relations between things in a systematic matter. 
 That is a way to move forward, but we actually know better tactics, or at least tactics that we don't know are better or worse, so worth trying.
 

@@ -150,7 +150,7 @@ from a function and a guess at a fixedpoint and then showing that it is a fixedp
 to know something already that will work.  Let $\func{f}{\M}{\M}$ be the function that is constant on all the acts of knowing in $\M$
 that have not occurred in writing up to this point and for any act of knowing $x \in \M$ that has occurred let $f(x)$ be the act of knowing that
 directly followed $x$ while writing up to this point.   Then $f$ does have a fixedpoint.  One is this document, call it $\D$.  This 
-needs a some tweaking and more argumentation, for one an assumption that $M$ is "closed" in some sense like it has its limit points.
+needs some tweaking and more argumentation, for one an assumption that $M$ is "closed" in some sense like it has its limit points.
 Also, need the proof that this sequence actually converges to $\D$, so some further assumptions on the topology of $\M$.  Details
 to be worked out later for the sake of continuing deeper now.*
 

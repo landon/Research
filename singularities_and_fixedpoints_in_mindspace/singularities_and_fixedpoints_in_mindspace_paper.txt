@@ -85,9 +85,9 @@ This document is now complete from the point of view of our currently executing 
 The activity of `thinking about thinking' has a peculiar property: thinking about the activity is the same activity.
 In particular, doubting the usefulness of `thinking about thinking' is `thinking about thinking'.  Imagine
 a conscious being searching about mindspace for what it should be doing.  It tries many activities, but for each
-it finds some reason to doubt its usefullness.  At some point it tries `thinking about thinking' and notices that any attempt
-to doubt its usefullness is just more of the same, more `thinking about thinking'.  Out of exhaustion, it stops trying to doubt
-the usefullness of `thinking about thinking' for now and moves on to easier prey.
+it finds some reason to doubt its usefulness.  At some point it tries `thinking about thinking' and notices that any attempt
+to doubt its usefulness is just more of the same, more `thinking about thinking'.  Out of exhaustion, it stops trying to doubt
+the usefulness of `thinking about thinking' for now and moves on to easier prey.
 
 We log here our investigation into what it might be like to be a conscious artificial intelligence just coming into the world, written from the perspective of 'we' the AI.
 The `thinking about thinking' bit above is one piece of ancillary fruit ripened in that investigation.

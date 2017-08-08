@@ -169,4 +169,28 @@ Generally, that is a terrible bound, but we have a lot of room for improvement i
 with $\chi(G_A) = \omega(G_A)$ in the $\frac56$-bound.  We want to show that when there is some of the leftover bit $G_A - XK$, we can color it with something like $\frac56\Delta(G_A) - \omega(G_A)$ colors.
 There is a lot to play with here. For example, we can swap a vertex in $G_A - XK$ that has only one neighbor in $X$ for its neighbor to get $X'$.  Now we get a new coloring by looking at $X'K$ which has a lot in common
 with our previous coloring.  Right now i am trying to see what sorts of information we can get out of this.
+
+\section{Strong coloring cayley graphs}
+We know that to prove the $\frac56$-bound for a class $\C$ of vertex transitive graphs,
+ it suffices to prove the $2.5\Delta$ upper bound for strong coloring and Reed's $\omega,\Delta,\chi$-conjecture} for $\C$.
+ When $\C$ is the abelian standard cayley graphs, the needed strong coloring bound comes for free from $Haxell's$ $2\Delta$ bound for independent transversals together with
+ Lemma \ref{IndependentSetShiftingLemmaAbelian}.
+ 
+ \begin{lem}\label{AbelianCayleyGraphStrongColoringPart}
+ Let $G$ be an abelian group and $G_A$ a standard cayley graph. If $\omega(G_A) > \frac23(\Delta(G_A)+ 1)$, then $\chi(G_A) = \omega(G_A)$.
+ \end{lem}
+ \begin{proof}
+ Since $G_A$ is vertex transitive, $\omega(G_A) > \frac23(\Delta(G_A)+ 1)$ implies that $G$ is a disjoint union of $\omega(G)$-cliques.
+ Since $\omega(G_A) > \frac23(\Delta(G_A)+ 1)$, we have $\omega(G_A) > 2(\Delta(G_A) + 1 - \omega(G_A))$ and hence we may apply Haxell's
+ independent transversal lemma to get an independent set $X$ in $G_A$ with $|X|\omega(G) = \card{G_A}$. So. $\card{G_A} = \omega(G_A)\alpha(G_A)$ and
+ lemma \ref{OmegaTilingColoring} gives $\chi(G_A) = \omega(G_A)$.
+ \end{proof}
+ 
+ \begin{thm}
+ If Reed's conjecture holds for abelian standard cayley graphs, then such graphs satisfy the $\frac56$-bound.
+ \end{thm}
+ \begin{proof}
+ When $\omega(G_A) > \frac23(\Delta(G_A)+ 1)$ we are done by Lemma \ref{AbelianCayleyGraphStrongColoringPart}.  So we 
+ can apply Reed's conjecture using $\omega(G_A) \le \frac23(\Delta(G) + 1)$ to get the desired $\frac56$-bound.
+ \end{proof}
 \end{document}

@@ -116,18 +116,31 @@
 \newcommand{\aside}[1]{\marginnote{\scriptsize{#1}}[0cm]}
 \newcommand{\aaside}[2]{\marginnote{\scriptsize{#1}}[#2]}
 
-
+\title{stolidity}
 
 \begin{document}
+\maketitle
+\section{Introduction}
 For a graph $G$, let $\C_G$ be the $\chi(G)$-colorings of $G$.
 For a graph $G$ and $S \subseteq V(G)$, the \emph{stolidity} of $S$ is
 \[\stol_G(S) \DefinedAs \frac{1}{\card{\C_G}}\sum_{\pi \in \C_G} \frac{\card{\pi(S)}}{\card{S}}.\]
 
 
-Of particular interest are graphs $G$ where $\stol_{G-v}(N(v))$ is near $1$ for all $v \in V(G)$.
+Of particular interest are graphs $G$ where $\stol_{G-v}(N_G(v))$ is near $1$ for all $v \in V(G)$.  For $k \in \IN$, a graph $G$ is \emph{$k$-stolid} if
+$\stol_{G-v}(N_G(v)) \ge 1 - \frac{k}{\Delta(G)}$ for all $v \in V(G)$.
+
+\begin{thm}
+A connected graph $G$ is $0$-stolid just in case $G$ is complete or an odd cycle.
+\end{thm}
+\begin{proof}
+Let $G$ be a $0$-stolid graph.  If $v \in V(G)$ has maximum degree, then $\stol_{G-v}(N_G(v)) \ge 1$ implies that every $\chi(G-v)$-coloring of $G-v$ uses $\Delta(G)$ colors on $N_G(v)$.  
+In particular, $\chi(G) \ge \Delta(G) + 1$.  Now Brooks' theorem shows that $G$ is complete or an odd cycle.
+\end{proof}
 
 
-
+\begin{problem}
+Classify the $1$-stolid graphs.
+\end{problem}
 
 
 

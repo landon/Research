@@ -1,0 +1,381 @@
+\documentclass[10pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.0in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1.0in}
+
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+\newcommand{\CS}{C\includegraphics{sharp}}
+\newcommand{\FS}{F\includegraphics{sharp}}
+
+\usepackage[svgnames]{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{0.94, 0.97, 1.0}
+ 
+\newcommand{\resheading}[1]{
+  \parbox{\textwidth}{
+    \begin{shaded}
+      \textbf{\sffamily{\mbox{~}{\large #1}}}
+    \end{shaded}
+  }
+}
+
+\newcommand{\squishlist}{
+   \begin{list}{$\bullet$}
+    { \setlength{\itemsep}{0pt}    \setlength{\parsep}{0pt}
+      \setlength{\topsep}{4.5pt}     \setlength{\partopsep}{0pt}
+      \setlength{\leftmargin}{2em} \setlength{\labelwidth}{1.5em}
+      \setlength{\labelsep}{0.5em} } }
+      
+\newcommand{\squishend}{
+    \end{list}  }
+
+\begin{document}
+
+
+\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+\Large \textbf{landon rabern, phd}  & (805) 403-8185\\
+314 Euclid Ave. & landon.rabern@gmail.com\\
+Mt. Gretna, PA & \href{https://github.com/landon?tab=repositories}{https://github.com/landon}\\
+\end{tabular*}
+\line(1,0){544}
+
+\vspace{0.1in}
+
+\resheading{Work History}
+ \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{CTO, Co-founder} & 2008 -  2017\\
+       	LBD Data\\
+  \end{tabular*}
+
+\squishlist
+    \item Contract development for Safety Vision, a producer of mobile video solutions for police and public transit.
+	\item Wrote SafetyView (\CS{})
+		\squishlist
+			\item P/Invoke wrapper of libavcodec for H264/MPEG4 decoding, up to 12 channel playback at once.
+			\item Vehicle location display via embedded Google map (JavaScript).
+			\item Custom AVI writer for export.
+			\item Shareable web links, multichannel playback in HTML5 for mobile (using Amazon S3 with DynamoDB).
+			\item Both WinForms and WPF versions.
+		\squishend
+	\item Wrote SafetyNet (\CS{})
+		\squishlist
+			\item Automatic wireless download of video from vehicles.
+			\item Video searchable by metadata in database (SQL).
+			\item Streaming video to SafetyView.
+		\squishend
+	\item Wrote LiveLook (\CC{} / \CS{})
+		\squishlist
+			\item Live playback of multiple IP camera streams.
+			\item Uses LIVE555 to eat the streams, passing frames up to a \CS{} WPF viewer.
+		\squishend
+	
+	\item Contract development for ipDatatel
+	\item Wrote uDownloader (\CS{})
+		\squishlist
+			\item NT service that talks to household appliances
+			\item Tray application to monitor connections, view data transmission
+		\squishend
+	\item Made custom version of com0com null-modem emulator driver (\CC{})
+	\squishend
+	
+	 \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Adjunct Assistant Professor} & 2014 - 2016 \\
+		Mathematics Department \\
+        Franklin \& Marshall College & Lancaster, PA\\
+    \end{tabular*}
+	
+	\squishlist
+	  \item 6 sections of Calculus.
+	  \item 3 sections of Algebra \& Trigonometry.
+	\squishend
+	
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Senior Software Engineer} & 2010 - 2011 \\
+        Wall Street On Demand & Boulder, CO\\
+    \end{tabular*}
+
+	\squishlist
+	   \item Made an attribute-based runtime object to/from stream protocol mapping engine using compiled expression trees in \CS{}.
+		\item Heavily optimized the mapping of built-in types to/from the stream protocol achieving a 10x speed increase.
+		\item Optimized the memory profile of the multithreaded socket server by writing a lockless thread-safe memory pool in \CS{}.  
+		This allowed the server to handle a 2x increase in load.
+	\squishend
+
+  \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Senior Software Engineer} & 2009 - 2010 \\
+       	Synaptics & Santa Clara, CA\\
+  \end{tabular*}
+
+\squishlist
+   \item Debugged and fixed issues in the Synaptics TouchPad driver, ranging from blue screens to gesture recognition problems (\CC).
+	\item Built a tool to play back and analyze gestures from customer log files (\CS{}).
+	\item Built a tool to verify and optimize driver INF files (\CS{}).
+\squishend
+
+	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Software Engineer} & 2007 - 2009 \\
+        Wall Street On Demand & Boulder, CO\\
+    \end{tabular*}
+
+	\squishlist
+	\item Rewrote the company's entire distributed computing layer in \CS{}.  This included the implementation of socket based clients and servers that communicate using the company's custom data transfer protocol.
+	\item Wrote large portions of Goldman Sachs' (the parent company) new \CS{} financial plotting tool.
+	\item Built the foundation for the company's new chart and pdf generation server.  This uses WPF to generate thumbnail charts for web pages as well as creating complete stock and research reports.
+	\squishend
+
+	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Scientific Programmer} & 2006 - 2007 \\
+        L-3 Communications - Applied Technologies Division & Santa Barbara, CA\\
+        Security Clearance: Secret
+    \end{tabular*}
+
+    \squishlist
+    \item Developed a \CS{} control encapsulating NASA's WorldWind 3D mapping application.  Wrote algorithms to display shaded contours on WorldWind's globe.
+    \item Exposed Unmanaged \CC{} algorithms and graphics packages for use in Managed \CS{} code using both P/Invoke services and \CC/CLI wrappers.
+	\item Wrote a \CC{} application that provides nuclear effects simulation in real-time wargaming exercises for White Sands Missile Range.
+	\item Wrote a COM object that provides source region electromagnetic pulse effects simulation (the thing that happens when a nuke goes off at low altitude).
+	\item Wrote a parallel Monte Carlo electromagnetic simulation to compute damage probabilities. 
+	\item Wrote a finite difference time domain Maxwell's equations visualizer in \CC{}.
+    \squishend
+	
+\resheading{Education}
+	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{Ph.D., Mathematics} & 2011 - 2013 \\
+        Arizona State University \\
+        Research: Discrete math, graph coloring, games and algorithms.\\
+        Advisor: Hal Kierstead
+    \end{tabular*}
+	
+	\bigskip
+
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{M.A., Mathematics} & 2003 - 2005 \\
+        University of California, Santa Barbara \\
+    \end{tabular*}
+	
+	\bigskip
+
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \textbf{B.A., Mathematics} & 1999 - 2003 \\
+        Washington University in St. Louis \\
+        Ross Middlemiss Prize (for top graduating Mathematics major)\\
+		Study Abroad in the Netherlands (Utrecht University) & 2001 - 2002 \\
+    \end{tabular*}
+
+\resheading{Honors \& Activities}
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \hspace{3ex}\textbf{Erd\H{o}s number 2} & 2011 \\
+    \end{tabular*}\newline
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \hspace{3ex}\textbf{$1^{st}$ place, Mentor Graphics State Programming Competition} & 1997 and 1998\\
+    \end{tabular*}\newline
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \hspace{3ex}\textbf{Developed Betsy, a master strength chess program, in C}  & 1998 - 2003\\
+    \end{tabular*}\newline
+    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+        \hspace{3ex}\textbf{Built Tesla coils and produced massive lightning bolts} & 1997 - 1999 \\
+    \end{tabular*}    
+
+\resheading{Technical Skills}
+\squishlist
+    \item \textbf{Languages and Technologies}
+    \squishlist
+        \item \CS{}, C/\CC{}, JavaScript, Go, Python, Solidity, \FS{}, Dart, Java, Pascal, VB.NET, Scheme, Fortran, x86 assembly
+        \item LINQ, \LaTeX, SQL, ASP.NET MVC, HTML, CSS, XML, XSLT, Bridge.NET, Google protobufs
+        \item WinForms, WPF, Silverlight, Xamarin
+    \squishend
+    
+    \item \textbf{Development Tools and Platforms}
+    \squishlist
+		\item ANTS profiler, dotTrace
+  	    \item .NET Reflector, dotPeek
+        \item Visual Studio, Notepad++
+        \item Git, Subversion, CVS
+        \item Windows, Linux, Mac
+      \squishend
+\squishend
+\newpage
+\resheading{Research Articles}
+	
+\begin{enumerate}[{[}1{]}]\addtolength{\itemsep}{-0.5\baselineskip}
+\item
+	D.W.~Cranston and L.~Rabern.
+	\newblock Beyond Degree Choosability.
+	\newblock {\em Electron. J. Combin.}, Accepted.
+	\smallskip
+	
+	\item
+	D.W.~Cranston and L.~Rabern.
+	\newblock Planar graphs are 9/2-colorable.
+	\newblock {\em  J. Combin. Theory Ser. B}, Accepted.
+	\smallskip
+	
+	\item
+	D.W.~Cranston and L.~Rabern.
+	\newblock Short fans and the 5/6 bound for line graphs.
+	\newblock {\em SIAM J. Discrete Math}, Accepted.
+	\smallskip
+	
+\item
+L.~Rabern.
+\newblock A better lower bound on average degree of 4-list-critical graphs.
+\newblock {\em Electron. J. Combin.}, \textbf{23} (3), 2016.
+	
+	\smallskip
+	
+	\item
+H.~Kierstead and L.~Rabern.
+\newblock Extracting list colorings from large independent sets.
+\newblock {\em J. Graph Theory}, Accepted.
+
+\smallskip
+
+	\item
+	D.W.~Cranston and L.~Rabern.
+	\newblock Edge Lower Bounds for List Critical Graphs, via Discharging.
+	\newblock {\em Combinatorica}, Accepted.
+	\smallskip
+
+\item
+D.W.~Cranston and L.~Rabern.
+\newblock Planar graphs have independence ratio at least 3/13.
+\newblock {\em Electron. J. Combin.}, \textbf{23} (3), 2016.
+\smallskip
+
+\item
+D.W.~Cranston and L.~Rabern.
+\newblock List-coloring claw-free graphs with $\Delta - 1$ colors.
+\newblock {\em SIAM J. Discrete Math.}, Accepted.
+\smallskip
+
+\item
+D.W.~Cranston and L.~Rabern.
+\newblock Subcubic edge chromatic critical graphs have many edges.
+\newblock {\em J. Graph Theory}, Accepted.
+\smallskip
+
+\item
+D.W.~Cranston and L.~Rabern.
+\newblock Painting squares in $\Delta^2 - 1$ shades.
+\newblock {\em Electron. J. Combin.}, \textbf{23} (2), 2016.
+	
+	\smallskip
+	
+	\item
+H.~Kierstead and L.~Rabern.
+\newblock Improved lower bounds on the number of edges in list critical and online list critical graphs.
+\newblock {\em J. Combin. Theory Ser. B}, Accepted.
+
+\item D.W.~Cranston and L.~Rabern.
+	\newblock The fractional chromatic number of the plane.
+	\newblock {\em Combinatorica}, Accepted.
+	
+\item D.W.~Cranston and L.~Rabern.
+\newblock Graphs with $\chi = \Delta$ have big cliques.
+\newblock {\em SIAM J. Discrete Math.}, Accepted.	
+
+\item D.W.~Cranston and L.~Rabern.
+\newblock A note on coloring vertex-transitive graphs.
+\newblock {\em Electron. J. Combin.}, Accepted.
+
+\item
+	D.W.~Cranston and L.~Rabern.
+	\newblock Brooks' Theorem and Beyond.
+	\newblock {\em J. Graph Theory}, Accepted.
+	
+\item D.W.~Cranston and L.~Rabern.
+\newblock Conjectures equivalent to the Borodin-Kostochka conjecture that appear weaker.
+\newblock {\em European J. Combinatorics}, Volume 44, Part A, February 2015, Pages 23–42.
+
+\item L.~Rabern.
+\newblock A game generalizing Hall's Theorem.
+\newblock {\em Discrete Math.}, \textbf{320}\penalty0 (6):\penalty0 87-91, 2014.
+
+\item L.~Rabern.
+\newblock Coloring graphs with dense neighborhoods.
+\newblock {\em J. Graph Theory}, \textbf{76}\penalty0 (4):\penalty0 323-340, 2014.
+
+\item L.~Rabern.
+\newblock A different short proof of Brooks' theorem.
+\newblock {\em Discuss. Math. Graph Theory}, \textbf{34}\penalty0 (3), 2014.
+
+\item L.~Rabern, B.~Rabern, and M.~Macauley.
+\newblock Dangerous reference graphs and semantic paradoxes.
+\newblock {\em Journal of Philosophical Logic}, \textbf{42}\penalty0 (5):\penalty0 727-765, 2013.
+
+\item L.~Rabern.
+\newblock Partitioning and coloring graphs with degree constraints.
+\newblock {\em Discrete Math.}, \textbf{313}\penalty0 (9):\penalty0 1028-1034, 2013.
+
+\item D.W.~Cranston and L.~Rabern.
+\newblock Coloring claw-free graphs with $\Delta - 1$ colors.
+\newblock {\em SIAM J. Discrete Math.}, \textbf{27}\penalty0 (1):\penalty0 534-549, 2013.
+
+\item L.~Rabern.
+\newblock Destroying non-complete regular components in graph partitions.
+\newblock {\em J. Graph Theory}, \textbf{72}\penalty0 (2):\penalty0 123-127, 2013.
+
+\item A.V.~Kostochka, L.~Rabern and M.~Stiebitz.
+\newblock Graphs with chromatic number close to maximum degree.
+\newblock {\em Discrete Math.}, \textbf{312}\penalty0 (6):\penalty0 1273-1281, 2012.
+
+\item L.~Rabern.
+\newblock A strengthening of Brooks' Theorem for line graphs.
+\newblock {\em Electron. J. Combin.}, N145, \textbf{18} (1), 2011.
+
+\item L.~Rabern.
+\newblock $\Delta$-Critical graphs with small high vertex cliques.
+\newblock {\em J. Combin. Theory Ser. B}, \textbf{102}\penalty0 (1):\penalty0 126-130, 2012.
+
+\item L.~Rabern. 
+\newblock On hitting all maximum cliques with an independent set.
+\newblock {\em J. Graph Theory}, \textbf{66}\penalty0 (1):\penalty0 32-37, 2011.
+
+\item L.~Rabern.
+\newblock A note on Reed's conjecture.
+\newblock {\em SIAM J. Discrete Math.}, \textbf{22}\penalty0 (2):\penalty0 820-827, 2008.
+
+\item
+B.~Rabern and L.~Rabern.
+\newblock A simple solution to the hardest logic puzzle ever. 
+\newblock {\em Analysis}, \textbf{68}\penalty0 (2), April 2008.
+
+\item L.~Rabern.
+\newblock Applying Groebner basis techniques to group theory.
+\newblock {\em J. Pure Appl. Algebra}, \textbf{210}\penalty0 (1):\penalty0 137-140, 2007.
+
+\item
+L.~Rabern.
+\newblock The Borodin-Kostochka conjecture for graphs containing a doubly critical edge.
+\newblock {\em Electron. J. Combin.}, N22, \textbf{14} (1), 2007.
+
+\item
+D.~Gernert and L.~Rabern.
+\newblock A knowledge-based system for graph theory, demonstrated by partial proofs for graph-colouring problems.
+\newblock {\em Comm. Math. Comput. Chem.}, \textbf{58}, N2 2007.
+
+\item L.~Rabern.
+\newblock On graph associations.
+\newblock {\em SIAM J. Discrete Math.}, \textbf{20} \penalty0 (2):\penalty0 529--535,
+  2006.
+
+\item L.~Rabern.
+\newblock Properties of magic squares of squares.
+\newblock {\em Rose Hulman Undergraduate J. Math.}, \textbf{4}\penalty0
+  (1), 2003. 
+\end{enumerate}
+\end{document}
+

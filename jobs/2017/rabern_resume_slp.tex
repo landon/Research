@@ -22,7 +22,7 @@
 
 \usepackage[svgnames]{xcolor}
 \usepackage{framed}
-\definecolor{shadecolor}{rgb}{0.94, 0.97, 1.0}
+\definecolor{shadecolor}{rgb}{0.90, 0.97, 1.0}
  
 \newcommand{\resheading}[1]{
   \parbox{\textwidth}{
@@ -99,7 +99,7 @@ I was the sole developer on a team of 3.}
 			\item Live playback of multiple IP camera streams. (JavaScript / HTML)
                          \item Map UI for monitoring vehicle locations with sub-second latency (built on top of Google Maps).
 			\item Uses LIVE555 to eat the streams, passing frames up to a \CS{} WPF viewer.
-			\item J1939 implementation (\CC{}) for retrieving vehicle diagnostics, including ECU and tire pressure.
+			\item J1939 implementation (\CC{}) for retrieving vehicle diagnostics, including engine exhaust and tire pressure.
 		\squishend
 \squishend
 	
@@ -147,7 +147,8 @@ I was the sole developer on a team of 3.}
 	\squishlist
 	\item Rewrote the company's entire distributed computing layer in \CS{}. Implemented routing (Random, Round-Robin, etc), load balancing, failover, etc.
 	\item Wrote significant portions of Goldman Sachs' (the parent company) new \CS{} financial plotting tool.
-	\item Built our charting framework, including a re-usable API used by all other developers and the core chart rendering service, using vector graphics. This generates thumbnail charts for web pages as well as creating complete stock and research reports. Topological sort was to used to  avoid label collisions (\CS{}, WPF).
+	\item Built our charting framework, including a re-usable API used by all other developers and the core chart rendering service, using vector graphics. 
+	This generates thumbnail charts for web pages as well as creating complete stock and research reports (\CS{}, WPF).
 	\squishend
 
 \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}

@@ -42,116 +42,122 @@
 \newcommand{\squishend}{
     \end{list}  }
 
+\newcommand{\mydesc}[1] {\vspace{0.1in}{\it #1}}
+
 \begin{document}
 
 
 \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
 \Large \textbf{landon rabern, phd}  & (805) 403-8185\\
-314 Euclid Ave. & landon.rabern@gmail.com\\
-Mt. Gretna, PA & \href{https://landon.github.io/}{https://landon.github.io/}\\
+& landon.rabern@gmail.com\\
+& \href{https://landon.github.io/}{https://landon.github.io/}\\
 \end{tabular*}
 \line(1,0){544}
 
 \vspace{0.1in}
 
+\resheading{Objective}
+
+PhD Mathematician with an Erd\H{o}s number of 2 and significant industry programming experience looking to work in a fast-paced environment and build upon my machine learning expertise in a production context.
+
 \resheading{Work History}
+
  \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
         \textbf{CTO, Co-founder} & 2008 -  2017\\
        	LBD Data\\
   \end{tabular*}
 
+\mydesc{ My cofounders and I formed LBD Data to build a suite of enterprise software products in collaboration with Safety Vision, a producer of mobile video solutions for police and public transit. Our products are used throughout the United States. TODO: How many installations, how many users, how much video stored (TB). I was the sole developer on a team of 3.}
+
 \squishlist
-    \item Contract development for Safety Vision, a producer of mobile video solutions for police and public transit.
-	\item Our software suite is used at police departments and transit authorities all over Texas, in Las Vegas, Honolulu,
-	Indianapolis, Columbus, and Portland.
-	\item Wrote SafetyView (\CS{})
+	\item Designed and developed SafetyView, an application to search and explore large video collections for the purposes of identifying video clips and submitting them into evidence for legal proceedings (\CS{}).
 		\squishlist
-			\item P/Invoke wrapper of libavcodec for H264/MPEG4 decoding, up to 12 channel playback at once.
-			\item Vehicle location display via embedded Google map (JavaScript).
-			\item Custom AVI writer for export.
-			\item Shareable web links, multichannel playback in HTML5 for mobile (using Amazon S3 with DynamoDB).
-			\item Both WinForms and WPF versions.
+		        \item UI to search and sort through videos with previews (\CS{}, WinForms).
+                         \item GPU-accelerated 180$^\circ$ fisheye camera dewarping with support for tilt/pan/zoom.
+		        \item Video player (H264/MPEG4) with support for 16 channels plus integrated UI that presents all relevant metadata including GPS traces, allowing you to scrub through the video based on, e.g. location (libavcodec, OpenStreetMap).
+		        \item Video editor with support for annotation and blurring faces (OpenCV).
+			\item Shareable, permissioned web links to specific videos (Amazon S3, Cloudfront, DynamoDB).
+			\item HTML5 Mobile App for viewing streams with synchronized multichannel playback.
 		\squishend
-	\item Wrote SafetyNet (\CS{})
+		
+	\item Developed SafetyNet, a media server to collect video from a fleet of vehicles and support search and playback in SafetyView. It also monitors and reports on the health of the underlying Camera/DVR hardware (\CS{}).
 		\squishlist
-			\item Automatic wireless download of video from vehicles.
-			\item Video searchable by metadata in database (SQL).
+			\item High speed multithreaded video import, including scraping GPS and vehicle metadata from a variety of file formats and storing it in a central database (\CS{}, MS-SQL)
+			\item Automatic wireless download of video from vehicles with support for resume (FTP/SFTP/SSH/Samba/ other custom protocols).
+			\item Wireless Camera/DVR health analysis (camera functioning/positioning/field of view) 
+			\item Management of software/firmware upgrades for Camera/DVR hardware for the whole fleet.
+			\item Video search backend for SafetyView (SQL).
 			\item Streaming video to SafetyView.
 		\squishend
-	\item Wrote LiveLook (\CC{} / \CS{})
+		
+	\item Created LiveLook, a realtime web-based UI for public transit systems that allows centralized monitoring and alerting for fleets of thousands of vehicles, including simultaneous viewing of the video streams from their onboard cameras. (\CC{} / \CS{} / JavaScript / HTML / CSS)
 		\squishlist
-			\item Live playback of multiple IP camera streams.
+			\item Live playback of multiple IP camera streams. (JavaScript / HTML)
+                         \item Map UI for monitoring vehicle locations with sub-second latency (built on top of Google Maps).
 			\item Uses LIVE555 to eat the streams, passing frames up to a \CS{} WPF viewer.
+			\item J1939 implementation (\CC{}) for retrieving vehicle diagnostics, including ECU and tire pressure.
 		\squishend
-	
-	\item Contract development for ipDatatel
-	\item Wrote uDownloader (\CS{})
-		\squishlist
-			\item Provides remote access to alarm panels
-			\item Tray application to monitor connections, view data transmission
-		\squishend
-	\item Made custom version of com0com null-modem emulator driver (\CC{})
-	\squishend
+\squishend
 	
 	 \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{Adjunct Assistant Professor} & 2014 - 2016 \\
-		Mathematics Department \\
+        \textbf{Adjunct Assistant Professor, Mathematics} & 2014 - 2017 \\
         Franklin \& Marshall College & Lancaster, PA\\
     \end{tabular*}
 	
 	\squishlist
-	  \item 6 sections of Calculus.
-	  \item 3 sections of Algebra \& Trigonometry.
+	  \item 6 sections of Calculus,  3 sections of Algebra \& Trigonometry.
 	\squishend
 	
     \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{Senior Software Engineer} & 2010 - 2011 \\
+        \textbf{Senior Staff Software Engineer} & 2010 - 2011 \\
         Wall Street On Demand & Boulder, CO\\
     \end{tabular*}
-
+	\mydesc{Worked on the web engineering team, focused on optimizing middleware supporting hundreds of developers.}
 	\squishlist
-	   \item Made an attribute-based runtime object to/from stream protocol mapping engine using compiled expression trees in \CS{}.
-		\item Heavily optimized the mapping of built-in types to/from the stream protocol achieving a 10x speed increase.
-		\item Optimized the memory profile of the multithreaded socket server by writing a lockless thread-safe memory pool in \CS{}.  
-		This allowed the server to handle a 2x increase in load.
+		\item Replaced a hodgepodge of thousands of schema-less data exchange formats with autogenerated data types for clearer, more performant code using compiled expression trees. Reduced the number of bugs due to data parsing and the ramp-up time for new developers significantly.  \CS{}
+		\item Sped up our data-fetching layer by 10x by optimizing serialization/deserialization, affecting hundreds of different services.
+		\item Doubled the capacity of our business-critical chart generation service by writing a lockless thread-safe memory pool to optimize memory use \CS{}.
 	\squishend
 
   \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{Senior Software Engineer} & 2009 - 2010 \\
+        \textbf{Staff Software Engineer} & 2009 - 2010 \\
        	Synaptics & Santa Clara, CA\\
   \end{tabular*}
+  
+\mydesc{My work at Synaptics was focused on improving the reliability of the Synaptics TouchPad.}
 
 \squishlist
-   \item Debugged and fixed issues in the Synaptics TouchPad driver, ranging from blue screens to gesture recognition problems (\CC).
-	\item Built a tool to play back and analyze gestures from customer log files (\CS{}).
-	\item Built a tool to verify and optimize driver INF files (\CS{}).
+   \item Debugged and fixed issues in the Synaptics TouchPad (kernel-mode) driver, ranging from blue screens to gesture recognition problems (\CC).
+	\item Improved the reliability of gesture recognition by building a playback tool to recreate and fix recognition failures from customer log files (\CS{}).
+	\item Reduced time spent to debug configuration-based issues from hours to minutes by building a tool to verify and optimize and load driver INF files (\CS{}).
 \squishend
 
-	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{Software Engineer} & 2007 - 2009 \\
-        Wall Street On Demand & Boulder, CO\\
-    \end{tabular*}
+\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+	 \textbf{Software Engineer} & 2007 - 2009 \\
+	Wall Street On Demand & Boulder, CO\\
+\end{tabular*}
 
+\mydesc{WSOD designs and develops charts, reports, and tools for the financial services industry. Major customers included Charles Schwab, Fidelity, Vanguard, JP Morgan, Scottrade, and eTrade}. 
 	\squishlist
-	\item Rewrote the company's entire distributed computing layer in \CS{}.  This included the implementation of socket based clients and servers that communicate using the company's custom data transfer protocol.
-	\item Wrote large portions of Goldman Sachs' (the parent company) new \CS{} financial plotting tool.
-	\item Built the foundation for the company's new chart and pdf generation server.  This uses WPF to generate thumbnail charts for web pages as well as creating complete stock and research reports.
+	\item Rewrote the company's entire distributed computing layer in \CS{}. Implemented routing (Random, Round-Robin, etc), load balancing, failover, etc.
+	\item Wrote significant portions of Goldman Sachs' (the parent company) new \CS{} financial plotting tool.
+	\item Built our charting framework, including a re-usable API used by all other developers and the core chart rendering service, using vector graphics. This generates thumbnail charts for web pages as well as creating complete stock and research reports. Topological sort was to used to  avoid label collisions (\CS{}, WPF).
 	\squishend
 
-	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{Scientific Programmer} & 2006 - 2007 \\
-        L-3 Communications - Applied Technologies Division & Santa Barbara, CA\\
-        Security Clearance: Secret
-    \end{tabular*}
+\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+	\textbf{Scientific Programmer} & 2006 - 2007 \\
+	L-3 Communications - Applied Technologies Division & Santa Barbara, CA\\
+        Security Clearance: \textcolor{red}{Secret}
+\end{tabular*}
 
-    \squishlist
-    \item Developed a \CS{} control encapsulating NASA's WorldWind 3D mapping application.  Wrote algorithms to display shaded contours on WorldWind's globe.
-    \item Exposed Unmanaged \CC{} algorithms and graphics packages for use in Managed \CS{} code using both P/Invoke services and \CC/CLI wrappers.
+\mydesc{Our group at L-3 created software to model the effects of electromagnetic pulses (EMP) on military systems.}
+
+\squishlist
+	\item Wrote a parallel Monte Carlo electromagnetic simulation to compute damage probabilities.
 	\item Wrote a \CC{} application that provides nuclear effects simulation in real-time wargaming exercises for White Sands Missile Range.
-	\item Wrote a COM object that provides source region electromagnetic pulse effects simulation (the thing that happens when a nuke goes off at low altitude).
-	\item Wrote a parallel Monte Carlo electromagnetic simulation to compute damage probabilities. 
-	\item Wrote a finite difference time domain Maxwell's equations visualizer in \CC{}.
-    \squishend
+	\item Wrote a finite difference time domain Maxwell's equations visualizer in \CC{}.	
+	\item Developed a \CS{} control encapsulating NASA's WorldWind 3D mapping application.  Wrote algorithms to display shaded contours, representing nuclear detonations, on the resulting globe control.
+\squishend
 	
 \resheading{Education}
 	\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
@@ -161,21 +167,21 @@ Mt. Gretna, PA & \href{https://landon.github.io/}{https://landon.github.io/}\\
         Advisor: Hal Kierstead
     \end{tabular*}
 	
-	\bigskip
+\bigskip
 
-    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{M.A., Mathematics} & 2003 - 2005 \\
-        University of California, Santa Barbara \\
-    \end{tabular*}
+\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+	\textbf{M.A., Mathematics} & 2003 - 2005 \\
+	University of California, Santa Barbara \\
+\end{tabular*}
 	
-	\bigskip
+\bigskip
 
-    \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
-        \textbf{B.A., Mathematics} & 1999 - 2003 \\
+\begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
+	\textbf{B.A., Mathematics} & 1999 - 2003 \\
         Washington University in St. Louis \\
         Ross Middlemiss Prize (for top graduating Mathematics major)\\
-		Study Abroad in the Netherlands (Utrecht University) & 2001 - 2002 \\
-    \end{tabular*}
+	Study Abroad in the Netherlands (Utrecht University) & 2001 - 2002 \\
+\end{tabular*}
 
 \resheading{Honors \& Activities}
     \begin{tabular*}{7.5in}{l@{\extracolsep{\fill}}r}
@@ -191,26 +197,8 @@ Mt. Gretna, PA & \href{https://landon.github.io/}{https://landon.github.io/}\\
         \hspace{3ex}\textbf{Built Tesla coils and produced massive lightning bolts} & 1997 - 1999 \\
     \end{tabular*}    
 
-\resheading{Technical Skills}
-\squishlist
-    \item \textbf{Languages and Technologies}
-    \squishlist
-        \item \CS{}, C/\CC{}, JavaScript, Go, Python, Solidity, \FS{}, Dart, Java, Pascal, VB.NET, Scheme, Fortran, x86 assembly
-        \item LINQ, \LaTeX, SQL, MVC, HTML, CSS, XML, jQuery, AJAX, XSLT, Bridge.NET, Google protobufs
-		\item SQL Server, MySql, Sqlite, Amazon DynamoDB, Azure SQL, Entity Framework
-        \item WinForms, WPF, Silverlight, Xamarin
-    \squishend
-    
-    \item \textbf{Development Tools and Platforms}
-    \squishlist
-		\item ANTS profiler, dotTrace, NUnit
-  	    \item .NET Reflector, dotPeek
-        \item Visual Studio, Notepad++
-        \item Git, Subversion, CVS
-        \item Windows, Linux, Mac
-      \squishend
-\squishend
 \newpage
+
 \resheading{Research Articles}
 {\large$30^+$ \href{https://landon.github.io/#math}{\color{blue}{publications}} in top-tier discrete mathematics and philosophy journals.  
 A couple of favorites:}
@@ -229,10 +217,9 @@ To prove that 5 colors suffice is relatively simple.  We gave a human-checkable 
 we get to use 9 colors, but have to assign each country 2 colors.
 
 \squishlist
-\item settled a 20 year old conjecture on the existence of such a proof
-\item featured on the popular computer science blog 
-\href{http://blog.computationalcomplexity.org/2015/10/a-human-readable-proof-that-every.html}{\color{blue}{Computational Complexity}} by Lance Fortnow
-and Bill Gasarch.
+	\item Settled a 20-year old conjecture on the existence of such a proof.
+	\item Featured on 
+\href{http://blog.computationalcomplexity.org/2015/10/a-human-readable-proof-that-every.html}{\color{blue}{Computational Complexity}}, a popular computer science blog by Lance Fortnow \& Bill Gasarch.
 \squishend
 \end{quote}
 
@@ -249,11 +236,31 @@ Your task is to determine the identities of A, B, and C by asking three yes-no q
 The gods understand English, but will answer all questions in their own language, in which the words for yes and no are da and ja, in some order. 
 You do not know which word means which.
 	  \squishlist
-		\item showed how to trivialize the puzzle by asking questions that elicit meaningful answers from Random
-		\item showed how to solve the puzzle in only two questions by using paradoxes to explode god-heads
-		\item this article led to the problem getting a lot of \href{http://brianrabern.net/New_Scientist_HLPE.pdf}{\color{blue}{press}} 
-		and many \href{https://scholar.google.com/scholar?oi=bibs&hl=en&cites=14941881349355280851}{\color{blue}{follow-up papers}} have been written
+		\item Showed how to trivialize the puzzle by asking questions that elicit meaningful answers from Random.
+		\item Showed how to solve the puzzle in only two questions by using paradoxes to explode god-heads.
+		\item This article led to the problem getting a lot of \href{http://brianrabern.net/New_Scientist_HLPE.pdf}{\color{blue}{press}} 
+		and many \href{https://scholar.google.com/scholar?oi=bibs&hl=en&cites=14941881349355280851}{\color{blue}{follow-up papers}} have been written.
       \squishend
 \end{quote}
+
+\resheading{Technical Skills}
+\squishlist
+	\item \textbf{Languages and Technologies}
+	\squishlist
+		\item \CS{}, C/\CC{}, JavaScript, Go, Python, Solidity, \FS{}, Dart, Java, Pascal, VB.NET, Scheme, Fortran, x86 assembly
+		\item LINQ, \LaTeX, SQL, MVC, HTML, CSS, XML, jQuery, AJAX, XSLT, Bridge.NET, Google protobufs
+		\item SQL Server, MySql, Sqlite, Amazon DynamoDB, Azure SQL, Entity Framework
+		\item WinForms, WPF, Silverlight, Xamarin
+	\squishend
+    
+	\item \textbf{Development Tools and Platforms}
+    	\squishlist
+		\item .NET Reflector, dotPeek
+	        \item Git, Subversion, CVS
+		\item Windows, Linux, Mac
+	\squishend
+\squishend
+
+
 \end{document}
 

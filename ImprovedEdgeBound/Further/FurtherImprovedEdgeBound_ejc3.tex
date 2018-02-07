@@ -101,7 +101,7 @@
 		We improve the best known bounds on the average degree of online $k$-list-critical graphs for $k \ge 6$. 
 		Specifically, for $k \ge 7$ we show that every non-complete online $k$-list-critical graph has average degree at least $k-1 + \frac{(k-3)^2 (2 k-3)}{k^4-2 k^3-11 k^2+28 k-14}$
 		and every non-complete online $6$-list-critical graph has average degree at least $5 + \frac{93}{766}$.
-		The same bounds holds for offline $k$-list-critical graphs.
+		The same bounds hold for offline $k$-list-critical graphs.
 \end{abstract}
 
 \section{Introduction}
@@ -158,7 +158,7 @@ an upper bound of the form:
 Of course, we can measure badness along multiple axes.  In our proof we use two badness measures $\beta(\L)$ and $q(\L)$, so the upper bound looks like:
 \[2\size{\L} \le s(k)\card{L} + h(k)\beta(\L) + z(k)q(\L).\]
 High $\beta(\L)$ badness leads to reducible configurations by kernel-perfect orientations and high $q(\L)$ badness leads to reducible configurations by Alon-Tarsi orientations.
-That means the same proof shows that Main Theorem holds for online $k$-list-critical graphs as well (in fact, for the larger class of $OC$-irreducible graphs with $\delta(G) = k-1$ defined in section 5).
+That means the same proof shows that Main Theorem holds for offline $k$-list-critical graphs as well (in fact, for the larger class of $OC$-irreducible graphs with $\delta(G) = k-1$ defined in section 5).
 
 Let $c_k^*(\L)$ be the number of components of $\L$ containing a copy of $K_{k-1}$. Let $q_k(\L)$ be the number of non-cut vertices in $\L$ that appear in copies of $K_{k-1}$.  
 Let $\beta_k(\L)$ be the independence number of the subgraph of $\L$ induced on the vertices of degree $k-1$.  
@@ -365,10 +365,10 @@ that generalizes a kernel technique of Kostochka and Yancey \cite{kostochkayance
 	of $G$. 
 \end{TheDefinition}
 
-\begin{KernelMagic}\label{ConsantListMicStrength} 
+\begin{lem}[Kernel Magic]\label{ConsantListMicStrength} 
 	Every OC-irreducible graph $G$ with $\delta(G) = k-1$ satisfies
 	\[2\size{G} \ge (k-2)\card{G} + \mic(G) + 1.\]
-\end{KernelMagic}
+\end{lem}
 
 
 \begin{thm}[L{\"o}wenstein, et al. \cite{lowenstein2011independence}]\label{Lowenstein}
@@ -421,7 +421,7 @@ So, we may assume $\size{C} \ge \card{C}$.  Applying Corollary \ref{AlphaBound},
 	 \mic(G) \ge \parens{\frac{k}{2} + \frac{k-1}{\lambda}}\card{\HH} - \parens{\frac{2(k-1)}{\lambda}}\size{\HH} + (k-1)\beta(\L).
 	 \label{eq19}
 	\end{equation}
-	Applying Kernel Magic using \eqref{eq19} and solving for $\beta(\L)$ proves the claim.
+	Applying Lemma \ref{ConsantListMicStrength} using \eqref{eq19} and solving for $\beta(\L)$ proves the claim.
 \end{proof}
 
 

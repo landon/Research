@@ -1,0 +1,172 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+\newtheorem{theorem}{Theorem}
+
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+\newcommand{\PP}{\fancy{P}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+\newcommand{\type}{\operatorname{type}}
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+\newcommand{\gcd}{\operatorname{gcd}}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\s{\sigma}
+
+\newcommand{\claim}[2]{{\bf Claim #1.}~{\it #2}~~}
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\def\gcd{\bigtriangledown}
+\def\lcm{\bigtriangleup}
+\def\no{\natural}
+
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\newcommand{\Bond}[6]%
+% start, end, thickness, incolor, outcolor, iterations
+{ \begin{pgfonlayer}{background}
+        \colorlet{InColor}{#4}
+        \colorlet{OutColor}{#5}
+        \foreach \I in {#6,...,1}
+        {   \pgfmathsetlengthmacro{\r}{#3/#6*\I}
+            \pgfmathsetmacro{\C}{sqrt(1-\r*\r/#3/#3)*100}
+            \draw[InColor!\C!OutColor, line width=\r] (#1.center) -- (#2.center);
+        }
+    \end{pgfonlayer}
+}
+
+\newcommand{\BlackBond}[2]%
+% start, end
+{   \Bond{#1}{#2}{0.7071mm}{black!25}{black!25!black}{10}
+}
+
+\title{Generalized orientations for list coloring}
+\author{landon rabern\thanks{landon.rabern@gmail.com}}
+\begin{document}
+\maketitle
+
+\section{Basic notions}
+For a set $S$, let $\IN^S$ be all functions from $S$ to $\IN$.  Let $T \subseteq S$. For $g\in \IN^S$ and $h \in \IN^T$, define $g+h \in \IN^S$ by $(g+h)(x) = g(x) + h(x)$ for $x \in T$ and $(g+h)(x) = g(x)$ for 
+$x \in S\setminus T$. Define $g-h \in \IN^S$ by $(g-h)(x) = \max\set{0, g(x) + h(x)}$ for $x \in T$ and $(g+h)(x) = g(x)$ for $x \in S\setminus T$.  
+For $g \in \IN^S$ let $g + \IN^T$ be all functions of the form $g + h$ where $h \in \IN^T$.  Let $1_T \in \IN^T$ be given by $1_T(x) = 1$ for $x \in T$.  When $T = \set{u}$, we write $1_u$ in place of $1_{\set{u}}$.
+If $\func{a}{S}{\IN}$ and $\func{b}{S}{\IN}$, then $a > b$ just in case $a(v) > b(v)$ for all $v \in S$.  Extend all these definitions to functions with codomain $\IQ$ as well with the proviso that 
+a sum or difference operation on functions with different codomains results in a function whose codomain in the union of the input codomains.  If functions with different domains are compared, the comparison is on the
+intersection of the domains.
+
+If $G$ is a graph and $\func{f}{V(G)}{\IN}$, then $G$ is \emph{online $f$-list-colorable} just in case for every nonempty $S \subseteq V(G)$ there is a nonempty independent set $F \subseteq S$
+such that $G - F$ is online $(f-1_{S\setminus F})$-list-colorable.
+
+
+\section{Generalized orientations}
+Let $G$ be a graph.  For $v \in V(G)$, let $E(v)$ be the edges incident to $v$.    For a finite set $W \subset \IQ$, a $W$-orientation of $G$ is an assignment $\pi(v,e) \in W$ to each pair $(v,e)$ where $e \in E(v)$ such that
+\begin{enumerate}
+\item[(1)] $\pi(v, vw) + \pi(w, wv) = 1$ \text{ for each $vw \in E(G)$; and}\\
+\item[(2)] $\sum_{e \in E(v)} \pi(v, e) \ge 0$ \text{ for all $v \in V(G)$.}
+\end{enumerate}
+
+When $W = \set{0,1}$, $W$-orientations are equivalent to the usual notion of orienting a graph by directing its edges.  Each $W$-orientation $\pi$ of $G$ induces a \emph{score function} $\func{h_\pi}{V(G)}{\IQ_{\ge 0}}$ given by
+$h_\pi(v) \DefinedAs \sum_{e \in E(v)} \pi(v, e)$.  By (1), $\sum_{v \in V(G)} h_\pi(v) = \size{G}$.  Let $\eta(W, G, D)$ be shorthand for ``the number of $W$-orientations $\pi$ of $G$ with $h_\pi \in D$''.
+Let $\kappa(W)$ be the number of $(a,b) \in W\times W$ with $a + b = 1$.
+
+\begin{theorem}
+Let $G$ be a graph, $\func{f}{V(G)}{\IN}$ and $\func{g}{V(G)}{\IQ}$ with $f > g$.  If $W \subset \IQ$ is finite and the number of $W$-orientations $\pi$ of $G$ with $h_\pi = g$ is not a multiple of $\kappa(W)$, 
+then $G$ is online $f$-list-colorable.
+\end{theorem}
+\begin{proof}
+By induction on $\card{G}$, it will suffice to find, for each nonempty $S \subseteq V(G)$, a nonempty independent set $F \subseteq S$ and $\func{g'}{V(G - F)}{\IQ}$ such that $f - 1_{S \setminus F} > g'$
+and the number of $W$-orientations $\pi$ of $G-F$ with $h_\pi = g'$ is not a multiple of $\kappa(W)$. 
+
+Fix nonempty $S \subseteq V(G)$.  Since $\sum_{v \in V(G)} h_\pi(v) = \size{G}$ for every $W$-orientation $\pi$ of $G$, it follows that $\eta(W,G,\set{g}) = \eta(W,G,g + \IN^S)$.  
+In particular, $\eta(W,G,g - 1_{\emptyset} + \IN^{S\setminus \emptyset})$ is not a multiple of $\kappa(W)$.
+This allows picking $X \subseteq S$ maximal such that there is $Y \subseteq X$ 
+where $\eta\parens{W, G,\parens{g - 1_X} + \IN^{S \setminus Y}}$ 
+is not a multiple of $\kappa(W)$.  Suppose $X \ne S$. Pick $v \in S \setminus X$. Put $X' \DefinedAs X \cup \set{v}$ and $Y' \DefinedAs Y \cup \set{v}$.  
+Then $\parens{g - 1_{X'}} + \IN^{S \setminus Y}$ is the disjoint union of $\parens{g - 1_{X'}} + \IN^{S \setminus Y'}$ and 
+$\parens{g - 1_X} + \IN^{S \setminus Y}$.  By maximality of $X$, $\eta\parens{W,G,\parens{g - 1_{X'}} + \IN^{S \setminus {Y}}}$ 
+is a multiple of $\kappa(W)$.  But the same holds for \eta\parens{W,G,\parens{g - 1_{X'}} + \IN^{S \setminus {Y'}}}$, so 
+\eta\parens{W,G,\parens{g - 1_X} + \IN^{S \setminus Y}}$ must be a multiple of $\kappa(W)$, a contradiction.  Hence $X = S$.
+
+So there is $Y \subseteq S$ such that \eta\parens{W,G,\parens{g - 1_S} + \IN^{S \setminus Y}}$ is not a multiple of $\kappa(W)$.
+Suppose $G[S \setminus Y]$ contains an edge $vw$.
+
+
+
+\section{Applications}
+\end{proof}
+\end{document}

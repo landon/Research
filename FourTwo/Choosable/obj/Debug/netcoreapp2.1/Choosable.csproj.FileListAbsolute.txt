@@ -1,0 +1,11 @@
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\bin\Debug\netcoreapp2.1\Choosable.deps.json
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\bin\Debug\netcoreapp2.1\Choosable.runtimeconfig.json
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\bin\Debug\netcoreapp2.1\Choosable.runtimeconfig.dev.json
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\bin\Debug\netcoreapp2.1\Choosable.dll
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\bin\Debug\netcoreapp2.1\Choosable.pdb
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.csprojAssemblyReference.cache
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.csproj.CoreCompileInputs.cache
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.AssemblyInfoInputs.cache
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.AssemblyInfo.cs
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.dll
+C:\Users\landon\Documents\GitHub\Research\FourTwo\Choosable\obj\Debug\netcoreapp2.1\Choosable.pdb

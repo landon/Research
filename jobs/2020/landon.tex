@@ -1,0 +1,203 @@
+% !TEX program = latexmk
+% !TEX options = -synctex=1 -file-line-error -halt-on-error -xelatex -outdir="%OUTDIR%" "%DOC%"
+
+\documentclass[11pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{multirow}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.3in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1.0in}
+
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+\newcommand{\CS}{C\includegraphics{sharp.pdf}}
+\newcommand{\FS}{F\includegraphics{sharp.pdf}}
+
+\usepackage[svgnames]{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{0.91, 0.97, 1.0}
+ 
+\newcommand{\resheading}[1]{
+  \parbox{\textwidth}{
+    \begin{shaded}
+      \textcolor{darkgray}{\hspace{-.05in}\sffamily{\mbox{~}{\large #1}}}
+    \end{shaded}
+  }
+}
+
+\newcommand{\squishlist}{
+   \begin{list}{$\circ$}
+    { \setlength{\itemsep}{0pt}    \setlength{\parsep}{0pt}
+      \setlength{\topsep}{4.5pt}     \setlength{\partopsep}{0pt}
+      \setlength{\leftmargin}{2em} \setlength{\labelwidth}{1.5em}
+      \setlength{\labelsep}{0.5em} } }
+      
+\newcommand{\squishend}{
+    \end{list}  }
+
+\newcommand\Gigantic{\fontsize{36}{50}\selectfont}
+    
+\usepackage{xcolor}
+\definecolor{the_blue}{HTML}{2A5DB0}
+
+\begin{document}
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+\multirow{3}*{\textbf{\Gigantic  \sffamily \href{https://www.chessprogramming.org/Landon_Rabern}{\color{the_blue}{landon rabern}}}}
+& {\footnotesize \textcolor{gray}{(805) 403-8185}} \\
+& {\footnotesize  \textcolor{gray}{landon.rabern@gmail.com}} \\
+& {\footnotesize  \href{https://landon.github.io/}{\textcolor{gray}{https://landon.github.io/}}}\\
+\end{tabular*}
+
+
+
+\line(1,0){572}
+
+
+\resheading{work history}
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{principal engineer: \href{https://www.performance-star.com/}{\color{the_blue}{performance star}}} & 2019 - \phantom{2020}\\
+\end{tabular*}
+\begin{minipage}{6.5in}
+analysis and fault detection for semiconductor manufacturing machines.
+wavelets, genetic programming, recurrent neural nets, probabilistic programming,
+gaussian processes, autograd. lots of reading and implementing ideas in research papers. (python, torch, java, keras, numpy, pandas, sklearn)
+\end{minipage}
+
+\vspace{0.02in}
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{data scientist: \href{https://dataforgood.fb.com/impact/category/population-density-maps/}{\color{the_blue}{facebook}}} & 2018 - 2019\\
+\end{tabular*}
+\begin{minipage}{6.5in}
+worked with the world.ai team to ingest and digest open street map diffs. helped create accurate population density maps
+of africa combining census data and satellite imagery (python, presto, giraph, hadoop, hive, gluster, \CC{}, java, javascript)\end{minipage}
+
+
+\vspace{0.02in}
+
+\smallskip
+ \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{senior staff engineer: \href{https://www.iqvia.com/about-us/iqvia-core}{\color{the_blue}{iqvia}}} & 2017 - 2018\\
+  \end{tabular*}
+\begin{minipage}{6.5in}
+built general diagram of things charting engine with arbitrary depth axis-aligned recursively nested, interactive, 
+  animated charts.  chart components and databinding specified by an xml-based markup language used by a team of 100+ 
+  engineers in india to build client specific applications (\CS{}, javascript)\end{minipage}
+ 
+
+  \vspace{0.02in}
+ 
+	\smallskip
+ \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{cto, co-founder: \href{https://www.lbd-data.com/}{\color{the_blue}{lbd data}}} & 2008 - 2018\\
+  \end{tabular*}
+\begin{minipage}{6.5in}
+ built a suite of mobile video software for \href{http://www.safetyvision.com/products/primaview}{\color{the_blue}{police}} 
+ and \href{http://www.safetyvision.com/products/safetyview-pro}{\color{the_blue}{public transit}}. the suite is used throughout the united states. 
+(\CS{}, winforms, wpf, libavcodec, openstreetmap, opencv, amazon s3, dynamodb, sql, javascript, html5, \CC{})\end{minipage}
+
+
+\vspace{0.02in}
+ 
+\smallskip
+	 \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{adjunct assistant professor, mathematics: franklin \& marshall college} & 2014 - 2017 \\
+		\end{tabular*}
+		\begin{minipage}{6.5in} taught math!\end{minipage}
+
+      \vspace{0.02in}
+	 
+		\smallskip
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{senior software engineer: markit on demand} & 2010 - 2011 \\
+    \end{tabular*}
+\begin{minipage}{6.5in} optimized middleware supporting hundreds of developers (\CS{}, \CC{})\end{minipage}
+
+  \vspace{0.02in}
+	\smallskip
+  \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{kernel engineer: synaptics} & 2009 - 2010 \\
+  \end{tabular*}
+\begin{minipage}{6.5in} improved reliability of \href{https://landon.github.io/images/synaptics.PNG}{\color{the_blue}{touchpad driver}} (\CC{})\end{minipage}
+
+  \vspace{0.02in}
+\smallskip
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	 \textbf{software engineer: markit on demand} & 2007 - 2009 \\
+\end{tabular*}
+\begin{minipage}{6.5in} charts, reports, and tools for the financial services industry (\CS{}, \CC{}, html5, javascript)\end{minipage}
+
+
+  \vspace{0.02in}
+ 
+\smallskip
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{scientific programmer: titan national security} & 2006 - 2007 \\
+\end{tabular*}
+\begin{minipage}{6.5in} created software to model the effects of electromagnetic pulses on military systems (\CC{}, \CS{})\end{minipage}
+
+  \vspace{0.02in}
+
+\resheading{education}
+	\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{phd, mathematics: arizona state university} & 2011 - 2013 \\
+    $\circ$ research: discrete math, combinatorics, graph coloring, games and algorithms\\
+    \end{tabular*}
+	 
+\smallskip
+
+
+ 
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{ma, mathematics: uc santa barbara} & 2003 - 2005 \\
+\end{tabular*}
+
+\smallskip
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{ba, mathematics: washington university in st. louis} & 1999 - 2003 
+\end{tabular*}
+
+\resheading{research, etc.}
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        $\circ$ \textbf{\href{https://en.wikipedia.org/wiki/Erd\%C5\%91s_number}{\color{the_blue}{erd\H{o}s number}} 2} & 2011 -\phantom{1}$\infty$\phantom{2}
+    \end{tabular*}
+
+    \smallskip
+
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+      $\circ$  \textbf{$30^+$} \href{https://dblp.org/pers/r/Rabern:Landon.html}{\textbf{\color{the_blue}{publications}}} \textbf{in top-tier discrete 
+      mathematics and philosophy journals} & 2006 - 2020 \\
+  \end{tabular*} 
+    
+    \smallskip
+
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+       $\circ$ \textbf{$\mathbf{1^{st}}$ place, mentor graphics state programming competition} & 1997 and 1998\\
+    \end{tabular*}
+    
+    \smallskip
+    
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        $\circ$ \textbf{developed \href{https://www.chessprogramming.org/Betsy}{\color{the_blue}{betsy}}, a strong chess AI, in C and x86 assembly}  & 1998 - 2003\\
+    \end{tabular*}
+    
+    \smallskip
+    
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        $\circ$ \textbf{built tesla coils and produced massive lightning bolts} & 1997 - 1999 \\
+    \end{tabular*} 
+\end{document}

@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+
+\usepackage{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem*{question}{Question}
+\newtheorem*{observation}{Observation}
+
+\newcommand{\fancy}[1]{\mathcal{#1}}
+\newcommand{\C}[1]{\fancy{C}_{#1}}
+
+
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\G}{\fancy{G}}
+\newcommand{\CC}{\fancy{C}}
+\newcommand{\D}{\fancy{D}}
+\newcommand{\T}{\fancy{T}}
+\newcommand{\B}{\fancy{B}}
+\renewcommand{\L}{\fancy{L}}
+\newcommand{\HH}{\fancy{H}}
+
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setb}[3]{\left\{ #1 \in #2 : #3 \right\}}
+\newcommand{\setbs}[2]{\left\{ #1 : #2 \right\}}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\size}[1]{\left\Vert#1\right\Vert}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\func}[3]{#1\colon #2 \rightarrow #3}
+\newcommand{\funcinj}[3]{#1\colon #2 \inj #3}
+\newcommand{\funcsurj}[3]{#1\colon #2 \surj #3}
+\newcommand{\irange}[1]{\left[#1\right]}
+\newcommand{\join}[2]{#1 \mbox{\hspace{2 pt}$\ast$\hspace{2 pt}} #2}
+\newcommand{\djunion}[2]{#1 \mbox{\hspace{2 pt}$+$\hspace{2 pt}} #2}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\DefinedAs}{\mathrel{\mathop:}=}
+
+\newcommand{\mic}{\operatorname{mic}}
+\newcommand{\AT}{\operatorname{AT}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\nonsep}{\bar{S}}
+
+\def\adj{\leftrightarrow}
+\def\nonadj{\not\!\leftrightarrow}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\def\D{\fancy{D}}
+\def\C{\fancy{C}}
+\def\A{\fancy{A}}
+\def\M{\fancy{M}}
+\def\chil{{\chi_\ell}}
+\def\chiol{\chi_{\rm{OL}}}
+
+\newcommand{\case}[2]{{\bf Case #1.}~{\it #2}~~}
+\newcommand{\aside}[1]{\marginnote{\scriptsize{#1}}[0cm]}
+\newcommand{\aaside}[2]{\marginnote{\scriptsize{#1}}[#2]}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\title{}
+\author{}
+
+\begin{document}
+\maketitle
+
+
+\begin{lem}
+    The homogeneous cliques in a vertex-critical counterexample to BK have at most three vertices.
+\end{lem}
+\begin{proof}
+    Suppose $G$ is a vertex-critical counterexample to BK.  
+    Choose homogeneous clique $S\subseteq V(G)$ maximizing $\card{S}$.
+    Put $T \DefinedAs N(S)\setminus S$. 
+    By homogeneity, $S$ is joined to $T$.
+    Plainly, $\card{S} + \card{T} \ge \Delta(G) + 1$.
+
+    Suppose the lemma is false.
+    Then $\card{S} \ge 4$. By Lemma 4.49 in 
+    \href{https://arxiv.org/pdf/1203.5380v1.pdf}{original mules} 
+    $\card{T} \le 3$.  By Lemma 4.29  in 
+    \href{https://arxiv.org/pdf/1203.5380v1.pdf}{original mules} there is
+    no induced $K_6 \vee E_3$, so we must have $\card{S} \le 5$. 
+    But then $\Delta(G) + 1 \ge 10 > 8 \ge \card{S} + \card{T}$, a contradiction.
+
+
+\end{proof}
+\end{document} 

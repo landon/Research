@@ -1,0 +1,162 @@
+% !TEX program = latexmk
+% !TEX options = -synctex=1 -file-line-error -halt-on-error -xelatex -outdir="%OUTDIR%" "%DOC%"
+
+\documentclass[11pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{multirow}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.3in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1.0in}
+
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+\newcommand{\CS}{C\includegraphics{sharp.pdf}}
+\newcommand{\FS}{F\includegraphics{sharp.pdf}}
+
+\usepackage[svgnames]{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{0.91, 0.97, 1.0}
+ 
+\newcommand{\resheading}[1]{
+  \parbox{\textwidth}{
+    \begin{shaded}
+      \textcolor{darkgray}{\hspace{-.05in}\sffamily{\mbox{~}{\large #1}}}
+    \end{shaded}
+  }
+}
+
+\newcommand{\squishlist}{
+   \begin{list}{$\circ$}
+    { \setlength{\itemsep}{0pt}    \setlength{\parsep}{0pt}
+      \setlength{\topsep}{4.5pt}     \setlength{\partopsep}{0pt}
+      \setlength{\leftmargin}{2em} \setlength{\labelwidth}{1.5em}
+      \setlength{\labelsep}{0.5em} } }
+      
+\newcommand{\squishend}{
+    \end{list}  }
+
+\newcommand\Gigantic{\fontsize{36}{50}\selectfont}
+    
+\usepackage{xcolor}
+\definecolor{the_blue}{HTML}{2A5DB0}
+
+\begin{document}
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+\multirow{3}*{\textbf{\Gigantic  \sffamily Landon Rabern}}
+& {\footnotesize \textcolor{gray}{(805) 403-8185}} \\
+& {\footnotesize  \textcolor{gray}{landon.rabern@gmail.com}} \\
+& {\footnotesize  \href{https://landon.github.io/}{\textcolor{gray}{https://landon.github.io/}}}\\
+\end{tabular*}
+
+
+
+\line(1,0){572}
+
+
+\resheading{Work History}
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{Principal Engineer: \href{https://www.performance-star.com/}{\color{the_blue}{Performance Star}}} & 2019 - \phantom{2020}\\
+\end{tabular*}
+\begin{minipage}{6.5in}
+Analysis and fault detection for semiconductor manufacturing machines.
+Wavelets, genetic programming, recurrent neural nets, probabilistic programming,
+gaussian processes, autograd. (Python, Torch, Java, Keras, Numpy, Pandas, Scikit-Learn)
+\end{minipage}
+
+\vspace{0.11in}
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{Data Scientist: \href{https://dataforgood.fb.com/impact/category/population-density-maps/}{\color{the_blue}{Facebook}}} & 2018 - 2019\\
+\end{tabular*}
+\begin{minipage}{6.5in}
+Worked with the World.AI team to ingest and digest OpenStreetMap diffs. Helped create accurate population density maps
+of Africa combining census data and satellite imagery. (Python, Presto, Giraph, Hadoop, Hive, Gluster, \CC{}, Java, JavaScript)\end{minipage}
+
+
+\vspace{0.11in}
+
+\smallskip
+ \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{Senior Staff Engineer: \href{https://www.iqvia.com/about-us/iqvia-core}{\color{the_blue}{IQVIA}}} & 2017 - 2018\\
+  \end{tabular*}
+\begin{minipage}{6.5in}
+Built general diagram of things charting engine with arbitrary depth axis-aligned recursively nested, interactive, 
+  animated charts.  Chart components and databinding specified by an XML-based markup language used by a team of 100+ 
+  engineers in India to build client specific applications. (\CS{}, JavaScript)\end{minipage}
+ 
+
+  \vspace{0.11in}
+ 
+	\smallskip
+ \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{CTO, Co-Founder: \href{https://www.lbd-data.com/}{\color{the_blue}{LBD Data}}} & 2008 - 2018\\
+  \end{tabular*}
+\begin{minipage}{6.5in}
+ Built a suite of mobile video software for \href{http://www.safetyvision.com/products/primaview}{\color{the_blue}{police}} 
+ and \href{http://www.safetyvision.com/products/safetyview-pro}{\color{the_blue}{public transit}}. The suite is used throughout the United States. 
+(\CS{}, Winforms, WPF, libavcodec, OpenStreetMap, OpenCV, Amazon S3, DynamodDB, SQL, JavaScript, HTML5, \CC{})\end{minipage}
+
+
+\vspace{0.11in}
+ 
+\smallskip
+	 \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{Assistant Professor, Mathematics: Franklin \& Marshall College} & 2014 - 2017 \\
+		\end{tabular*}
+		\begin{minipage}{6.5in} Taught math!\end{minipage}
+
+      \vspace{0.11in}
+	 
+		\smallskip
+    \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{Senior Software Engineer: Markit on Demand} & 2010 - 2011 \\
+    \end{tabular*}
+\begin{minipage}{6.5in} Optimized middleware supporting hundreds of developers. (\CS{}, \CC{})\end{minipage}
+
+  \vspace{0.11in}
+	\smallskip
+  \begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{Kernel Engineer: Synaptics} & 2009 - 2010 \\
+  \end{tabular*}
+\begin{minipage}{6.5in} Improved reliability of \href{https://landon.github.io/images/synaptics.PNG}{\color{the_blue}{TouchPad driver}}. (\CS{}, \CC{})\end{minipage}
+
+  \vspace{0.11in}
+\smallskip
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	 \textbf{Software Engineer: Markit on Demand} & 2007 - 2009 \\
+\end{tabular*}
+\begin{minipage}{6.5in} Charts, reports, and tools for the financial services industry. (\CS{}, \CC{}, HTML5, JavaScript)\end{minipage}
+  \vspace{0.11in}
+\smallskip
+
+\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+	\textbf{Scientific Programmer: Titan National Security} & 2006 - 2007 \\
+\end{tabular*}
+\begin{minipage}{6.5in} Created software to model the effects of electromagnetic pulses on military systems. (\CC{}, \CS{})\end{minipage}
+
+  \vspace{0.11in}
+
+\resheading{Research}
+	\begin{tabular*}{7.9in}{l@{\extracolsep{\fill}}r}
+        \textbf{PhD, Mathematics: Arizona State University} & 2011 - 2013 \\
+    $\circ$ discrete math, combinatorics, graph coloring, games and algorithms\\
+    
+	 
+    $\circ$ \textbf{$30^+$} \href{https://dblp.org/pers/r/Rabern:Landon.html}{\textbf{\color{the_blue}{publications}}} in top-tier discrete 
+      mathematics and philosophy journals \\
+      
+      $\circ$  \textbf{\href{https://en.wikipedia.org/wiki/Erd\%C5\%91s_number}{\color{the_blue}{Erd\H{o}s number}} 2}
+    \end{tabular*}
+\end{document}
